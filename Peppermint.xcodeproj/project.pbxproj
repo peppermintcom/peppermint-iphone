@@ -9,12 +9,14 @@
 /* Begin PBXBuildFile section */
 		B17B3D311BB6898C009B8BC5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D301BB6898C009B8BC5 /* main.m */; };
 		B17B3D341BB6898C009B8BC5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D331BB6898C009B8BC5 /* AppDelegate.m */; };
-		B17B3D371BB6898C009B8BC5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D361BB6898C009B8BC5 /* ViewController.m */; };
 		B17B3D3A1BB6898C009B8BC5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D381BB6898C009B8BC5 /* Main.storyboard */; };
 		B17B3D3C1BB6898C009B8BC5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D3B1BB6898C009B8BC5 /* Images.xcassets */; };
 		B17B3D3F1BB6898C009B8BC5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D3D1BB6898C009B8BC5 /* LaunchScreen.xib */; };
 		B17B3D4B1BB6898C009B8BC5 /* PeppermintTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D4A1BB6898C009B8BC5 /* PeppermintTests.m */; };
 		B17B3D571BB68A39009B8BC5 /* Text.strings in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D561BB68A39009B8BC5 /* Text.strings */; };
+		B17B3D5B1BB6A49E009B8BC5 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D5A1BB6A49E009B8BC5 /* BaseViewController.m */; };
+		B17B3D5E1BB6A504009B8BC5 /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D5D1BB6A504009B8BC5 /* ContactsViewController.m */; };
+		B17B3D641BB6AE8B009B8BC5 /* RecordingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D631BB6AE8B009B8BC5 /* RecordingViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,8 +35,6 @@
 		B17B3D301BB6898C009B8BC5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B17B3D321BB6898C009B8BC5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B17B3D331BB6898C009B8BC5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		B17B3D351BB6898C009B8BC5 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		B17B3D361BB6898C009B8BC5 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		B17B3D391BB6898C009B8BC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B17B3D3B1BB6898C009B8BC5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B17B3D3E1BB6898C009B8BC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -43,6 +43,12 @@
 		B17B3D4A1BB6898C009B8BC5 /* PeppermintTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeppermintTests.m; sourceTree = "<group>"; };
 		B17B3D561BB68A39009B8BC5 /* Text.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Text.strings; sourceTree = "<group>"; };
 		B17B3D581BB68A4D009B8BC5 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		B17B3D591BB6A49E009B8BC5 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
+		B17B3D5A1BB6A49E009B8BC5 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		B17B3D5C1BB6A504009B8BC5 /* ContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsViewController.h; sourceTree = "<group>"; };
+		B17B3D5D1BB6A504009B8BC5 /* ContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsViewController.m; sourceTree = "<group>"; };
+		B17B3D621BB6AE8B009B8BC5 /* RecordingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingViewController.h; sourceTree = "<group>"; };
+		B17B3D631BB6AE8B009B8BC5 /* RecordingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordingViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,9 +139,13 @@
 		B17B3D551BB689F1009B8BC5 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				B17B3D351BB6898C009B8BC5 /* ViewController.h */,
-				B17B3D361BB6898C009B8BC5 /* ViewController.m */,
 				B17B3D381BB6898C009B8BC5 /* Main.storyboard */,
+				B17B3D591BB6A49E009B8BC5 /* BaseViewController.h */,
+				B17B3D5A1BB6A49E009B8BC5 /* BaseViewController.m */,
+				B17B3D5C1BB6A504009B8BC5 /* ContactsViewController.h */,
+				B17B3D5D1BB6A504009B8BC5 /* ContactsViewController.m */,
+				B17B3D621BB6AE8B009B8BC5 /* RecordingViewController.h */,
+				B17B3D631BB6AE8B009B8BC5 /* RecordingViewController.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -241,7 +251,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B17B3D371BB6898C009B8BC5 /* ViewController.m in Sources */,
+				B17B3D5B1BB6A49E009B8BC5 /* BaseViewController.m in Sources */,
+				B17B3D641BB6AE8B009B8BC5 /* RecordingViewController.m in Sources */,
+				B17B3D5E1BB6A504009B8BC5 /* ContactsViewController.m in Sources */,
 				B17B3D341BB6898C009B8BC5 /* AppDelegate.m in Sources */,
 				B17B3D311BB6898C009B8BC5 /* main.m in Sources */,
 			);

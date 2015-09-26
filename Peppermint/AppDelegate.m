@@ -14,9 +14,15 @@
 
 @implementation AppDelegate
 
+-(void) initNavigationViewController {
+    UIColor *navigationBarGreenColor = [UIColor colorWithRed:0.361f green:0.769f blue:0.651f alpha:1.00f];
+    [[UINavigationBar appearance] setBarTintColor:navigationBarGreenColor];
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [self initNavigationViewController];
     return YES;
 }
 
