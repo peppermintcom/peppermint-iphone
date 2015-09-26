@@ -16,7 +16,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    // Do any additional setup after loading the view, typically from a nib.    
+    NSLog(@"I'm well and alive...");
+    NSLog(@"Active locale is %@", LOC(@"Locale", @"Active Locale"));
 }
 
 - (void)didReceiveMemoryWarning {

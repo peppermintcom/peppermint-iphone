@@ -14,6 +14,7 @@
 		B17B3D3C1BB6898C009B8BC5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D3B1BB6898C009B8BC5 /* Images.xcassets */; };
 		B17B3D3F1BB6898C009B8BC5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D3D1BB6898C009B8BC5 /* LaunchScreen.xib */; };
 		B17B3D4B1BB6898C009B8BC5 /* PeppermintTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D4A1BB6898C009B8BC5 /* PeppermintTests.m */; };
+		B17B3D571BB68A39009B8BC5 /* Text.strings in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D561BB68A39009B8BC5 /* Text.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		B17B3D441BB6898C009B8BC5 /* PeppermintTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PeppermintTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B17B3D491BB6898C009B8BC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B17B3D4A1BB6898C009B8BC5 /* PeppermintTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeppermintTests.m; sourceTree = "<group>"; };
+		B17B3D561BB68A39009B8BC5 /* Text.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Text.strings; sourceTree = "<group>"; };
+		B17B3D581BB68A4D009B8BC5 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,13 +84,8 @@
 		B17B3D2D1BB6898C009B8BC5 /* Peppermint */ = {
 			isa = PBXGroup;
 			children = (
-				B17B3D321BB6898C009B8BC5 /* AppDelegate.h */,
-				B17B3D331BB6898C009B8BC5 /* AppDelegate.m */,
-				B17B3D351BB6898C009B8BC5 /* ViewController.h */,
-				B17B3D361BB6898C009B8BC5 /* ViewController.m */,
-				B17B3D381BB6898C009B8BC5 /* Main.storyboard */,
-				B17B3D3B1BB6898C009B8BC5 /* Images.xcassets */,
-				B17B3D3D1BB6898C009B8BC5 /* LaunchScreen.xib */,
+				B17B3D541BB689D2009B8BC5 /* App */,
+				B17B3D551BB689F1009B8BC5 /* View */,
 				B17B3D2E1BB6898C009B8BC5 /* Supporting Files */,
 			);
 			path = Peppermint;
@@ -98,6 +96,8 @@
 			children = (
 				B17B3D2F1BB6898C009B8BC5 /* Info.plist */,
 				B17B3D301BB6898C009B8BC5 /* main.m */,
+				B17B3D581BB68A4D009B8BC5 /* PrefixHeader.pch */,
+				B17B3D561BB68A39009B8BC5 /* Text.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -117,6 +117,27 @@
 				B17B3D491BB6898C009B8BC5 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B17B3D541BB689D2009B8BC5 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				B17B3D3B1BB6898C009B8BC5 /* Images.xcassets */,
+				B17B3D3D1BB6898C009B8BC5 /* LaunchScreen.xib */,
+				B17B3D321BB6898C009B8BC5 /* AppDelegate.h */,
+				B17B3D331BB6898C009B8BC5 /* AppDelegate.m */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
+		B17B3D551BB689F1009B8BC5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B17B3D351BB6898C009B8BC5 /* ViewController.h */,
+				B17B3D361BB6898C009B8BC5 /* ViewController.m */,
+				B17B3D381BB6898C009B8BC5 /* Main.storyboard */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,6 +221,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B17B3D3A1BB6898C009B8BC5 /* Main.storyboard in Resources */,
+				B17B3D571BB68A39009B8BC5 /* Text.strings in Resources */,
 				B17B3D3F1BB6898C009B8BC5 /* LaunchScreen.xib in Resources */,
 				B17B3D3C1BB6898C009B8BC5 /* Images.xcassets in Resources */,
 			);
@@ -347,6 +369,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = Peppermint/PrefixHeader.pch;
 				INFOPLIST_FILE = Peppermint/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -357,6 +380,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = Peppermint/PrefixHeader.pch;
 				INFOPLIST_FILE = Peppermint/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

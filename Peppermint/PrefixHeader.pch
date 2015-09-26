@@ -1,0 +1,26 @@
+//
+//  PrefixHeader.pch
+//  Peppermint
+//
+//  Created by Okan Kurtulus on 26/09/15.
+//  Copyright (c) 2015 Okan Kurtulus. All rights reserved.
+//
+
+#ifndef Peppermint_PrefixHeader_pch
+#define Peppermint_PrefixHeader_pch
+
+#pragma mark - NSLOG Definition
+
+#ifdef DEBUG
+#   define NSLog(...) NSLog(__VA_ARGS__)
+#else
+#   define NSLog(...)
+#endif
+
+#pragma mark - Localized Text Definition
+
+#define LOC(__key, __comment) \
+NSLocalizedStringFromTable(\
+(__key),@"Text",(__comment))
+
+#endif
