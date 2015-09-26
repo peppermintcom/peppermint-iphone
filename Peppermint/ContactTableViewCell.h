@@ -1,0 +1,18 @@
+//
+//  ContactTableViewCell.h
+//  Peppermint
+//
+//  Created by Okan Kurtulus on 26/09/15.
+//  Copyright (c) 2015 Okan Kurtulus. All rights reserved.
+//
+
+#import "BaseTableViewCell.h"
+
+@interface ContactTableViewCell : BaseTableViewCell
+@property(weak, nonatomic) IBOutlet UIImageView *avatarImageView;
+@property(weak, nonatomic) IBOutlet UILabel *contactNameLabel;
+@property(weak, nonatomic) IBOutlet UILabel *contactViaCaptionLabel;
+@property(weak, nonatomic) IBOutlet UILabel *contactViaInformationLabel;
+@property(weak, nonatomic) IBOutlet UIView *cellSeperatorView;
+
+@end

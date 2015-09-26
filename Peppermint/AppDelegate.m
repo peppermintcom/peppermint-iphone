@@ -15,8 +15,7 @@
 @implementation AppDelegate
 
 -(void) initNavigationViewController {
-    UIColor *navigationBarGreenColor = [UIColor colorWithRed:0.361f green:0.769f blue:0.651f alpha:1.00f];
-    [[UINavigationBar appearance] setBarTintColor:navigationBarGreenColor];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor peppermintGreen]];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 }
 

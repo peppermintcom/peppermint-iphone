@@ -7,10 +7,12 @@
 //
 
 #import "BaseViewController.h"
+#import "ContactsModel.h"
 
-@interface ContactsViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate>
+@interface ContactsViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+@property (strong, nonatomic) ContactsModel *contactsModel;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
+@property (weak, nonatomic) IBOutlet UITextField *searchContactsTextField;
 
 @end

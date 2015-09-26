@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B165EF121BB71A85008C6F71 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF111BB71A85008C6F71 /* BaseModel.m */; };
+		B165EF151BB71A99008C6F71 /* ContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF141BB71A99008C6F71 /* ContactsModel.m */; };
+		B165EF181BB71EC0008C6F71 /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF171BB71EC0008C6F71 /* Contact.m */; };
+		B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF1C1BB72242008C6F71 /* EmptyResultTableViewCell.m */; };
+		B165EF1F1BB72254008C6F71 /* EmptyResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B165EF1E1BB72254008C6F71 /* EmptyResultTableViewCell.xib */; };
 		B17B3D311BB6898C009B8BC5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D301BB6898C009B8BC5 /* main.m */; };
 		B17B3D341BB6898C009B8BC5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D331BB6898C009B8BC5 /* AppDelegate.m */; };
 		B17B3D3A1BB6898C009B8BC5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D381BB6898C009B8BC5 /* Main.storyboard */; };
@@ -17,6 +22,11 @@
 		B17B3D5B1BB6A49E009B8BC5 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D5A1BB6A49E009B8BC5 /* BaseViewController.m */; };
 		B17B3D5E1BB6A504009B8BC5 /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D5D1BB6A504009B8BC5 /* ContactsViewController.m */; };
 		B17B3D641BB6AE8B009B8BC5 /* RecordingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D631BB6AE8B009B8BC5 /* RecordingViewController.m */; };
+		B17B3D691BB6BCE5009B8BC5 /* CellFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D681BB6BCE5009B8BC5 /* CellFactory.m */; };
+		B17B3D6E1BB6BD13009B8BC5 /* ContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D6D1BB6BD13009B8BC5 /* ContactTableViewCell.m */; };
+		B17B3D701BB6BD2E009B8BC5 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D6F1BB6BD2E009B8BC5 /* ContactTableViewCell.xib */; };
+		B17B3D741BB6C4B0009B8BC5 /* UIColor_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D731BB6C4B0009B8BC5 /* UIColor_Addition.m */; };
+		B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D771BB6C90A009B8BC5 /* BaseTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,6 +40,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B165EF101BB71A85008C6F71 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
+		B165EF111BB71A85008C6F71 /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
+		B165EF131BB71A99008C6F71 /* ContactsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsModel.h; sourceTree = "<group>"; };
+		B165EF141BB71A99008C6F71 /* ContactsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsModel.m; sourceTree = "<group>"; };
+		B165EF161BB71EC0008C6F71 /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
+		B165EF171BB71EC0008C6F71 /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
+		B165EF1B1BB72242008C6F71 /* EmptyResultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyResultTableViewCell.h; sourceTree = "<group>"; };
+		B165EF1C1BB72242008C6F71 /* EmptyResultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyResultTableViewCell.m; sourceTree = "<group>"; };
+		B165EF1E1BB72254008C6F71 /* EmptyResultTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyResultTableViewCell.xib; sourceTree = "<group>"; };
 		B17B3D2B1BB6898C009B8BC5 /* Peppermint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peppermint.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B17B3D2F1BB6898C009B8BC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B17B3D301BB6898C009B8BC5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -49,6 +68,15 @@
 		B17B3D5D1BB6A504009B8BC5 /* ContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsViewController.m; sourceTree = "<group>"; };
 		B17B3D621BB6AE8B009B8BC5 /* RecordingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingViewController.h; sourceTree = "<group>"; };
 		B17B3D631BB6AE8B009B8BC5 /* RecordingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordingViewController.m; sourceTree = "<group>"; };
+		B17B3D671BB6BCE5009B8BC5 /* CellFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellFactory.h; sourceTree = "<group>"; };
+		B17B3D681BB6BCE5009B8BC5 /* CellFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellFactory.m; sourceTree = "<group>"; };
+		B17B3D6C1BB6BD13009B8BC5 /* ContactTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactTableViewCell.h; sourceTree = "<group>"; };
+		B17B3D6D1BB6BD13009B8BC5 /* ContactTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactTableViewCell.m; sourceTree = "<group>"; };
+		B17B3D6F1BB6BD2E009B8BC5 /* ContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactTableViewCell.xib; sourceTree = "<group>"; };
+		B17B3D721BB6C4B0009B8BC5 /* UIColor_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIColor_Addition.h; sourceTree = "<group>"; };
+		B17B3D731BB6C4B0009B8BC5 /* UIColor_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIColor_Addition.m; sourceTree = "<group>"; };
+		B17B3D761BB6C90A009B8BC5 /* BaseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableViewCell.h; sourceTree = "<group>"; };
+		B17B3D771BB6C90A009B8BC5 /* BaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +97,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B165EF0F1BB71A31008C6F71 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B165EF191BB71F50008C6F71 /* Entity */,
+				B165EF101BB71A85008C6F71 /* BaseModel.h */,
+				B165EF111BB71A85008C6F71 /* BaseModel.m */,
+				B165EF131BB71A99008C6F71 /* ContactsModel.h */,
+				B165EF141BB71A99008C6F71 /* ContactsModel.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		B165EF191BB71F50008C6F71 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				B165EF161BB71EC0008C6F71 /* Contact.h */,
+				B165EF171BB71EC0008C6F71 /* Contact.m */,
+			);
+			name = Entity;
+			sourceTree = "<group>";
+		};
+		B165EF1A1BB7221D008C6F71 /* EmptyResultTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				B165EF1B1BB72242008C6F71 /* EmptyResultTableViewCell.h */,
+				B165EF1C1BB72242008C6F71 /* EmptyResultTableViewCell.m */,
+				B165EF1E1BB72254008C6F71 /* EmptyResultTableViewCell.xib */,
+			);
+			name = EmptyResultTableViewCell;
+			sourceTree = "<group>";
+		};
 		B17B3D221BB6898C009B8BC5 = {
 			isa = PBXGroup;
 			children = (
@@ -90,8 +149,10 @@
 		B17B3D2D1BB6898C009B8BC5 /* Peppermint */ = {
 			isa = PBXGroup;
 			children = (
+				B17B3D711BB6C3CD009B8BC5 /* Addition */,
 				B17B3D541BB689D2009B8BC5 /* App */,
 				B17B3D551BB689F1009B8BC5 /* View */,
+				B165EF0F1BB71A31008C6F71 /* Model */,
 				B17B3D2E1BB6898C009B8BC5 /* Supporting Files */,
 			);
 			path = Peppermint;
@@ -140,6 +201,15 @@
 			isa = PBXGroup;
 			children = (
 				B17B3D381BB6898C009B8BC5 /* Main.storyboard */,
+				B17B3D661BB6BBDB009B8BC5 /* Component */,
+				B17B3D651BB6BBB9009B8BC5 /* ViewControllers */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		B17B3D651BB6BBB9009B8BC5 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
 				B17B3D591BB6A49E009B8BC5 /* BaseViewController.h */,
 				B17B3D5A1BB6A49E009B8BC5 /* BaseViewController.m */,
 				B17B3D5C1BB6A504009B8BC5 /* ContactsViewController.h */,
@@ -147,7 +217,55 @@
 				B17B3D621BB6AE8B009B8BC5 /* RecordingViewController.h */,
 				B17B3D631BB6AE8B009B8BC5 /* RecordingViewController.m */,
 			);
-			name = View;
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		B17B3D661BB6BBDB009B8BC5 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				B17B3D6A1BB6BCEC009B8BC5 /* Cell */,
+			);
+			name = Component;
+			sourceTree = "<group>";
+		};
+		B17B3D6A1BB6BCEC009B8BC5 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B17B3D751BB6C8F4009B8BC5 /* BaseTableViewCell */,
+				B17B3D6B1BB6BCF8009B8BC5 /* ContactTableViewCell */,
+				B165EF1A1BB7221D008C6F71 /* EmptyResultTableViewCell */,
+				B17B3D671BB6BCE5009B8BC5 /* CellFactory.h */,
+				B17B3D681BB6BCE5009B8BC5 /* CellFactory.m */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		B17B3D6B1BB6BCF8009B8BC5 /* ContactTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				B17B3D6C1BB6BD13009B8BC5 /* ContactTableViewCell.h */,
+				B17B3D6D1BB6BD13009B8BC5 /* ContactTableViewCell.m */,
+				B17B3D6F1BB6BD2E009B8BC5 /* ContactTableViewCell.xib */,
+			);
+			name = ContactTableViewCell;
+			sourceTree = "<group>";
+		};
+		B17B3D711BB6C3CD009B8BC5 /* Addition */ = {
+			isa = PBXGroup;
+			children = (
+				B17B3D721BB6C4B0009B8BC5 /* UIColor_Addition.h */,
+				B17B3D731BB6C4B0009B8BC5 /* UIColor_Addition.m */,
+			);
+			name = Addition;
+			sourceTree = "<group>";
+		};
+		B17B3D751BB6C8F4009B8BC5 /* BaseTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				B17B3D761BB6C90A009B8BC5 /* BaseTableViewCell.h */,
+				B17B3D771BB6C90A009B8BC5 /* BaseTableViewCell.m */,
+			);
+			name = BaseTableViewCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,7 +350,9 @@
 			files = (
 				B17B3D3A1BB6898C009B8BC5 /* Main.storyboard in Resources */,
 				B17B3D571BB68A39009B8BC5 /* Text.strings in Resources */,
+				B165EF1F1BB72254008C6F71 /* EmptyResultTableViewCell.xib in Resources */,
 				B17B3D3F1BB6898C009B8BC5 /* LaunchScreen.xib in Resources */,
+				B17B3D701BB6BD2E009B8BC5 /* ContactTableViewCell.xib in Resources */,
 				B17B3D3C1BB6898C009B8BC5 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -251,10 +371,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */,
+				B165EF151BB71A99008C6F71 /* ContactsModel.m in Sources */,
+				B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */,
 				B17B3D5B1BB6A49E009B8BC5 /* BaseViewController.m in Sources */,
 				B17B3D641BB6AE8B009B8BC5 /* RecordingViewController.m in Sources */,
+				B165EF181BB71EC0008C6F71 /* Contact.m in Sources */,
+				B17B3D6E1BB6BD13009B8BC5 /* ContactTableViewCell.m in Sources */,
+				B17B3D691BB6BCE5009B8BC5 /* CellFactory.m in Sources */,
 				B17B3D5E1BB6A504009B8BC5 /* ContactsViewController.m in Sources */,
+				B17B3D741BB6C4B0009B8BC5 /* UIColor_Addition.m in Sources */,
 				B17B3D341BB6898C009B8BC5 /* AppDelegate.m in Sources */,
+				B165EF121BB71A85008C6F71 /* BaseModel.m in Sources */,
 				B17B3D311BB6898C009B8BC5 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -452,6 +580,7 @@
 				B17B3D501BB6898C009B8BC5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B17B3D511BB6898C009B8BC5 /* Build configuration list for PBXNativeTarget "PeppermintTests" */ = {
 			isa = XCConfigurationList;
@@ -460,6 +589,7 @@
 				B17B3D531BB6898C009B8BC5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

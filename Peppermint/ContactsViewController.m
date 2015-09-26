@@ -8,46 +8,95 @@
 
 #import "ContactsViewController.h"
 
+#define SEGUE_RECORDING_VIEW_CONTROLLER @"RecordingViewControllerSegue"
+
 @interface ContactsViewController ()
 
 @end
 
-@implementation ContactsViewController
+@implementation ContactsViewController {
+    BOOL isFirstOpen;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    isFirstOpen = YES;
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"colorfill"]];
-}
-
--(void) viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES];
+    self.contactsModel = [ContactsModel new];
+    self.searchContactsTextField.text = @"";
+    self.searchContactsTextField.placeholder = LOC(@"Search for Contacts", @"Placeholder text");
+    self.searchContactsTextField.tintColor = [UIColor textFieldTintGreen];
+    self.searchContactsTextField.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.contactsModel = nil;
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if(isFirstOpen) {
+        isFirstOpen = NO;
+        [self.searchContactsTextField becomeFirstResponder];
+    }
 }
 
 #pragma mark - UITableView
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return self.contactsModel.contactList.count == 0 ? 1 : self.contactsModel.contactList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    UITableViewCell *preparedCell = nil;
+    if(self.contactsModel.contactList.count == 0) {
+        EmptyResultTableViewCell *cell = [CellFactory cellEmptyResultTableViewCellFromTable:tableView forIndexPath:indexPath];
+        [cell setVisibiltyOfExplanationLabels:(!isFirstOpen)];
+        preparedCell = cell;
+    } else if (indexPath.row < self.contactsModel.contactList.count) {
+        ContactTableViewCell *cell = [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath];
+        Contact *contact = [self.contactsModel.contactList objectAtIndex:indexPath.row];
+        cell.avatarImageView.image = contact.avatarImage;
+        cell.contactNameLabel.text = contact.nameSurname;
+        cell.contactViaInformationLabel.text = contact.communicationChannelAddress;
+        preparedCell = cell;
+    }
+    return preparedCell;
 }
 
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat height = 0;
+    if(self.contactsModel.contactList.count == 0) {
+        height = CELL_HEIGHT_EMPTYRESULT_TABLEVIEWCELL;
+    } else {
+        height = CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
+    }
+    return height;
+}
 
-/*
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self performSegueWithIdentifier:SEGUE_RECORDING_VIEW_CONTROLLER sender:self];
+}
+
+#pragma mark - TextField
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    textField.text = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    NSLog(@"Text changed");
+    
+    [self.tableView reloadData];
+    
+    return NO;
+}
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    
+    if([segue.identifier isEqualToString:SEGUE_RECORDING_VIEW_CONTROLLER]) {
+        NSLog(@"Start Recording...");
+    }
 }
-*/
 
 @end

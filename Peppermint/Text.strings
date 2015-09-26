@@ -6,4 +6,8 @@
   Copyright (c) 2015 Okan Kurtulus. All rights reserved.
 */
 
-"Locale" = "English";
+"via" = "via";
+"Search for Contacts" = "Search for Contacts";
+"No contacts have been found" = "No contacts\nhave been found";
+"No contacts explanation" = "Add some friends to your contact book first\nand come back to";
+"Peppermint" = "Peppermint";

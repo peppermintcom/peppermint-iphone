@@ -23,4 +23,7 @@
 NSLocalizedStringFromTable(\
 (__key),@"Text",(__comment))
 
+#pragma mark - Colors Addition
+#import "UIColor_Addition.h"
+
 #endif

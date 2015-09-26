@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ContactTableViewCell" rowHeight="56" id="8e4-VB-87A" customClass="ContactTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8e4-VB-87A" id="ejf-Un-hy5">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aEQ-5s-Sav" userLabel="Seperator View">
+                        <rect key="frame" x="0.0" y="54" width="320" height="1"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="HY2-5E-NHW"/>
+                        </constraints>
+                    </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1G5-fy-gLb" userLabel="Avatar Image View">
+                        <rect key="frame" x="11" y="10" width="35" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="1G5-fy-gLb" secondAttribute="height" multiplier="1:1" id="BN9-P6-Tn1"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_ContactName" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lwr-bI-hp8">
+                        <rect key="frame" x="54" y="14" width="256" height="13"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="13" id="N1G-JJ-pfS"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="via_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uAi-pa-EQU">
+                        <rect key="frame" x="54" y="24" width="25" height="26"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="26" id="ARw-iF-GXd"/>
+                            <constraint firstAttribute="width" constant="25" id="mZK-Fh-7kz"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_via_Information" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qhu-no-qln">
+                        <rect key="frame" x="79" y="24" width="231" height="26"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="26" id="ywC-Gm-RzA"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="uAi-pa-EQU" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" constant="24" id="5Rn-4f-bCw"/>
+                    <constraint firstItem="uAi-pa-EQU" firstAttribute="leading" secondItem="1G5-fy-gLb" secondAttribute="trailing" constant="8" id="5ej-SP-vXh"/>
+                    <constraint firstAttribute="trailing" secondItem="aEQ-5s-Sav" secondAttribute="trailing" id="C2v-Bc-bQy"/>
+                    <constraint firstItem="Lwr-bI-hp8" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" constant="14" id="DHl-Ge-UpB"/>
+                    <constraint firstItem="Qhu-no-qln" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" constant="24" id="ImA-A3-kgR"/>
+                    <constraint firstItem="Lwr-bI-hp8" firstAttribute="leading" secondItem="1G5-fy-gLb" secondAttribute="trailing" constant="8" id="LZW-xD-sh4"/>
+                    <constraint firstItem="aEQ-5s-Sav" firstAttribute="leading" secondItem="ejf-Un-hy5" secondAttribute="leading" id="T1O-ci-IwN"/>
+                    <constraint firstAttribute="trailing" secondItem="Qhu-no-qln" secondAttribute="trailing" constant="10" id="U9j-3Q-2HP"/>
+                    <constraint firstAttribute="trailing" secondItem="Lwr-bI-hp8" secondAttribute="trailing" constant="10" id="Zts-SD-QRz"/>
+                    <constraint firstItem="1G5-fy-gLb" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" constant="10" id="bDo-0S-BDQ"/>
+                    <constraint firstAttribute="bottom" secondItem="aEQ-5s-Sav" secondAttribute="bottom" id="wxc-Nh-MF3"/>
+                    <constraint firstItem="aEQ-5s-Sav" firstAttribute="top" secondItem="1G5-fy-gLb" secondAttribute="bottom" constant="9" id="xS1-aO-lqk"/>
+                    <constraint firstItem="1G5-fy-gLb" firstAttribute="leading" secondItem="ejf-Un-hy5" secondAttribute="leading" constant="11" id="y4P-bU-8s1"/>
+                    <constraint firstItem="Qhu-no-qln" firstAttribute="leading" secondItem="uAi-pa-EQU" secondAttribute="trailing" id="zJK-Kg-KRI"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="avatarImageView" destination="1G5-fy-gLb" id="ho6-S4-xrJ"/>
+                <outlet property="cellSeperatorView" destination="aEQ-5s-Sav" id="oBZ-9K-8s7"/>
+                <outlet property="contactNameLabel" destination="Lwr-bI-hp8" id="buE-gG-wER"/>
+                <outlet property="contactViaCaptionLabel" destination="uAi-pa-EQU" id="ptM-pM-6uf"/>
+                <outlet property="contactViaInformationLabel" destination="Qhu-no-qln" id="vdR-IG-Qc3"/>
+            </connections>
+            <point key="canvasLocation" x="304" y="275"/>
+        </tableViewCell>
+    </objects>
+</document>
