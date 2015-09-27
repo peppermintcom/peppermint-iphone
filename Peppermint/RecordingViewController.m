@@ -27,6 +27,12 @@
     
     self.recordingModel = [RecordingModel new];
     self.recordingModel.delegate = self;
+    
+    self.counterLabel.textColor = [UIColor progressCoverViewGreen];
+    self.progressContainerView.backgroundColor = [UIColor progressContainerViewGray];
+    self.progressContainerView.layer.cornerRadius = 45;
+    [self.m13ProgressViewPie setPrimaryColor:[UIColor progressCoverViewGreen]];
+    [self.m13ProgressViewPie setSecondaryColor:[UIColor clearColor]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -56,6 +62,9 @@
     [self.recordingModel record];
     self.pauseButton.hidden = NO;
     self.resumeButton.hidden = YES;
+    
+    self.resumeButton.enabled = YES;
+    self.pauseButton.enabled = YES;
 }
 
 -(IBAction)resumeButtonPressed:(id)sender {
@@ -70,8 +79,17 @@
     self.resumeButton.hidden = NO;
 }
 
+-(IBAction)sendButtonDown:(id)sender {
+    self.progressCenterImageView.image = [UIImage imageNamed:@"recording_logo_pressed"];
+}
+
 -(IBAction)sendButtonPressed:(id)sender {
-    [self.recordingModel stop];
+    self.progressCenterImageView.image = [UIImage imageNamed:@"recording_logo"];
+    
+    self.resumeButton.enabled = NO;
+    self.pauseButton.enabled = NO;
+    
+    
     [self.sendVoiceMessageModel sendVoiceMessageatURL:self.recordingModel.fileUrl];
 }
 
@@ -81,7 +99,10 @@
     int totalSeconds = (int)timeInterval;
     int minutes = totalSeconds / 60;
     int seconds = totalSeconds % 60;
-    self.counterLabel.text = [NSString stringWithFormat:@"%.2d:%.2d", minutes, seconds];
+    self.counterLabel.text = [NSString stringWithFormat:@"%.1d:%.2d", minutes, seconds];
+    
+    [self.m13ProgressViewPie setProgress:timeInterval/100 animated:NO];
+    
 }
 
 #pragma mark - SendVoiceMessage Delegate

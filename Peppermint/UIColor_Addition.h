@@ -17,5 +17,7 @@
 + (UIColor *) textFieldTintGreen;
 + (UIColor *) emptyResultTableViewCellHeaderLabelTextcolorGray;
 + (UIColor *) recordingNavigationsubTitleGreen;
++ (UIColor *) progressContainerViewGray;
++ (UIColor *) progressCoverViewGreen;
 
 @end

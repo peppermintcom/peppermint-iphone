@@ -15,9 +15,12 @@
     if(self) {
         self.contactList = [NSMutableArray new];
         self.filterText = @"";
-        [self checkForAddressBookPermission];
     }
     return self;
+}
+
+-(void) setup {
+    [self checkForAddressBookPermission];
 }
 
 -(void) checkForAddressBookPermission {

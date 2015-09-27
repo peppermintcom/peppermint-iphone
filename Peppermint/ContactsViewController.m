@@ -22,6 +22,7 @@
     [super viewDidLoad];
     self.contactsModel = [ContactsModel new];
     self.contactsModel.delegate = self;
+    [self.contactsModel setup];
     self.searchContactsTextField.text = self.contactsModel.filterText;
     self.searchContactsTextField.placeholder = LOC(@"Search for Contacts", @"Placeholder text");
     self.searchContactsTextField.tintColor = [UIColor textFieldTintGreen];

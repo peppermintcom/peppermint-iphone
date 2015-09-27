@@ -31,6 +31,8 @@
 		B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40E41BB7D58C00042E4B /* RecordingModel.m */; };
 		B1EF40EB1BB7E78C00042E4B /* SendVoiceMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40EA1BB7E78C00042E4B /* SendVoiceMessageModel.m */; };
 		B1EF40EE1BB7EAA200042E4B /* SendVoiceMessageEmailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40ED1BB7EAA200042E4B /* SendVoiceMessageEmailModel.m */; };
+		B1EF40F21BB8579D00042E4B /* M13ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40F11BB8579D00042E4B /* M13ProgressView.m */; };
+		B1EF40F51BB857C800042E4B /* M13ProgressViewPie.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40F41BB857C800042E4B /* M13ProgressViewPie.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +91,10 @@
 		B1EF40EA1BB7E78C00042E4B /* SendVoiceMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendVoiceMessageModel.m; sourceTree = "<group>"; };
 		B1EF40EC1BB7EAA200042E4B /* SendVoiceMessageEmailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVoiceMessageEmailModel.h; sourceTree = "<group>"; };
 		B1EF40ED1BB7EAA200042E4B /* SendVoiceMessageEmailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendVoiceMessageEmailModel.m; sourceTree = "<group>"; };
+		B1EF40F01BB8579D00042E4B /* M13ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M13ProgressView.h; sourceTree = "<group>"; };
+		B1EF40F11BB8579D00042E4B /* M13ProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M13ProgressView.m; sourceTree = "<group>"; };
+		B1EF40F31BB857C800042E4B /* M13ProgressViewPie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M13ProgressViewPie.h; sourceTree = "<group>"; };
+		B1EF40F41BB857C800042E4B /* M13ProgressViewPie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M13ProgressViewPie.m; sourceTree = "<group>"; };
 		C388433C48F87557ED2F3C2D /* Pods-Peppermint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peppermint.release.xcconfig"; path = "Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -240,6 +246,7 @@
 		B17B3D551BB689F1009B8BC5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B1EF40EF1BB8578200042E4B /* M13ProgressView */,
 				B1EF40E21BB7CE7700042E4B /* Storyboard */,
 				B17B3D6A1BB6BCEC009B8BC5 /* Cell */,
 			);
@@ -305,6 +312,17 @@
 				B17B3D381BB6898C009B8BC5 /* Main.storyboard */,
 			);
 			name = Storyboard;
+			sourceTree = "<group>";
+		};
+		B1EF40EF1BB8578200042E4B /* M13ProgressView */ = {
+			isa = PBXGroup;
+			children = (
+				B1EF40F01BB8579D00042E4B /* M13ProgressView.h */,
+				B1EF40F11BB8579D00042E4B /* M13ProgressView.m */,
+				B1EF40F31BB857C800042E4B /* M13ProgressViewPie.h */,
+				B1EF40F41BB857C800042E4B /* M13ProgressViewPie.m */,
+			);
+			name = M13ProgressView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -446,6 +464,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1EF40F51BB857C800042E4B /* M13ProgressViewPie.m in Sources */,
 				B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */,
 				B165EF151BB71A99008C6F71 /* ContactsModel.m in Sources */,
 				B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */,
@@ -462,6 +481,7 @@
 				B165EF121BB71A85008C6F71 /* BaseModel.m in Sources */,
 				B17B3D311BB6898C009B8BC5 /* main.m in Sources */,
 				B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */,
+				B1EF40F21BB8579D00042E4B /* M13ProgressView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

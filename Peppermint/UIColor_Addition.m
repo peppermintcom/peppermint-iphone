@@ -74,6 +74,24 @@
     return color;
 }
 
++ (UIColor *) progressContainerViewGray {
+    static dispatch_once_t onceToken;
+    static UIColor *color;
+    dispatch_once(&onceToken, ^{
+        color = [UIColor colorWithRed:0.839f green:0.894f blue:0.882f alpha:1.00f];
+    });
+    return color;
+}
+
++ (UIColor *) progressCoverViewGreen {
+    static dispatch_once_t onceToken;
+    static UIColor *color;
+    dispatch_once(&onceToken, ^{
+        color = [UIColor colorWithRed:0.012f green:0.518f blue:0.475f alpha:1.00f];
+    });
+    return color;
+}
+
 
 
 @end

@@ -40,6 +40,7 @@
 -(void) initRecordFile {
     NSArray *pathComponents = [NSArray arrayWithObjects: [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"PeppermintMessage.m4a", nil];
     self.fileUrl = [NSURL fileURLWithPathComponents:pathComponents];
+    NSLog(@"File Url: %@", self.fileUrl);
 }
 
 -(void) initRecorder {

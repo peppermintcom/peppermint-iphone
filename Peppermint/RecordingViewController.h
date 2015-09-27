@@ -9,6 +9,7 @@
 #import "BaseViewController.h"
 #import "RecordingModel.h"
 #import "SendVoiceMessageModel.h"
+#import "M13ProgressViewPie.h"
 
 @interface RecordingViewController : BaseViewController <RecordingModelDelegate, SendVoiceMessageDelegate>
 @property (strong, nonatomic) RecordingModel *recordingModel;
@@ -18,6 +19,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *navigationSubTitleLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *counterLabel;
+@property (weak, nonatomic) IBOutlet UIView *progressContainerView;
+@property (weak, nonatomic) IBOutlet M13ProgressViewPie *m13ProgressViewPie;
+@property (weak, nonatomic) IBOutlet UIImageView *progressCenterImageView;
+
 
 @property (weak, nonatomic) IBOutlet UIView *seperatorView;
 @property (weak, nonatomic) IBOutlet UIButton *rerecordButton;
@@ -29,5 +34,6 @@
 -(IBAction)pauseButtonPressed:(id)sender;
 -(IBAction)backButtonPressed:(id)sender;
 
+-(IBAction)sendButtonDown:(id)sender;
 -(IBAction)sendButtonPressed:(id)sender;
 @end
