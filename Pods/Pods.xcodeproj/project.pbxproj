@@ -7,117 +7,162 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		150473846EA39BB2C8BEFA12E426D46B /* APSocialProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF2E8D34BB1D8C14ABD43794CED6FF /* APSocialProfile.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		1DFF9D941D087860D79B543CCA714903 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E3961A1C33D034EBB20745AFB5E4242 /* Foundation.framework */; };
-		26447C1DD7067DFB2AA429A60D67F7A6 /* APAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = D1640440B839FF3262CD78EB6D69701A /* APAddressBook.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		3D2D82D2A6FF0AE12E003315553315AC /* APContact.h in Headers */ = {isa = PBXBuildFile; fileRef = 675F027E508BE19FC9ABF1311C6F8BA1 /* APContact.h */; };
-		44D320CA8B475D0BDF715F8B3D08606B /* APTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 64CA4A6C56D8BCAB5793D3CEC5765A32 /* APTypes.h */; };
-		64CE9F48C596D70A7DB448FAC6ACC6D7 /* APAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 81DFECAFD40296D6D108AD8230D306B0 /* APAddress.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		66068223B3843DD096E2AC5414F5E0D8 /* APAddressBook.h in Headers */ = {isa = PBXBuildFile; fileRef = C2A0450A6EA15E0005490230B21EA1FF /* APAddressBook.h */; };
-		69C5F20B9716B8A099C6A1A973DC7AB5 /* APContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 57B2DCB19DE2375F2D7228F56402F1E5 /* APContact.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		7272C319359192E8B9AD351CBE2EC241 /* APPhoneWithLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = D9F45C678AB58B0AE775765664CE6B51 /* APPhoneWithLabel.h */; };
-		86ACF4B8FDCA7FCA734AC196E82360E8 /* APAddressBook-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D5A074FBCAE5E0A6FE42F7FE1544C7 /* APAddressBook-dummy.m */; };
-		936A8385361D69317DCE923F9E8F1E98 /* APPhoneWithLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C87197110FC69E56A1192E2ED30BF58 /* APPhoneWithLabel.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		A043B351161B88178616199A06AE7E48 /* APAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = 64152AEE0819B980706D7DB6ABAE6C3D /* APAddress.h */; };
-		BE37412B72F3F0A8AB6A90C2FE4272F4 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1733CBBFAC2DA6BCC7E0766AE24B343D /* AddressBook.framework */; };
-		C5B9CC3360AFF6869B7DAE8886CAF8D8 /* Pods-Peppermint-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DB3036EC2E2EC050D0A3E8C1993F4034 /* Pods-Peppermint-dummy.m */; };
-		D1CDA9375860214694D4F5E9D143052B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E3961A1C33D034EBB20745AFB5E4242 /* Foundation.framework */; };
-		E3C60BAB03265C9BFB4C3A2D55FB1405 /* APSocialProfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 21EE4DB44825A306C5A026EE7D933543 /* APSocialProfile.h */; };
+		03986E0E997754B83FDE33F3CFA3C8E8 /* EasyMailAlertSender.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3E243DB1EC5BCD2DBBD2E4E67172AB /* EasyMailAlertSender.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		06E807AE8852924D90BA5F8079DC3757 /* EasyMailSender-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 321C8DA62B4E7A62893D5416D0D795E7 /* EasyMailSender-dummy.m */; };
+		1E4AE8D985EE74280987B0D06CB7196E /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECF4444B346628AA173C0CBA3BFD6E52 /* AddressBook.framework */; };
+		1E65CAA4691B301F36F4D63D45EC223A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C092F4EFF6C7F9259585951AD4895325 /* Foundation.framework */; };
+		2610FB6D57C91F4030AC6F0C71F4079D /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24251B6451267BFB4C14BD0F5E953571 /* MessageUI.framework */; };
+		357B19E96131CDE9DCD1CE195ABCAA24 /* ja.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 647C4A01C0033696E8F62DB00FCD71C0 /* ja.lproj */; };
+		3FBDAFA989D52EA9D5FE92788890C4B0 /* APAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = 431FC50467FE9782347E636329A046E9 /* APAddress.h */; };
+		436ABFAAC41F6F816C6925F4BADD1401 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C092F4EFF6C7F9259585951AD4895325 /* Foundation.framework */; };
+		43A5E6AEEC1AF527449FAC2C9F2B4E83 /* APAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 65697D9E9B2C14A12C592D841BF863BD /* APAddress.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		4F9E1631DB25056489BED60EA39EE952 /* APAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E63314597A0561DD3BA300F51D5709 /* APAddressBook.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		536D5945F30DECA3B847D4CE0AFFE50A /* EasyMailSender.h in Headers */ = {isa = PBXBuildFile; fileRef = F07C0113AE61D214F776F669AD629CA4 /* EasyMailSender.h */; };
+		5419E380AD8C124D68A6B2411811054A /* APAddressBook.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CF12E44E110E6B43A713E5F652EB05E /* APAddressBook.h */; };
+		57BBC8E2BA7999DCBB593039C831D60A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C092F4EFF6C7F9259585951AD4895325 /* Foundation.framework */; };
+		583779988C2639B6C55FDEDABE984F16 /* APAddressBook-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 058A1B0C2B48E21C25980A5D2997C635 /* APAddressBook-dummy.m */; };
+		5F6A30214F3088BA9228B069D82BA534 /* EasyMailSender.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CC95CF57A0B8AC83AC332EF82ADAA1D /* EasyMailSender.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		69397ECD4A7276AA1248D7D5E8CEE867 /* APPhoneWithLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B21D0CD2CE2112ADA535626C585B4CA4 /* APPhoneWithLabel.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		6FF566DB313A44A37D7CE81DD3A32917 /* APContact.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD011EC73D196D9304663AE565675EB /* APContact.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		7DA380C101F054C094D690C4C1BA97BF /* APSocialProfile.h in Headers */ = {isa = PBXBuildFile; fileRef = DC0838BAEFFF99059D1A1CD8492C3145 /* APSocialProfile.h */; };
+		8F5279BD9D629D2566C46BB51DB5CA45 /* Base.lproj in Resources */ = {isa = PBXBuildFile; fileRef = BBB71671288ED5EE71B4C6CD25C98896 /* Base.lproj */; };
+		9E6E441BA940BF1D72DE006A3821CF3E /* EasyMailAlertSender.h in Headers */ = {isa = PBXBuildFile; fileRef = 97C88FE376B085C8577097142F472E5B /* EasyMailAlertSender.h */; };
+		BBF7FDFD38D1D7DEB404C787F9ECF32D /* APContact.h in Headers */ = {isa = PBXBuildFile; fileRef = CB4A56BD3938A7E2E0F1D522A62FF97E /* APContact.h */; };
+		C6CE816F06F2C3288C7DDA8268917F75 /* APPhoneWithLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E353DF09950B2907E6FF8A99E273D5A /* APPhoneWithLabel.h */; };
+		DF3445EE943A15ADD75F913822F2CEF1 /* APSocialProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = A6CAEB11ACB84BA8AF854ACE4DE017D0 /* APSocialProfile.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		E681E44E13F827D2AA993D011E48638E /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 2EDDD5CD02318F8C06E17E4C09522145 /* en.lproj */; };
+		F5F152243AE32485B58D4DE5C827A2FD /* APTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = FB2F0775533A3A22FDC1C5F7BA3C313C /* APTypes.h */; };
+		F6B5FE33464E650649DC1856157A8870 /* Pods-Peppermint-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE5C0AD4275867BD20606F64941F075 /* Pods-Peppermint-dummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0DB06F6A5A9A9A017291D0DADA5C5884 /* PBXContainerItemProxy */ = {
+		4F533C9F4F61DF085E6A45557CAC5E4D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = D1FADC3B6FC1FDCC35F95F4AF73CFA4B;
+			remoteGlobalIDString = 6123EEC59D0EBFD53BF1394BCC7E143F;
 			remoteInfo = APAddressBook;
+		};
+		9B5EC1A18211823134A52372B3AEA409 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F3094E4B7BD557D12201B9BCD2CD7AEA;
+			remoteInfo = EasyMailSender;
+		};
+		DAA5ADE5FC622C4561EF188641061553 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 182DF27BCD04CFD09F217BD5EB9734AC;
+			remoteInfo = "EasyMailSender-EasyMailSender";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		01406698509E4D3F320F916C8900D335 /* libPods-Peppermint.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Peppermint.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A791F534F56C799F55C34A35886EC6 /* Pods-Peppermint-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Peppermint-acknowledgements.markdown"; sourceTree = "<group>"; };
-		1733CBBFAC2DA6BCC7E0766AE24B343D /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/AddressBook.framework; sourceTree = DEVELOPER_DIR; };
-		18DF2E8D34BB1D8C14ABD43794CED6FF /* APSocialProfile.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = APSocialProfile.m; path = Pod/Core/APSocialProfile.m; sourceTree = "<group>"; };
-		1FEA49001AB125E99EDEF0BE54D08D54 /* Pods-Peppermint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Peppermint.release.xcconfig"; sourceTree = "<group>"; };
-		21EE4DB44825A306C5A026EE7D933543 /* APSocialProfile.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = APSocialProfile.h; path = Pod/Core/APSocialProfile.h; sourceTree = "<group>"; };
-		286D483A20DE644EC545C747C67232BA /* APAddressBook-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "APAddressBook-Private.xcconfig"; sourceTree = "<group>"; };
-		4E3961A1C33D034EBB20745AFB5E4242 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		55FA8F5AE5F7419DF1CE615B73AA29CB /* APAddressBook-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "APAddressBook-prefix.pch"; sourceTree = "<group>"; };
-		57B2DCB19DE2375F2D7228F56402F1E5 /* APContact.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = APContact.m; path = Pod/Core/APContact.m; sourceTree = "<group>"; };
-		64152AEE0819B980706D7DB6ABAE6C3D /* APAddress.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = APAddress.h; path = Pod/Core/APAddress.h; sourceTree = "<group>"; };
-		64CA4A6C56D8BCAB5793D3CEC5765A32 /* APTypes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = APTypes.h; path = Pod/Core/APTypes.h; sourceTree = "<group>"; };
-		675F027E508BE19FC9ABF1311C6F8BA1 /* APContact.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = APContact.h; path = Pod/Core/APContact.h; sourceTree = "<group>"; };
-		69D5A074FBCAE5E0A6FE42F7FE1544C7 /* APAddressBook-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "APAddressBook-dummy.m"; sourceTree = "<group>"; };
-		7C87197110FC69E56A1192E2ED30BF58 /* APPhoneWithLabel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = APPhoneWithLabel.m; path = Pod/Core/APPhoneWithLabel.m; sourceTree = "<group>"; };
+		058A1B0C2B48E21C25980A5D2997C635 /* APAddressBook-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "APAddressBook-dummy.m"; sourceTree = "<group>"; };
+		1C123B5F67FE95C46230CD1D3946A20A /* APAddressBook-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "APAddressBook-prefix.pch"; sourceTree = "<group>"; };
+		24251B6451267BFB4C14BD0F5E953571 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
+		2EDDD5CD02318F8C06E17E4C09522145 /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = en.lproj; path = Classes/Localizable/en.lproj; sourceTree = "<group>"; };
+		319FE9BC6DDC9BADBDD151EB767052F6 /* libAPAddressBook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAPAddressBook.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		321C8DA62B4E7A62893D5416D0D795E7 /* EasyMailSender-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "EasyMailSender-dummy.m"; sourceTree = "<group>"; };
+		3CF12E44E110E6B43A713E5F652EB05E /* APAddressBook.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = APAddressBook.h; path = Pod/Core/APAddressBook.h; sourceTree = "<group>"; };
+		431FC50467FE9782347E636329A046E9 /* APAddress.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = APAddress.h; path = Pod/Core/APAddress.h; sourceTree = "<group>"; };
+		545575779B8EF52330173EC8C20AF5DF /* EasyMailSender.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = EasyMailSender.xcconfig; sourceTree = "<group>"; };
+		5A3E243DB1EC5BCD2DBBD2E4E67172AB /* EasyMailAlertSender.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = EasyMailAlertSender.m; path = Classes/EasyMailAlertSender.m; sourceTree = "<group>"; };
+		647C4A01C0033696E8F62DB00FCD71C0 /* ja.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = ja.lproj; path = Classes/Localizable/ja.lproj; sourceTree = "<group>"; };
+		65697D9E9B2C14A12C592D841BF863BD /* APAddress.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = APAddress.m; path = Pod/Core/APAddress.m; sourceTree = "<group>"; };
+		79E09E5860FE63445A4F81806C969081 /* APAddressBook.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = APAddressBook.xcconfig; sourceTree = "<group>"; };
+		7CC95CF57A0B8AC83AC332EF82ADAA1D /* EasyMailSender.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = EasyMailSender.m; path = Classes/EasyMailSender.m; sourceTree = "<group>"; };
+		7E353DF09950B2907E6FF8A99E273D5A /* APPhoneWithLabel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = APPhoneWithLabel.h; path = Pod/Core/APPhoneWithLabel.h; sourceTree = "<group>"; };
 		814357C2F1729376744C0CCF58266B44 /* Pods-Peppermint-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Peppermint-acknowledgements.plist"; sourceTree = "<group>"; };
-		81DFECAFD40296D6D108AD8230D306B0 /* APAddress.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = APAddress.m; path = Pod/Core/APAddress.m; sourceTree = "<group>"; };
 		915BE9DB4CDE93B0FF1EB084C32FD63C /* Pods-Peppermint-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Peppermint-resources.sh"; sourceTree = "<group>"; };
+		92A4EA210D4A77F5FC3A635BE38A088E /* libEasyMailSender.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libEasyMailSender.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		97C88FE376B085C8577097142F472E5B /* EasyMailAlertSender.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EasyMailAlertSender.h; path = Classes/EasyMailAlertSender.h; sourceTree = "<group>"; };
+		A6CAEB11ACB84BA8AF854ACE4DE017D0 /* APSocialProfile.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = APSocialProfile.m; path = Pod/Core/APSocialProfile.m; sourceTree = "<group>"; };
+		A8109523FAE5509F781A1313CA360975 /* Pods-Peppermint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Peppermint.release.xcconfig"; sourceTree = "<group>"; };
+		B21D0CD2CE2112ADA535626C585B4CA4 /* APPhoneWithLabel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = APPhoneWithLabel.m; path = Pod/Core/APPhoneWithLabel.m; sourceTree = "<group>"; };
+		B3DF9222D4CCCF44507C3B46541E30D2 /* libPods-Peppermint.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Peppermint.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		BF8F570CA38A622C63A4859B38F04BBC /* libAPAddressBook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAPAddressBook.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		C2A0450A6EA15E0005490230B21EA1FF /* APAddressBook.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = APAddressBook.h; path = Pod/Core/APAddressBook.h; sourceTree = "<group>"; };
-		D1640440B839FF3262CD78EB6D69701A /* APAddressBook.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = APAddressBook.m; path = Pod/Core/APAddressBook.m; sourceTree = "<group>"; };
-		D9F45C678AB58B0AE775765664CE6B51 /* APPhoneWithLabel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = APPhoneWithLabel.h; path = Pod/Core/APPhoneWithLabel.h; sourceTree = "<group>"; };
-		DB3036EC2E2EC050D0A3E8C1993F4034 /* Pods-Peppermint-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Peppermint-dummy.m"; sourceTree = "<group>"; };
-		E93FB004BEEB8857347101242E3C1593 /* Pods-Peppermint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Peppermint.debug.xcconfig"; sourceTree = "<group>"; };
-		EBC194241C24246524FD1D77C2928EC5 /* APAddressBook.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = APAddressBook.xcconfig; sourceTree = "<group>"; };
+		BBB71671288ED5EE71B4C6CD25C98896 /* Base.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = Base.lproj; path = Classes/Localizable/Base.lproj; sourceTree = "<group>"; };
+		BBD011EC73D196D9304663AE565675EB /* APContact.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = APContact.m; path = Pod/Core/APContact.m; sourceTree = "<group>"; };
+		BD10218985496E012D87624790C90E56 /* EasyMailSender-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "EasyMailSender-prefix.pch"; sourceTree = "<group>"; };
+		C092F4EFF6C7F9259585951AD4895325 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		CB4A56BD3938A7E2E0F1D522A62FF97E /* APContact.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = APContact.h; path = Pod/Core/APContact.h; sourceTree = "<group>"; };
+		DB8F51462BD3B86B3C13EFC3B8A11C78 /* EasyMailSender.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EasyMailSender.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC0838BAEFFF99059D1A1CD8492C3145 /* APSocialProfile.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = APSocialProfile.h; path = Pod/Core/APSocialProfile.h; sourceTree = "<group>"; };
+		E2E63314597A0561DD3BA300F51D5709 /* APAddressBook.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = APAddressBook.m; path = Pod/Core/APAddressBook.m; sourceTree = "<group>"; };
+		ECF4444B346628AA173C0CBA3BFD6E52 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/AddressBook.framework; sourceTree = DEVELOPER_DIR; };
+		F07C0113AE61D214F776F669AD629CA4 /* EasyMailSender.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EasyMailSender.h; path = Classes/EasyMailSender.h; sourceTree = "<group>"; };
+		F5E62EAC63D3C9C63E14DE427B0C37EA /* APAddressBook-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "APAddressBook-Private.xcconfig"; sourceTree = "<group>"; };
+		F89F2AC22ADF5F2BCC4C80ED119A7EF8 /* EasyMailSender-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "EasyMailSender-Private.xcconfig"; sourceTree = "<group>"; };
+		FB2F0775533A3A22FDC1C5F7BA3C313C /* APTypes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = APTypes.h; path = Pod/Core/APTypes.h; sourceTree = "<group>"; };
+		FD7E6F60EEAE86BE0259FD15A0A7FA50 /* Pods-Peppermint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Peppermint.debug.xcconfig"; sourceTree = "<group>"; };
+		FEE5C0AD4275867BD20606F64941F075 /* Pods-Peppermint-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Peppermint-dummy.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		5670983F9D07768B0894993DF2752556 /* Frameworks */ = {
+		177D0D5D7AE5A0577A915E949AA4F835 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D1CDA9375860214694D4F5E9D143052B /* Foundation.framework in Frameworks */,
+				436ABFAAC41F6F816C6925F4BADD1401 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8139732C833A49CDCFF8B1B43BFEF1C2 /* Frameworks */ = {
+		31CC37E5BF72408733877E6988E7DC52 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE37412B72F3F0A8AB6A90C2FE4272F4 /* AddressBook.framework in Frameworks */,
-				1DFF9D941D087860D79B543CCA714903 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5995910B086AFC8555E6C588DF1BCF82 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1E4AE8D985EE74280987B0D06CB7196E /* AddressBook.framework in Frameworks */,
+				1E65CAA4691B301F36F4D63D45EC223A /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		80A32B61A955A9DED6AF78E42D216086 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57BBC8E2BA7999DCBB593039C831D60A /* Foundation.framework in Frameworks */,
+				2610FB6D57C91F4030AC6F0C71F4079D /* MessageUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0A76F0FF028B58DEB2D3167706238F2E /* Core */ = {
+		122DA2E5084A4393C29BE363C764795C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				64152AEE0819B980706D7DB6ABAE6C3D /* APAddress.h */,
-				81DFECAFD40296D6D108AD8230D306B0 /* APAddress.m */,
-				C2A0450A6EA15E0005490230B21EA1FF /* APAddressBook.h */,
-				D1640440B839FF3262CD78EB6D69701A /* APAddressBook.m */,
-				675F027E508BE19FC9ABF1311C6F8BA1 /* APContact.h */,
-				57B2DCB19DE2375F2D7228F56402F1E5 /* APContact.m */,
-				D9F45C678AB58B0AE775765664CE6B51 /* APPhoneWithLabel.h */,
-				7C87197110FC69E56A1192E2ED30BF58 /* APPhoneWithLabel.m */,
-				21EE4DB44825A306C5A026EE7D933543 /* APSocialProfile.h */,
-				18DF2E8D34BB1D8C14ABD43794CED6FF /* APSocialProfile.m */,
-				64CA4A6C56D8BCAB5793D3CEC5765A32 /* APTypes.h */,
-			);
-			name = Core;
-			sourceTree = "<group>";
-		};
-		27E09D0FD8488CDED3FA18706B109E1F /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				1733CBBFAC2DA6BCC7E0766AE24B343D /* AddressBook.framework */,
-				4E3961A1C33D034EBB20745AFB5E4242 /* Foundation.framework */,
-			);
-			name = iOS;
-			sourceTree = "<group>";
-		};
-		433CD3331B6C3787F473C941B61FC68F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				27E09D0FD8488CDED3FA18706B109E1F /* iOS */,
+				D9624D2EC43D671E1CAFF0D47F988230 /* iOS */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		454549ABE8F37F2C3C4B30DD86C9EDE5 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				431FC50467FE9782347E636329A046E9 /* APAddress.h */,
+				65697D9E9B2C14A12C592D841BF863BD /* APAddress.m */,
+				3CF12E44E110E6B43A713E5F652EB05E /* APAddressBook.h */,
+				E2E63314597A0561DD3BA300F51D5709 /* APAddressBook.m */,
+				CB4A56BD3938A7E2E0F1D522A62FF97E /* APContact.h */,
+				BBD011EC73D196D9304663AE565675EB /* APContact.m */,
+				7E353DF09950B2907E6FF8A99E273D5A /* APPhoneWithLabel.h */,
+				B21D0CD2CE2112ADA535626C585B4CA4 /* APPhoneWithLabel.m */,
+				DC0838BAEFFF99059D1A1CD8492C3145 /* APSocialProfile.h */,
+				A6CAEB11ACB84BA8AF854ACE4DE017D0 /* APSocialProfile.m */,
+				FB2F0775533A3A22FDC1C5F7BA3C313C /* APTypes.h */,
+			);
+			name = Core;
 			sourceTree = "<group>";
 		};
 		580EF9A7926E73913FD7CFB40B211FB7 /* Pods-Peppermint */ = {
@@ -125,42 +170,21 @@
 			children = (
 				04A791F534F56C799F55C34A35886EC6 /* Pods-Peppermint-acknowledgements.markdown */,
 				814357C2F1729376744C0CCF58266B44 /* Pods-Peppermint-acknowledgements.plist */,
-				DB3036EC2E2EC050D0A3E8C1993F4034 /* Pods-Peppermint-dummy.m */,
+				FEE5C0AD4275867BD20606F64941F075 /* Pods-Peppermint-dummy.m */,
 				915BE9DB4CDE93B0FF1EB084C32FD63C /* Pods-Peppermint-resources.sh */,
-				E93FB004BEEB8857347101242E3C1593 /* Pods-Peppermint.debug.xcconfig */,
-				1FEA49001AB125E99EDEF0BE54D08D54 /* Pods-Peppermint.release.xcconfig */,
+				FD7E6F60EEAE86BE0259FD15A0A7FA50 /* Pods-Peppermint.debug.xcconfig */,
+				A8109523FAE5509F781A1313CA360975 /* Pods-Peppermint.release.xcconfig */,
 			);
 			name = "Pods-Peppermint";
 			path = "Target Support Files/Pods-Peppermint";
-			sourceTree = "<group>";
-		};
-		5FC5CA463F62C8A4AEBCFA83B574D8AB /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				EBC194241C24246524FD1D77C2928EC5 /* APAddressBook.xcconfig */,
-				286D483A20DE644EC545C747C67232BA /* APAddressBook-Private.xcconfig */,
-				69D5A074FBCAE5E0A6FE42F7FE1544C7 /* APAddressBook-dummy.m */,
-				55FA8F5AE5F7419DF1CE615B73AA29CB /* APAddressBook-prefix.pch */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/APAddressBook";
-			sourceTree = "<group>";
-		};
-		72D464A879FBF1C8076245122601BB0C /* APAddressBook */ = {
-			isa = PBXGroup;
-			children = (
-				0A76F0FF028B58DEB2D3167706238F2E /* Core */,
-				5FC5CA463F62C8A4AEBCFA83B574D8AB /* Support Files */,
-			);
-			path = APAddressBook;
 			sourceTree = "<group>";
 		};
 		7DB346D0F39D3F0E887471402A8071AB = {
 			isa = PBXGroup;
 			children = (
 				BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */,
-				433CD3331B6C3787F473C941B61FC68F /* Frameworks */,
-				CE968CCED43FAAF29030AFB666EAA171 /* Pods */,
+				122DA2E5084A4393C29BE363C764795C /* Frameworks */,
+				FD835713EEB2A657CD35AA6A057A3489 /* Pods */,
 				CCA510CFBEA2D207524CDA0D73C3B561 /* Products */,
 				8AA28E979280F770F6B4EB57962EE7AA /* Targets Support Files */,
 			);
@@ -174,19 +198,88 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
+		9E1FF5EC010156ED1EA6E4C79DF195BB /* APAddressBook */ = {
+			isa = PBXGroup;
+			children = (
+				454549ABE8F37F2C3C4B30DD86C9EDE5 /* Core */,
+				FB61ECB43AF8ED2E84F7CB961D99E569 /* Support Files */,
+			);
+			path = APAddressBook;
+			sourceTree = "<group>";
+		};
+		C4E443D652525EAAF54B3F7F2CD45E87 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				545575779B8EF52330173EC8C20AF5DF /* EasyMailSender.xcconfig */,
+				F89F2AC22ADF5F2BCC4C80ED119A7EF8 /* EasyMailSender-Private.xcconfig */,
+				321C8DA62B4E7A62893D5416D0D795E7 /* EasyMailSender-dummy.m */,
+				BD10218985496E012D87624790C90E56 /* EasyMailSender-prefix.pch */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/EasyMailSender";
+			sourceTree = "<group>";
+		};
 		CCA510CFBEA2D207524CDA0D73C3B561 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BF8F570CA38A622C63A4859B38F04BBC /* libAPAddressBook.a */,
-				01406698509E4D3F320F916C8900D335 /* libPods-Peppermint.a */,
+				DB8F51462BD3B86B3C13EFC3B8A11C78 /* EasyMailSender.bundle */,
+				319FE9BC6DDC9BADBDD151EB767052F6 /* libAPAddressBook.a */,
+				92A4EA210D4A77F5FC3A635BE38A088E /* libEasyMailSender.a */,
+				B3DF9222D4CCCF44507C3B46541E30D2 /* libPods-Peppermint.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CE968CCED43FAAF29030AFB666EAA171 /* Pods */ = {
+		D9624D2EC43D671E1CAFF0D47F988230 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				72D464A879FBF1C8076245122601BB0C /* APAddressBook */,
+				ECF4444B346628AA173C0CBA3BFD6E52 /* AddressBook.framework */,
+				C092F4EFF6C7F9259585951AD4895325 /* Foundation.framework */,
+				24251B6451267BFB4C14BD0F5E953571 /* MessageUI.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		EE48A43D352C0E1A9AA4822E25A54186 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BBB71671288ED5EE71B4C6CD25C98896 /* Base.lproj */,
+				2EDDD5CD02318F8C06E17E4C09522145 /* en.lproj */,
+				647C4A01C0033696E8F62DB00FCD71C0 /* ja.lproj */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		F046322CB5FC90D0CF11F09E5DFB69A7 /* EasyMailSender */ = {
+			isa = PBXGroup;
+			children = (
+				97C88FE376B085C8577097142F472E5B /* EasyMailAlertSender.h */,
+				5A3E243DB1EC5BCD2DBBD2E4E67172AB /* EasyMailAlertSender.m */,
+				F07C0113AE61D214F776F669AD629CA4 /* EasyMailSender.h */,
+				7CC95CF57A0B8AC83AC332EF82ADAA1D /* EasyMailSender.m */,
+				EE48A43D352C0E1A9AA4822E25A54186 /* Resources */,
+				C4E443D652525EAAF54B3F7F2CD45E87 /* Support Files */,
+			);
+			path = EasyMailSender;
+			sourceTree = "<group>";
+		};
+		FB61ECB43AF8ED2E84F7CB961D99E569 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				79E09E5860FE63445A4F81806C969081 /* APAddressBook.xcconfig */,
+				F5E62EAC63D3C9C63E14DE427B0C37EA /* APAddressBook-Private.xcconfig */,
+				058A1B0C2B48E21C25980A5D2997C635 /* APAddressBook-dummy.m */,
+				1C123B5F67FE95C46230CD1D3946A20A /* APAddressBook-prefix.pch */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/APAddressBook";
+			sourceTree = "<group>";
+		};
+		FD835713EEB2A657CD35AA6A057A3489 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9E1FF5EC010156ED1EA6E4C79DF195BB /* APAddressBook */,
+				F046322CB5FC90D0CF11F09E5DFB69A7 /* EasyMailSender */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -194,46 +287,55 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		0651E9E5C6EF5FC32B0D5DC9760F14DA /* Headers */ = {
+		A24BF782263508504FF99F00FC721A71 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A043B351161B88178616199A06AE7E48 /* APAddress.h in Headers */,
-				66068223B3843DD096E2AC5414F5E0D8 /* APAddressBook.h in Headers */,
-				3D2D82D2A6FF0AE12E003315553315AC /* APContact.h in Headers */,
-				7272C319359192E8B9AD351CBE2EC241 /* APPhoneWithLabel.h in Headers */,
-				E3C60BAB03265C9BFB4C3A2D55FB1405 /* APSocialProfile.h in Headers */,
-				44D320CA8B475D0BDF715F8B3D08606B /* APTypes.h in Headers */,
+				3FBDAFA989D52EA9D5FE92788890C4B0 /* APAddress.h in Headers */,
+				5419E380AD8C124D68A6B2411811054A /* APAddressBook.h in Headers */,
+				BBF7FDFD38D1D7DEB404C787F9ECF32D /* APContact.h in Headers */,
+				C6CE816F06F2C3288C7DDA8268917F75 /* APPhoneWithLabel.h in Headers */,
+				7DA380C101F054C094D690C4C1BA97BF /* APSocialProfile.h in Headers */,
+				F5F152243AE32485B58D4DE5C827A2FD /* APTypes.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F648CA6EA8B8A390CDA3E833793FC71B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9E6E441BA940BF1D72DE006A3821CF3E /* EasyMailAlertSender.h in Headers */,
+				536D5945F30DECA3B847D4CE0AFFE50A /* EasyMailSender.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		BEB88AED4AEF405A2116437BEF7C4F06 /* Pods-Peppermint */ = {
+		182DF27BCD04CFD09F217BD5EB9734AC /* EasyMailSender-EasyMailSender */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 285E36DFB6A5640B72844E668FCF855C /* Build configuration list for PBXNativeTarget "Pods-Peppermint" */;
+			buildConfigurationList = 74E194ED9F643E356122A2489358AB6C /* Build configuration list for PBXNativeTarget "EasyMailSender-EasyMailSender" */;
 			buildPhases = (
-				18167D634C2AA9EADCC2048A7982E619 /* Sources */,
-				5670983F9D07768B0894993DF2752556 /* Frameworks */,
+				99965DE0E001B7C6F4F8A1495A6642A6 /* Sources */,
+				31CC37E5BF72408733877E6988E7DC52 /* Frameworks */,
+				247A412F571FD9FBBD10B7798C9E9AAC /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				6FC65137F93C24CCDFE39EDBB8E80AA7 /* PBXTargetDependency */,
 			);
-			name = "Pods-Peppermint";
-			productName = "Pods-Peppermint";
-			productReference = 01406698509E4D3F320F916C8900D335 /* libPods-Peppermint.a */;
-			productType = "com.apple.product-type.library.static";
+			name = "EasyMailSender-EasyMailSender";
+			productName = "EasyMailSender-EasyMailSender";
+			productReference = DB8F51462BD3B86B3C13EFC3B8A11C78 /* EasyMailSender.bundle */;
+			productType = "com.apple.product-type.bundle";
 		};
-		D1FADC3B6FC1FDCC35F95F4AF73CFA4B /* APAddressBook */ = {
+		6123EEC59D0EBFD53BF1394BCC7E143F /* APAddressBook */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1A1DA36D9878C846010E9E65CAD8AF99 /* Build configuration list for PBXNativeTarget "APAddressBook" */;
+			buildConfigurationList = 8D1784C3F717EC9646AD9A29CB120300 /* Build configuration list for PBXNativeTarget "APAddressBook" */;
 			buildPhases = (
-				00169654171B6001A3DD6C910E93BDDB /* Sources */,
-				8139732C833A49CDCFF8B1B43BFEF1C2 /* Frameworks */,
-				0651E9E5C6EF5FC32B0D5DC9760F14DA /* Headers */,
+				BACCE19DC0EBE033EA4A37DEB730BCCC /* Sources */,
+				5995910B086AFC8555E6C588DF1BCF82 /* Frameworks */,
+				A24BF782263508504FF99F00FC721A71 /* Headers */,
 			);
 			buildRules = (
 			);
@@ -241,7 +343,43 @@
 			);
 			name = APAddressBook;
 			productName = APAddressBook;
-			productReference = BF8F570CA38A622C63A4859B38F04BBC /* libAPAddressBook.a */;
+			productReference = 319FE9BC6DDC9BADBDD151EB767052F6 /* libAPAddressBook.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		89780E3661A7C6E3FB85A46E53B30186 /* Pods-Peppermint */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7B733B67A0C65D4EBC7E27C3161A1C0B /* Build configuration list for PBXNativeTarget "Pods-Peppermint" */;
+			buildPhases = (
+				1FE4CE5D5B9B39859631145BCB8AB03E /* Sources */,
+				177D0D5D7AE5A0577A915E949AA4F835 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5BF108DD138CB2299F716B7625AD3E12 /* PBXTargetDependency */,
+				48EAE6802400F1BBC88D698027F9E6FB /* PBXTargetDependency */,
+			);
+			name = "Pods-Peppermint";
+			productName = "Pods-Peppermint";
+			productReference = B3DF9222D4CCCF44507C3B46541E30D2 /* libPods-Peppermint.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		F3094E4B7BD557D12201B9BCD2CD7AEA /* EasyMailSender */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD54E7EDB6AFDED17A836C22ED01C7FB /* Build configuration list for PBXNativeTarget "EasyMailSender" */;
+			buildPhases = (
+				F49EF07743C1282742BC6A6F4EA1AF0C /* Sources */,
+				80A32B61A955A9DED6AF78E42D216086 /* Frameworks */,
+				F648CA6EA8B8A390CDA3E833793FC71B /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6CD5350B4D4DB286929D52577FC2A658 /* PBXTargetDependency */,
+			);
+			name = EasyMailSender;
+			productName = EasyMailSender;
+			productReference = 92A4EA210D4A77F5FC3A635BE38A088E /* libEasyMailSender.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -265,46 +403,122 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D1FADC3B6FC1FDCC35F95F4AF73CFA4B /* APAddressBook */,
-				BEB88AED4AEF405A2116437BEF7C4F06 /* Pods-Peppermint */,
+				6123EEC59D0EBFD53BF1394BCC7E143F /* APAddressBook */,
+				F3094E4B7BD557D12201B9BCD2CD7AEA /* EasyMailSender */,
+				182DF27BCD04CFD09F217BD5EB9734AC /* EasyMailSender-EasyMailSender */,
+				89780E3661A7C6E3FB85A46E53B30186 /* Pods-Peppermint */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXSourcesBuildPhase section */
-		00169654171B6001A3DD6C910E93BDDB /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
+/* Begin PBXResourcesBuildPhase section */
+		247A412F571FD9FBBD10B7798C9E9AAC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				64CE9F48C596D70A7DB448FAC6ACC6D7 /* APAddress.m in Sources */,
-				86ACF4B8FDCA7FCA734AC196E82360E8 /* APAddressBook-dummy.m in Sources */,
-				26447C1DD7067DFB2AA429A60D67F7A6 /* APAddressBook.m in Sources */,
-				69C5F20B9716B8A099C6A1A973DC7AB5 /* APContact.m in Sources */,
-				936A8385361D69317DCE923F9E8F1E98 /* APPhoneWithLabel.m in Sources */,
-				150473846EA39BB2C8BEFA12E426D46B /* APSocialProfile.m in Sources */,
+				8F5279BD9D629D2566C46BB51DB5CA45 /* Base.lproj in Resources */,
+				E681E44E13F827D2AA993D011E48638E /* en.lproj in Resources */,
+				357B19E96131CDE9DCD1CE195ABCAA24 /* ja.lproj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		18167D634C2AA9EADCC2048A7982E619 /* Sources */ = {
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1FE4CE5D5B9B39859631145BCB8AB03E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5B9CC3360AFF6869B7DAE8886CAF8D8 /* Pods-Peppermint-dummy.m in Sources */,
+				F6B5FE33464E650649DC1856157A8870 /* Pods-Peppermint-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99965DE0E001B7C6F4F8A1495A6642A6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BACCE19DC0EBE033EA4A37DEB730BCCC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43A5E6AEEC1AF527449FAC2C9F2B4E83 /* APAddress.m in Sources */,
+				583779988C2639B6C55FDEDABE984F16 /* APAddressBook-dummy.m in Sources */,
+				4F9E1631DB25056489BED60EA39EE952 /* APAddressBook.m in Sources */,
+				6FF566DB313A44A37D7CE81DD3A32917 /* APContact.m in Sources */,
+				69397ECD4A7276AA1248D7D5E8CEE867 /* APPhoneWithLabel.m in Sources */,
+				DF3445EE943A15ADD75F913822F2CEF1 /* APSocialProfile.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F49EF07743C1282742BC6A6F4EA1AF0C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03986E0E997754B83FDE33F3CFA3C8E8 /* EasyMailAlertSender.m in Sources */,
+				06E807AE8852924D90BA5F8079DC3757 /* EasyMailSender-dummy.m in Sources */,
+				5F6A30214F3088BA9228B069D82BA534 /* EasyMailSender.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		6FC65137F93C24CCDFE39EDBB8E80AA7 /* PBXTargetDependency */ = {
+		48EAE6802400F1BBC88D698027F9E6FB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = EasyMailSender;
+			target = F3094E4B7BD557D12201B9BCD2CD7AEA /* EasyMailSender */;
+			targetProxy = 9B5EC1A18211823134A52372B3AEA409 /* PBXContainerItemProxy */;
+		};
+		5BF108DD138CB2299F716B7625AD3E12 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = APAddressBook;
-			target = D1FADC3B6FC1FDCC35F95F4AF73CFA4B /* APAddressBook */;
-			targetProxy = 0DB06F6A5A9A9A017291D0DADA5C5884 /* PBXContainerItemProxy */;
+			target = 6123EEC59D0EBFD53BF1394BCC7E143F /* APAddressBook */;
+			targetProxy = 4F533C9F4F61DF085E6A45557CAC5E4D /* PBXContainerItemProxy */;
+		};
+		6CD5350B4D4DB286929D52577FC2A658 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "EasyMailSender-EasyMailSender";
+			target = 182DF27BCD04CFD09F217BD5EB9734AC /* EasyMailSender-EasyMailSender */;
+			targetProxy = DAA5ADE5FC622C4561EF188641061553 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		37E82594A5280F9BF7F51CD20E0AEC10 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FD7E6F60EEAE86BE0259FD15A0A7FA50 /* Pods-Peppermint.debug.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		44245264F1DB4E41CACCA08FAA9FC215 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F89F2AC22ADF5F2BCC4C80ED119A7EF8 /* EasyMailSender-Private.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/EasyMailSender/EasyMailSender-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		511103F7F15A7E8F83B268EA03462CAB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -339,37 +553,33 @@
 			};
 			name = Release;
 		};
-		73154FCAF1D24BDAE09CE150482C7753 /* Debug */ = {
+		715E57745885E136B33B3DD43B4DB758 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E93FB004BEEB8857347101242E3C1593 /* Pods-Peppermint.debug.xcconfig */;
+			baseConfigurationReference = F89F2AC22ADF5F2BCC4C80ED119A7EF8 /* EasyMailSender-Private.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				PRODUCT_NAME = EasyMailSender;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		80DD899EC33FE790C84745C3AE431F7E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F5E62EAC63D3C9C63E14DE427B0C37EA /* APAddressBook-Private.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/APAddressBook/APAddressBook-prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
-		};
-		A48E0EC7E16D857B5A1E6467819E0CAA /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FEA49001AB125E99EDEF0BE54D08D54 /* Pods-Peppermint.release.xcconfig */;
-			buildSettings = {
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
 		};
 		AA05AF9C3A14EE0E32F42C6E6D42D34F /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -410,9 +620,9 @@
 			};
 			name = Debug;
 		};
-		C75A984BD2832088DF5A97F358742333 /* Release */ = {
+		AA6DB953E6868EECA5A851AB257230C2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 286D483A20DE644EC545C747C67232BA /* APAddressBook-Private.xcconfig */;
+			baseConfigurationReference = F5E62EAC63D3C9C63E14DE427B0C37EA /* APAddressBook-Private.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/APAddressBook/APAddressBook-prefix.pch";
@@ -426,12 +636,40 @@
 			};
 			name = Release;
 		};
-		D6839B07D9F1EE892A8F2A66CADA40F1 /* Debug */ = {
+		CCE3C6292E3FF9B3AAC819E1201B2825 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 286D483A20DE644EC545C747C67232BA /* APAddressBook-Private.xcconfig */;
+			baseConfigurationReference = A8109523FAE5509F781A1313CA360975 /* Pods-Peppermint.release.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/APAddressBook/APAddressBook-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		D3ECEAE089BD67296C77AA0817D3EF8D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F89F2AC22ADF5F2BCC4C80ED119A7EF8 /* EasyMailSender-Private.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				PRODUCT_NAME = EasyMailSender;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		F7308676B9E4F8A3BB6AC22930531C51 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F89F2AC22ADF5F2BCC4C80ED119A7EF8 /* EasyMailSender-Private.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/EasyMailSender/EasyMailSender-prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
@@ -445,29 +683,47 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1A1DA36D9878C846010E9E65CAD8AF99 /* Build configuration list for PBXNativeTarget "APAddressBook" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D6839B07D9F1EE892A8F2A66CADA40F1 /* Debug */,
-				C75A984BD2832088DF5A97F358742333 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		285E36DFB6A5640B72844E668FCF855C /* Build configuration list for PBXNativeTarget "Pods-Peppermint" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				73154FCAF1D24BDAE09CE150482C7753 /* Debug */,
-				A48E0EC7E16D857B5A1E6467819E0CAA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AA05AF9C3A14EE0E32F42C6E6D42D34F /* Debug */,
 				511103F7F15A7E8F83B268EA03462CAB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		74E194ED9F643E356122A2489358AB6C /* Build configuration list for PBXNativeTarget "EasyMailSender-EasyMailSender" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				715E57745885E136B33B3DD43B4DB758 /* Debug */,
+				D3ECEAE089BD67296C77AA0817D3EF8D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7B733B67A0C65D4EBC7E27C3161A1C0B /* Build configuration list for PBXNativeTarget "Pods-Peppermint" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				37E82594A5280F9BF7F51CD20E0AEC10 /* Debug */,
+				CCE3C6292E3FF9B3AAC819E1201B2825 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8D1784C3F717EC9646AD9A29CB120300 /* Build configuration list for PBXNativeTarget "APAddressBook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				80DD899EC33FE790C84745C3AE431F7E /* Debug */,
+				AA6DB953E6868EECA5A851AB257230C2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DD54E7EDB6AFDED17A836C22ED01C7FB /* Build configuration list for PBXNativeTarget "EasyMailSender" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F7308676B9E4F8A3BB6AC22930531C51 /* Debug */,
+				44245264F1DB4E41CACCA08FAA9FC215 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

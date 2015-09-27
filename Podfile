@@ -3,6 +3,7 @@
 
 target 'Peppermint' do
 pod 'APAddressBook'
+pod 'EasyMailSender'
 end
 
 target 'PeppermintTests' do

@@ -9,9 +9,14 @@
 #import "BaseModel.h"
 #import "PeppermintContact.h"
 
+@protocol SendVoiceMessageDelegate <BaseModelDelegate>
+@required
+-(void) messageSentWithSuccess;
+@end
+
 @interface SendVoiceMessageModel : BaseModel
 @property (strong, nonatomic) PeppermintContact *selectedPeppermintContact;
-
+@property (weak, nonatomic) id<SendVoiceMessageDelegate> delegate;
 -(void) sendVoiceMessageatURL:(NSURL*) url;
 
 @end

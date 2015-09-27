@@ -19,7 +19,10 @@
 "Recording is already acitve" = "Recording is already acitve";
 "Record Message" = "Record Message";
 "for ContactNameSurname" = "for %@";
-"SMS is not implemented" = "SMS functionality is not implemented yet";
+"SMS is not implemented" = "SMS functionality is not implemented";
 "Information" = "Information";
 "Could not resume" = "Could not resume the recording";
 "Could not start record" = "Could not start recording";
+"Mail Subject" = "I sent you a voice message";
+"Mail Body" = "Here's my message.<br/><br/>Reply via <a href=\"http://www.peppermint.com\">Peppermint.com</a> ";
+"Please add an email account" = "Please add and configure at leas one mail account on this device to be able to send voice messages over email";

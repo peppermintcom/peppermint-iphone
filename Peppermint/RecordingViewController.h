@@ -10,7 +10,7 @@
 #import "RecordingModel.h"
 #import "SendVoiceMessageModel.h"
 
-@interface RecordingViewController : BaseViewController <RecordingModelDelegate>
+@interface RecordingViewController : BaseViewController <RecordingModelDelegate, SendVoiceMessageDelegate>
 @property (strong, nonatomic) RecordingModel *recordingModel;
 @property (strong, nonatomic) SendVoiceMessageModel *sendVoiceMessageModel;
 

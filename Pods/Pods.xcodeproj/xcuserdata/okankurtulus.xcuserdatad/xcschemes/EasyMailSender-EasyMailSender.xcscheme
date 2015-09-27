@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FA55CC92C4533352455B12A2"
-               BuildableName = "libAPAddressBook.a"
-               BlueprintName = "APAddressBook"
+               BlueprintIdentifier = "0954C22110F1C96D17F16896"
+               BuildableName = "EasyMailSender.bundle"
+               BlueprintName = "EasyMailSender-EasyMailSender"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

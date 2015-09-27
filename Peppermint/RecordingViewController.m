@@ -8,7 +8,9 @@
 
 #import "RecordingViewController.h"
 
-@interface RecordingViewController ()
+@interface RecordingViewController () {
+    BOOL isFirstOpen;
+}
 
 @end
 
@@ -16,6 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    isFirstOpen = YES;
     assert(self.sendVoiceMessageModel != nil);
     self.navigationTitleLabel.text = LOC(@"Record Message", @"Navigation title");
     self.navigationSubTitleLabel.textColor = [UIColor recordingNavigationsubTitleGreen];
@@ -34,12 +37,14 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self rerecordButtonPressed:nil];
+    if(isFirstOpen) {
+        isFirstOpen = NO;
+        [self rerecordButtonPressed:nil];
+    }
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
     [self.recordingModel stop];
-    NSLog(@"recording stopped!");
     [super viewWillDisappear:animated];
 }
 
@@ -70,7 +75,7 @@
     [self.sendVoiceMessageModel sendVoiceMessageatURL:self.recordingModel.fileUrl];
 }
 
-#pragma mark - Recording Model Delegate
+#pragma mark - RecordingModel Delegate
 
 -(void) timerUpdated:(NSTimeInterval) timeInterval {
     int totalSeconds = (int)timeInterval;
@@ -79,15 +84,16 @@
     self.counterLabel.text = [NSString stringWithFormat:@"%.2d:%.2d", minutes, seconds];
 }
 
+#pragma mark - SendVoiceMessage Delegate
+
+-(void) messageSentWithSuccess {
+    [self backButtonPressed:nil];
+}
+
 #pragma mark - Navigation
 
 -(IBAction)backButtonPressed:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
 }
 
 @end

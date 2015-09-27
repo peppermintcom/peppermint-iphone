@@ -2,11 +2,14 @@ PODS:
   - APAddressBook (0.1.11):
     - APAddressBook/Core (= 0.1.11)
   - APAddressBook/Core (0.1.11)
+  - EasyMailSender (0.0.1)
 
 DEPENDENCIES:
   - APAddressBook
+  - EasyMailSender
 
 SPEC CHECKSUMS:
   APAddressBook: 2c949367b190a993d2cce769a3b20bce8bcf000c
+  EasyMailSender: f50b6b5fa49b47f4b60998a56345600b848f2121
 
 COCOAPODS: 0.38.2

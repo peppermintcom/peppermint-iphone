@@ -7,17 +7,37 @@
 //
 
 #import "SendVoiceMessageEmailModel.h"
+#import <MessageUI/MessageUI.h>
+#import "EasyMailSender.h"
+#import "EasyMailAlertSender.h"
 
 @implementation SendVoiceMessageEmailModel
 
 -(void) sendVoiceMessageatURL:(NSURL*) url {
-    NSLog(@"I'm sending...");
-    
-    
-    
-    
-    
-    
+    EasyMailAlertSender *mailSender = [EasyMailAlertSender easyMail:^(MFMailComposeViewController *controller) {
+        [controller setToRecipients:[NSArray arrayWithObject:self.selectedPeppermintContact.communicationChannelAddress]];
+        [controller setSubject:LOC(@"Mail Subject",@"Default Mail Subject")];
+        [controller setMessageBody:LOC(@"Mail Body",@"Default Mail Body") isHTML:YES];
+        NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+        [controller addAttachmentData:data mimeType:@"audio/mp4" fileName:@"Peppermint.m4a"];
+    } complete:^(MFMailComposeViewController *controller, MFMailComposeResult result, NSError *error) {
+        [controller dismissViewControllerAnimated:YES completion:nil];
+        if(error) {
+            [self.delegate operationFailure:error];
+        } else if (result == MFMailComposeResultFailed) {
+            error = [NSError errorWithDomain:LOC(@"An error occured",@"Unknown Error Message") code:0 userInfo:nil];
+            [self.delegate operationFailure:error];
+        } else if (result == MFMailComposeResultSent) {
+            [self.delegate messageSentWithSuccess];
+        }
+    }];
+    [mailSender showFromViewController:(UIViewController*)self.delegate];
+}
+
++ (BOOL)canDeviceSendEmail
+{
+    Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
+    return mailClass != nil && [MFMailComposeViewController canSendMail];
 }
 
 @end

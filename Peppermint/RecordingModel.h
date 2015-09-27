@@ -10,8 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 
 @protocol RecordingModelDelegate <BaseModelDelegate>
-
-@optional
+@required
 -(void) timerUpdated:(NSTimeInterval) timeInterval;
 @end
 

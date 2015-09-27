@@ -9,5 +9,5 @@
 #import "SendVoiceMessageModel.h"
 
 @interface SendVoiceMessageEmailModel : SendVoiceMessageModel
-
++ (BOOL)canDeviceSendEmail;
 @end

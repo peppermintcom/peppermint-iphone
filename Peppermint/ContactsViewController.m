@@ -16,13 +16,10 @@
 
 @end
 
-@implementation ContactsViewController {
-    BOOL isFirstOpen;
-}
+@implementation ContactsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    isFirstOpen = YES;
     self.contactsModel = [ContactsModel new];
     self.contactsModel.delegate = self;
     self.searchContactsTextField.text = self.contactsModel.filterText;
@@ -38,10 +35,7 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if(isFirstOpen) {
-        isFirstOpen = NO;
-        [self.searchContactsTextField becomeFirstResponder];
-    }
+    [self.searchContactsTextField becomeFirstResponder];
 }
 
 #pragma mark - UITableView
@@ -122,6 +116,7 @@
         if(selectedContact.communicationChannel == CommunicationChannelEmail) {
             SendVoiceMessageEmailModel *sendVoiceMessageEmailModel = [SendVoiceMessageEmailModel new];
             sendVoiceMessageEmailModel.selectedPeppermintContact = selectedContact;
+            sendVoiceMessageEmailModel.delegate = rvc;
             rvc.sendVoiceMessageModel = sendVoiceMessageEmailModel;
         } else if (selectedContact.communicationChannel == CommunicationChannelSMS) {
             NSLog(@"SMS functionality is not implemented yet");
@@ -133,7 +128,15 @@
     BOOL result = YES;    
     if([identifier isEqualToString:SEGUE_RECORDING_VIEW_CONTROLLER]) {
         PeppermintContact *selectedContact = (PeppermintContact*)sender;
-        if (selectedContact.communicationChannel == CommunicationChannelSMS) {
+        if(selectedContact.communicationChannel == CommunicationChannelEmail) {
+            result = [SendVoiceMessageEmailModel canDeviceSendEmail];
+            if(!result) {
+                NSString *title = LOC(@"Information", @"Information");
+                NSString *message = LOC(@"Please add an email account", @"Email service info");
+                NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
+                [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
+            }
+        } else if (selectedContact.communicationChannel == CommunicationChannelSMS) {
             result = NO;
             NSString *title = LOC(@"Information", @"Information");
             NSString *message = LOC(@"SMS is not implemented", @"SMS implementation info");
