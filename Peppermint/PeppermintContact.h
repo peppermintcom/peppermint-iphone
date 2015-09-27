@@ -1,5 +1,5 @@
 //
-//  Contact.h
+//  PeppermintContact.h
 //  Peppermint
 //
 //  Created by Okan Kurtulus on 26/09/15.
@@ -13,7 +13,7 @@ typedef enum : NSUInteger {
     CommunicationChannelSMS,
 } CommunicationChannel;
 
-@interface Contact : NSObject
+@interface PeppermintContact : NSObject
 @property (strong, nonatomic) UIImage *avatarImage;
 @property (strong, nonatomic) NSString* nameSurname;
 @property (strong, nonatomic) NSString* communicationChannelAddress;

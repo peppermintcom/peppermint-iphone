@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol BaseModelDelegate <NSObject>
+@required
+-(void) operationFailure:(NSError*) error;
+@end
+
 @interface BaseModel : NSObject
 
 @end

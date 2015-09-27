@@ -23,7 +23,8 @@
     isFirstOpen = YES;
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"colorfill"]];
     self.contactsModel = [ContactsModel new];
-    self.searchContactsTextField.text = @"";
+    self.contactsModel.delegate = self;
+    self.searchContactsTextField.text = self.contactsModel.filterText;
     self.searchContactsTextField.placeholder = LOC(@"Search for Contacts", @"Placeholder text");
     self.searchContactsTextField.tintColor = [UIColor textFieldTintGreen];
     self.searchContactsTextField.delegate = self;
@@ -52,14 +53,18 @@
     UITableViewCell *preparedCell = nil;
     if(self.contactsModel.contactList.count == 0) {
         EmptyResultTableViewCell *cell = [CellFactory cellEmptyResultTableViewCellFromTable:tableView forIndexPath:indexPath];
-        [cell setVisibiltyOfExplanationLabels:(!isFirstOpen)];
+        [cell setVisibiltyOfExplanationLabels:self.contactsModel.filterText.length > 0];
         preparedCell = cell;
     } else if (indexPath.row < self.contactsModel.contactList.count) {
         ContactTableViewCell *cell = [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath];
-        Contact *contact = [self.contactsModel.contactList objectAtIndex:indexPath.row];
-        cell.avatarImageView.image = contact.avatarImage;
-        cell.contactNameLabel.text = contact.nameSurname;
-        cell.contactViaInformationLabel.text = contact.communicationChannelAddress;
+        PeppermintContact *peppermintContact = [self.contactsModel.contactList objectAtIndex:indexPath.row];
+        if(peppermintContact.avatarImage) {
+            cell.avatarImageView.image = peppermintContact.avatarImage;
+        } else {
+            cell.avatarImageView.image = [UIImage imageNamed:@"avatar_empty"];
+        }        
+        cell.contactNameLabel.text = peppermintContact.nameSurname;
+        cell.contactViaInformationLabel.text = peppermintContact.communicationChannelAddress;
         preparedCell = cell;
     }
     return preparedCell;
@@ -80,14 +85,25 @@
 }
 
 #pragma mark - TextField
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    
-    textField.text = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    NSLog(@"Text changed");
-    
-    [self.tableView reloadData];
-    
+    self.contactsModel.filterText = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    textField.text = self.contactsModel.filterText;
+    [self.contactsModel refreshContactList];
     return NO;
+}
+
+#pragma mark - ContactsModelDelegate
+
+-(void) accessRightsAreNotSupplied {
+    NSString *title = LOC(@"Information", @"Title Message");
+    NSString *message = LOC(@"Access rights explanation", @"Directives to give access rights") ;
+    NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
+    [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
+}
+
+-(void) contactListRefreshed {
+    [self.tableView reloadData];
 }
 
 #pragma mark - Navigation

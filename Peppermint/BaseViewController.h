@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "CellFactory.h"
+#import "BaseModel.h"
 
-@interface BaseViewController : UIViewController
+@interface BaseViewController : UIViewController <BaseModelDelegate>
 
 @end

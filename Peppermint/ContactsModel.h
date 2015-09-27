@@ -7,10 +7,23 @@
 //
 
 #import "BaseModel.h"
-#import "Contact.h"
+#import "PeppermintContact.h"
+@import AddressBook;
+#import "APContact.h"
+#import "APAddressBook.h"
 
-@interface ContactsModel : BaseModel
+@protocol ContactsModelDelegate <BaseModelDelegate>
+-(void) accessRightsAreNotSupplied;
+-(void) contactListRefreshed;
+@end
 
+@interface ContactsModel : BaseModel {
+    APAddressBook *addressBook;
+}
+
+@property (weak, nonatomic) id<ContactsModelDelegate> delegate;
 @property (strong, nonatomic) NSMutableArray *contactList;
+@property (strong, nonatomic) NSString *filterText;
+-(void) refreshContactList;
 
 @end

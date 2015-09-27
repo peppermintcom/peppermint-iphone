@@ -9,5 +9,9 @@
 "via" = "via";
 "Search for Contacts" = "Search for Contacts";
 "No contacts have been found" = "No contacts\nhave been found";
-"No contacts explanation" = "Add some friends to your contact book first\nand come back to";
+"No contacts explanation" = "Add some friends to your contactbook first\nand then come back to Peppermint";
 "Peppermint" = "Peppermint";
+"Ok" = "Ok";
+"An error occured" = "An error occured";
+"Access rights explanation" = "To be able to use Peppermint you should give access to your contacts. You can change the access rights from the settings page of your device.";
+"Information" = "Information";

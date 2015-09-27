@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		392D9C861A6F3945B758D95F /* libPods-Peppermint.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4568D87C1B184E71C2B112BE /* libPods-Peppermint.a */; };
 		B165EF121BB71A85008C6F71 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF111BB71A85008C6F71 /* BaseModel.m */; };
 		B165EF151BB71A99008C6F71 /* ContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF141BB71A99008C6F71 /* ContactsModel.m */; };
-		B165EF181BB71EC0008C6F71 /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF171BB71EC0008C6F71 /* Contact.m */; };
+		B165EF181BB71EC0008C6F71 /* PeppermintContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF171BB71EC0008C6F71 /* PeppermintContact.m */; };
 		B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF1C1BB72242008C6F71 /* EmptyResultTableViewCell.m */; };
 		B165EF1F1BB72254008C6F71 /* EmptyResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B165EF1E1BB72254008C6F71 /* EmptyResultTableViewCell.xib */; };
 		B17B3D311BB6898C009B8BC5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D301BB6898C009B8BC5 /* main.m */; };
@@ -40,12 +41,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4568D87C1B184E71C2B112BE /* libPods-Peppermint.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Peppermint.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A3AC8DCFCC2ADAD1159483F0 /* Pods-Peppermint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peppermint.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint.debug.xcconfig"; sourceTree = "<group>"; };
 		B165EF101BB71A85008C6F71 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
 		B165EF111BB71A85008C6F71 /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
 		B165EF131BB71A99008C6F71 /* ContactsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsModel.h; sourceTree = "<group>"; };
 		B165EF141BB71A99008C6F71 /* ContactsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsModel.m; sourceTree = "<group>"; };
-		B165EF161BB71EC0008C6F71 /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
-		B165EF171BB71EC0008C6F71 /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
+		B165EF161BB71EC0008C6F71 /* PeppermintContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeppermintContact.h; sourceTree = "<group>"; };
+		B165EF171BB71EC0008C6F71 /* PeppermintContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeppermintContact.m; sourceTree = "<group>"; };
 		B165EF1B1BB72242008C6F71 /* EmptyResultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyResultTableViewCell.h; sourceTree = "<group>"; };
 		B165EF1C1BB72242008C6F71 /* EmptyResultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyResultTableViewCell.m; sourceTree = "<group>"; };
 		B165EF1E1BB72254008C6F71 /* EmptyResultTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyResultTableViewCell.xib; sourceTree = "<group>"; };
@@ -77,6 +80,7 @@
 		B17B3D731BB6C4B0009B8BC5 /* UIColor_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIColor_Addition.m; sourceTree = "<group>"; };
 		B17B3D761BB6C90A009B8BC5 /* BaseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableViewCell.h; sourceTree = "<group>"; };
 		B17B3D771BB6C90A009B8BC5 /* BaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewCell.m; sourceTree = "<group>"; };
+		C388433C48F87557ED2F3C2D /* Pods-Peppermint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peppermint.release.xcconfig"; path = "Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				392D9C861A6F3945B758D95F /* libPods-Peppermint.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,6 +102,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0EC1EC4EC6188F1BAA69C949 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A3AC8DCFCC2ADAD1159483F0 /* Pods-Peppermint.debug.xcconfig */,
+				C388433C48F87557ED2F3C2D /* Pods-Peppermint.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		6C8541A65356EA01C859C162 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4568D87C1B184E71C2B112BE /* libPods-Peppermint.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B165EF0F1BB71A31008C6F71 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -112,8 +134,8 @@
 		B165EF191BB71F50008C6F71 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				B165EF161BB71EC0008C6F71 /* Contact.h */,
-				B165EF171BB71EC0008C6F71 /* Contact.m */,
+				B165EF161BB71EC0008C6F71 /* PeppermintContact.h */,
+				B165EF171BB71EC0008C6F71 /* PeppermintContact.m */,
 			);
 			name = Entity;
 			sourceTree = "<group>";
@@ -134,6 +156,8 @@
 				B17B3D2D1BB6898C009B8BC5 /* Peppermint */,
 				B17B3D471BB6898C009B8BC5 /* PeppermintTests */,
 				B17B3D2C1BB6898C009B8BC5 /* Products */,
+				0EC1EC4EC6188F1BAA69C949 /* Pods */,
+				6C8541A65356EA01C859C162 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -151,8 +175,9 @@
 			children = (
 				B17B3D711BB6C3CD009B8BC5 /* Addition */,
 				B17B3D541BB689D2009B8BC5 /* App */,
-				B17B3D551BB689F1009B8BC5 /* View */,
 				B165EF0F1BB71A31008C6F71 /* Model */,
+				B17B3D551BB689F1009B8BC5 /* View */,
+				B1EF40E11BB7CE5600042E4B /* Controller */,
 				B17B3D2E1BB6898C009B8BC5 /* Supporting Files */,
 			);
 			path = Peppermint;
@@ -200,32 +225,10 @@
 		B17B3D551BB689F1009B8BC5 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				B17B3D381BB6898C009B8BC5 /* Main.storyboard */,
-				B17B3D661BB6BBDB009B8BC5 /* Component */,
-				B17B3D651BB6BBB9009B8BC5 /* ViewControllers */,
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
-		B17B3D651BB6BBB9009B8BC5 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				B17B3D591BB6A49E009B8BC5 /* BaseViewController.h */,
-				B17B3D5A1BB6A49E009B8BC5 /* BaseViewController.m */,
-				B17B3D5C1BB6A504009B8BC5 /* ContactsViewController.h */,
-				B17B3D5D1BB6A504009B8BC5 /* ContactsViewController.m */,
-				B17B3D621BB6AE8B009B8BC5 /* RecordingViewController.h */,
-				B17B3D631BB6AE8B009B8BC5 /* RecordingViewController.m */,
-			);
-			name = ViewControllers;
-			sourceTree = "<group>";
-		};
-		B17B3D661BB6BBDB009B8BC5 /* Component */ = {
-			isa = PBXGroup;
-			children = (
+				B1EF40E21BB7CE7700042E4B /* Storyboard */,
 				B17B3D6A1BB6BCEC009B8BC5 /* Cell */,
 			);
-			name = Component;
+			name = View;
 			sourceTree = "<group>";
 		};
 		B17B3D6A1BB6BCEC009B8BC5 /* Cell */ = {
@@ -268,6 +271,27 @@
 			name = BaseTableViewCell;
 			sourceTree = "<group>";
 		};
+		B1EF40E11BB7CE5600042E4B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				B17B3D591BB6A49E009B8BC5 /* BaseViewController.h */,
+				B17B3D5A1BB6A49E009B8BC5 /* BaseViewController.m */,
+				B17B3D5C1BB6A504009B8BC5 /* ContactsViewController.h */,
+				B17B3D5D1BB6A504009B8BC5 /* ContactsViewController.m */,
+				B17B3D621BB6AE8B009B8BC5 /* RecordingViewController.h */,
+				B17B3D631BB6AE8B009B8BC5 /* RecordingViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		B1EF40E21BB7CE7700042E4B /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				B17B3D381BB6898C009B8BC5 /* Main.storyboard */,
+			);
+			name = Storyboard;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -275,9 +299,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B17B3D4E1BB6898C009B8BC5 /* Build configuration list for PBXNativeTarget "Peppermint" */;
 			buildPhases = (
+				BA057164F91858255C6D867A /* Check Pods Manifest.lock */,
 				B17B3D271BB6898C009B8BC5 /* Sources */,
 				B17B3D281BB6898C009B8BC5 /* Frameworks */,
 				B17B3D291BB6898C009B8BC5 /* Resources */,
+				99E5888A4AEAE0B8E8705C03 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -317,6 +343,7 @@
 				TargetAttributes = {
 					B17B3D2A1BB6898C009B8BC5 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 54PM5VBJ3C;
 					};
 					B17B3D431BB6898C009B8BC5 = {
 						CreatedOnToolsVersion = 6.4;
@@ -366,6 +393,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		99E5888A4AEAE0B8E8705C03 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BA057164F91858255C6D867A /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B17B3D271BB6898C009B8BC5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -376,7 +436,7 @@
 				B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */,
 				B17B3D5B1BB6A49E009B8BC5 /* BaseViewController.m in Sources */,
 				B17B3D641BB6AE8B009B8BC5 /* RecordingViewController.m in Sources */,
-				B165EF181BB71EC0008C6F71 /* Contact.m in Sources */,
+				B165EF181BB71EC0008C6F71 /* PeppermintContact.m in Sources */,
 				B17B3D6E1BB6BD13009B8BC5 /* ContactTableViewCell.m in Sources */,
 				B17B3D691BB6BCE5009B8BC5 /* CellFactory.m in Sources */,
 				B17B3D5E1BB6A504009B8BC5 /* ContactsViewController.m in Sources */,
@@ -507,23 +567,31 @@
 		};
 		B17B3D4F1BB6898C009B8BC5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A3AC8DCFCC2ADAD1159483F0 /* Pods-Peppermint.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = Peppermint/PrefixHeader.pch;
 				INFOPLIST_FILE = Peppermint/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
 		B17B3D501BB6898C009B8BC5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C388433C48F87557ED2F3C2D /* Pods-Peppermint.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = Peppermint/PrefixHeader.pch;
 				INFOPLIST_FILE = Peppermint/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

@@ -13,9 +13,9 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GRo-Nl-2Ld">
-                        <rect key="frame" x="8" y="8" width="304" height="78"/>
+                        <rect key="frame" x="8" y="8" width="304" height="59"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="78" id="7Ah-zP-v0q"/>
+                            <constraint firstAttribute="height" constant="59" id="7Ah-zP-v0q"/>
                         </constraints>
                         <string key="text">_No contacts
 habe been found</string>
@@ -24,25 +24,31 @@ habe been found</string>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_defaultstate" translatesAutoresizingMaskIntoConstraints="NO" id="6OV-Bj-hRK">
-                        <rect key="frame" x="91" y="94" width="137" height="137"/>
+                        <rect key="frame" x="91" y="75" width="137" height="137"/>
                         <constraints>
+                            <constraint firstAttribute="width" constant="137" id="1YQ-XR-8NH"/>
                             <constraint firstAttribute="height" constant="137" id="3gV-fs-ElV"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NSp-vo-3VN">
-                        <rect key="frame" x="8" y="239" width="304" height="50"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NSp-vo-3VN">
+                        <rect key="frame" x="8" y="220" width="304" height="69"/>
+                        <string key="text">_Add some friends to your contactbook first
+and then come back to Peppermint</string>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
+                    <constraint firstItem="NSp-vo-3VN" firstAttribute="leading" secondItem="88e-Lp-HvR" secondAttribute="leading" constant="8" id="0Hr-oZ-8qk"/>
                     <constraint firstAttribute="trailing" secondItem="GRo-Nl-2Ld" secondAttribute="trailing" constant="8" id="1gf-OG-c5N"/>
-                    <constraint firstItem="6OV-Bj-hRK" firstAttribute="leading" secondItem="88e-Lp-HvR" secondAttribute="leading" constant="91" id="Our-tk-O7Z"/>
+                    <constraint firstItem="NSp-vo-3VN" firstAttribute="top" secondItem="6OV-Bj-hRK" secondAttribute="bottom" constant="8" id="43t-ER-O6S"/>
+                    <constraint firstAttribute="trailing" secondItem="NSp-vo-3VN" secondAttribute="trailing" constant="8" id="URg-f7-VLQ"/>
                     <constraint firstItem="GRo-Nl-2Ld" firstAttribute="top" secondItem="88e-Lp-HvR" secondAttribute="top" constant="8" id="cTW-RQ-9vg"/>
                     <constraint firstItem="6OV-Bj-hRK" firstAttribute="top" secondItem="GRo-Nl-2Ld" secondAttribute="bottom" constant="8" id="cwe-eB-PNZ"/>
-                    <constraint firstAttribute="trailing" secondItem="6OV-Bj-hRK" secondAttribute="trailing" constant="92" id="hkh-m7-t5h"/>
+                    <constraint firstAttribute="bottom" secondItem="NSp-vo-3VN" secondAttribute="bottom" id="h6m-PC-Swr"/>
+                    <constraint firstAttribute="centerX" secondItem="6OV-Bj-hRK" secondAttribute="centerX" id="iis-4r-zcr"/>
                     <constraint firstItem="GRo-Nl-2Ld" firstAttribute="leading" secondItem="88e-Lp-HvR" secondAttribute="leading" constant="8" id="r3m-NJ-O36"/>
                 </constraints>
             </tableViewCellContentView>
