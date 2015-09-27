@@ -17,6 +17,6 @@
 @interface SendVoiceMessageModel : BaseModel
 @property (strong, nonatomic) PeppermintContact *selectedPeppermintContact;
 @property (weak, nonatomic) id<SendVoiceMessageDelegate> delegate;
--(void) sendVoiceMessageatURL:(NSURL*) url;
+-(void) sendVoiceMessageWithData:(NSData*) data;
 
 @end

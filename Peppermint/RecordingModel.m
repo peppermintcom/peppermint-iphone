@@ -40,7 +40,6 @@
 -(void) initRecordFile {
     NSArray *pathComponents = [NSArray arrayWithObjects: [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"PeppermintMessage.m4a", nil];
     self.fileUrl = [NSURL fileURLWithPathComponents:pathComponents];
-    NSLog(@"File Url: %@", self.fileUrl);
 }
 
 -(void) initRecorder {
@@ -82,9 +81,9 @@
 }
 
 -(void) stop {
-    [recorder stop];
     [timer invalidate];
     timer = nil;
+    [recorder stop];    
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     [audioSession setActive:NO error:nil];
 }

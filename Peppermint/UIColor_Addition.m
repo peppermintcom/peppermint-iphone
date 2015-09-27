@@ -92,6 +92,13 @@
     return color;
 }
 
-
++ (UIColor *) tutorialGreen {
+    static dispatch_once_t onceToken;
+    static UIColor *color;
+    dispatch_once(&onceToken, ^{
+        color = [UIColor colorWithRed:0.235f green:0.741f blue:0.686f alpha:1.00f];
+    });
+    return color;
+}
 
 @end

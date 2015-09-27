@@ -33,6 +33,8 @@
 		B1EF40EE1BB7EAA200042E4B /* SendVoiceMessageEmailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40ED1BB7EAA200042E4B /* SendVoiceMessageEmailModel.m */; };
 		B1EF40F21BB8579D00042E4B /* M13ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40F11BB8579D00042E4B /* M13ProgressView.m */; };
 		B1EF40F51BB857C800042E4B /* M13ProgressViewPie.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40F41BB857C800042E4B /* M13ProgressViewPie.m */; };
+		B1EF40F91BB8782F00042E4B /* SwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40F81BB8782F00042E4B /* SwipeView.m */; };
+		B1EF40FC1BB8786500042E4B /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40FB1BB8786500042E4B /* TutorialViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +97,10 @@
 		B1EF40F11BB8579D00042E4B /* M13ProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M13ProgressView.m; sourceTree = "<group>"; };
 		B1EF40F31BB857C800042E4B /* M13ProgressViewPie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M13ProgressViewPie.h; sourceTree = "<group>"; };
 		B1EF40F41BB857C800042E4B /* M13ProgressViewPie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M13ProgressViewPie.m; sourceTree = "<group>"; };
+		B1EF40F71BB8782F00042E4B /* SwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeView.h; sourceTree = "<group>"; };
+		B1EF40F81BB8782F00042E4B /* SwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeView.m; sourceTree = "<group>"; };
+		B1EF40FA1BB8786500042E4B /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
+		B1EF40FB1BB8786500042E4B /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
 		C388433C48F87557ED2F3C2D /* Pods-Peppermint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peppermint.release.xcconfig"; path = "Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -246,6 +252,7 @@
 		B17B3D551BB689F1009B8BC5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B1EF40F61BB8781D00042E4B /* SwipeView */,
 				B1EF40EF1BB8578200042E4B /* M13ProgressView */,
 				B1EF40E21BB7CE7700042E4B /* Storyboard */,
 				B17B3D6A1BB6BCEC009B8BC5 /* Cell */,
@@ -298,6 +305,8 @@
 			children = (
 				B17B3D591BB6A49E009B8BC5 /* BaseViewController.h */,
 				B17B3D5A1BB6A49E009B8BC5 /* BaseViewController.m */,
+				B1EF40FA1BB8786500042E4B /* TutorialViewController.h */,
+				B1EF40FB1BB8786500042E4B /* TutorialViewController.m */,
 				B17B3D5C1BB6A504009B8BC5 /* ContactsViewController.h */,
 				B17B3D5D1BB6A504009B8BC5 /* ContactsViewController.m */,
 				B17B3D621BB6AE8B009B8BC5 /* RecordingViewController.h */,
@@ -323,6 +332,15 @@
 				B1EF40F41BB857C800042E4B /* M13ProgressViewPie.m */,
 			);
 			name = M13ProgressView;
+			sourceTree = "<group>";
+		};
+		B1EF40F61BB8781D00042E4B /* SwipeView */ = {
+			isa = PBXGroup;
+			children = (
+				B1EF40F71BB8782F00042E4B /* SwipeView.h */,
+				B1EF40F81BB8782F00042E4B /* SwipeView.m */,
+			);
+			name = SwipeView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -478,8 +496,10 @@
 				B17B3D5E1BB6A504009B8BC5 /* ContactsViewController.m in Sources */,
 				B17B3D741BB6C4B0009B8BC5 /* UIColor_Addition.m in Sources */,
 				B17B3D341BB6898C009B8BC5 /* AppDelegate.m in Sources */,
+				B1EF40FC1BB8786500042E4B /* TutorialViewController.m in Sources */,
 				B165EF121BB71A85008C6F71 /* BaseModel.m in Sources */,
 				B17B3D311BB6898C009B8BC5 /* main.m in Sources */,
+				B1EF40F91BB8782F00042E4B /* SwipeView.m in Sources */,
 				B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */,
 				B1EF40F21BB8579D00042E4B /* M13ProgressView.m in Sources */,
 			);

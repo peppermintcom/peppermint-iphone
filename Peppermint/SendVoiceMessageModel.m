@@ -10,8 +10,8 @@
 
 @implementation SendVoiceMessageModel
 
--(void) sendVoiceMessageatURL:(NSURL*) url {
-    NSLog(@"Override this function in a subclass implemntation");
+-(void) sendVoiceMessageWithData:(NSData*) data {
+    NSLog(@"Override this function in a subclass implementation");
 }
 
 @end

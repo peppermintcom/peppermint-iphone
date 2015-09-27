@@ -97,7 +97,7 @@
     _backgroundLayer = [CAShapeLayer layer];
     _backgroundLayer.strokeColor = self.secondaryColor.CGColor;
     _backgroundLayer.fillColor = [UIColor clearColor].CGColor;
-    _backgroundLayer.lineCap = kCALineCapRound;
+    _backgroundLayer.lineCap = kCALineCapSquare;
     _backgroundLayer.lineWidth = _backgroundRingWidth;
     [self.layer addSublayer:_backgroundLayer];
     

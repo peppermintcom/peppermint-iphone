@@ -13,12 +13,11 @@
 
 @implementation SendVoiceMessageEmailModel
 
--(void) sendVoiceMessageatURL:(NSURL*) url {
+-(void) sendVoiceMessageWithData:(NSData*) data {
     EasyMailAlertSender *mailSender = [EasyMailAlertSender easyMail:^(MFMailComposeViewController *controller) {
         [controller setToRecipients:[NSArray arrayWithObject:self.selectedPeppermintContact.communicationChannelAddress]];
         [controller setSubject:LOC(@"Mail Subject",@"Default Mail Subject")];
         [controller setMessageBody:LOC(@"Mail Body",@"Default Mail Body") isHTML:YES];
-        NSData *data = [[NSData alloc] initWithContentsOfURL:url];
         [controller addAttachmentData:data mimeType:@"audio/mp4" fileName:@"Peppermint.m4a"];
     } complete:^(MFMailComposeViewController *controller, MFMailComposeResult result, NSError *error) {
         [controller dismissViewControllerAnimated:YES completion:nil];

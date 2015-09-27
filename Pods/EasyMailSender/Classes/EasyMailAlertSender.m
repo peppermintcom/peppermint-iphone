@@ -28,7 +28,7 @@
         case MFMailComposeResultSaved:
             break;
         case MFMailComposeResultSent: {
-            [self alertWithTitle:nil message:[bundle localizedStringForKey:@"EasyMailSender_Sent" value:@"Mail Sent" table:@"EasyMailSenderLocalizable"]];
+            //[self alertWithTitle:nil message:[bundle localizedStringForKey:@"EasyMailSender_Sent" value:@"Mail Sent" table:@"EasyMailSenderLocalizable"]];
             break;
         }
         case MFMailComposeResultFailed: {

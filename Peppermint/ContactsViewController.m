@@ -16,10 +16,13 @@
 
 @end
 
-@implementation ContactsViewController
+@implementation ContactsViewController {
+    BOOL canDeviceSendEmail;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    canDeviceSendEmail = [SendVoiceMessageEmailModel canDeviceSendEmail];
     self.contactsModel = [ContactsModel new];
     self.contactsModel.delegate = self;
     [self.contactsModel setup];
@@ -77,10 +80,12 @@
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    PeppermintContact *selectedContact = [self.contactsModel.contactList objectAtIndex:indexPath.row];
-    [self.searchContactsTextField resignFirstResponder];
-    if([self shouldPerformSegueWithIdentifier:SEGUE_RECORDING_VIEW_CONTROLLER sender:selectedContact]) {
-        [self performSegueWithIdentifier:SEGUE_RECORDING_VIEW_CONTROLLER sender:selectedContact];
+    if(self.contactsModel.contactList.count > indexPath.row) {
+        PeppermintContact *selectedContact = [self.contactsModel.contactList objectAtIndex:indexPath.row];
+        [self.searchContactsTextField resignFirstResponder];
+        if([self shouldPerformSegueWithIdentifier:SEGUE_RECORDING_VIEW_CONTROLLER sender:selectedContact]) {
+            [self performSegueWithIdentifier:SEGUE_RECORDING_VIEW_CONTROLLER sender:selectedContact];
+        }
     }
 }
 
@@ -109,7 +114,6 @@
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
     if([segue.identifier isEqualToString:SEGUE_RECORDING_VIEW_CONTROLLER]) {
         RecordingViewController *rvc = (RecordingViewController*)segue.destinationViewController;
         PeppermintContact *selectedContact = (PeppermintContact*)sender;
@@ -130,7 +134,7 @@
     if([identifier isEqualToString:SEGUE_RECORDING_VIEW_CONTROLLER]) {
         PeppermintContact *selectedContact = (PeppermintContact*)sender;
         if(selectedContact.communicationChannel == CommunicationChannelEmail) {
-            result = [SendVoiceMessageEmailModel canDeviceSendEmail];
+            result = canDeviceSendEmail;
             if(!result) {
                 NSString *title = LOC(@"Information", @"Information");
                 NSString *message = LOC(@"Please add an email account", @"Email service info");

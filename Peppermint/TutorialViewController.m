@@ -1,0 +1,83 @@
+//
+//  TutorialViewController.m
+//  Peppermint
+//
+//  Created by Okan Kurtulus on 27/09/15.
+//  Copyright (c) 2015 Okan Kurtulus. All rights reserved.
+//
+
+#import "TutorialViewController.h"
+
+#define SEGUE_CONTACTS_VIEW_CONTROLLER  @"ContactsViewControllerSegue"
+#define TAG_IMAGE_VIEW                  1
+#define DURATION                        0.3
+
+@interface TutorialViewController ()
+
+@end
+
+@implementation TutorialViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.items = [NSArray arrayWithObjects:@"tutorial1",@"tutorial2",@"tutorial3",@"_NEXPAGE_", nil];
+    self.swipeView.backgroundColor = [UIColor tutorialGreen];
+}
+
+#pragma mark - SwipeView Delegate
+
+- (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView {
+    return self.items.count;
+}
+
+- (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
+{
+    if(index == self.items.count -1) {
+        [self performSegueWithIdentifier:SEGUE_CONTACTS_VIEW_CONTROLLER sender:self];
+    }
+    
+    UIImageView *imageView = nil;
+    if (view == nil) {
+        view = [[UIView alloc] initWithFrame:self.swipeView.bounds];
+        view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        
+        imageView = [[UIImageView alloc] initWithFrame:view.bounds];
+        imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        imageView.backgroundColor = [UIColor clearColor];
+        imageView.tag = TAG_IMAGE_VIEW;
+        [view addSubview:imageView];
+    }
+    else
+    {
+        imageView = (UIImageView *)[view viewWithTag:TAG_IMAGE_VIEW];
+    }
+    imageView.image = [UIImage imageNamed:[self.items objectAtIndex:index]];
+    
+    
+    [self.page1Button setSelected:(index == 0)];
+    [self.page2Button setSelected:(index == 1)];
+    [self.page3Button setSelected:(index == 2)];
+    
+    return view;
+}
+
+- (CGSize)swipeViewItemSize:(SwipeView *)swipeView
+{
+    return self.swipeView.bounds.size;
+}
+
+#pragma mark - Button Actions
+
+-(IBAction)page1ButtonPressed:(id)sender {
+    [self.swipeView scrollToPage:0 duration:DURATION];
+}
+
+-(IBAction)page2ButtonPressed:(id)sender {
+    [self.swipeView scrollToPage:1 duration:DURATION];
+}
+
+-(IBAction)page3ButtonPressed:(id)sender {
+    [self.swipeView scrollToPage:2 duration:DURATION];
+}
+
+@end

@@ -11,7 +11,7 @@
 #import "SendVoiceMessageModel.h"
 #import "M13ProgressViewPie.h"
 
-@interface RecordingViewController : BaseViewController <RecordingModelDelegate, SendVoiceMessageDelegate>
+@interface RecordingViewController : BaseViewController <RecordingModelDelegate, SendVoiceMessageDelegate, UIAlertViewDelegate>
 @property (strong, nonatomic) RecordingModel *recordingModel;
 @property (strong, nonatomic) SendVoiceMessageModel *sendVoiceMessageModel;
 
