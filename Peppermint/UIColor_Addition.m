@@ -65,5 +65,15 @@
     return color;
 }
 
++ (UIColor *) recordingNavigationsubTitleGreen {
+    static dispatch_once_t onceToken;
+    static UIColor *color;
+    dispatch_once(&onceToken, ^{
+        color = [UIColor colorWithRed:0.000f green:0.455f blue:0.420f alpha:1.00f];
+    });
+    return color;
+}
+
+
 
 @end

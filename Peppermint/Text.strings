@@ -15,3 +15,11 @@
 "An error occured" = "An error occured";
 "Access rights explanation" = "To be able to use Peppermint you should give access to your contacts. You can change the access rights from the settings page of your device.";
 "Information" = "Information";
+"Recording is not acitve" = "Recording is not acitve";
+"Recording is already acitve" = "Recording is already acitve";
+"Record Message" = "Record Message";
+"for ContactNameSurname" = "for %@";
+"SMS is not implemented" = "SMS functionality is not implemented yet";
+"Information" = "Information";
+"Could not resume" = "Could not resume the recording";
+"Could not start record" = "Could not start recording";

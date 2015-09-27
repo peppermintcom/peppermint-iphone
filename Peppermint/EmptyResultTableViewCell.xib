@@ -13,9 +13,9 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GRo-Nl-2Ld">
-                        <rect key="frame" x="8" y="8" width="304" height="59"/>
+                        <rect key="frame" x="8" y="8" width="304" height="45"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="59" id="7Ah-zP-v0q"/>
+                            <constraint firstAttribute="height" constant="45" id="7Ah-zP-v0q"/>
                         </constraints>
                         <string key="text">_No contacts
 habe been found</string>
@@ -24,14 +24,17 @@ habe been found</string>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_defaultstate" translatesAutoresizingMaskIntoConstraints="NO" id="6OV-Bj-hRK">
-                        <rect key="frame" x="91" y="75" width="137" height="137"/>
+                        <rect key="frame" x="91" y="61" width="137" height="137"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="137" id="1YQ-XR-8NH"/>
                             <constraint firstAttribute="height" constant="137" id="3gV-fs-ElV"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NSp-vo-3VN">
-                        <rect key="frame" x="8" y="220" width="304" height="69"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NSp-vo-3VN">
+                        <rect key="frame" x="8" y="206" width="304" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="0kY-FN-nTm"/>
+                        </constraints>
                         <string key="text">_Add some friends to your contactbook first
 and then come back to Peppermint</string>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -49,8 +52,15 @@ and then come back to Peppermint</string>
                     <constraint firstItem="6OV-Bj-hRK" firstAttribute="top" secondItem="GRo-Nl-2Ld" secondAttribute="bottom" constant="8" id="cwe-eB-PNZ"/>
                     <constraint firstAttribute="bottom" secondItem="NSp-vo-3VN" secondAttribute="bottom" id="h6m-PC-Swr"/>
                     <constraint firstAttribute="centerX" secondItem="6OV-Bj-hRK" secondAttribute="centerX" id="iis-4r-zcr"/>
+                    <constraint firstItem="6OV-Bj-hRK" firstAttribute="top" secondItem="GRo-Nl-2Ld" secondAttribute="bottom" constant="8" id="mv5-ge-XCx"/>
                     <constraint firstItem="GRo-Nl-2Ld" firstAttribute="leading" secondItem="88e-Lp-HvR" secondAttribute="leading" constant="8" id="r3m-NJ-O36"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="cwe-eB-PNZ"/>
+                        <exclude reference="h6m-PC-Swr"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="footerLabel" destination="NSp-vo-3VN" id="I1U-E3-mAB"/>

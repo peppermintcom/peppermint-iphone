@@ -16,5 +16,6 @@
 + (UIColor *) viaInformationLabelTextGreen;
 + (UIColor *) textFieldTintGreen;
 + (UIColor *) emptyResultTableViewCellHeaderLabelTextcolorGray;
++ (UIColor *) recordingNavigationsubTitleGreen;
 
 @end

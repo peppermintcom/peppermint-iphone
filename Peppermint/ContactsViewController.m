@@ -7,6 +7,8 @@
 //
 
 #import "ContactsViewController.h"
+#import "RecordingViewController.h"
+#import "SendVoiceMessageEmailModel.h"
 
 #define SEGUE_RECORDING_VIEW_CONTROLLER @"RecordingViewControllerSegue"
 
@@ -21,7 +23,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     isFirstOpen = YES;
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"colorfill"]];
     self.contactsModel = [ContactsModel new];
     self.contactsModel.delegate = self;
     self.searchContactsTextField.text = self.contactsModel.filterText;
@@ -81,7 +82,11 @@
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:SEGUE_RECORDING_VIEW_CONTROLLER sender:self];
+    PeppermintContact *selectedContact = [self.contactsModel.contactList objectAtIndex:indexPath.row];
+    [self.searchContactsTextField resignFirstResponder];
+    if([self shouldPerformSegueWithIdentifier:SEGUE_RECORDING_VIEW_CONTROLLER sender:selectedContact]) {
+        [self performSegueWithIdentifier:SEGUE_RECORDING_VIEW_CONTROLLER sender:selectedContact];
+    }
 }
 
 #pragma mark - TextField
@@ -111,8 +116,32 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     if([segue.identifier isEqualToString:SEGUE_RECORDING_VIEW_CONTROLLER]) {
-        NSLog(@"Start Recording...");
+        RecordingViewController *rvc = (RecordingViewController*)segue.destinationViewController;
+        PeppermintContact *selectedContact = (PeppermintContact*)sender;
+        
+        if(selectedContact.communicationChannel == CommunicationChannelEmail) {
+            SendVoiceMessageEmailModel *sendVoiceMessageEmailModel = [SendVoiceMessageEmailModel new];
+            sendVoiceMessageEmailModel.selectedPeppermintContact = selectedContact;
+            rvc.sendVoiceMessageModel = sendVoiceMessageEmailModel;
+        } else if (selectedContact.communicationChannel == CommunicationChannelSMS) {
+            NSLog(@"SMS functionality is not implemented yet");
+        }
     }
+}
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    BOOL result = YES;    
+    if([identifier isEqualToString:SEGUE_RECORDING_VIEW_CONTROLLER]) {
+        PeppermintContact *selectedContact = (PeppermintContact*)sender;
+        if (selectedContact.communicationChannel == CommunicationChannelSMS) {
+            result = NO;
+            NSString *title = LOC(@"Information", @"Information");
+            NSString *message = LOC(@"SMS is not implemented", @"SMS implementation info");
+            NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
+            [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
+        }
+    }
+    return result;
 }
 
 @end

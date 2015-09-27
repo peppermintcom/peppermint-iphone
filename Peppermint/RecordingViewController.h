@@ -7,8 +7,27 @@
 //
 
 #import "BaseViewController.h"
+#import "RecordingModel.h"
+#import "SendVoiceMessageModel.h"
 
-@interface RecordingViewController : BaseViewController
+@interface RecordingViewController : BaseViewController <RecordingModelDelegate>
+@property (strong, nonatomic) RecordingModel *recordingModel;
+@property (strong, nonatomic) SendVoiceMessageModel *sendVoiceMessageModel;
 
+@property (weak, nonatomic) IBOutlet UILabel *navigationTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *navigationSubTitleLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *counterLabel;
+
+@property (weak, nonatomic) IBOutlet UIView *seperatorView;
+@property (weak, nonatomic) IBOutlet UIButton *rerecordButton;
+@property (weak, nonatomic) IBOutlet UIButton *resumeButton;
+@property (weak, nonatomic) IBOutlet UIButton *pauseButton;
+
+-(IBAction)rerecordButtonPressed:(id)sender;
+-(IBAction)resumeButtonPressed:(id)sender;
+-(IBAction)pauseButtonPressed:(id)sender;
 -(IBAction)backButtonPressed:(id)sender;
+
+-(IBAction)sendButtonPressed:(id)sender;
 @end
