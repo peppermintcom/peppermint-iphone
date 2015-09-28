@@ -191,11 +191,40 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="dzJ-Zo-rhC"/>
                                 </connections>
                             </tableView>
+                            <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xd7-a5-1Sz" userLabel="LoadingView">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <subviews>
+                                    <view alpha="0.39999999999999963" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qag-2F-TZf">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                        <color key="backgroundColor" red="0.3411764706" green="0.72941176470000002" blue="0.57254901960000004" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_loading_contacts" translatesAutoresizingMaskIntoConstraints="NO" id="aHr-R1-Ob8">
+                                        <rect key="frame" x="137" y="119" width="140" height="140"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="140" id="bZk-c3-tLe"/>
+                                            <constraint firstAttribute="width" constant="140" id="knz-7h-hUp"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="aHr-R1-Ob8" secondAttribute="centerX" id="0XF-Bb-tRd"/>
+                                    <constraint firstItem="Qag-2F-TZf" firstAttribute="leading" secondItem="xd7-a5-1Sz" secondAttribute="leading" id="1Zz-Qp-t7z"/>
+                                    <constraint firstAttribute="bottom" secondItem="Qag-2F-TZf" secondAttribute="bottom" id="3aF-Og-QON"/>
+                                    <constraint firstItem="aHr-R1-Ob8" firstAttribute="top" secondItem="xd7-a5-1Sz" secondAttribute="top" constant="119" id="JOx-Kw-eeZ"/>
+                                    <constraint firstItem="Qag-2F-TZf" firstAttribute="top" secondItem="xd7-a5-1Sz" secondAttribute="top" id="OaH-rS-FCz"/>
+                                    <constraint firstAttribute="trailing" secondItem="Qag-2F-TZf" secondAttribute="trailing" id="rqH-pM-Rq7"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="BhH-Ju-VVT" secondAttribute="bottom" id="11Q-5a-Iz0"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="xd7-a5-1Sz" secondAttribute="bottom" id="5Fu-3q-xF7"/>
+                            <constraint firstItem="xd7-a5-1Sz" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="5ef-s0-0Qk"/>
                             <constraint firstItem="BhH-Ju-VVT" firstAttribute="top" secondItem="Dr5-gj-0ac" secondAttribute="bottom" id="9Tv-Gz-71J"/>
+                            <constraint firstAttribute="trailing" secondItem="xd7-a5-1Sz" secondAttribute="trailing" id="Fgx-k2-ZEs"/>
+                            <constraint firstItem="xd7-a5-1Sz" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="HOg-GJ-ajo"/>
                             <constraint firstItem="Dr5-gj-0ac" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="JH5-XW-Yhq"/>
                             <constraint firstItem="BhH-Ju-VVT" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="NVe-3o-jcT"/>
                             <constraint firstAttribute="trailing" secondItem="Dr5-gj-0ac" secondAttribute="trailing" id="adM-Jn-qH0"/>
@@ -205,6 +234,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="QX1-I9-fmL"/>
                     <connections>
+                        <outlet property="loadingView" destination="xd7-a5-1Sz" id="anx-3W-hck"/>
                         <outlet property="searchContactsTextField" destination="uAf-dO-WUM" id="nA1-4S-XXK"/>
                         <outlet property="tableView" destination="BhH-Ju-VVT" id="B8Q-tY-IdA"/>
                         <segue destination="72p-Nj-Mys" kind="show" identifier="RecordingViewControllerSegue" id="U7X-PO-uZJ"/>
@@ -260,7 +290,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_for Bob Adams" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ec0-0X-HbZ">
                                         <rect key="frame" x="97" y="38" width="221" height="26"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -356,7 +386,7 @@
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KTd-Hk-2oP" userLabel="SeperatorView">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                                        <color key="backgroundColor" red="0.12156862745098039" green="0.12941176470588237" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="JEb-dm-7pe"/>
                                         </constraints>
@@ -477,6 +507,7 @@
         <image name="eye" width="18" height="18"/>
         <image name="icon_back" width="22" height="37"/>
         <image name="icon_down" width="9" height="5"/>
+        <image name="icon_loading_contacts" width="275" height="275"/>
         <image name="icon_search" width="27" height="27"/>
         <image name="recording_logo" width="402" height="399"/>
         <image name="tap_to_send" width="278" height="50"/>

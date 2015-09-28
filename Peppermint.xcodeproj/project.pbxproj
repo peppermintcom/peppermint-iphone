@@ -252,10 +252,10 @@
 		B17B3D551BB689F1009B8BC5 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				B1EF40F61BB8781D00042E4B /* SwipeView */,
-				B1EF40EF1BB8578200042E4B /* M13ProgressView */,
 				B1EF40E21BB7CE7700042E4B /* Storyboard */,
 				B17B3D6A1BB6BCEC009B8BC5 /* Cell */,
+				B1EF40EF1BB8578200042E4B /* M13ProgressView */,
+				B1EF40F61BB8781D00042E4B /* SwipeView */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -394,7 +394,6 @@
 				TargetAttributes = {
 					B17B3D2A1BB6898C009B8BC5 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = 54PM5VBJ3C;
 					};
 					B17B3D431BB6898C009B8BC5 = {
 						CreatedOnToolsVersion = 6.4;

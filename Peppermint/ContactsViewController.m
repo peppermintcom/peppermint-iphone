@@ -30,6 +30,7 @@
     self.searchContactsTextField.placeholder = LOC(@"Search for Contacts", @"Placeholder text");
     self.searchContactsTextField.tintColor = [UIColor textFieldTintGreen];
     self.searchContactsTextField.delegate = self;
+    self.loadingView.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -94,6 +95,7 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     self.contactsModel.filterText = [textField.text stringByReplacingCharactersInRange:range withString:string];
     textField.text = self.contactsModel.filterText;
+    //self.loadingView.hidden = NO;
     [self.contactsModel refreshContactList];
     return NO;
 }
@@ -108,6 +110,7 @@
 }
 
 -(void) contactListRefreshed {
+    //self.loadingView.hidden = YES;
     [self.tableView reloadData];
 }
 

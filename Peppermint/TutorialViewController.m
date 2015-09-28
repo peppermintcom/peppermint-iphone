@@ -46,6 +46,12 @@
         imageView.backgroundColor = [UIColor clearColor];
         imageView.tag = TAG_IMAGE_VIEW;
         [view addSubview:imageView];
+        
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.frame = view.bounds;
+        button.backgroundColor = [UIColor clearColor];
+        [button addTarget:self action:@selector(imageButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+        [view addSubview:button];
     }
     else
     {
@@ -78,6 +84,10 @@
 
 -(IBAction)page3ButtonPressed:(id)sender {
     [self.swipeView scrollToPage:2 duration:DURATION];
+}
+
+-(void) imageButtonTapped {
+    [self.swipeView scrollByNumberOfItems:1 duration:DURATION];
 }
 
 @end

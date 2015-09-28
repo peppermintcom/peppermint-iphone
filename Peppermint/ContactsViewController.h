@@ -14,5 +14,6 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *searchContactsTextField;
+@property (weak, nonatomic) IBOutlet UIView *loadingView;
 
 @end
