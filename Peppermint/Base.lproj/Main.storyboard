@@ -462,20 +462,23 @@
                             <constraint firstItem="Q8d-aX-Zzs" firstAttribute="top" secondItem="5Fg-2m-Bqw" secondAttribute="bottom" constant="8" id="2LJ-cU-IvI"/>
                             <constraint firstAttribute="trailing" secondItem="wBp-tO-dh3" secondAttribute="trailing" id="8Ea-W2-b7Q"/>
                             <constraint firstItem="5Fg-2m-Bqw" firstAttribute="top" secondItem="BtP-te-qTt" secondAttribute="topMargin" id="GkR-Sd-QtT"/>
-                            <constraint firstItem="DDk-IO-9d3" firstAttribute="top" secondItem="5Fg-2m-Bqw" secondAttribute="bottom" constant="32" id="GtY-9E-Ndn"/>
-                            <constraint firstItem="5Fg-2m-Bqw" firstAttribute="leading" secondItem="BtP-te-qTt" secondAttribute="leadingMargin" constant="-16" id="NPY-sw-bd7"/>
+                            <constraint firstItem="DDk-IO-9d3" firstAttribute="top" relation="greaterThanOrEqual" secondItem="5Fg-2m-Bqw" secondAttribute="bottom" constant="10" id="GtY-9E-Ndn"/>
+                            <constraint firstItem="DDk-IO-9d3" firstAttribute="top" secondItem="5Fg-2m-Bqw" secondAttribute="bottom" priority="750" constant="32" id="OPD-PF-xQn"/>
                             <constraint firstAttribute="centerX" secondItem="AeY-zM-M6P" secondAttribute="centerX" id="QGd-Ne-kBh"/>
                             <constraint firstItem="Q8d-aX-Zzs" firstAttribute="leading" secondItem="BtP-te-qTt" secondAttribute="leading" constant="16" id="RsZ-mp-Ftb"/>
                             <constraint firstItem="wBp-tO-dh3" firstAttribute="top" secondItem="Q8d-aX-Zzs" secondAttribute="bottom" constant="8" id="Sdy-Hr-JYd"/>
                             <constraint firstAttribute="centerX" secondItem="mIn-yH-lj8" secondAttribute="centerX" id="Vse-jX-fpJ"/>
                             <constraint firstItem="IZW-Qj-bwP" firstAttribute="top" secondItem="wBp-tO-dh3" secondAttribute="bottom" id="W60-qR-WQa"/>
                             <constraint firstItem="wBp-tO-dh3" firstAttribute="leading" secondItem="BtP-te-qTt" secondAttribute="leading" id="dIr-h7-Xfx"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="5Fg-2m-Bqw" secondAttribute="trailing" constant="-16" id="duL-cd-HhP"/>
-                            <constraint firstItem="AeY-zM-M6P" firstAttribute="top" secondItem="DDk-IO-9d3" secondAttribute="bottom" constant="31" id="e2A-Vl-X3P"/>
+                            <constraint firstItem="AeY-zM-M6P" firstAttribute="top" secondItem="DDk-IO-9d3" secondAttribute="bottom" priority="750" constant="31" id="e2A-Vl-X3P"/>
                             <constraint firstItem="DDk-IO-9d3" firstAttribute="leading" secondItem="BtP-te-qTt" secondAttribute="leadingMargin" id="kCh-Rz-bO2"/>
                             <constraint firstItem="DDk-IO-9d3" firstAttribute="trailing" secondItem="BtP-te-qTt" secondAttribute="trailingMargin" id="mR9-2s-I9O"/>
+                            <constraint firstAttribute="trailing" secondItem="5Fg-2m-Bqw" secondAttribute="trailing" id="phc-Go-OhK"/>
+                            <constraint firstItem="5Fg-2m-Bqw" firstAttribute="leading" secondItem="BtP-te-qTt" secondAttribute="leading" id="qCD-qW-64u"/>
                             <constraint firstItem="mIn-yH-lj8" firstAttribute="top" secondItem="AeY-zM-M6P" secondAttribute="bottom" constant="26" id="u2n-0D-lH8"/>
                             <constraint firstAttribute="trailing" secondItem="Q8d-aX-Zzs" secondAttribute="trailing" constant="16" id="uXf-Wc-xr4"/>
+                            <constraint firstItem="AeY-zM-M6P" firstAttribute="top" relation="greaterThanOrEqual" secondItem="DDk-IO-9d3" secondAttribute="bottom" constant="10" id="vQq-oG-gbR"/>
+                            <constraint firstItem="wBp-tO-dh3" firstAttribute="top" relation="greaterThanOrEqual" secondItem="mIn-yH-lj8" secondAttribute="bottom" constant="20" id="wLv-Pg-JWI"/>
                         </constraints>
                     </view>
                     <connections>
