@@ -4,6 +4,8 @@
 target 'Peppermint' do
 pod 'APAddressBook'
 pod 'EasyMailSender'
+pod 'Fabric'
+pod 'Crashlytics'
 end
 
 target 'PeppermintTests' do

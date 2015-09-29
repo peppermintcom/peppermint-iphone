@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EE12F4C18374A0C92E8CF6AF"
+               BlueprintIdentifier = "BCEA205BF7EDB91122BBE5F4"
                BuildableName = "libAPAddressBook.a"
                BlueprintName = "APAddressBook"
                ReferencedContainer = "container:Pods.xcodeproj">

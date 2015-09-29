@@ -355,6 +355,7 @@
 				B17B3D281BB6898C009B8BC5 /* Frameworks */,
 				B17B3D291BB6898C009B8BC5 /* Resources */,
 				99E5888A4AEAE0B8E8705C03 /* Copy Pods Resources */,
+				B12FD6C61BB98E9B007CBA31 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -394,6 +395,7 @@
 				TargetAttributes = {
 					B17B3D2A1BB6898C009B8BC5 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = D6D5362XU9;
 					};
 					B17B3D431BB6898C009B8BC5 = {
 						CreatedOnToolsVersion = 6.4;
@@ -458,6 +460,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		B12FD6C61BB98E9B007CBA31 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" b0f9447ce570c6a59d66e84fd53f91a0fadc63cc de219f36d61063c1e338d39f9fe3a31f1860ef71964ea41cce98a4a3d2dcabb5";
 		};
 		BA057164F91858255C6D867A /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
