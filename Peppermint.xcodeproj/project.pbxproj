@@ -710,7 +710,7 @@
 				INFOPLIST_FILE = Peppermint/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "073f4ba9-413c-46de-bfa1-de4a4dd7f359";
 			};
 			name = Debug;
 		};
@@ -725,7 +725,7 @@
 				INFOPLIST_FILE = Peppermint/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "073f4ba9-413c-46de-bfa1-de4a4dd7f359";
 			};
 			name = Release;
 		};

@@ -58,6 +58,7 @@
 - (void) refreshRecentContactList {
     self.searchContactsTextField.text = self.contactsModel.filterText = @"";
     activeCellTag = CELL_TAG_RECENT_CONTACTS;
+    [self.searchContactsTextField becomeFirstResponder];
     [self.recentContactsModel refreshRecentContactList];
 }
 
@@ -143,7 +144,7 @@
             activeCellTag = CELL_TAG_ALL_CONTACTS;
             [self.contactsModel refreshContactList];
         } else if (textField.text.length == 0) {
-            activeCellTag = CELL_TAG_RECENT_CONTACTS;
+            [self refreshRecentContactList];
         } else {
             [self.contactsModel refreshContactList];
         }
