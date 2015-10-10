@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14F27" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="RecentContact" representedClassName="RecentContact" syncable="YES">
+        <attribute name="avatarImageData" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="communicationChannel" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="communicationChannelAddress" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="contactDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="nameSurname" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="RecentContact" positionX="-63" positionY="-18" width="128" height="120"/>
+    </elements>
+</model>

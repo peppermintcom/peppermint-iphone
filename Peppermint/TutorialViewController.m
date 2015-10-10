@@ -7,6 +7,7 @@
 //
 
 #import "TutorialViewController.h"
+#import "Repository.h"
 
 #define SEGUE_CONTACTS_VIEW_CONTROLLER  @"ContactsViewControllerSegue"
 #define TAG_IMAGE_VIEW                  1

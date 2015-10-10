@@ -8,9 +8,11 @@
 
 #import "BaseViewController.h"
 #import "ContactsModel.h"
+#import "RecentContactsModel.h"
 
-@interface ContactsViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ContactsModelDelegate>
+@interface ContactsViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ContactsModelDelegate, RecentContactsModelDelegate>
 @property (strong, nonatomic) ContactsModel *contactsModel;
+@property (strong, nonatomic) RecentContactsModel *recentContactsModel;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *searchContactsTextField;

@@ -26,6 +26,12 @@
     self.contactsModel = [ContactsModel new];
     self.contactsModel.delegate = self;
     [self.contactsModel setup];
+    self.recentContactsModel = [RecentContactsModel new];
+    self.recentContactsModel.delegate = self;
+    
+    [self.recentContactsModel getRecentContactsAsync];
+    
+    
     self.searchContactsTextField.text = self.contactsModel.filterText;
     self.searchContactsTextField.placeholder = LOC(@"Search for Contacts", @"Placeholder text");
     self.searchContactsTextField.tintColor = [UIColor textFieldTintGreen];
@@ -114,6 +120,18 @@
     [self.tableView reloadData];
 }
 
+#pragma mark - RecentContactsModelDelegate
+
+-(void) recentContactSavedSucessfully:(RecentContact*) recentContact {
+    NSLog(@"Contact saved successfully. %@, %@", recentContact.contactDate, recentContact.nameSurname);
+}
+
+-(void) recentContactsQueried:(NSArray*) recentContactsArray {
+    NSLog(@"queried %d objects", recentContactsArray.count);
+    for(RecentContact *r in recentContactsArray)
+        NSLog(@"%@, %@, %@", r.contactDate, r.nameSurname, r.communicationChannelAddress);
+}
+
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -136,6 +154,11 @@
     BOOL result = YES;    
     if([identifier isEqualToString:SEGUE_RECORDING_VIEW_CONTROLLER]) {
         PeppermintContact *selectedContact = (PeppermintContact*)sender;
+        
+        
+        [self.recentContactsModel saveAsync:selectedContact];
+        
+        
         if(selectedContact.communicationChannel == CommunicationChannelEmail) {
             result = canDeviceSendEmail;
             if(!result) {
