@@ -6,7 +6,6 @@ pod 'APAddressBook'
 pod 'EasyMailSender'
 pod 'Fabric'
 pod 'Crashlytics'
-pod 'REMenu', '~> 1.10'
 end
 
 target 'PeppermintTests' do

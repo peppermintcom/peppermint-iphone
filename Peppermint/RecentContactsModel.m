@@ -8,12 +8,19 @@
 
 #import "RecentContactsModel.h"
 
-//#define DBQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
-#define DBQueue dispatch_get_main_queue()
+#define DBQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
 
 @implementation RecentContactsModel
 
--(void) saveAsync:(PeppermintContact*) peppermintContact {
+-(id) init {
+    self = [super init];
+    if(self) {
+        self.contactList = [NSMutableArray new];
+    }
+    return self;
+}
+
+-(void) save:(PeppermintContact*) peppermintContact {
     dispatch_async(DBQueue, ^() {
         Repository *repository = [Repository beginTransaction];
         NSArray *matchedRecentContacts = [repository getResultsFromEntity:[RecentContact class] predicateOrNil:[self recentContactPredicate:peppermintContact]];
@@ -31,8 +38,7 @@
 }
 
 -(NSPredicate*) recentContactPredicate:(PeppermintContact*) peppermintContact {
-
-    return [NSPredicate predicateWithFormat:@"self.nameSurname MATCHES %@ AND self.communicationChannelAddress MATCHES %@ AND self.communicationChannel = %@ ",
+    return [NSPredicate predicateWithFormat:@"self.nameSurname CONTAINS %@ AND self.communicationChannelAddress CONTAINS %@ AND self.communicationChannel = %@ ",
             peppermintContact.nameSurname,
             peppermintContact.communicationChannelAddress,
             [NSNumber numberWithInt:peppermintContact.communicationChannel]
@@ -55,11 +61,12 @@
 -(void) updateRecentContact:(RecentContact*) recentContact inRepository:(Repository*) repository {
     recentContact.contactDate = [NSDate new];
     NSError *err = [repository endTransaction];
+    PeppermintContact *peppermintContact = [self peppermintContactWithRecentContact:recentContact];
     dispatch_async(dispatch_get_main_queue(), ^{
         if(err) {
             [self.delegate operationFailure:err];
         } else {
-            [self.delegate recentContactSavedSucessfully:recentContact];
+            [self.delegate recentPeppermintContactSavedSucessfully:peppermintContact];
         }
     });
 }
@@ -76,19 +83,35 @@
         if(err) {
             [self.delegate operationFailure:err];
         } else {
-            [self.delegate recentContactSavedSucessfully:recentContact];
+            [self.delegate recentPeppermintContactSavedSucessfully:peppermintContact];
         }
     });
 }
 
--(void) getRecentContactsAsync {
+-(void) refreshRecentContactList {
     dispatch_async(DBQueue, ^{
         Repository *repository = [Repository beginTransaction];
         NSArray *recentContactsArray = [repository getResultsFromEntity:[RecentContact class] predicateOrNil:nil ascSortStringOrNil:nil descSortStringOrNil:[NSArray arrayWithObjects:@"contactDate", nil]];
+        
+        NSMutableArray *recentPeppermintContacts = [NSMutableArray new];
+        for(RecentContact *recentContact in recentContactsArray) {
+            [recentPeppermintContacts addObject:[self peppermintContactWithRecentContact:recentContact]];
+        }
+        self.contactList = recentPeppermintContacts;
+        
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.delegate recentContactsQueried:recentContactsArray];
+            [self.delegate recentPeppermintContactsRefreshed];
         });
     });
+}
+
+- (PeppermintContact*) peppermintContactWithRecentContact:(RecentContact*) recentContact {
+    PeppermintContact *peppermintContact = [PeppermintContact new];
+    peppermintContact.avatarImage = [UIImage imageWithData:recentContact.avatarImageData];
+    peppermintContact.nameSurname = recentContact.nameSurname;
+    peppermintContact.communicationChannelAddress = recentContact.communicationChannelAddress;
+    peppermintContact.communicationChannel = !recentContact.communicationChannel ? -1 : recentContact.communicationChannel.intValue;
+    return peppermintContact;
 }
 
 @end

@@ -27,6 +27,7 @@
             error = [NSError errorWithDomain:LOC(@"An error occured",@"Unknown Error Message") code:0 userInfo:nil];
             [self.delegate operationFailure:error];
         } else if (result == MFMailComposeResultSent) {
+            [super sendVoiceMessageWithData:data];
             [self.delegate messageSentWithSuccess];
         }
     }];

@@ -12,12 +12,14 @@
 
 @protocol RecentContactsModelDelegate <BaseModelDelegate>
 @optional
--(void) recentContactSavedSucessfully:(RecentContact*) recentContact;
--(void) recentContactsQueried:(NSArray*) recentContactsArray;
+-(void) recentPeppermintContactsRefreshed;
+-(void) recentPeppermintContactSavedSucessfully:(PeppermintContact*) recentContact;
 @end
 
 @interface RecentContactsModel : BaseModel
 @property (weak, nonatomic) id<RecentContactsModelDelegate> delegate;
--(void) saveAsync:(PeppermintContact*) peppermintContact;
--(void) getRecentContactsAsync;
+@property (strong, nonatomic) NSMutableArray *contactList;
+
+-(void) save:(PeppermintContact*) peppermintContact;
+-(void) refreshRecentContactList;
 @end

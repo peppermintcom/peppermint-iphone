@@ -8,10 +8,31 @@
 
 #import "SendVoiceMessageModel.h"
 
-@implementation SendVoiceMessageModel
+@implementation SendVoiceMessageModel {
+    RecentContactsModel *recentContactsModel;
+}
+
+-(id) init {
+    self = [super init];
+    if(self) {
+        recentContactsModel = [RecentContactsModel new];
+        recentContactsModel.delegate = self;
+    }
+    return self;
+}
 
 -(void) sendVoiceMessageWithData:(NSData*) data {
-    NSLog(@"Override this function in a subclass implementation");
+    [recentContactsModel save:self.selectedPeppermintContact];
+}
+
+#pragma mark - RecentContactsModelDelegate
+
+-(void) recentPeppermintContactSavedSucessfully:(PeppermintContact*) recentContact {
+    NSLog(@"%@, %@, Contact is saved to recent", recentContact.nameSurname, recentContact.communicationChannelAddress);
+}
+
+-(void) operationFailure:(NSError*) error {
+    [self.delegate operationFailure:error];
 }
 
 @end

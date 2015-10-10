@@ -191,7 +191,7 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="dzJ-Zo-rhC"/>
                                 </connections>
                             </tableView>
-                            <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xd7-a5-1Sz" userLabel="LoadingView">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xd7-a5-1Sz" userLabel="LoadingView">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <subviews>
                                     <view alpha="0.39999999999999963" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qag-2F-TZf">

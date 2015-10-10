@@ -28,10 +28,6 @@
     [self.contactsModel setup];
     self.recentContactsModel = [RecentContactsModel new];
     self.recentContactsModel.delegate = self;
-    
-    [self.recentContactsModel getRecentContactsAsync];
-    
-    
     self.searchContactsTextField.text = self.contactsModel.filterText;
     self.searchContactsTextField.placeholder = LOC(@"Search for Contacts", @"Placeholder text");
     self.searchContactsTextField.tintColor = [UIColor textFieldTintGreen];
@@ -42,28 +38,43 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     self.contactsModel = nil;
+    self.recentContactsModel = nil;
 }
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.searchContactsTextField becomeFirstResponder];
+    self.loadingView.hidden = NO;
+    [self.recentContactsModel refreshRecentContactList];
+}
+
+#pragma mark - ContactList Logic
+
+- (NSArray*) activeContactList {
+    NSArray *activeContactList = nil;
+    
+    if([self.contactsModel.filterText length] > 0) {
+        activeContactList = self.contactsModel.contactList;
+    } else {
+        activeContactList = self.recentContactsModel.contactList;
+    }
+    return activeContactList;
 }
 
 #pragma mark - UITableView
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.contactsModel.contactList.count == 0 ? 1 : self.contactsModel.contactList.count;
+    return [self activeContactList].count == 0 ? 1 : [self activeContactList].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *preparedCell = nil;
-    if(self.contactsModel.contactList.count == 0) {
+    if([self activeContactList].count == 0) {
         EmptyResultTableViewCell *cell = [CellFactory cellEmptyResultTableViewCellFromTable:tableView forIndexPath:indexPath];
         [cell setVisibiltyOfExplanationLabels:self.contactsModel.filterText.length > 0];
         preparedCell = cell;
-    } else if (indexPath.row < self.contactsModel.contactList.count) {
+    } else if (indexPath.row < [self activeContactList].count) {
         ContactTableViewCell *cell = [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath];
-        PeppermintContact *peppermintContact = [self.contactsModel.contactList objectAtIndex:indexPath.row];
+        PeppermintContact *peppermintContact = [[self activeContactList] objectAtIndex:indexPath.row];
         if(peppermintContact.avatarImage) {
             cell.avatarImageView.image = peppermintContact.avatarImage;
         } else {
@@ -78,7 +89,7 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat height = 0;
-    if(self.contactsModel.contactList.count == 0) {
+    if([self activeContactList].count == 0) {
         height = CELL_HEIGHT_EMPTYRESULT_TABLEVIEWCELL;
     } else {
         height = CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
@@ -87,8 +98,8 @@
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(self.contactsModel.contactList.count > indexPath.row) {
-        PeppermintContact *selectedContact = [self.contactsModel.contactList objectAtIndex:indexPath.row];
+    if([self activeContactList].count > indexPath.row) {
+        PeppermintContact *selectedContact = [[self activeContactList] objectAtIndex:indexPath.row];
         [self.searchContactsTextField resignFirstResponder];
         if([self shouldPerformSegueWithIdentifier:SEGUE_RECORDING_VIEW_CONTROLLER sender:selectedContact]) {
             [self performSegueWithIdentifier:SEGUE_RECORDING_VIEW_CONTROLLER sender:selectedContact];
@@ -116,20 +127,19 @@
 }
 
 -(void) contactListRefreshed {
-    //self.loadingView.hidden = YES;
+    self.loadingView.hidden = YES;
     [self.tableView reloadData];
 }
 
 #pragma mark - RecentContactsModelDelegate
 
--(void) recentContactSavedSucessfully:(RecentContact*) recentContact {
-    NSLog(@"Contact saved successfully. %@, %@", recentContact.contactDate, recentContact.nameSurname);
+-(void) recentPeppermintContactSavedSucessfully:(PeppermintContact*) recentContact {
+    NSLog(@"Contact saved successfully. %@", recentContact.nameSurname);
 }
 
--(void) recentContactsQueried:(NSArray*) recentContactsArray {
-    NSLog(@"queried %d objects", recentContactsArray.count);
-    for(RecentContact *r in recentContactsArray)
-        NSLog(@"%@, %@, %@", r.contactDate, r.nameSurname, r.communicationChannelAddress);
+-(void) recentPeppermintContactsRefreshed {
+    self.loadingView.hidden = YES;
+    [self.tableView reloadData];
 }
 
 #pragma mark - Navigation
@@ -153,12 +163,7 @@
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
     BOOL result = YES;    
     if([identifier isEqualToString:SEGUE_RECORDING_VIEW_CONTROLLER]) {
-        PeppermintContact *selectedContact = (PeppermintContact*)sender;
-        
-        
-        [self.recentContactsModel saveAsync:selectedContact];
-        
-        
+        PeppermintContact *selectedContact = (PeppermintContact*)sender;        
         if(selectedContact.communicationChannel == CommunicationChannelEmail) {
             result = canDeviceSendEmail;
             if(!result) {
