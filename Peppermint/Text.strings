@@ -28,3 +28,9 @@
 "Please add an email account" = "Please add and configure at least one mail account on this device to be able to send voice messages over email";
 "Time is up" = "Time is up!\nYou may tap send to send your message\nor re-record voice message";
 "Message sent with success" = "Your message has been sent successfully";
+"All Contacts" = "All Contacts";
+"Recent Contacts" = "Recent Contacts";
+"Email Contacts" = "Email Contacts";
+"Phone Contacts" = "Phone Contacts";
+"Enter a filter text" = "Your selection can only work with a filter text. Please type a filter text";
+"Mic Access rights explanation" = "To be able to use Peppermint you should give access to your microphone. You can change the access rights from the settings page of your device.";

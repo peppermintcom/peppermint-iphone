@@ -30,4 +30,14 @@
     return cell;
 }
 
++(SearchMenuTableViewCell*) cellSearchMenuTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath {
+    NSString *cellKey = @"SearchMenuTableViewCell";
+    SearchMenuTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellKey];
+    if(!cell) {
+        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:cellKey owner:self options:nil];
+        cell = [topLevelObjects objectAtIndex:0];
+    }
+    return cell;
+}
+
 @end

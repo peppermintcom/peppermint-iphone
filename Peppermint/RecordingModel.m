@@ -21,9 +21,27 @@
         [session setCategory:AVAudioSessionCategoryRecord error:&error];
         if(error) {
             [self.delegate operationFailure:error];
-        } else {
-            [self initRecordFile];
-            [self initRecorder];
+        } else {            
+            AVAudioSession *session = [AVAudioSession sharedInstance];
+            if([session respondsToSelector:@selector(requestRecordPermission:)]) {
+                [session requestRecordPermission:^(BOOL granted) {
+                    self.grantedForMicrophone = granted;
+                    if(granted) {
+                        [self initRecordFile];
+                        [self initRecorder];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self.delegate accessRightsAreSupplied];
+                        });
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self.delegate accessRightsAreNotSupplied];
+                        });
+                    }
+                }];
+            } else {
+                [self initRecordFile];
+                [self initRecorder];
+            }
         }
     }
     return self;

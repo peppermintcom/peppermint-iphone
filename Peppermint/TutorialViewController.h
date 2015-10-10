@@ -8,8 +8,9 @@
 
 #import "BaseViewController.h"
 #import "SwipeView.h"
+#import "ContactsModel.h"
 
-@interface TutorialViewController : BaseViewController <SwipeViewDataSource, SwipeViewDelegate>
+@interface TutorialViewController : BaseViewController <SwipeViewDataSource, SwipeViewDelegate, ContactsModelDelegate>
 
 @property (nonatomic, weak) IBOutlet SwipeView *swipeView;
 @property (nonatomic, strong) NSArray *items;

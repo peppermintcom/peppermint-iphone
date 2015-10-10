@@ -162,6 +162,19 @@
                                             <constraint firstAttribute="width" constant="14" id="0mr-M7-lXB"/>
                                         </constraints>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TG9-kp-9n4" userLabel="SearchButton">
+                                        <rect key="frame" x="325" y="24" width="89" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="89" id="M0l-SF-wga"/>
+                                            <constraint firstAttribute="height" constant="34" id="sqI-fI-OW5"/>
+                                        </constraints>
+                                        <state key="normal">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="searchButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="nG8-TE-chV"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.3411764705882353" green="0.72941176470588232" blue="0.5725490196078431" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -177,7 +190,9 @@
                                     <constraint firstAttribute="bottom" secondItem="5s2-t1-QW3" secondAttribute="bottom" constant="7" id="SxN-64-qvR"/>
                                     <constraint firstItem="5s2-t1-QW3" firstAttribute="leading" secondItem="Dr5-gj-0ac" secondAttribute="leading" constant="10" id="VNr-0L-Pwy"/>
                                     <constraint firstItem="5s2-t1-QW3" firstAttribute="top" secondItem="Dr5-gj-0ac" secondAttribute="top" constant="27" id="XIK-Hj-gIA"/>
+                                    <constraint firstAttribute="trailing" secondItem="TG9-kp-9n4" secondAttribute="trailing" id="azC-Vg-qeA"/>
                                     <constraint firstAttribute="bottom" secondItem="W29-cZ-jxx" secondAttribute="bottom" constant="22" id="e6E-bo-nic"/>
+                                    <constraint firstItem="TG9-kp-9n4" firstAttribute="top" secondItem="Dr5-gj-0ac" secondAttribute="top" constant="24" id="yRC-wJ-WGy"/>
                                     <constraint firstItem="LiB-i9-G5L" firstAttribute="leading" secondItem="uAf-dO-WUM" secondAttribute="trailing" constant="63" id="ywH-tU-eIp"/>
                                     <constraint firstItem="W29-cZ-jxx" firstAttribute="top" secondItem="Dr5-gj-0ac" secondAttribute="top" constant="39" id="zRb-Eu-Qty"/>
                                 </constraints>
@@ -191,7 +206,14 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="dzJ-Zo-rhC"/>
                                 </connections>
                             </tableView>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xd7-a5-1Sz" userLabel="LoadingView">
+                            <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mZU-e0-vbZ" userLabel="SearchMenuView">
+                                <rect key="frame" x="10" y="50" width="394" height="368"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="368" id="PVp-q4-M2r"/>
+                                </constraints>
+                            </view>
+                            <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xd7-a5-1Sz" userLabel="LoadingView">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <subviews>
                                     <view alpha="0.39999999999999963" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qag-2F-TZf">
@@ -220,6 +242,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="BhH-Ju-VVT" secondAttribute="bottom" id="11Q-5a-Iz0"/>
+                            <constraint firstAttribute="trailing" secondItem="mZU-e0-vbZ" secondAttribute="trailing" constant="10" id="1yo-L9-ftw"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="xd7-a5-1Sz" secondAttribute="bottom" id="5Fu-3q-xF7"/>
                             <constraint firstItem="xd7-a5-1Sz" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="5ef-s0-0Qk"/>
                             <constraint firstItem="BhH-Ju-VVT" firstAttribute="top" secondItem="Dr5-gj-0ac" secondAttribute="bottom" id="9Tv-Gz-71J"/>
@@ -228,14 +251,17 @@
                             <constraint firstItem="Dr5-gj-0ac" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="JH5-XW-Yhq"/>
                             <constraint firstItem="BhH-Ju-VVT" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="NVe-3o-jcT"/>
                             <constraint firstAttribute="trailing" secondItem="Dr5-gj-0ac" secondAttribute="trailing" id="adM-Jn-qH0"/>
+                            <constraint firstItem="mZU-e0-vbZ" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="10" id="ea3-pb-tbZ"/>
                             <constraint firstItem="Dr5-gj-0ac" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="gXR-ra-tyE"/>
                             <constraint firstAttribute="trailing" secondItem="BhH-Ju-VVT" secondAttribute="trailing" id="rFy-2n-jE8"/>
+                            <constraint firstItem="mZU-e0-vbZ" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="30" id="sBw-ya-RsJ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="QX1-I9-fmL"/>
                     <connections>
                         <outlet property="loadingView" destination="xd7-a5-1Sz" id="anx-3W-hck"/>
                         <outlet property="searchContactsTextField" destination="uAf-dO-WUM" id="nA1-4S-XXK"/>
+                        <outlet property="searchMenuView" destination="mZU-e0-vbZ" id="zZ2-Yx-Tqe"/>
                         <outlet property="tableView" destination="BhH-Ju-VVT" id="B8Q-tY-IdA"/>
                         <segue destination="72p-Nj-Mys" kind="show" identifier="RecordingViewControllerSegue" id="U7X-PO-uZJ"/>
                     </connections>

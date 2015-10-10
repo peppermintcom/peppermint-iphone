@@ -24,25 +24,35 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>REMenu.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>89780E3661A7C6E3FB85A46E53B30186</key>
+		<key>013D87C13001C643964D7963EA487B17</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BAA88AA54811AA9CE9C2A2BC6EBECCEF</key>
+		<key>287488D31CD08392FE198D2E48C3073E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E848A41B7744CA096D05E13757D5C12B</key>
+		<key>411B7FA31818A8F12E56EE6136471081</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F9B02725B32273462E43DBB15A24B814</key>
+		<key>4D9063A08AE788897C9A55E832FE7A55</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>56718AC47B67CFE1E8C772A48D9481F4</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -45,7 +45,9 @@
     [super viewWillAppear:animated];
     if(isFirstOpen) {
         isFirstOpen = NO;
-        [self rerecordButtonPressed:nil];
+        if(self.recordingModel.grantedForMicrophone) {
+            [self rerecordButtonPressed:nil];
+        }
     }
 }
 
@@ -92,6 +94,17 @@
 }
 
 #pragma mark - RecordingModel Delegate
+
+-(void) accessRightsAreNotSupplied {
+        NSString *title = LOC(@"Information", @"Title Message");
+        NSString *message = LOC(@"Mic Access rights explanation", @"Directives to give access rights") ;
+        NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
+        [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
+}
+
+-(void) accessRightsAreSupplied {
+    [self rerecordButtonPressed:nil];
+}
 
 -(void) timerUpdated:(NSTimeInterval) timeInterval {
     int totalSeconds = (int)timeInterval;

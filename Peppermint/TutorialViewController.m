@@ -23,6 +23,13 @@
     [super viewDidLoad];
     self.items = [NSArray arrayWithObjects:@"tutorial1",@"tutorial2",@"tutorial3",@"_NEXPAGE_", nil];
     self.swipeView.backgroundColor = [UIColor tutorialGreen];
+    [self askUserForContactsReadPermission];
+}
+
+-(void) askUserForContactsReadPermission {
+    ContactsModel* contactsModel = [ContactsModel new];
+    contactsModel.delegate = self;
+    [contactsModel setup];
 }
 
 #pragma mark - SwipeView Delegate
@@ -60,17 +67,18 @@
     }
     imageView.image = [UIImage imageNamed:[self.items objectAtIndex:index]];
     
-    
-    [self.page1Button setSelected:(index == 0)];
-    [self.page2Button setSelected:(index == 1)];
-    [self.page3Button setSelected:(index == 2)];
-    
     return view;
 }
 
 - (CGSize)swipeViewItemSize:(SwipeView *)swipeView
 {
     return self.swipeView.bounds.size;
+}
+
+- (void)swipeViewDidScroll:(SwipeView *)swipeView {
+    [self.page1Button setSelected:(swipeView.currentItemIndex == 0)];
+    [self.page2Button setSelected:(swipeView.currentItemIndex == 1)];
+    [self.page3Button setSelected:(swipeView.currentItemIndex == 2)];
 }
 
 #pragma mark - Button Actions
@@ -89,6 +97,19 @@
 
 -(void) imageButtonTapped {
     [self.swipeView scrollByNumberOfItems:1 duration:DURATION];
+}
+
+#pragma mark - ContactsModelDelegate
+
+-(void) accessRightsAreNotSupplied {
+    NSString *title = LOC(@"Information", @"Title Message");
+    NSString *message = LOC(@"Access rights explanation", @"Directives to give access rights") ;
+    NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
+    [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
+}
+
+-(void) contactListRefreshed {
+    //No need to implement.
 }
 
 @end

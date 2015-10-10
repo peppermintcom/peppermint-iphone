@@ -7,17 +7,20 @@ PODS:
   - Fabric (1.4.1):
     - Fabric/Base (= 1.4.1)
   - Fabric/Base (1.4.1)
+  - REMenu (1.10)
 
 DEPENDENCIES:
   - APAddressBook
   - Crashlytics
   - EasyMailSender
   - Fabric
+  - REMenu (~> 1.10)
 
 SPEC CHECKSUMS:
   APAddressBook: 2c949367b190a993d2cce769a3b20bce8bcf000c
   Crashlytics: a29e4f820aa401482b26043dc5d78adf08ac7573
   EasyMailSender: f50b6b5fa49b47f4b60998a56345600b848f2121
   Fabric: 4f718eeca4c02c7d6f6f4e5f0e5f87c63aa38458
+  REMenu: 30dad195930adf6c5eeb8041e3257aa60bf9fa49
 
 COCOAPODS: 0.38.2

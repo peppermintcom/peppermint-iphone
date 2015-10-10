@@ -96,6 +96,7 @@
         dict[NSUnderlyingErrorKey] = error;
         error = [NSError errorWithDomain:@"Peppermint DB Error" code:9999 userInfo:dict];
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
         
 #ifdef DEBUG
             abort();

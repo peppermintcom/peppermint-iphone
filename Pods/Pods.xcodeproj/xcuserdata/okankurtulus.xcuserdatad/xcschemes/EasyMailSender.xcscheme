@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DDEA019CE34DFDD29C5C35DD"
+               BlueprintIdentifier = "B131CB5F02754EF8DD222E7E"
                BuildableName = "libEasyMailSender.a"
                BlueprintName = "EasyMailSender"
                ReferencedContainer = "container:Pods.xcodeproj">

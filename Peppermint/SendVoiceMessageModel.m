@@ -28,7 +28,7 @@
 #pragma mark - RecentContactsModelDelegate
 
 -(void) recentPeppermintContactSavedSucessfully:(PeppermintContact*) recentContact {
-    NSLog(@"%@, %@, Contact is saved to recent", recentContact.nameSurname, recentContact.communicationChannelAddress);
+    //Contact is saved...
 }
 
 -(void) operationFailure:(NSError*) error {

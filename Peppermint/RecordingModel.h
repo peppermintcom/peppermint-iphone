@@ -11,12 +11,15 @@
 
 @protocol RecordingModelDelegate <BaseModelDelegate>
 @required
+-(void) accessRightsAreNotSupplied;
+-(void) accessRightsAreSupplied;
 -(void) timerUpdated:(NSTimeInterval) timeInterval;
 @end
 
 @interface RecordingModel : BaseModel <AVAudioRecorderDelegate>
 @property (weak, nonatomic) id<RecordingModelDelegate> delegate;
 @property (strong, nonatomic) NSURL *fileUrl;
+@property (nonatomic) BOOL grantedForMicrophone;
 
 -(void) record;
 -(void) pause;

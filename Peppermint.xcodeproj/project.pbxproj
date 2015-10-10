@@ -13,6 +13,8 @@
 		B165EF181BB71EC0008C6F71 /* PeppermintContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF171BB71EC0008C6F71 /* PeppermintContact.m */; };
 		B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF1C1BB72242008C6F71 /* EmptyResultTableViewCell.m */; };
 		B165EF1F1BB72254008C6F71 /* EmptyResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B165EF1E1BB72254008C6F71 /* EmptyResultTableViewCell.xib */; };
+		B179F83A1BC9316F0089D709 /* SearchMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B179F8391BC9316F0089D709 /* SearchMenuTableViewCell.m */; };
+		B179F83C1BC931820089D709 /* SearchMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B179F83B1BC931820089D709 /* SearchMenuTableViewCell.xib */; };
 		B17B3D311BB6898C009B8BC5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D301BB6898C009B8BC5 /* main.m */; };
 		B17B3D341BB6898C009B8BC5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D331BB6898C009B8BC5 /* AppDelegate.m */; };
 		B17B3D3A1BB6898C009B8BC5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D381BB6898C009B8BC5 /* Main.storyboard */; };
@@ -64,6 +66,9 @@
 		B165EF1B1BB72242008C6F71 /* EmptyResultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyResultTableViewCell.h; sourceTree = "<group>"; };
 		B165EF1C1BB72242008C6F71 /* EmptyResultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyResultTableViewCell.m; sourceTree = "<group>"; };
 		B165EF1E1BB72254008C6F71 /* EmptyResultTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyResultTableViewCell.xib; sourceTree = "<group>"; };
+		B179F8381BC9316F0089D709 /* SearchMenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchMenuTableViewCell.h; sourceTree = "<group>"; };
+		B179F8391BC9316F0089D709 /* SearchMenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchMenuTableViewCell.m; sourceTree = "<group>"; };
+		B179F83B1BC931820089D709 /* SearchMenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchMenuTableViewCell.xib; sourceTree = "<group>"; };
 		B17B3D2B1BB6898C009B8BC5 /* Peppermint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peppermint.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B17B3D2F1BB6898C009B8BC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B17B3D301BB6898C009B8BC5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -196,6 +201,16 @@
 			name = EmptyResultTableViewCell;
 			sourceTree = "<group>";
 		};
+		B179F8371BC931340089D709 /* SearchMenuTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				B179F8381BC9316F0089D709 /* SearchMenuTableViewCell.h */,
+				B179F8391BC9316F0089D709 /* SearchMenuTableViewCell.m */,
+				B179F83B1BC931820089D709 /* SearchMenuTableViewCell.xib */,
+			);
+			name = SearchMenuTableViewCell;
+			sourceTree = "<group>";
+		};
 		B17B3D221BB6898C009B8BC5 = {
 			isa = PBXGroup;
 			children = (
@@ -285,6 +300,7 @@
 				B17B3D751BB6C8F4009B8BC5 /* BaseTableViewCell */,
 				B17B3D6B1BB6BCF8009B8BC5 /* ContactTableViewCell */,
 				B165EF1A1BB7221D008C6F71 /* EmptyResultTableViewCell */,
+				B179F8371BC931340089D709 /* SearchMenuTableViewCell */,
 				B17B3D671BB6BCE5009B8BC5 /* CellFactory.h */,
 				B17B3D681BB6BCE5009B8BC5 /* CellFactory.m */,
 			);
@@ -469,6 +485,7 @@
 			files = (
 				B17B3D3A1BB6898C009B8BC5 /* Main.storyboard in Resources */,
 				B17B3D571BB68A39009B8BC5 /* Text.strings in Resources */,
+				B179F83C1BC931820089D709 /* SearchMenuTableViewCell.xib in Resources */,
 				B165EF1F1BB72254008C6F71 /* EmptyResultTableViewCell.xib in Resources */,
 				B17B3D3F1BB6898C009B8BC5 /* LaunchScreen.xib in Resources */,
 				B17B3D701BB6BD2E009B8BC5 /* ContactTableViewCell.xib in Resources */,
@@ -503,7 +520,7 @@
 		};
 		B12FD6C61BB98E9B007CBA31 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -539,6 +556,7 @@
 				B1EF40F51BB857C800042E4B /* M13ProgressViewPie.m in Sources */,
 				B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */,
 				B165EF151BB71A99008C6F71 /* ContactsModel.m in Sources */,
+				B179F83A1BC9316F0089D709 /* SearchMenuTableViewCell.m in Sources */,
 				B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */,
 				B17B3D5B1BB6A49E009B8BC5 /* BaseViewController.m in Sources */,
 				B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */,
@@ -692,7 +710,7 @@
 				INFOPLIST_FILE = Peppermint/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d35acd1b-ce79-496e-bf10-2b9423482593";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -707,7 +725,7 @@
 				INFOPLIST_FILE = Peppermint/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d35acd1b-ce79-496e-bf10-2b9423482593";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

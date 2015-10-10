@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol BaseTableViewCellDelegate <NSObject>
+
+@end
+
 @interface BaseTableViewCell : UITableViewCell
 
 @end

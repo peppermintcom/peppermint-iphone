@@ -12,12 +12,18 @@
 
 #define SEGUE_RECORDING_VIEW_CONTROLLER @"RecordingViewControllerSegue"
 
+#define CELL_TAG_ALL_CONTACTS       1
+#define CELL_TAG_RECENT_CONTACTS    2
+#define CELL_TAG_EMAIL_CONTACTS     3
+#define CELL_TAG_SMS_CONTACTS     4
+
 @interface ContactsViewController ()
 
 @end
 
 @implementation ContactsViewController {
     BOOL canDeviceSendEmail;
+    NSUInteger activeCellTag;
 }
 
 - (void)viewDidLoad {
@@ -32,19 +38,31 @@
     self.searchContactsTextField.placeholder = LOC(@"Search for Contacts", @"Placeholder text");
     self.searchContactsTextField.tintColor = [UIColor textFieldTintGreen];
     self.searchContactsTextField.delegate = self;
+    [self initSearchMenu];
     self.loadingView.hidden = YES;
+    activeCellTag = CELL_TAG_RECENT_CONTACTS;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     self.contactsModel = nil;
     self.recentContactsModel = nil;
+    self.searchMenu = nil;
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    //self.loadingView.hidden = NO;
+    [self refreshRecentContactList];
+}
+
+- (void) refreshRecentContactList {
+    self.searchContactsTextField.text = self.contactsModel.filterText = @"";
+    activeCellTag = CELL_TAG_RECENT_CONTACTS;
+    [self.recentContactsModel refreshRecentContactList];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    self.loadingView.hidden = NO;
-    [self.recentContactsModel refreshRecentContactList];
 }
 
 #pragma mark - ContactList Logic
@@ -52,10 +70,16 @@
 - (NSArray*) activeContactList {
     NSArray *activeContactList = nil;
     
-    if([self.contactsModel.filterText length] > 0) {
-        activeContactList = self.contactsModel.contactList;
-    } else {
+    if(activeCellTag == CELL_TAG_RECENT_CONTACTS) {
         activeContactList = self.recentContactsModel.contactList;
+    } else if (activeCellTag == CELL_TAG_ALL_CONTACTS)   {
+        activeContactList = self.contactsModel.contactList;
+    } else if (activeCellTag == CELL_TAG_EMAIL_CONTACTS) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.communicationChannel == %d", CommunicationChannelEmail];
+        activeContactList = [self.contactsModel.contactList filteredArrayUsingPredicate:predicate];
+    } else if (activeCellTag == CELL_TAG_SMS_CONTACTS) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.communicationChannel == %d", CommunicationChannelSMS];
+        activeContactList = [self.contactsModel.contactList filteredArrayUsingPredicate:predicate];
     }
     return activeContactList;
 }
@@ -110,11 +134,26 @@
 #pragma mark - TextField
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    self.contactsModel.filterText = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    textField.text = self.contactsModel.filterText;
-    //self.loadingView.hidden = NO;
-    [self.contactsModel refreshContactList];
+    if(![string isEqual:@"\n"]) {
+        [self.searchMenu close];
+        self.contactsModel.filterText = [textField.text stringByReplacingCharactersInRange:range withString:string];
+        textField.text = self.contactsModel.filterText;
+        
+        if(textField.text.length > 0 && activeCellTag == CELL_TAG_RECENT_CONTACTS) {
+            activeCellTag = CELL_TAG_ALL_CONTACTS;
+            [self.contactsModel refreshContactList];
+        } else if (textField.text.length == 0) {
+            activeCellTag = CELL_TAG_RECENT_CONTACTS;
+        } else {
+            [self.contactsModel refreshContactList];
+        }
+    }
     return NO;
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    [self.searchMenu close];
+    return YES;
 }
 
 #pragma mark - ContactsModelDelegate
@@ -140,6 +179,95 @@
 -(void) recentPeppermintContactsRefreshed {
     self.loadingView.hidden = YES;
     [self.tableView reloadData];
+}
+
+#pragma mark - SearchButton
+
+-(IBAction)searchButtonPressed:(id)sender {
+    if(!self.searchMenu.isOpen) {
+        self.searchMenuView.hidden = NO;
+        [self.searchMenu showInView:self.searchMenuView];
+    } else {        
+        [self.searchMenu close];
+    }
+}
+
+#pragma mark - SearchMenu
+
+-(REMenuItem*) createMenuItemWithTitle:(NSString*)title icon:(NSString*)icon iconHighlighted:(NSString*)iconHightlighted cellTag:(NSUInteger)cellTag {
+    SearchMenuTableViewCell *cellView = [CellFactory cellSearchMenuTableViewCellFromTable:nil forIndexPath:nil];
+    cellView.titleLabel.text = title;
+    cellView.iconImageName = icon;
+    cellView.iconHighlightedImageName = iconHightlighted;
+    cellView.cellTag = cellTag;
+    cellView.delegate = self;
+    [cellView setSelected:NO];
+    REMenuItem *reMenuItem = [[REMenuItem alloc] initWithCustomView:cellView];
+    return reMenuItem;
+}
+
+-(void) initSearchMenu {
+    REMenuItem *allContactsMenuItem = [self createMenuItemWithTitle:LOC(@"All Contacts", @"Title")
+                                                               icon:@"icon_search"
+                                                    iconHighlighted:@"icon_search_pressed"
+                                                                cellTag:CELL_TAG_ALL_CONTACTS];
+    
+    REMenuItem *recentContactsMenuItem = [self createMenuItemWithTitle:LOC(@"Recent Contacts", @"Title")
+                                                                 icon:@"icon_star"
+                                                      iconHighlighted:@"icon_star_pressed"
+                                                                  cellTag:CELL_TAG_RECENT_CONTACTS];
+    
+    REMenuItem *emailContactsMenuItem = [self createMenuItemWithTitle:LOC(@"Email Contacts", @"Title")
+                                                               icon:@"icon_email"
+                                                    iconHighlighted:@"icon_email_pressed"
+                                                                cellTag:CELL_TAG_EMAIL_CONTACTS];
+    
+    REMenuItem *smsContactsMenuItem = [self createMenuItemWithTitle:LOC(@"Phone Contacts", @"Title")
+                                                                 icon:@"icon_phone"
+                                                      iconHighlighted:@"icon_phone_pressed"
+                                                                  cellTag:CELL_TAG_SMS_CONTACTS];
+    
+    self.searchMenu = [[REMenu alloc] initWithItems:@[allContactsMenuItem,
+                                                      recentContactsMenuItem,
+                                                      emailContactsMenuItem,
+                                                      smsContactsMenuItem]];
+    
+    self.searchMenu.bounce = NO;
+    self.searchMenu.cornerRadius = 5;
+    self.searchMenu.borderWidth = 0;
+    self.searchMenu.separatorHeight = 0;
+    self.searchMenu.separatorColor = [UIColor cellSeperatorGray];
+    self.searchMenu.closeOnSelection = YES;
+    __weak __typeof__(self) weakSelf = self;
+    self.searchMenu.closeCompletionHandler = ^{
+        weakSelf.searchMenuView.hidden = YES;
+    };
+}
+
+#pragma mark - SearchMenuTableViewCellDelegate
+
+-(void)cellSelectedWithTag:(NSUInteger) cellTag {
+    activeCellTag = cellTag;
+    if(cellTag == CELL_TAG_RECENT_CONTACTS) {
+        [self refreshRecentContactList];
+    } else {
+        [self.contactsModel refreshContactList];
+        if (self.contactsModel.filterText.length == 0) {
+            NSString *title = LOC(@"Information", @"Information");
+            NSString *message = LOC(@"Enter a filter text", @"Enter a filter text");
+            NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
+            [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
+        }
+    }
+    
+    [self.tableView reloadData];
+    [self.searchMenu close];
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    [self.searchContactsTextField becomeFirstResponder];
 }
 
 #pragma mark - Navigation
