@@ -43,6 +43,7 @@
     self.searchContactsTextField.placeholder = LOC(@"Search for Contacts", @"Placeholder text");
     self.searchContactsTextField.tintColor = [UIColor textFieldTintGreen];
     self.searchContactsTextField.delegate = self;
+    self.searchContactsTextField.autocorrectionType = UITextAutocorrectionTypeNo;
     [self initSearchMenu];
     self.loadingView.hidden = YES;
     activeCellTag = CELL_TAG_ALL_CONTACTS;
@@ -57,15 +58,22 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     //self.loadingView.hidden = NO;
     self.searchContactsTextField.text = self.contactsModel.filterText = @"";
     activeCellTag = CELL_TAG_RECENT_CONTACTS;
     [self.recentContactsModel refreshRecentContactList];
+    [self registerKeyboardActions];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.searchContactsTextField becomeFirstResponder];
+}
+
+-(void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self deRegisterKeyboardActions];
 }
 
 #pragma mark - ContactList Logic
@@ -285,6 +293,53 @@
                 break;
         }
     }
+}
+
+#pragma mark - Keyboard Actions
+
+-(void) registerKeyboardActions {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+}
+
+-(void) deRegisterKeyboardActions {
+    [[NSNotificationCenter defaultCenter] removeObserver: self name: UIKeyboardWillShowNotification object: nil];
+    [[NSNotificationCenter defaultCenter] removeObserver: self name: UIKeyboardWillHideNotification object: nil];
+}
+
+-(void) keyboardWillShow:(NSNotification *)notification {
+    CGRect keyboardBounds;
+    [[notification.userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] getValue: &keyboardBounds];
+    
+    CGFloat keyboardHeight = 0;
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    if (orientation == UIInterfaceOrientationPortrait
+        || orientation == UIInterfaceOrientationPortraitUpsideDown) {
+        keyboardHeight = keyboardBounds.size.height;
+    } else {
+        keyboardHeight = keyboardBounds.size.width;
+    }
+    
+    [self.tableView layoutIfNeeded];
+    self.tableViewBottomConstraint.constant = keyboardHeight;
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.tableView layoutIfNeeded];
+    }];
+}
+
+-(void) keyboardWillHide:(NSNotification *)notification {
+    [self.tableView layoutIfNeeded];
+    self.tableViewBottomConstraint.constant = 0;
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.tableView layoutIfNeeded];
+    }];
 }
 
 #pragma mark - Navigation
