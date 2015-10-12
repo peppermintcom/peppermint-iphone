@@ -68,24 +68,20 @@
     addressBook.filterBlock = ^BOOL(APContact *contact)
     {
         return
-        self.filterText.length > 0
-        && [contact.compositeName.lowercaseString containsString:self.filterText.lowercaseString]
-        && (contact.phones.count > 0 || contact.emails.count > 0)
-        ;
+        (contact.phones.count > 0 || contact.emails.count > 0)
+        && ( self.filterText.length == 0
+            || [contact.compositeName.lowercaseString containsString:self.filterText.lowercaseString]
+        );
     };
     [self refreshContactList];
 }
 
 
 -(void) refreshContactList {
-    
-    dispatch_queue_t backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0);
-    [addressBook loadContactsOnQueue:backgroundQueue completion:^(NSArray *contacts, NSError *error)
+    [addressBook loadContacts:^(NSArray *contacts, NSError *error)
     {
         if(error) {
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                [self.delegate operationFailure:error];
-            });
+            [self.delegate operationFailure:error];
         } else {
             NSMutableArray *peppermintContactsArray = [NSMutableArray new];
             for(APContact *contact in contacts) {
@@ -104,13 +100,10 @@
                     peppermintContact.nameSurname = contact.compositeName;
                     peppermintContact.avatarImage = contact.thumbnail;
                     [peppermintContactsArray addObject:peppermintContact];
-                }
-                
+                }                
             }
             self.contactList = peppermintContactsArray;
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                [self.delegate contactListRefreshed];
-            });
+            [self.delegate contactListRefreshed];
         }
     }];
 }

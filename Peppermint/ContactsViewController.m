@@ -24,6 +24,7 @@
 @implementation ContactsViewController {
     BOOL canDeviceSendEmail;
     NSUInteger activeCellTag;
+    NSUInteger cachedActiveCellTag;
 }
 
 - (void)viewDidLoad {
@@ -40,7 +41,8 @@
     self.searchContactsTextField.delegate = self;
     [self initSearchMenu];
     self.loadingView.hidden = YES;
-    activeCellTag = CELL_TAG_RECENT_CONTACTS;
+    activeCellTag = CELL_TAG_ALL_CONTACTS;
+    cachedActiveCellTag = CELL_TAG_ALL_CONTACTS;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -52,10 +54,6 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     //self.loadingView.hidden = NO;
-    [self refreshRecentContactList];
-}
-
-- (void) refreshRecentContactList {
     self.searchContactsTextField.text = self.contactsModel.filterText = @"";
     activeCellTag = CELL_TAG_RECENT_CONTACTS;
     [self.searchContactsTextField becomeFirstResponder];
@@ -81,6 +79,8 @@
     } else if (activeCellTag == CELL_TAG_SMS_CONTACTS) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.communicationChannel == %d", CommunicationChannelSMS];
         activeContactList = [self.contactsModel.contactList filteredArrayUsingPredicate:predicate];
+    } else {
+        activeContactList = [NSArray new];
     }
     return activeContactList;
 }
@@ -140,11 +140,18 @@
         self.contactsModel.filterText = [textField.text stringByReplacingCharactersInRange:range withString:string];
         textField.text = self.contactsModel.filterText;
         
-        if(textField.text.length > 0 && activeCellTag == CELL_TAG_RECENT_CONTACTS) {
+        if(textField.text.length > 0
+           && activeCellTag == CELL_TAG_RECENT_CONTACTS) {
+            cachedActiveCellTag = CELL_TAG_RECENT_CONTACTS;
             activeCellTag = CELL_TAG_ALL_CONTACTS;
-            [self.contactsModel refreshContactList];
-        } else if (textField.text.length == 0) {
-            [self refreshRecentContactList];
+        } else if (textField.text.length == 0
+                   &&cachedActiveCellTag == CELL_TAG_RECENT_CONTACTS ) {
+            cachedActiveCellTag = CELL_TAG_ALL_CONTACTS;
+            activeCellTag = CELL_TAG_RECENT_CONTACTS;
+        }
+        
+        if(activeCellTag == CELL_TAG_RECENT_CONTACTS) {
+            [self.recentContactsModel refreshRecentContactList];
         } else {
             [self.contactsModel refreshContactList];
         }
@@ -248,21 +255,14 @@
 #pragma mark - SearchMenuTableViewCellDelegate
 
 -(void)cellSelectedWithTag:(NSUInteger) cellTag {
+    [self.searchMenu close];
+    self.searchContactsTextField.text = self.contactsModel.filterText = @"";
     activeCellTag = cellTag;
     if(cellTag == CELL_TAG_RECENT_CONTACTS) {
-        [self refreshRecentContactList];
+        [self.recentContactsModel refreshRecentContactList];
     } else {
         [self.contactsModel refreshContactList];
-        if (self.contactsModel.filterText.length == 0) {
-            NSString *title = LOC(@"Information", @"Information");
-            NSString *message = LOC(@"Enter a filter text", @"Enter a filter text");
-            NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
-            [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
-        }
     }
-    
-    [self.tableView reloadData];
-    [self.searchMenu close];
 }
 
 #pragma mark - UIAlertViewDelegate
