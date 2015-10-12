@@ -13,7 +13,7 @@
 "Peppermint" = "Peppermint";
 "Ok" = "Ok";
 "An error occured" = "An error occured";
-"Access rights explanation" = "To be able to use Peppermint you should give access to your contacts. You can change the access rights from the settings page of your device.";
+"Contacts access rights explanation" = "To be able to use Peppermint you should give access to your contacts. You can change the access rights from the settings.";
 "Information" = "Information";
 "Recording is not acitve" = "Recording is not acitve";
 "Recording is already acitve" = "Recording is already acitve";
@@ -33,4 +33,6 @@
 "Email Contacts" = "Email Contacts";
 "Phone Contacts" = "Phone Contacts";
 "Enter a filter text" = "Your selection can only work with a filter text. Please type a filter text";
-"Mic Access rights explanation" = "To be able to use Peppermint you should give access to your microphone. You can change the access rights from the settings page of your device.";
+"Mic Access rights explanation" = "To be able to use Peppermint you should give access to your microphone. You can change the access rights from the settings.";
+"Settings URL is not supported" = "Your iOS version does not support redirecting to Settings Page. Please follow the Home Screen -> Settings -> Peppermint path to change permissions";
+"Settings" = "Settings";

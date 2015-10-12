@@ -22,6 +22,7 @@
 @end
 
 @implementation ContactsViewController {
+    UIAlertView *contactsAlertView;
     BOOL canDeviceSendEmail;
     NSUInteger activeCellTag;
     NSUInteger cachedActiveCellTag;
@@ -29,10 +30,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    canDeviceSendEmail = [SendVoiceMessageEmailModel canDeviceSendEmail];
-    self.contactsModel = [ContactsModel new];
-    self.contactsModel.delegate = self;
-    [self.contactsModel setup];
+    contactsAlertView = nil;
+    canDeviceSendEmail = [SendVoiceMessageEmailModel canDeviceSendEmail];    
+    if(!self.contactsModel) {
+        self.contactsModel = [ContactsModel new];
+        self.contactsModel.delegate = self;
+        [self.contactsModel setup];
+    }
     self.recentContactsModel = [RecentContactsModel new];
     self.recentContactsModel.delegate = self;
     self.searchContactsTextField.text = self.contactsModel.filterText;
@@ -56,12 +60,12 @@
     //self.loadingView.hidden = NO;
     self.searchContactsTextField.text = self.contactsModel.filterText = @"";
     activeCellTag = CELL_TAG_RECENT_CONTACTS;
-    [self.searchContactsTextField becomeFirstResponder];
     [self.recentContactsModel refreshRecentContactList];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [self.searchContactsTextField becomeFirstResponder];
 }
 
 #pragma mark - ContactList Logic
@@ -166,11 +170,15 @@
 
 #pragma mark - ContactsModelDelegate
 
--(void) accessRightsAreNotSupplied {
+-(void) contactsAccessRightsAreNotSupplied {
+    [self.searchContactsTextField resignFirstResponder];
     NSString *title = LOC(@"Information", @"Title Message");
-    NSString *message = LOC(@"Access rights explanation", @"Directives to give access rights") ;
+    NSString *message = LOC(@"Contacts access rights explanation", @"Directives to give access rights") ;
     NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
-    [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
+    NSString *settingsButtonTitle = LOC(@"Settings", @"Settings Message");
+    contactsAlertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:settingsButtonTitle, nil];
+    [contactsAlertView show];
+
 }
 
 -(void) contactListRefreshed {
@@ -268,7 +276,15 @@
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    [self.searchContactsTextField becomeFirstResponder];
+    if(alertView == contactsAlertView) {
+        switch (buttonIndex) {
+            case ALERT_BUTTON_INDEX_OTHER_1:
+                [self redirectToSettingsPageForPermission];
+                break;
+            default:
+                break;
+        }
+    }
 }
 
 #pragma mark - Navigation

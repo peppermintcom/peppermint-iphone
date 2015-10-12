@@ -25,11 +25,27 @@
     [self.navigationController setNavigationBarHidden:YES];
 }
 
+#pragma mark - BaseModelDelegate
+
 -(void) operationFailure:(NSError*) error {
     NSString *title = LOC(@"An error occured", @"Error Title Message");
     NSString *message = error.description;
     NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
     [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
+}
+
+#pragma mark - Settings Page
+
+-(void) redirectToSettingsPageForPermission {
+    if(UIApplicationOpenSettingsURLString != nil) {
+        NSURL *appSettingsUrl = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        [[UIApplication sharedApplication] openURL:appSettingsUrl];
+    } else {
+        NSString *title = LOC(@"Information", @"Title Message");
+        NSString *message = LOC(@"Settings URL is not supported", @"Information Message");
+        NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
+        [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
+    }
 }
 
 @end

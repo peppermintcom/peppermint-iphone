@@ -11,7 +11,7 @@
 
 @protocol RecordingModelDelegate <BaseModelDelegate>
 @required
--(void) accessRightsAreNotSupplied;
+-(void) microphoneAccessRightsAreNotSupplied;
 -(void) accessRightsAreSupplied;
 -(void) timerUpdated:(NSTimeInterval) timeInterval;
 @end

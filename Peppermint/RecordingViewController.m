@@ -12,6 +12,7 @@
 
 @interface RecordingViewController () {
     BOOL isFirstOpen;
+    UIAlertView *microphoneAccessAlertView;
 }
 
 @end
@@ -21,6 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     isFirstOpen = YES;
+    microphoneAccessAlertView = nil;
     assert(self.sendVoiceMessageModel != nil);
     self.navigationTitleLabel.text = LOC(@"Record Message", @"Navigation title");
     self.navigationSubTitleLabel.textColor = [UIColor recordingNavigationsubTitleGreen];
@@ -95,11 +97,13 @@
 
 #pragma mark - RecordingModel Delegate
 
--(void) accessRightsAreNotSupplied {
-        NSString *title = LOC(@"Information", @"Title Message");
-        NSString *message = LOC(@"Mic Access rights explanation", @"Directives to give access rights") ;
-        NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
-        [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
+-(void) microphoneAccessRightsAreNotSupplied {
+    NSString *title = LOC(@"Information", @"Title Message");
+    NSString *message = LOC(@"Mic Access rights explanation", @"Directives to give access rights") ;
+    NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
+    NSString *settingsButtonTitle = LOC(@"Settings", @"Settings Message");
+    microphoneAccessAlertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:settingsButtonTitle, nil];
+    [microphoneAccessAlertView show];
 }
 
 -(void) accessRightsAreSupplied {
@@ -144,7 +148,19 @@
 
 #pragma mark - AlertView Delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if([alertView.message isEqualToString:LOC(@"Message sent with success", @"Message sent information")]) {
+    
+    if(alertView == microphoneAccessAlertView) {
+        switch (buttonIndex) {
+            case ALERT_BUTTON_INDEX_CANCEL:
+                [self.navigationController popViewControllerAnimated:YES];
+                break;
+            case ALERT_BUTTON_INDEX_OTHER_1:
+                [self redirectToSettingsPageForPermission];
+                break;
+            default:
+                break;
+        }
+    } else if([alertView.message isEqualToString:LOC(@"Message sent with success", @"Message sent information")]) {
         [self backButtonPressed:nil];
     }
 }

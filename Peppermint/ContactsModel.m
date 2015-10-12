@@ -30,7 +30,7 @@
             [self requestAccessForAddressBook];
             break;
         case APAddressBookAccessDenied:
-            [self.delegate accessRightsAreNotSupplied];
+            [self.delegate contactsAccessRightsAreNotSupplied];
             break;
         case APAddressBookAccessGranted:
             [self initAPAddressBook];
@@ -48,7 +48,7 @@
             });
         } else if (!granted) {
             dispatch_sync(dispatch_get_main_queue(), ^{
-                [self.delegate accessRightsAreNotSupplied];
+                [self.delegate contactsAccessRightsAreNotSupplied];
             });
         } else {
             [self initAPAddressBook];

@@ -8,6 +8,7 @@
 
 #import "TutorialViewController.h"
 #import "Repository.h"
+#import "ContactsViewController.h"
 
 #define SEGUE_CONTACTS_VIEW_CONTROLLER  @"ContactsViewControllerSegue"
 #define TAG_IMAGE_VIEW                  1
@@ -17,17 +18,22 @@
 
 @end
 
-@implementation TutorialViewController
+@implementation TutorialViewController {
+    UIAlertView *contactsAlertView;
+    ContactsModel* contactsModel;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    contactsAlertView = nil;
+    contactsModel = nil;
     self.items = [NSArray arrayWithObjects:@"tutorial1",@"tutorial2",@"tutorial3",@"_NEXPAGE_", nil];
     self.swipeView.backgroundColor = [UIColor tutorialGreen];
     [self askUserForContactsReadPermission];
 }
 
 -(void) askUserForContactsReadPermission {
-    ContactsModel* contactsModel = [ContactsModel new];
+    contactsModel = [ContactsModel new];
     contactsModel.delegate = self;
     [contactsModel setup];
 }
@@ -101,15 +107,41 @@
 
 #pragma mark - ContactsModelDelegate
 
--(void) accessRightsAreNotSupplied {
+-(void) contactsAccessRightsAreNotSupplied {
     NSString *title = LOC(@"Information", @"Title Message");
-    NSString *message = LOC(@"Access rights explanation", @"Directives to give access rights") ;
+    NSString *message = LOC(@"Contacts access rights explanation", @"Directives to give access rights") ;
     NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
-    [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
+    NSString *settingsButtonTitle = LOC(@"Settings", @"Settings Message");
+    contactsAlertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:settingsButtonTitle, nil];
+    [contactsAlertView show];
 }
 
 -(void) contactListRefreshed {
     //No need to implement.
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if(alertView == contactsAlertView) {
+        switch (buttonIndex) {
+            case ALERT_BUTTON_INDEX_OTHER_1:
+                [self redirectToSettingsPageForPermission];
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:SEGUE_CONTACTS_VIEW_CONTROLLER]) {
+        ContactsViewController *contactsViewController = (ContactsViewController*) segue.destinationViewController;
+        contactsViewController.contactsModel = contactsModel;
+        contactsViewController.contactsModel.delegate = contactsViewController;
+    }
 }
 
 @end

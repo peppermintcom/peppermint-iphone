@@ -13,7 +13,7 @@
 #import "APAddressBook.h"
 
 @protocol ContactsModelDelegate <BaseModelDelegate>
--(void) accessRightsAreNotSupplied;
+-(void) contactsAccessRightsAreNotSupplied;
 -(void) contactListRefreshed;
 @end
 

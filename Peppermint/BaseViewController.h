@@ -10,6 +10,11 @@
 #import "CellFactory.h"
 #import "BaseModel.h"
 
-@interface BaseViewController : UIViewController <BaseModelDelegate>
+#define ALERT_BUTTON_INDEX_CANCEL   0
+#define ALERT_BUTTON_INDEX_OTHER_1  1
+#define ALERT_BUTTON_INDEX_OTHER_2  2
+#define ALERT_BUTTON_INDEX_OTHER_3  3
 
+@interface BaseViewController : UIViewController <BaseModelDelegate>
+-(void) redirectToSettingsPageForPermission;
 @end
