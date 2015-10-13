@@ -46,7 +46,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_via_Information" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qhu-no-qln">
-                        <rect key="frame" x="79" y="24" width="231" height="26"/>
+                        <rect key="frame" x="75" y="24" width="231" height="26"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="26" id="ywC-Gm-RzA"/>
                         </constraints>
@@ -63,13 +63,13 @@
                     <constraint firstItem="Qhu-no-qln" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" constant="24" id="ImA-A3-kgR"/>
                     <constraint firstItem="Lwr-bI-hp8" firstAttribute="leading" secondItem="1G5-fy-gLb" secondAttribute="trailing" constant="8" id="LZW-xD-sh4"/>
                     <constraint firstItem="aEQ-5s-Sav" firstAttribute="leading" secondItem="ejf-Un-hy5" secondAttribute="leading" id="T1O-ci-IwN"/>
-                    <constraint firstAttribute="trailing" secondItem="Qhu-no-qln" secondAttribute="trailing" constant="10" id="U9j-3Q-2HP"/>
+                    <constraint firstAttribute="trailing" secondItem="Qhu-no-qln" secondAttribute="trailing" constant="14" id="U9j-3Q-2HP"/>
                     <constraint firstAttribute="trailing" secondItem="Lwr-bI-hp8" secondAttribute="trailing" constant="10" id="Zts-SD-QRz"/>
                     <constraint firstItem="1G5-fy-gLb" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" constant="10" id="bDo-0S-BDQ"/>
                     <constraint firstAttribute="bottom" secondItem="aEQ-5s-Sav" secondAttribute="bottom" id="wxc-Nh-MF3"/>
                     <constraint firstItem="aEQ-5s-Sav" firstAttribute="top" secondItem="1G5-fy-gLb" secondAttribute="bottom" constant="9" id="xS1-aO-lqk"/>
                     <constraint firstItem="1G5-fy-gLb" firstAttribute="leading" secondItem="ejf-Un-hy5" secondAttribute="leading" constant="11" id="y4P-bU-8s1"/>
-                    <constraint firstItem="Qhu-no-qln" firstAttribute="leading" secondItem="uAi-pa-EQU" secondAttribute="trailing" id="zJK-Kg-KRI"/>
+                    <constraint firstItem="Qhu-no-qln" firstAttribute="leading" secondItem="uAi-pa-EQU" secondAttribute="trailing" constant="-4" id="zJK-Kg-KRI"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

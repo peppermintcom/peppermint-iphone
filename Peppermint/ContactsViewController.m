@@ -17,6 +17,8 @@
 #define CELL_TAG_EMAIL_CONTACTS     3
 #define CELL_TAG_SMS_CONTACTS       4
 
+#define ALLOWED_CHARS @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@."
+
 @interface ContactsViewController ()
 
 @end
@@ -26,6 +28,7 @@
     BOOL canDeviceSendEmail;
     NSUInteger activeCellTag;
     NSUInteger cachedActiveCellTag;
+    NSCharacterSet *unwantedCharsSet;
 }
 
 - (void)viewDidLoad {
@@ -48,6 +51,7 @@
     self.loadingView.hidden = YES;
     activeCellTag = CELL_TAG_ALL_CONTACTS;
     cachedActiveCellTag = CELL_TAG_ALL_CONTACTS;
+    unwantedCharsSet = [[NSCharacterSet characterSetWithCharactersInString:ALLOWED_CHARS] invertedSet];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -117,8 +121,9 @@
         } else {
             cell.avatarImageView.image = [UIImage imageNamed:@"avatar_empty"];
         }        
-        cell.contactNameLabel.text = peppermintContact.nameSurname;
-        cell.contactViaInformationLabel.text = peppermintContact.communicationChannelAddress;
+        cell.contactNameLabel.text = peppermintContact.nameSurname;        
+        NSString *filteredCommunicationChannelAddress = [[peppermintContact.communicationChannelAddress componentsSeparatedByCharactersInSet:unwantedCharsSet] componentsJoinedByString:@""];
+        cell.contactViaInformationLabel.text = filteredCommunicationChannelAddress;
         preparedCell = cell;
     }
     return preparedCell;
