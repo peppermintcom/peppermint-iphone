@@ -518,6 +518,7 @@
                         <outlet property="progressContainerView" destination="AeY-zM-M6P" id="BXm-vR-eE1"/>
                         <outlet property="rerecordButton" destination="DWt-x2-XlP" id="1no-Vp-brg"/>
                         <outlet property="resumeButton" destination="FDP-TD-UfN" id="DGQ-HX-hEQ"/>
+                        <outlet property="sendButton" destination="Q8d-aX-Zzs" id="t4B-vE-M10"/>
                         <outlet property="seperatorView" destination="KTd-Hk-2oP" id="ovH-fM-5CC"/>
                     </connections>
                 </viewController>

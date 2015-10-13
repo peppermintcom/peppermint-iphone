@@ -8,7 +8,8 @@
 
 #import "RecordingViewController.h"
 
-#define MAX_RECORD_TIME 120
+#define MAX_RECORD_TIME             120
+#define MIN_VOICE_MESSAGE_LENGTH    2
 
 @interface RecordingViewController () {
     BOOL isFirstOpen;
@@ -68,6 +69,12 @@
     self.resumeButton.hidden = YES;
     self.resumeButton.enabled = YES;
     self.pauseButton.enabled = YES;
+    self.sendButton.enabled = NO;
+    [self performSelector:@selector(enableSendButton) withObject:nil afterDelay:MIN_VOICE_MESSAGE_LENGTH];
+}
+
+-(void) enableSendButton {
+    self.sendButton.enabled = YES;
 }
 
 -(IBAction)resumeButtonPressed:(id)sender {

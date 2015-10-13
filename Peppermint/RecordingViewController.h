@@ -23,11 +23,11 @@
 @property (weak, nonatomic) IBOutlet M13ProgressViewPie *m13ProgressViewPie;
 @property (weak, nonatomic) IBOutlet UIImageView *progressCenterImageView;
 
-
 @property (weak, nonatomic) IBOutlet UIView *seperatorView;
 @property (weak, nonatomic) IBOutlet UIButton *rerecordButton;
 @property (weak, nonatomic) IBOutlet UIButton *resumeButton;
 @property (weak, nonatomic) IBOutlet UIButton *pauseButton;
+@property (weak, nonatomic) IBOutlet UIButton *sendButton;
 
 -(IBAction)rerecordButtonPressed:(id)sender;
 -(IBAction)resumeButtonPressed:(id)sender;
