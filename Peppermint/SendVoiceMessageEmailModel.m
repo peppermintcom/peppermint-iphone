@@ -13,25 +13,30 @@
 
 @implementation SendVoiceMessageEmailModel
 
--(void) sendVoiceMessageWithData:(NSData*) data {
+-(void) sendVoiceMessageWithData:(NSData*) data overViewController:(UIViewController*) viewController {
     EasyMailAlertSender *mailSender = [EasyMailAlertSender easyMail:^(MFMailComposeViewController *controller) {
         [controller setToRecipients:[NSArray arrayWithObject:self.selectedPeppermintContact.communicationChannelAddress]];
         [controller setSubject:LOC(@"Mail Subject",@"Default Mail Subject")];
         [controller setMessageBody:LOC(@"Mail Body",@"Default Mail Body") isHTML:YES];
         [controller addAttachmentData:data mimeType:@"audio/mp4" fileName:@"Peppermint.m4a"];
     } complete:^(MFMailComposeViewController *controller, MFMailComposeResult result, NSError *error) {
-        [controller dismissViewControllerAnimated:YES completion:nil];
+        
         if(error) {
+            [controller dismissViewControllerAnimated:YES completion:nil];
             [self.delegate operationFailure:error];
         } else if (result == MFMailComposeResultFailed) {
+            [controller dismissViewControllerAnimated:YES completion:nil];
             error = [NSError errorWithDomain:LOC(@"An error occured",@"Unknown Error Message") code:0 userInfo:nil];
             [self.delegate operationFailure:error];
         } else if (result == MFMailComposeResultSent) {
-            [super sendVoiceMessageWithData:data];
+            [super sendVoiceMessageWithData:data overViewController:(UIViewController*) viewController];
             [self.delegate messageSentWithSuccess];
+            [controller dismissViewControllerAnimated:NO completion:nil];
+        } else {
+            [controller dismissViewControllerAnimated:YES completion:nil];
         }
     }];
-    [mailSender showFromViewController:(UIViewController*)self.delegate];
+    [mailSender showFromViewController:viewController];
 }
 
 + (BOOL)canDeviceSendEmail

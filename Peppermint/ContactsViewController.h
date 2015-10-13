@@ -21,7 +21,11 @@
 @property (weak, nonatomic) IBOutlet UITextField *searchContactsTextField;
 @property (weak, nonatomic) IBOutlet UIView *loadingView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewBottomConstraint;
+@property (weak, nonatomic) IBOutlet UIView *sendingIndicatorView;
+@property (weak, nonatomic) IBOutlet UIImageView *sendingImageView;
 
 -(IBAction)searchButtonPressed:(id)sender;
+
+-(void) messageSendingIndicatorSetMessageIsSending;
 
 @end

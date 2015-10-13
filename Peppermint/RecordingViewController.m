@@ -7,6 +7,7 @@
 //
 
 #import "RecordingViewController.h"
+#import "ContactsViewController.h"
 
 #define MAX_RECORD_TIME             120
 #define MIN_VOICE_MESSAGE_LENGTH    2
@@ -99,7 +100,7 @@
     self.pauseButton.enabled = NO;
     [self.recordingModel stop];
     NSData *data = [[NSData alloc] initWithContentsOfURL:self.recordingModel.fileUrl];
-    [self.sendVoiceMessageModel sendVoiceMessageWithData:data];
+    [self.sendVoiceMessageModel sendVoiceMessageWithData:data overViewController:self];
 }
 
 #pragma mark - RecordingModel Delegate
@@ -147,10 +148,20 @@
 #pragma mark - SendVoiceMessage Delegate
 
 -(void) messageSentWithSuccess {
+    
+    ContactsViewController *contactsViewController = (ContactsViewController*)[self backViewController];
+    [contactsViewController messageSendingIndicatorSetMessageIsSending];
+    [self.navigationController popViewControllerAnimated:NO];
+    //[self.navigationController popToViewController:contactsViewController animated:NO];
+    
+    
+    
+    /*
     NSString *title = LOC(@"Information", @"Information");
     NSString *message = LOC(@"Message sent with success", @"Message sent information");
     NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
     [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
+     */
 }
 
 #pragma mark - AlertView Delegate

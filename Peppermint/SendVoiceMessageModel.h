@@ -19,6 +19,6 @@
 @property (strong, nonatomic) PeppermintContact *selectedPeppermintContact;
 @property (weak, nonatomic) id<SendVoiceMessageDelegate> delegate;
 
--(void) sendVoiceMessageWithData:(NSData*) data;
+-(void) sendVoiceMessageWithData:(NSData*) data overViewController:(UIViewController*) viewController;
 
 @end

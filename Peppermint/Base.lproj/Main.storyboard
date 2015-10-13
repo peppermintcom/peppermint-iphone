@@ -238,6 +238,23 @@
                                     <constraint firstAttribute="trailing" secondItem="Qag-2F-TZf" secondAttribute="trailing" id="rqH-pM-Rq7"/>
                                 </constraints>
                             </view>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7zR-tD-HrX" userLabel="SendingIndicatorView">
+                                <rect key="frame" x="0.0" y="671" width="414" height="65"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_message_sending" translatesAutoresizingMaskIntoConstraints="NO" id="ZTG-t4-EfW">
+                                        <rect key="frame" x="74" y="18" width="266" height="30"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="ZTG-t4-EfW" firstAttribute="top" secondItem="7zR-tD-HrX" secondAttribute="top" constant="18" id="O2o-O9-tTP"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZTG-t4-EfW" secondAttribute="trailing" constant="74" id="QPO-gg-rNJ"/>
+                                    <constraint firstItem="ZTG-t4-EfW" firstAttribute="leading" secondItem="7zR-tD-HrX" secondAttribute="leading" constant="74" id="eFq-xr-wgd"/>
+                                    <constraint firstAttribute="height" constant="65" id="mc3-hf-htx"/>
+                                    <constraint firstAttribute="bottom" secondItem="ZTG-t4-EfW" secondAttribute="bottom" constant="17" id="pdQ-hT-Map"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -250,9 +267,12 @@
                             <constraint firstItem="xd7-a5-1Sz" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="HOg-GJ-ajo"/>
                             <constraint firstItem="Dr5-gj-0ac" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="JH5-XW-Yhq"/>
                             <constraint firstItem="BhH-Ju-VVT" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="NVe-3o-jcT"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="7zR-tD-HrX" secondAttribute="bottom" id="OHV-gX-pAF"/>
                             <constraint firstAttribute="trailing" secondItem="Dr5-gj-0ac" secondAttribute="trailing" id="adM-Jn-qH0"/>
+                            <constraint firstItem="7zR-tD-HrX" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="ayj-Ym-CQk"/>
                             <constraint firstItem="mZU-e0-vbZ" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="10" id="ea3-pb-tbZ"/>
                             <constraint firstItem="Dr5-gj-0ac" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="gXR-ra-tyE"/>
+                            <constraint firstAttribute="trailing" secondItem="7zR-tD-HrX" secondAttribute="trailing" id="nbe-jX-xJr"/>
                             <constraint firstAttribute="trailing" secondItem="BhH-Ju-VVT" secondAttribute="trailing" id="rFy-2n-jE8"/>
                             <constraint firstItem="mZU-e0-vbZ" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="30" id="sBw-ya-RsJ"/>
                         </constraints>
@@ -262,6 +282,8 @@
                         <outlet property="loadingView" destination="xd7-a5-1Sz" id="anx-3W-hck"/>
                         <outlet property="searchContactsTextField" destination="uAf-dO-WUM" id="nA1-4S-XXK"/>
                         <outlet property="searchMenuView" destination="mZU-e0-vbZ" id="zZ2-Yx-Tqe"/>
+                        <outlet property="sendingImageView" destination="ZTG-t4-EfW" id="qf5-9A-rNR"/>
+                        <outlet property="sendingIndicatorView" destination="7zR-tD-HrX" id="aPf-8b-ADq"/>
                         <outlet property="tableView" destination="BhH-Ju-VVT" id="B8Q-tY-IdA"/>
                         <outlet property="tableViewBottomConstraint" destination="11Q-5a-Iz0" id="FDS-Yb-JA6"/>
                         <segue destination="72p-Nj-Mys" kind="show" identifier="RecordingViewControllerSegue" id="U7X-PO-uZJ"/>
@@ -539,6 +561,7 @@
         <image name="icon_back" width="22" height="37"/>
         <image name="icon_down" width="9" height="5"/>
         <image name="icon_loading_contacts" width="275" height="275"/>
+        <image name="icon_message_sending" width="229" height="50"/>
         <image name="icon_search" width="27" height="27"/>
         <image name="recording_logo" width="402" height="399"/>
         <image name="tap_to_send" width="278" height="50"/>

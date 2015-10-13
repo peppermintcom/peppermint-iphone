@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		392D9C861A6F3945B758D95F /* libPods-Peppermint.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4568D87C1B184E71C2B112BE /* libPods-Peppermint.a */; };
+		B102BBB81BCD03EC001E1E7A /* UIViewController_AdditionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B102BBB71BCD03EC001E1E7A /* UIViewController_AdditionViewController.m */; };
 		B165EF121BB71A85008C6F71 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF111BB71A85008C6F71 /* BaseModel.m */; };
 		B165EF151BB71A99008C6F71 /* ContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF141BB71A99008C6F71 /* ContactsModel.m */; };
 		B165EF181BB71EC0008C6F71 /* PeppermintContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF171BB71EC0008C6F71 /* PeppermintContact.m */; };
@@ -58,6 +59,8 @@
 		4568D87C1B184E71C2B112BE /* libPods-Peppermint.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Peppermint.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3AC8DCFCC2ADAD1159483F0 /* Pods-Peppermint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peppermint.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint.debug.xcconfig"; sourceTree = "<group>"; };
 		B102BBB51BCCE039001E1E7A /* nsuserdefaults-helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "nsuserdefaults-helper.h"; sourceTree = "<group>"; };
+		B102BBB61BCD03EC001E1E7A /* UIViewController_AdditionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIViewController_AdditionViewController.h; sourceTree = "<group>"; };
+		B102BBB71BCD03EC001E1E7A /* UIViewController_AdditionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIViewController_AdditionViewController.m; sourceTree = "<group>"; };
 		B165EF101BB71A85008C6F71 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
 		B165EF111BB71A85008C6F71 /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
 		B165EF131BB71A99008C6F71 /* ContactsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ContactsModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -324,6 +327,8 @@
 			children = (
 				B17B3D721BB6C4B0009B8BC5 /* UIColor_Addition.h */,
 				B17B3D731BB6C4B0009B8BC5 /* UIColor_Addition.m */,
+				B102BBB61BCD03EC001E1E7A /* UIViewController_AdditionViewController.h */,
+				B102BBB71BCD03EC001E1E7A /* UIViewController_AdditionViewController.m */,
 			);
 			name = Addition;
 			sourceTree = "<group>";
@@ -600,6 +605,7 @@
 				B17B3D5E1BB6A504009B8BC5 /* ContactsViewController.m in Sources */,
 				B17B3D741BB6C4B0009B8BC5 /* UIColor_Addition.m in Sources */,
 				B17B3D341BB6898C009B8BC5 /* AppDelegate.m in Sources */,
+				B102BBB81BCD03EC001E1E7A /* UIViewController_AdditionViewController.m in Sources */,
 				B1EF40FC1BB8786500042E4B /* TutorialViewController.m in Sources */,
 				B165EF121BB71A85008C6F71 /* BaseModel.m in Sources */,
 				B17B3D311BB6898C009B8BC5 /* main.m in Sources */,
@@ -740,7 +746,7 @@
 				INFOPLIST_FILE = Peppermint/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9bfdc13b-e1f6-4d76-9961-a53327514d16";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -755,7 +761,7 @@
 				INFOPLIST_FILE = Peppermint/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9bfdc13b-e1f6-4d76-9961-a53327514d16";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

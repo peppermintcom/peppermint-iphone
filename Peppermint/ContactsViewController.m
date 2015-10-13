@@ -18,6 +18,8 @@
 #define CELL_TAG_SMS_CONTACTS       4
 
 #define ALLOWED_CHARS @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@."
+#define MESSAGE_SENDING_DURATION   2
+
 
 @interface ContactsViewController ()
 
@@ -52,6 +54,7 @@
     activeCellTag = CELL_TAG_ALL_CONTACTS;
     cachedActiveCellTag = CELL_TAG_ALL_CONTACTS;
     unwantedCharsSet = [[NSCharacterSet characterSetWithCharactersInString:ALLOWED_CHARS] invertedSet];
+    self.sendingIndicatorView.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -72,7 +75,10 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.searchContactsTextField becomeFirstResponder];
+    
+    if(self.sendingIndicatorView.hidden) {
+        [self.searchContactsTextField becomeFirstResponder];
+    }
 }
 
 -(void) viewWillDisappear:(BOOL)animated {
@@ -284,6 +290,25 @@
     } else {
         [self.contactsModel refreshContactList];
     }
+}
+
+#pragma mark - MessageSending status indicators
+
+-(void) messageSendingIndicatorSetMessageIsSending {
+    self.sendingImageView.image = [UIImage imageNamed:@"icon_message_sending"];
+    self.sendingIndicatorView.hidden = NO;
+    [self performSelector:@selector(messageSendingIndicatorSetMessageIsSent) withObject:nil afterDelay:MESSAGE_SENDING_DURATION];
+}
+
+-(void) messageSendingIndicatorSetMessageIsSent {
+    self.sendingImageView.image = [UIImage imageNamed:@"icon_message_sent"];
+    [self performSelector:@selector(refreshTheScreen) withObject:nil afterDelay:MESSAGE_SENDING_DURATION];
+}
+
+-(void) refreshTheScreen {
+    self.sendingIndicatorView.hidden = YES;
+    [self.searchContactsTextField becomeFirstResponder];
+    [self.recentContactsModel refreshRecentContactList];
 }
 
 #pragma mark - UIAlertViewDelegate

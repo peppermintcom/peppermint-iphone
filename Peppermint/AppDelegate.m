@@ -40,10 +40,17 @@
     [self.window makeKeyAndVisible];
 }
 
+-(void) initFabric {
+#ifdef DEBUG
+#else
+    [Fabric with:@[[Crashlytics class]]];
+#endif
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self initNavigationViewController];
-    [Fabric with:@[[Crashlytics class]]];
+    [self initFabric];
     [self initInitialViewController];
     return YES;
 }

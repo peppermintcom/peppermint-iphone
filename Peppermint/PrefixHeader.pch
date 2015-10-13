@@ -26,6 +26,9 @@ NSLocalizedStringFromTable(\
 #pragma mark - Colors Addition
 #import "UIColor_Addition.h"
 
+#pragma mark - UIViewController Addition
+#import "UIViewController_AdditionViewController.h"
+
 #pragma mark - NSUserDefaults Helper
 #import "nsuserdefaults-helper.h"
 #define DEFAULTS_KEY_ISTUTORIALSHOWED @"isTutorialShowed"

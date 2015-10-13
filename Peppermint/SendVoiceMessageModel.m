@@ -21,7 +21,7 @@
     return self;
 }
 
--(void) sendVoiceMessageWithData:(NSData*) data {
+-(void) sendVoiceMessageWithData:(NSData*) data overViewController:(UIViewController*) viewController {
     [recentContactsModel save:self.selectedPeppermintContact];
 }
 
