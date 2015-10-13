@@ -15,7 +15,7 @@
 #define CELL_TAG_ALL_CONTACTS       1
 #define CELL_TAG_RECENT_CONTACTS    2
 #define CELL_TAG_EMAIL_CONTACTS     3
-#define CELL_TAG_SMS_CONTACTS     4
+#define CELL_TAG_SMS_CONTACTS       4
 
 @interface ContactsViewController ()
 
