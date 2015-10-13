@@ -10,6 +10,8 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 
+#define MAIN_STORYBOARD         @"Main"
+#define MAIN_VIEWCONTROLLER     @"ContactsViewController"
 
 @interface AppDelegate ()
 
@@ -22,10 +24,27 @@
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 }
 
+-(void) initInitialViewController {
+    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:MAIN_STORYBOARD bundle:nil];
+    UINavigationController *nvc = [storyboard instantiateInitialViewController];
+    
+    BOOL isTutorialShowed = [defaults_object(DEFAULTS_KEY_ISTUTORIALSHOWED) boolValue];
+    if(isTutorialShowed) {
+        UIViewController *vc = [storyboard instantiateViewControllerWithIdentifier:MAIN_VIEWCONTROLLER];
+        [nvc setViewControllers:@[vc] animated:NO];
+    } else {
+        defaults_set_object(DEFAULTS_KEY_ISTUTORIALSHOWED, @(YES));
+    }
+    self.window.rootViewController = nvc;
+    [self.window makeKeyAndVisible];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self initNavigationViewController];
     [Fabric with:@[[Crashlytics class]]];
+    [self initInitialViewController];
     return YES;
 }
 
