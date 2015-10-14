@@ -29,7 +29,9 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:MAIN_STORYBOARD bundle:nil];
     UINavigationController *nvc = [storyboard instantiateInitialViewController];
     
-    BOOL isTutorialShowed = [defaults_object(DEFAULTS_KEY_ISTUTORIALSHOWED) boolValue];
+    BOOL isTutorialShowed = false && [defaults_object(DEFAULTS_KEY_ISTUTORIALSHOWED) boolValue];
+    #warning “Fix to show tutorial only on the first opening of the app... (Delete "false &&" from above line)”
+    
     if(isTutorialShowed) {
         UIViewController *vc = [storyboard instantiateViewControllerWithIdentifier:MAIN_VIEWCONTROLLER];
         [nvc setViewControllers:@[vc] animated:NO];
@@ -38,6 +40,7 @@
     }
     self.window.rootViewController = nvc;
     [self.window makeKeyAndVisible];
+    self.window.frame = [[UIScreen mainScreen] bounds];
 }
 
 -(void) initFabric {

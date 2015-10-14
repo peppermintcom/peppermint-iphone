@@ -18,7 +18,7 @@
     if(self) {
         AVAudioSession *session = [AVAudioSession sharedInstance];
         NSError *error;
-        [session setCategory:AVAudioSessionCategoryRecord error:&error];
+        [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
         if(error) {
             [self.delegate operationFailure:error];
         } else {            
@@ -73,11 +73,17 @@
 -(void) record {
     if(!recorder.recording) {
         AVAudioSession *session = [AVAudioSession sharedInstance];
-        [session setActive:YES error:nil];
-        if(![recorder record]) {
-            [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Could not start record", @"Error message") code:0 userInfo:nil]];
+        NSError *error;
+        [session setCategory:AVAudioSessionCategoryRecord error:&error];
+        if(error) {
+            [self.delegate operationFailure:error];
         } else {
-            timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(onTick:) userInfo:nil repeats:YES];
+            [session setActive:YES error:nil];
+            if(![recorder record]) {
+                [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Could not start record", @"Error message") code:0 userInfo:nil]];
+            } else {
+                timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(onTick:) userInfo:nil repeats:YES];
+            }
         }
     } else {
         [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Recording is already acitve", @"Error message") code:0 userInfo:nil]];
@@ -104,6 +110,11 @@
     [recorder stop];    
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     [audioSession setActive:NO error:nil];
+    NSError *error;
+    [audioSession setCategory:AVAudioSessionCategoryPlayback error:&error];
+    if(error) {
+        [self.delegate operationFailure:error];
+    }
 }
 
 -(NSTimeInterval) recordingTime {

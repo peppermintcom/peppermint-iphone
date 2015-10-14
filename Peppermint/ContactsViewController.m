@@ -55,6 +55,7 @@
     cachedActiveCellTag = CELL_TAG_ALL_CONTACTS;
     unwantedCharsSet = [[NSCharacterSet characterSetWithCharactersInString:ALLOWED_CHARS] invertedSet];
     self.sendingIndicatorView.hidden = YES;
+    self.seperatorView.backgroundColor = [UIColor cellSeperatorGray];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -293,6 +294,8 @@
 }
 
 #pragma mark - MessageSending status indicators
+
+#warning "Sending message is just an illusion now. When having the service it will be updated to catch really when the message is sent!"
 
 -(void) messageSendingIndicatorSetMessageIsSending {
     self.sendingImageView.image = [UIImage imageNamed:@"icon_message_sending"];

@@ -19,6 +19,5 @@
 + (UIColor *) recordingNavigationsubTitleGreen;
 + (UIColor *) progressContainerViewGray;
 + (UIColor *) progressCoverViewGreen;
-+ (UIColor *) tutorialGreen;
 
 @end

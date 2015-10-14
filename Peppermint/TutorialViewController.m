@@ -28,7 +28,7 @@
     contactsAlertView = nil;
     contactsModel = nil;
     self.items = [NSArray arrayWithObjects:@"tutorial1",@"tutorial2",@"tutorial3",@"_NEXPAGE_", nil];
-    self.swipeView.backgroundColor = [UIColor tutorialGreen];
+    //self.swipeView.backgroundColor = [UIColor tutorialGreen];
     [self askUserForContactsReadPermission];
 }
 

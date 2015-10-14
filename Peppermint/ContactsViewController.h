@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewBottomConstraint;
 @property (weak, nonatomic) IBOutlet UIView *sendingIndicatorView;
 @property (weak, nonatomic) IBOutlet UIImageView *sendingImageView;
+@property (weak, nonatomic) IBOutlet UIView *seperatorView;
 
 -(IBAction)searchButtonPressed:(id)sender;
 
