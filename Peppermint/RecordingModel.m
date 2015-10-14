@@ -8,6 +8,8 @@
 
 #import "RecordingModel.h"
 
+#define DEFAULT_GAIN 0.8 //Input Gain must be a value btw 0.0 - 1.0
+
 @implementation RecordingModel {
     AVAudioRecorder *recorder;
     NSTimer *timer;
@@ -23,12 +25,12 @@
             [self.delegate operationFailure:error];
         } else {            
             AVAudioSession *session = [AVAudioSession sharedInstance];
+            __weak RecordingModel *weakSelf = self;
             if([session respondsToSelector:@selector(requestRecordPermission:)]) {
                 [session requestRecordPermission:^(BOOL granted) {
                     self.grantedForMicrophone = granted;
                     if(granted) {
-                        [self initRecordFile];
-                        [self initRecorder];
+                        [weakSelf performGrantedOperations];
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [self.delegate accessRightsAreSupplied];
                         });
@@ -39,15 +41,20 @@
                     }
                 }];
             } else {
-                [self initRecordFile];
-                [self initRecorder];
+                [weakSelf performGrantedOperations];
             }
         }
     }
     return self;
 }
 
-- (void)dealloc {
+-(void) performGrantedOperations {
+    [self initRecordFile];
+    [self initRecorder];
+    [self setInputGain];
+}
+
+- (void) dealloc {
     NSError *error;
     [[NSFileManager defaultManager] removeItemAtURL:self.fileUrl error:&error];
     if(error) {
@@ -66,8 +73,21 @@
     [recordSetting setValue:[NSNumber numberWithFloat:44100.0] forKey:AVSampleRateKey];
     [recordSetting setValue:[NSNumber numberWithInt: 2] forKey:AVNumberOfChannelsKey];
     recorder = [[AVAudioRecorder alloc] initWithURL:self.fileUrl settings:recordSetting error:nil];
-    recorder.delegate = self;
-    recorder.meteringEnabled = YES;
+    recorder.delegate = self;    
+    [recorder prepareToRecord];
+}
+
+-(void) setInputGain {
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    NSError* error;
+    if(session.isInputGainSettable) {
+        [session setInputGain:DEFAULT_GAIN error:&error];
+        if(error) {
+            [self.delegate operationFailure:error];
+        }
+    } else {
+        NSLog(@"input gain is not settable. Using default value : %f", session.inputGain);
+    }
 }
 
 -(void) record {
