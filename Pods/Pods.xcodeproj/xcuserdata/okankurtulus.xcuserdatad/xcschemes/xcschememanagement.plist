@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>AFNetworking.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>APAddressBook.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -39,15 +44,25 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>tolo.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>2C379FDA5D905C568C491D833B2CB419</key>
+		<key>224D30F9E7CD6074E160CB11C56DC2E2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2D1DAECA4CA72A9336521E78FC3E58C8</key>
+		<key>229ACEEE2501226DFDD1C32328F899BF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3928FD551698F97CFCCBFDB2D717E388</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -57,22 +72,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>65E585AA9B9AD065E03361368966B651</key>
+		<key>7D621DC3865830C5693D793FAF3127C7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6900B94333B411D84E50671803706992</key>
+		<key>9DB7123AE3435E00BF3772911BAF63A8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AC7C5C59B87C439F3F4850B4FDCA5C33</key>
+		<key>BAEF3677EB6A5574CE084524C670EC1A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D5E16D800E0A5974353C0CF91BEC8530</key>
+		<key>CF21E6BD33DB99666CE87553772263ED</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D1AD43D9B1465D7E61B93C7895D03940</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -38,6 +38,8 @@
 		B1EF40F51BB857C800042E4B /* M13ProgressViewPie.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40F41BB857C800042E4B /* M13ProgressViewPie.m */; };
 		B1EF40F91BB8782F00042E4B /* SwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40F81BB8782F00042E4B /* SwipeView.m */; };
 		B1EF40FC1BB8786500042E4B /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40FB1BB8786500042E4B /* TutorialViewController.m */; };
+		B1F045671BCFB36900A67942 /* BaseService.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F045661BCFB36900A67942 /* BaseService.m */; };
+		B1F0456B1BCFB4E400A67942 /* Events.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F0456A1BCFB4E400A67942 /* Events.m */; };
 		B1F93E8C1BC8E0D9005F2128 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1F93E8B1BC8E0D9005F2128 /* CoreData.framework */; };
 		B1F93E901BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E8E1BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld */; };
 		B1F93E981BC8E328005F2128 /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E971BC8E328005F2128 /* Repository.m */; };
@@ -115,6 +117,10 @@
 		B1EF40F81BB8782F00042E4B /* SwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeView.m; sourceTree = "<group>"; };
 		B1EF40FA1BB8786500042E4B /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
 		B1EF40FB1BB8786500042E4B /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TutorialViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B1F045651BCFB36900A67942 /* BaseService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseService.h; sourceTree = "<group>"; };
+		B1F045661BCFB36900A67942 /* BaseService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseService.m; sourceTree = "<group>"; };
+		B1F045691BCFB4E400A67942 /* Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
+		B1F0456A1BCFB4E400A67942 /* Events.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Events.m; sourceTree = "<group>"; };
 		B1F93E8B1BC8E0D9005F2128 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		B1F93E8F1BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PeppermintDataModel.xcdatamodel; sourceTree = "<group>"; };
 		B1F93E951BC8E328005F2128 /* Entity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
@@ -168,8 +174,9 @@
 		B165EF0F1BB71A31008C6F71 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B1F93E8D1BC8E1C2005F2128 /* CoreData */,
 				B165EF191BB71F50008C6F71 /* Entity */,
+				B1F93E8D1BC8E1C2005F2128 /* CoreData */,
+				B1F045641BCFB33F00A67942 /* Service */,
 				B165EF101BB71A85008C6F71 /* BaseModel.h */,
 				B165EF111BB71A85008C6F71 /* BaseModel.m */,
 				B165EF131BB71A99008C6F71 /* ContactsModel.h */,
@@ -385,6 +392,25 @@
 			name = SwipeView;
 			sourceTree = "<group>";
 		};
+		B1F045641BCFB33F00A67942 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				B1F045681BCFB4D500A67942 /* Events */,
+				B1F045651BCFB36900A67942 /* BaseService.h */,
+				B1F045661BCFB36900A67942 /* BaseService.m */,
+			);
+			name = Service;
+			sourceTree = "<group>";
+		};
+		B1F045681BCFB4D500A67942 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				B1F045691BCFB4E400A67942 /* Events.h */,
+				B1F0456A1BCFB4E400A67942 /* Events.m */,
+			);
+			name = Events;
+			sourceTree = "<group>";
+		};
 		B1F93E8D1BC8E1C2005F2128 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
@@ -590,11 +616,13 @@
 			files = (
 				B1EF40F51BB857C800042E4B /* M13ProgressViewPie.m in Sources */,
 				B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */,
+				B1F045671BCFB36900A67942 /* BaseService.m in Sources */,
 				B165EF151BB71A99008C6F71 /* ContactsModel.m in Sources */,
 				B179F83A1BC9316F0089D709 /* SearchMenuTableViewCell.m in Sources */,
 				B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */,
 				B17B3D5B1BB6A49E009B8BC5 /* BaseViewController.m in Sources */,
 				B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */,
+				B1F0456B1BCFB4E400A67942 /* Events.m in Sources */,
 				B17B3D641BB6AE8B009B8BC5 /* RecordingViewController.m in Sources */,
 				B1EF40EE1BB7EAA200042E4B /* SendVoiceMessageEmailModel.m in Sources */,
 				B165EF181BB71EC0008C6F71 /* PeppermintContact.m in Sources */,

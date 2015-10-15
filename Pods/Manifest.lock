@@ -1,4 +1,25 @@
 PODS:
+  - AFNetworking (2.6.0):
+    - AFNetworking/NSURLConnection (= 2.6.0)
+    - AFNetworking/NSURLSession (= 2.6.0)
+    - AFNetworking/Reachability (= 2.6.0)
+    - AFNetworking/Security (= 2.6.0)
+    - AFNetworking/Serialization (= 2.6.0)
+    - AFNetworking/UIKit (= 2.6.0)
+  - AFNetworking/NSURLConnection (2.6.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.6.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.6.0)
+  - AFNetworking/Security (2.6.0)
+  - AFNetworking/Serialization (2.6.0)
+  - AFNetworking/UIKit (2.6.0):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
   - APAddressBook (0.1.11):
     - APAddressBook/Core (= 0.1.11)
   - APAddressBook/Core (0.1.11)
@@ -9,21 +30,26 @@ PODS:
   - Fabric/Base (1.4.1)
   - OpenSans (1.0.3)
   - REMenu (1.10)
+  - tolo (1.0.0)
 
 DEPENDENCIES:
+  - AFNetworking (~> 2.0)
   - APAddressBook
   - Crashlytics
   - EasyMailSender
   - Fabric
   - OpenSans
   - REMenu (~> 1.10)
+  - tolo (~> 1.0)
 
 SPEC CHECKSUMS:
+  AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
   APAddressBook: 2c949367b190a993d2cce769a3b20bce8bcf000c
   Crashlytics: a29e4f820aa401482b26043dc5d78adf08ac7573
   EasyMailSender: f50b6b5fa49b47f4b60998a56345600b848f2121
   Fabric: 4f718eeca4c02c7d6f6f4e5f0e5f87c63aa38458
   OpenSans: 33078846463eae780aa5f82986b51cce085f970d
   REMenu: 30dad195930adf6c5eeb8041e3257aa60bf9fa49
+  tolo: 906f6fe2943451e7354c694ce968d76ea344c01d
 
 COCOAPODS: 0.38.2
