@@ -12,7 +12,6 @@
 
 + (UIColor *) peppermintGreen;
 + (UIColor *) cellSeperatorGray;
-+ (UIColor *) viaCaptionLabelTextGray;
 + (UIColor *) viaInformationLabelTextGreen;
 + (UIColor *) textFieldTintGreen;
 + (UIColor *) emptyResultTableViewCellHeaderLabelTextcolorGray;

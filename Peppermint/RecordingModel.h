@@ -14,17 +14,21 @@
 -(void) microphoneAccessRightsAreNotSupplied;
 -(void) accessRightsAreSupplied;
 -(void) timerUpdated:(NSTimeInterval) timeInterval;
+-(void) recordDataIsPrepared:(NSData*) data;
 @end
 
 @interface RecordingModel : BaseModel <AVAudioRecorderDelegate>
 @property (weak, nonatomic) id<RecordingModelDelegate> delegate;
 @property (strong, nonatomic) NSURL *fileUrl;
 @property (nonatomic) BOOL grantedForMicrophone;
+@property (nonatomic) NSUInteger previousFileLength;
 
 -(void) record;
 -(void) pause;
 -(void) resume;
 -(void) stop;
--(NSTimeInterval) recordingTime;
 
+-(void) backUpRecording;
+-(void) resetRecording;
+-(void) prepareRecordData;
 @end

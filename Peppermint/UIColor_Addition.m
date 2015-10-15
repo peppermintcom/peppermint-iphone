@@ -28,21 +28,11 @@
     return color;
 }
 
-+ (UIColor *) viaCaptionLabelTextGray {
-    static dispatch_once_t onceToken;
-    static UIColor *color;
-    dispatch_once(&onceToken, ^{
-        color = [UIColor colorWithRed:0.380f green:0.569f blue:0.553f alpha:1.00f];
-    });
-    return color;
-}
-
-
 + (UIColor *) viaInformationLabelTextGreen {
     static dispatch_once_t onceToken;
     static UIColor *color;
     dispatch_once(&onceToken, ^{
-        color = [UIColor colorWithRed:0.000f green:0.729f blue:0.682f alpha:1.00f];
+        color = [UIColor colorWithRed:0.184f green:0.741f blue:0.698f alpha:1.00f];
     });
     return color;
 }
@@ -51,7 +41,7 @@
     static dispatch_once_t onceToken;
     static UIColor *color;
     dispatch_once(&onceToken, ^{
-        color = [UIColor colorWithRed:0.671f green:0.769f blue:0.765f alpha:1.00f];
+        color = [UIColor colorWithRed:0.549f green:0.659f blue:0.647f alpha:1.00f];
     });
     return color;
 }

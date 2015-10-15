@@ -8,6 +8,8 @@
 
 #import "ContactsModel.h"
 
+#define ContactsOperationQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
+
 @implementation ContactsModel {
     volatile NSUInteger loadContactsTriggerCount;
 }
@@ -86,7 +88,9 @@
      *  during a query is continuing.
      */
      if(++loadContactsTriggerCount == 1) {
-        [addressBook loadContacts:^(NSArray *contacts, NSError *error)
+         
+         [addressBook loadContactsOnQueue:ContactsOperationQueue completion:
+          ^(NSArray *contacts, NSError *error)
          {
              if(error) {
                  [self.delegate operationFailure:error];
@@ -111,13 +115,18 @@
                      }
                  }
                  self.contactList = peppermintContactsArray;
-                 [self.delegate contactListRefreshed];
+                 dispatch_sync(dispatch_get_main_queue(), ^{
+                     [self.delegate contactListRefreshed];
+                 });
              }
              
              if(--loadContactsTriggerCount > 0) {
                  NSLog(@"Load contacts method is recalled %lu times during the previous query", (unsigned long)loadContactsTriggerCount);
                  loadContactsTriggerCount = 0;
-                 [self refreshContactList];
+                 
+                 dispatch_sync(dispatch_get_main_queue(), ^{
+                     [self refreshContactList];
+                 });
              }
          }];
      }

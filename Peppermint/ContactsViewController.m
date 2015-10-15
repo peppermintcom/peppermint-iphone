@@ -20,6 +20,8 @@
 #define ALLOWED_CHARS @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@."
 #define MESSAGE_SENDING_DURATION   2
 
+#define SENDING_ICON_HEIGHT     15
+#define SENT_ICON_HEIGHT        20
 
 @interface ContactsViewController ()
 
@@ -44,6 +46,7 @@
     }
     self.recentContactsModel = [RecentContactsModel new];
     self.recentContactsModel.delegate = self;
+    self.searchContactsTextField.font = [UIFont openSansFontOfSize:14];
     self.searchContactsTextField.text = self.contactsModel.filterText;
     self.searchContactsTextField.placeholder = LOC(@"Search for Contacts", @"Placeholder text");
     self.searchContactsTextField.tintColor = [UIColor textFieldTintGreen];
@@ -179,6 +182,8 @@
         } else {
             [self.contactsModel refreshContactList];
         }
+    } else {
+        [textField resignFirstResponder];
     }
     return NO;
 }
@@ -298,12 +303,16 @@
 #warning "Sending message is just an illusion now. When having the service it will be updated to catch really when the message is sent!"
 
 -(void) messageSendingIndicatorSetMessageIsSending {
+    self.sendingImageHeightConstraint.constant = SENDING_ICON_HEIGHT;
+    [self.sendingImageView layoutIfNeeded];
     self.sendingImageView.image = [UIImage imageNamed:@"icon_message_sending"];
     self.sendingIndicatorView.hidden = NO;
     [self performSelector:@selector(messageSendingIndicatorSetMessageIsSent) withObject:nil afterDelay:MESSAGE_SENDING_DURATION];
 }
 
 -(void) messageSendingIndicatorSetMessageIsSent {
+    self.sendingImageHeightConstraint.constant = SENT_ICON_HEIGHT;
+    [self.sendingImageView layoutIfNeeded];
     self.sendingImageView.image = [UIImage imageNamed:@"icon_message_sent"];
     [self performSelector:@selector(refreshTheScreen) withObject:nil afterDelay:MESSAGE_SENDING_DURATION];
 }

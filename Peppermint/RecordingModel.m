@@ -18,6 +18,10 @@
 -(id) init {
     self = [super init];
     if(self) {
+        
+        NSString *length = (NSString*) defaults_object(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH);
+        self.previousFileLength = !length ? 0 : length.intValue;
+        
         AVAudioSession *session = [AVAudioSession sharedInstance];
         NSError *error;
         [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
@@ -55,16 +59,11 @@
 }
 
 - (void) dealloc {
-    NSError *error;
-    [[NSFileManager defaultManager] removeItemAtURL:self.fileUrl error:&error];
-    if(error) {
-        [self.delegate operationFailure:error];
-    }
+    [self removeFileIfExistsAtUrl:self.fileUrl];
 }
 
 -(void) initRecordFile {
-    NSArray *pathComponents = [NSArray arrayWithObjects: [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"PeppermintMessage.m4a", nil];
-    self.fileUrl = [NSURL fileURLWithPathComponents:pathComponents];
+    self.fileUrl = [self recordFileUrl];
 }
 
 -(void) initRecorder {
@@ -74,7 +73,6 @@
     [recordSetting setValue:[NSNumber numberWithInt: 2] forKey:AVNumberOfChannelsKey];
     recorder = [[AVAudioRecorder alloc] initWithURL:self.fileUrl settings:recordSetting error:nil];
     recorder.delegate = self;    
-    [recorder prepareToRecord];
 }
 
 -(void) setInputGain {
@@ -137,12 +135,94 @@
     }
 }
 
--(NSTimeInterval) recordingTime {
-    return recorder.currentTime;
+-(void)onTick:(NSTimer *)timer {
+    [self.delegate timerUpdated:recorder.currentTime + self.previousFileLength];
 }
 
--(void)onTick:(NSTimer *)timer {
-    [self.delegate timerUpdated:recorder.currentTime];
+-(NSURL*) recordFileUrl {
+    NSArray *pathComponents = [NSArray arrayWithObjects: [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"PeppermintMessage.m4a", nil];
+    return [NSURL fileURLWithPathComponents:pathComponents];
+}
+
+-(NSURL*) backUpFileUrl {
+    NSArray *pathComponents = [NSArray arrayWithObjects: [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"PeppermintBackUpFile.m4a", nil];
+    return [NSURL fileURLWithPathComponents:pathComponents];
+}
+
+-(void) removeFileIfExistsAtUrl:(NSURL*) url {
+    NSError *error;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if([fileManager fileExistsAtPath:url.path]) {
+        [fileManager removeItemAtURL:url error:&error];
+        if(error) {
+            [self.delegate operationFailure:error];
+        }
+    }
+}
+
+-(void) backUpRecording {
+    defaults_set_object(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH, [NSString stringWithFormat:@"%f",recorder.currentTime + self.previousFileLength]);
+    [self stop];
+    [self mixAudiosWithTargetUrl:[self backUpFileUrl] Completion:^{
+        [self removeFileIfExistsAtUrl:self.fileUrl];
+    }];
+}
+
+-(void) resetRecording {
+    [self.delegate timerUpdated:0];
+    self.previousFileLength = 0;
+    [self removeFileIfExistsAtUrl:[self backUpFileUrl]];
+}
+
+-(void) prepareRecordData {
+    [self mixAudiosWithTargetUrl:self.fileUrl Completion:^{
+        [self removeFileIfExistsAtUrl:[self backUpFileUrl]];
+        NSData *data = [[NSData alloc] initWithContentsOfURL:self.fileUrl];
+        [self removeFileIfExistsAtUrl:[self fileUrl]];
+        [self.delegate recordDataIsPrepared:data];
+    }];
+}
+
+/****************************************************************************************************
+ * Grabbed & Modified the mixAudios function from : http://stackoverflow.com/a/15241353/5171866
+ *****************************************************************************************************/
+-(void)mixAudiosWithTargetUrl:(NSURL*)targetUrl Completion:(void(^)(void))completion
+{
+    NSError *error;
+    AVMutableComposition* mixComposition = [AVMutableComposition composition];
+    [mixComposition addMutableTrackWithMediaType:AVMediaTypeAudio  preferredTrackID:kCMPersistentTrackID_Invalid];
+    
+    CMTime mergedFileEndPoint = kCMTimeZero;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *fileUrlArray = [NSArray arrayWithObjects:[self backUpFileUrl], self.fileUrl, nil];
+    for(int i=0; i<fileUrlArray.count; i++)
+    {
+        NSURL *url = [fileUrlArray objectAtIndex:i];
+        if([fileManager fileExistsAtPath:url.path]) {
+            AVURLAsset* audioAsset = [AVURLAsset URLAssetWithURL:url options:nil];
+            AVMutableCompositionTrack* audioTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeAudio
+                                                                                preferredTrackID:kCMPersistentTrackID_Invalid];
+            NSArray *audioAssetArray = [audioAsset tracksWithMediaType:AVMediaTypeAudio];
+            if(audioAssetArray.count > 0) {
+                AVAssetTrack *assetTrack = [audioAssetArray objectAtIndex:0];
+                [audioTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, assetTrack.asset.duration) ofTrack:assetTrack atTime:mergedFileEndPoint error:&error];
+                if (error) {
+                    [self.delegate operationFailure:error];
+                } else {
+                    mergedFileEndPoint = CMTimeAdd(mergedFileEndPoint, assetTrack.asset.duration);
+                }
+            }
+        }
+    }
+    AVAssetExportSession* _assetExport = [[AVAssetExportSession alloc] initWithAsset:mixComposition
+                                                                          presetName:
+                                          AVAssetExportPresetAppleM4A];
+    [self removeFileIfExistsAtUrl:targetUrl];
+    
+    _assetExport.outputFileType = AVFileTypeAppleM4A;
+    _assetExport.outputURL = targetUrl;
+    _assetExport.shouldOptimizeForNetworkUse = YES;
+    [_assetExport exportAsynchronouslyWithCompletionHandler:completion];
 }
 
 @end

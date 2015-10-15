@@ -27,9 +27,9 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_ContactName" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lwr-bI-hp8">
-                        <rect key="frame" x="54" y="10" width="256" height="17"/>
+                        <rect key="frame" x="54" y="8" width="256" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="17" id="N1G-JJ-pfS"/>
+                            <constraint firstAttribute="height" constant="21" id="N1G-JJ-pfS"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -59,7 +59,7 @@
                     <constraint firstItem="uAi-pa-EQU" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" constant="24" id="5Rn-4f-bCw"/>
                     <constraint firstItem="uAi-pa-EQU" firstAttribute="leading" secondItem="1G5-fy-gLb" secondAttribute="trailing" constant="8" id="5ej-SP-vXh"/>
                     <constraint firstAttribute="trailing" secondItem="aEQ-5s-Sav" secondAttribute="trailing" id="C2v-Bc-bQy"/>
-                    <constraint firstItem="Lwr-bI-hp8" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" constant="10" id="DHl-Ge-UpB"/>
+                    <constraint firstItem="Lwr-bI-hp8" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" constant="8" id="DHl-Ge-UpB"/>
                     <constraint firstItem="Qhu-no-qln" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" constant="24" id="ImA-A3-kgR"/>
                     <constraint firstItem="Lwr-bI-hp8" firstAttribute="leading" secondItem="1G5-fy-gLb" secondAttribute="trailing" constant="8" id="LZW-xD-sh4"/>
                     <constraint firstItem="aEQ-5s-Sav" firstAttribute="leading" secondItem="ejf-Un-hy5" secondAttribute="leading" id="T1O-ci-IwN"/>

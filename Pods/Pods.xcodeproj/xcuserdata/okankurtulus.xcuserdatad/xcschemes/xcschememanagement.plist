@@ -19,6 +19,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>OpenSans-OpenSans.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>OpenSans.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Peppermint.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,12 +42,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>013D87C13001C643964D7963EA487B17</key>
+		<key>2C379FDA5D905C568C491D833B2CB419</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>287488D31CD08392FE198D2E48C3073E</key>
+		<key>2D1DAECA4CA72A9336521E78FC3E58C8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -47,12 +57,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4D9063A08AE788897C9A55E832FE7A55</key>
+		<key>65E585AA9B9AD065E03361368966B651</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>56718AC47B67CFE1E8C772A48D9481F4</key>
+		<key>6900B94333B411D84E50671803706992</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AC7C5C59B87C439F3F4850B4FDCA5C33</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D5E16D800E0A5974353C0CF91BEC8530</key>
 		<dict>
 			<key>primary</key>
 			<true/>

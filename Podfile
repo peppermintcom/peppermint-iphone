@@ -7,6 +7,9 @@ pod 'EasyMailSender'
 pod 'Fabric'
 pod 'Crashlytics'
 pod 'REMenu', '~> 1.10'
+pod 'OpenSans'
+pod "AFNetworking", "~> 2.0"
+pod "tolo", "~> 1.0"
 end
 
 target 'PeppermintTests' do

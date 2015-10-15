@@ -31,12 +31,18 @@
     self.navigationSubTitleLabel.text = [NSString stringWithFormat:LOC(@"for ContactNameSurname", @"Label text format"), self.sendVoiceMessageModel.selectedPeppermintContact.nameSurname];
     self.seperatorView.backgroundColor = [UIColor cellSeperatorGray];
     self.recordingModel = [RecordingModel new];
+    self.recordingModel.previousFileLength = 0;
     self.recordingModel.delegate = self;
     self.counterLabel.textColor = [UIColor progressCoverViewGreen];
     self.progressContainerView.backgroundColor = [UIColor progressContainerViewGray];
     self.progressContainerView.layer.cornerRadius = 45;
     [self.m13ProgressViewPie setPrimaryColor:[UIColor progressCoverViewGreen]];
     [self.m13ProgressViewPie setSecondaryColor:[UIColor clearColor]];
+    [self registerAppNotifications];
+}
+
+-(void)dealloc {
+    [self deRegisterAppNotifications];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -99,8 +105,7 @@
     self.resumeButton.enabled = NO;
     self.pauseButton.enabled = NO;
     [self.recordingModel stop];
-    NSData *data = [[NSData alloc] initWithContentsOfURL:self.recordingModel.fileUrl];
-    [self.sendVoiceMessageModel sendVoiceMessageWithData:data overViewController:self];
+    [self.recordingModel prepareRecordData];
 }
 
 #pragma mark - RecordingModel Delegate
@@ -115,7 +120,9 @@
 }
 
 -(void) accessRightsAreSupplied {
-    [self rerecordButtonPressed:nil];
+    if(self.recordingModel.previousFileLength == 0) {
+        [self rerecordButtonPressed:nil];
+    }
 }
 
 -(void) timerUpdated:(NSTimeInterval) timeInterval {
@@ -145,16 +152,16 @@
     [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
 }
 
+- (void) recordDataIsPrepared:(NSData *)data {
+    [self.sendVoiceMessageModel sendVoiceMessageWithData:data overViewController:self];
+}
+
 #pragma mark - SendVoiceMessage Delegate
 
 -(void) messageSentWithSuccess {
-    
     ContactsViewController *contactsViewController = (ContactsViewController*)[self backViewController];
     [contactsViewController messageSendingIndicatorSetMessageIsSending];
     [self.navigationController popViewControllerAnimated:NO];
-    //[self.navigationController popToViewController:contactsViewController animated:NO];
-    
-    
     
     /*
     NSString *title = LOC(@"Information", @"Information");
@@ -162,6 +169,7 @@
     NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
     [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
      */
+#warning "Delete the commented out code when the sending-sent animation for the voice message will be certain"
 }
 
 #pragma mark - AlertView Delegate
@@ -180,7 +188,53 @@
         }
     } else if([alertView.message isEqualToString:LOC(@"Message sent with success", @"Message sent information")]) {
         [self backButtonPressed:nil];
+    } else if ([alertView.message isEqualToString:LOC(@"Recording is cut", @"Recording is cut, how to continue question?")]) {
+        switch (buttonIndex) {
+            case ALERT_BUTTON_INDEX_CANCEL:
+                [self.recordingModel resetRecording];
+                break;
+            case ALERT_BUTTON_INDEX_OTHER_1:
+                break;
+            default:
+                break;
+        }
+        [self.recordingModel record];
     }
+}
+
+#pragma mark - App Interruption Actions
+
+-(void) registerAppNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationWillResignActive)
+                                                 name:UIApplicationWillResignActiveNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidBecomeActive)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+}
+
+-(void) deRegisterAppNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver: self name: UIApplicationWillResignActiveNotification object: nil];
+    [[NSNotificationCenter defaultCenter] removeObserver: self name: UIApplicationDidBecomeActiveNotification object: nil];
+}
+
+-(void) applicationWillResignActive {
+    [self.recordingModel backUpRecording];
+}
+
+-(void) applicationDidBecomeActive {
+    self.recordingModel = [RecordingModel new];
+    [self timerUpdated:self.recordingModel.previousFileLength];
+    self.recordingModel.delegate = self;
+    
+    NSString *title = LOC(@"Information", @"Information");
+    NSString *message = LOC(@"Recording is cut", @"Recording is cut, how to continue question?");
+    NSString *newRecordButtonTitle = LOC(@"Restart record", @"Restart record button title");
+    NSString *continueFromPreviousButtonTitle = LOC(@"Continue from previous", @"Continue from previous button title");
+    [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:newRecordButtonTitle otherButtonTitles:continueFromPreviousButtonTitle, nil] show];
 }
 
 #pragma mark - Navigation

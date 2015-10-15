@@ -15,6 +15,9 @@
     self.avatarImageView.layer.cornerRadius = 5;
     self.avatarImageView.layer.borderColor  = [UIColor whiteColor].CGColor;
     self.cellSeperatorView.backgroundColor = [UIColor cellSeperatorGray];
+    self.contactNameLabel.font = [UIFont openSansSemiBoldFontOfSize:17];
+    self.contactViaCaptionLabel.font = [UIFont openSansSemiBoldFontOfSize:13];
+    self.contactViaInformationLabel.font = [UIFont openSansSemiBoldFontOfSize:13];
     self.contactViaCaptionLabel.text = LOC(@"via", @"Localized value for the word via");
     [self applyNonSelectedStyle];
 }
@@ -40,7 +43,7 @@
     self.backgroundColor = [UIColor whiteColor];
     self.avatarImageView.layer.borderWidth = 0;
     self.contactNameLabel.textColor = [UIColor blackColor];
-    self.contactViaCaptionLabel.textColor = [UIColor viaCaptionLabelTextGray];
+    self.contactViaCaptionLabel.textColor = [UIColor textFieldTintGreen];
     self.contactViaInformationLabel.textColor = [UIColor viaInformationLabelTextGreen];
 }
 

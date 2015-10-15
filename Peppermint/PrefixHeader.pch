@@ -31,6 +31,10 @@ NSLocalizedStringFromTable(\
 
 #pragma mark - NSUserDefaults Helper
 #import "nsuserdefaults-helper.h"
-#define DEFAULTS_KEY_ISTUTORIALSHOWED @"isTutorialShowed"
+#define DEFAULTS_KEY_ISTUTORIALSHOWED           @"isTutorialShowed"
+#define DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH  @"previousRecordingLength"
+
+#pragma mark - OpenSans Fonts
+#import <OpenSans/UIFont+OpenSans.h>
 
 #endif
