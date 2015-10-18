@@ -27,6 +27,8 @@
         NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:cellKey owner:self options:nil];
         cell = [topLevelObjects objectAtIndex:0];
     }
+    
+    cell.indexPath = indexPath;
     return cell;
 }
 

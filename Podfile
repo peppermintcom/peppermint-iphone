@@ -10,6 +10,8 @@ pod 'REMenu', '~> 1.10'
 pod 'OpenSans'
 pod "AFNetworking", "~> 2.0"
 pod "tolo", "~> 1.0"
+pod 'MBProgressHUD', '~> 0.9.1'
+pod "JSONModel"
 end
 
 target 'PeppermintTests' do

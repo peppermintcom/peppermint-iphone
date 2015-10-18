@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import "AFNetworkActivityLogger.h"
 
 #define MAIN_STORYBOARD         @"Main"
 #define MAIN_VIEWCONTROLLER     @"ContactsViewController"
@@ -48,11 +49,19 @@
 #endif
 }
 
+-(void) logServiceCalls {
+#ifdef DEBUG
+    [[AFNetworkActivityLogger sharedLogger] startLogging];
+    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
+#endif
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self initNavigationViewController];
     [self initFabric];
     [self initInitialViewController];
+    [self logServiceCalls];
     return YES;
 }
 

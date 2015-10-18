@@ -54,18 +54,40 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9h8-TZ-qu8" userLabel="CellActionButton">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
+                        <gestureRecognizers/>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="touchDownFinishedOnIndexPath:event:" destination="8e4-VB-87A" eventType="touchCancel" id="867-AS-prJ"/>
+                            <action selector="touchDownFinishedOnIndexPath:event:" destination="8e4-VB-87A" eventType="touchUpOutside" id="SB5-QP-chY"/>
+                            <action selector="touchDownFinishedOnIndexPath:event:" destination="8e4-VB-87A" eventType="touchUpInside" id="jwa-Jr-a9d"/>
+                            <action selector="touchDownOnIndexPath:event:" destination="8e4-VB-87A" eventType="touchDown" id="AVs-TW-Att"/>
+                            <action selector="touchDragging:event:" destination="8e4-VB-87A" eventType="touchDragEnter" id="98T-gx-yOG"/>
+                            <action selector="touchDragging:event:" destination="8e4-VB-87A" eventType="touchDragOutside" id="GKj-Jh-fDv"/>
+                            <action selector="touchDragging:event:" destination="8e4-VB-87A" eventType="touchDragExit" id="mb3-N2-kk6"/>
+                            <action selector="touchDragging:event:" destination="8e4-VB-87A" eventType="touchDragInside" id="sDg-KG-stx"/>
+                        </connections>
+                    </button>
                 </subviews>
+                <gestureRecognizers/>
                 <constraints>
+                    <constraint firstItem="9h8-TZ-qu8" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" id="2Fu-b4-URx"/>
                     <constraint firstItem="uAi-pa-EQU" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" constant="24" id="5Rn-4f-bCw"/>
                     <constraint firstItem="uAi-pa-EQU" firstAttribute="leading" secondItem="1G5-fy-gLb" secondAttribute="trailing" constant="8" id="5ej-SP-vXh"/>
                     <constraint firstAttribute="trailing" secondItem="aEQ-5s-Sav" secondAttribute="trailing" id="C2v-Bc-bQy"/>
                     <constraint firstItem="Lwr-bI-hp8" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" constant="8" id="DHl-Ge-UpB"/>
+                    <constraint firstAttribute="trailing" secondItem="9h8-TZ-qu8" secondAttribute="trailing" id="G3Q-78-E0j"/>
                     <constraint firstItem="Qhu-no-qln" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" constant="24" id="ImA-A3-kgR"/>
                     <constraint firstItem="Lwr-bI-hp8" firstAttribute="leading" secondItem="1G5-fy-gLb" secondAttribute="trailing" constant="8" id="LZW-xD-sh4"/>
                     <constraint firstItem="aEQ-5s-Sav" firstAttribute="leading" secondItem="ejf-Un-hy5" secondAttribute="leading" id="T1O-ci-IwN"/>
                     <constraint firstAttribute="trailing" secondItem="Qhu-no-qln" secondAttribute="trailing" constant="14" id="U9j-3Q-2HP"/>
                     <constraint firstAttribute="trailing" secondItem="Lwr-bI-hp8" secondAttribute="trailing" constant="10" id="Zts-SD-QRz"/>
                     <constraint firstItem="1G5-fy-gLb" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" constant="10" id="bDo-0S-BDQ"/>
+                    <constraint firstItem="9h8-TZ-qu8" firstAttribute="leading" secondItem="ejf-Un-hy5" secondAttribute="leading" id="lbc-pb-MIJ"/>
+                    <constraint firstAttribute="bottom" secondItem="9h8-TZ-qu8" secondAttribute="bottom" id="qGD-ZP-1sN"/>
                     <constraint firstAttribute="bottom" secondItem="aEQ-5s-Sav" secondAttribute="bottom" id="wxc-Nh-MF3"/>
                     <constraint firstItem="aEQ-5s-Sav" firstAttribute="top" secondItem="1G5-fy-gLb" secondAttribute="bottom" constant="9" id="xS1-aO-lqk"/>
                     <constraint firstItem="1G5-fy-gLb" firstAttribute="leading" secondItem="ejf-Un-hy5" secondAttribute="leading" constant="11" id="y4P-bU-8s1"/>
@@ -74,6 +96,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="avatarImageView" destination="1G5-fy-gLb" id="ho6-S4-xrJ"/>
+                <outlet property="cellActionButton" destination="9h8-TZ-qu8" id="m2C-CG-ckU"/>
                 <outlet property="cellSeperatorView" destination="aEQ-5s-Sav" id="oBZ-9K-8s7"/>
                 <outlet property="contactNameLabel" destination="Lwr-bI-hp8" id="buE-gG-wER"/>
                 <outlet property="contactViaCaptionLabel" destination="uAi-pa-EQU" id="ptM-pM-6uf"/>

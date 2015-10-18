@@ -10,8 +10,9 @@
 #import "ContactsModel.h"
 #import "RecentContactsModel.h"
 #import <REMenu/REMenu.h>
+#import "FastRecordingView.h"
 
-@interface ContactsViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ContactsModelDelegate, RecentContactsModelDelegate, SearchMenuTableViewCellDelegate, UIAlertViewDelegate>
+@interface ContactsViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ContactsModelDelegate, RecentContactsModelDelegate, SearchMenuTableViewCellDelegate, UIAlertViewDelegate, ContactTableViewCellDelegate, FastRecordingViewDelegate>
 @property (strong, nonatomic) ContactsModel *contactsModel;
 @property (strong, nonatomic) RecentContactsModel *recentContactsModel;
 @property (strong, nonatomic) REMenu *searchMenu;
@@ -25,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *sendingImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sendingImageHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIView *seperatorView;
+@property (strong, nonatomic) FastRecordingView *fastRecordingView;
 
 -(IBAction)searchButtonPressed:(id)sender;
 

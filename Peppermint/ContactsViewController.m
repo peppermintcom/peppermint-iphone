@@ -8,9 +8,9 @@
 
 #import "ContactsViewController.h"
 #import "RecordingViewController.h"
-#import "SendVoiceMessageEmailModel.h"
+#import "SendVoiceMessageMandrillModel.h"
 
-#define SEGUE_RECORDING_VIEW_CONTROLLER @"RecordingViewControllerSegue"
+#define SEGUE_RECORDING_VIEW_CONTROLLER         @"RecordingViewControllerSegue"
 
 #define CELL_TAG_ALL_CONTACTS       1
 #define CELL_TAG_RECENT_CONTACTS    2
@@ -29,7 +29,6 @@
 
 @implementation ContactsViewController {
     UIAlertView *contactsAlertView;
-    BOOL canDeviceSendEmail;
     NSUInteger activeCellTag;
     NSUInteger cachedActiveCellTag;
     NSCharacterSet *unwantedCharsSet;
@@ -38,7 +37,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     contactsAlertView = nil;
-    canDeviceSendEmail = [SendVoiceMessageEmailModel canDeviceSendEmail];    
     if(!self.contactsModel) {
         self.contactsModel = [ContactsModel new];
         self.contactsModel.delegate = self;
@@ -59,6 +57,7 @@
     unwantedCharsSet = [[NSCharacterSet characterSetWithCharactersInString:ALLOWED_CHARS] invertedSet];
     self.sendingIndicatorView.hidden = YES;
     self.seperatorView.backgroundColor = [UIColor cellSeperatorGray];
+    [self initRecordingView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -66,6 +65,7 @@
     self.contactsModel = nil;
     self.recentContactsModel = nil;
     self.searchMenu = nil;
+    self.fastRecordingView = nil;
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -79,10 +79,13 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    if(self.sendingIndicatorView.hidden) {
-        [self.searchContactsTextField becomeFirstResponder];
-    }
+}
+
+-(void) initRecordingView {
+    self.fastRecordingView = [FastRecordingView createInstanceWithDelegate:self];
+    self.fastRecordingView.frame = self.view.frame;
+    [self.view addSubview:self.fastRecordingView];
+    [self.view bringSubviewToFront:self.fastRecordingView];
 }
 
 -(void) viewWillDisappear:(BOOL)animated {
@@ -125,6 +128,7 @@
         preparedCell = cell;
     } else if (indexPath.row < [self activeContactList].count) {
         ContactTableViewCell *cell = [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath];
+        cell.delegate = self;
         PeppermintContact *peppermintContact = [[self activeContactList] objectAtIndex:indexPath.row];
         if(peppermintContact.avatarImage) {
             cell.avatarImageView.image = peppermintContact.avatarImage;
@@ -149,6 +153,8 @@
     return height;
 }
 
+
+/*
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if([self activeContactList].count > indexPath.row) {
         PeppermintContact *selectedContact = [[self activeContactList] objectAtIndex:indexPath.row];
@@ -157,6 +163,61 @@
             [self performSegueWithIdentifier:SEGUE_RECORDING_VIEW_CONTROLLER sender:selectedContact];
         }
     }
+}
+*/
+
+#pragma mark - ContactTableViewCellDelegate
+
+-(void) didShortTouchOnIndexPath:(NSIndexPath*) indexPath location:(CGPoint) location {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = @"Hold to record, release to send";
+    hud.margin = 10.f;
+    
+    UIView *cellView = [self.tableView cellForRowAtIndexPath:indexPath];
+    location = [self.view convertPoint:location fromView:cellView];
+    
+    hud.yOffset = 150.f;
+    
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:2];
+}
+
+-(void) didBeginItemSelectionOnIndexpath:(NSIndexPath*) indexPath location:(CGPoint) location {
+    self.tableView.bounces = NO;
+    
+    //UIView *cellView = [self.tableView cellForRowAtIndexPath:indexPath];
+    //location = [self.view convertPoint:location fromView:cellView];
+    
+    PeppermintContact *selectedContact = [[self activeContactList] objectAtIndex:indexPath.row];
+    [self.searchContactsTextField resignFirstResponder];
+    
+    if(selectedContact.communicationChannel == CommunicationChannelEmail) {
+        AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+        SendVoiceMessageModel *sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
+        sendVoiceMessageModel.selectedPeppermintContact = selectedContact;
+        sendVoiceMessageModel.delegate = self.fastRecordingView;
+        self.fastRecordingView.sendVoiceMessageModel = sendVoiceMessageModel;
+        [self.fastRecordingView presentWithAnimation];
+    } else if (selectedContact.communicationChannel == CommunicationChannelSMS) {
+        NSLog(@"SMS functionality is not implemented yet");
+    }
+}
+
+-(void) didCancelItemSelectionOnIndexpath:(NSIndexPath*) indexPath location:(CGPoint) location {
+    self.tableView.bounces = YES;
+    [self.fastRecordingView finishRecordingWithSendMessage:NO];
+}
+
+-(void) didFinishItemSelectionOnIndexPath:(NSIndexPath*) indexPath location:(CGPoint) location {
+    self.tableView.bounces = YES;
+    [self.fastRecordingView finishRecordingWithSendMessage:YES];
+}
+
+#pragma mark - FastRecordingViewDelegate
+
+-(void) messageSentWithSuccess {
+    [self messageSendingIndicatorSetMessageIsSending];
 }
 
 #pragma mark - TextField
@@ -319,7 +380,6 @@
 
 -(void) refreshTheScreen {
     self.sendingIndicatorView.hidden = YES;
-    [self.searchContactsTextField becomeFirstResponder];
     [self.recentContactsModel refreshRecentContactList];
 }
 
@@ -392,10 +452,10 @@
         PeppermintContact *selectedContact = (PeppermintContact*)sender;
         
         if(selectedContact.communicationChannel == CommunicationChannelEmail) {
-            SendVoiceMessageEmailModel *sendVoiceMessageEmailModel = [SendVoiceMessageEmailModel new];
-            sendVoiceMessageEmailModel.selectedPeppermintContact = selectedContact;
-            sendVoiceMessageEmailModel.delegate = rvc;
-            rvc.sendVoiceMessageModel = sendVoiceMessageEmailModel;
+            SendVoiceMessageModel *sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
+            sendVoiceMessageModel.selectedPeppermintContact = selectedContact;
+            sendVoiceMessageModel.delegate = rvc;
+            rvc.sendVoiceMessageModel = sendVoiceMessageModel;
         } else if (selectedContact.communicationChannel == CommunicationChannelSMS) {
             NSLog(@"SMS functionality is not implemented yet");
         }
@@ -407,6 +467,7 @@
     if([identifier isEqualToString:SEGUE_RECORDING_VIEW_CONTROLLER]) {
         PeppermintContact *selectedContact = (PeppermintContact*)sender;        
         if(selectedContact.communicationChannel == CommunicationChannelEmail) {
+            /*
             result = canDeviceSendEmail;
             if(!result) {
                 NSString *title = LOC(@"Information", @"Information");
@@ -414,6 +475,7 @@
                 NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
                 [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
             }
+            */
         } else if (selectedContact.communicationChannel == CommunicationChannelSMS) {
             result = NO;
             NSString *title = LOC(@"Information", @"Information");

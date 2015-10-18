@@ -39,3 +39,4 @@
 "Recording is cut" = "Your voice recording is cut. How would you like to proceed?";
 "Restart record" = "Restart recording";
 "Continue from previous" = "Continue from previous";
+"Recording for contact format" = "Recording for %@\n%@";

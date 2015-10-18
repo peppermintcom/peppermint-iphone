@@ -10,3 +10,6 @@
 
 @implementation NetworkFailure
 @end
+
+@implementation MandrillMesssageSent
+@end

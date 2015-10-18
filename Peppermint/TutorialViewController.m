@@ -29,9 +29,6 @@
     contactsModel = nil;
     self.items = [NSArray arrayWithObjects:@"tutorial1",@"tutorial2",@"tutorial3",@"_NEXPAGE_", nil];
     [self askUserForContactsReadPermission];
-        
-    NSString* name = [[self newNamesFromDeviceName:UIDevice.currentDevice.name] componentsJoinedByString:@" "];
-    NSLog(@"The guessed user information is = %@", name);
 }
 
 - (NSArray*) newNamesFromDeviceName: (NSString *) deviceName

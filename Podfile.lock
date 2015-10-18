@@ -28,6 +28,8 @@ PODS:
   - Fabric (1.4.1):
     - Fabric/Base (= 1.4.1)
   - Fabric/Base (1.4.1)
+  - JSONModel (1.1.0)
+  - MBProgressHUD (0.9.1)
   - OpenSans (1.0.3)
   - REMenu (1.10)
   - tolo (1.0.0)
@@ -38,6 +40,8 @@ DEPENDENCIES:
   - Crashlytics
   - EasyMailSender
   - Fabric
+  - JSONModel
+  - MBProgressHUD (~> 0.9.1)
   - OpenSans
   - REMenu (~> 1.10)
   - tolo (~> 1.0)
@@ -48,6 +52,8 @@ SPEC CHECKSUMS:
   Crashlytics: a29e4f820aa401482b26043dc5d78adf08ac7573
   EasyMailSender: f50b6b5fa49b47f4b60998a56345600b848f2121
   Fabric: 4f718eeca4c02c7d6f6f4e5f0e5f87c63aa38458
+  JSONModel: ec77e9865236a7a09d9cf7668df6b4b328d9ec1d
+  MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   OpenSans: 33078846463eae780aa5f82986b51cce085f970d
   REMenu: 30dad195930adf6c5eeb8041e3257aa60bf9fa49
   tolo: 906f6fe2943451e7354c694ce968d76ea344c01d

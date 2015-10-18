@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Tolo.h"
+#import "Events.h"
 
 @protocol BaseModelDelegate <NSObject>
 @required

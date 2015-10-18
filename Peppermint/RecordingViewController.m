@@ -9,9 +9,6 @@
 #import "RecordingViewController.h"
 #import "ContactsViewController.h"
 
-#define MAX_RECORD_TIME             120
-#define MIN_VOICE_MESSAGE_LENGTH    2
-
 @interface RecordingViewController () {
     BOOL isFirstOpen;
     UIAlertView *microphoneAccessAlertView;

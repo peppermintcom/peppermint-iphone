@@ -11,3 +11,6 @@
 @interface NetworkFailure : NSObject
 @property(nonatomic) NSError *error;
 @end
+
+@interface MandrillMesssageSent : NSObject
+@end

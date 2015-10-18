@@ -37,4 +37,14 @@ NSLocalizedStringFromTable(\
 #pragma mark - OpenSans Fonts
 #import <OpenSans/UIFont+OpenSans.h>
 
+#pragma mark - Record Constraint Definition
+#define MAX_RECORD_TIME             60
+#define MIN_VOICE_MESSAGE_LENGTH    2
+
+#pragma mark - Alert Button Index Definition
+#define ALERT_BUTTON_INDEX_CANCEL   0
+#define ALERT_BUTTON_INDEX_OTHER_1  1
+#define ALERT_BUTTON_INDEX_OTHER_2  2
+#define ALERT_BUTTON_INDEX_OTHER_3  3
+
 #endif

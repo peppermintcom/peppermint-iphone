@@ -9,11 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CellFactory.h"
 #import "BaseModel.h"
-
-#define ALERT_BUTTON_INDEX_CANCEL   0
-#define ALERT_BUTTON_INDEX_OTHER_1  1
-#define ALERT_BUTTON_INDEX_OTHER_2  2
-#define ALERT_BUTTON_INDEX_OTHER_3  3
+#import "MBProgressHUD.h"
 
 @interface BaseViewController : UIViewController <BaseModelDelegate>
 -(void) redirectToSettingsPageForPermission;

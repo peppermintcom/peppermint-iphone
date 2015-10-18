@@ -11,11 +11,11 @@
 #import "Tolo.h"
 #import "Events.h"
 
-//REMOTE SERVICE ENDPOINT
-#define BASE_URL            @"http://mandrill...."
-#define ENDPOINT_LOCATION   @"/crud/location"
-
 @interface BaseService : NSObject
 @property(strong, nonatomic) NSString *baseUrl;
+
+-(void)failureDuringRequestCreationWithError:(NSError*) error;
+-(void)failureWithOperation:(AFHTTPRequestOperation*) operation andError:(NSError*) error;
+-(void)failureDuringJSONCastWithError:(NSError*) error ;
 
 @end

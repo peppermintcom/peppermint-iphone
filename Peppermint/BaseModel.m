@@ -10,4 +10,12 @@
 
 @implementation BaseModel
 
+-(id) init {
+    self = [super init];
+    if(self) {
+        REGISTER();
+    }
+    return self;
+}
+
 @end

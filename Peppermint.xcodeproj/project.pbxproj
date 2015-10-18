@@ -9,6 +9,16 @@
 /* Begin PBXBuildFile section */
 		392D9C861A6F3945B758D95F /* libPods-Peppermint.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4568D87C1B184E71C2B112BE /* libPods-Peppermint.a */; };
 		B102BBB81BCD03EC001E1E7A /* UIViewController_AdditionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B102BBB71BCD03EC001E1E7A /* UIViewController_AdditionViewController.m */; };
+		B102DD5E1BD0802100D71D62 /* BaseCustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = B102DD5D1BD0802100D71D62 /* BaseCustomView.m */; };
+		B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B12C03BA1BCFFC060085A55A /* FastRecordingView.m */; };
+		B12C03BD1BCFFC280085A55A /* FastRecordingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B12C03BC1BCFFC280085A55A /* FastRecordingView.xib */; };
+		B13B075A1BD3686500974AC3 /* MandrillInformationResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07591BD3686500974AC3 /* MandrillInformationResponse.m */; };
+		B13B075D1BD3716100974AC3 /* MandrillSendRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B075C1BD3716100974AC3 /* MandrillSendRequest.m */; };
+		B13B07601BD3719500974AC3 /* MandrillToObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B075F1BD3719500974AC3 /* MandrillToObject.m */; };
+		B13B07631BD3720100974AC3 /* MandrillMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07621BD3720100974AC3 /* MandrillMessage.m */; };
+		B13B07671BD3736400974AC3 /* MandrillMailAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07661BD3736400974AC3 /* MandrillMailAttachment.m */; };
+		B13B076A1BD3752900974AC3 /* MandrillRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07691BD3752900974AC3 /* MandrillRequest.m */; };
+		B13B076D1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B076C1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m */; };
 		B165EF121BB71A85008C6F71 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF111BB71A85008C6F71 /* BaseModel.m */; };
 		B165EF151BB71A99008C6F71 /* ContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF141BB71A99008C6F71 /* ContactsModel.m */; };
 		B165EF181BB71EC0008C6F71 /* PeppermintContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF171BB71EC0008C6F71 /* PeppermintContact.m */; };
@@ -31,6 +41,8 @@
 		B17B3D701BB6BD2E009B8BC5 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D6F1BB6BD2E009B8BC5 /* ContactTableViewCell.xib */; };
 		B17B3D741BB6C4B0009B8BC5 /* UIColor_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D731BB6C4B0009B8BC5 /* UIColor_Addition.m */; };
 		B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D771BB6C90A009B8BC5 /* BaseTableViewCell.m */; };
+		B1BB1E5F1BD35CD300A1CE45 /* MandrillService.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB1E5E1BD35CD300A1CE45 /* MandrillService.m */; };
+		B1BB1E631BD364FB00A1CE45 /* AFNetworkActivityLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB1E621BD364FB00A1CE45 /* AFNetworkActivityLogger.m */; };
 		B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40E41BB7D58C00042E4B /* RecordingModel.m */; };
 		B1EF40EB1BB7E78C00042E4B /* SendVoiceMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40EA1BB7E78C00042E4B /* SendVoiceMessageModel.m */; };
 		B1EF40EE1BB7EAA200042E4B /* SendVoiceMessageEmailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40ED1BB7EAA200042E4B /* SendVoiceMessageEmailModel.m */; };
@@ -63,6 +75,25 @@
 		B102BBB51BCCE039001E1E7A /* nsuserdefaults-helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "nsuserdefaults-helper.h"; sourceTree = "<group>"; };
 		B102BBB61BCD03EC001E1E7A /* UIViewController_AdditionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIViewController_AdditionViewController.h; sourceTree = "<group>"; };
 		B102BBB71BCD03EC001E1E7A /* UIViewController_AdditionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIViewController_AdditionViewController.m; sourceTree = "<group>"; };
+		B102DD5C1BD0802100D71D62 /* BaseCustomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseCustomView.h; sourceTree = "<group>"; };
+		B102DD5D1BD0802100D71D62 /* BaseCustomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseCustomView.m; sourceTree = "<group>"; };
+		B12C03B91BCFFC060085A55A /* FastRecordingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastRecordingView.h; sourceTree = "<group>"; };
+		B12C03BA1BCFFC060085A55A /* FastRecordingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FastRecordingView.m; sourceTree = "<group>"; };
+		B12C03BC1BCFFC280085A55A /* FastRecordingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FastRecordingView.xib; sourceTree = "<group>"; };
+		B13B07581BD3686500974AC3 /* MandrillInformationResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrillInformationResponse.h; sourceTree = "<group>"; };
+		B13B07591BD3686500974AC3 /* MandrillInformationResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MandrillInformationResponse.m; sourceTree = "<group>"; };
+		B13B075B1BD3716100974AC3 /* MandrillSendRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrillSendRequest.h; sourceTree = "<group>"; };
+		B13B075C1BD3716100974AC3 /* MandrillSendRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MandrillSendRequest.m; sourceTree = "<group>"; };
+		B13B075E1BD3719500974AC3 /* MandrillToObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrillToObject.h; sourceTree = "<group>"; };
+		B13B075F1BD3719500974AC3 /* MandrillToObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MandrillToObject.m; sourceTree = "<group>"; };
+		B13B07611BD3720100974AC3 /* MandrillMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrillMessage.h; sourceTree = "<group>"; };
+		B13B07621BD3720100974AC3 /* MandrillMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MandrillMessage.m; sourceTree = "<group>"; };
+		B13B07651BD3736400974AC3 /* MandrillMailAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrillMailAttachment.h; sourceTree = "<group>"; };
+		B13B07661BD3736400974AC3 /* MandrillMailAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MandrillMailAttachment.m; sourceTree = "<group>"; };
+		B13B07681BD3752900974AC3 /* MandrillRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrillRequest.h; sourceTree = "<group>"; };
+		B13B07691BD3752900974AC3 /* MandrillRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MandrillRequest.m; sourceTree = "<group>"; };
+		B13B076B1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVoiceMessageMandrillModel.h; sourceTree = "<group>"; };
+		B13B076C1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendVoiceMessageMandrillModel.m; sourceTree = "<group>"; };
 		B165EF101BB71A85008C6F71 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
 		B165EF111BB71A85008C6F71 /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
 		B165EF131BB71A99008C6F71 /* ContactsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ContactsModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -103,6 +134,10 @@
 		B17B3D731BB6C4B0009B8BC5 /* UIColor_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIColor_Addition.m; sourceTree = "<group>"; };
 		B17B3D761BB6C90A009B8BC5 /* BaseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableViewCell.h; sourceTree = "<group>"; };
 		B17B3D771BB6C90A009B8BC5 /* BaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewCell.m; sourceTree = "<group>"; };
+		B1BB1E5D1BD35CD300A1CE45 /* MandrillService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrillService.h; sourceTree = "<group>"; };
+		B1BB1E5E1BD35CD300A1CE45 /* MandrillService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MandrillService.m; sourceTree = "<group>"; };
+		B1BB1E611BD364FB00A1CE45 /* AFNetworkActivityLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityLogger.h; sourceTree = "<group>"; };
+		B1BB1E621BD364FB00A1CE45 /* AFNetworkActivityLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityLogger.m; sourceTree = "<group>"; };
 		B1EF40E31BB7D58C00042E4B /* RecordingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RecordingModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B1EF40E41BB7D58C00042E4B /* RecordingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RecordingModel.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B1EF40E91BB7E78C00042E4B /* SendVoiceMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVoiceMessageModel.h; sourceTree = "<group>"; };
@@ -171,6 +206,25 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B102DD5B1BD0800B00D71D62 /* BaseCustomView */ = {
+			isa = PBXGroup;
+			children = (
+				B102DD5C1BD0802100D71D62 /* BaseCustomView.h */,
+				B102DD5D1BD0802100D71D62 /* BaseCustomView.m */,
+			);
+			name = BaseCustomView;
+			sourceTree = "<group>";
+		};
+		B12C03B81BCFFBDC0085A55A /* FastRecordingView */ = {
+			isa = PBXGroup;
+			children = (
+				B12C03B91BCFFC060085A55A /* FastRecordingView.h */,
+				B12C03BA1BCFFC060085A55A /* FastRecordingView.m */,
+				B12C03BC1BCFFC280085A55A /* FastRecordingView.xib */,
+			);
+			name = FastRecordingView;
+			sourceTree = "<group>";
+		};
 		B165EF0F1BB71A31008C6F71 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +241,8 @@
 				B1EF40EA1BB7E78C00042E4B /* SendVoiceMessageModel.m */,
 				B1EF40EC1BB7EAA200042E4B /* SendVoiceMessageEmailModel.h */,
 				B1EF40ED1BB7EAA200042E4B /* SendVoiceMessageEmailModel.m */,
+				B13B076B1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.h */,
+				B13B076C1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m */,
 				B1F93E991BC8E5E7005F2128 /* RecentContactsModel.h */,
 				B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */,
 			);
@@ -298,6 +354,8 @@
 		B17B3D551BB689F1009B8BC5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B102DD5B1BD0800B00D71D62 /* BaseCustomView */,
+				B12C03B81BCFFBDC0085A55A /* FastRecordingView */,
 				B1EF40E21BB7CE7700042E4B /* Storyboard */,
 				B17B3D6A1BB6BCEC009B8BC5 /* Cell */,
 				B1EF40EF1BB8578200042E4B /* M13ProgressView */,
@@ -349,6 +407,34 @@
 			name = BaseTableViewCell;
 			sourceTree = "<group>";
 		};
+		B1BB1E601BD364EC00A1CE45 /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				B1BB1E611BD364FB00A1CE45 /* AFNetworkActivityLogger.h */,
+				B1BB1E621BD364FB00A1CE45 /* AFNetworkActivityLogger.m */,
+			);
+			name = Logger;
+			sourceTree = "<group>";
+		};
+		B1BB1E641BD3679200A1CE45 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				B13B07681BD3752900974AC3 /* MandrillRequest.h */,
+				B13B07691BD3752900974AC3 /* MandrillRequest.m */,
+				B13B07581BD3686500974AC3 /* MandrillInformationResponse.h */,
+				B13B07591BD3686500974AC3 /* MandrillInformationResponse.m */,
+				B13B075B1BD3716100974AC3 /* MandrillSendRequest.h */,
+				B13B075C1BD3716100974AC3 /* MandrillSendRequest.m */,
+				B13B075E1BD3719500974AC3 /* MandrillToObject.h */,
+				B13B075F1BD3719500974AC3 /* MandrillToObject.m */,
+				B13B07611BD3720100974AC3 /* MandrillMessage.h */,
+				B13B07621BD3720100974AC3 /* MandrillMessage.m */,
+				B13B07651BD3736400974AC3 /* MandrillMailAttachment.h */,
+				B13B07661BD3736400974AC3 /* MandrillMailAttachment.m */,
+			);
+			name = Entity;
+			sourceTree = "<group>";
+		};
 		B1EF40E11BB7CE5600042E4B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -395,9 +481,13 @@
 		B1F045641BCFB33F00A67942 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				B1BB1E641BD3679200A1CE45 /* Entity */,
+				B1BB1E601BD364EC00A1CE45 /* Logger */,
 				B1F045681BCFB4D500A67942 /* Events */,
 				B1F045651BCFB36900A67942 /* BaseService.h */,
 				B1F045661BCFB36900A67942 /* BaseService.m */,
+				B1BB1E5D1BD35CD300A1CE45 /* MandrillService.h */,
+				B1BB1E5E1BD35CD300A1CE45 /* MandrillService.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -522,6 +612,7 @@
 				B17B3D571BB68A39009B8BC5 /* Text.strings in Resources */,
 				B179F83C1BC931820089D709 /* SearchMenuTableViewCell.xib in Resources */,
 				B165EF1F1BB72254008C6F71 /* EmptyResultTableViewCell.xib in Resources */,
+				B12C03BD1BCFFC280085A55A /* FastRecordingView.xib in Resources */,
 				B17B3D3F1BB6898C009B8BC5 /* LaunchScreen.xib in Resources */,
 				B17B3D701BB6BD2E009B8BC5 /* ContactTableViewCell.xib in Resources */,
 				B17B3D3C1BB6898C009B8BC5 /* Images.xcassets in Resources */,
@@ -614,30 +705,41 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */,
 				B1EF40F51BB857C800042E4B /* M13ProgressViewPie.m in Sources */,
 				B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */,
 				B1F045671BCFB36900A67942 /* BaseService.m in Sources */,
+				B13B075D1BD3716100974AC3 /* MandrillSendRequest.m in Sources */,
 				B165EF151BB71A99008C6F71 /* ContactsModel.m in Sources */,
 				B179F83A1BC9316F0089D709 /* SearchMenuTableViewCell.m in Sources */,
+				B102DD5E1BD0802100D71D62 /* BaseCustomView.m in Sources */,
+				B13B07631BD3720100974AC3 /* MandrillMessage.m in Sources */,
 				B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */,
 				B17B3D5B1BB6A49E009B8BC5 /* BaseViewController.m in Sources */,
 				B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */,
+				B13B075A1BD3686500974AC3 /* MandrillInformationResponse.m in Sources */,
 				B1F0456B1BCFB4E400A67942 /* Events.m in Sources */,
 				B17B3D641BB6AE8B009B8BC5 /* RecordingViewController.m in Sources */,
 				B1EF40EE1BB7EAA200042E4B /* SendVoiceMessageEmailModel.m in Sources */,
 				B165EF181BB71EC0008C6F71 /* PeppermintContact.m in Sources */,
+				B1BB1E5F1BD35CD300A1CE45 /* MandrillService.m in Sources */,
 				B1F93E981BC8E328005F2128 /* Repository.m in Sources */,
 				B17B3D6E1BB6BD13009B8BC5 /* ContactTableViewCell.m in Sources */,
 				B17B3D691BB6BCE5009B8BC5 /* CellFactory.m in Sources */,
+				B13B076D1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m in Sources */,
+				B1BB1E631BD364FB00A1CE45 /* AFNetworkActivityLogger.m in Sources */,
 				B1EF40EB1BB7E78C00042E4B /* SendVoiceMessageModel.m in Sources */,
 				B17B3D5E1BB6A504009B8BC5 /* ContactsViewController.m in Sources */,
+				B13B07601BD3719500974AC3 /* MandrillToObject.m in Sources */,
 				B17B3D741BB6C4B0009B8BC5 /* UIColor_Addition.m in Sources */,
 				B17B3D341BB6898C009B8BC5 /* AppDelegate.m in Sources */,
 				B102BBB81BCD03EC001E1E7A /* UIViewController_AdditionViewController.m in Sources */,
+				B13B076A1BD3752900974AC3 /* MandrillRequest.m in Sources */,
 				B1EF40FC1BB8786500042E4B /* TutorialViewController.m in Sources */,
 				B165EF121BB71A85008C6F71 /* BaseModel.m in Sources */,
 				B17B3D311BB6898C009B8BC5 /* main.m in Sources */,
 				B1EF40F91BB8782F00042E4B /* SwipeView.m in Sources */,
+				B13B07671BD3736400974AC3 /* MandrillMailAttachment.m in Sources */,
 				B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */,
 				B1F93E901BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld in Sources */,
 				B1EF40F21BB8579D00042E4B /* M13ProgressView.m in Sources */,

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="FastRecordingView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view opaque="NO" clipsSubviews="YES" alpha="0.74999999999999978" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yze-9c-yzA" userLabel="BackgroundView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" red="0.043129229085894422" green="0.18120390855457225" blue="0.15778756858651818" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PZg-zV-ZMy">
+                    <rect key="frame" x="8" y="25" width="304" height="59"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="59" id="eAh-SN-Y3w"/>
+                    </constraints>
+                    <string key="text">_Recording for Bob Adams
+081234567</string>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4vy-Vz-Ek4" userLabel="ProgressContainerView">
+                    <rect key="frame" x="57" y="182" width="206" height="205"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IPo-3k-itg" customClass="M13ProgressViewPie">
+                            <rect key="frame" x="-117" y="-118" width="440" height="440"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="440" id="N9b-1d-goW"/>
+                                <constraint firstAttribute="height" constant="440" id="YkQ-Xc-vwT"/>
+                            </constraints>
+                        </view>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="recording_logo1" translatesAutoresizingMaskIntoConstraints="NO" id="Kks-qv-Zee">
+                            <rect key="frame" x="5" y="5" width="196" height="195"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="0.48128892690000002" blue="0.29840627149999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="Kks-qv-Zee" firstAttribute="leading" secondItem="4vy-Vz-Ek4" secondAttribute="leading" constant="5" id="26G-nw-dCK"/>
+                        <constraint firstItem="Kks-qv-Zee" firstAttribute="top" secondItem="4vy-Vz-Ek4" secondAttribute="top" constant="5" id="4cT-UB-Crz"/>
+                        <constraint firstAttribute="height" constant="205" id="A1A-Yg-gHQ"/>
+                        <constraint firstAttribute="bottom" secondItem="Kks-qv-Zee" secondAttribute="bottom" constant="5" id="Iih-Z9-ssS"/>
+                        <constraint firstAttribute="trailing" secondItem="Kks-qv-Zee" secondAttribute="trailing" constant="5" id="SU1-cv-trX"/>
+                        <constraint firstAttribute="centerX" secondItem="IPo-3k-itg" secondAttribute="centerX" id="emm-6E-9fr"/>
+                        <constraint firstAttribute="centerY" secondItem="IPo-3k-itg" secondAttribute="centerY" id="pbP-V4-Gtg"/>
+                        <constraint firstAttribute="width" constant="206" id="tul-ZD-9pm"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Qx-iJ-3yh">
+                    <rect key="frame" x="60" y="417" width="200" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="R4Q-Xm-5IJ"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="40"/>
+                    <color key="textColor" red="0.90823108460000002" green="0.081871332150000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swipeToCancel" translatesAutoresizingMaskIntoConstraints="NO" id="G44-pU-yBs">
+                    <rect key="frame" x="0.0" y="506" width="320" height="57"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="57" id="Dbj-e2-5eu"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="G44-pU-yBs" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="75q-1l-clL"/>
+                <constraint firstItem="7Qx-iJ-3yh" firstAttribute="top" secondItem="4vy-Vz-Ek4" secondAttribute="bottom" constant="30" id="Ccn-hc-FZA"/>
+                <constraint firstItem="PZg-zV-ZMy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="25" id="Dl6-Nu-ADo"/>
+                <constraint firstAttribute="centerX" secondItem="4vy-Vz-Ek4" secondAttribute="centerX" id="Esh-Uq-fin"/>
+                <constraint firstAttribute="bottom" secondItem="Yze-9c-yzA" secondAttribute="bottom" id="GtG-AD-xQr"/>
+                <constraint firstItem="PZg-zV-ZMy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="HpQ-7a-0jI"/>
+                <constraint firstAttribute="bottom" secondItem="G44-pU-yBs" secondAttribute="bottom" constant="5" id="Pzh-yk-3Yj"/>
+                <constraint firstItem="7Qx-iJ-3yh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="60" id="bb7-9w-t8s"/>
+                <constraint firstItem="G44-pU-yBs" firstAttribute="top" secondItem="7Qx-iJ-3yh" secondAttribute="bottom" constant="39" id="cUu-cm-IIC"/>
+                <constraint firstItem="Yze-9c-yzA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="eKV-VJ-7Cy"/>
+                <constraint firstAttribute="trailing" secondItem="G44-pU-yBs" secondAttribute="trailing" id="fQl-es-4Bx"/>
+                <constraint firstAttribute="trailing" secondItem="Yze-9c-yzA" secondAttribute="trailing" id="fbd-tq-NcO"/>
+                <constraint firstAttribute="trailing" secondItem="PZg-zV-ZMy" secondAttribute="trailing" constant="8" id="ksL-oB-nHV"/>
+                <constraint firstAttribute="trailing" secondItem="7Qx-iJ-3yh" secondAttribute="trailing" constant="60" id="ox6-Tf-afx"/>
+                <constraint firstAttribute="centerY" secondItem="4vy-Vz-Ek4" secondAttribute="centerY" id="r6f-CR-mYy"/>
+                <constraint firstItem="Yze-9c-yzA" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="vhk-Wi-rO2"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <connections>
+                <outlet property="counterLabel" destination="7Qx-iJ-3yh" id="KMT-Gt-F6F"/>
+                <outlet property="m13ProgressViewPie" destination="IPo-3k-itg" id="cd9-FX-9Ya"/>
+                <outlet property="navigationTitleLabel" destination="PZg-zV-ZMy" id="35b-Kv-cAK"/>
+                <outlet property="progressCenterImageView" destination="Kks-qv-Zee" id="v7d-rZ-V00"/>
+                <outlet property="progressContainerView" destination="4vy-Vz-Ek4" id="d4p-hI-bI6"/>
+            </connections>
+            <point key="canvasLocation" x="279.5" y="230.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="recording_logo1" width="397" height="395"/>
+        <image name="swipeToCancel" width="401" height="112"/>
+    </resources>
+</document>
