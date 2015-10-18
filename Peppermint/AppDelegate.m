@@ -61,7 +61,7 @@
     [self initNavigationViewController];
     [self initFabric];
     [self initInitialViewController];
-    [self logServiceCalls];
+    //[self logServiceCalls];
     return YES;
 }
 

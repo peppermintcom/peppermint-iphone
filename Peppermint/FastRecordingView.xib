@@ -6,7 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="FastRecordingView">
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="iN0-l3-epB" customClass="FastRecordingView">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -78,7 +78,7 @@
                 <constraint firstItem="PZg-zV-ZMy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="HpQ-7a-0jI"/>
                 <constraint firstAttribute="bottom" secondItem="G44-pU-yBs" secondAttribute="bottom" constant="5" id="Pzh-yk-3Yj"/>
                 <constraint firstItem="7Qx-iJ-3yh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="60" id="bb7-9w-t8s"/>
-                <constraint firstItem="G44-pU-yBs" firstAttribute="top" secondItem="7Qx-iJ-3yh" secondAttribute="bottom" constant="39" id="cUu-cm-IIC"/>
+                <constraint firstItem="G44-pU-yBs" firstAttribute="top" relation="lessThanOrEqual" secondItem="7Qx-iJ-3yh" secondAttribute="bottom" constant="39" id="cUu-cm-IIC"/>
                 <constraint firstItem="Yze-9c-yzA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="eKV-VJ-7Cy"/>
                 <constraint firstAttribute="trailing" secondItem="G44-pU-yBs" secondAttribute="trailing" id="fQl-es-4Bx"/>
                 <constraint firstAttribute="trailing" secondItem="Yze-9c-yzA" secondAttribute="trailing" id="fbd-tq-NcO"/>

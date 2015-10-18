@@ -13,7 +13,7 @@
 
 @implementation SendVoiceMessageEmailModel
 
--(void) sendVoiceMessageWithData:(NSData*) data overViewController:(UIViewController*) viewController {
+-(void) sendVoiceMessageWithData:(NSData*) data {
     EasyMailAlertSender *mailSender = [EasyMailAlertSender easyMail:^(MFMailComposeViewController *controller) {
         [controller setToRecipients:[NSArray arrayWithObject:self.selectedPeppermintContact.communicationChannelAddress]];
         [controller setSubject:LOC(@"Mail Subject",@"Default Mail Subject")];
@@ -29,14 +29,16 @@
             error = [NSError errorWithDomain:LOC(@"An error occured",@"Unknown Error Message") code:0 userInfo:nil];
             [self.delegate operationFailure:error];
         } else if (result == MFMailComposeResultSent) {
-            [super sendVoiceMessageWithData:data overViewController:(UIViewController*) viewController];
+            [super sendVoiceMessageWithData:data];
             [self.delegate messageSentWithSuccess];
             [controller dismissViewControllerAnimated:NO completion:nil];
         } else {
             [controller dismissViewControllerAnimated:YES completion:nil];
         }
     }];
-    [mailSender showFromViewController:viewController];
+    UIViewController *activeViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    [self.delegate messageIsSending];
+    [mailSender showFromViewController:activeViewController];
 }
 
 + (BOOL)canDeviceSendEmail

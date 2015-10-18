@@ -23,13 +23,10 @@
 {
     NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, ENDPOINT_INFO];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
     MandrillRequest *request = [MandrillRequest new];
     request.key = self.apiKey;
     NSDictionary *parameters = request.toDictionary;
-    
     [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
         NSError *error;
         MandrillInformationResponse *informationResponse = [[MandrillInformationResponse alloc] initWithDictionary:responseObject error:&error];
         if(error) {
@@ -39,29 +36,9 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self failureWithOperation:operation andError:error];
     }];
-    
 }
 
 -(void) sendMessage:(MandrillMessage*) message {
-    /*
-    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, ENDPOINT_SEND_MAIL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    MandrillRequest *request = [MandrillRequest new];
-    request.key = self.apiKey;
-    request.message = message;
-    NSDictionary *parameters = request.toDictionary;
-    
-    [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSLog(@"Got Information: %@ \n\n\n %@", responseObject, operation.response);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self failureWithOperation:operation andError:error];
-    }];
-     */
-    
-    
-    
     NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, ENDPOINT_SEND_MAIL];
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
@@ -80,7 +57,6 @@
             if (error) {
                 [self failureWithOperation:nil andError:error];
             } else {
-                NSLog(@"Response is :\n\n%@", response);
                 MandrillMesssageSent *mandrillMesssageSent = [MandrillMesssageSent new];
                 PUBLISH(mandrillMesssageSent);
             }

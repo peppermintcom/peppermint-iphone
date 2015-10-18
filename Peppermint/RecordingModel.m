@@ -18,36 +18,37 @@
 -(id) init {
     self = [super init];
     if(self) {
-        
-        NSString *length = (NSString*) defaults_object(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH);
-        self.previousFileLength = !length ? 0 : length.intValue;
-        
-        AVAudioSession *session = [AVAudioSession sharedInstance];
-        NSError *error;
-        [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
-        if(error) {
-            [self.delegate operationFailure:error];
-        } else {            
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString *length = (NSString*) defaults_object(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH);
+            self.previousFileLength = !length ? 0 : length.intValue;
+            
             AVAudioSession *session = [AVAudioSession sharedInstance];
-            __weak RecordingModel *weakSelf = self;
-            if([session respondsToSelector:@selector(requestRecordPermission:)]) {
-                [session requestRecordPermission:^(BOOL granted) {
-                    self.grantedForMicrophone = granted;
-                    if(granted) {
-                        [weakSelf performGrantedOperations];
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [self.delegate accessRightsAreSupplied];
-                        });
-                    } else {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [self.delegate microphoneAccessRightsAreNotSupplied];
-                        });
-                    }
-                }];
+            NSError *error;
+            [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
+            if(error) {
+                [self.delegate operationFailure:error];
             } else {
-                [weakSelf performGrantedOperations];
+                AVAudioSession *session = [AVAudioSession sharedInstance];
+                __weak RecordingModel *weakSelf = self;
+                if([session respondsToSelector:@selector(requestRecordPermission:)]) {
+                    [session requestRecordPermission:^(BOOL granted) {
+                        self.grantedForMicrophone = granted;
+                        if(granted) {
+                            [weakSelf performGrantedOperations];
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [self.delegate accessRightsAreSupplied];
+                            });
+                        } else {
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [self.delegate microphoneAccessRightsAreNotSupplied];
+                            });
+                        }
+                    }];
+                } else {
+                    [weakSelf performGrantedOperations];
+                }
             }
-        }
+        });
     }
     return self;
 }
@@ -179,7 +180,9 @@
         [self removeFileIfExistsAtUrl:[self backUpFileUrl]];
         NSData *data = [[NSData alloc] initWithContentsOfURL:self.fileUrl];
         [self removeFileIfExistsAtUrl:[self fileUrl]];
-        [self.delegate recordDataIsPrepared:data];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate recordDataIsPrepared:data];
+        });
     }];
 }
 

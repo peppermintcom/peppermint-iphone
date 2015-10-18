@@ -24,7 +24,7 @@
 "Could not resume" = "Could not resume the recording";
 "Could not start record" = "Could not start recording";
 "Mail Subject" = "I sent you a voice message";
-"Mail Body" = "Here's my message.<br/><br/>Reply via <a href=\"http://www.peppermint.com\">Peppermint.com</a> ";
+"Mail Body" = "Here's my message.<br/><br/>Reply via <a href=\"http://www.peppermint.com\">Peppermint.com</a><br/> ";
 "Please add an email account" = "Please add and configure at least one mail account on this device to be able to send voice messages over email";
 "Time is up" = "Time is up!\nYou may tap send to send your message\nor re-record voice message";
 "Message sent with success" = "Your message has been sent successfully";

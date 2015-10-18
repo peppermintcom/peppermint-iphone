@@ -32,6 +32,7 @@
     NSUInteger activeCellTag;
     NSUInteger cachedActiveCellTag;
     NSCharacterSet *unwantedCharsSet;
+    NSUInteger activeSendingCount;
 }
 
 - (void)viewDidLoad {
@@ -58,6 +59,7 @@
     self.sendingIndicatorView.hidden = YES;
     self.seperatorView.backgroundColor = [UIColor cellSeperatorGray];
     [self initRecordingView];
+    activeSendingCount = 0;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -169,6 +171,10 @@
 #pragma mark - ContactTableViewCellDelegate
 
 -(void) didShortTouchOnIndexPath:(NSIndexPath*) indexPath location:(CGPoint) location {
+    
+#warning "Add custom view"
+    NSLog(@"Hold to record, release to send");
+    /*
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     hud.mode = MBProgressHUDModeText;
     hud.labelText = @"Hold to record, release to send";
@@ -176,18 +182,14 @@
     
     UIView *cellView = [self.tableView cellForRowAtIndexPath:indexPath];
     location = [self.view convertPoint:location fromView:cellView];
-    
     hud.yOffset = 150.f;
-    
     hud.removeFromSuperViewOnHide = YES;
-    [hud hide:YES afterDelay:2];
+    [hud hide:YES afterDelay:1];
+    */
 }
 
 -(void) didBeginItemSelectionOnIndexpath:(NSIndexPath*) indexPath location:(CGPoint) location {
     self.tableView.bounces = NO;
-    
-    //UIView *cellView = [self.tableView cellForRowAtIndexPath:indexPath];
-    //location = [self.view convertPoint:location fromView:cellView];
     
     PeppermintContact *selectedContact = [[self activeContactList] objectAtIndex:indexPath.row];
     [self.searchContactsTextField resignFirstResponder];
@@ -196,7 +198,6 @@
         AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
         SendVoiceMessageModel *sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
         sendVoiceMessageModel.selectedPeppermintContact = selectedContact;
-        sendVoiceMessageModel.delegate = self.fastRecordingView;
         self.fastRecordingView.sendVoiceMessageModel = sendVoiceMessageModel;
         [self.fastRecordingView presentWithAnimation];
     } else if (selectedContact.communicationChannel == CommunicationChannelSMS) {
@@ -211,13 +212,18 @@
 
 -(void) didFinishItemSelectionOnIndexPath:(NSIndexPath*) indexPath location:(CGPoint) location {
     self.tableView.bounces = YES;
-    [self.fastRecordingView finishRecordingWithSendMessage:YES];
+    BOOL isRecordValid = self.fastRecordingView.totalSeconds > 2;
+    [self.fastRecordingView finishRecordingWithSendMessage:isRecordValid];
 }
 
 #pragma mark - FastRecordingViewDelegate
 
--(void) messageSentWithSuccess {
+-(void) messageIsSending {
     [self messageSendingIndicatorSetMessageIsSending];
+}
+
+-(void) messageSentWithSuccess {
+    [self messageSendingIndicatorSetMessageIsSent];
 }
 
 #pragma mark - TextField
@@ -361,14 +367,20 @@
 
 #pragma mark - MessageSending status indicators
 
-#warning "Sending message is just an illusion now. When having the service it will be updated to catch really when the message is sent!"
-
 -(void) messageSendingIndicatorSetMessageIsSending {
     self.sendingImageHeightConstraint.constant = SENDING_ICON_HEIGHT;
     [self.sendingImageView layoutIfNeeded];
     self.sendingImageView.image = [UIImage imageNamed:@"icon_message_sending"];
-    self.sendingIndicatorView.hidden = NO;
-    [self performSelector:@selector(messageSendingIndicatorSetMessageIsSent) withObject:nil afterDelay:MESSAGE_SENDING_DURATION];
+    ++activeSendingCount;
+    if(self.sendingIndicatorView.hidden) {
+        self.sendingIndicatorView.alpha = 0;
+        self.sendingIndicatorView.hidden = NO;
+        [UIView animateWithDuration:0.3 animations:^{
+            self.sendingIndicatorView.alpha = 1;
+        } completion:^(BOOL finished) {
+            
+        }];
+    }
 }
 
 -(void) messageSendingIndicatorSetMessageIsSent {
@@ -376,11 +388,20 @@
     [self.sendingImageView layoutIfNeeded];
     self.sendingImageView.image = [UIImage imageNamed:@"icon_message_sent"];
     [self performSelector:@selector(refreshTheScreen) withObject:nil afterDelay:MESSAGE_SENDING_DURATION];
+    --activeSendingCount;
 }
 
 -(void) refreshTheScreen {
-    self.sendingIndicatorView.hidden = YES;
-    [self.recentContactsModel refreshRecentContactList];
+    if(activeSendingCount == 0) {
+        self.sendingIndicatorView.alpha = 1;
+        [UIView animateWithDuration:0.3 animations:^{
+            self.sendingIndicatorView.alpha = 0;
+        } completion:^(BOOL finished) {
+            self.sendingIndicatorView.hidden = YES;
+            self.sendingIndicatorView.alpha = 1;
+        }];
+        [self.recentContactsModel refreshRecentContactList];
+    }
 }
 
 #pragma mark - UIAlertViewDelegate

@@ -12,9 +12,7 @@
 #import "SendVoiceMessageModel.h"
 #import "M13ProgressViewPie.h"
 
-@protocol FastRecordingViewDelegate <NSObject>
-@required
--(void) messageSentWithSuccess;
+@protocol FastRecordingViewDelegate <SendVoiceMessageDelegate>
 @end
 
 @interface FastRecordingView : BaseCustomView <RecordingModelDelegate, SendVoiceMessageDelegate, UIAlertViewDelegate>
@@ -27,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet M13ProgressViewPie *m13ProgressViewPie;
 @property (weak, nonatomic) IBOutlet UIImageView *progressCenterImageView;
 @property (weak, nonatomic) IBOutlet UILabel *counterLabel;
+@property (nonatomic)   NSTimeInterval totalSeconds;
 
 +(FastRecordingView*) createInstanceWithDelegate:(UIViewController<FastRecordingViewDelegate>*) delegate;
 

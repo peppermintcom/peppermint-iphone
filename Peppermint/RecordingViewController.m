@@ -150,23 +150,20 @@
 }
 
 - (void) recordDataIsPrepared:(NSData *)data {
-    [self.sendVoiceMessageModel sendVoiceMessageWithData:data overViewController:self];
+    [self.sendVoiceMessageModel sendVoiceMessageWithData:data];
 }
 
 #pragma mark - SendVoiceMessage Delegate
 
--(void) messageSentWithSuccess {
+-(void) messageIsSending {
     ContactsViewController *contactsViewController = (ContactsViewController*)[self backViewController];
     [contactsViewController messageSendingIndicatorSetMessageIsSending];
+}
+
+-(void) messageSentWithSuccess {
+    ContactsViewController *contactsViewController = (ContactsViewController*)[self backViewController];
+    [contactsViewController messageSendingIndicatorSetMessageIsSent];
     [self.navigationController popViewControllerAnimated:NO];
-    
-    /*
-    NSString *title = LOC(@"Information", @"Information");
-    NSString *message = LOC(@"Message sent with success", @"Message sent information");
-    NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
-    [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
-     */
-#warning "Delete the commented out code when the sending-sent animation for the voice message will be certain"
 }
 
 #pragma mark - AlertView Delegate

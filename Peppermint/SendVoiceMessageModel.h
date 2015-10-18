@@ -12,6 +12,7 @@
 
 @protocol SendVoiceMessageDelegate <BaseModelDelegate>
 @required
+-(void) messageIsSending;
 -(void) messageSentWithSuccess;
 @end
 
@@ -19,6 +20,6 @@
 @property (strong, nonatomic) PeppermintContact *selectedPeppermintContact;
 @property (weak, nonatomic) id<SendVoiceMessageDelegate> delegate;
 
--(void) sendVoiceMessageWithData:(NSData*) data overViewController:(UIViewController*) viewController;
+-(void) sendVoiceMessageWithData:(NSData*) data;
 
 @end

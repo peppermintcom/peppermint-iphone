@@ -10,7 +10,7 @@
 
 @implementation SendVoiceMessageMandrillModel
 
--(void) sendVoiceMessageWithData:(NSData*) data overViewController:(UIViewController*) viewController {    
+-(void) sendVoiceMessageWithData:(NSData*) data {    
     MandrillMessage *message = [MandrillMessage new];
 #warning "Currently, default username is typed, fix it to retrieve from the user"
     message.from_email = @"johnDoe@peppermint.com";
@@ -29,6 +29,7 @@
     mailAttachment.content = [data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
     [message.attachments addObject:mailAttachment];
     [message.headers setObject:@"info@peppermint.com" forKey:@"Reply-To"];
+    [self.delegate messageIsSending];
     [[MandrillService new] sendMessage:message];
 }
 

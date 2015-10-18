@@ -51,6 +51,8 @@
 
 #pragma mark - Record Methods
 -(void) presentWithAnimation {
+    self.hidden = NO;
+    /*
     CGRect frame = CGRectMake(0 , self.superview.frame.size.height, 1, 1);
     self.frame = frame;
     self.alpha = 0;
@@ -59,14 +61,15 @@
         self.frame = self.superview.frame;
         self.alpha = 1;
     }];
+    */
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        assert(self.sendVoiceMessageModel != nil);
-        [self initViewComponents];
-        if(self.recordingModel.grantedForMicrophone) {
-            [self beginRecording];
-        }
-    });
+    assert(self.sendVoiceMessageModel != nil);
+    [self initViewComponents];
+    
+    /*
+    if(self.recordingModel.grantedForMicrophone) {
+        [self beginRecording];
+    }*/
 }
 
 -(void) finishRecordingWithSendMessage:(BOOL) sendMessage {
@@ -99,8 +102,8 @@
 }
 
 -(void) timerUpdated:(NSTimeInterval) timeInterval {
-    int totalSeconds = (int)timeInterval;    
-    if(totalSeconds < MAX_RECORD_TIME) {
+    self.totalSeconds = timeInterval;
+    if(self.totalSeconds < MAX_RECORD_TIME) {
         /*
         if(totalSeconds/5 % 2 == 0 ) {
             self.progressCenterImageView.image = [UIImage imageNamed:@"recording_logo1"];
@@ -108,8 +111,8 @@
             self.progressCenterImageView.image = [UIImage imageNamed:@"recording_logo_right"];
         }
          */
-        int minutes = totalSeconds / 60;
-        int seconds = totalSeconds % 60;
+        int minutes = self.totalSeconds / 60;
+        int seconds = ((int)self.totalSeconds) % 60;
         self.counterLabel.text = [NSString stringWithFormat:@"%.1d:%.2d", minutes, seconds];
         [self.m13ProgressViewPie setProgress:timeInterval/MAX_RECORD_TIME animated:YES];
     } else {
@@ -126,17 +129,17 @@
 }
 
 - (void) recordDataIsPrepared:(NSData *)data {
-    NSLog(@"Sending the message");
     [self dissmiss];
-    
-    
-    [self.sendVoiceMessageModel sendVoiceMessageWithData:data overViewController:self.delegate];
+    [self.sendVoiceMessageModel sendVoiceMessageWithData:data];
 }
 
 #pragma mark - SendVoiceMessage Delegate
 
+-(void) messageIsSending {
+    [self.delegate messageIsSending];
+}
+
 -(void) messageSentWithSuccess {
-    NSLog(@"The message is sent");
     [self.delegate messageSentWithSuccess];
 }
 

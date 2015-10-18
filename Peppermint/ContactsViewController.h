@@ -31,5 +31,6 @@
 -(IBAction)searchButtonPressed:(id)sender;
 
 -(void) messageSendingIndicatorSetMessageIsSending;
+-(void) messageSendingIndicatorSetMessageIsSent;
 
 @end
