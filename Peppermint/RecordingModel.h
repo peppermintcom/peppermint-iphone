@@ -31,4 +31,6 @@
 -(void) backUpRecording;
 -(void) resetRecording;
 -(void) prepareRecordData;
+
+-(void) beep;
 @end

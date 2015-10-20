@@ -60,6 +60,7 @@
 #pragma mark - Action Buttons
 
 -(IBAction) touchDownOnIndexPath:(id) sender event:(UIEvent *)event {
+    [self applySelectedStyle];
     NSDictionary *userInfo = [NSDictionary dictionaryWithObject:event forKey:EVENT];
     touchBeginPoint = CGPointMake(0, 0);
     timer = [NSTimer scheduledTimerWithTimeInterval:HOLD_LIMIT target:self selector:@selector(touchingHold) userInfo:userInfo repeats:NO];
@@ -97,6 +98,7 @@
             if(timer.isValid)
                [timer invalidate];
             timer = nil;
+            [self applyNonSelectedStyle];
             [self.delegate didCancelItemSelectionOnIndexpath:self.indexPath location:touchBeginPoint];
         }
     }
@@ -104,10 +106,14 @@
 
 -(IBAction) touchDownFinishedOnIndexPath:(id) sender event:(UIEvent *)event {
     if(timer) {
+        [self applyNonSelectedStyle];
         if(timer.isValid)  {
             [timer invalidate];
             timer = nil;
-            [self.delegate didShortTouchOnIndexPath:self.indexPath location:touchBeginPoint];
+            
+            UITouch *touch = [[event allTouches] anyObject];
+            CGPoint endPoint = [touch locationInView:rootView];
+            [self.delegate didShortTouchOnIndexPath:self.indexPath location:endPoint];
         } else {
             timer = nil;
             [self.delegate didFinishItemSelectionOnIndexPath:self.indexPath location:touchBeginPoint];

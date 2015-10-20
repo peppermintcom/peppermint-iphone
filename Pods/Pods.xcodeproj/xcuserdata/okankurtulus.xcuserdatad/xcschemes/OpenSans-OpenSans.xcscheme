@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "14AF577A0EED41CF63B5AFC2"
+               BlueprintIdentifier = "1C9B76E6299620927931B982"
                BuildableName = "OpenSans.bundle"
                BlueprintName = "OpenSans-OpenSans"
                ReferencedContainer = "container:Pods.xcodeproj">

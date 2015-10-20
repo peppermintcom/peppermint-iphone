@@ -11,10 +11,10 @@
 @implementation SendVoiceMessageMandrillModel
 
 -(void) sendVoiceMessageWithData:(NSData*) data {    
+    [super sendVoiceMessageWithData:data];    
     MandrillMessage *message = [MandrillMessage new];
-#warning "Currently, default username is typed, fix it to retrieve from the user"
-    message.from_email = @"johnDoe@peppermint.com";
-    message.from_name = @"John Doe";
+    message.from_email = @"noreply@peppermint.com";
+    message.from_name = self.peppermintMessageSender.nameSurname;
     message.subject = LOC(@"Mail Subject",@"Default Mail Subject");
     message.html = LOC(@"Mail Body",@"Default Mail Body");
     MandrillToObject *recipient = [MandrillToObject new];
@@ -28,8 +28,9 @@
     mailAttachment.name = @"Peppermint.m4a";
     mailAttachment.content = [data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
     [message.attachments addObject:mailAttachment];
-    [message.headers setObject:@"info@peppermint.com" forKey:@"Reply-To"];
+    [message.headers setObject:self.peppermintMessageSender.email forKey:@"Reply-To"];
     [self.delegate messageIsSending];
+    
     [[MandrillService new] sendMessage:message];
 }
 

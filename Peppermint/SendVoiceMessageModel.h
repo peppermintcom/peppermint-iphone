@@ -9,6 +9,7 @@
 #import "BaseModel.h"
 #import "PeppermintContact.h"
 #import "RecentContactsModel.h"
+#import "PeppermintMessageSender.h"
 
 @protocol SendVoiceMessageDelegate <BaseModelDelegate>
 @required
@@ -17,6 +18,7 @@
 @end
 
 @interface SendVoiceMessageModel : BaseModel <RecentContactsModelDelegate>
+@property (strong, nonatomic) PeppermintMessageSender *peppermintMessageSender;
 @property (strong, nonatomic) PeppermintContact *selectedPeppermintContact;
 @property (weak, nonatomic) id<SendVoiceMessageDelegate> delegate;
 

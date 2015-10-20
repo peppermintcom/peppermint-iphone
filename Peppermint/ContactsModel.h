@@ -24,7 +24,11 @@
 @property (weak, nonatomic) id<ContactsModelDelegate> delegate;
 @property (strong, nonatomic) NSMutableArray *contactList;
 @property (strong, nonatomic) NSString *filterText;
+
 -(void) setup;
 -(void) refreshContactList;
+
+-(NSArray*) emailContactList;
+-(NSArray*) smsContactList;
 
 @end

@@ -17,11 +17,13 @@
     if(self) {
         recentContactsModel = [RecentContactsModel new];
         recentContactsModel.delegate = self;
+        self.peppermintMessageSender = [PeppermintMessageSender new];
     }
     return self;
 }
 
 -(void) sendVoiceMessageWithData:(NSData*) data {
+    NSAssert(self.peppermintMessageSender.isValid, @"Sender information must be defined");
     [recentContactsModel save:self.selectedPeppermintContact];
 }
 

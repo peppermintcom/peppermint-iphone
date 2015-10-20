@@ -24,9 +24,9 @@
 "Could not resume" = "Could not resume the recording";
 "Could not start record" = "Could not start recording";
 "Mail Subject" = "I sent you a voice message";
-"Mail Body" = "Here's my message.<br/><br/>Reply via <a href=\"http://www.peppermint.com\">Peppermint.com</a><br/> ";
+"Mail Body" = "Here's my message.<br/><br/>Reply via <a href=\"http://www.peppermint.com\">Peppermint.com</a><br/><br/> ";
 "Please add an email account" = "Please add and configure at least one mail account on this device to be able to send voice messages over email";
-"Time is up" = "Time is up!\nYou may tap send to send your message\nor re-record voice message";
+"Time is up" = "Time is up!\nYou may tap send to send current recorded message or tap cancel to dismiss the recorded message";
 "Message sent with success" = "Your message has been sent successfully";
 "All Contacts" = "All Contacts";
 "Recent Contacts" = "Recent Contacts";
@@ -40,3 +40,11 @@
 "Restart record" = "Restart recording";
 "Continue from previous" = "Continue from previous";
 "Recording for contact format" = "Recording for %@\n%@";
+"Hold to record message" = "Hold to record, release to send";
+"Account details message" = "Please enter your account details.\n**********\nTEST NOTE:This popup will be redesigned& shown once. Please supply valid information\n**********";
+"Cancel" = "Cancel";
+"Email" = "Email";
+"Name surname" = "Name surname";
+"Record More Than Limit Format" = "Please record at least %d seconds before\nsending";
+"Send" = "Send";
+"Re record" = "Re record";

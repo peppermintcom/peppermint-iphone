@@ -158,12 +158,12 @@
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="done"/>
                                     </textField>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_down" translatesAutoresizingMaskIntoConstraints="NO" id="W29-cZ-jxx">
-                                        <rect key="frame" x="370" y="39" width="5" height="3"/>
+                                        <rect key="frame" x="370" y="36" width="6" height="6"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="5" id="dBE-T7-HhE"/>
+                                            <constraint firstAttribute="width" constant="6" id="dBE-T7-HhE"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_search" translatesAutoresizingMaskIntoConstraints="NO" id="LiB-i9-G5L">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_recent" translatesAutoresizingMaskIntoConstraints="NO" id="LiB-i9-G5L">
                                         <rect key="frame" x="379" y="34" width="14" height="14"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="14" id="0mr-M7-lXB"/>
@@ -191,7 +191,7 @@
                                     <constraint firstItem="uAf-dO-WUM" firstAttribute="top" secondItem="Dr5-gj-0ac" secondAttribute="top" constant="27" id="8CH-0o-uZe"/>
                                     <constraint firstAttribute="trailing" secondItem="LiB-i9-G5L" secondAttribute="trailing" constant="21" id="8JY-3a-ipa"/>
                                     <constraint firstAttribute="height" constant="64" id="NfJ-rG-epb"/>
-                                    <constraint firstAttribute="trailing" secondItem="W29-cZ-jxx" secondAttribute="trailing" constant="39" id="Of9-WE-ar6"/>
+                                    <constraint firstAttribute="trailing" secondItem="W29-cZ-jxx" secondAttribute="trailing" constant="38" id="Of9-WE-ar6"/>
                                     <constraint firstAttribute="trailing" secondItem="5s2-t1-QW3" secondAttribute="trailing" constant="10" id="PQ3-tO-i5m"/>
                                     <constraint firstAttribute="bottom" secondItem="uAf-dO-WUM" secondAttribute="bottom" constant="7" id="SKd-60-a3P"/>
                                     <constraint firstAttribute="bottom" secondItem="5s2-t1-QW3" secondAttribute="bottom" constant="7" id="SxN-64-qvR"/>
@@ -201,7 +201,7 @@
                                     <constraint firstAttribute="bottom" secondItem="W29-cZ-jxx" secondAttribute="bottom" constant="22" id="e6E-bo-nic"/>
                                     <constraint firstItem="TG9-kp-9n4" firstAttribute="top" secondItem="Dr5-gj-0ac" secondAttribute="top" constant="24" id="yRC-wJ-WGy"/>
                                     <constraint firstItem="LiB-i9-G5L" firstAttribute="leading" secondItem="uAf-dO-WUM" secondAttribute="trailing" constant="63" id="ywH-tU-eIp"/>
-                                    <constraint firstItem="W29-cZ-jxx" firstAttribute="top" secondItem="Dr5-gj-0ac" secondAttribute="top" constant="39" id="zRb-Eu-Qty"/>
+                                    <constraint firstItem="W29-cZ-jxx" firstAttribute="top" secondItem="Dr5-gj-0ac" secondAttribute="top" constant="36" id="zRb-Eu-Qty"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="BhH-Ju-VVT">
@@ -288,6 +288,34 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bqr-Ay-zAT" userLabel="HoldToRecordView">
+                                <rect key="frame" x="85" y="120" width="245" height="42"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" alpha="0.80000000000000027" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hold_to_record_background" translatesAutoresizingMaskIntoConstraints="NO" id="NPm-oW-gZ9">
+                                        <rect key="frame" x="0.0" y="0.0" width="245" height="42"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Hold to record, release to send" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HyV-Kd-4bj">
+                                        <rect key="frame" x="0.0" y="10" width="245" height="32"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="HyV-Kd-4bj" firstAttribute="top" secondItem="bqr-Ay-zAT" secondAttribute="top" constant="10" id="3eA-PU-WLy"/>
+                                    <constraint firstAttribute="width" constant="245" id="HU2-4y-gxH"/>
+                                    <constraint firstAttribute="bottom" secondItem="NPm-oW-gZ9" secondAttribute="bottom" id="IiZ-Ps-grR"/>
+                                    <constraint firstAttribute="trailing" secondItem="NPm-oW-gZ9" secondAttribute="trailing" id="aDO-Ob-adq"/>
+                                    <constraint firstItem="NPm-oW-gZ9" firstAttribute="leading" secondItem="bqr-Ay-zAT" secondAttribute="leading" id="aQ2-QT-Gjh"/>
+                                    <constraint firstItem="HyV-Kd-4bj" firstAttribute="leading" secondItem="bqr-Ay-zAT" secondAttribute="leading" id="aa2-hY-SS0"/>
+                                    <constraint firstAttribute="trailing" secondItem="HyV-Kd-4bj" secondAttribute="trailing" id="cT1-eC-PCW"/>
+                                    <constraint firstAttribute="bottom" secondItem="HyV-Kd-4bj" secondAttribute="bottom" id="dOn-bJ-fu3"/>
+                                    <constraint firstAttribute="height" constant="42" id="fjM-G8-4tl"/>
+                                    <constraint firstItem="NPm-oW-gZ9" firstAttribute="top" secondItem="bqr-Ay-zAT" secondAttribute="top" id="gEC-Wg-boD"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -297,6 +325,7 @@
                             <constraint firstItem="xd7-a5-1Sz" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="5ef-s0-0Qk"/>
                             <constraint firstItem="BhH-Ju-VVT" firstAttribute="top" secondItem="Dr5-gj-0ac" secondAttribute="bottom" id="9Tv-Gz-71J"/>
                             <constraint firstAttribute="trailing" secondItem="xd7-a5-1Sz" secondAttribute="trailing" id="Fgx-k2-ZEs"/>
+                            <constraint firstAttribute="centerX" secondItem="bqr-Ay-zAT" secondAttribute="centerX" id="Fp0-n4-OrF"/>
                             <constraint firstItem="xd7-a5-1Sz" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="HOg-GJ-ajo"/>
                             <constraint firstItem="Dr5-gj-0ac" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="JH5-XW-Yhq"/>
                             <constraint firstItem="BhH-Ju-VVT" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="NVe-3o-jcT"/>
@@ -304,6 +333,7 @@
                             <constraint firstAttribute="trailing" secondItem="Dr5-gj-0ac" secondAttribute="trailing" id="adM-Jn-qH0"/>
                             <constraint firstItem="7zR-tD-HrX" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="ayj-Ym-CQk"/>
                             <constraint firstItem="mZU-e0-vbZ" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="10" id="ea3-pb-tbZ"/>
+                            <constraint firstItem="bqr-Ay-zAT" firstAttribute="top" secondItem="Dr5-gj-0ac" secondAttribute="top" constant="120" id="fXC-Ki-css"/>
                             <constraint firstItem="Dr5-gj-0ac" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="gXR-ra-tyE"/>
                             <constraint firstAttribute="trailing" secondItem="7zR-tD-HrX" secondAttribute="trailing" id="nbe-jX-xJr"/>
                             <constraint firstAttribute="trailing" secondItem="BhH-Ju-VVT" secondAttribute="trailing" id="rFy-2n-jE8"/>
@@ -312,9 +342,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="QX1-I9-fmL"/>
                     <connections>
+                        <outlet property="holdToRecordInfoView" destination="bqr-Ay-zAT" id="bmK-Vc-NaW"/>
+                        <outlet property="holdToRecordInfoViewLabel" destination="HyV-Kd-4bj" id="Sx3-xk-W29"/>
+                        <outlet property="holdToRecordInfoViewYValueConstraint" destination="fXC-Ki-css" id="NFx-e7-cI4"/>
                         <outlet property="loadingView" destination="xd7-a5-1Sz" id="anx-3W-hck"/>
                         <outlet property="searchContactsTextField" destination="uAf-dO-WUM" id="nA1-4S-XXK"/>
                         <outlet property="searchMenuView" destination="mZU-e0-vbZ" id="zZ2-Yx-Tqe"/>
+                        <outlet property="searchSourceIconImageView" destination="LiB-i9-G5L" id="xR3-2G-86O"/>
                         <outlet property="sendingImageHeightConstraint" destination="NP8-fL-any" id="208-vg-zI7"/>
                         <outlet property="sendingImageView" destination="ZTG-t4-EfW" id="qf5-9A-rNR"/>
                         <outlet property="sendingIndicatorView" destination="7zR-tD-HrX" id="aPf-8b-ADq"/>
@@ -594,11 +628,12 @@
         <image name="button_resume_pressed" width="320" height="128"/>
         <image name="dot" width="18" height="18"/>
         <image name="eye" width="18" height="18"/>
+        <image name="hold_to_record_background" width="492" height="86"/>
         <image name="icon_back" width="22" height="37"/>
-        <image name="icon_down" width="9" height="5"/>
+        <image name="icon_down" width="6" height="6"/>
         <image name="icon_loading_contacts" width="275" height="275"/>
         <image name="icon_message_sending" width="229" height="50"/>
-        <image name="icon_search" width="27" height="27"/>
+        <image name="icon_recent" width="14" height="14"/>
         <image name="recording_logo" width="402" height="399"/>
         <image name="tap_to_send" width="278" height="50"/>
         <image name="textfield_bg" width="596" height="60"/>

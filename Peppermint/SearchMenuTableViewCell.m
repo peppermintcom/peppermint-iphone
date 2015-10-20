@@ -13,8 +13,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.cellSeperatorView.backgroundColor = [UIColor cellSeperatorGray];
-    self.iconImageName = @"icon_email";
-    self.iconHighlightedImageName = @"icon_email_highlighted";
+    self.iconImageName = @"icon_mail";
+    self.iconHighlightedImageName = @"icon_mail_touch";
     self.cellTag = -1;
     [self applyNonSelectedStyle];
 }

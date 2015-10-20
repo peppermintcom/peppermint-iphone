@@ -19,6 +19,16 @@
     self = [super init];
     if(self) {
         dispatch_async(dispatch_get_main_queue(), ^{
+            
+            //Completion block of recording permission
+            void (^permissionGranted)(RecordingModel*) = ^(RecordingModel *recordingModel) {
+                [recordingModel performGrantedOperations];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [recordingModel beep];
+                    [recordingModel.delegate accessRightsAreSupplied];
+                });
+            };
+            
             NSString *length = (NSString*) defaults_object(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH);
             self.previousFileLength = !length ? 0 : length.intValue;
             
@@ -34,10 +44,7 @@
                     [session requestRecordPermission:^(BOOL granted) {
                         self.grantedForMicrophone = granted;
                         if(granted) {
-                            [weakSelf performGrantedOperations];
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                [self.delegate accessRightsAreSupplied];
-                            });
+                            permissionGranted(weakSelf);
                         } else {
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [self.delegate microphoneAccessRightsAreNotSupplied];
@@ -45,7 +52,7 @@
                         }
                     }];
                 } else {
-                    [weakSelf performGrantedOperations];
+                    permissionGranted(weakSelf);
                 }
             }
         });
@@ -85,7 +92,7 @@
             [self.delegate operationFailure:error];
         }
     } else {
-        NSLog(@"input gain is not settable. Using default value : %f", session.inputGain);
+        //NSLog(@"input gain is not settable. Using default value : %f", session.inputGain);
     }
 }
 
@@ -93,7 +100,7 @@
     if(!recorder.recording) {
         AVAudioSession *session = [AVAudioSession sharedInstance];
         NSError *error;
-        [session setCategory:AVAudioSessionCategoryRecord error:&error];
+        [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
         if(error) {
             [self.delegate operationFailure:error];
         } else {
@@ -130,7 +137,7 @@
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     [audioSession setActive:NO error:nil];
     NSError *error;
-    [audioSession setCategory:AVAudioSessionCategoryPlayback error:&error];
+    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
     if(error) {
         [self.delegate operationFailure:error];
     }
@@ -226,6 +233,15 @@
     _assetExport.outputURL = targetUrl;
     _assetExport.shouldOptimizeForNetworkUse = YES;
     [_assetExport exportAsynchronouslyWithCompletionHandler:completion];
+}
+
+-(void) beep {
+    //NSURL *directoryURL = [NSURL URLWithString:@"/System/Library/Audio/UISounds/SIMToolkitGeneralBeep.caf"];
+    //NSURL *directoryURL = [NSURL URLWithString:@"/System/Library/Audio/UISounds/end_record.caf"];
+    NSURL *directoryURL = [NSURL URLWithString:@"/System/Library/Audio/UISounds/jbl_begin.caf"];
+    SystemSoundID soundID;
+    AudioServicesCreateSystemSoundID((__bridge_retained CFURLRef)directoryURL,&soundID);
+    AudioServicesPlaySystemSound(soundID);
 }
 
 @end

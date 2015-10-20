@@ -33,13 +33,15 @@ NSLocalizedStringFromTable(\
 #import "nsuserdefaults-helper.h"
 #define DEFAULTS_KEY_ISTUTORIALSHOWED           @"isTutorialShowed"
 #define DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH  @"previousRecordingLength"
+#define DEFAULTS_KEY_SENDER_NAMESURNAME         @"SenderNameSurname"
+#define DEFAULTS_KEY_SENDER_EMAIL               @"SenderEmail"
 
 #pragma mark - OpenSans Fonts
 #import <OpenSans/UIFont+OpenSans.h>
 
 #pragma mark - Record Constraint Definition
-#define MAX_RECORD_TIME             60
-#define MIN_VOICE_MESSAGE_LENGTH    2
+#define MAX_RECORD_TIME             10     //Seconds
+#define MIN_VOICE_MESSAGE_LENGTH    2           //Seconds
 
 #pragma mark - Alert Button Index Definition
 #define ALERT_BUTTON_INDEX_CANCEL   0

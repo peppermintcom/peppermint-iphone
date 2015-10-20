@@ -12,6 +12,8 @@
 
 @implementation ContactsModel {
     volatile NSUInteger loadContactsTriggerCount;
+    NSArray *emailContactList;
+    NSArray *smsContactList;
 }
 
 -(id) init {
@@ -115,6 +117,14 @@
                      }
                  }
                  self.contactList = peppermintContactsArray;
+                 NSArray *sortedList = [self.contactList sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+                     NSString *first = [(PeppermintContact*)a nameSurname];
+                     NSString *second = [(PeppermintContact*)b nameSurname];
+                     return [first compare:second];
+                 }];
+                 self.contactList = [NSMutableArray arrayWithArray:sortedList];
+                 
+                 emailContactList = smsContactList = nil;
                  dispatch_sync(dispatch_get_main_queue(), ^{
                      [self.delegate contactListRefreshed];
                  });
@@ -130,6 +140,22 @@
              }
          }];
      }
+}
+
+-(NSArray*) emailContactList {
+    if(emailContactList == nil) {
+        emailContactList = [self.contactList filteredArrayUsingPredicate:
+                            [NSPredicate predicateWithFormat:
+                             @"self.communicationChannel == %d", CommunicationChannelEmail]];
+    }
+    return emailContactList;
+}
+
+-(NSArray*) smsContactList {
+    if(smsContactList == nil) {
+        smsContactList = [self.contactList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.communicationChannel == %d", CommunicationChannelSMS]];
+    }
+    return smsContactList;
 }
 
 @end

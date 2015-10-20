@@ -23,21 +23,23 @@
 #define SENDING_ICON_HEIGHT     15
 #define SENT_ICON_HEIGHT        20
 
+#define ANIM_TIME               0.3
+#define WARN_TIME               1.5
+
 @interface ContactsViewController ()
 
 @end
 
 @implementation ContactsViewController {
-    UIAlertView *contactsAlertView;
     NSUInteger activeCellTag;
     NSUInteger cachedActiveCellTag;
     NSCharacterSet *unwantedCharsSet;
     NSUInteger activeSendingCount;
+    BOOL isScrolling;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    contactsAlertView = nil;
     if(!self.contactsModel) {
         self.contactsModel = [ContactsModel new];
         self.contactsModel.delegate = self;
@@ -60,6 +62,8 @@
     self.seperatorView.backgroundColor = [UIColor cellSeperatorGray];
     [self initRecordingView];
     activeSendingCount = 0;
+    isScrolling  = NO;
+    [self initHoldToRecordInfoView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -81,6 +85,8 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    if(self.recentContactsModel.contactList.count == 0)
+       [self.searchContactsTextField becomeFirstResponder];
 }
 
 -(void) initRecordingView {
@@ -105,11 +111,9 @@
     } else if (activeCellTag == CELL_TAG_ALL_CONTACTS)   {
         activeContactList = self.contactsModel.contactList;
     } else if (activeCellTag == CELL_TAG_EMAIL_CONTACTS) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.communicationChannel == %d", CommunicationChannelEmail];
-        activeContactList = [self.contactsModel.contactList filteredArrayUsingPredicate:predicate];
+        activeContactList = self.contactsModel.emailContactList;
     } else if (activeCellTag == CELL_TAG_SMS_CONTACTS) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.communicationChannel == %d", CommunicationChannelSMS];
-        activeContactList = [self.contactsModel.contactList filteredArrayUsingPredicate:predicate];
+        activeContactList = self.contactsModel.smsContactList;
     } else {
         activeContactList = [NSArray new];
     }
@@ -141,6 +145,9 @@
         NSString *filteredCommunicationChannelAddress = [[peppermintContact.communicationChannelAddress componentsSeparatedByCharactersInSet:unwantedCharsSet] componentsJoinedByString:@""];
         cell.contactViaInformationLabel.text = filteredCommunicationChannelAddress;
         preparedCell = cell;
+    } else {
+        NSLog(@"Queried for indexpath: %d,%d and the active contact list has %d elemends", indexPath.section, indexPath.row, [self activeContactList].count);
+        return [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath];
     }
     return preparedCell;
 }
@@ -155,6 +162,25 @@
     return height;
 }
 
+#pragma mark - ScrollView Delegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    isScrolling = YES;
+    [self hideHoldToRecordInfoView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    isScrolling = NO;
+}
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+    [self.searchContactsTextField resignFirstResponder];
+    isScrolling = YES;
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    isScrolling = NO;
+}
 
 /*
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -168,24 +194,48 @@
 }
 */
 
+#pragma mark - HoldToRecordInfoView
+
+-(void) initHoldToRecordInfoView {
+    self.holdToRecordInfoView.hidden = YES;
+    self.holdToRecordInfoViewLabel.font = [UIFont openSansSemiBoldFontOfSize:14];
+    self.holdToRecordInfoViewLabel.text = LOC(@"Hold to record message",@"Hold to record message");
+    UITapGestureRecognizer *tapRecogniser = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)];
+    [self.holdToRecordInfoView addGestureRecognizer:tapRecogniser];
+}
+
+-(void) hideHoldToRecordInfoView {
+    [UIView animateWithDuration:ANIM_TIME animations:^{
+        self.holdToRecordInfoView.alpha = 0;
+    } completion:^(BOOL finished) {
+        self.holdToRecordInfoView.hidden = YES;
+    }];
+}
+
 #pragma mark - ContactTableViewCellDelegate
 
 -(void) didShortTouchOnIndexPath:(NSIndexPath*) indexPath location:(CGPoint) location {
-    
-#warning "Add custom view"
-    NSLog(@"Hold to record, release to send");
-    /*
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    hud.mode = MBProgressHUDModeText;
-    hud.labelText = @"Hold to record, release to send";
-    hud.margin = 10.f;
-    
-    UIView *cellView = [self.tableView cellForRowAtIndexPath:indexPath];
-    location = [self.view convertPoint:location fromView:cellView];
-    hud.yOffset = 150.f;
-    hud.removeFromSuperViewOnHide = YES;
-    [hud hide:YES afterDelay:1];
-    */
+    if(!isScrolling) {
+        self.holdToRecordInfoView.hidden = YES;
+        CGFloat cellHeight = CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
+        location.y +=  cellHeight * (3/4);
+        if(location.y + self.holdToRecordInfoView.frame.size.height <= self.view.frame.size.height) {
+            self.holdToRecordInfoViewYValueConstraint.constant = location.y;
+            [self.view layoutIfNeeded];
+            self.holdToRecordInfoView.alpha = 0;
+            self.holdToRecordInfoView.hidden = NO;
+            [UIView animateWithDuration:ANIM_TIME animations:^{
+                self.holdToRecordInfoView.alpha = 1;
+            } completion:^(BOOL finished) {
+                dispatch_time_t hideTime = dispatch_time(DISPATCH_TIME_NOW, WARN_TIME * NSEC_PER_SEC);
+                dispatch_after(hideTime, dispatch_get_main_queue(), ^(void){
+                    [self hideHoldToRecordInfoView];
+                });
+            }];
+        } else {
+            NSLog(@"Can not show holdToRecordView out of the view");
+        }
+    }
 }
 
 -(void) didBeginItemSelectionOnIndexpath:(NSIndexPath*) indexPath location:(CGPoint) location {
@@ -195,7 +245,6 @@
     [self.searchContactsTextField resignFirstResponder];
     
     if(selectedContact.communicationChannel == CommunicationChannelEmail) {
-        AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
         SendVoiceMessageModel *sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
         sendVoiceMessageModel.selectedPeppermintContact = selectedContact;
         self.fastRecordingView.sendVoiceMessageModel = sendVoiceMessageModel;
@@ -212,8 +261,24 @@
 
 -(void) didFinishItemSelectionOnIndexPath:(NSIndexPath*) indexPath location:(CGPoint) location {
     self.tableView.bounces = YES;
-    BOOL isRecordValid = self.fastRecordingView.totalSeconds > 2;
-    [self.fastRecordingView finishRecordingWithSendMessage:isRecordValid];
+    [self.fastRecordingView.recordingModel stop];
+    BOOL isRecordLengthLong = self.fastRecordingView.totalSeconds >= MAX_RECORD_TIME;
+    if(!isRecordLengthLong) {
+        BOOL isRecordLengthShort = self.fastRecordingView.totalSeconds <= MIN_VOICE_MESSAGE_LENGTH;
+        if(isRecordLengthShort) {
+            [self showAlertToRecordMoreThanMinimumMessageLength];
+        } else {
+            [self showAlertToCompleteLoginInformation];
+        }
+    }
+    
+#warning "Remove the above else case and add below code"
+    /*
+    else if(!self.fastRecordingView.sendVoiceMessageModel.peppermintMessageSender.isValid) {
+        [self showAlertToCompleteLoginInformation];
+    } else {
+        [self.fastRecordingView finishRecordingWithSendMessage:YES];
+    }*/
 }
 
 #pragma mark - FastRecordingViewDelegate
@@ -268,9 +333,8 @@
     NSString *message = LOC(@"Contacts access rights explanation", @"Directives to give access rights") ;
     NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
     NSString *settingsButtonTitle = LOC(@"Settings", @"Settings Message");
-    contactsAlertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:settingsButtonTitle, nil];
-    [contactsAlertView show];
-
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:settingsButtonTitle, nil];
+    [alertView show];
 }
 
 -(void) contactListRefreshed {
@@ -311,29 +375,35 @@
     cellView.delegate = self;
     [cellView setSelected:NO];
     REMenuItem *reMenuItem = [[REMenuItem alloc] initWithCustomView:cellView];
+    reMenuItem.tag = cellTag;
     return reMenuItem;
 }
 
 -(void) initSearchMenu {
     REMenuItem *allContactsMenuItem = [self createMenuItemWithTitle:LOC(@"All Contacts", @"Title")
-                                                               icon:@"icon_search"
-                                                    iconHighlighted:@"icon_search_pressed"
+                                                               icon:@"icon_all"
+                                                    iconHighlighted:@"icon_all_touch"
                                                                 cellTag:CELL_TAG_ALL_CONTACTS];
     
     REMenuItem *recentContactsMenuItem = [self createMenuItemWithTitle:LOC(@"Recent Contacts", @"Title")
-                                                                 icon:@"icon_star"
-                                                      iconHighlighted:@"icon_star_pressed"
+                                                                 icon:@"icon_recent"
+                                                      iconHighlighted:@"icon_recent_touch"
                                                                   cellTag:CELL_TAG_RECENT_CONTACTS];
     
     REMenuItem *emailContactsMenuItem = [self createMenuItemWithTitle:LOC(@"Email Contacts", @"Title")
-                                                               icon:@"icon_email"
-                                                    iconHighlighted:@"icon_email_pressed"
+                                                               icon:@"icon_mail"
+                                                    iconHighlighted:@"icon_mail_touch"
                                                                 cellTag:CELL_TAG_EMAIL_CONTACTS];
     
     REMenuItem *smsContactsMenuItem = [self createMenuItemWithTitle:LOC(@"Phone Contacts", @"Title")
                                                                  icon:@"icon_phone"
-                                                      iconHighlighted:@"icon_phone_pressed"
+                                                      iconHighlighted:@"icon_phone_touch"
                                                                   cellTag:CELL_TAG_SMS_CONTACTS];
+    
+    allContactsMenuItem.font    = [UIFont openSansSemiBoldFontOfSize:allContactsMenuItem.font.pointSize];
+    recentContactsMenuItem.font = [UIFont openSansSemiBoldFontOfSize:recentContactsMenuItem.font.pointSize];
+    emailContactsMenuItem.font    = [UIFont openSansSemiBoldFontOfSize:emailContactsMenuItem.font.pointSize];
+    smsContactsMenuItem.font    = [UIFont openSansSemiBoldFontOfSize:smsContactsMenuItem.font.pointSize];
     
     self.searchMenu = [[REMenu alloc] initWithItems:@[allContactsMenuItem,
                                                       recentContactsMenuItem,
@@ -358,6 +428,14 @@
     [self.searchMenu close];
     self.searchContactsTextField.text = self.contactsModel.filterText = @"";
     activeCellTag = cellTag;
+
+    NSPredicate *itemWithTagPredicate = [NSPredicate predicateWithFormat:@"self.tag == %d", cellTag];
+    NSArray *filteredArray = [self.searchMenu.items filteredArrayUsingPredicate:itemWithTagPredicate];
+    REMenuItem *activeMenuItem = filteredArray.count > 0 ? [filteredArray objectAtIndex:0] : nil;
+    SearchMenuTableViewCell *activeMenuTableViewCell = (SearchMenuTableViewCell*)activeMenuItem.customView;
+    self.searchSourceIconImageView.image = [UIImage imageNamed:activeMenuTableViewCell.iconImageName];
+    
+    
     if(cellTag == CELL_TAG_RECENT_CONTACTS) {
         [self.recentContactsModel refreshRecentContactList];
     } else {
@@ -375,7 +453,7 @@
     if(self.sendingIndicatorView.hidden) {
         self.sendingIndicatorView.alpha = 0;
         self.sendingIndicatorView.hidden = NO;
-        [UIView animateWithDuration:0.3 animations:^{
+        [UIView animateWithDuration:0.15 animations:^{
             self.sendingIndicatorView.alpha = 1;
         } completion:^(BOOL finished) {
             
@@ -394,7 +472,7 @@
 -(void) refreshTheScreen {
     if(activeSendingCount == 0) {
         self.sendingIndicatorView.alpha = 1;
-        [UIView animateWithDuration:0.3 animations:^{
+        [UIView animateWithDuration:0.15 animations:^{
             self.sendingIndicatorView.alpha = 0;
         } completion:^(BOOL finished) {
             self.sendingIndicatorView.hidden = YES;
@@ -406,13 +484,70 @@
 
 #pragma mark - UIAlertViewDelegate
 
+-(void) showAlertToRecordMoreThanMinimumMessageLength {
+    MBProgressHUD * hud =  [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.detailsLabelFont = [UIFont openSansFontOfSize:12];
+    hud.detailsLabelText = [NSString stringWithFormat:LOC(@"Record More Than Limit Format", @"Format of minimum recording warning text"),
+     MIN_VOICE_MESSAGE_LENGTH];
+    hud.removeFromSuperViewOnHide = YES;
+    hud.yOffset += (self.view.frame.size.height * 0.3);
+    
+    [hud hide:YES afterDelay:WARN_TIME];
+    dispatch_time_t hideTime = dispatch_time(DISPATCH_TIME_NOW, WARN_TIME * 1.2 * NSEC_PER_SEC);
+    dispatch_after(hideTime, dispatch_get_main_queue(), ^(void){
+        [self.fastRecordingView finishRecordingWithSendMessage:NO];
+    });
+}
+
+-(void) showAlertToCompleteLoginInformation {
+    [self.searchContactsTextField resignFirstResponder];
+    NSString *title = LOC(@"Information", @"Title Message");
+    NSString *message = LOC(@"Account details message", @"Account details message") ;
+    NSString *cancelButtonTitle = LOC(@"Cancel", @"Cancel Message");
+    NSString *okButtonTitle = LOC(@"Ok", @"Ok Message");
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:okButtonTitle, nil];
+    alertView.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
+    UITextField *nameSurnameTextField = [alertView textFieldAtIndex:0];
+    nameSurnameTextField.secureTextEntry = NO;
+    nameSurnameTextField.placeholder = LOC(@"Name surname", @"Name surname");
+    nameSurnameTextField.keyboardType = UIKeyboardTypeAlphabet;
+    nameSurnameTextField.text = self.fastRecordingView.sendVoiceMessageModel.peppermintMessageSender.nameSurname;
+    UITextField *emailTextField = [alertView textFieldAtIndex:1];
+    emailTextField.secureTextEntry = NO;
+    emailTextField.placeholder = LOC(@"Email", @"Email");
+    emailTextField.keyboardType = UIKeyboardTypeEmailAddress;
+    emailTextField.text = self.fastRecordingView.sendVoiceMessageModel.peppermintMessageSender.email;
+    [alertView show];
+}
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if(alertView == contactsAlertView) {
+    if([alertView.message isEqualToString:LOC(@"Contacts access rights explanation", @"Directives to give access rights")]) {
         switch (buttonIndex) {
             case ALERT_BUTTON_INDEX_OTHER_1:
                 [self redirectToSettingsPageForPermission];
                 break;
             default:
+                break;
+        }
+    } else if ([alertView.message isEqualToString:LOC(@"Account details message", @"Account details message")]) {
+        UITextField *nameSurnameTextField = [alertView textFieldAtIndex:0];
+        UITextField *emailTextField = [alertView textFieldAtIndex:1];
+        PeppermintMessageSender *peppermintMessageSender = self.fastRecordingView.sendVoiceMessageModel.peppermintMessageSender;
+        switch (buttonIndex) {
+            case ALERT_BUTTON_INDEX_OTHER_1:
+                peppermintMessageSender.nameSurname = nameSurnameTextField.text;
+                peppermintMessageSender.email = emailTextField.text;
+                
+                if(!peppermintMessageSender.isValid) {
+                    [self showAlertToCompleteLoginInformation];
+                } else {
+                    [peppermintMessageSender save];
+                    [self.fastRecordingView finishRecordingWithSendMessage:YES];
+                }
+                break;
+            default:
+                [self.fastRecordingView finishRecordingWithSendMessage:NO];
                 break;
         }
     }
@@ -488,15 +623,7 @@
     if([identifier isEqualToString:SEGUE_RECORDING_VIEW_CONTROLLER]) {
         PeppermintContact *selectedContact = (PeppermintContact*)sender;        
         if(selectedContact.communicationChannel == CommunicationChannelEmail) {
-            /*
-            result = canDeviceSendEmail;
-            if(!result) {
-                NSString *title = LOC(@"Information", @"Information");
-                NSString *message = LOC(@"Please add an email account", @"Email service info");
-                NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
-                [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
-            }
-            */
+            //IF there is a possible limitation implement here...
         } else if (selectedContact.communicationChannel == CommunicationChannelSMS) {
             result = NO;
             NSString *title = LOC(@"Information", @"Information");

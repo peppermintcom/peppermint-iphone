@@ -45,31 +45,21 @@
     
     self.recordingModel = [RecordingModel new];
     self.recordingModel.previousFileLength = 0;
+    defaults_set_object(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH, 0);
     self.recordingModel.delegate = self;
+    
     #warning "Add app will resign notifications"
 }
 
 #pragma mark - Record Methods
--(void) presentWithAnimation {
-    self.hidden = NO;
-    /*
-    CGRect frame = CGRectMake(0 , self.superview.frame.size.height, 1, 1);
-    self.frame = frame;
+-(void) presentWithAnimation {    
     self.alpha = 0;
     self.hidden = NO;
-    [UIView animateWithDuration:0.1 animations:^{
-        self.frame = self.superview.frame;
+    [UIView animateWithDuration:0.2 animations:^{
         self.alpha = 1;
     }];
-    */
-    
     assert(self.sendVoiceMessageModel != nil);
     [self initViewComponents];
-    
-    /*
-    if(self.recordingModel.grantedForMicrophone) {
-        [self beginRecording];
-    }*/
 }
 
 -(void) finishRecordingWithSendMessage:(BOOL) sendMessage {
@@ -81,8 +71,12 @@
 
 -(void) dissmiss {
     [self.recordingModel stop];
-    self.hidden = YES;
-    [self timerUpdated:0];
+    [UIView animateWithDuration:0.2 animations:^{
+        self.alpha = 0;
+    } completion:^(BOOL completed) {
+        [self timerUpdated:0];
+        self.hidden = YES;
+    }];
 }
 
 #pragma mark - RecordingModel Delegate
@@ -103,14 +97,7 @@
 
 -(void) timerUpdated:(NSTimeInterval) timeInterval {
     self.totalSeconds = timeInterval;
-    if(self.totalSeconds < MAX_RECORD_TIME) {
-        /*
-        if(totalSeconds/5 % 2 == 0 ) {
-            self.progressCenterImageView.image = [UIImage imageNamed:@"recording_logo1"];
-        } else {
-            self.progressCenterImageView.image = [UIImage imageNamed:@"recording_logo_right"];
-        }
-         */
+    if(self.totalSeconds <= MAX_RECORD_TIME + 0.3) {
         int minutes = self.totalSeconds / 60;
         int seconds = ((int)self.totalSeconds) % 60;
         self.counterLabel.text = [NSString stringWithFormat:@"%.1d:%.2d", minutes, seconds];
@@ -124,8 +111,9 @@
 - (void) showTimeFinishedInformation {
     NSString *title = LOC(@"Information", @"Information");
     NSString *message = LOC(@"Time is up", @"Max time reached information message");
-    NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
-    [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
+    NSString *cancelButtonTitle = LOC(@"Cancel", @"Cancel");
+    NSString *sendButtonTitle = LOC(@"Send", @"Send Message");
+    [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:sendButtonTitle, nil] show];
 }
 
 - (void) recordDataIsPrepared:(NSData *)data {
@@ -171,7 +159,16 @@
         }
         [self.recordingModel record];
     } else if ([alertView.message isEqualToString:LOC(@"Time is up", @"Max time reached information message")]) {
-        [self dissmiss];
+        switch (buttonIndex) {
+            case ALERT_BUTTON_INDEX_CANCEL:
+                [self finishRecordingWithSendMessage:NO];
+                break;
+            case ALERT_BUTTON_INDEX_OTHER_1:
+                [self finishRecordingWithSendMessage:YES];
+                break;
+            default:
+                break;
+        }
     } else {
         NSLog(@"Unhandled alertview Message: %@", alertView.message);
     }

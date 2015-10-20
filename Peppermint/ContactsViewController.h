@@ -26,6 +26,10 @@
 @property (weak, nonatomic) IBOutlet UIImageView *sendingImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sendingImageHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIView *seperatorView;
+@property (weak, nonatomic) IBOutlet UIView *holdToRecordInfoView;
+@property (weak, nonatomic) IBOutlet UILabel *holdToRecordInfoViewLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *holdToRecordInfoViewYValueConstraint;
+@property (weak, nonatomic) IBOutlet UIImageView *searchSourceIconImageView;
 @property (strong, nonatomic) FastRecordingView *fastRecordingView;
 
 -(IBAction)searchButtonPressed:(id)sender;
