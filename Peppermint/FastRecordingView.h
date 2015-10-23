@@ -11,6 +11,7 @@
 #import "RecordingModel.h"
 #import "SendVoiceMessageModel.h"
 #import "M13ProgressViewPie.h"
+#import "ExplodingView.h"
 
 @protocol FastRecordingViewDelegate <SendVoiceMessageDelegate>
 @end
@@ -30,6 +31,6 @@
 +(FastRecordingView*) createInstanceWithDelegate:(UIViewController<FastRecordingViewDelegate>*) delegate;
 
 -(void) presentWithAnimation;
--(void) finishRecordingWithSendMessage:(BOOL) sendMessage;
+-(void) finishRecordingWithGestureIsValid:(BOOL) isGestureValid;
 
 @end

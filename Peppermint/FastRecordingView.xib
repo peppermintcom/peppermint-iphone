@@ -52,7 +52,7 @@
                         <constraint firstAttribute="width" constant="206" id="tul-ZD-9pm"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Qx-iJ-3yh">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_0:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Qx-iJ-3yh">
                     <rect key="frame" x="60" y="417" width="200" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="R4Q-Xm-5IJ"/>

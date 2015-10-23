@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseModel.h"
+#import "MBProgressHUD.h"
 
 @interface BaseCustomView : UIView <BaseModelDelegate>
 

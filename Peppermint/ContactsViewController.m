@@ -23,9 +23,6 @@
 #define SENDING_ICON_HEIGHT     15
 #define SENT_ICON_HEIGHT        20
 
-#define ANIM_TIME               0.3
-#define WARN_TIME               1.5
-
 @interface ContactsViewController ()
 
 @end
@@ -268,29 +265,12 @@
 
 -(void) didCancelItemSelectionOnIndexpath:(NSIndexPath*) indexPath location:(CGPoint) location {
     self.tableView.bounces = YES;
-    [self.fastRecordingView finishRecordingWithSendMessage:NO];
+    [self.fastRecordingView finishRecordingWithGestureIsValid:NO];
 }
 
 -(void) didFinishItemSelectionOnIndexPath:(NSIndexPath*) indexPath location:(CGPoint) location {
     self.tableView.bounces = YES;
-    [self.fastRecordingView.recordingModel stop];
-    BOOL isRecordLengthLong = self.fastRecordingView.totalSeconds >= MAX_RECORD_TIME;
-    if(!isRecordLengthLong) {
-        BOOL isRecordLengthShort = self.fastRecordingView.totalSeconds <= MIN_VOICE_MESSAGE_LENGTH;
-        if(isRecordLengthShort) {
-            [self showAlertToRecordMoreThanMinimumMessageLength];
-        } else {
-            [self showAlertToCompleteLoginInformation];
-        }
-    }
-    
-#warning "Remove the above else case and add below code"
-    /*
-    else if(!self.fastRecordingView.sendVoiceMessageModel.peppermintMessageSender.isValid) {
-        [self showAlertToCompleteLoginInformation];
-    } else {
-        [self.fastRecordingView finishRecordingWithSendMessage:YES];
-    }*/
+    [self.fastRecordingView finishRecordingWithGestureIsValid:YES];
 }
 
 #pragma mark - FastRecordingViewDelegate
@@ -496,43 +476,6 @@
 
 #pragma mark - UIAlertViewDelegate
 
--(void) showAlertToRecordMoreThanMinimumMessageLength {
-    MBProgressHUD * hud =  [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeText;
-    hud.detailsLabelFont = [UIFont openSansFontOfSize:12];
-    hud.detailsLabelText = [NSString stringWithFormat:LOC(@"Record More Than Limit Format", @"Format of minimum recording warning text"),
-     MIN_VOICE_MESSAGE_LENGTH];
-    hud.removeFromSuperViewOnHide = YES;
-    hud.yOffset += (self.view.frame.size.height * 0.3);
-    
-    [hud hide:YES afterDelay:WARN_TIME];
-    dispatch_time_t hideTime = dispatch_time(DISPATCH_TIME_NOW, WARN_TIME * 1.2 * NSEC_PER_SEC);
-    dispatch_after(hideTime, dispatch_get_main_queue(), ^(void){
-        [self.fastRecordingView finishRecordingWithSendMessage:NO];
-    });
-}
-
--(void) showAlertToCompleteLoginInformation {
-    [self.searchContactsTextField resignFirstResponder];
-    NSString *title = LOC(@"Information", @"Title Message");
-    NSString *message = LOC(@"Account details message", @"Account details message") ;
-    NSString *cancelButtonTitle = LOC(@"Cancel", @"Cancel Message");
-    NSString *okButtonTitle = LOC(@"Ok", @"Ok Message");
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:okButtonTitle, nil];
-    alertView.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
-    UITextField *nameSurnameTextField = [alertView textFieldAtIndex:0];
-    nameSurnameTextField.secureTextEntry = NO;
-    nameSurnameTextField.placeholder = LOC(@"Name surname", @"Name surname");
-    nameSurnameTextField.keyboardType = UIKeyboardTypeAlphabet;
-    nameSurnameTextField.text = self.fastRecordingView.sendVoiceMessageModel.peppermintMessageSender.nameSurname;
-    UITextField *emailTextField = [alertView textFieldAtIndex:1];
-    emailTextField.secureTextEntry = NO;
-    emailTextField.placeholder = LOC(@"Email", @"Email");
-    emailTextField.keyboardType = UIKeyboardTypeEmailAddress;
-    emailTextField.text = self.fastRecordingView.sendVoiceMessageModel.peppermintMessageSender.email;
-    [alertView show];
-}
-
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if([alertView.message isEqualToString:LOC(@"Contacts access rights explanation", @"Directives to give access rights")]) {
         switch (buttonIndex) {
@@ -540,26 +483,6 @@
                 [self redirectToSettingsPageForPermission];
                 break;
             default:
-                break;
-        }
-    } else if ([alertView.message isEqualToString:LOC(@"Account details message", @"Account details message")]) {
-        UITextField *nameSurnameTextField = [alertView textFieldAtIndex:0];
-        UITextField *emailTextField = [alertView textFieldAtIndex:1];
-        PeppermintMessageSender *peppermintMessageSender = self.fastRecordingView.sendVoiceMessageModel.peppermintMessageSender;
-        switch (buttonIndex) {
-            case ALERT_BUTTON_INDEX_OTHER_1:
-                peppermintMessageSender.nameSurname = nameSurnameTextField.text;
-                peppermintMessageSender.email = emailTextField.text;
-                
-                if(!peppermintMessageSender.isValid) {
-                    [self showAlertToCompleteLoginInformation];
-                } else {
-                    [peppermintMessageSender save];
-                    [self.fastRecordingView finishRecordingWithSendMessage:YES];
-                }
-                break;
-            default:
-                [self.fastRecordingView finishRecordingWithSendMessage:NO];
                 break;
         }
     }

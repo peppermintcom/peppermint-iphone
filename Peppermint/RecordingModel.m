@@ -8,7 +8,8 @@
 
 #import "RecordingModel.h"
 
-#define DEFAULT_GAIN 0.8 //Input Gain must be a value btw 0.0 - 1.0
+#define DEFAULT_GAIN    0.8 //Input Gain must be a value btw 0.0 - 1.0
+#define PING_INTERVAL   0.2
 
 @implementation RecordingModel {
     AVAudioRecorder *recorder;
@@ -124,7 +125,7 @@
             if(![recorder record]) {
                 [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Could not start record", @"Error message") code:0 userInfo:nil]];
             } else {
-                timer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(onTick:) userInfo:nil repeats:YES];
+                timer = [NSTimer scheduledTimerWithTimeInterval:PING_INTERVAL target:self selector:@selector(onTick:) userInfo:nil repeats:YES];
             }
         }
     } else {

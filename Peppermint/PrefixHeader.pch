@@ -42,6 +42,8 @@ NSLocalizedStringFromTable(\
 #pragma mark - Record Constraint Definition
 #define MAX_RECORD_TIME             10     //Seconds
 #define MIN_VOICE_MESSAGE_LENGTH    2           //Seconds
+#define ANIM_TIME                   0.3
+#define WARN_TIME                   1.5
 
 #pragma mark - Alert Button Index Definition
 #define ALERT_BUTTON_INDEX_CANCEL   0
