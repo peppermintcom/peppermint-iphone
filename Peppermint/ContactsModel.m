@@ -97,17 +97,30 @@
              if(error) {
                  [self.delegate operationFailure:error];
              } else {
+                 NSMutableSet *uniqueSet = [NSMutableSet new];
                  NSMutableArray *peppermintContactsArray = [NSMutableArray new];
                  for(APContact *contact in contacts) {
                      for(NSString *email in contact.emails) {
-                         PeppermintContact *peppermintContact = [PeppermintContact new];
-                         peppermintContact.communicationChannel = CommunicationChannelEmail;
-                         peppermintContact.communicationChannelAddress = email;
-                         peppermintContact.nameSurname = contact.compositeName;
-                         peppermintContact.avatarImage = contact.thumbnail;
-                         [peppermintContactsArray addObject:peppermintContact];
+                         NSString *key = [NSString stringWithFormat:@"%@,%@", contact.compositeName, email];
+                         if([uniqueSet containsObject:key]) {
+                             continue;
+                         } else {
+                             [uniqueSet addObject:key];
+                             PeppermintContact *peppermintContact = [PeppermintContact new];
+                             peppermintContact.communicationChannel = CommunicationChannelEmail;
+                             peppermintContact.communicationChannelAddress = email;
+                             peppermintContact.nameSurname = contact.compositeName;
+                             peppermintContact.avatarImage = contact.thumbnail;
+                             [peppermintContactsArray addObject:peppermintContact];
+                         }
                      }
                      for(NSString *phone in contact.phones) {
+                         NSString *key = [NSString stringWithFormat:@"%@,%@", contact.compositeName, phone];
+                         if([uniqueSet containsObject:key]) {
+                             continue;
+                         } else {
+                             [uniqueSet addObject:key];
+                         }
                          PeppermintContact *peppermintContact = [PeppermintContact new];
                          peppermintContact.communicationChannel = CommunicationChannelSMS;
                          peppermintContact.communicationChannelAddress = phone;
