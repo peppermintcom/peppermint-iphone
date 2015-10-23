@@ -21,5 +21,6 @@
 @property (strong, nonatomic) NSMutableArray *contactList;
 
 -(void) save:(PeppermintContact*) peppermintContact;
+-(NSPredicate*) recentContactPredicate:(PeppermintContact*) peppermintContact;
 -(void) refreshRecentContactList;
 @end

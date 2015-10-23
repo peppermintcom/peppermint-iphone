@@ -19,6 +19,7 @@
 		B13B07671BD3736400974AC3 /* MandrillMailAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07661BD3736400974AC3 /* MandrillMailAttachment.m */; };
 		B13B076A1BD3752900974AC3 /* MandrillRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07691BD3752900974AC3 /* MandrillRequest.m */; };
 		B13B076D1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B076C1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m */; };
+		B15B15AC1BD9D8B800C0C171 /* ExplodingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15AB1BD9D8B800C0C171 /* ExplodingView.m */; };
 		B165EF121BB71A85008C6F71 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF111BB71A85008C6F71 /* BaseModel.m */; };
 		B165EF151BB71A99008C6F71 /* ContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF141BB71A99008C6F71 /* ContactsModel.m */; };
 		B165EF181BB71EC0008C6F71 /* PeppermintContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF171BB71EC0008C6F71 /* PeppermintContact.m */; };
@@ -95,6 +96,8 @@
 		B13B07691BD3752900974AC3 /* MandrillRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MandrillRequest.m; sourceTree = "<group>"; };
 		B13B076B1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVoiceMessageMandrillModel.h; sourceTree = "<group>"; };
 		B13B076C1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendVoiceMessageMandrillModel.m; sourceTree = "<group>"; };
+		B15B15AA1BD9D8B800C0C171 /* ExplodingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExplodingView.h; sourceTree = "<group>"; };
+		B15B15AB1BD9D8B800C0C171 /* ExplodingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExplodingView.m; sourceTree = "<group>"; };
 		B165EF101BB71A85008C6F71 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
 		B165EF111BB71A85008C6F71 /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
 		B165EF131BB71A99008C6F71 /* ContactsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ContactsModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -226,6 +229,15 @@
 				B12C03BC1BCFFC280085A55A /* FastRecordingView.xib */,
 			);
 			name = FastRecordingView;
+			sourceTree = "<group>";
+		};
+		B15B15A91BD9D8A100C0C171 /* ExplodingView */ = {
+			isa = PBXGroup;
+			children = (
+				B15B15AA1BD9D8B800C0C171 /* ExplodingView.h */,
+				B15B15AB1BD9D8B800C0C171 /* ExplodingView.m */,
+			);
+			name = ExplodingView;
 			sourceTree = "<group>";
 		};
 		B165EF0F1BB71A31008C6F71 /* Model */ = {
@@ -360,6 +372,7 @@
 			isa = PBXGroup;
 			children = (
 				B102DD5B1BD0800B00D71D62 /* BaseCustomView */,
+				B15B15A91BD9D8A100C0C171 /* ExplodingView */,
 				B12C03B81BCFFBDC0085A55A /* FastRecordingView */,
 				B1EF40E21BB7CE7700042E4B /* Storyboard */,
 				B17B3D6A1BB6BCEC009B8BC5 /* Cell */,
@@ -734,6 +747,7 @@
 				B13B076D1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m in Sources */,
 				B18BF95E1BD674CD009B665E /* PeppermintMessageSender.m in Sources */,
 				B1BB1E631BD364FB00A1CE45 /* AFNetworkActivityLogger.m in Sources */,
+				B15B15AC1BD9D8B800C0C171 /* ExplodingView.m in Sources */,
 				B1EF40EB1BB7E78C00042E4B /* SendVoiceMessageModel.m in Sources */,
 				B17B3D5E1BB6A504009B8BC5 /* ContactsViewController.m in Sources */,
 				B13B07601BD3719500974AC3 /* MandrillToObject.m in Sources */,

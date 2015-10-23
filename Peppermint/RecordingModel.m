@@ -18,6 +18,9 @@
 -(id) init {
     self = [super init];
     if(self) {
+        NSString *length = (NSString*) defaults_object(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH);
+        self.previousFileLength = !length ? 0 : length.intValue;
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             
             //Completion block of recording permission
@@ -28,9 +31,6 @@
                     [recordingModel.delegate accessRightsAreSupplied];
                 });
             };
-            
-            NSString *length = (NSString*) defaults_object(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH);
-            self.previousFileLength = !length ? 0 : length.intValue;
             
             AVAudioSession *session = [AVAudioSession sharedInstance];
             NSError *error;
@@ -72,15 +72,31 @@
 
 -(void) initRecordFile {
     self.fileUrl = [self recordFileUrl];
+    NSLog(@"path:%@", self.fileUrl);
 }
 
 -(void) initRecorder {
-    NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
-    [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
-    [recordSetting setValue:[NSNumber numberWithFloat:44100.0] forKey:AVSampleRateKey];
-    [recordSetting setValue:[NSNumber numberWithInt: 2] forKey:AVNumberOfChannelsKey];
-    recorder = [[AVAudioRecorder alloc] initWithURL:self.fileUrl settings:recordSetting error:nil];
-    recorder.delegate = self;    
+    if(!recorder) {
+        NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
+        [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
+        [recordSetting setValue:[NSNumber numberWithFloat:44100.0] forKey:AVSampleRateKey];
+        [recordSetting setValue:[NSNumber numberWithInt: 2] forKey:AVNumberOfChannelsKey];
+        
+        NSDictionary *lowQualityRecordSetting = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                 //[NSNumber numberWithInt:kAudioFormatMPEG4AAC], AVFormatIDKey,
+                                                 [NSNumber numberWithInt:kAudioFormatMPEG4AAC], AVFormatIDKey,
+                                                 
+                                                 //[NSNumber numberWithInt:AVAudioQualityMin], AVEncoderAudioQualityKey,
+                                                 //[NSNumber numberWithInt:16384], AVEncoderBitRateKey,
+                                                 [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,
+                                                 //[NSNumber numberWithFloat:8000.0], AVSampleRateKey,
+                                                 [NSNumber numberWithFloat:44100.0], AVSampleRateKey,
+                                                 //[NSNumber numberWithInt:8], AVLinearPCMBitDepthKey,
+                                                 nil];
+        
+        recorder = [[AVAudioRecorder alloc] initWithURL:self.fileUrl settings:lowQualityRecordSetting error:nil];
+        recorder.delegate = self;
+    }
 }
 
 -(void) setInputGain {

@@ -15,6 +15,7 @@
     if(self) {
         self.nameSurname = (NSString*) defaults_object(DEFAULTS_KEY_SENDER_NAMESURNAME);
         self.email = (NSString*) defaults_object(DEFAULTS_KEY_SENDER_EMAIL);
+        [self guessNameFromDeviceName];
     }
     return self;
 }
@@ -27,6 +28,50 @@
 -(BOOL) isValid {
     return self.nameSurname.length > 0
     && self.email.length > 0;
+}
+
+#pragma mark - Guess Name From Device Name
+
+-(void) guessNameFromDeviceName {
+    if(self.nameSurname.length == 0) {
+        NSString *deviceName = [UIDevice currentDevice].name;
+        NSArray *names =  [self parseNamesFromDeviceName:deviceName];
+        if(names.count > 0) {
+            self.nameSurname = [names firstObject];
+        }
+    }
+}
+
+- (NSArray*) parseNamesFromDeviceName: (NSString *) deviceName
+{
+    NSCharacterSet* characterSet = [NSCharacterSet characterSetWithCharactersInString:@" '’\\"];
+    NSArray* words = [deviceName componentsSeparatedByCharactersInSet:characterSet];
+    NSMutableArray* names = [[NSMutableArray alloc] init];
+    
+    for (NSString *word in words)
+    {
+        if(![word localizedCaseInsensitiveContainsString:@"iPhone"]
+           && ![word localizedCaseInsensitiveContainsString:@"iPod"]
+           && ![word localizedCaseInsensitiveContainsString:@"iPad"]
+           && ![word localizedCaseInsensitiveContainsString:@"mini"]
+           && [word length] > 2
+           )
+        {
+            NSString *newWord = [word stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[word substringToIndex:1] uppercaseString]];
+            [names addObject:newWord];
+        }
+    }
+    if ([names count] > 1)
+    {
+        int lastNameIndex = [names count] - 1;
+        NSString* name = [names objectAtIndex:lastNameIndex];
+        unichar lastChar = [name characterAtIndex:[name length] - 1];
+        if (lastChar == 's')
+        {
+            [names replaceObjectAtIndex:lastNameIndex withObject:[name substringToIndex:[name length] - 1]];
+        }
+    }
+    return names;
 }
 
 @end
