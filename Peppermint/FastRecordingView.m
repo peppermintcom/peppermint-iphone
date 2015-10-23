@@ -57,7 +57,7 @@
     
     defaults_set_object(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH, 0);
     self.recordingModel.delegate = self;
-    
+    self.progressContainerView.hidden = NO;
     #warning "Add app will resign notifications"
 }
 
@@ -98,6 +98,8 @@
     [self.recordingModel prepareRecordData];
 }
 
+#pragma mark - Dissmiss
+
 -(void) dissmissWithFadeOut {
     [UIView animateWithDuration:0.2 animations:^{
         self.alpha = 0;
@@ -109,12 +111,14 @@
 }
 
 -(void) dissmissWithExplode {
-    ExplodingView *explodingView = [ExplodingView createInstanceFromView:self];
+    
+    ExplodingView *explodingView = [ExplodingView createInstanceFromView:self.progressContainerView];
     [self.superview addSubview:explodingView];
     [self.superview bringSubviewToFront:explodingView];
-    self.hidden = YES;
-    [self timerUpdated:0];
-    [explodingView lp_explode];
+    self.progressContainerView.hidden = YES;
+    [explodingView lp_explodeWithCallback:^{
+        [self dissmissWithFadeOut];
+    }];
 }
 
 #pragma mark - RecordingModel Delegate

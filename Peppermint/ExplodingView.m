@@ -8,7 +8,10 @@
 
 #import "ExplodingView.h"
 
-#define SPEED_DIVIDER   1
+#define SPEED_DIVIDER       0.2  //Increase to speed down 4:slow 1:actual 0.2:Fast
+#define PIECES_MULTIPLIER   1   //Increase to draw less pieces 2:less piece 1:actual 0.2:Lots of pieces
+#define ANIMATION_Y_MULTIPLER   1
+#define ANIMATION_X_MULTIPLIER  1
 
 @implementation ExplodingView
 
@@ -68,7 +71,7 @@ float randomFloat()
         self.completionCallback = callback;
     }
     
-    float size = self.frame.size.width/5;
+    float size = self.frame.size.width/5 * PIECES_MULTIPLIER;
     CGSize imageSize = CGSizeMake(size, size);
     
     CGFloat cols = self.frame.size.width / imageSize.width ;
@@ -153,7 +156,7 @@ float randomFloat()
         NSArray *timingFunctions = [NSArray arrayWithObjects:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut],nil];
         [moveAnim setTimingFunctions:timingFunctions];
         
-        float r = randomFloat();
+        float r = 1; //randomFloat();
         
         NSTimeInterval speed = 2.35*r*SPEED_DIVIDER;
         
@@ -260,13 +263,20 @@ float randomFloat()
     }
     else
     {
-        endPoint = CGPointMake(layerXPosAndHeight, endY);
+        endPoint = CGPointMake(layerXPosAndHeight, -endY);
         curvePoint= CGPointMake((((layer.position.x*0.5)*r3)*upOrDown+rect.size.width)*maxLeftRightShift, -layerYPosAndHeight);
     }
     
-    NSLog(@"EndPoint is %f,%f", endPoint.x, endPoint.y);
-    [particlePath addQuadCurveToPoint:endPoint
-                         controlPoint:curvePoint];
+    
+    CGFloat centerX = rect.origin.x + rect.size.width / 2;
+    CGFloat centerY = rect.origin.y + rect.size.height / 2;
+    CGPoint center = CGPointMake(centerX, centerY);
+    curvePoint = center;
+    endPoint.x = layer.position.x + (layer.position.x - centerX) * ANIMATION_X_MULTIPLIER;
+    endPoint.y = layer.position.y + (layer.position.y - centerY) * ANIMATION_Y_MULTIPLER;
+    //NSLog(@"%f,%f_EndPoint is %f,%f", centerX, centerY, endPoint.x, endPoint.y);
+    [particlePath addLineToPoint:endPoint];
+    //[particlePath addQuadCurveToPoint:endPoint controlPoint:curvePoint];
     return particlePath;
     
 }

@@ -349,6 +349,7 @@
 
 -(IBAction)searchButtonPressed:(id)sender {
     if(!self.searchMenu.isOpen) {
+        [self hideHoldToRecordInfoView];
         self.searchMenuView.hidden = NO;
         [self.searchMenu showInView:self.searchMenuView];
     } else {        
