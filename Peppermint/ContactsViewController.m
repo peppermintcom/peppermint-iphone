@@ -144,6 +144,18 @@
         cell.contactNameLabel.text = peppermintContact.nameSurname;        
         NSString *filteredCommunicationChannelAddress = [[peppermintContact.communicationChannelAddress componentsSeparatedByCharactersInSet:unwantedCharsSet] componentsJoinedByString:@""];
         cell.contactViaInformationLabel.text = filteredCommunicationChannelAddress;
+                
+        NSPredicate *predicate = [self.recentContactsModel recentContactPredicate:peppermintContact];
+        NSArray *filteredArray = [self.recentContactsModel.contactList filteredArrayUsingPredicate:predicate];
+        
+        if(filteredArray.count > 0) {
+            cell.rightIconImageView.image = [UIImage imageNamed:@"icon_recent"];
+        } else if(peppermintContact.communicationChannel == CommunicationChannelEmail) {
+            cell.rightIconImageView.image = [UIImage imageNamed:@"icon_mail"];
+        } else if (peppermintContact.communicationChannel == CommunicationChannelSMS) {
+            cell.rightIconImageView.image = [UIImage imageNamed:@"icon_phone"];
+        }
+        
         preparedCell = cell;
     } else {
         NSLog(@"Queried for indexpath: %d,%d and the active contact list has %d elemends", indexPath.section, indexPath.row, [self activeContactList].count);

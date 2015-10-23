@@ -22,6 +22,7 @@
 @property(weak, nonatomic) IBOutlet UILabel *contactViaCaptionLabel;
 @property(weak, nonatomic) IBOutlet UILabel *contactViaInformationLabel;
 @property(weak, nonatomic) IBOutlet UIView *cellSeperatorView;
+@property(weak, nonatomic) IBOutlet UIImageView *rightIconImageView;
 @property (weak, nonatomic) IBOutlet UIButton* cellActionButton;
 @property(weak, nonatomic) id<ContactTableViewCellDelegate> delegate;
 @property(strong, nonatomic) NSIndexPath *indexPath;
