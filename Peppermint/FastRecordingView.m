@@ -35,6 +35,13 @@
     self.hidden = YES;
 }
 
+-(RecordingModel*) getRecordingModel {
+    if(!self.recordingModel) {
+        self.recordingModel = [RecordingModel new];
+    }
+    return self.recordingModel;
+}
+
 -(void) initViewComponents {
     self.navigationTitleLabel.text = [NSString stringWithFormat:
                                       LOC(@"Recording for contact format", @"Title Text Format"),
@@ -43,8 +50,10 @@
                                       ];
     self.sendVoiceMessageModel.delegate = self;
     
-    self.recordingModel = [RecordingModel new];
+    //self.recordingModel = [RecordingModel new];
+    self.recordingModel = [self getRecordingModel];
     self.recordingModel.previousFileLength = 0;
+    
     defaults_set_object(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH, 0);
     self.recordingModel.delegate = self;
     
@@ -72,7 +81,7 @@
 -(void) dissmiss {
     [self.recordingModel stop];
     [UIView animateWithDuration:0.2 animations:^{
-        self.alpha = 0;
+        self.alpha = 1;
     } completion:^(BOOL completed) {
         [self timerUpdated:0];
         self.hidden = YES;

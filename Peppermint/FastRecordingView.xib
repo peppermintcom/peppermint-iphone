@@ -70,15 +70,17 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="G44-pU-yBs" firstAttribute="top" secondItem="7Qx-iJ-3yh" secondAttribute="bottom" constant="39" id="4Jp-J5-47v"/>
                 <constraint firstItem="G44-pU-yBs" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="75q-1l-clL"/>
-                <constraint firstItem="7Qx-iJ-3yh" firstAttribute="top" secondItem="4vy-Vz-Ek4" secondAttribute="bottom" constant="30" id="Ccn-hc-FZA"/>
+                <constraint firstItem="7Qx-iJ-3yh" firstAttribute="top" relation="lessThanOrEqual" secondItem="4vy-Vz-Ek4" secondAttribute="bottom" constant="30" id="Ccn-hc-FZA"/>
                 <constraint firstItem="PZg-zV-ZMy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="25" id="Dl6-Nu-ADo"/>
                 <constraint firstAttribute="centerX" secondItem="4vy-Vz-Ek4" secondAttribute="centerX" id="Esh-Uq-fin"/>
                 <constraint firstAttribute="bottom" secondItem="Yze-9c-yzA" secondAttribute="bottom" id="GtG-AD-xQr"/>
                 <constraint firstItem="PZg-zV-ZMy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="HpQ-7a-0jI"/>
                 <constraint firstAttribute="bottom" secondItem="G44-pU-yBs" secondAttribute="bottom" constant="5" id="Pzh-yk-3Yj"/>
+                <constraint firstItem="4vy-Vz-Ek4" firstAttribute="top" relation="lessThanOrEqual" secondItem="PZg-zV-ZMy" secondAttribute="bottom" priority="750" constant="98" id="Tk0-eX-Nyn"/>
                 <constraint firstItem="7Qx-iJ-3yh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="60" id="bb7-9w-t8s"/>
-                <constraint firstItem="G44-pU-yBs" firstAttribute="top" relation="lessThanOrEqual" secondItem="7Qx-iJ-3yh" secondAttribute="bottom" constant="39" id="cUu-cm-IIC"/>
+                <constraint firstItem="G44-pU-yBs" firstAttribute="top" relation="greaterThanOrEqual" secondItem="7Qx-iJ-3yh" secondAttribute="bottom" constant="20" id="cUu-cm-IIC"/>
                 <constraint firstItem="Yze-9c-yzA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="eKV-VJ-7Cy"/>
                 <constraint firstAttribute="trailing" secondItem="G44-pU-yBs" secondAttribute="trailing" id="fQl-es-4Bx"/>
                 <constraint firstAttribute="trailing" secondItem="Yze-9c-yzA" secondAttribute="trailing" id="fbd-tq-NcO"/>
@@ -88,9 +90,14 @@
                 <constraint firstItem="Yze-9c-yzA" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="vhk-Wi-rO2"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="r6f-CR-mYy"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="counterLabel" destination="7Qx-iJ-3yh" id="KMT-Gt-F6F"/>
-                <outlet property="m13ProgressViewPie" destination="IPo-3k-itg" id="cd9-FX-9Ya"/>
+                <outlet property="m13ProgressViewPie" destination="IPo-3k-itg" id="Azw-EA-Txr"/>
                 <outlet property="navigationTitleLabel" destination="PZg-zV-ZMy" id="35b-Kv-cAK"/>
                 <outlet property="progressCenterImageView" destination="Kks-qv-Zee" id="v7d-rZ-V00"/>
                 <outlet property="progressContainerView" destination="4vy-Vz-Ek4" id="d4p-hI-bI6"/>
