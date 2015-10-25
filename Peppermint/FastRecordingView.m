@@ -11,7 +11,7 @@
 #import "ExplodingView.h"
 
 @implementation FastRecordingView {
-
+    BOOL isAppInBackground;
 }
 
 +(FastRecordingView*) createInstanceWithDelegate:(UIViewController<FastRecordingViewDelegate>*) delegate {
@@ -35,41 +35,35 @@
     [self.m13ProgressViewPie setPrimaryColor:[UIColor progressCoverViewGreen]];
     [self.m13ProgressViewPie setSecondaryColor:[UIColor clearColor]];
     self.hidden = YES;
+    defaults_set_object(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH, 0);
+    isAppInBackground = NO;
+    self.swipeInAnyDirectionLabel.text = LOC(@"Swipe in any direction to cancel", @"Swipe in any direction label");
+    REGISTER();
 }
 
--(RecordingModel*) getRecordingModel {
-    if(!self.recordingModel) {
-        self.recordingModel = [RecordingModel new];
-    }
-    return self.recordingModel;
-}
-
--(void) initViewComponents {
+-(void) prepareViewToPresent {
     self.navigationTitleLabel.text = [NSString stringWithFormat:
                                       LOC(@"Recording for contact format", @"Title Text Format"),
                                       self.sendVoiceMessageModel.selectedPeppermintContact.nameSurname,
                                       self.sendVoiceMessageModel.selectedPeppermintContact.communicationChannelAddress
                                       ];
     self.sendVoiceMessageModel.delegate = self;
-    
+    self.recordingModel = nil;
     self.recordingModel = [RecordingModel new];
-    self.recordingModel.previousFileLength = 0;
-    
-    defaults_set_object(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH, 0);
+    [RecordingModel setPreviousFileLength:0];
     self.recordingModel.delegate = self;
     self.progressContainerView.hidden = NO;
-    #warning "Add app will resign notifications"
 }
 
 #pragma mark - Record Methods
--(void) presentWithAnimation {    
+-(void) presentWithAnimation {
     self.alpha = 0;
     self.hidden = NO;
     [UIView animateWithDuration:0.2 animations:^{
         self.alpha = 1;
     }];
     assert(self.sendVoiceMessageModel != nil);
-    [self initViewComponents];
+    [self prepareViewToPresent];
 }
 
 -(void) finishRecordingWithGestureIsValid:(BOOL) isGestureValid {
@@ -85,8 +79,9 @@
         NSLog(@"Max time reached..."); //This action is handled in "timerUpdated:" delegate method
     } else if (isRecordingShort) {
         [self showAlertToRecordMoreThanMinimumMessageLength];
-    } else if (!isLoginInfoValid || isLoginInfoValid) {
-#warning "Remove ' || isLoginInfoValid' from above "
+    } else if (isAppInBackground) {
+        [self showAlertForRecordIsCut];
+    } else if (!isLoginInfoValid) {
         [self showAlertToCompleteLoginInformation];
     } else {
         [self dissmissWithFadeOut];
@@ -132,7 +127,7 @@
 }
 
 -(void) accessRightsAreSupplied {
-    if(self.recordingModel.previousFileLength == 0) {
+    if([RecordingModel checkPreviousFileLength] < 0.01) {
         [self beginRecording];
     }
 }
@@ -158,8 +153,8 @@
     [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:sendButtonTitle, nil] show];
 }
 
-- (void) recordDataIsPrepared:(NSData *)data {
-    [self.sendVoiceMessageModel sendVoiceMessageWithData:data];
+- (void) recordDataIsPrepared:(NSData *)data withExtension:(NSString*) extension {
+    [self.sendVoiceMessageModel sendVoiceMessageWithData:data withExtension: extension];
 }
 
 #pragma mark - SendVoiceMessage Delegate
@@ -210,6 +205,14 @@
     [alertView show];
 }
 
+-(void) showAlertForRecordIsCut {
+    NSString *title = LOC(@"Information", @"Information");
+    NSString *message = LOC(@"Recording is cut", @"Recording is cut, how to continue question?");
+    NSString *cancel = LOC(@"Cancel", @"Cancel");
+    NSString *send = LOC(@"Send", @"Send");
+    [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancel otherButtonTitles:send, nil] show];
+}
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     
     if([alertView.message isEqualToString: LOC(@"Mic Access rights explanation", @"Directives to give access rights")]) {
@@ -223,14 +226,16 @@
             default:
                 break;
         }
-#warning "include recording is cut"
     }
     else if ([alertView.message isEqualToString:LOC(@"Recording is cut", @"Recording is cut, how to continue question?")]) {
         switch (buttonIndex) {
             case ALERT_BUTTON_INDEX_CANCEL:
-                [self.recordingModel resetRecording];
+                self.recordingModel = nil;
+                [self dissmissWithFadeOut];
                 break;
             case ALERT_BUTTON_INDEX_OTHER_1:
+                [self dissmissWithFadeOut];
+                [self performOperationsToSend];
                 break;
             default:
                 break;
@@ -243,7 +248,8 @@
                 [self dissmissWithExplode];
                 break;
             case ALERT_BUTTON_INDEX_OTHER_1:
-                [self finishRecordingWithGestureIsValid:YES];
+                [self dissmissWithFadeOut];
+                [self performOperationsToSend];
                 break;
             default:
                 break;
@@ -295,6 +301,37 @@
         NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
         [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
     }
+}
+
+#pragma mark - App Interruption Actions
+
+SUBSCRIBE(ApplicationWillResignActive) {
+    NSLog(@"ApplicationWillResignActive");
+    isAppInBackground = YES;
+    //[self.recordingModel backUpRecording];
+}
+
+SUBSCRIBE(ApplicationDidBecomeActive) {
+    NSLog(@"ApplicationDidBecomeActive");
+    isAppInBackground = NO;
+    /*
+    CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
+    if( previousFileLength > MIN_VOICE_MESSAGE_LENGTH) {
+     
+        if(!self.recordingModel)
+            self.recordingModel = [RecordingModel new];
+        else
+            NSLog(@"recordingModel was already existing!!");
+        
+        [self timerUpdated:previousFileLength];
+        self.recordingModel.delegate = self;
+        [self.recordingModel stop];
+     
+     
+    } else {
+        [RecordingModel setPreviousFileLength:0];
+    }
+    */
 }
 
 @end

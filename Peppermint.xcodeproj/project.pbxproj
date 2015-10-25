@@ -10,6 +10,8 @@
 		392D9C861A6F3945B758D95F /* libPods-Peppermint.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4568D87C1B184E71C2B112BE /* libPods-Peppermint.a */; };
 		B102BBB81BCD03EC001E1E7A /* UIViewController_AdditionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B102BBB71BCD03EC001E1E7A /* UIViewController_AdditionViewController.m */; };
 		B102DD5E1BD0802100D71D62 /* BaseCustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = B102DD5D1BD0802100D71D62 /* BaseCustomView.m */; };
+		B11F8A5C1BDCC45F000E79AA /* FinalizeUploadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5B1BDCC45F000E79AA /* FinalizeUploadRequest.m */; };
+		B11F8A5F1BDCC474000E79AA /* FinalizeUploadResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5E1BDCC474000E79AA /* FinalizeUploadResponse.m */; };
 		B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B12C03BA1BCFFC060085A55A /* FastRecordingView.m */; };
 		B12C03BD1BCFFC280085A55A /* FastRecordingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B12C03BC1BCFFC280085A55A /* FastRecordingView.xib */; };
 		B13B075A1BD3686500974AC3 /* MandrillInformationResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07591BD3686500974AC3 /* MandrillInformationResponse.m */; };
@@ -20,6 +22,13 @@
 		B13B076A1BD3752900974AC3 /* MandrillRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07691BD3752900974AC3 /* MandrillRequest.m */; };
 		B13B076D1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B076C1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m */; };
 		B15B15AC1BD9D8B800C0C171 /* ExplodingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15AB1BD9D8B800C0C171 /* ExplodingView.m */; };
+		B15B15B01BDA44E200C0C171 /* TPAACAudioConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15AF1BDA44E200C0C171 /* TPAACAudioConverter.m */; };
+		B15B15B21BDBBAB200C0C171 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B15B15B11BDBBAB200C0C171 /* Login.storyboard */; };
+		B15B15B81BDBC17300C0C171 /* Recorder.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15B71BDBC17300C0C171 /* Recorder.m */; };
+		B15B15BB1BDBC29A00C0C171 /* RecorderRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15BA1BDBC29A00C0C171 /* RecorderRequest.m */; };
+		B15B15BE1BDBC31F00C0C171 /* AWSService.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15BD1BDBC31F00C0C171 /* AWSService.m */; };
+		B15B15C11BDBC55A00C0C171 /* AWSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15C01BDBC55A00C0C171 /* AWSModel.m */; };
+		B15B15C41BDBC8CB00C0C171 /* RecorderResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15C31BDBC8CB00C0C171 /* RecorderResponse.m */; };
 		B165EF121BB71A85008C6F71 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF111BB71A85008C6F71 /* BaseModel.m */; };
 		B165EF151BB71A99008C6F71 /* ContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF141BB71A99008C6F71 /* ContactsModel.m */; };
 		B165EF181BB71EC0008C6F71 /* PeppermintContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF171BB71EC0008C6F71 /* PeppermintContact.m */; };
@@ -43,6 +52,8 @@
 		B17B3D741BB6C4B0009B8BC5 /* UIColor_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D731BB6C4B0009B8BC5 /* UIColor_Addition.m */; };
 		B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D771BB6C90A009B8BC5 /* BaseTableViewCell.m */; };
 		B18BF95E1BD674CD009B665E /* PeppermintMessageSender.m in Sources */ = {isa = PBXBuildFile; fileRef = B18BF95D1BD674CD009B665E /* PeppermintMessageSender.m */; };
+		B1A366921BDC92DB00852B52 /* UploadsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A366911BDC92DB00852B52 /* UploadsRequest.m */; };
+		B1A366951BDC92FF00852B52 /* UploadsResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A366941BDC92FF00852B52 /* UploadsResponse.m */; };
 		B1BB1E5F1BD35CD300A1CE45 /* MandrillService.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB1E5E1BD35CD300A1CE45 /* MandrillService.m */; };
 		B1BB1E631BD364FB00A1CE45 /* AFNetworkActivityLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB1E621BD364FB00A1CE45 /* AFNetworkActivityLogger.m */; };
 		B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40E41BB7D58C00042E4B /* RecordingModel.m */; };
@@ -79,6 +90,10 @@
 		B102BBB71BCD03EC001E1E7A /* UIViewController_AdditionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIViewController_AdditionViewController.m; sourceTree = "<group>"; };
 		B102DD5C1BD0802100D71D62 /* BaseCustomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseCustomView.h; sourceTree = "<group>"; };
 		B102DD5D1BD0802100D71D62 /* BaseCustomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseCustomView.m; sourceTree = "<group>"; };
+		B11F8A5A1BDCC45F000E79AA /* FinalizeUploadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinalizeUploadRequest.h; sourceTree = "<group>"; };
+		B11F8A5B1BDCC45F000E79AA /* FinalizeUploadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinalizeUploadRequest.m; sourceTree = "<group>"; };
+		B11F8A5D1BDCC474000E79AA /* FinalizeUploadResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinalizeUploadResponse.h; sourceTree = "<group>"; };
+		B11F8A5E1BDCC474000E79AA /* FinalizeUploadResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinalizeUploadResponse.m; sourceTree = "<group>"; };
 		B12C03B91BCFFC060085A55A /* FastRecordingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastRecordingView.h; sourceTree = "<group>"; };
 		B12C03BA1BCFFC060085A55A /* FastRecordingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FastRecordingView.m; sourceTree = "<group>"; };
 		B12C03BC1BCFFC280085A55A /* FastRecordingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FastRecordingView.xib; sourceTree = "<group>"; };
@@ -98,6 +113,19 @@
 		B13B076C1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendVoiceMessageMandrillModel.m; sourceTree = "<group>"; };
 		B15B15AA1BD9D8B800C0C171 /* ExplodingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExplodingView.h; sourceTree = "<group>"; };
 		B15B15AB1BD9D8B800C0C171 /* ExplodingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExplodingView.m; sourceTree = "<group>"; };
+		B15B15AE1BDA44E200C0C171 /* TPAACAudioConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPAACAudioConverter.h; sourceTree = "<group>"; };
+		B15B15AF1BDA44E200C0C171 /* TPAACAudioConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPAACAudioConverter.m; sourceTree = "<group>"; };
+		B15B15B11BDBBAB200C0C171 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		B15B15B61BDBC17300C0C171 /* Recorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recorder.h; sourceTree = "<group>"; };
+		B15B15B71BDBC17300C0C171 /* Recorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Recorder.m; sourceTree = "<group>"; };
+		B15B15B91BDBC29A00C0C171 /* RecorderRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecorderRequest.h; sourceTree = "<group>"; };
+		B15B15BA1BDBC29A00C0C171 /* RecorderRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecorderRequest.m; sourceTree = "<group>"; };
+		B15B15BC1BDBC31F00C0C171 /* AWSService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSService.h; sourceTree = "<group>"; };
+		B15B15BD1BDBC31F00C0C171 /* AWSService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSService.m; sourceTree = "<group>"; };
+		B15B15BF1BDBC55A00C0C171 /* AWSModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSModel.h; sourceTree = "<group>"; };
+		B15B15C01BDBC55A00C0C171 /* AWSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSModel.m; sourceTree = "<group>"; };
+		B15B15C21BDBC8CB00C0C171 /* RecorderResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecorderResponse.h; sourceTree = "<group>"; };
+		B15B15C31BDBC8CB00C0C171 /* RecorderResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecorderResponse.m; sourceTree = "<group>"; };
 		B165EF101BB71A85008C6F71 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
 		B165EF111BB71A85008C6F71 /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
 		B165EF131BB71A99008C6F71 /* ContactsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ContactsModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -140,6 +168,10 @@
 		B17B3D771BB6C90A009B8BC5 /* BaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewCell.m; sourceTree = "<group>"; };
 		B18BF95C1BD674CD009B665E /* PeppermintMessageSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeppermintMessageSender.h; sourceTree = "<group>"; };
 		B18BF95D1BD674CD009B665E /* PeppermintMessageSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeppermintMessageSender.m; sourceTree = "<group>"; };
+		B1A366901BDC92DB00852B52 /* UploadsRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadsRequest.h; sourceTree = "<group>"; };
+		B1A366911BDC92DB00852B52 /* UploadsRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadsRequest.m; sourceTree = "<group>"; };
+		B1A366931BDC92FF00852B52 /* UploadsResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadsResponse.h; sourceTree = "<group>"; };
+		B1A366941BDC92FF00852B52 /* UploadsResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadsResponse.m; sourceTree = "<group>"; };
 		B1BB1E5D1BD35CD300A1CE45 /* MandrillService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrillService.h; sourceTree = "<group>"; };
 		B1BB1E5E1BD35CD300A1CE45 /* MandrillService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MandrillService.m; sourceTree = "<group>"; };
 		B1BB1E611BD364FB00A1CE45 /* AFNetworkActivityLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityLogger.h; sourceTree = "<group>"; };
@@ -240,9 +272,59 @@
 			name = ExplodingView;
 			sourceTree = "<group>";
 		};
+		B15B15AD1BDA44D200C0C171 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				B15B15AE1BDA44E200C0C171 /* TPAACAudioConverter.h */,
+				B15B15AF1BDA44E200C0C171 /* TPAACAudioConverter.m */,
+			);
+			name = Vendor;
+			sourceTree = "<group>";
+		};
+		B15B15B41BDBC14000C0C171 /* Mandrill */ = {
+			isa = PBXGroup;
+			children = (
+				B13B07681BD3752900974AC3 /* MandrillRequest.h */,
+				B13B07691BD3752900974AC3 /* MandrillRequest.m */,
+				B13B07581BD3686500974AC3 /* MandrillInformationResponse.h */,
+				B13B07591BD3686500974AC3 /* MandrillInformationResponse.m */,
+				B13B075B1BD3716100974AC3 /* MandrillSendRequest.h */,
+				B13B075C1BD3716100974AC3 /* MandrillSendRequest.m */,
+				B13B075E1BD3719500974AC3 /* MandrillToObject.h */,
+				B13B075F1BD3719500974AC3 /* MandrillToObject.m */,
+				B13B07611BD3720100974AC3 /* MandrillMessage.h */,
+				B13B07621BD3720100974AC3 /* MandrillMessage.m */,
+				B13B07651BD3736400974AC3 /* MandrillMailAttachment.h */,
+				B13B07661BD3736400974AC3 /* MandrillMailAttachment.m */,
+			);
+			name = Mandrill;
+			sourceTree = "<group>";
+		};
+		B15B15B51BDBC15900C0C171 /* AWS */ = {
+			isa = PBXGroup;
+			children = (
+				B15B15B61BDBC17300C0C171 /* Recorder.h */,
+				B15B15B71BDBC17300C0C171 /* Recorder.m */,
+				B15B15B91BDBC29A00C0C171 /* RecorderRequest.h */,
+				B15B15BA1BDBC29A00C0C171 /* RecorderRequest.m */,
+				B15B15C21BDBC8CB00C0C171 /* RecorderResponse.h */,
+				B15B15C31BDBC8CB00C0C171 /* RecorderResponse.m */,
+				B1A366901BDC92DB00852B52 /* UploadsRequest.h */,
+				B1A366911BDC92DB00852B52 /* UploadsRequest.m */,
+				B1A366931BDC92FF00852B52 /* UploadsResponse.h */,
+				B1A366941BDC92FF00852B52 /* UploadsResponse.m */,
+				B11F8A5A1BDCC45F000E79AA /* FinalizeUploadRequest.h */,
+				B11F8A5B1BDCC45F000E79AA /* FinalizeUploadRequest.m */,
+				B11F8A5D1BDCC474000E79AA /* FinalizeUploadResponse.h */,
+				B11F8A5E1BDCC474000E79AA /* FinalizeUploadResponse.m */,
+			);
+			name = AWS;
+			sourceTree = "<group>";
+		};
 		B165EF0F1BB71A31008C6F71 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B15B15AD1BDA44D200C0C171 /* Vendor */,
 				B165EF191BB71F50008C6F71 /* Entity */,
 				B1F93E8D1BC8E1C2005F2128 /* CoreData */,
 				B1F045641BCFB33F00A67942 /* Service */,
@@ -260,6 +342,8 @@
 				B13B076C1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m */,
 				B1F93E991BC8E5E7005F2128 /* RecentContactsModel.h */,
 				B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */,
+				B15B15BF1BDBC55A00C0C171 /* AWSModel.h */,
+				B15B15C01BDBC55A00C0C171 /* AWSModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -437,18 +521,8 @@
 		B1BB1E641BD3679200A1CE45 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				B13B07681BD3752900974AC3 /* MandrillRequest.h */,
-				B13B07691BD3752900974AC3 /* MandrillRequest.m */,
-				B13B07581BD3686500974AC3 /* MandrillInformationResponse.h */,
-				B13B07591BD3686500974AC3 /* MandrillInformationResponse.m */,
-				B13B075B1BD3716100974AC3 /* MandrillSendRequest.h */,
-				B13B075C1BD3716100974AC3 /* MandrillSendRequest.m */,
-				B13B075E1BD3719500974AC3 /* MandrillToObject.h */,
-				B13B075F1BD3719500974AC3 /* MandrillToObject.m */,
-				B13B07611BD3720100974AC3 /* MandrillMessage.h */,
-				B13B07621BD3720100974AC3 /* MandrillMessage.m */,
-				B13B07651BD3736400974AC3 /* MandrillMailAttachment.h */,
-				B13B07661BD3736400974AC3 /* MandrillMailAttachment.m */,
+				B15B15B51BDBC15900C0C171 /* AWS */,
+				B15B15B41BDBC14000C0C171 /* Mandrill */,
 			);
 			name = Entity;
 			sourceTree = "<group>";
@@ -472,6 +546,7 @@
 			isa = PBXGroup;
 			children = (
 				B17B3D381BB6898C009B8BC5 /* Main.storyboard */,
+				B15B15B11BDBBAB200C0C171 /* Login.storyboard */,
 			);
 			name = Storyboard;
 			sourceTree = "<group>";
@@ -506,6 +581,8 @@
 				B1F045661BCFB36900A67942 /* BaseService.m */,
 				B1BB1E5D1BD35CD300A1CE45 /* MandrillService.h */,
 				B1BB1E5E1BD35CD300A1CE45 /* MandrillService.m */,
+				B15B15BC1BDBC31F00C0C171 /* AWSService.h */,
+				B15B15BD1BDBC31F00C0C171 /* AWSService.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -634,6 +711,7 @@
 				B17B3D3F1BB6898C009B8BC5 /* LaunchScreen.xib in Resources */,
 				B17B3D701BB6BD2E009B8BC5 /* ContactTableViewCell.xib in Resources */,
 				B17B3D3C1BB6898C009B8BC5 /* Images.xcassets in Resources */,
+				B15B15B21BDBBAB200C0C171 /* Login.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -726,26 +804,36 @@
 				B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */,
 				B1EF40F51BB857C800042E4B /* M13ProgressViewPie.m in Sources */,
 				B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */,
+				B15B15BB1BDBC29A00C0C171 /* RecorderRequest.m in Sources */,
 				B1F045671BCFB36900A67942 /* BaseService.m in Sources */,
+				B11F8A5F1BDCC474000E79AA /* FinalizeUploadResponse.m in Sources */,
 				B13B075D1BD3716100974AC3 /* MandrillSendRequest.m in Sources */,
 				B165EF151BB71A99008C6F71 /* ContactsModel.m in Sources */,
 				B179F83A1BC9316F0089D709 /* SearchMenuTableViewCell.m in Sources */,
+				B15B15B01BDA44E200C0C171 /* TPAACAudioConverter.m in Sources */,
 				B102DD5E1BD0802100D71D62 /* BaseCustomView.m in Sources */,
 				B13B07631BD3720100974AC3 /* MandrillMessage.m in Sources */,
 				B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */,
 				B17B3D5B1BB6A49E009B8BC5 /* BaseViewController.m in Sources */,
+				B11F8A5C1BDCC45F000E79AA /* FinalizeUploadRequest.m in Sources */,
 				B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */,
+				B1A366921BDC92DB00852B52 /* UploadsRequest.m in Sources */,
 				B13B075A1BD3686500974AC3 /* MandrillInformationResponse.m in Sources */,
 				B1F0456B1BCFB4E400A67942 /* Events.m in Sources */,
+				B15B15C41BDBC8CB00C0C171 /* RecorderResponse.m in Sources */,
 				B17B3D641BB6AE8B009B8BC5 /* RecordingViewController.m in Sources */,
+				B15B15B81BDBC17300C0C171 /* Recorder.m in Sources */,
 				B1EF40EE1BB7EAA200042E4B /* SendVoiceMessageEmailModel.m in Sources */,
+				B15B15BE1BDBC31F00C0C171 /* AWSService.m in Sources */,
 				B165EF181BB71EC0008C6F71 /* PeppermintContact.m in Sources */,
 				B1BB1E5F1BD35CD300A1CE45 /* MandrillService.m in Sources */,
 				B1F93E981BC8E328005F2128 /* Repository.m in Sources */,
 				B17B3D6E1BB6BD13009B8BC5 /* ContactTableViewCell.m in Sources */,
 				B17B3D691BB6BCE5009B8BC5 /* CellFactory.m in Sources */,
+				B15B15C11BDBC55A00C0C171 /* AWSModel.m in Sources */,
 				B13B076D1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m in Sources */,
 				B18BF95E1BD674CD009B665E /* PeppermintMessageSender.m in Sources */,
+				B1A366951BDC92FF00852B52 /* UploadsResponse.m in Sources */,
 				B1BB1E631BD364FB00A1CE45 /* AFNetworkActivityLogger.m in Sources */,
 				B15B15AC1BD9D8B800C0C171 /* ExplodingView.m in Sources */,
 				B1EF40EB1BB7E78C00042E4B /* SendVoiceMessageModel.m in Sources */,

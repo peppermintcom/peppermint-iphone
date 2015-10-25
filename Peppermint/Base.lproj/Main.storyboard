@@ -149,7 +149,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dr5-gj-0ac" userLabel="NavigationView">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="textfield_bg" translatesAutoresizingMaskIntoConstraints="NO" id="5s2-t1-QW3">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="white_ellipse" translatesAutoresizingMaskIntoConstraints="NO" id="5s2-t1-QW3">
                                         <rect key="frame" x="10" y="27" width="394" height="30"/>
                                     </imageView>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="_Placeholder" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uAf-dO-WUM">
@@ -218,31 +218,6 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="368" id="PVp-q4-M2r"/>
-                                </constraints>
-                            </view>
-                            <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xd7-a5-1Sz" userLabel="LoadingView">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                                <subviews>
-                                    <view alpha="0.39999999999999963" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qag-2F-TZf">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                                        <color key="backgroundColor" red="0.3411764706" green="0.72941176470000002" blue="0.57254901960000004" alpha="1" colorSpace="calibratedRGB"/>
-                                    </view>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_loading_contacts" translatesAutoresizingMaskIntoConstraints="NO" id="aHr-R1-Ob8">
-                                        <rect key="frame" x="137" y="119" width="140" height="140"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="140" id="bZk-c3-tLe"/>
-                                            <constraint firstAttribute="width" constant="140" id="knz-7h-hUp"/>
-                                        </constraints>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="centerX" secondItem="aHr-R1-Ob8" secondAttribute="centerX" id="0XF-Bb-tRd"/>
-                                    <constraint firstItem="Qag-2F-TZf" firstAttribute="leading" secondItem="xd7-a5-1Sz" secondAttribute="leading" id="1Zz-Qp-t7z"/>
-                                    <constraint firstAttribute="bottom" secondItem="Qag-2F-TZf" secondAttribute="bottom" id="3aF-Og-QON"/>
-                                    <constraint firstItem="aHr-R1-Ob8" firstAttribute="top" secondItem="xd7-a5-1Sz" secondAttribute="top" constant="119" id="JOx-Kw-eeZ"/>
-                                    <constraint firstItem="Qag-2F-TZf" firstAttribute="top" secondItem="xd7-a5-1Sz" secondAttribute="top" id="OaH-rS-FCz"/>
-                                    <constraint firstAttribute="trailing" secondItem="Qag-2F-TZf" secondAttribute="trailing" id="rqH-pM-Rq7"/>
                                 </constraints>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7zR-tD-HrX" userLabel="SendingIndicatorView">
@@ -321,12 +296,8 @@
                         <constraints>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="BhH-Ju-VVT" secondAttribute="bottom" priority="250" id="11Q-5a-Iz0"/>
                             <constraint firstAttribute="trailing" secondItem="mZU-e0-vbZ" secondAttribute="trailing" constant="10" id="1yo-L9-ftw"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="xd7-a5-1Sz" secondAttribute="bottom" id="5Fu-3q-xF7"/>
-                            <constraint firstItem="xd7-a5-1Sz" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="5ef-s0-0Qk"/>
                             <constraint firstItem="BhH-Ju-VVT" firstAttribute="top" secondItem="Dr5-gj-0ac" secondAttribute="bottom" id="9Tv-Gz-71J"/>
-                            <constraint firstAttribute="trailing" secondItem="xd7-a5-1Sz" secondAttribute="trailing" id="Fgx-k2-ZEs"/>
                             <constraint firstAttribute="centerX" secondItem="bqr-Ay-zAT" secondAttribute="centerX" id="Fp0-n4-OrF"/>
-                            <constraint firstItem="xd7-a5-1Sz" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="HOg-GJ-ajo"/>
                             <constraint firstItem="Dr5-gj-0ac" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="JH5-XW-Yhq"/>
                             <constraint firstItem="BhH-Ju-VVT" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="NVe-3o-jcT"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="7zR-tD-HrX" secondAttribute="bottom" id="OHV-gX-pAF"/>
@@ -345,7 +316,6 @@
                         <outlet property="holdToRecordInfoView" destination="bqr-Ay-zAT" id="bmK-Vc-NaW"/>
                         <outlet property="holdToRecordInfoViewLabel" destination="HyV-Kd-4bj" id="Sx3-xk-W29"/>
                         <outlet property="holdToRecordInfoViewYValueConstraint" destination="fXC-Ki-css" id="NFx-e7-cI4"/>
-                        <outlet property="loadingView" destination="xd7-a5-1Sz" id="anx-3W-hck"/>
                         <outlet property="searchContactsTextField" destination="uAf-dO-WUM" id="nA1-4S-XXK"/>
                         <outlet property="searchMenuView" destination="mZU-e0-vbZ" id="zZ2-Yx-Tqe"/>
                         <outlet property="searchSourceIconImageView" destination="LiB-i9-G5L" id="xR3-2G-86O"/>
@@ -631,11 +601,10 @@
         <image name="hold_to_record_background" width="492" height="86"/>
         <image name="icon_back" width="22" height="37"/>
         <image name="icon_down" width="6" height="6"/>
-        <image name="icon_loading_contacts" width="275" height="275"/>
         <image name="icon_message_sending" width="229" height="50"/>
         <image name="icon_recent" width="14" height="14"/>
         <image name="recording_logo" width="402" height="399"/>
         <image name="tap_to_send" width="278" height="50"/>
-        <image name="textfield_bg" width="596" height="60"/>
+        <image name="white_ellipse" width="596" height="60"/>
     </resources>
 </document>

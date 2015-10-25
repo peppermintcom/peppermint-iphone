@@ -8,9 +8,6 @@
 
 #import "JSONModel.h"
 
-#define TYPE_TEXT   @"text/plain"
-#define TYPE_M4A    @"audio/mp4"
-
 @protocol MandrillMailAttachment
 @end
 

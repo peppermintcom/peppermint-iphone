@@ -54,6 +54,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SimpleKeychain.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>tolo.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -62,12 +67,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>013BD8DC420C2BEC99C362DA3AA48924</key>
+		<key>320E8C2742660248338A40809529B405</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>0833E0236B84F7FDDCAFCECF23977F90</key>
+		<key>33A7E880B78671E17A0DCF3A51A117C9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3A56279A9A6178CADFFBE6D76DE25CB1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,32 +87,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4644B0BB0C71392466C785F47B73AC40</key>
+		<key>5B74C0E7C662C2DEB6A68D3E8C98647E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6EC30571ECB528667C0018B7B75FC9A3</key>
+		<key>9D0EFB0C56F9AD7614E66D6DE12AA06E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7C923A194CCD24DBE8D572FB8A44E4D0</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>9533E88759634778ACF1E02F44A3D710</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>97D48CA752C39C6A7D5FCD9EE12A1E88</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>983B92B59C2DE51BC25ACF35D2C58935</key>
+		<key>B54DE0C2396885308AD59A00FE6C2891</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -112,7 +107,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DC38E7ED1D5F2B6BFF8722A40D48D70D</key>
+		<key>D4572F62F8B1B9E8F888B7E8DA0E5C7D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D71EC19A06C8F5FF6E7AB3938A4CB1F6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D98FA0C8F6F20AEB0A805B306F261D75</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FE748B225548B4EEA010ACF977810F27</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -18,4 +18,8 @@
     return self;
 }
 
+-(void) dealloc {
+    NSLog(@"Model released:%@)", self.description);
+}
+
 @end

@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *progressCenterImageView;
 @property (weak, nonatomic) IBOutlet UILabel *counterLabel;
 @property (nonatomic)   NSTimeInterval totalSeconds;
+@property (weak, nonatomic) IBOutlet UILabel *swipeInAnyDirectionLabel;
 
 +(FastRecordingView*) createInstanceWithDelegate:(UIViewController<FastRecordingViewDelegate>*) delegate;
 

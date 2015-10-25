@@ -12,6 +12,7 @@ pod "AFNetworking", "~> 2.0"
 pod "tolo", "~> 1.0"
 pod 'MBProgressHUD', '~> 0.9.1'
 pod "JSONModel"
+pod "SimpleKeychain"
 end
 
 target 'PeppermintTests' do

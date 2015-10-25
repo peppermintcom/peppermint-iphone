@@ -13,12 +13,18 @@
 
 @implementation SendVoiceMessageEmailModel
 
--(void) sendVoiceMessageWithData:(NSData*) data {
+-(void) sendVoiceMessageWithData:(NSData *)data withExtension:(NSString *)extension  {
     EasyMailAlertSender *mailSender = [EasyMailAlertSender easyMail:^(MFMailComposeViewController *controller) {
         [controller setToRecipients:[NSArray arrayWithObject:self.selectedPeppermintContact.communicationChannelAddress]];
         [controller setSubject:LOC(@"Mail Subject",@"Default Mail Subject")];
         [controller setMessageBody:LOC(@"Mail Body",@"Default Mail Body") isHTML:YES];
-        [controller addAttachmentData:data mimeType:@"audio/mp4" fileName:@"Peppermint.m4a"];
+        
+        if([extension isEqualToString:EXTENSION_M4A])
+            [controller addAttachmentData:data mimeType:@"audio/mp4" fileName:@"Peppermint.m4a"];
+        else if ([extension isEqualToString:EXTENSION_AAC])
+            [controller addAttachmentData:data mimeType:@"audio/aac" fileName:@"Peppermint.aac"];
+        else
+            NSAssert(false, @"MIME Type could not be read!");
     } complete:^(MFMailComposeViewController *controller, MFMailComposeResult result, NSError *error) {
         
         if(error) {
@@ -29,7 +35,7 @@
             error = [NSError errorWithDomain:LOC(@"An error occured",@"Unknown Error Message") code:0 userInfo:nil];
             [self.delegate operationFailure:error];
         } else if (result == MFMailComposeResultSent) {
-            [super sendVoiceMessageWithData:data];
+            [super sendVoiceMessageWithData:data withExtension:extension];
             [self.delegate messageSentWithSuccess];
             [controller dismissViewControllerAnimated:NO completion:nil];
         } else {

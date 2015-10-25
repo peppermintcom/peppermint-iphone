@@ -33,6 +33,8 @@
     NSCharacterSet *unwantedCharsSet;
     NSUInteger activeSendingCount;
     BOOL isScrolling;
+    MBProgressHUD *_loadingHud;
+    AWSModel *awsModel;
 }
 
 - (void)viewDidLoad {
@@ -51,7 +53,6 @@
     self.searchContactsTextField.delegate = self;
     self.searchContactsTextField.autocorrectionType = UITextAutocorrectionTypeNo;
     [self initSearchMenu];
-    self.loadingView.hidden = YES;
     activeCellTag = CELL_TAG_ALL_CONTACTS;
     cachedActiveCellTag = CELL_TAG_ALL_CONTACTS;
     unwantedCharsSet = [[NSCharacterSet characterSetWithCharactersInString:ALLOWED_CHARS] invertedSet];
@@ -61,6 +62,17 @@
     activeSendingCount = 0;
     isScrolling  = NO;
     [self initHoldToRecordInfoView];
+}
+
+-(void) recorderInitIsSuccessful {
+    NSLog(@"recorder is inited");    
+    UIImage *image = [UIImage imageNamed:@"recording_logo_pressed"];
+    NSData *data = UIImagePNGRepresentation(image);
+    [awsModel startToUploadData:data ofType:@"image/png"];
+}
+
+-(void) fileUploadCompletedWithPublicUrl:(NSString*) url {
+    NSLog(@"Url is %@", url);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,7 +85,7 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    //self.loadingView.hidden = NO;
+    [[self loadingHud] show:YES];
     self.searchContactsTextField.text = self.contactsModel.filterText = @"";
     activeCellTag = CELL_TAG_RECENT_CONTACTS;
     [self.recentContactsModel refreshRecentContactList];
@@ -203,6 +215,35 @@
 }
 */
 
+#pragma mark - LoadingView
+-(MBProgressHUD*) loadingHud {
+    if(!_loadingHud) {
+        _loadingHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        
+        UIView *customView = [[UIView alloc] initWithFrame:self.view.frame];
+        UIView *backGroundView = [[UIView alloc] initWithFrame:self.view.frame];
+        backGroundView.backgroundColor = [UIColor peppermintGreen];
+        backGroundView.alpha = 0.6;
+        [customView addSubview:backGroundView];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_loading_contacts"]];
+        [customView addSubview:imageView];
+        CGFloat totalWidth = customView.frame.size.width;
+        CGFloat totalHeight = customView.frame.size.height;
+        CGFloat width = totalWidth/3;
+        CGFloat height = totalHeight/5;
+        imageView.frame = CGRectMake((totalWidth-width) / 2, height*1.5 , width, height);
+        [customView bringSubviewToFront:imageView];
+
+        _loadingHud.minShowTime = 1;
+        _loadingHud.graceTime = 0.2;
+        _loadingHud.color = [UIColor clearColor];
+        _loadingHud.margin = 0;
+        _loadingHud.mode = MBProgressHUDModeCustomView;
+        _loadingHud.customView = customView;
+    }
+    return _loadingHud;
+}
+
 #pragma mark - HoldToRecordInfoView
 
 -(void) initHoldToRecordInfoView {
@@ -330,7 +371,7 @@
 }
 
 -(void) contactListRefreshed {
-    self.loadingView.hidden = YES;
+    [[self loadingHud] hide:YES];
     [self.tableView reloadData];
 }
 
@@ -341,8 +382,12 @@
 }
 
 -(void) recentPeppermintContactsRefreshed {
-    self.loadingView.hidden = YES;
-    [self.tableView reloadData];
+    if(self.recentContactsModel.contactList.count == 0) {
+        [self cellSelectedWithTag:CELL_TAG_ALL_CONTACTS];
+    } else {
+        [[self loadingHud] hide:YES];
+        [self.tableView reloadData];
+    }
 }
 
 #pragma mark - SearchButton
@@ -419,6 +464,7 @@
 
 -(void)cellSelectedWithTag:(NSUInteger) cellTag {
     [self.searchMenu close];
+    [self.searchContactsTextField resignFirstResponder];
     self.searchContactsTextField.text = self.contactsModel.filterText = @"";
     activeCellTag = cellTag;
 
@@ -428,7 +474,7 @@
     SearchMenuTableViewCell *activeMenuTableViewCell = (SearchMenuTableViewCell*)activeMenuItem.customView;
     self.searchSourceIconImageView.image = [UIImage imageNamed:activeMenuTableViewCell.iconImageName];
     
-    
+    [[self loadingHud] show:YES];
     if(cellTag == CELL_TAG_RECENT_CONTACTS) {
         [self.recentContactsModel refreshRecentContactList];
     } else {

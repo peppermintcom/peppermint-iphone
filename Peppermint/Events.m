@@ -13,3 +13,21 @@
 
 @implementation MandrillMesssageSent
 @end
+
+@implementation ApplicationWillResignActive
+@end
+
+@implementation ApplicationDidBecomeActive
+@end
+
+@implementation RecorderSubmitSuccessful
+@end
+
+@implementation RetrieveSignedUrlSuccessful
+@end
+
+@implementation FileUploadCompleted
+@end
+
+@implementation FileUploadFinalized
+@end

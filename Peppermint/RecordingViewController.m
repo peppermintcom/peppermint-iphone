@@ -28,7 +28,7 @@
     self.navigationSubTitleLabel.text = [NSString stringWithFormat:LOC(@"for ContactNameSurname", @"Label text format"), self.sendVoiceMessageModel.selectedPeppermintContact.nameSurname];
     self.seperatorView.backgroundColor = [UIColor cellSeperatorGray];
     self.recordingModel = [RecordingModel new];
-    self.recordingModel.previousFileLength = 0;
+    [RecordingModel setPreviousFileLength:0];
     self.recordingModel.delegate = self;
     self.counterLabel.textColor = [UIColor progressCoverViewGreen];
     self.progressContainerView.backgroundColor = [UIColor progressContainerViewGray];
@@ -117,7 +117,7 @@
 }
 
 -(void) accessRightsAreSupplied {
-    if(self.recordingModel.previousFileLength == 0) {
+    if([RecordingModel checkPreviousFileLength] < 0.01) {
         [self rerecordButtonPressed:nil];
     }
 }
@@ -149,8 +149,8 @@
     [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
 }
 
-- (void) recordDataIsPrepared:(NSData *)data {
-    [self.sendVoiceMessageModel sendVoiceMessageWithData:data];
+- (void) recordDataIsPrepared:(NSData *)data withExtension:(NSString *)extension{
+    [self.sendVoiceMessageModel sendVoiceMessageWithData:data withExtension:extension];
 }
 
 #pragma mark - SendVoiceMessage Delegate
@@ -221,7 +221,8 @@
 
 -(void) applicationDidBecomeActive {
     self.recordingModel = [RecordingModel new];
-    [self timerUpdated:self.recordingModel.previousFileLength];
+    CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
+    [self timerUpdated:previousFileLength];
     self.recordingModel.delegate = self;
     
     NSString *title = LOC(@"Information", @"Information");

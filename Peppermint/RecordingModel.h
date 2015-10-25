@@ -8,20 +8,23 @@
 
 #import "BaseModel.h"
 #import <AVFoundation/AVFoundation.h>
+#import "TPAACAudioConverter.h"
 
 @protocol RecordingModelDelegate <BaseModelDelegate>
 @required
 -(void) microphoneAccessRightsAreNotSupplied;
 -(void) accessRightsAreSupplied;
 -(void) timerUpdated:(NSTimeInterval) timeInterval;
--(void) recordDataIsPrepared:(NSData*) data;
+-(void) recordDataIsPrepared:(NSData*) data withExtension:(NSString*) extension;
 @end
 
-@interface RecordingModel : BaseModel <AVAudioRecorderDelegate>
+@interface RecordingModel : BaseModel <AVAudioRecorderDelegate, TPAACAudioConverterDelegate>
 @property (weak, nonatomic) id<RecordingModelDelegate> delegate;
 @property (strong, nonatomic) NSURL *fileUrl;
 @property (nonatomic) BOOL grantedForMicrophone;
-@property (nonatomic) NSUInteger previousFileLength;
+
++(CGFloat) checkPreviousFileLength;
++(void) setPreviousFileLength:(CGFloat) previousFileLength;
 
 -(void) record;
 -(void) pause;

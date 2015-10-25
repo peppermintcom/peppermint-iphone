@@ -7,6 +7,8 @@
 //
 
 #import "ContactTableViewCell.h"
+#import "Tolo.h"
+#import "Events.h"
 
 #define EVENT                   @"Event"
 #define HOLD_LIMIT              0.05

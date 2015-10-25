@@ -63,7 +63,7 @@
     }
     if ([names count] > 1)
     {
-        int lastNameIndex = [names count] - 1;
+        NSInteger lastNameIndex = [names count] - 1;
         NSString* name = [names objectAtIndex:lastNameIndex];
         unichar lastChar = [name characterAtIndex:[name length] - 1];
         if (lastChar == 's')
