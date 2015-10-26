@@ -263,7 +263,8 @@ static inline BOOL _checkResultLite(OSStatus result, const char *operation, cons
         memset(&clientFormat, 0, sizeof(clientFormat));
         clientFormat.mFormatID          = kAudioFormatLinearPCM;
         clientFormat.mFormatFlags       = kAudioFormatFlagIsFloat | kAudioFormatFlagIsPacked | kAudioFormatFlagIsNonInterleaved;
-        clientFormat.mChannelsPerFrame  = sourceFormat.mChannelsPerFrame;
+#warning "Modified below line"
+        clientFormat.mChannelsPerFrame  = 1; //sourceFormat.mChannelsPerFrame;
         clientFormat.mBytesPerPacket    = sizeof(float);
         clientFormat.mFramesPerPacket   = 1;
         clientFormat.mBytesPerFrame     = sizeof(float);
@@ -314,7 +315,8 @@ static inline BOOL _checkResultLite(OSStatus result, const char *operation, cons
     while ( !_cancelled ) {
         AudioBufferList fillBufList;
         fillBufList.mNumberBuffers = 1;
-        fillBufList.mBuffers[0].mNumberChannels = clientFormat.mChannelsPerFrame;
+#warning "Modified below line"
+        fillBufList.mBuffers[0].mNumberChannels = 1; //clientFormat.mChannelsPerFrame;
         fillBufList.mBuffers[0].mDataByteSize = bufferByteSize;
         fillBufList.mBuffers[0].mData = srcBuffer;
         

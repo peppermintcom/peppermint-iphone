@@ -155,8 +155,9 @@
 
 #pragma mark - SendVoiceMessage Delegate
 
--(void) messageIsSending {
+-(void) messageIsSendingWithCancelOption:(BOOL)cancelable {
     ContactsViewController *contactsViewController = (ContactsViewController*)[self backViewController];
+    NSLog(@"Cancel button modifications can be implemented! This implementation will be decided in future.");
     [contactsViewController messageSendingIndicatorSetMessageIsSending];
 }
 
@@ -164,6 +165,11 @@
     ContactsViewController *contactsViewController = (ContactsViewController*)[self backViewController];
     [contactsViewController messageSendingIndicatorSetMessageIsSent];
     [self.navigationController popViewControllerAnimated:NO];
+}
+
+-(void) messageIsCancelledByTheUserOutOfApp {
+    NSLog(@"Sending message is cancelled!");
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - AlertView Delegate

@@ -12,6 +12,7 @@
 
 -(void) sendVoiceMessageWithData:(NSData *)data withExtension:(NSString *)extension  {
     [super sendVoiceMessageWithData:data withExtension:extension];
+    [self.delegate messageIsSendingWithCancelOption:YES];
     [awsModel startToUploadData:data ofType:[self typeForExtension:extension]];
 }
 
@@ -19,7 +20,11 @@
 
 -(void) fileUploadCompletedWithPublicUrl:(NSString*) url {
     NSLog(@"File Upload is finished with url %@", url);
-    [self fireMandrillMessageWithUrl:url];
+    if(!self.isCancelled) {
+        [self fireMandrillMessageWithUrl:url];
+    } else {
+        NSLog(@"Mandrill message sending is not fired, cos message is cancelled");
+    }
 }
 
 -(void) fireMandrillMessageWithUrl:(NSString*) url {
@@ -30,7 +35,7 @@
     message.subject = LOC(@"Mail Subject",@"Default Mail Subject");
     message.html = LOC(@"Mail Body",@"Default Mail Body");
     
-    message.html = [NSString stringWithFormat:@"%@ \n\n<a href=\"%@\">Message</a>", message.html,
+    message.html = [NSString stringWithFormat:@"%@ \n\n<a href=\"%@\">Message, (TEST: Attachment is removed cos there is a link now. It can be added again too. decision will be given for this behaviour)</a>", message.html,
                     url];
     
     MandrillToObject *recipient = [MandrillToObject new];
@@ -48,17 +53,12 @@
     [message.attachments addObject:mailAttachment];
     */
     [message.headers setObject:self.peppermintMessageSender.email forKey:@"Reply-To"];
-    [self.delegate messageIsSending];
-    
+    [self.delegate messageIsSendingWithCancelOption:NO];
     [[MandrillService new] sendMessage:message];
 }
 
 SUBSCRIBE(MandrillMesssageSent) {
     [self.delegate messageSentWithSuccess];
-}
-
-SUBSCRIBE(NetworkFailure) {
-    [self.delegate operationFailure:[event error]];
 }
 
 @end

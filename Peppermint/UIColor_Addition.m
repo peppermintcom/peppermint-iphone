@@ -82,4 +82,15 @@
     return color;
 }
 
++ (UIColor *) peppermintCancelOrange {
+    static dispatch_once_t onceToken;
+    static UIColor *color;
+    dispatch_once(&onceToken, ^{
+        color = [UIColor colorWithRed:0.961f green:0.420f blue:0.294f alpha:1.00f];
+    });
+    return color;
+}
+
+
+
 @end

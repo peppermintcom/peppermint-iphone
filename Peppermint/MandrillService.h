@@ -16,9 +16,9 @@
 #define MANDRILL_API_KEY    @"Z8ZJYcld1Ppop-OUHgK06g"   //Rob@peppermint.com
 
 
-#define BASE_URL            @"https://mandrillapp.com/api/1.0"
-#define ENDPOINT_INFO       @"/users/info.json"
-#define ENDPOINT_SEND_MAIL  @"/messages/send.json"
+#define MND_BASE_URL            @"https://mandrillapp.com/api/1.0"
+#define MND_ENDPOINT_INFO       @"/users/info.json"
+#define MND_ENDPOINT_SEND_MAIL  @"/messages/send.json"
 
 
 @interface MandrillService : BaseService

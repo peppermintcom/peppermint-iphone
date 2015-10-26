@@ -16,10 +16,10 @@
 
 #define AWS_API_KEY             @"abc123"
 
-#define BASE_URL                @"https://qdkkavugcd.execute-api.us-west-2.amazonaws.com/prod/v1"
-#define ENDPOINT_RECORDER       @"/recorder"
-#define ENDPOINT_UPLOADS        @"/uploads"
-#define ENDPOINT_RECORD         @"/record"
+#define AWS_BASE_URL                @"https://qdkkavugcd.execute-api.us-west-2.amazonaws.com/prod/v1"
+#define AWS_ENDPOINT_RECORDER       @"/recorder"
+#define AWS_ENDPOINT_UPLOADS        @"/uploads"
+#define AWS_ENDPOINT_RECORD         @"/record"
 
 @interface AWSService : BaseService
 @property(strong, nonatomic) NSString *apiKey;

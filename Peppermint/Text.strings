@@ -41,7 +41,7 @@
 "Continue from previous" = "Continue from previous";
 "Recording for contact format" = "Recording for %@\n%@";
 "Hold to record message" = "Hold to record, release to send";
-"Account details message" = "Please enter your account details.\n**********\nTEST NOTE:This popup will be redesigned& shown once. Please supply valid information\n**********";
+"Account details message" = "Please enter your account details.\n**********\nTEST NOTE:This popup is shown for user to login. Design will be changed\n**********";
 "Cancel" = "Cancel";
 "Email" = "Email";
 "Name surname" = "Name surname";
@@ -49,3 +49,6 @@
 "Send" = "Send";
 "Re record" = "Re record";
 "Swipe in any direction to cancel" = "Swipe in any direction\nto cancel";
+"Tap to cancel" = "Tap to cancel";
+"Service is not available" = "Your device does not support this message service";
+"SMS Body" = "Here's my message from Peppermint.";

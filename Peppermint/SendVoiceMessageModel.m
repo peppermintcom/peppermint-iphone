@@ -21,6 +21,7 @@
         awsModel = [AWSModel new];
         awsModel.delegate = self;
         [awsModel initRecorder];
+        self.isCancelled = NO;
     }
     return self;
 }
@@ -63,6 +64,12 @@
     return type;
 }
 
+SUBSCRIBE(NetworkFailure) {
+    [self.delegate operationFailure:[event error]];
+}
 
+-(BOOL) isServiceAvailable {
+    return YES;
+}
 
 @end

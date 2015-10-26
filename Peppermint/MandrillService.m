@@ -13,7 +13,7 @@
 -(id)init {
     self = [super init];
     if(self) {
-        self.baseUrl = BASE_URL;
+        self.baseUrl = MND_BASE_URL;
         self.apiKey = MANDRILL_API_KEY;
     }
     return self;
@@ -21,7 +21,7 @@
 
 -(void) getInformation
 {
-    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, ENDPOINT_INFO];
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, MND_ENDPOINT_INFO];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     MandrillRequest *request = [MandrillRequest new];
     request.key = self.apiKey;
@@ -39,7 +39,7 @@
 }
 
 -(void) sendMessage:(MandrillMessage*) message {
-    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, ENDPOINT_SEND_MAIL];
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, MND_ENDPOINT_SEND_MAIL];
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     

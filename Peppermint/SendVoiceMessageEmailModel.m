@@ -18,13 +18,9 @@
         [controller setToRecipients:[NSArray arrayWithObject:self.selectedPeppermintContact.communicationChannelAddress]];
         [controller setSubject:LOC(@"Mail Subject",@"Default Mail Subject")];
         [controller setMessageBody:LOC(@"Mail Body",@"Default Mail Body") isHTML:YES];
-        
-        if([extension isEqualToString:EXTENSION_M4A])
-            [controller addAttachmentData:data mimeType:@"audio/mp4" fileName:@"Peppermint.m4a"];
-        else if ([extension isEqualToString:EXTENSION_AAC])
-            [controller addAttachmentData:data mimeType:@"audio/aac" fileName:@"Peppermint.aac"];
-        else
-            NSAssert(false, @"MIME Type could not be read!");
+        NSString *fileName = [NSString stringWithFormat:@"Peppermint.%@", extension];
+        NSString *mimeType = [self typeForExtension:extension];
+        [controller addAttachmentData:data mimeType:mimeType fileName:fileName];
     } complete:^(MFMailComposeViewController *controller, MFMailComposeResult result, NSError *error) {
         
         if(error) {
@@ -43,12 +39,11 @@
         }
     }];
     UIViewController *activeViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    [self.delegate messageIsSending];
+    [self.delegate messageIsSendingWithCancelOption:YES];
     [mailSender showFromViewController:activeViewController];
 }
 
-+ (BOOL)canDeviceSendEmail
-{
+-(BOOL) isServiceAvailable {
     Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
     return mailClass != nil && [MFMailComposeViewController canSendMail];
 }

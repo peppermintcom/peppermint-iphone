@@ -16,14 +16,14 @@
 -(id)init {
     self = [super init];
     if(self) {
-        self.baseUrl = BASE_URL;
+        self.baseUrl = AWS_BASE_URL;
         self.apiKey = AWS_API_KEY;
     }
     return self;
 }
 
 -(void) submitRecorderWithUdid:(NSString*) clientId {
-    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, ENDPOINT_RECORDER];
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_RECORDER];
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
@@ -46,11 +46,7 @@
                 RecorderResponse *recorderResponse = [[RecorderResponse alloc] initWithDictionary:responseObject error:&error];
                 if (error) {
                     [self failureWithOperation:nil andError:error];
-                }
-                NSLog(@"JWT is :%@", recorderResponse.at);
-                NSLog(@"Recorder Key is : %@", recorderResponse.recorder.recorder_key);
-                NSLog(@"Recorder TS is : %@", recorderResponse.recorder.recorder_ts);
-                
+                }                
                 RecorderSubmitSuccessful *recorderSubmitSuccessful = [RecorderSubmitSuccessful new];
                 recorderSubmitSuccessful.jwt = recorderResponse.at;
                 PUBLISH(recorderSubmitSuccessful);
@@ -65,7 +61,7 @@
 }
 
 -(void) retrieveSignedURLForContentType:(NSString*) contentType jwt:(NSString*) jwt {
-    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, ENDPOINT_UPLOADS];
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_UPLOADS];
     NSString *tokenText = [self toketTextForJwt:jwt];
     
     AFHTTPRequestOperationManager *requestOperationManager = [[AFHTTPRequestOperationManager alloc]
@@ -114,7 +110,7 @@
 }
 
 -(void) finalizeFileUploadForSignedUrl:(NSString*) signedUrl withJwt:(NSString*) jwt {
-    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, ENDPOINT_RECORD];
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_RECORD];
     NSString *tokenText = [self toketTextForJwt:jwt];
     
     AFHTTPRequestOperationManager *requestOperationManager = [[AFHTTPRequestOperationManager alloc]

@@ -9,6 +9,7 @@
 #import "ContactsViewController.h"
 #import "RecordingViewController.h"
 #import "SendVoiceMessageMandrillModel.h"
+#import "SendVoiceMessageSMSModel.h"
 
 #define SEGUE_RECORDING_VIEW_CONTROLLER         @"RecordingViewControllerSegue"
 
@@ -23,6 +24,9 @@
 #define SENDING_ICON_HEIGHT     15
 #define SENT_ICON_HEIGHT        20
 
+#define CANCEL_BUTTON_VISIBLE_WIDTH 153
+#define CANCEL_BUTTON_HIDDEN_WIDTH  40
+
 @interface ContactsViewController ()
 
 @end
@@ -31,6 +35,7 @@
     NSUInteger activeCellTag;
     NSUInteger cachedActiveCellTag;
     NSCharacterSet *unwantedCharsSet;
+    BOOL callLockForCurrentMessage;
     NSUInteger activeSendingCount;
     BOOL isScrolling;
     MBProgressHUD *_loadingHud;
@@ -59,8 +64,11 @@
     self.sendingIndicatorView.hidden = YES;
     self.seperatorView.backgroundColor = [UIColor cellSeperatorGray];
     [self initRecordingView];
+    callLockForCurrentMessage = NO;
     activeSendingCount = 0;
     isScrolling  = NO;
+    [self.cancelMessageSendingButton setTitle:LOC(@"Tap to cancel",@"Title") forState:UIControlStateNormal];
+    [self.cancelMessageSendingButton setTintColor:[UIColor peppermintCancelOrange]];
     [self initHoldToRecordInfoView];
 }
 
@@ -294,13 +302,27 @@
     PeppermintContact *selectedContact = [[self activeContactList] objectAtIndex:indexPath.row];
     [self.searchContactsTextField resignFirstResponder];
     
+    SendVoiceMessageModel *sendVoiceMessageModel = nil;
     if(selectedContact.communicationChannel == CommunicationChannelEmail) {
-        SendVoiceMessageModel *sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
+        sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
+    } else if (selectedContact.communicationChannel == CommunicationChannelSMS) {
+        sendVoiceMessageModel = [SendVoiceMessageSMSModel new];
+    }
+    
+    if([sendVoiceMessageModel isServiceAvailable]) {
         sendVoiceMessageModel.selectedPeppermintContact = selectedContact;
         self.fastRecordingView.sendVoiceMessageModel = sendVoiceMessageModel;
         [self.fastRecordingView presentWithAnimation];
-    } else if (selectedContact.communicationChannel == CommunicationChannelSMS) {
-        NSLog(@"SMS functionality is not implemented yet");
+    } else {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.detailsLabelFont = [UIFont openSansSemiBoldFontOfSize:13];
+        hud.detailsLabelText = LOC(@"Service is not available", @"Service is not available message");
+        CGFloat messageShiftValue = 50;
+        CGFloat center = self.view.frame.size.height / 2 - messageShiftValue;
+        hud.yOffset = location.y - center;
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hide:YES afterDelay:WARN_TIME/2];
     }
 }
 
@@ -316,12 +338,26 @@
 
 #pragma mark - FastRecordingViewDelegate
 
--(void) messageIsSending {
+-(void) messageIsSendingWithCancelOption:(BOOL)cancelable {
+    self.cancelMessageSendingButton.hidden = !cancelable;
+    self.cancelMessageButtonWidthConstraint.constant = cancelable ? CANCEL_BUTTON_VISIBLE_WIDTH : CANCEL_BUTTON_HIDDEN_WIDTH;
+    [self.cancelMessageSendingButton.superview layoutIfNeeded];
     [self messageSendingIndicatorSetMessageIsSending];
 }
 
 -(void) messageSentWithSuccess {
     [self messageSendingIndicatorSetMessageIsSent];
+}
+
+-(void) messageIsCancelledByTheUserOutOfApp {
+    [self messageCancelButtonPressed:nil];
+}
+
+#pragma mark - CancelMessageSendingButton
+
+-(IBAction)messageCancelButtonPressed:(id)sender {
+    [self.fastRecordingView cancelMessageSending];
+    [self messageSendingIsCancelled];
 }
 
 #pragma mark - TextField
@@ -485,18 +521,22 @@
 #pragma mark - MessageSending status indicators
 
 -(void) messageSendingIndicatorSetMessageIsSending {
-    self.sendingImageHeightConstraint.constant = SENDING_ICON_HEIGHT;
-    [self.sendingImageView layoutIfNeeded];
-    self.sendingImageView.image = [UIImage imageNamed:@"icon_message_sending"];
-    ++activeSendingCount;
-    if(self.sendingIndicatorView.hidden) {
-        self.sendingIndicatorView.alpha = 0;
-        self.sendingIndicatorView.hidden = NO;
-        [UIView animateWithDuration:0.15 animations:^{
-            self.sendingIndicatorView.alpha = 1;
-        } completion:^(BOOL finished) {
-            
-        }];
+    if(!callLockForCurrentMessage) {
+        callLockForCurrentMessage  = YES;
+        
+        self.sendingImageHeightConstraint.constant = SENDING_ICON_HEIGHT;
+        [self.sendingImageView layoutIfNeeded];
+        self.sendingImageView.image = [UIImage imageNamed:@"icon_message_sending"];
+        ++activeSendingCount;
+        if(self.sendingIndicatorView.hidden) {
+            self.sendingIndicatorView.alpha = 0;
+            self.sendingIndicatorView.hidden = NO;
+            [UIView animateWithDuration:0.15 animations:^{
+                self.sendingIndicatorView.alpha = 1;
+            } completion:^(BOOL finished) {
+                
+            }];
+        }
     }
 }
 
@@ -505,7 +545,14 @@
     [self.sendingImageView layoutIfNeeded];
     self.sendingImageView.image = [UIImage imageNamed:@"icon_message_sent"];
     [self performSelector:@selector(refreshTheScreen) withObject:nil afterDelay:MESSAGE_SENDING_DURATION];
+    callLockForCurrentMessage = NO;
     --activeSendingCount;
+}
+
+-(void) messageSendingIsCancelled {
+    callLockForCurrentMessage = NO;
+    --activeSendingCount;
+    [self refreshTheScreen];
 }
 
 -(void) refreshTheScreen {

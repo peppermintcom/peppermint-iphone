@@ -41,7 +41,7 @@
             
             AVAudioSession *session = [AVAudioSession sharedInstance];
             NSError *error;
-            [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
+            [session setCategory:AVAudioSessionCategoryRecord error:&error];
             if(error) {
                 [self.delegate operationFailure:error];
             } else {
@@ -83,24 +83,13 @@
 
 -(void) initRecorder {
     if(!recorder) {
-        NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
-        [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
-        [recordSetting setValue:[NSNumber numberWithFloat:44100.0] forKey:AVSampleRateKey];
-        [recordSetting setValue:[NSNumber numberWithInt: 1] forKey:AVNumberOfChannelsKey];
-        
-        NSDictionary *lowQualityRecordSetting = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                 //[NSNumber numberWithInt:kAudioFormatMPEG4AAC], AVFormatIDKey,
+        NSDictionary *recordSetting = [NSDictionary dictionaryWithObjectsAndKeys:
                                                  [NSNumber numberWithInt:kAudioFormatMPEG4AAC], AVFormatIDKey,
-                                                 
-                                                 //[NSNumber numberWithInt:AVAudioQualityMin], AVEncoderAudioQualityKey,
-                                                 //[NSNumber numberWithInt:16384], AVEncoderBitRateKey,
+                                                 [NSNumber numberWithInt:AVAudioQualityHigh], AVEncoderAudioQualityKey,
                                                  [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,
-                                                 //[NSNumber numberWithFloat:8000.0], AVSampleRateKey,
                                                  [NSNumber numberWithFloat:44100.0], AVSampleRateKey,
-                                                 //[NSNumber numberWithInt:8], AVLinearPCMBitDepthKey,
                                                  nil];
-        
-        recorder = [[AVAudioRecorder alloc] initWithURL:self.fileUrl settings:lowQualityRecordSetting error:nil];
+        recorder = [[AVAudioRecorder alloc] initWithURL:self.fileUrl settings:recordSetting error:nil];
         recorder.delegate = self;
     }
 }
@@ -122,15 +111,20 @@
     if(!recorder.recording) {
         AVAudioSession *session = [AVAudioSession sharedInstance];
         NSError *error;
-        [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
+        [session setCategory:AVAudioSessionCategoryRecord error:&error];
         if(error) {
             [self.delegate operationFailure:error];
         } else {
-            [session setActive:YES error:nil];
-            if(![recorder record]) {
-                [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Could not start record", @"Error message") code:0 userInfo:nil]];
+            [session setPreferredInputNumberOfChannels:1 error:&error];
+            if(error) {
+                [self.delegate operationFailure:error];
             } else {
-                timer = [NSTimer scheduledTimerWithTimeInterval:PING_INTERVAL target:self selector:@selector(onTick:) userInfo:nil repeats:YES];
+                [session setActive:YES error:nil];
+                if(![recorder record]) {
+                    [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Could not start record", @"Error message") code:0 userInfo:nil]];
+                } else {
+                    timer = [NSTimer scheduledTimerWithTimeInterval:PING_INTERVAL target:self selector:@selector(onTick:) userInfo:nil repeats:YES];
+                }
             }
         }
     } else {
@@ -159,7 +153,7 @@
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     [audioSession setActive:NO error:nil];
     NSError *error;
-    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
+    [audioSession setCategory:AVAudioSessionCategoryRecord error:&error];
     if(error) {
         [self.delegate operationFailure:error];
     }
@@ -291,7 +285,7 @@
     
     NSError *error;
     AVAudioSession *session = [AVAudioSession sharedInstance];
-    [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
+    [session setCategory:AVAudioSessionCategoryRecord error:&error];
     if(error) {
         [self.delegate operationFailure:error];
     } else {

@@ -33,5 +33,6 @@
 
 -(void) presentWithAnimation;
 -(void) finishRecordingWithGestureIsValid:(BOOL) isGestureValid;
+-(void) cancelMessageSending;
 
 @end

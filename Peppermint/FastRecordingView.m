@@ -90,7 +90,12 @@
 }
 
 -(void) performOperationsToSend {
+    [self.delegate messageIsSendingWithCancelOption:YES];
     [self.recordingModel prepareRecordData];
+}
+
+-(void) cancelMessageSending {
+    self.sendVoiceMessageModel.isCancelled = YES;
 }
 
 #pragma mark - Dissmiss
@@ -159,12 +164,16 @@
 
 #pragma mark - SendVoiceMessage Delegate
 
--(void) messageIsSending {
-    [self.delegate messageIsSending];
+-(void) messageIsSendingWithCancelOption:(BOOL)cancelable {
+    [self.delegate messageIsSendingWithCancelOption:cancelable];
 }
 
 -(void) messageSentWithSuccess {
     [self.delegate messageSentWithSuccess];
+}
+
+-(void) messageIsCancelledByTheUserOutOfApp {
+    [self.delegate messageIsCancelledByTheUserOutOfApp];
 }
 
 #pragma mark - AlertView Delegate

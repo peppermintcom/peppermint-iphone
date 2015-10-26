@@ -231,27 +231,44 @@
                                         </constraints>
                                     </view>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_message_sending" translatesAutoresizingMaskIntoConstraints="NO" id="ZTG-t4-EfW">
-                                        <rect key="frame" x="74" y="23" width="266" height="20"/>
+                                        <rect key="frame" x="74" y="23" width="229" height="20"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="NP8-fL-any"/>
                                         </constraints>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Udr-nq-7U3">
+                                        <rect key="frame" x="311" y="0.0" width="103" height="65"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="103" id="D2N-sK-9s4"/>
+                                        </constraints>
+                                        <state key="normal" title="_Tap to cancel">
+                                            <color key="titleColor" red="1" green="0.48128892690000002" blue="0.29840627149999999" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="messageCancelButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="M9M-Fz-Flt"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="centerY" secondItem="ZTG-t4-EfW" secondAttribute="centerY" id="4OT-Tq-8mf"/>
+                                    <constraint firstAttribute="centerY" secondItem="ZTG-t4-EfW" secondAttribute="centerY" priority="750" id="4OT-Tq-8mf"/>
                                     <constraint firstItem="gkl-pL-Y4B" firstAttribute="top" secondItem="7zR-tD-HrX" secondAttribute="top" id="AUx-xb-KvR"/>
-                                    <constraint firstItem="ZTG-t4-EfW" firstAttribute="leading" secondItem="7zR-tD-HrX" secondAttribute="leading" constant="74" id="HjY-P1-Qvs"/>
+                                    <constraint firstItem="ZTG-t4-EfW" firstAttribute="leading" relation="lessThanOrEqual" secondItem="7zR-tD-HrX" secondAttribute="leading" priority="750" constant="74" id="HjY-P1-Qvs"/>
                                     <constraint firstItem="ZTG-t4-EfW" firstAttribute="top" secondItem="7zR-tD-HrX" secondAttribute="top" constant="18" id="O2o-O9-tTP"/>
                                     <constraint firstAttribute="trailing" secondItem="ZTG-t4-EfW" secondAttribute="trailing" constant="74" id="QPO-gg-rNJ"/>
-                                    <constraint firstAttribute="trailing" secondItem="ZTG-t4-EfW" secondAttribute="trailing" constant="74" id="Txb-GD-bT8"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ZTG-t4-EfW" secondAttribute="trailing" priority="750" constant="74" id="Txb-GD-bT8"/>
+                                    <constraint firstItem="Udr-nq-7U3" firstAttribute="leading" secondItem="ZTG-t4-EfW" secondAttribute="trailing" constant="8" id="WcV-hd-IdM"/>
                                     <constraint firstAttribute="trailing" secondItem="gkl-pL-Y4B" secondAttribute="trailing" id="XqX-jF-9C3"/>
                                     <constraint firstItem="ZTG-t4-EfW" firstAttribute="leading" secondItem="7zR-tD-HrX" secondAttribute="leading" constant="74" id="eFq-xr-wgd"/>
                                     <constraint firstAttribute="centerY" secondItem="ZTG-t4-EfW" secondAttribute="centerY" id="gIe-IK-I0L"/>
                                     <constraint firstItem="gkl-pL-Y4B" firstAttribute="leading" secondItem="7zR-tD-HrX" secondAttribute="leading" id="gqr-9k-QXG"/>
+                                    <constraint firstAttribute="bottom" secondItem="Udr-nq-7U3" secondAttribute="bottom" id="hjw-Q4-atu"/>
                                     <constraint firstAttribute="height" constant="65" id="mc3-hf-htx"/>
                                     <constraint firstAttribute="bottom" secondItem="ZTG-t4-EfW" secondAttribute="bottom" constant="27" id="pdQ-hT-Map"/>
+                                    <constraint firstItem="Udr-nq-7U3" firstAttribute="top" secondItem="7zR-tD-HrX" secondAttribute="top" id="tXs-EJ-B37"/>
+                                    <constraint firstAttribute="trailing" secondItem="Udr-nq-7U3" secondAttribute="trailing" id="wS0-1f-Ay6"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -313,6 +330,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="QX1-I9-fmL"/>
                     <connections>
+                        <outlet property="cancelMessageButtonWidthConstraint" destination="D2N-sK-9s4" id="N82-mf-sIO"/>
+                        <outlet property="cancelMessageSendingButton" destination="Udr-nq-7U3" id="g4S-Ax-a3P"/>
                         <outlet property="holdToRecordInfoView" destination="bqr-Ay-zAT" id="bmK-Vc-NaW"/>
                         <outlet property="holdToRecordInfoViewLabel" destination="HyV-Kd-4bj" id="Sx3-xk-W29"/>
                         <outlet property="holdToRecordInfoViewYValueConstraint" destination="fXC-Ki-css" id="NFx-e7-cI4"/>

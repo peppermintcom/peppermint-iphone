@@ -40,7 +40,7 @@ NSLocalizedStringFromTable(\
 #import <OpenSans/UIFont+OpenSans.h>
 
 #pragma mark - Record Constraint Definition
-#define MAX_RECORD_TIME             600     //Seconds
+#define MAX_RECORD_TIME             10     //Seconds
 #define MIN_VOICE_MESSAGE_LENGTH    2           //Seconds
 #define ANIM_TIME                   0.3
 #define WARN_TIME                   1.5

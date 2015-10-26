@@ -18,5 +18,6 @@
 + (UIColor *) recordingNavigationsubTitleGreen;
 + (UIColor *) progressContainerViewGray;
 + (UIColor *) progressCoverViewGreen;
++ (UIColor *) peppermintCancelOrange;
 
 @end

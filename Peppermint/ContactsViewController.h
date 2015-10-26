@@ -29,9 +29,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *holdToRecordInfoViewLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *holdToRecordInfoViewYValueConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *searchSourceIconImageView;
+@property (weak, nonatomic) IBOutlet UIButton *cancelMessageSendingButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cancelMessageButtonWidthConstraint;
 @property (strong, nonatomic) FastRecordingView *fastRecordingView;
 
 -(IBAction)searchButtonPressed:(id)sender;
+-(IBAction)messageCancelButtonPressed:(id)sender;
 
 -(void) messageSendingIndicatorSetMessageIsSending;
 -(void) messageSendingIndicatorSetMessageIsSent;
