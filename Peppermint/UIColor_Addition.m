@@ -91,6 +91,31 @@
     return color;
 }
 
++ (UIColor *) facebookLoginColor {
+    static dispatch_once_t onceToken;
+    static UIColor *color;
+    dispatch_once(&onceToken, ^{
+        color = [UIColor colorWithRed:0.243f green:0.337f blue:0.510f alpha:1.00f];
+    });
+    return color;
+}
 
++ (UIColor *) googleLoginColor {
+    static dispatch_once_t onceToken;
+    static UIColor *color;
+    dispatch_once(&onceToken, ^{
+        color = [UIColor colorWithRed:0.980f green:0.459f blue:0.384f alpha:1.00f];
+    });
+    return color;
+}
+
++ (UIColor *) emailLoginColor {
+    static dispatch_once_t onceToken;
+    static UIColor *color;
+    dispatch_once(&onceToken, ^{
+        color = [UIColor colorWithRed:0.361f green:0.769f blue:0.647f alpha:1.00f];
+    });
+    return color;
+}
 
 @end

@@ -81,7 +81,9 @@
         [self showAlertToRecordMoreThanMinimumMessageLength];
     } else if (isAppInBackground) {
         [self showAlertForRecordIsCut];
-    } else if (!isLoginInfoValid) {
+    } else if ([self.sendVoiceMessageModel needsAuth] && !isLoginInfoValid ) {
+#warning "implement login modal view"
+        //[LoginViewController logUserInWithDelegate:self];        
         [self showAlertToCompleteLoginInformation];
     } else {
         [self dissmissWithFadeOut];
@@ -90,7 +92,7 @@
 }
 
 -(void) performOperationsToSend {
-    [self.delegate messageIsSendingWithCancelOption:YES];
+    [self.sendVoiceMessageModel messagePrepareIsStarting];
     [self.recordingModel prepareRecordData];
 }
 

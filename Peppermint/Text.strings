@@ -51,4 +51,9 @@
 "Swipe in any direction to cancel" = "Swipe in any direction\nto cancel";
 "Tap to cancel" = "Tap to cancel";
 "Service is not available" = "Your device does not support this message service";
-"SMS Body" = "Here's my message from Peppermint.";
+"SMS Body Format" = "Here's my message from Peppermint.\n%@";
+"Log In with Facebook" = "Log In With Facebook";
+"Log In with Google" = "Log In With Google";
+"Log In with Email" = "Log In With Email";
+"Please Login" = "To send your first message please select how to log in:";
+"Done" = "Done";

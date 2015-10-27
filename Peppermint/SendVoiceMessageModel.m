@@ -27,7 +27,6 @@
 }
 
 -(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension {
-    NSAssert(self.peppermintMessageSender.isValid, @"Sender information must be defined");
     [recentContactsModel save:self.selectedPeppermintContact];
 }
 
@@ -70,6 +69,14 @@ SUBSCRIBE(NetworkFailure) {
 
 -(BOOL) isServiceAvailable {
     return YES;
+}
+
+-(BOOL) needsAuth {
+    return NO;
+}
+
+-(void) messagePrepareIsStarting {
+    [self.delegate messageIsSendingWithCancelOption:YES];
 }
 
 @end

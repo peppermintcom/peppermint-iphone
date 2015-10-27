@@ -144,9 +144,8 @@
              }
              
              if(--loadContactsTriggerCount > 0) {
-                 NSLog(@"Load contacts method is recalled %lu times during the previous query", (unsigned long)loadContactsTriggerCount);
+                 //NSLog(@"Load contacts method is recalled %lu times during the previous query", (unsigned long)loadContactsTriggerCount);
                  loadContactsTriggerCount = 0;
-                 
                  dispatch_sync(dispatch_get_main_queue(), ^{
                      [self refreshContactList];
                  });

@@ -45,7 +45,7 @@
             if(error) {
                 [self.delegate operationFailure:error];
             } else {
-                AVAudioSession *session = [AVAudioSession sharedInstance];
+                [session setActive:YES error:nil];
                 __weak RecordingModel *weakSelf = self;
                 if([session respondsToSelector:@selector(requestRecordPermission:)]) {
                     [session requestRecordPermission:^(BOOL granted) {
@@ -79,17 +79,22 @@
 
 -(void) initRecordFile {
     self.fileUrl = [self recordFileUrl];
+    NSLog(@"fileUrl : %@", self.fileUrl);
 }
 
 -(void) initRecorder {
     if(!recorder) {
+        NSError *error;
         NSDictionary *recordSetting = [NSDictionary dictionaryWithObjectsAndKeys:
                                                  [NSNumber numberWithInt:kAudioFormatMPEG4AAC], AVFormatIDKey,
                                                  [NSNumber numberWithInt:AVAudioQualityHigh], AVEncoderAudioQualityKey,
                                                  [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,
                                                  [NSNumber numberWithFloat:44100.0], AVSampleRateKey,
                                                  nil];
-        recorder = [[AVAudioRecorder alloc] initWithURL:self.fileUrl settings:recordSetting error:nil];
+        recorder = [[AVAudioRecorder alloc] initWithURL:self.fileUrl settings:ni error:&error];
+        if(error) {
+            [self.delegate operationFailure:error];
+        }
         recorder.delegate = self;
     }
 }
@@ -115,7 +120,6 @@
         if(error) {
             [self.delegate operationFailure:error];
         } else {
-            [session setPreferredInputNumberOfChannels:1 error:&error];
             if(error) {
                 [self.delegate operationFailure:error];
             } else {
@@ -190,6 +194,11 @@
     }
 }
 
+-(BOOL) fileExistsAtUrl:(NSURL*) url {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    return [fileManager fileExistsAtPath:url.path];
+}
+
 -(void) backUpRecording {
     CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
     [RecordingModel setPreviousFileLength:recorder.currentTime + previousFileLength];
@@ -206,8 +215,8 @@
 }
 
 -(void) prepareRecordData {
-    [self mixAudiosWithTargetUrl:self.fileUrl Completion:^{
-        [self removeFileIfExistsAtUrl:[self backUpFileUrl]];
+    //Completion block for preparing Record
+    void (^preparingProcess)(void) = ^(void) {
         if(![TPAACAudioConverter AACConverterAvailable]) {
             NSLog(@"Can not convert to aac for this device!");
             NSData *data = [[NSData alloc] initWithContentsOfURL:self.fileUrl];
@@ -218,8 +227,17 @@
         } else {
             [self convertM4aToAAC];
         }
-        
-    }];
+    };
+    
+    //If there is a backUp - MixRecordings
+    if([self fileExistsAtUrl:[self backUpFileUrl]]) {
+        [self mixAudiosWithTargetUrl:self.fileUrl Completion:^{
+            [self removeFileIfExistsAtUrl:[self backUpFileUrl]];
+            preparingProcess();
+        }];
+    } else {
+        preparingProcess();
+    }
 }
 
 /****************************************************************************************************

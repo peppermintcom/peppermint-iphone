@@ -23,11 +23,11 @@ PODS:
   - APAddressBook (0.1.11):
     - APAddressBook/Core (= 0.1.11)
   - APAddressBook/Core (0.1.11)
-  - Crashlytics (3.2.0)
+  - Crashlytics (3.3.4)
   - EasyMailSender (0.0.1)
-  - Fabric (1.4.1):
-    - Fabric/Base (= 1.4.1)
-  - Fabric/Base (1.4.1)
+  - Fabric (1.5.5):
+    - Fabric/Base (= 1.5.5)
+  - Fabric/Base (1.5.5)
   - JSONModel (1.1.0)
   - MBProgressHUD (0.9.1)
   - OpenSans (1.0.3)
@@ -38,9 +38,9 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - APAddressBook
-  - Crashlytics
+  - Crashlytics (~> 3.3.1)
   - EasyMailSender
-  - Fabric
+  - Fabric (~> 1.5.1)
   - JSONModel
   - MBProgressHUD (~> 0.9.1)
   - OpenSans
@@ -51,9 +51,9 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
   APAddressBook: 2c949367b190a993d2cce769a3b20bce8bcf000c
-  Crashlytics: a29e4f820aa401482b26043dc5d78adf08ac7573
+  Crashlytics: 41c082440d2e14da444186fff65e79c0b4b35d4c
   EasyMailSender: f50b6b5fa49b47f4b60998a56345600b848f2121
-  Fabric: 4f718eeca4c02c7d6f6f4e5f0e5f87c63aa38458
+  Fabric: 190bf1a6eb65f7500de1347d027d2e59a7e53db1
   JSONModel: ec77e9865236a7a09d9cf7668df6b4b328d9ec1d
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   OpenSans: 33078846463eae780aa5f82986b51cce085f970d

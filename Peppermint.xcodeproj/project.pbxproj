@@ -52,10 +52,19 @@
 		B17B3D741BB6C4B0009B8BC5 /* UIColor_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D731BB6C4B0009B8BC5 /* UIColor_Addition.m */; };
 		B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D771BB6C90A009B8BC5 /* BaseTableViewCell.m */; };
 		B18BF95E1BD674CD009B665E /* PeppermintMessageSender.m in Sources */ = {isa = PBXBuildFile; fileRef = B18BF95D1BD674CD009B665E /* PeppermintMessageSender.m */; };
+		B190F5BA1BDD63400094B391 /* SendVoiceMessageSMSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B190F5B91BDD63400094B391 /* SendVoiceMessageSMSModel.m */; };
+		B190F5BC1BDD7F040094B391 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190F5BB1BDD7F040094B391 /* AudioToolbox.framework */; };
 		B1A366921BDC92DB00852B52 /* UploadsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A366911BDC92DB00852B52 /* UploadsRequest.m */; };
 		B1A366951BDC92FF00852B52 /* UploadsResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A366941BDC92FF00852B52 /* UploadsResponse.m */; };
 		B1BB1E5F1BD35CD300A1CE45 /* MandrillService.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB1E5E1BD35CD300A1CE45 /* MandrillService.m */; };
 		B1BB1E631BD364FB00A1CE45 /* AFNetworkActivityLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB1E621BD364FB00A1CE45 /* AFNetworkActivityLogger.m */; };
+		B1BB60151BDE0E0200C1140B /* LoginTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB60141BDE0E0200C1140B /* LoginTableViewCell.m */; };
+		B1BB60171BDE0E3200C1140B /* LoginTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1BB60161BDE0E3200C1140B /* LoginTableViewCell.xib */; };
+		B1BB601A1BDE127500C1140B /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB60191BDE127500C1140B /* LoginViewController.m */; };
+		B1BB601D1BDE16D400C1140B /* UIStoryboard_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB601C1BDE16D400C1140B /* UIStoryboard_Addition.m */; };
+		B1BB605F1BDE36AF00C1140B /* LoginWithEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB605E1BDE36AF00C1140B /* LoginWithEmailViewController.m */; };
+		B1C83A191BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C83A181BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m */; };
+		B1C83A1B1BDEB0FC00EB14C2 /* LoginTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1C83A1A1BDEB0FC00EB14C2 /* LoginTextFieldTableViewCell.xib */; };
 		B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40E41BB7D58C00042E4B /* RecordingModel.m */; };
 		B1EF40EB1BB7E78C00042E4B /* SendVoiceMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40EA1BB7E78C00042E4B /* SendVoiceMessageModel.m */; };
 		B1EF40EE1BB7EAA200042E4B /* SendVoiceMessageEmailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40ED1BB7EAA200042E4B /* SendVoiceMessageEmailModel.m */; };
@@ -168,6 +177,9 @@
 		B17B3D771BB6C90A009B8BC5 /* BaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewCell.m; sourceTree = "<group>"; };
 		B18BF95C1BD674CD009B665E /* PeppermintMessageSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeppermintMessageSender.h; sourceTree = "<group>"; };
 		B18BF95D1BD674CD009B665E /* PeppermintMessageSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeppermintMessageSender.m; sourceTree = "<group>"; };
+		B190F5B81BDD63400094B391 /* SendVoiceMessageSMSModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVoiceMessageSMSModel.h; sourceTree = "<group>"; };
+		B190F5B91BDD63400094B391 /* SendVoiceMessageSMSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendVoiceMessageSMSModel.m; sourceTree = "<group>"; };
+		B190F5BB1BDD7F040094B391 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		B1A366901BDC92DB00852B52 /* UploadsRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadsRequest.h; sourceTree = "<group>"; };
 		B1A366911BDC92DB00852B52 /* UploadsRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadsRequest.m; sourceTree = "<group>"; };
 		B1A366931BDC92FF00852B52 /* UploadsResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadsResponse.h; sourceTree = "<group>"; };
@@ -176,6 +188,18 @@
 		B1BB1E5E1BD35CD300A1CE45 /* MandrillService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MandrillService.m; sourceTree = "<group>"; };
 		B1BB1E611BD364FB00A1CE45 /* AFNetworkActivityLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityLogger.h; sourceTree = "<group>"; };
 		B1BB1E621BD364FB00A1CE45 /* AFNetworkActivityLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityLogger.m; sourceTree = "<group>"; };
+		B1BB60131BDE0E0200C1140B /* LoginTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTableViewCell.h; sourceTree = "<group>"; };
+		B1BB60141BDE0E0200C1140B /* LoginTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTableViewCell.m; sourceTree = "<group>"; };
+		B1BB60161BDE0E3200C1140B /* LoginTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginTableViewCell.xib; sourceTree = "<group>"; };
+		B1BB60181BDE127500C1140B /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		B1BB60191BDE127500C1140B /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		B1BB601B1BDE16D400C1140B /* UIStoryboard_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIStoryboard_Addition.h; sourceTree = "<group>"; };
+		B1BB601C1BDE16D400C1140B /* UIStoryboard_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIStoryboard_Addition.m; sourceTree = "<group>"; };
+		B1BB605D1BDE36AF00C1140B /* LoginWithEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginWithEmailViewController.h; sourceTree = "<group>"; };
+		B1BB605E1BDE36AF00C1140B /* LoginWithEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginWithEmailViewController.m; sourceTree = "<group>"; };
+		B1C83A171BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTextFieldTableViewCell.h; sourceTree = "<group>"; };
+		B1C83A181BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTextFieldTableViewCell.m; sourceTree = "<group>"; };
+		B1C83A1A1BDEB0FC00EB14C2 /* LoginTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginTextFieldTableViewCell.xib; sourceTree = "<group>"; };
 		B1EF40E31BB7D58C00042E4B /* RecordingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RecordingModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B1EF40E41BB7D58C00042E4B /* RecordingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RecordingModel.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B1EF40E91BB7E78C00042E4B /* SendVoiceMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVoiceMessageModel.h; sourceTree = "<group>"; };
@@ -211,6 +235,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B190F5BC1BDD7F040094B391 /* AudioToolbox.framework in Frameworks */,
 				B1F93E8C1BC8E0D9005F2128 /* CoreData.framework in Frameworks */,
 				392D9C861A6F3945B758D95F /* libPods-Peppermint.a in Frameworks */,
 			);
@@ -238,6 +263,7 @@
 		6C8541A65356EA01C859C162 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B190F5BB1BDD7F040094B391 /* AudioToolbox.framework */,
 				B1F93E8B1BC8E0D9005F2128 /* CoreData.framework */,
 				4568D87C1B184E71C2B112BE /* libPods-Peppermint.a */,
 			);
@@ -340,6 +366,8 @@
 				B1EF40ED1BB7EAA200042E4B /* SendVoiceMessageEmailModel.m */,
 				B13B076B1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.h */,
 				B13B076C1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m */,
+				B190F5B81BDD63400094B391 /* SendVoiceMessageSMSModel.h */,
+				B190F5B91BDD63400094B391 /* SendVoiceMessageSMSModel.m */,
 				B1F93E991BC8E5E7005F2128 /* RecentContactsModel.h */,
 				B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */,
 				B15B15BF1BDBC55A00C0C171 /* AWSModel.h */,
@@ -469,6 +497,8 @@
 		B17B3D6A1BB6BCEC009B8BC5 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				B1C83A161BDEB0C300EB14C2 /* LoginTextFieldTableViewCell */,
+				B1BB60121BDE0DD200C1140B /* LoginTableViewCell */,
 				B17B3D751BB6C8F4009B8BC5 /* BaseTableViewCell */,
 				B17B3D6B1BB6BCF8009B8BC5 /* ContactTableViewCell */,
 				B165EF1A1BB7221D008C6F71 /* EmptyResultTableViewCell */,
@@ -496,6 +526,8 @@
 				B17B3D731BB6C4B0009B8BC5 /* UIColor_Addition.m */,
 				B102BBB61BCD03EC001E1E7A /* UIViewController_AdditionViewController.h */,
 				B102BBB71BCD03EC001E1E7A /* UIViewController_AdditionViewController.m */,
+				B1BB601B1BDE16D400C1140B /* UIStoryboard_Addition.h */,
+				B1BB601C1BDE16D400C1140B /* UIStoryboard_Addition.m */,
 			);
 			name = Addition;
 			sourceTree = "<group>";
@@ -527,6 +559,26 @@
 			name = Entity;
 			sourceTree = "<group>";
 		};
+		B1BB60121BDE0DD200C1140B /* LoginTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				B1BB60131BDE0E0200C1140B /* LoginTableViewCell.h */,
+				B1BB60141BDE0E0200C1140B /* LoginTableViewCell.m */,
+				B1BB60161BDE0E3200C1140B /* LoginTableViewCell.xib */,
+			);
+			name = LoginTableViewCell;
+			sourceTree = "<group>";
+		};
+		B1C83A161BDEB0C300EB14C2 /* LoginTextFieldTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				B1C83A171BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.h */,
+				B1C83A181BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m */,
+				B1C83A1A1BDEB0FC00EB14C2 /* LoginTextFieldTableViewCell.xib */,
+			);
+			name = LoginTextFieldTableViewCell;
+			sourceTree = "<group>";
+		};
 		B1EF40E11BB7CE5600042E4B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -538,6 +590,10 @@
 				B17B3D5D1BB6A504009B8BC5 /* ContactsViewController.m */,
 				B17B3D621BB6AE8B009B8BC5 /* RecordingViewController.h */,
 				B17B3D631BB6AE8B009B8BC5 /* RecordingViewController.m */,
+				B1BB60181BDE127500C1140B /* LoginViewController.h */,
+				B1BB60191BDE127500C1140B /* LoginViewController.m */,
+				B1BB605D1BDE36AF00C1140B /* LoginWithEmailViewController.h */,
+				B1BB605E1BDE36AF00C1140B /* LoginWithEmailViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -629,9 +685,9 @@
 				B17B3D281BB6898C009B8BC5 /* Frameworks */,
 				B17B3D291BB6898C009B8BC5 /* Resources */,
 				99E5888A4AEAE0B8E8705C03 /* Copy Pods Resources */,
-				B12FD6C61BB98E9B007CBA31 /* ShellScript */,
 				B17EFFBF1BCBCFFB00F50511 /* ShellScript */,
 				B17EFFC01BCBD02200F50511 /* ShellScript */,
+				B1B6528C1BDDF8C0006987EA /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -666,7 +722,7 @@
 		B17B3D231BB6898C009B8BC5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Okan Kurtulus";
 				TargetAttributes = {
 					B17B3D2A1BB6898C009B8BC5 = {
@@ -703,6 +759,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1C83A1B1BDEB0FC00EB14C2 /* LoginTextFieldTableViewCell.xib in Resources */,
 				B17B3D3A1BB6898C009B8BC5 /* Main.storyboard in Resources */,
 				B17B3D571BB68A39009B8BC5 /* Text.strings in Resources */,
 				B179F83C1BC931820089D709 /* SearchMenuTableViewCell.xib in Resources */,
@@ -710,6 +767,7 @@
 				B12C03BD1BCFFC280085A55A /* FastRecordingView.xib in Resources */,
 				B17B3D3F1BB6898C009B8BC5 /* LaunchScreen.xib in Resources */,
 				B17B3D701BB6BD2E009B8BC5 /* ContactTableViewCell.xib in Resources */,
+				B1BB60171BDE0E3200C1140B /* LoginTableViewCell.xib in Resources */,
 				B17B3D3C1BB6898C009B8BC5 /* Images.xcassets in Resources */,
 				B15B15B21BDBBAB200C0C171 /* Login.storyboard in Resources */,
 			);
@@ -740,19 +798,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B12FD6C61BB98E9B007CBA31 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" b0f9447ce570c6a59d66e84fd53f91a0fadc63cc de219f36d61063c1e338d39f9fe3a31f1860ef71964ea41cce98a4a3d2dcabb5";
-		};
 		B17EFFBF1BCBCFFB00F50511 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -778,6 +823,19 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "# xcode-version-bump.sh\n# @desc Auto-increment the version number (only) when a project is archived for export.\n# @usage\n# 1. Select: your Target in Xcode\n# 2. Select: Build Phases Tab\n# 3. Select: Add Build Phase -> Add Run Script\n# 4. Paste code below in to new \"Run Script\" section\n# 5. Check the checkbox \"Run script only when installing\"\n# 6. Drag the \"Run Script\" below \"Link Binaries With Libraries\"\n# 7. Insure your starting version number is in SemVer format (e.g. 1.0.0)\n\n# This splits a two-decimal version string, such as \"0.45.123\", allowing us to increment the third position.\nVERSIONNUM=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nNEWSUBVERSION=`echo $VERSIONNUM | awk -F \".\" '{print $3}'`\nNEWSUBVERSION=$(($NEWSUBVERSION + 1))\nNEWVERSIONSTRING=`echo $VERSIONNUM | awk -F \".\" '{print $1 \".\" $2 \".'$NEWSUBVERSION'\" }'`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $NEWVERSIONSTRING\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+		};
+		B1B6528C1BDDF8C0006987EA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" b0f9447ce570c6a59d66e84fd53f91a0fadc63cc de219f36d61063c1e338d39f9fe3a31f1860ef71964ea41cce98a4a3d2dcabb5";
 		};
 		BA057164F91858255C6D867A /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -814,7 +872,9 @@
 				B102DD5E1BD0802100D71D62 /* BaseCustomView.m in Sources */,
 				B13B07631BD3720100974AC3 /* MandrillMessage.m in Sources */,
 				B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */,
+				B1BB605F1BDE36AF00C1140B /* LoginWithEmailViewController.m in Sources */,
 				B17B3D5B1BB6A49E009B8BC5 /* BaseViewController.m in Sources */,
+				B190F5BA1BDD63400094B391 /* SendVoiceMessageSMSModel.m in Sources */,
 				B11F8A5C1BDCC45F000E79AA /* FinalizeUploadRequest.m in Sources */,
 				B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */,
 				B1A366921BDC92DB00852B52 /* UploadsRequest.m in Sources */,
@@ -832,6 +892,7 @@
 				B17B3D691BB6BCE5009B8BC5 /* CellFactory.m in Sources */,
 				B15B15C11BDBC55A00C0C171 /* AWSModel.m in Sources */,
 				B13B076D1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m in Sources */,
+				B1BB601A1BDE127500C1140B /* LoginViewController.m in Sources */,
 				B18BF95E1BD674CD009B665E /* PeppermintMessageSender.m in Sources */,
 				B1A366951BDC92FF00852B52 /* UploadsResponse.m in Sources */,
 				B1BB1E631BD364FB00A1CE45 /* AFNetworkActivityLogger.m in Sources */,
@@ -847,11 +908,14 @@
 				B165EF121BB71A85008C6F71 /* BaseModel.m in Sources */,
 				B17B3D311BB6898C009B8BC5 /* main.m in Sources */,
 				B1EF40F91BB8782F00042E4B /* SwipeView.m in Sources */,
+				B1BB60151BDE0E0200C1140B /* LoginTableViewCell.m in Sources */,
 				B13B07671BD3736400974AC3 /* MandrillMailAttachment.m in Sources */,
+				B1C83A191BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m in Sources */,
 				B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */,
 				B1F93E901BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld in Sources */,
 				B1EF40F21BB8579D00042E4B /* M13ProgressView.m in Sources */,
 				B1F93E9E1BC8ED58005F2128 /* RecentContact.m in Sources */,
+				B1BB601D1BDE16D400C1140B /* UIStoryboard_Addition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -914,6 +978,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -929,7 +994,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -966,7 +1031,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -982,9 +1047,11 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = Peppermint/PrefixHeader.pch;
 				INFOPLIST_FILE = Peppermint/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "okankurtulus.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "18921fe0-120a-4ab1-940c-91112253db92";
 			};
 			name = Debug;
 		};
@@ -997,9 +1064,11 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = Peppermint/PrefixHeader.pch;
 				INFOPLIST_FILE = Peppermint/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "okankurtulus.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "18921fe0-120a-4ab1-940c-91112253db92";
 			};
 			name = Release;
 		};
@@ -1017,6 +1086,7 @@
 				);
 				INFOPLIST_FILE = PeppermintTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "okankurtulus.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Peppermint.app/Peppermint";
 			};
@@ -1032,6 +1102,7 @@
 				);
 				INFOPLIST_FILE = PeppermintTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "okankurtulus.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Peppermint.app/Peppermint";
 			};

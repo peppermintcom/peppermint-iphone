@@ -24,8 +24,8 @@
 #define SENDING_ICON_HEIGHT     15
 #define SENT_ICON_HEIGHT        20
 
-#define CANCEL_BUTTON_VISIBLE_WIDTH 153
-#define CANCEL_BUTTON_HIDDEN_WIDTH  40
+#define CANCEL_BUTTON_VISIBLE_WIDTH 100
+#define CANCEL_BUTTON_HIDDEN_WIDTH  80
 
 @interface ContactsViewController ()
 
@@ -150,8 +150,7 @@
         [cell setVisibiltyOfExplanationLabels:self.contactsModel.filterText.length > 0];
         preparedCell = cell;
     } else if (indexPath.row < [self activeContactList].count) {
-        ContactTableViewCell *cell = [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath];
-        cell.delegate = self;
+        ContactTableViewCell *cell = [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
         PeppermintContact *peppermintContact = [[self activeContactList] objectAtIndex:indexPath.row];
         if(peppermintContact.avatarImage) {
             cell.avatarImageView.image = peppermintContact.avatarImage;
@@ -176,7 +175,7 @@
         preparedCell = cell;
     } else {
         NSLog(@"Queried for indexpath: %d,%d and the active contact list has %d elemends", indexPath.section, indexPath.row, [self activeContactList].count);
-        return [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath];
+        return [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:nil];
     }
     return preparedCell;
 }

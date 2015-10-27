@@ -23,10 +23,9 @@
 
 -(void) sendVoiceMessageWithData:(NSData *)data withExtension:(NSString *)extension  {
     if(!self.isCancelled) {
-        if([MFMessageComposeViewController canSendText]) {
+        if([self isServiceAvailable]) {
             [super sendVoiceMessageWithData:data withExtension:extension];
-            [self.delegate messageIsSendingWithCancelOption:YES];
-            [self fireSMSMessageWithData:data ofExtension:extension];
+            [awsModel startToUploadData:data ofType:[self typeForExtension:extension]];
         } else {
             NSLog(@"Could not proceeed, cos device does not support!");
         }
@@ -35,7 +34,18 @@
     }
 }
 
--(void) fireSMSMessageWithData:(NSData*) data ofExtension:(NSString*) extension {
+#pragma mark - AWSModelDelegate
+
+-(void) fileUploadCompletedWithPublicUrl:(NSString*) url {
+    NSLog(@"File Upload is finished with url %@", url);
+    if(!self.isCancelled) {
+        [self fireSMSMessageWithUrl:url];
+    } else {
+        NSLog(@"Mandrill message sending is not fired, cos message is cancelled");
+    }
+}
+
+-(void) fireSMSMessageWithUrl:(NSString*) url {
     
     MFMessageComposeViewController *smsComposerVC = [MFMessageComposeViewController new];
     smsComposerVC.messageComposeDelegate = self;
@@ -47,11 +57,9 @@
         smsComposerVC.subject = @"Peppermint";
     }
     
-    smsComposerVC.body = LOC(@"SMS Body", @"SMS Body");;
-    [smsComposerVC addAttachmentData:data typeIdentifier:@"public.audio" filename:[NSString stringWithFormat:@"Peppermint.%@", extension]];
-    
-    [self.delegate messageIsSendingWithCancelOption:NO];
+    smsComposerVC.body =  [NSString stringWithFormat:LOC(@"SMS Body Format", @"SMS Body Format"), url];
     [rootViewController presentViewController:smsComposerVC animated:YES completion:nil];
+    [self.delegate messageIsSendingWithCancelOption:NO];
 }
 
 #pragma mark - MFMessageComposeViewControllerDelegate
@@ -76,6 +84,10 @@
 
 -(BOOL) isServiceAvailable {
     return [MFMessageComposeViewController canSendText];
+}
+
+-(void) messagePrepareIsStarting {
+    NSLog(@"Do not show sending message");
 }
 
 @end

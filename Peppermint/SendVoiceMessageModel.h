@@ -35,5 +35,7 @@
 -(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension;
 -(NSString*) typeForExtension:(NSString*) extension;
 -(BOOL) isServiceAvailable;
+-(BOOL) needsAuth;
+-(void) messagePrepareIsStarting;
 
 @end

@@ -14,6 +14,7 @@
 #import "Events.h"
 
 #define MAIN_STORYBOARD         @"Main"
+#define LOGIN_STORYBOARD        @"Login"
 #define MAIN_VIEWCONTROLLER     @"ContactsViewController"
 
 @interface AppDelegate ()
@@ -28,6 +29,13 @@
 }
 
 -(void) initInitialViewController {
+    NSString *mainStoryBoardName = [UIStoryboard LDMainStoryboardName];
+    if([mainStoryBoardName isEqualToString:MAIN_STORYBOARD]) {
+        [self initMainStoryBoardForTutorial];
+    }
+}
+
+-(void) initMainStoryBoardForTutorial {
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:MAIN_STORYBOARD bundle:nil];
     UINavigationController *nvc = [storyboard instantiateInitialViewController];

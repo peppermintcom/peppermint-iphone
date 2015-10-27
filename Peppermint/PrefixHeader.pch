@@ -29,6 +29,9 @@ NSLocalizedStringFromTable(\
 #pragma mark - UIViewController Addition
 #import "UIViewController_AdditionViewController.h"
 
+#pragma mark - UIStoryboard Addition
+#import "UIStoryboard_Addition.h"
+
 #pragma mark - NSUserDefaults Helper
 #import "nsuserdefaults-helper.h"
 #define DEFAULTS_KEY_ISTUTORIALSHOWED           @"isTutorialShowed"
@@ -40,7 +43,7 @@ NSLocalizedStringFromTable(\
 #import <OpenSans/UIFont+OpenSans.h>
 
 #pragma mark - Record Constraint Definition
-#define MAX_RECORD_TIME             10     //Seconds
+#define MAX_RECORD_TIME             10          //Seconds
 #define MIN_VOICE_MESSAGE_LENGTH    2           //Seconds
 #define ANIM_TIME                   0.3
 #define WARN_TIME                   1.5

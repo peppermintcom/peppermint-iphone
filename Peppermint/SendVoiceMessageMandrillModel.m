@@ -35,7 +35,7 @@
     message.subject = LOC(@"Mail Subject",@"Default Mail Subject");
     message.html = LOC(@"Mail Body",@"Default Mail Body");
     
-    message.html = [NSString stringWithFormat:@"%@ \n\n<a href=\"%@\">Message, (TEST: Attachment is removed cos there is a link now. It can be added again too. decision will be given for this behaviour)</a>", message.html,
+    message.html = [NSString stringWithFormat:@"%@ \n\n<a href=\"%@\">Message, (TEST NOTE: Attachment is removed cos there is a link now. It can be added again too. decision will be given for this behaviour)</a>", message.html,
                     url];
     
     MandrillToObject *recipient = [MandrillToObject new];
@@ -59,6 +59,10 @@
 
 SUBSCRIBE(MandrillMesssageSent) {
     [self.delegate messageSentWithSuccess];
+}
+
+-(BOOL) needsAuth {
+    return YES;
 }
 
 @end

@@ -57,9 +57,13 @@ SUBSCRIBE(RecorderSubmitSuccessful) {
 #pragma mark - Upload File
 
 -(void) startToUploadData:(NSData*) data ofType:(NSString*) contentType {
-    _data = data;
-    _contentType = contentType;
-    [awsService retrieveSignedURLForContentType:_contentType jwt:jwt];
+    if(!data || !contentType) {
+        NSLog(@"Stopped aws cos the data or content type is supplied!");
+    } else {
+        _data = data;
+        _contentType = contentType;
+        [awsService retrieveSignedURLForContentType:_contentType jwt:jwt];
+    }
 }
 
 SUBSCRIBE(RetrieveSignedUrlSuccessful) {

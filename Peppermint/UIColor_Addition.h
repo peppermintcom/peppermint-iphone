@@ -19,5 +19,8 @@
 + (UIColor *) progressContainerViewGray;
 + (UIColor *) progressCoverViewGreen;
 + (UIColor *) peppermintCancelOrange;
++ (UIColor *) facebookLoginColor;
++ (UIColor *) googleLoginColor;
++ (UIColor *) emailLoginColor;
 
 @end

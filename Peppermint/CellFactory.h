@@ -10,6 +10,8 @@
 #import "EmptyResultTableViewCell.h"
 #import "ContactTableViewCell.h"
 #import "SearchMenuTableViewCell.h"
+#import "LoginTableViewCell.h"
+#import "LoginTextFieldTableViewCell.h"
 
 @interface CellFactory : NSObject
 
@@ -17,9 +19,15 @@
 +(EmptyResultTableViewCell*) cellEmptyResultTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath;
 
 #define CELL_HEIGHT_CONTACT_TABLEVIEWCELL 56
-+(ContactTableViewCell*) cellContactTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath;
++(ContactTableViewCell*) cellContactTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath withDelegate:(id<ContactTableViewCellDelegate>) delegate;
 
 #define CELL_HEIGHT_SEARCH_MENU_TABLEVIEWCELL 44
 +(SearchMenuTableViewCell*) cellSearchMenuTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath;
+
+#define CELL_HEIGHT_LOGIN_TABLEVIEWCELL 42
++(LoginTableViewCell*) cellLoginTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath withDelegate:(id<LoginTableViewCellDelegate>) delegate;
+
+#define CELL_HEIGHT_LOGIN_TEXTFIELD_TABLEVIEWCELL 42
++(LoginTextFieldTableViewCell*) cellLoginTextFieldTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath;
 
 @end

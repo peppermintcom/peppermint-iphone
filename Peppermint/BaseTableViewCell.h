@@ -13,5 +13,5 @@
 @end
 
 @interface BaseTableViewCell : UITableViewCell
-
+@property(strong, nonatomic) NSIndexPath *indexPath;
 @end

@@ -48,4 +48,8 @@
     return mailClass != nil && [MFMailComposeViewController canSendMail];
 }
 
+-(BOOL) needsAuth {
+    return YES;
+}
+
 @end
