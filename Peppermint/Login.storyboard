@@ -3,13 +3,12 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
+        <!--Login Navigation View Controller-->
         <scene sceneID="ELl-cP-Xti">
             <objects>
-                <navigationController navigationBarHidden="YES" id="ceq-N7-4vt" sceneMemberID="viewController">
+                <navigationController navigationBarHidden="YES" id="ceq-N7-4vt" customClass="LoginNavigationViewController" sceneMemberID="viewController">
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
@@ -111,9 +110,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3S4-yk-exg">
-                                <rect key="frame" x="10" y="10" width="100" height="100"/>
+                                <rect key="frame" x="10" y="10" width="100" height="64"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="ZWW-ht-bD7"/>
+                                    <constraint firstAttribute="height" constant="64" id="ZWW-ht-bD7"/>
                                     <constraint firstAttribute="width" constant="100" id="eUh-4a-CgS"/>
                                 </constraints>
                                 <connections>
@@ -121,7 +120,7 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kLE-J5-PmJ">
-                                <rect key="frame" x="40" y="108" width="334" height="628"/>
+                                <rect key="frame" x="40" y="74" width="334" height="662"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="gYd-Oo-fUs" id="LJ2-FX-y8H"/>
@@ -146,9 +145,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X8L-Ph-XdZ">
-                                <rect key="frame" x="294" y="10" width="100" height="100"/>
+                                <rect key="frame" x="294" y="10" width="100" height="64"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="Avk-Rz-2T6"/>
+                                    <constraint firstAttribute="height" constant="64" id="Avk-Rz-2T6"/>
                                     <constraint firstAttribute="width" constant="100" id="o7s-Oi-Sfe"/>
                                 </constraints>
                                 <connections>
@@ -163,12 +162,12 @@
                             <constraint firstItem="z7s-7c-dOj" firstAttribute="leading" secondItem="BxQ-dH-hPN" secondAttribute="leading" constant="18" id="AZe-1Z-Uuw"/>
                             <constraint firstAttribute="trailing" secondItem="Ahn-gk-Hqg" secondAttribute="trailing" constant="20" id="BCP-gi-5DZ"/>
                             <constraint firstAttribute="trailing" secondItem="X8L-Ph-XdZ" secondAttribute="trailing" constant="20" id="FYP-f8-PPP"/>
-                            <constraint firstItem="kLE-J5-PmJ" firstAttribute="top" secondItem="BxQ-dH-hPN" secondAttribute="topMargin" constant="108" id="Ig7-Sa-gzu"/>
                             <constraint firstItem="X8L-Ph-XdZ" firstAttribute="top" secondItem="BxQ-dH-hPN" secondAttribute="top" constant="10" id="Ksv-Y3-NNg"/>
                             <constraint firstItem="VV3-gT-Ui5" firstAttribute="top" secondItem="BxQ-dH-hPN" secondAttribute="top" id="OFh-1C-ytl"/>
                             <constraint firstAttribute="trailing" secondItem="VV3-gT-Ui5" secondAttribute="trailing" id="Ujw-Y5-bc0"/>
                             <constraint firstAttribute="bottom" secondItem="VV3-gT-Ui5" secondAttribute="bottom" id="aLj-iM-cJA"/>
                             <constraint firstItem="z7s-7c-dOj" firstAttribute="top" secondItem="tsu-zU-dGQ" secondAttribute="bottom" constant="28" id="dw1-kA-CLH"/>
+                            <constraint firstItem="kLE-J5-PmJ" firstAttribute="top" secondItem="X8L-Ph-XdZ" secondAttribute="bottom" id="hFz-Cl-NFq"/>
                             <constraint firstItem="Ahn-gk-Hqg" firstAttribute="top" secondItem="tsu-zU-dGQ" secondAttribute="bottom" constant="28" id="lRu-cI-k3P"/>
                             <constraint firstItem="3S4-yk-exg" firstAttribute="top" secondItem="BxQ-dH-hPN" secondAttribute="top" constant="10" id="q5f-rB-Kg7"/>
                             <constraint firstItem="VV3-gT-Ui5" firstAttribute="leading" secondItem="BxQ-dH-hPN" secondAttribute="leading" id="rVK-sL-HJZ"/>

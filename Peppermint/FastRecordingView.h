@@ -12,12 +12,12 @@
 #import "SendVoiceMessageModel.h"
 #import "M13ProgressViewPie.h"
 #import "ExplodingView.h"
-#import "LoginViewController.h"
+#import "LoginNavigationViewController.h"
 
 @protocol FastRecordingViewDelegate <SendVoiceMessageDelegate>
 @end
 
-@interface FastRecordingView : BaseCustomView <RecordingModelDelegate, SendVoiceMessageDelegate, UIAlertViewDelegate, LoginViewControllerDelegate>
+@interface FastRecordingView : BaseCustomView <RecordingModelDelegate, SendVoiceMessageDelegate, UIAlertViewDelegate, LoginNavigationViewControllerDelegate>
 @property (weak, nonatomic) UIViewController<FastRecordingViewDelegate>* delegate;
 @property (strong, nonatomic) RecordingModel *recordingModel;
 @property (strong, nonatomic) SendVoiceMessageModel *sendVoiceMessageModel;

@@ -7,8 +7,10 @@
 //
 
 #import "BaseViewController.h"
+#import "LoginModel.h"
 
-@interface LoginWithEmailViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate>
+@interface LoginWithEmailViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, LoginTextFieldTableViewCellDelegate>
+@property (weak, nonatomic) LoginModel *loginModel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *doneLabel;
 

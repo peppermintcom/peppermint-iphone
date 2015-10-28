@@ -18,7 +18,10 @@
 @interface ApplicationWillResignActive : NSObject
 @end
 
-@interface ApplicationDidBecomeActive : NSObject
+@interface ApplicationDidEnterBackground : NSObject
+@end
+
+@interface ApplicationWillEnterForeground : NSObject
 @end
 
 @interface RecorderSubmitSuccessful : NSObject

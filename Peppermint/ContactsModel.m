@@ -133,7 +133,7 @@
                  NSArray *sortedList = [self.contactList sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
                      NSString *first = [(PeppermintContact*)a nameSurname];
                      NSString *second = [(PeppermintContact*)b nameSurname];
-                     return [first compare:second];
+                     return [first.lowercaseString compare:second.lowercaseString];
                  }];
                  self.contactList = [NSMutableArray arrayWithArray:sortedList];
                  

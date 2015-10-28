@@ -24,18 +24,20 @@
 @end
 
 @interface SendVoiceMessageModel : BaseModel <RecentContactsModelDelegate, AWSModelDelegate> {
+    RecentContactsModel *recentContactsModel;
     AWSModel *awsModel;
+    BOOL isCancelled;
 }
 
 @property (strong, nonatomic) PeppermintMessageSender *peppermintMessageSender;
 @property (strong, nonatomic) PeppermintContact *selectedPeppermintContact;
 @property (weak, nonatomic) id<SendVoiceMessageDelegate> delegate;
-@property (nonatomic) BOOL isCancelled;
 
 -(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension;
 -(NSString*) typeForExtension:(NSString*) extension;
 -(BOOL) isServiceAvailable;
 -(BOOL) needsAuth;
 -(void) messagePrepareIsStarting;
+-(void) cancelSending;
 
 @end

@@ -17,7 +17,10 @@
 @implementation ApplicationWillResignActive
 @end
 
-@implementation ApplicationDidBecomeActive
+@implementation ApplicationDidEnterBackground
+@end
+
+@implementation ApplicationWillEnterForeground
 @end
 
 @implementation RecorderSubmitSuccessful

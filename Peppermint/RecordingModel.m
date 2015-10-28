@@ -7,6 +7,7 @@
 //
 
 #import "RecordingModel.h"
+#import <AudioToolbox/AudioServices.h>
 
 #define DEFAULT_GAIN    0.8 //Input Gain must be a value btw 0.0 - 1.0
 #define PING_INTERVAL   0.2
@@ -30,37 +31,30 @@
     self = [super init];
     if(self) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            //Completion block of recording permission
             void (^permissionGranted)(RecordingModel*) = ^(RecordingModel *recordingModel) {
                 [recordingModel performGrantedOperations];
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [recordingModel beep];
+#warning "Will add beep in future!!"
+                    //[recordingModel beep];
                     [recordingModel.delegate accessRightsAreSupplied];
                 });
             };
             
+            __weak RecordingModel *weakSelf = self;
             AVAudioSession *session = [AVAudioSession sharedInstance];
-            NSError *error;
-            [session setCategory:AVAudioSessionCategoryRecord error:&error];
-            if(error) {
-                [self.delegate operationFailure:error];
+            if([session respondsToSelector:@selector(requestRecordPermission:)]) {
+                [session requestRecordPermission:^(BOOL granted) {
+                    self.grantedForMicrophone = granted;
+                    if(granted) {
+                        permissionGranted(weakSelf);
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self.delegate microphoneAccessRightsAreNotSupplied];
+                        });
+                    }
+                }];
             } else {
-                [session setActive:YES error:nil];
-                __weak RecordingModel *weakSelf = self;
-                if([session respondsToSelector:@selector(requestRecordPermission:)]) {
-                    [session requestRecordPermission:^(BOOL granted) {
-                        self.grantedForMicrophone = granted;
-                        if(granted) {
-                            permissionGranted(weakSelf);
-                        } else {
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                [self.delegate microphoneAccessRightsAreNotSupplied];
-                            });
-                        }
-                    }];
-                } else {
-                    permissionGranted(weakSelf);
-                }
+                permissionGranted(weakSelf);
             }
         });
     }
@@ -79,23 +73,27 @@
 
 -(void) initRecordFile {
     self.fileUrl = [self recordFileUrl];
-    NSLog(@"fileUrl : %@", self.fileUrl);
+    NSLog(@"File Url is %@", self.fileUrl);
 }
 
 -(void) initRecorder {
     if(!recorder) {
-        NSError *error;
-        NSDictionary *recordSetting = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                 [NSNumber numberWithInt:kAudioFormatMPEG4AAC], AVFormatIDKey,
-                                                 [NSNumber numberWithInt:AVAudioQualityHigh], AVEncoderAudioQualityKey,
-                                                 [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,
-                                                 [NSNumber numberWithFloat:44100.0], AVSampleRateKey,
-                                                 nil];
-        recorder = [[AVAudioRecorder alloc] initWithURL:self.fileUrl settings:ni error:&error];
-        if(error) {
-            [self.delegate operationFailure:error];
+        if([self setAudioSession:YES]) {
+            NSError *error;
+            NSDictionary *recordSetting = [NSDictionary dictionaryWithObjectsAndKeys:
+                                           [NSNumber numberWithInt:kAudioFormatMPEG4AAC], AVFormatIDKey,
+                                           [NSNumber numberWithInt:AVAudioQualityHigh], AVEncoderAudioQualityKey,
+                                           [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,
+                                           [NSNumber numberWithFloat:44100.0], AVSampleRateKey,
+                                           nil];
+            recorder = [[AVAudioRecorder alloc] initWithURL:self.fileUrl settings:recordSetting error:&error];
+            if(error) {
+                [self.delegate operationFailure:error];
+            }
+            recorder.delegate = self;
         }
-        recorder.delegate = self;
+    } else {
+        NSLog(@"Recorder was already active!!!");
     }
 }
 
@@ -112,24 +110,40 @@
     }
 }
 
--(void) record {
-    if(!recorder.recording) {
-        AVAudioSession *session = [AVAudioSession sharedInstance];
-        NSError *error;
-        [session setCategory:AVAudioSessionCategoryRecord error:&error];
+#pragma mark - Session Setting
+
+-(BOOL) setAudioSession:(BOOL) active {
+    BOOL result = NO;
+    NSError *error = nil;
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    [session setCategory :AVAudioSessionCategoryPlayAndRecord error:&error];
+    if(error){
+        [self.delegate operationFailure:error];
+        result = NO;
+    } else {
+        [session setActive:active error:&error];
         if(error) {
             [self.delegate operationFailure:error];
+            result = NO;
         } else {
-            if(error) {
-                [self.delegate operationFailure:error];
-            } else {
-                [session setActive:YES error:nil];
-                if(![recorder record]) {
-                    [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Could not start record", @"Error message") code:0 userInfo:nil]];
-                } else {
-                    timer = [NSTimer scheduledTimerWithTimeInterval:PING_INTERVAL target:self selector:@selector(onTick:) userInfo:nil repeats:YES];
+            if(active) {
+                [session setPreferredInputNumberOfChannels:1 error:&error];
+                if(error) {
+                    [self.delegate operationFailure:error];
                 }
             }
+            result = YES;
+        }
+    }
+    return result;
+}
+
+-(void) record {
+    if(!recorder.recording) {
+        if([recorder record]) {
+            timer = [NSTimer scheduledTimerWithTimeInterval:PING_INTERVAL target:self selector:@selector(onTick:) userInfo:nil repeats:YES];
+        } else {
+            [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Could not start record", @"Error message") code:0 userInfo:nil]];
         }
     } else {
         [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Recording is already acitve", @"Error message") code:0 userInfo:nil]];
@@ -153,14 +167,7 @@
 -(void) stop {
     [timer invalidate];
     timer = nil;
-    [recorder stop];    
-    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-    [audioSession setActive:NO error:nil];
-    NSError *error;
-    [audioSession setCategory:AVAudioSessionCategoryRecord error:&error];
-    if(error) {
-        [self.delegate operationFailure:error];
-    }
+    [recorder stop];
 }
 
 -(void)onTick:(NSTimer *)timer {
@@ -221,6 +228,7 @@
             NSLog(@"Can not convert to aac for this device!");
             NSData *data = [[NSData alloc] initWithContentsOfURL:self.fileUrl];
             [self removeFileIfExistsAtUrl:[self fileUrl]];
+            [self setAudioSession:NO];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.delegate recordDataIsPrepared:data withExtension:[self.fileUrl pathExtension]];
             });
@@ -245,6 +253,27 @@
  *****************************************************************************************************/
 -(void)mixAudiosWithTargetUrl:(NSURL*)targetUrl Completion:(void(^)(void))completion
 {
+    
+#warning "There is aproblem with mixing, solve it!"
+    
+    NSError *error;
+    NSURL *sourceUrl = (targetUrl == self.fileUrl) ? [self backUpFileUrl] : self.fileUrl;
+    
+    if([self fileExistsAtUrl:sourceUrl]) {
+        [self removeFileIfExistsAtUrl:targetUrl];
+        [[NSFileManager defaultManager] copyItemAtPath:sourceUrl.path toPath:targetUrl.path error:&error];
+        if(error) {
+            [self.delegate operationFailure:error];
+        } else {
+            completion();
+        }
+    } else {
+        NSLog(@"Did not back up, cos there is no source! ;)");
+        completion();
+    }
+    
+    return;
+    /*
     NSError *error;
     AVMutableComposition* mixComposition = [AVMutableComposition composition];
     [mixComposition addMutableTrackWithMediaType:AVMediaTypeAudio  preferredTrackID:kCMPersistentTrackID_Invalid];
@@ -280,6 +309,7 @@
     _assetExport.outputURL = targetUrl;
     _assetExport.shouldOptimizeForNetworkUse = YES;
     [_assetExport exportAsynchronouslyWithCompletionHandler:completion];
+    */
 }
 
 -(void) beep {
@@ -294,25 +324,15 @@
 #pragma mark - Voice Record Conversion
 
 -(void) convertM4aToAAC {
-    
     // Register an Audio Session interruption listener, important for AAC conversion
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(audioSessionInterrupted:)
                                                  name:AVAudioSessionInterruptionNotification
                                                object:nil];
-    
-    NSError *error;
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    [session setCategory:AVAudioSessionCategoryRecord error:&error];
-    if(error) {
-        [self.delegate operationFailure:error];
-    } else {
-        [session setActive:YES error:nil];
-    }
-    
     tPAACAudioConverter = [[TPAACAudioConverter alloc] initWithDelegate:self
                                                                  source:[self fileUrl].path
                                                             destination:[self aacFileUrl].path];
+    [self removeFileIfExistsAtUrl:[self aacFileUrl]];
     [tPAACAudioConverter start];
 }
 
@@ -323,6 +343,7 @@
     NSData *data = [[NSData alloc] initWithContentsOfURL:[self aacFileUrl]];
     [self removeFileIfExistsAtUrl:[self fileUrl]];
     [self removeFileIfExistsAtUrl:[self aacFileUrl]];
+    [self setAudioSession:NO];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.delegate recordDataIsPrepared:data withExtension:[[self aacFileUrl] pathExtension]];
     });
@@ -341,10 +362,10 @@
 
 - (void)audioSessionInterrupted:(NSNotification*)notification {
     AVAudioSessionInterruptionType type = [notification.userInfo[AVAudioSessionInterruptionTypeKey] integerValue];
-    
     if ( type == AVAudioSessionInterruptionTypeEnded) {
-        [[AVAudioSession sharedInstance] setActive:YES error:NULL];
-        if ( tPAACAudioConverter ) [tPAACAudioConverter resume];
+        if ( [self setAudioSession:YES] && tPAACAudioConverter ) {
+            [tPAACAudioConverter resume];
+        }
     } else if ( type == AVAudioSessionInterruptionTypeBegan ) {
         if ( tPAACAudioConverter ) [tPAACAudioConverter interrupt];
     }

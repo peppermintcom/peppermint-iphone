@@ -7,15 +7,15 @@
 //
 
 #import "LoginWithEmailViewController.h"
+#import "LoginNavigationViewController.h"
 
 #define NUMBER_OF_GROUPS    2
 #define INDEX_NAME_SURNAME    0
 #define INDEX_EMAIL           1
 
-#define DISTANCE_BTW_SECTIONS       24
+#define DISTANCE_BTW_SECTIONS       12
 
 @interface LoginWithEmailViewController ()
-
 @end
 
 @implementation LoginWithEmailViewController
@@ -24,13 +24,25 @@
     [super viewDidLoad];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;    
-    self.doneLabel.font = [UIFont openSansSemiBoldFontOfSize:14];
+    self.doneLabel.font = [UIFont openSansFontOfSize:14];
     self.doneLabel.textColor = [UIColor whiteColor];
-    self.doneLabel.text = LOC(@"Done",@"Done button text");
+    self.doneLabel.text = LOC(@"Login",@"Login button text");
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    NSAssert(self.loginModel != nil, @"LoginModel must be initiated before LoginWithEmailViewController is shown");
+}
+
+-(void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self showKeyboardForNameSurname];
+}
+
+-(void) showKeyboardForNameSurname {
+    NSIndexPath* indexPath = [NSIndexPath indexPathForItem:INDEX_NAME_SURNAME inSection:0];
+    LoginTextFieldTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    [cell.textField becomeFirstResponder];
 }
 
 #pragma mark - UITableView
@@ -44,13 +56,15 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LoginTextFieldTableViewCell *loginTextFieldCell = [CellFactory cellLoginTextFieldTableViewCellFromTable:tableView forIndexPath:indexPath];
+    LoginTextFieldTableViewCell *loginTextFieldCell = [CellFactory cellLoginTextFieldTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
     
     NSInteger index = indexPath.section;
     if(index == INDEX_NAME_SURNAME) {
         loginTextFieldCell.textField.placeholder = @"Name surname";
+        loginTextFieldCell.textField.text = self.loginModel.peppermintMessageSender.nameSurname;
     } else if (index == INDEX_EMAIL) {
         loginTextFieldCell.textField.placeholder = @"Email";
+        loginTextFieldCell.textField.text = self.loginModel.peppermintMessageSender.email;
     }
     return loginTextFieldCell;
 }
@@ -71,6 +85,19 @@
     return view;
 }
 
+#pragma mark - LoginTextFieldTableViewCellDelegate
+
+-(void) updatedTextFor:(UITableViewCell*) cell atIndexPath:(NSIndexPath*) indexPath {
+    LoginTextFieldTableViewCell* loginTextCell = (LoginTextFieldTableViewCell*) cell;
+    NSString *text = loginTextCell.textField.text;
+    NSInteger index = indexPath.section;
+    if(index == INDEX_NAME_SURNAME) {
+        self.loginModel.peppermintMessageSender.nameSurname = text;
+    } else if (index == INDEX_EMAIL) {
+        self.loginModel.peppermintMessageSender.email = text;
+    }
+}
+
 #pragma mark - Navigation
 
 -(IBAction) backButtonPressed:(id)sender {
@@ -78,13 +105,50 @@
 }
 
 -(IBAction) doneButtonPressed:(id)sender {
-    NSLog(@"done bakalım...");
+    if([self.loginModel.peppermintMessageSender isValid]) {
+        [self.loginModel performFacebookLogin];
+    } else {
+        NSLog(@"Please supply login information");
+    }
 }
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - Blink Animation
+#warning "Add some animation"
+/*
+-(void) startFlashingbutton
+{
+    if (buttonFlashing) return;
+    buttonFlashing = YES;
+    self.button.alpha = 1.0f;
+    [UIView animateWithDuration:0.12
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseInOut |
+     UIViewAnimationOptionRepeat |
+     UIViewAnimationOptionAutoreverse |
+     UIViewAnimationOptionAllowUserInteraction
+                     animations:^{
+                         self.button.alpha = 0.0f;
+                     }
+                     completion:^(BOOL finished){
+                         // Do nothing
+                     }];
 }
+
+-(void) stopFlashingbutton
+{
+    if (!buttonFlashing) return;
+    buttonFlashing = NO;
+    [UIView animateWithDuration:0.12
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseInOut |
+     UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         self.button.alpha = 1.0f;
+                     }
+                     completion:^(BOOL finished){
+                         // Do nothing
+                     }];
+}
+*/
 
 @end

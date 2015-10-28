@@ -55,7 +55,7 @@
     return cell;
 }
 
-+(LoginTextFieldTableViewCell*) cellLoginTextFieldTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath {
++(LoginTextFieldTableViewCell*) cellLoginTextFieldTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath withDelegate:(id<LoginTextFieldTableViewCellDelegate>) delegate {
     NSString *cellKey = @"LoginTextFieldTableViewCell";
     LoginTextFieldTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellKey];
     if(!cell) {
@@ -63,6 +63,7 @@
         cell = [topLevelObjects objectAtIndex:0];
     }
     cell.indexPath = indexPath;
+    cell.delegate = delegate;
     return cell;
 }
 

@@ -7,7 +7,7 @@
 //
 
 #import "LoginViewController.h"
-#import "AppDelegate.h"
+#import "LoginNavigationViewController.h"
 #import "LoginWithEmailViewController.h"
 
 #define NUMBER_OF_LOGIN_OPTIONS 3
@@ -94,9 +94,11 @@
 -(void) selectedLoginTableViewCell:(UITableViewCell*) cell atIndexPath:(NSIndexPath*) indexPath {
     NSInteger index = indexPath.section;
     if(index == SECTION_LOGIN_WITH_GOOGLE) {
-        NSLog(@"Google login");
+        LoginNavigationViewController *loginNavigationViewController = (LoginNavigationViewController*)self.navigationController;
+        [loginNavigationViewController.loginModel performGoogleLogin];
     } else if (index == SECTION_LOGIN_WITH_FACEBOOK) {
-        NSLog(@"Facebook login");
+        LoginNavigationViewController *loginNavigationViewController = (LoginNavigationViewController*)self.navigationController;
+        [loginNavigationViewController.loginModel performFacebookLogin];
     } else if (index == SECTION_LOGIN_WITH_EMAIL) {
         [self performSegueWithIdentifier:SEGUE_LOGIN_WITH_EMAIL sender:self];
     }
@@ -106,25 +108,12 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:SEGUE_LOGIN_WITH_EMAIL]) {
-        
-        LoginWithEmailViewController *loginWithEmailViewController = segue.destinationViewController;
-        
-#warning "Handle login operations..."
-        
-        NSLog(@"implement if needed..");
+        LoginWithEmailViewController *loginWithEmailViewController =
+            (LoginWithEmailViewController*) segue.destinationViewController;
+        LoginNavigationViewController *loginNavigationViewController =
+            (LoginNavigationViewController*)self.navigationController;
+        loginWithEmailViewController.loginModel = loginNavigationViewController.loginModel;
     }
-}
-
-#pragma mark - PresentLoginModalView
-
-+(void) logUserInWithDelegate:(id<LoginViewControllerDelegate>) delegate {
-    UIViewController *rootVC = [AppDelegate Instance].window.rootViewController;
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:[NSBundle mainBundle]];
-    LoginViewController *loginVc = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-    loginVc.delegate = delegate;
-    [rootVC presentViewController:loginVc.navigationController animated:YES completion:^{
-        NSLog(@"Login is shown!");
-    }];
 }
 
 @end

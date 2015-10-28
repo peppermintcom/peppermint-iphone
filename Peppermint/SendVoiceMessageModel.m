@@ -8,9 +8,7 @@
 
 #import "SendVoiceMessageModel.h"
 
-@implementation SendVoiceMessageModel {
-    RecentContactsModel *recentContactsModel;
-}
+@implementation SendVoiceMessageModel
 
 -(id) init {
     self = [super init];
@@ -21,7 +19,7 @@
         awsModel = [AWSModel new];
         awsModel.delegate = self;
         [awsModel initRecorder];
-        self.isCancelled = NO;
+        isCancelled = NO;
     }
     return self;
 }
@@ -77,6 +75,14 @@ SUBSCRIBE(NetworkFailure) {
 
 -(void) messagePrepareIsStarting {
     [self.delegate messageIsSendingWithCancelOption:YES];
+}
+
+-(void) cancelSending {
+    NSLog(@"Cancelling!");
+    awsModel.delegate = nil;
+    awsModel = nil;
+    recentContactsModel = nil;
+    isCancelled = YES;
 }
 
 @end

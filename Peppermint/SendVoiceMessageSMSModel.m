@@ -22,7 +22,7 @@
 }
 
 -(void) sendVoiceMessageWithData:(NSData *)data withExtension:(NSString *)extension  {
-    if(!self.isCancelled) {
+    if(!isCancelled) {
         if([self isServiceAvailable]) {
             [super sendVoiceMessageWithData:data withExtension:extension];
             [awsModel startToUploadData:data ofType:[self typeForExtension:extension]];
@@ -38,7 +38,7 @@
 
 -(void) fileUploadCompletedWithPublicUrl:(NSString*) url {
     NSLog(@"File Upload is finished with url %@", url);
-    if(!self.isCancelled) {
+    if(!isCancelled) {
         [self fireSMSMessageWithUrl:url];
     } else {
         NSLog(@"Mandrill message sending is not fired, cos message is cancelled");
@@ -87,7 +87,7 @@
 }
 
 -(void) messagePrepareIsStarting {
-    NSLog(@"Do not show sending message");
+    [self.delegate messageIsSendingWithCancelOption:NO];
 }
 
 @end

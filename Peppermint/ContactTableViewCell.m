@@ -73,6 +73,7 @@
     [timer invalidate];
     UITouch *touch = [[event allTouches] anyObject];
     touchBeginPoint = [touch locationInView:rootView];
+    NSLog(@"didBeginItemSelectionOnIndexpath");
     [self.delegate didBeginItemSelectionOnIndexpath:self.indexPath location:touchBeginPoint];
 }
 
@@ -101,6 +102,7 @@
                [timer invalidate];
             timer = nil;
             [self applyNonSelectedStyle];
+            NSLog(@"didCancelItemSelectionOnIndexpath");
             [self.delegate didCancelItemSelectionOnIndexpath:self.indexPath location:touchBeginPoint];
         }
     }
@@ -115,9 +117,11 @@
             
             UITouch *touch = [[event allTouches] anyObject];
             CGPoint endPoint = [touch locationInView:rootView];
+            NSLog(@"didShortTouchOnIndexPath");
             [self.delegate didShortTouchOnIndexPath:self.indexPath location:endPoint];
         } else {
             timer = nil;
+            NSLog(@"didFinishItemSelectionOnIndexPath");
             [self.delegate didFinishItemSelectionOnIndexPath:self.indexPath location:touchBeginPoint];
         }
     }

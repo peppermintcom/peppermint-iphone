@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Peppermint/RecordingModel.m"
-            timestampString = "467629378.442898"
+            filePath = "Peppermint/BaseCustomView.m"
+            timestampString = "467709301.067326"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
-            landmarkName = "-init"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "-operationFailure:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -7,17 +7,10 @@
 //
 
 #import "BaseViewController.h"
-#import "PeppermintMessageSender.h"
-
-@protocol LoginViewControllerDelegate <NSObject>
--(void) loginSucceedWithMessageSender:(PeppermintMessageSender*) peppermintMessageSender;
-@end
+#import "LoginModel.h"
 
 @interface LoginViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, LoginTableViewCellDelegate>
-@property (weak, nonatomic) id<LoginViewControllerDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UILabel *loginLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
-+(void) logUserInWithDelegate:(id<LoginViewControllerDelegate>) delegate;
 
 @end

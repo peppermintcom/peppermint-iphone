@@ -8,10 +8,15 @@
 
 #import "SendVoiceMessageMandrillModel.h"
 
-@implementation SendVoiceMessageMandrillModel
+@implementation SendVoiceMessageMandrillModel {
+    NSData *_data;
+    NSString *_extension;
+}
 
 -(void) sendVoiceMessageWithData:(NSData *)data withExtension:(NSString *)extension  {
     [super sendVoiceMessageWithData:data withExtension:extension];
+    _data = data;
+    _extension = extension;
     [self.delegate messageIsSendingWithCancelOption:YES];
     [awsModel startToUploadData:data ofType:[self typeForExtension:extension]];
 }
@@ -20,7 +25,8 @@
 
 -(void) fileUploadCompletedWithPublicUrl:(NSString*) url {
     NSLog(@"File Upload is finished with url %@", url);
-    if(!self.isCancelled) {
+    if(!isCancelled) {
+        [self.delegate messageIsSendingWithCancelOption:NO];
         [self fireMandrillMessageWithUrl:url];
     } else {
         NSLog(@"Mandrill message sending is not fired, cos message is cancelled");
@@ -33,11 +39,8 @@
     message.from_email = @"noreply@peppermint.com";
     message.from_name = self.peppermintMessageSender.nameSurname;
     message.subject = LOC(@"Mail Subject",@"Default Mail Subject");
-    message.html = LOC(@"Mail Body",@"Default Mail Body");
-    
-    message.html = [NSString stringWithFormat:@"%@ \n\n<a href=\"%@\">Message, (TEST NOTE: Attachment is removed cos there is a link now. It can be added again too. decision will be given for this behaviour)</a>", message.html,
-                    url];
-    
+    NSString *body = [NSString stringWithFormat:LOC(@"Mail Body Format",@"Default Mail Body Format"), url];
+    message.html = body;
     MandrillToObject *recipient = [MandrillToObject new];
     recipient.email = self.selectedPeppermintContact.communicationChannelAddress;
     recipient.name = self.selectedPeppermintContact.nameSurname;
@@ -45,13 +48,13 @@
     [message.to addObject:recipient];
     [message.tags addObject:@"Peppermint iOS"];
     
-    /*
+    
     MandrillMailAttachment *mailAttachment = [MandrillMailAttachment new];
-    mailAttachment.type = [self typeForExtension:extension];
-    mailAttachment.name = [NSString stringWithFormat:@"Peppermint.%@", extension];
-    mailAttachment.content = [data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
+    mailAttachment.type = [self typeForExtension:_extension];
+    mailAttachment.name = [NSString stringWithFormat:@"Peppermint.%@", _extension];
+    mailAttachment.content = [_data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
     [message.attachments addObject:mailAttachment];
-    */
+    
     [message.headers setObject:self.peppermintMessageSender.email forKey:@"Reply-To"];
     [self.delegate messageIsSendingWithCancelOption:NO];
     [[MandrillService new] sendMessage:message];
@@ -63,6 +66,12 @@ SUBSCRIBE(MandrillMesssageSent) {
 
 -(BOOL) needsAuth {
     return YES;
+}
+
+-(void) cancelSending {
+    _data = nil;
+    _extension = nil;
+    [super cancelSending];
 }
 
 @end

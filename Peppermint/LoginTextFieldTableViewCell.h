@@ -8,6 +8,11 @@
 
 #import "BaseTableViewCell.h"
 
-@interface LoginTextFieldTableViewCell : BaseTableViewCell
-@property (weak, nonatomic) IBOutlet UITextField *textField;;
+@protocol LoginTextFieldTableViewCellDelegate <BaseTableViewCellDelegate>
+-(void) updatedTextFor:(UITableViewCell*) cell atIndexPath:(NSIndexPath*) indexPath;
+@end
+
+@interface LoginTextFieldTableViewCell : BaseTableViewCell <UITextFieldDelegate>
+@property (weak, nonatomic) id<LoginTextFieldTableViewCellDelegate> delegate;
+@property (weak, nonatomic) IBOutlet UITextField *textField;
 @end

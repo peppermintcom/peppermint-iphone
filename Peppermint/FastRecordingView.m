@@ -7,11 +7,11 @@
 //
 
 #import "FastRecordingView.h"
-#import <AudioToolbox/AudioServices.h>
 #import "ExplodingView.h"
+#import "SendVoiceMessageMandrillModel.h"
 
 @implementation FastRecordingView {
-    BOOL isAppInBackground;
+    BOOL isAppGoingToBackground;
 }
 
 +(FastRecordingView*) createInstanceWithDelegate:(UIViewController<FastRecordingViewDelegate>*) delegate {
@@ -36,7 +36,7 @@
     [self.m13ProgressViewPie setSecondaryColor:[UIColor clearColor]];
     self.hidden = YES;
     defaults_set_object(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH, 0);
-    isAppInBackground = NO;
+    isAppGoingToBackground = NO;
     self.swipeInAnyDirectionLabel.text = LOC(@"Swipe in any direction to cancel", @"Swipe in any direction label");
     REGISTER();
 }
@@ -48,9 +48,7 @@
                                       self.sendVoiceMessageModel.selectedPeppermintContact.communicationChannelAddress
                                       ];
     self.sendVoiceMessageModel.delegate = self;
-    self.recordingModel = nil;
     self.recordingModel = [RecordingModel new];
-    [RecordingModel setPreviousFileLength:0];
     self.recordingModel.delegate = self;
     self.progressContainerView.hidden = NO;
 }
@@ -69,25 +67,27 @@
 -(void) finishRecordingWithGestureIsValid:(BOOL) isGestureValid {
     [self.recordingModel stop];
     
-    BOOL isRecordingLong = self.totalSeconds >= MAX_RECORD_TIME;
-    BOOL isRecordingShort = self.totalSeconds <= MIN_VOICE_MESSAGE_LENGTH;
-    BOOL isLoginInfoValid = self.sendVoiceMessageModel.peppermintMessageSender.isValid;
-    
-    if(!isGestureValid) {
-        [self dissmissWithExplode];
-    } else if (isRecordingLong) {
-        NSLog(@"Max time reached..."); //This action is handled in "timerUpdated:" delegate method
-    } else if (isRecordingShort) {
-        [self showAlertToRecordMoreThanMinimumMessageLength];
-    } else if (isAppInBackground) {
-        [self showAlertForRecordIsCut];
-    } else if ([self.sendVoiceMessageModel needsAuth] && !isLoginInfoValid ) {
-#warning "implement login modal view"
-        //[LoginViewController logUserInWithDelegate:self];        
-        [self showAlertToCompleteLoginInformation];
-    } else {
-        [self dissmissWithFadeOut];
-        [self performOperationsToSend];
+    if(!isAppGoingToBackground) {
+        
+        BOOL isRecordingLong = self.totalSeconds >= MAX_RECORD_TIME;
+        BOOL isRecordingShort = self.totalSeconds <= MIN_VOICE_MESSAGE_LENGTH;
+        BOOL isLoginInfoValid = self.sendVoiceMessageModel.peppermintMessageSender.isValid;
+        
+        if(!isGestureValid) {
+            [self dissmissWithExplode];
+        } else if (isRecordingLong) {
+            NSLog(@"Max time reached..."); //This action is handled in "timerUpdated:" delegate method
+        } else if (isRecordingShort) {
+            [self showAlertToRecordMoreThanMinimumMessageLength];
+        } else if (true) {// || [self.sendVoiceMessageModel needsAuth] && !isLoginInfoValid ) {
+            [LoginNavigationViewController logUserInWithDelegate:self];
+
+#warning "Delete alert process when finished!"
+            //[self showAlertToCompleteLoginInformation];
+        } else {
+            [self dissmissWithFadeOut];
+            [self performOperationsToSend];
+        }
     }
 }
 
@@ -97,7 +97,7 @@
 }
 
 -(void) cancelMessageSending {
-    self.sendVoiceMessageModel.isCancelled = YES;
+    [self.sendVoiceMessageModel cancelSending];
 }
 
 #pragma mark - Dissmiss
@@ -134,8 +134,12 @@
 }
 
 -(void) accessRightsAreSupplied {
-    if([RecordingModel checkPreviousFileLength] < 0.01) {
+    [self.recordingModel resetRecording];
+    if([RecordingModel checkPreviousFileLength] < MIN_VOICE_MESSAGE_LENGTH) {
         [self beginRecording];
+    } else {
+        NSLog(@"Önceden kalan kayıt var sanırım!");
+        [self showAlertForRecordIsCut];
     }
 }
 
@@ -177,6 +181,15 @@
 -(void) messageIsCancelledByTheUserOutOfApp {
     [self.delegate messageIsCancelledByTheUserOutOfApp];
 }
+
+#pragma mark - LoginNavigationViewControllerDelegate
+
+-(void) loginSucceedWithMessageSender:(PeppermintMessageSender*) peppermintMessageSender {
+    NSLog(@"login %@ - %@", peppermintMessageSender.nameSurname, peppermintMessageSender.email);
+    [self dissmissWithFadeOut];
+    [self performOperationsToSend];
+}
+
 
 #pragma mark - AlertView Delegate
 
@@ -241,17 +254,17 @@
     else if ([alertView.message isEqualToString:LOC(@"Recording is cut", @"Recording is cut, how to continue question?")]) {
         switch (buttonIndex) {
             case ALERT_BUTTON_INDEX_CANCEL:
-                self.recordingModel = nil;
+                [RecordingModel setPreviousFileLength:0];
                 [self dissmissWithFadeOut];
+                //__clear backup files
                 break;
             case ALERT_BUTTON_INDEX_OTHER_1:
-                [self dissmissWithFadeOut];
-                [self performOperationsToSend];
+                [self.recordingModel record];
+                [self finishRecordingWithGestureIsValid:YES];
                 break;
             default:
                 break;
         }
-        [self.recordingModel record];
     }
     else if ([alertView.message isEqualToString:LOC(@"Time is up", @"Max time reached information message")]) {
         switch (buttonIndex) {
@@ -318,31 +331,45 @@
 
 SUBSCRIBE(ApplicationWillResignActive) {
     NSLog(@"ApplicationWillResignActive");
-    isAppInBackground = YES;
-    //[self.recordingModel backUpRecording];
+    isAppGoingToBackground = YES;
+    [self.recordingModel backUpRecording];
 }
 
-SUBSCRIBE(ApplicationDidBecomeActive) {
+SUBSCRIBE(ApplicationDidEnterBackground) {
+    NSLog(@"App is in background");
+#warning "Handle if the model objects are released when the app is in background. Investigate the possibility of this situation can happen"
+    //NSLog(@"Killing sendVoiceMessageModel of %@", self.sendVoiceMessageModel.class);
+}
+
+SUBSCRIBE(ApplicationWillEnterForeground) {
     NSLog(@"ApplicationDidBecomeActive");
-    isAppInBackground = NO;
-    /*
+    isAppGoingToBackground = NO;
     CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
     if( previousFileLength > MIN_VOICE_MESSAGE_LENGTH) {
-     
-        if(!self.recordingModel)
-            self.recordingModel = [RecordingModel new];
-        else
-            NSLog(@"recordingModel was already existing!!");
+        if(!self.sendVoiceMessageModel) {
+            /*
+            id object = [[NSClassFromString(@"NameofClass") alloc] init];
+            self.sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
+            self.sendVoiceMessageModel.selectedPeppermintContact = [PeppermintContact new];
+            NSString *address = (NSString*)defaults_object(@"KEY1");
+            self.sendVoiceMessageModel.selectedPeppermintContact.communicationChannelAddress = address;
+             */
+            NSError *error = [NSError errorWithDomain:@"sendVoiceMessageModel was released. This message can not be sent! :(" code:-1 userInfo:nil];
+            [self.delegate operationFailure:error];
+        }
+        self.sendVoiceMessageModel.delegate = self;
         
-        [self timerUpdated:previousFileLength];
-        self.recordingModel.delegate = self;
-        [self.recordingModel stop];
-     
-     
+        if(!self.recordingModel) {
+            self.recordingModel = [RecordingModel new];
+            self.recordingModel.delegate = self;
+        } else {
+            self.recordingModel.delegate = self;
+            [self showAlertForRecordIsCut];
+        }
     } else {
         [RecordingModel setPreviousFileLength:0];
+        [self dissmissWithFadeOut];
     }
-    */
 }
 
 @end

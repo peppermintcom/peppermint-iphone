@@ -59,4 +59,8 @@ NSLocalizedStringFromTable(\
 
 #define KEYCHAIN_AWS_JWT    @"keychain-aws-jwt"
 
+#define CHARS_FOR_USERNAME @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 "
+#define CHARS_FOR_PASSWORD @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@"
+
+
 #endif

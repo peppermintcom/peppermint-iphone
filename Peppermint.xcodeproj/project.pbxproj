@@ -34,6 +34,8 @@
 		B165EF181BB71EC0008C6F71 /* PeppermintContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF171BB71EC0008C6F71 /* PeppermintContact.m */; };
 		B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF1C1BB72242008C6F71 /* EmptyResultTableViewCell.m */; };
 		B165EF1F1BB72254008C6F71 /* EmptyResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B165EF1E1BB72254008C6F71 /* EmptyResultTableViewCell.xib */; };
+		B17933121BE0B7B00016F158 /* LoginNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17933111BE0B7B00016F158 /* LoginNavigationViewController.m */; };
+		B17933151BE0C19C0016F158 /* LoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B17933141BE0C19C0016F158 /* LoginModel.m */; };
 		B179F83A1BC9316F0089D709 /* SearchMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B179F8391BC9316F0089D709 /* SearchMenuTableViewCell.m */; };
 		B179F83C1BC931820089D709 /* SearchMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B179F83B1BC931820089D709 /* SearchMenuTableViewCell.xib */; };
 		B17B3D311BB6898C009B8BC5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D301BB6898C009B8BC5 /* main.m */; };
@@ -144,6 +146,10 @@
 		B165EF1B1BB72242008C6F71 /* EmptyResultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyResultTableViewCell.h; sourceTree = "<group>"; };
 		B165EF1C1BB72242008C6F71 /* EmptyResultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyResultTableViewCell.m; sourceTree = "<group>"; };
 		B165EF1E1BB72254008C6F71 /* EmptyResultTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyResultTableViewCell.xib; sourceTree = "<group>"; };
+		B17933101BE0B7B00016F158 /* LoginNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginNavigationViewController.h; sourceTree = "<group>"; };
+		B17933111BE0B7B00016F158 /* LoginNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginNavigationViewController.m; sourceTree = "<group>"; };
+		B17933131BE0C19C0016F158 /* LoginModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginModel.h; sourceTree = "<group>"; };
+		B17933141BE0C19C0016F158 /* LoginModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginModel.m; sourceTree = "<group>"; };
 		B179F8381BC9316F0089D709 /* SearchMenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchMenuTableViewCell.h; sourceTree = "<group>"; };
 		B179F8391BC9316F0089D709 /* SearchMenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchMenuTableViewCell.m; sourceTree = "<group>"; };
 		B179F83B1BC931820089D709 /* SearchMenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchMenuTableViewCell.xib; sourceTree = "<group>"; };
@@ -372,6 +378,8 @@
 				B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */,
 				B15B15BF1BDBC55A00C0C171 /* AWSModel.h */,
 				B15B15C01BDBC55A00C0C171 /* AWSModel.m */,
+				B17933131BE0C19C0016F158 /* LoginModel.h */,
+				B17933141BE0C19C0016F158 /* LoginModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -590,6 +598,8 @@
 				B17B3D5D1BB6A504009B8BC5 /* ContactsViewController.m */,
 				B17B3D621BB6AE8B009B8BC5 /* RecordingViewController.h */,
 				B17B3D631BB6AE8B009B8BC5 /* RecordingViewController.m */,
+				B17933101BE0B7B00016F158 /* LoginNavigationViewController.h */,
+				B17933111BE0B7B00016F158 /* LoginNavigationViewController.m */,
 				B1BB60181BDE127500C1140B /* LoginViewController.h */,
 				B1BB60191BDE127500C1140B /* LoginViewController.m */,
 				B1BB605D1BDE36AF00C1140B /* LoginWithEmailViewController.h */,
@@ -911,8 +921,10 @@
 				B1BB60151BDE0E0200C1140B /* LoginTableViewCell.m in Sources */,
 				B13B07671BD3736400974AC3 /* MandrillMailAttachment.m in Sources */,
 				B1C83A191BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m in Sources */,
+				B17933121BE0B7B00016F158 /* LoginNavigationViewController.m in Sources */,
 				B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */,
 				B1F93E901BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld in Sources */,
+				B17933151BE0C19C0016F158 /* LoginModel.m in Sources */,
 				B1EF40F21BB8579D00042E4B /* M13ProgressView.m in Sources */,
 				B1F93E9E1BC8ED58005F2128 /* RecentContact.m in Sources */,
 				B1BB601D1BDE16D400C1140B /* UIStoryboard_Addition.m in Sources */,
