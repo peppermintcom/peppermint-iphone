@@ -57,3 +57,11 @@
 "Log In with Email" = "Log In With Email";
 "Please Login" = "To send your first message please select how to log in:";
 "Login" = "Login";
+"Contacts" = "Contacts";
+"Settings" = "Settings";
+"Tutorial" = "Tutorial";
+"Feedback" = "Feedback";
+"support@peppermint.com" = "support@peppermint.com";
+"Feedback account error" = "Please add and configure at least one mail account on this device to be able to send feedbacks";
+"Feedback sent with success" = "Your feedback is sent successfully";
+"Feedback Subject" = "Peppermint Feedback";

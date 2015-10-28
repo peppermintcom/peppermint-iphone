@@ -108,6 +108,7 @@
         self.hidden = YES;
         self.alpha = 1;
         [self timerUpdated:0];
+        [self.delegate fastRecordingViewDissappeared];
     }];
 }
 

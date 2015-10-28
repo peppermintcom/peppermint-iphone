@@ -32,7 +32,9 @@ PODS:
   - MBProgressHUD (0.9.1)
   - OpenSans (1.0.3)
   - REMenu (1.10)
+  - RESideMenu (4.0.7)
   - SimpleKeychain (0.5.0)
+  - SlideMenu3D (0.1.5)
   - tolo (1.0.0)
 
 DEPENDENCIES:
@@ -45,7 +47,9 @@ DEPENDENCIES:
   - MBProgressHUD (~> 0.9.1)
   - OpenSans
   - REMenu (~> 1.10)
+  - RESideMenu (~> 4.0.7)
   - SimpleKeychain
+  - SlideMenu3D
   - tolo (~> 1.0)
 
 SPEC CHECKSUMS:
@@ -58,7 +62,9 @@ SPEC CHECKSUMS:
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   OpenSans: 33078846463eae780aa5f82986b51cce085f970d
   REMenu: 30dad195930adf6c5eeb8041e3257aa60bf9fa49
+  RESideMenu: f24c508404b49c667344c54aba7e590883533958
   SimpleKeychain: ae04c7ca6a960a146081010b412cf0ba2ecb10fe
+  SlideMenu3D: 2acf790c19c7a97d3699cdfec9d0fc35125700ee
   tolo: 906f6fe2943451e7354c694ce968d76ea344c01d
 
 COCOAPODS: 0.38.2

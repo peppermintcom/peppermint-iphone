@@ -118,4 +118,23 @@
     return color;
 }
 
++ (UIColor *) slideMenuTableViewColor {
+    static dispatch_once_t onceToken;
+    static UIColor *color;
+    dispatch_once(&onceToken, ^{
+        color = [UIColor colorWithRed:0.925f green:0.953f blue:0.945f alpha:1.00f];
+    });
+    return color;
+}
+
++ (UIColor *) slideMenuTableViewCellTextLabelColor {
+    static dispatch_once_t onceToken;
+    static UIColor *color;
+    dispatch_once(&onceToken, ^{
+        color = [UIColor colorWithRed:0.180f green:0.741f blue:0.698f alpha:1.00f];
+    });
+    return color;
+}
+
+
 @end

@@ -15,7 +15,7 @@
 
 #define MAIN_STORYBOARD         @"Main"
 #define LOGIN_STORYBOARD        @"Login"
-#define MAIN_VIEWCONTROLLER     @"ContactsViewController"
+#define MAIN_VIEWCONTROLLER     @"ReSideMenuContainerViewController"
 
 @interface AppDelegate ()
 
@@ -43,7 +43,8 @@
     BOOL isTutorialShowed = [defaults_object(DEFAULTS_KEY_ISTUTORIALSHOWED) boolValue];
     if(isTutorialShowed) {
         UIViewController *vc = [storyboard instantiateViewControllerWithIdentifier:MAIN_VIEWCONTROLLER];
-        [nvc setViewControllers:@[vc] animated:NO];
+        [nvc pushViewController:vc animated:NO];
+        //[nvc setViewControllers:@[vc] animated:NO];
     } else {
         defaults_set_object(DEFAULTS_KEY_ISTUTORIALSHOWED, @(YES));
     }

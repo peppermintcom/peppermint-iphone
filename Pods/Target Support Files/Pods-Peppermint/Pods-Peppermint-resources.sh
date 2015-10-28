@@ -60,10 +60,12 @@ install_resource()
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "${BUILT_PRODUCTS_DIR}/EasyMailSender.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/OpenSans.bundle"
+  install_resource "${BUILT_PRODUCTS_DIR}/SlideMenu3D.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "${BUILT_PRODUCTS_DIR}/EasyMailSender.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/OpenSans.bundle"
+  install_resource "${BUILT_PRODUCTS_DIR}/SlideMenu3D.bundle"
 fi
 
 mkdir -p "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

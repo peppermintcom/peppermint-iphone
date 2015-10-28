@@ -22,5 +22,7 @@
 + (UIColor *) facebookLoginColor;
 + (UIColor *) googleLoginColor;
 + (UIColor *) emailLoginColor;
++ (UIColor *) slideMenuTableViewColor;
++ (UIColor *) slideMenuTableViewCellTextLabelColor;
 
 @end

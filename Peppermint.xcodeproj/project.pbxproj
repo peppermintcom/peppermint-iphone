@@ -34,6 +34,10 @@
 		B165EF181BB71EC0008C6F71 /* PeppermintContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF171BB71EC0008C6F71 /* PeppermintContact.m */; };
 		B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF1C1BB72242008C6F71 /* EmptyResultTableViewCell.m */; };
 		B165EF1F1BB72254008C6F71 /* EmptyResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B165EF1E1BB72254008C6F71 /* EmptyResultTableViewCell.xib */; };
+		B16DA2171BE0F2C100EBF043 /* SlideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B16DA2161BE0F2C100EBF043 /* SlideMenuViewController.m */; };
+		B16DA2201BE10A7A00EBF043 /* SlideMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B16DA21F1BE10A7A00EBF043 /* SlideMenuTableViewCell.m */; };
+		B16DA2221BE10A8B00EBF043 /* SlideMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B16DA2211BE10A8B00EBF043 /* SlideMenuTableViewCell.xib */; };
+		B1714CC81BE11EE6004F13A4 /* ReSideMenuContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1714CC71BE11EE6004F13A4 /* ReSideMenuContainerViewController.m */; };
 		B17933121BE0B7B00016F158 /* LoginNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17933111BE0B7B00016F158 /* LoginNavigationViewController.m */; };
 		B17933151BE0C19C0016F158 /* LoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B17933141BE0C19C0016F158 /* LoginModel.m */; };
 		B179F83A1BC9316F0089D709 /* SearchMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B179F8391BC9316F0089D709 /* SearchMenuTableViewCell.m */; };
@@ -81,6 +85,7 @@
 		B1F93E981BC8E328005F2128 /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E971BC8E328005F2128 /* Repository.m */; };
 		B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */; };
 		B1F93E9E1BC8ED58005F2128 /* RecentContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E9D1BC8ED58005F2128 /* RecentContact.m */; };
+		B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FE184F1BE1676D002772B4 /* FeedBackModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,6 +151,13 @@
 		B165EF1B1BB72242008C6F71 /* EmptyResultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyResultTableViewCell.h; sourceTree = "<group>"; };
 		B165EF1C1BB72242008C6F71 /* EmptyResultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyResultTableViewCell.m; sourceTree = "<group>"; };
 		B165EF1E1BB72254008C6F71 /* EmptyResultTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyResultTableViewCell.xib; sourceTree = "<group>"; };
+		B16DA2151BE0F2C100EBF043 /* SlideMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideMenuViewController.h; sourceTree = "<group>"; };
+		B16DA2161BE0F2C100EBF043 /* SlideMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideMenuViewController.m; sourceTree = "<group>"; };
+		B16DA21E1BE10A7A00EBF043 /* SlideMenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SlideMenuTableViewCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		B16DA21F1BE10A7A00EBF043 /* SlideMenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SlideMenuTableViewCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B16DA2211BE10A8B00EBF043 /* SlideMenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SlideMenuTableViewCell.xib; sourceTree = "<group>"; };
+		B1714CC61BE11EE6004F13A4 /* ReSideMenuContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReSideMenuContainerViewController.h; sourceTree = "<group>"; };
+		B1714CC71BE11EE6004F13A4 /* ReSideMenuContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReSideMenuContainerViewController.m; sourceTree = "<group>"; };
 		B17933101BE0B7B00016F158 /* LoginNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginNavigationViewController.h; sourceTree = "<group>"; };
 		B17933111BE0B7B00016F158 /* LoginNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginNavigationViewController.m; sourceTree = "<group>"; };
 		B17933131BE0C19C0016F158 /* LoginModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginModel.h; sourceTree = "<group>"; };
@@ -172,13 +184,13 @@
 		B17B3D5D1BB6A504009B8BC5 /* ContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ContactsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B17B3D621BB6AE8B009B8BC5 /* RecordingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingViewController.h; sourceTree = "<group>"; };
 		B17B3D631BB6AE8B009B8BC5 /* RecordingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RecordingViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		B17B3D671BB6BCE5009B8BC5 /* CellFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellFactory.h; sourceTree = "<group>"; };
-		B17B3D681BB6BCE5009B8BC5 /* CellFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellFactory.m; sourceTree = "<group>"; };
+		B17B3D671BB6BCE5009B8BC5 /* CellFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CellFactory.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		B17B3D681BB6BCE5009B8BC5 /* CellFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CellFactory.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B17B3D6C1BB6BD13009B8BC5 /* ContactTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactTableViewCell.h; sourceTree = "<group>"; };
 		B17B3D6D1BB6BD13009B8BC5 /* ContactTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactTableViewCell.m; sourceTree = "<group>"; };
 		B17B3D6F1BB6BD2E009B8BC5 /* ContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactTableViewCell.xib; sourceTree = "<group>"; };
-		B17B3D721BB6C4B0009B8BC5 /* UIColor_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIColor_Addition.h; sourceTree = "<group>"; };
-		B17B3D731BB6C4B0009B8BC5 /* UIColor_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIColor_Addition.m; sourceTree = "<group>"; };
+		B17B3D721BB6C4B0009B8BC5 /* UIColor_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = UIColor_Addition.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		B17B3D731BB6C4B0009B8BC5 /* UIColor_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = UIColor_Addition.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B17B3D761BB6C90A009B8BC5 /* BaseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableViewCell.h; sourceTree = "<group>"; };
 		B17B3D771BB6C90A009B8BC5 /* BaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewCell.m; sourceTree = "<group>"; };
 		B18BF95C1BD674CD009B665E /* PeppermintMessageSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeppermintMessageSender.h; sourceTree = "<group>"; };
@@ -233,6 +245,8 @@
 		B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentContactsModel.m; sourceTree = "<group>"; };
 		B1F93E9C1BC8ED58005F2128 /* RecentContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentContact.h; sourceTree = "<group>"; };
 		B1F93E9D1BC8ED58005F2128 /* RecentContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentContact.m; sourceTree = "<group>"; };
+		B1FE184E1BE1676D002772B4 /* FeedBackModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedBackModel.h; sourceTree = "<group>"; };
+		B1FE184F1BE1676D002772B4 /* FeedBackModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedBackModel.m; sourceTree = "<group>"; };
 		C388433C48F87557ED2F3C2D /* Pods-Peppermint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peppermint.release.xcconfig"; path = "Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -380,6 +394,8 @@
 				B15B15C01BDBC55A00C0C171 /* AWSModel.m */,
 				B17933131BE0C19C0016F158 /* LoginModel.h */,
 				B17933141BE0C19C0016F158 /* LoginModel.m */,
+				B1FE184E1BE1676D002772B4 /* FeedBackModel.h */,
+				B1FE184F1BE1676D002772B4 /* FeedBackModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -403,6 +419,38 @@
 				B165EF1E1BB72254008C6F71 /* EmptyResultTableViewCell.xib */,
 			);
 			name = EmptyResultTableViewCell;
+			sourceTree = "<group>";
+		};
+		B16DA2101BE0F1BE00EBF043 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				B17933101BE0B7B00016F158 /* LoginNavigationViewController.h */,
+				B17933111BE0B7B00016F158 /* LoginNavigationViewController.m */,
+				B1BB60181BDE127500C1140B /* LoginViewController.h */,
+				B1BB60191BDE127500C1140B /* LoginViewController.m */,
+				B1BB605D1BDE36AF00C1140B /* LoginWithEmailViewController.h */,
+				B1BB605E1BDE36AF00C1140B /* LoginWithEmailViewController.m */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		B16DA2111BE0F1CA00EBF043 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				B17B3D591BB6A49E009B8BC5 /* BaseViewController.h */,
+				B17B3D5A1BB6A49E009B8BC5 /* BaseViewController.m */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		B16DA21D1BE10A5F00EBF043 /* SlideMenuTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				B16DA21E1BE10A7A00EBF043 /* SlideMenuTableViewCell.h */,
+				B16DA21F1BE10A7A00EBF043 /* SlideMenuTableViewCell.m */,
+				B16DA2211BE10A8B00EBF043 /* SlideMenuTableViewCell.xib */,
+			);
+			name = SlideMenuTableViewCell;
 			sourceTree = "<group>";
 		};
 		B179F8371BC931340089D709 /* SearchMenuTableViewCell */ = {
@@ -505,6 +553,7 @@
 		B17B3D6A1BB6BCEC009B8BC5 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				B16DA21D1BE10A5F00EBF043 /* SlideMenuTableViewCell */,
 				B1C83A161BDEB0C300EB14C2 /* LoginTextFieldTableViewCell */,
 				B1BB60121BDE0DD200C1140B /* LoginTableViewCell */,
 				B17B3D751BB6C8F4009B8BC5 /* BaseTableViewCell */,
@@ -590,20 +639,18 @@
 		B1EF40E11BB7CE5600042E4B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				B17B3D591BB6A49E009B8BC5 /* BaseViewController.h */,
-				B17B3D5A1BB6A49E009B8BC5 /* BaseViewController.m */,
+				B16DA2111BE0F1CA00EBF043 /* Base */,
+				B16DA2101BE0F1BE00EBF043 /* Login */,
 				B1EF40FA1BB8786500042E4B /* TutorialViewController.h */,
 				B1EF40FB1BB8786500042E4B /* TutorialViewController.m */,
 				B17B3D5C1BB6A504009B8BC5 /* ContactsViewController.h */,
 				B17B3D5D1BB6A504009B8BC5 /* ContactsViewController.m */,
 				B17B3D621BB6AE8B009B8BC5 /* RecordingViewController.h */,
 				B17B3D631BB6AE8B009B8BC5 /* RecordingViewController.m */,
-				B17933101BE0B7B00016F158 /* LoginNavigationViewController.h */,
-				B17933111BE0B7B00016F158 /* LoginNavigationViewController.m */,
-				B1BB60181BDE127500C1140B /* LoginViewController.h */,
-				B1BB60191BDE127500C1140B /* LoginViewController.m */,
-				B1BB605D1BDE36AF00C1140B /* LoginWithEmailViewController.h */,
-				B1BB605E1BDE36AF00C1140B /* LoginWithEmailViewController.m */,
+				B16DA2151BE0F2C100EBF043 /* SlideMenuViewController.h */,
+				B16DA2161BE0F2C100EBF043 /* SlideMenuViewController.m */,
+				B1714CC61BE11EE6004F13A4 /* ReSideMenuContainerViewController.h */,
+				B1714CC71BE11EE6004F13A4 /* ReSideMenuContainerViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -777,6 +824,7 @@
 				B12C03BD1BCFFC280085A55A /* FastRecordingView.xib in Resources */,
 				B17B3D3F1BB6898C009B8BC5 /* LaunchScreen.xib in Resources */,
 				B17B3D701BB6BD2E009B8BC5 /* ContactTableViewCell.xib in Resources */,
+				B16DA2221BE10A8B00EBF043 /* SlideMenuTableViewCell.xib in Resources */,
 				B1BB60171BDE0E3200C1140B /* LoginTableViewCell.xib in Resources */,
 				B17B3D3C1BB6898C009B8BC5 /* Images.xcassets in Resources */,
 				B15B15B21BDBBAB200C0C171 /* Login.storyboard in Resources */,
@@ -871,6 +919,7 @@
 			files = (
 				B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */,
 				B1EF40F51BB857C800042E4B /* M13ProgressViewPie.m in Sources */,
+				B16DA2201BE10A7A00EBF043 /* SlideMenuTableViewCell.m in Sources */,
 				B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */,
 				B15B15BB1BDBC29A00C0C171 /* RecorderRequest.m in Sources */,
 				B1F045671BCFB36900A67942 /* BaseService.m in Sources */,
@@ -883,7 +932,9 @@
 				B13B07631BD3720100974AC3 /* MandrillMessage.m in Sources */,
 				B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */,
 				B1BB605F1BDE36AF00C1140B /* LoginWithEmailViewController.m in Sources */,
+				B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */,
 				B17B3D5B1BB6A49E009B8BC5 /* BaseViewController.m in Sources */,
+				B1714CC81BE11EE6004F13A4 /* ReSideMenuContainerViewController.m in Sources */,
 				B190F5BA1BDD63400094B391 /* SendVoiceMessageSMSModel.m in Sources */,
 				B11F8A5C1BDCC45F000E79AA /* FinalizeUploadRequest.m in Sources */,
 				B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */,
@@ -902,6 +953,7 @@
 				B17B3D691BB6BCE5009B8BC5 /* CellFactory.m in Sources */,
 				B15B15C11BDBC55A00C0C171 /* AWSModel.m in Sources */,
 				B13B076D1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m in Sources */,
+				B16DA2171BE0F2C100EBF043 /* SlideMenuViewController.m in Sources */,
 				B1BB601A1BDE127500C1140B /* LoginViewController.m in Sources */,
 				B18BF95E1BD674CD009B665E /* PeppermintMessageSender.m in Sources */,
 				B1A366951BDC92FF00852B52 /* UploadsResponse.m in Sources */,
@@ -1063,7 +1115,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "okankurtulus.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "18921fe0-120a-4ab1-940c-91112253db92";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};

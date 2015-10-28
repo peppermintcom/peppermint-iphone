@@ -10,6 +10,7 @@
 #import "RecordingViewController.h"
 #import "SendVoiceMessageMandrillModel.h"
 #import "SendVoiceMessageSMSModel.h"
+#import "SlideMenuViewController.h"
 
 #define SEGUE_RECORDING_VIEW_CONTROLLER         @"RecordingViewControllerSegue"
 
@@ -118,6 +119,23 @@
     [self deRegisterKeyboardActions];
 }
 
+#pragma mark - Slide Menu
+
+-(IBAction)slideMenuTouchDown:(id)sender {
+    UIButton *menuButton = (UIButton*)sender;
+    menuButton.alpha = 0.7;
+}
+
+-(IBAction)slideMenuTouchUp:(id)sender {
+    UIButton *menuButton = (UIButton*)sender;
+    menuButton.alpha = 1;
+}
+
+-(IBAction)slideMenuValidAction:(id)sender {
+    [self slideMenuTouchUp:sender];
+    [self.reSideMenuContainerViewController presentLeftMenuViewController];
+}
+
 #pragma mark - ContactList Logic
 
 - (NSArray*) activeContactList {
@@ -174,7 +192,6 @@
         
         preparedCell = cell;
     } else {
-        NSLog(@"Queried for indexpath: %d,%d and the active contact list has %d elemends", indexPath.section, indexPath.row, [self activeContactList].count);
         return [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:nil];
     }
     return preparedCell;
@@ -311,6 +328,7 @@
     if([sendVoiceMessageModel isServiceAvailable]) {
         sendVoiceMessageModel.selectedPeppermintContact = selectedContact;
         self.fastRecordingView.sendVoiceMessageModel = sendVoiceMessageModel;
+        self.reSideMenuContainerViewController.panGestureEnabled = NO;
         [self.fastRecordingView presentWithAnimation];
     } else {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -336,6 +354,10 @@
 }
 
 #pragma mark - FastRecordingViewDelegate
+
+-(void) fastRecordingViewDissappeared {
+    self.reSideMenuContainerViewController.panGestureEnabled = YES;
+}
 
 -(void) messageIsSendingWithCancelOption:(BOOL)cancelable {
     self.cancelMessageSendingButton.hidden = !cancelable;
@@ -489,6 +511,12 @@
     self.searchMenu.separatorHeight = 0;
     self.searchMenu.separatorColor = [UIColor cellSeperatorGray];
     self.searchMenu.closeOnSelection = YES;
+    
+    self.searchMenu.shadowOffset = CGSizeMake(1, 2);
+    self.searchMenu.shadowColor = [UIColor peppermintGreen];
+    self.searchMenu.shadowOpacity = 1;
+    self.searchMenu.shadowRadius = 1;
+    
     __weak __typeof__(self) weakSelf = self;
     self.searchMenu.closeCompletionHandler = ^{
         weakSelf.searchMenuView.hidden = YES;

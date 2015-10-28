@@ -8,6 +8,7 @@
 
 #import "TutorialViewController.h"
 #import "Repository.h"
+#import "ReSideMenuContainerViewController.h"
 #import "ContactsViewController.h"
 
 #define SEGUE_CONTACTS_VIEW_CONTROLLER  @"ContactsViewControllerSegue"
@@ -29,6 +30,11 @@
     contactsModel = nil;
     self.items = [NSArray arrayWithObjects:@"tutorial1",@"tutorial2",@"tutorial3",@"_NEXPAGE_", nil];
     [self askUserForContactsReadPermission];
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.swipeView scrollToItemAtIndex:0 duration:DURATION];
 }
 
 -(void) askUserForContactsReadPermission {
@@ -137,9 +143,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:SEGUE_CONTACTS_VIEW_CONTROLLER]) {
-        ContactsViewController *contactsViewController = (ContactsViewController*) segue.destinationViewController;
-        contactsViewController.contactsModel = contactsModel;
-        contactsViewController.contactsModel.delegate = contactsViewController;
+        ReSideMenuContainerViewController *reSideMenuContainerViewController = (ReSideMenuContainerViewController*) segue.destinationViewController;
+        [reSideMenuContainerViewController initContactsViewControllerWithContactsModel:contactsModel];
     }
 }
 

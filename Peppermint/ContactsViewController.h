@@ -11,6 +11,8 @@
 #import "RecentContactsModel.h"
 #import <REMenu/REMenu.h>
 #import "FastRecordingView.h"
+#import "ReSideMenuContainerViewController.h"
+
 
 @interface ContactsViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ContactsModelDelegate, RecentContactsModelDelegate, SearchMenuTableViewCellDelegate, UIAlertViewDelegate, ContactTableViewCellDelegate, FastRecordingViewDelegate>
 @property (strong, nonatomic) ContactsModel *contactsModel;
@@ -32,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *cancelMessageSendingButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *cancelMessageButtonWidthConstraint;
 @property (strong, nonatomic) FastRecordingView *fastRecordingView;
+@property (weak, nonatomic) ReSideMenuContainerViewController *reSideMenuContainerViewController;
 
 -(IBAction)searchButtonPressed:(id)sender;
 -(IBAction)messageCancelButtonPressed:(id)sender;

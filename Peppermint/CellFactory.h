@@ -12,6 +12,7 @@
 #import "SearchMenuTableViewCell.h"
 #import "LoginTableViewCell.h"
 #import "LoginTextFieldTableViewCell.h"
+#import "SlideMenuTableViewCell.h"
 
 @interface CellFactory : NSObject
 
@@ -29,5 +30,8 @@
 
 #define CELL_HEIGHT_LOGIN_TEXTFIELD_TABLEVIEWCELL 42
 +(LoginTextFieldTableViewCell*) cellLoginTextFieldTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath withDelegate:(id<LoginTextFieldTableViewCellDelegate>) delegate;
+
+#define CELL_HEIGHT_SLIDE_MENU_TABLEVIEWCELL 44
++(SlideMenuTableViewCell*) cellSlideMenuTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath;
 
 @end

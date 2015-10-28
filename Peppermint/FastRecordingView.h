@@ -15,6 +15,7 @@
 #import "LoginNavigationViewController.h"
 
 @protocol FastRecordingViewDelegate <SendVoiceMessageDelegate>
+-(void) fastRecordingViewDissappeared;
 @end
 
 @interface FastRecordingView : BaseCustomView <RecordingModelDelegate, SendVoiceMessageDelegate, UIAlertViewDelegate, LoginNavigationViewControllerDelegate>

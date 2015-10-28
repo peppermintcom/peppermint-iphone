@@ -62,5 +62,8 @@ NSLocalizedStringFromTable(\
 #define CHARS_FOR_USERNAME @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 "
 #define CHARS_FOR_PASSWORD @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@"
 
+#define VIEWCONTROLLER_CONTACTS     @"ContactsViewController"
+#define VIEWCONTROLLER_SLIDEMENU    @"SlideMenuViewController"
+#define VIEWCONTROLLER_TUTORIAL     @"TutorialViewController"
 
 #endif

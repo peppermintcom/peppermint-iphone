@@ -106,7 +106,7 @@
 
 -(IBAction) doneButtonPressed:(id)sender {
     if([self.loginModel.peppermintMessageSender isValid]) {
-        [self.loginModel performFacebookLogin];
+        [self.loginModel performEmailLogin];
     } else {
         NSLog(@"Please supply login information");
     }
