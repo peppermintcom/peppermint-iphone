@@ -79,9 +79,8 @@
             NSLog(@"Max time reached..."); //This action is handled in "timerUpdated:" delegate method
         } else if (isRecordingShort) {
             [self showAlertToRecordMoreThanMinimumMessageLength];
-        } else if (true) {// || [self.sendVoiceMessageModel needsAuth] && !isLoginInfoValid ) {
+        } else if ([self.sendVoiceMessageModel needsAuth]) { //  && !isLoginInfoValid ) {
             [LoginNavigationViewController logUserInWithDelegate:self];
-
 #warning "Delete alert process when finished!"
             //[self showAlertToCompleteLoginInformation];
         } else {
