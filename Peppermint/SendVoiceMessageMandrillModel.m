@@ -17,7 +17,7 @@
     [super sendVoiceMessageWithData:data withExtension:extension];
     _data = data;
     _extension = extension;
-    [self.delegate messageIsSendingWithCancelOption:YES];
+    [self.delegate messageStatusIsUpdated:SendingStatusUploading withCancelOption:YES];
     [awsModel startToUploadData:data ofType:[self typeForExtension:extension]];
 }
 
@@ -26,7 +26,7 @@
 -(void) fileUploadCompletedWithPublicUrl:(NSString*) url {
     NSLog(@"File Upload is finished with url %@", url);
     if(!isCancelled) {
-        [self.delegate messageIsSendingWithCancelOption:NO];
+        [self.delegate messageStatusIsUpdated:SendingStatusSending withCancelOption:YES];
         [self fireMandrillMessageWithUrl:url];
     } else {
         NSLog(@"Mandrill message sending is not fired, cos message is cancelled");
@@ -35,9 +35,19 @@
 
 -(void) fireMandrillMessageWithUrl:(NSString*) url {
 
+    
+    NSString* nameSurname = @"";
+    if(self.peppermintMessageSender.nameSurname.length > 0) {
+        nameSurname = self.peppermintMessageSender.nameSurname;
+    }
+    NSString *email = @"";
+    if(self.peppermintMessageSender.email.length > 0) {
+        email = self.peppermintMessageSender.email;
+    }
+    
     MandrillMessage *message = [MandrillMessage new];
     message.from_email = @"noreply@peppermint.com";
-    message.from_name = self.peppermintMessageSender.nameSurname;
+    message.from_name = nameSurname;
     message.subject = LOC(@"Mail Subject",@"Default Mail Subject");
     NSString *body = [NSString stringWithFormat:LOC(@"Mail Body Format",@"Default Mail Body Format"), url];
     message.html = body;
@@ -55,13 +65,16 @@
     mailAttachment.content = [_data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
     [message.attachments addObject:mailAttachment];
     
-    [message.headers setObject:self.peppermintMessageSender.email forKey:@"Reply-To"];
-    [self.delegate messageIsSendingWithCancelOption:NO];
-    [[MandrillService new] sendMessage:message];
+    [message.headers setObject:email forKey:@"Reply-To"];
+    
+    if(!isCancelled) {
+        [self.delegate messageStatusIsUpdated:SendingStatusSending withCancelOption:NO];
+        [[MandrillService new] sendMessage:message];
+    }
 }
 
 SUBSCRIBE(MandrillMesssageSent) {
-    [self.delegate messageSentWithSuccess];
+    [self.delegate messageStatusIsUpdated:SendingStatusSent withCancelOption:NO];
 }
 
 -(BOOL) needsAuth {

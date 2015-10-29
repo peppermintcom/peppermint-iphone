@@ -10,6 +10,7 @@
 #import "CellFactory.h"
 #import "BaseModel.h"
 #import "MBProgressHUD.h"
+#import "JPAttributedString.h"
 
 @interface BaseViewController : UIViewController <BaseModelDelegate>
 -(void) redirectToSettingsPageForPermission;

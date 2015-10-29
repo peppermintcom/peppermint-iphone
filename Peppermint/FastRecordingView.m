@@ -170,16 +170,8 @@
 
 #pragma mark - SendVoiceMessage Delegate
 
--(void) messageIsSendingWithCancelOption:(BOOL)cancelable {
-    [self.delegate messageIsSendingWithCancelOption:cancelable];
-}
-
--(void) messageSentWithSuccess {
-    [self.delegate messageSentWithSuccess];
-}
-
--(void) messageIsCancelledByTheUserOutOfApp {
-    [self.delegate messageIsCancelledByTheUserOutOfApp];
+-(void) messageStatusIsUpdated:(SendingStatus) sendingStatus withCancelOption:(BOOL) cancelable {
+    [self.delegate messageStatusIsUpdated:sendingStatus withCancelOption:cancelable];
 }
 
 #pragma mark - LoginNavigationViewControllerDelegate

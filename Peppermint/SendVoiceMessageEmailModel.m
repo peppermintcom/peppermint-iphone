@@ -33,14 +33,14 @@
             [self.delegate operationFailure:error];
         } else if (result == MFMailComposeResultSent) {
             [super sendVoiceMessageWithData:data withExtension:extension];
-            [self.delegate messageSentWithSuccess];
+            [self.delegate messageStatusIsUpdated:SendingStatusSent withCancelOption:NO];
             [controller dismissViewControllerAnimated:NO completion:nil];
         } else {
             [controller dismissViewControllerAnimated:YES completion:nil];
         }
     }];
     UIViewController *activeViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    [self.delegate messageIsSendingWithCancelOption:YES];
+    [self.delegate messageStatusIsUpdated:SendingStatusSending withCancelOption:YES];
     [mailSender showFromViewController:activeViewController];
 }
 

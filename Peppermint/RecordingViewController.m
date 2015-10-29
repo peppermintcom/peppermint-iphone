@@ -7,7 +7,6 @@
 //
 
 #import "RecordingViewController.h"
-#import "ContactsViewController.h"
 
 @interface RecordingViewController () {
     BOOL isFirstOpen;
@@ -155,21 +154,14 @@
 
 #pragma mark - SendVoiceMessage Delegate
 
--(void) messageIsSendingWithCancelOption:(BOOL)cancelable {
-    ContactsViewController *contactsViewController = (ContactsViewController*)[self backViewController];
-    NSLog(@"Cancel button modifications can be implemented! This implementation will be decided in future.");
-    [contactsViewController messageSendingIndicatorSetMessageIsSending];
-}
-
--(void) messageSentWithSuccess {
-    ContactsViewController *contactsViewController = (ContactsViewController*)[self backViewController];
-    [contactsViewController messageSendingIndicatorSetMessageIsSent];
-    [self.navigationController popViewControllerAnimated:NO];
-}
-
--(void) messageIsCancelledByTheUserOutOfApp {
-    NSLog(@"Sending message is cancelled!");
-    [self.navigationController popViewControllerAnimated:YES];
+-(void) messageStatusIsUpdated:(SendingStatus)sendingStatus withCancelOption:(BOOL)cancelable {
+    id<SendVoiceMessageDelegate> voiceMessageDelegate = (id<SendVoiceMessageDelegate>)[self backViewController];
+    [voiceMessageDelegate messageStatusIsUpdated:sendingStatus withCancelOption:cancelable];
+    if (sendingStatus == SendingStatusSent) {
+        [self.navigationController popViewControllerAnimated:NO];
+    } else if (sendingStatus == SendingStatusCancelled) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 #pragma mark - AlertView Delegate

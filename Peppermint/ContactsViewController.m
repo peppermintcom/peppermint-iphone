@@ -68,8 +68,6 @@
     callLockForCurrentMessage = NO;
     activeSendingCount = 0;
     isScrolling  = NO;
-    [self.cancelMessageSendingButton setTitle:LOC(@"Tap to cancel",@"Title") forState:UIControlStateNormal];
-    [self.cancelMessageSendingButton setTintColor:[UIColor peppermintCancelOrange]];
     [self initHoldToRecordInfoView];
 }
 
@@ -359,7 +357,59 @@
     self.reSideMenuContainerViewController.panGestureEnabled = YES;
 }
 
--(void) messageIsSendingWithCancelOption:(BOOL)cancelable {
+-(void) messageStatusIsUpdated:(SendingStatus)sendingStatus withCancelOption:(BOOL)cancelable {
+    NSMutableAttributedString *infoAttrText = [NSMutableAttributedString new];
+    UIColor *textColor = [UIColor textFieldTintGreen];
+    
+    if(sendingStatus == SendingStatusUploading) {
+        infoAttrText = [self addText:LOC(@"Uploading", @"Info") ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
+    } else if (sendingStatus == SendingStatusStarting) {
+        infoAttrText = [self addText:LOC(@"Starting", @"Info") ofSize:16 ofColor:textColor toAttributedText:infoAttrText];
+    } else if (sendingStatus == SendingStatusSending) {
+        infoAttrText = [self addText:LOC(@"Sending", @"Info") ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
+    }  else if (sendingStatus == SendingStatusSent) {
+        cancelable = NO;
+        infoAttrText = [self addTick:infoAttrText ofSize:21];
+        infoAttrText = [self addText:LOC(@"Sent", @"Info") ofSize:21 ofColor:textColor toAttributedText:infoAttrText];
+    }  else if (sendingStatus == SendingStatusCancelled) {
+        infoAttrText = [self addText:LOC(@"Cancelled", @"Info") ofSize:19 ofColor:textColor toAttributedText:infoAttrText];
+    }
+    if(cancelable) {
+        infoAttrText = [self addText:LOC(@"Tap to cancel", @"Info") ofSize:13
+                             ofColor:[UIColor peppermintCancelOrange] toAttributedText:infoAttrText];
+    }
+    self.sendingInformationLabel.attributedText = [self centerText:infoAttrText];
+    self.sendingIndicatorView.hidden = NO;
+}
+
+-(NSMutableAttributedString*) centerText:(NSMutableAttributedString*) attrText {
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init] ;
+    [paragraphStyle setAlignment:NSTextAlignmentCenter];
+    [attrText addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [attrText length])];
+    return attrText;
+}
+
+-(NSMutableAttributedString*) addTick:(NSMutableAttributedString*) attrText ofSize:(NSInteger) size {
+    NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+    attachment.image = [UIImage imageNamed:@"icon_tick"];
+    attachment.bounds = CGRectMake(0, 0, size, size);
+    NSAttributedString *tickAttachment = [NSAttributedString attributedStringWithAttachment:attachment];
+    [attrText appendAttributedString:tickAttachment];
+    return attrText;
+}
+
+-(NSMutableAttributedString*) addText:(NSString*)text ofSize:(NSUInteger)size ofColor:(UIColor*)color toAttributedText:(NSMutableAttributedString*) attrMutableText {
+    JPStringAttribute *infoAttr = [JPStringAttribute new];
+    infoAttr.foregroundColor = color;
+    infoAttr.font = [UIFont openSansBoldFontOfSize:size];
+    NSAttributedString *attrText = [[NSAttributedString alloc] initWithString:text
+                                                                   attributes:infoAttr.attributedDictionary];
+    [attrMutableText appendAttributedString:attrText];
+    return attrMutableText;
+}
+
+/*
+-(void) messageIsSendingWithInformationText:(NSString*)text cancelOption:(BOOL)cancelable {
     self.cancelMessageSendingButton.hidden = !cancelable;
     self.cancelMessageButtonWidthConstraint.constant = cancelable ? CANCEL_BUTTON_VISIBLE_WIDTH : CANCEL_BUTTON_HIDDEN_WIDTH;
     [self.cancelMessageSendingButton.superview layoutIfNeeded];
@@ -374,11 +424,63 @@
     [self messageCancelButtonPressed:nil];
 }
 
+#pragma mark - MessageSending status indicators
+
+-(void) messageSendingIndicatorSetMessageIsSending {
+    if(!callLockForCurrentMessage) {
+        callLockForCurrentMessage  = YES;
+        
+        self.sendingImageHeightConstraint.constant = SENDING_ICON_HEIGHT;
+        [self.sendingImageView layoutIfNeeded];
+        self.sendingImageView.image = [UIImage imageNamed:@"icon_message_sending"];
+        ++activeSendingCount;
+        if(self.sendingIndicatorView.hidden) {
+            self.sendingIndicatorView.alpha = 0;
+            self.sendingIndicatorView.hidden = NO;
+            [UIView animateWithDuration:0.15 animations:^{
+                self.sendingIndicatorView.alpha = 1;
+            } completion:^(BOOL finished) {
+                
+            }];
+        }
+    }
+}
+
+-(void) messageSendingIndicatorSetMessageIsSent {
+    self.sendingImageHeightConstraint.constant = SENT_ICON_HEIGHT;
+    [self.sendingImageView layoutIfNeeded];
+    self.sendingImageView.image = [UIImage imageNamed:@"icon_message_sent"];
+    [self performSelector:@selector(refreshTheScreen) withObject:nil afterDelay:MESSAGE_SENDING_DURATION];
+    callLockForCurrentMessage = NO;
+    --activeSendingCount;
+}
+
+-(void) messageSendingIsCancelled {
+    callLockForCurrentMessage = NO;
+    --activeSendingCount;
+    [self refreshTheScreen];
+}
+
+-(void) refreshTheScreen {
+    if(activeSendingCount == 0) {
+        self.sendingIndicatorView.alpha = 1;
+        [UIView animateWithDuration:0.15 animations:^{
+            self.sendingIndicatorView.alpha = 0;
+        } completion:^(BOOL finished) {
+            self.sendingIndicatorView.hidden = YES;
+            self.sendingIndicatorView.alpha = 1;
+        }];
+        [self.recentContactsModel refreshRecentContactList];
+    }
+}
+ 
+*/
+
 #pragma mark - CancelMessageSendingButton
 
 -(IBAction)messageCancelButtonPressed:(id)sender {
     [self.fastRecordingView cancelMessageSending];
-    [self messageSendingIsCancelled];
+    //[self messageSendingIsCancelled];
 }
 
 #pragma mark - TextField
@@ -542,56 +644,6 @@
         [self.recentContactsModel refreshRecentContactList];
     } else {
         [self.contactsModel refreshContactList];
-    }
-}
-
-#pragma mark - MessageSending status indicators
-
--(void) messageSendingIndicatorSetMessageIsSending {
-    if(!callLockForCurrentMessage) {
-        callLockForCurrentMessage  = YES;
-        
-        self.sendingImageHeightConstraint.constant = SENDING_ICON_HEIGHT;
-        [self.sendingImageView layoutIfNeeded];
-        self.sendingImageView.image = [UIImage imageNamed:@"icon_message_sending"];
-        ++activeSendingCount;
-        if(self.sendingIndicatorView.hidden) {
-            self.sendingIndicatorView.alpha = 0;
-            self.sendingIndicatorView.hidden = NO;
-            [UIView animateWithDuration:0.15 animations:^{
-                self.sendingIndicatorView.alpha = 1;
-            } completion:^(BOOL finished) {
-                
-            }];
-        }
-    }
-}
-
--(void) messageSendingIndicatorSetMessageIsSent {
-    self.sendingImageHeightConstraint.constant = SENT_ICON_HEIGHT;
-    [self.sendingImageView layoutIfNeeded];
-    self.sendingImageView.image = [UIImage imageNamed:@"icon_message_sent"];
-    [self performSelector:@selector(refreshTheScreen) withObject:nil afterDelay:MESSAGE_SENDING_DURATION];
-    callLockForCurrentMessage = NO;
-    --activeSendingCount;
-}
-
--(void) messageSendingIsCancelled {
-    callLockForCurrentMessage = NO;
-    --activeSendingCount;
-    [self refreshTheScreen];
-}
-
--(void) refreshTheScreen {
-    if(activeSendingCount == 0) {
-        self.sendingIndicatorView.alpha = 1;
-        [UIView animateWithDuration:0.15 animations:^{
-            self.sendingIndicatorView.alpha = 0;
-        } completion:^(BOOL finished) {
-            self.sendingIndicatorView.hidden = YES;
-            self.sendingIndicatorView.alpha = 1;
-        }];
-        [self.recentContactsModel refreshRecentContactList];
     }
 }
 

@@ -24,7 +24,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *searchContactsTextField;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewBottomConstraint;
 @property (weak, nonatomic) IBOutlet UIView *sendingIndicatorView;
-@property (weak, nonatomic) IBOutlet UIImageView *sendingImageView;
+@property (weak, nonatomic) IBOutlet UILabel *sendingInformationLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sendingImageHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIView *seperatorView;
 @property (weak, nonatomic) IBOutlet UIView *holdToRecordInfoView;
@@ -38,8 +38,5 @@
 
 -(IBAction)searchButtonPressed:(id)sender;
 -(IBAction)messageCancelButtonPressed:(id)sender;
-
--(void) messageSendingIndicatorSetMessageIsSending;
--(void) messageSendingIndicatorSetMessageIsSent;
 
 @end

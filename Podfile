@@ -14,8 +14,8 @@ pod "JSONModel"
 pod "SimpleKeychain"
 pod 'Fabric', '~>1.5.1'
 pod 'Crashlytics', '~>3.3.1'
-pod "SlideMenu3D"
 pod 'RESideMenu', '~> 4.0.7'
+pod 'JPAttributedString'
 end
 
 target 'PeppermintTests' do

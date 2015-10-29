@@ -65,3 +65,16 @@
 "Feedback account error" = "Please add and configure at least one mail account on this device to be able to send feedbacks";
 "Feedback sent with success" = "Your feedback is sent successfully";
 "Feedback Subject" = "Peppermint Feedback";
+"Starting" = "Starting";
+"Uploading" = "Uploading";
+"Sending" = "Sending";
+"Sent" = "Sent";
+"Cancelled" = "Cancelled";
+"Tap to cancel" = "  Tap to cancel";
+
+
+
+
+
+
+

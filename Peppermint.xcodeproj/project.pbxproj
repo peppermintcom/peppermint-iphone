@@ -111,7 +111,7 @@
 		B11F8A5D1BDCC474000E79AA /* FinalizeUploadResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinalizeUploadResponse.h; sourceTree = "<group>"; };
 		B11F8A5E1BDCC474000E79AA /* FinalizeUploadResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinalizeUploadResponse.m; sourceTree = "<group>"; };
 		B12C03B91BCFFC060085A55A /* FastRecordingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastRecordingView.h; sourceTree = "<group>"; };
-		B12C03BA1BCFFC060085A55A /* FastRecordingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FastRecordingView.m; sourceTree = "<group>"; };
+		B12C03BA1BCFFC060085A55A /* FastRecordingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = FastRecordingView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B12C03BC1BCFFC280085A55A /* FastRecordingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FastRecordingView.xib; sourceTree = "<group>"; };
 		B13B07581BD3686500974AC3 /* MandrillInformationResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrillInformationResponse.h; sourceTree = "<group>"; };
 		B13B07591BD3686500974AC3 /* MandrillInformationResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MandrillInformationResponse.m; sourceTree = "<group>"; };
@@ -126,7 +126,7 @@
 		B13B07681BD3752900974AC3 /* MandrillRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrillRequest.h; sourceTree = "<group>"; };
 		B13B07691BD3752900974AC3 /* MandrillRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MandrillRequest.m; sourceTree = "<group>"; };
 		B13B076B1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVoiceMessageMandrillModel.h; sourceTree = "<group>"; };
-		B13B076C1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendVoiceMessageMandrillModel.m; sourceTree = "<group>"; };
+		B13B076C1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SendVoiceMessageMandrillModel.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B15B15AA1BD9D8B800C0C171 /* ExplodingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExplodingView.h; sourceTree = "<group>"; };
 		B15B15AB1BD9D8B800C0C171 /* ExplodingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExplodingView.m; sourceTree = "<group>"; };
 		B15B15AE1BDA44E200C0C171 /* TPAACAudioConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPAACAudioConverter.h; sourceTree = "<group>"; };
@@ -196,7 +196,7 @@
 		B18BF95C1BD674CD009B665E /* PeppermintMessageSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeppermintMessageSender.h; sourceTree = "<group>"; };
 		B18BF95D1BD674CD009B665E /* PeppermintMessageSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeppermintMessageSender.m; sourceTree = "<group>"; };
 		B190F5B81BDD63400094B391 /* SendVoiceMessageSMSModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVoiceMessageSMSModel.h; sourceTree = "<group>"; };
-		B190F5B91BDD63400094B391 /* SendVoiceMessageSMSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendVoiceMessageSMSModel.m; sourceTree = "<group>"; };
+		B190F5B91BDD63400094B391 /* SendVoiceMessageSMSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SendVoiceMessageSMSModel.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B190F5BB1BDD7F040094B391 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		B1A366901BDC92DB00852B52 /* UploadsRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadsRequest.h; sourceTree = "<group>"; };
 		B1A366911BDC92DB00852B52 /* UploadsRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadsRequest.m; sourceTree = "<group>"; };
@@ -220,10 +220,10 @@
 		B1C83A1A1BDEB0FC00EB14C2 /* LoginTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginTextFieldTableViewCell.xib; sourceTree = "<group>"; };
 		B1EF40E31BB7D58C00042E4B /* RecordingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RecordingModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B1EF40E41BB7D58C00042E4B /* RecordingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RecordingModel.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		B1EF40E91BB7E78C00042E4B /* SendVoiceMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVoiceMessageModel.h; sourceTree = "<group>"; };
-		B1EF40EA1BB7E78C00042E4B /* SendVoiceMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendVoiceMessageModel.m; sourceTree = "<group>"; };
+		B1EF40E91BB7E78C00042E4B /* SendVoiceMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SendVoiceMessageModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		B1EF40EA1BB7E78C00042E4B /* SendVoiceMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SendVoiceMessageModel.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B1EF40EC1BB7EAA200042E4B /* SendVoiceMessageEmailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVoiceMessageEmailModel.h; sourceTree = "<group>"; };
-		B1EF40ED1BB7EAA200042E4B /* SendVoiceMessageEmailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendVoiceMessageEmailModel.m; sourceTree = "<group>"; };
+		B1EF40ED1BB7EAA200042E4B /* SendVoiceMessageEmailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SendVoiceMessageEmailModel.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B1EF40F01BB8579D00042E4B /* M13ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M13ProgressView.h; sourceTree = "<group>"; };
 		B1EF40F11BB8579D00042E4B /* M13ProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M13ProgressView.m; sourceTree = "<group>"; };
 		B1EF40F31BB857C800042E4B /* M13ProgressViewPie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M13ProgressViewPie.h; sourceTree = "<group>"; };

@@ -44,7 +44,6 @@
     if(isTutorialShowed) {
         UIViewController *vc = [storyboard instantiateViewControllerWithIdentifier:MAIN_VIEWCONTROLLER];
         [nvc pushViewController:vc animated:NO];
-        //[nvc setViewControllers:@[vc] animated:NO];
     } else {
         defaults_set_object(DEFAULTS_KEY_ISTUTORIALSHOWED, @(YES));
     }

@@ -1,0 +1,1 @@
+../../../JPAttributedString/JPAttributedString/Classes/JPStringAttribute.h

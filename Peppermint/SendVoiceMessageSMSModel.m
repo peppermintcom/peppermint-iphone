@@ -59,20 +59,19 @@
     
     smsComposerVC.body =  [NSString stringWithFormat:LOC(@"SMS Body Format", @"SMS Body Format"), url];
     [rootViewController presentViewController:smsComposerVC animated:YES completion:nil];
-    [self.delegate messageIsSendingWithCancelOption:NO];
+    [self.delegate messageStatusIsUpdated:SendingStatusSending withCancelOption:NO];
 }
 
 #pragma mark - MFMessageComposeViewControllerDelegate
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
-    [controller dismissViewControllerAnimated:YES completion:nil];
-    
+    [controller dismissViewControllerAnimated:YES completion:nil];    
     switch (result) {
         case MessageComposeResultSent:
-            [self.delegate messageSentWithSuccess];
+            [self.delegate messageStatusIsUpdated:SendingStatusSent withCancelOption:NO];
             break;
         case MessageComposeResultCancelled:
-            [self.delegate messageIsCancelledByTheUserOutOfApp];
+            [self.delegate messageStatusIsUpdated:SendingStatusCancelled withCancelOption:NO];
             break;
         case MessageComposeResultFailed:
             [self.delegate operationFailure: [NSError errorWithDomain:@"SMS sending is failed" code:-1 userInfo:nil]];
@@ -87,7 +86,7 @@
 }
 
 -(void) messagePrepareIsStarting {
-    [self.delegate messageIsSendingWithCancelOption:NO];
+    [self.delegate messageStatusIsUpdated:SendingStatusStarting withCancelOption:NO];
 }
 
 @end

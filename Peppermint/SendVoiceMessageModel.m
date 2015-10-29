@@ -74,7 +74,7 @@ SUBSCRIBE(NetworkFailure) {
 }
 
 -(void) messagePrepareIsStarting {
-    [self.delegate messageIsSendingWithCancelOption:YES];
+    [self.delegate messageStatusIsUpdated:SendingStatusStarting withCancelOption:YES];
 }
 
 -(void) cancelSending {

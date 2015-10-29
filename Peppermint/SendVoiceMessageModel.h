@@ -16,11 +16,22 @@
 #define TYPE_M4A    @"audio/mp4"
 #define TYPE_AAC    @"audio/aac"
 
+typedef enum : NSUInteger {
+    SendingStatusStarting = 0,
+    SendingStatusUploading = 1,
+    SendingStatusSending = 2,
+    SendingStatusSent = 3,
+    SendingStatusCancelled = -1,
+} SendingStatus;
+
 @protocol SendVoiceMessageDelegate <BaseModelDelegate>
 @required
--(void) messageIsSendingWithCancelOption:(BOOL) cancelable;
+-(void) messageStatusIsUpdated:(SendingStatus) sendingStatus withCancelOption:(BOOL) cancelable;
+/*
+-(void) messageIsSendingWithInformationText:(NSString*)text cancelOption:(BOOL) cancelable;
 -(void) messageSentWithSuccess;
 -(void) messageIsCancelledByTheUserOutOfApp;
+*/
 @end
 
 @interface SendVoiceMessageModel : BaseModel <RecentContactsModelDelegate, AWSModelDelegate> {
