@@ -30,25 +30,4 @@
     [self.delegate selectedLoginTableViewCell:self atIndexPath:self.indexPath];
 }
 
-
-#warning "Remove if not used!"
--(void) setText:(NSString*) text withTitleImageNamed:(NSString*) imageName {
-    NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
-    attachment.image = [UIImage imageNamed:imageName];
-    attachment.bounds = CGRectMake(0, 0, 10, 10);
-    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
-    NSMutableAttributedString *attributedLoginText= [[NSMutableAttributedString alloc] initWithString:text];
-    
-    NSMutableAttributedString *s = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
-    
-    [s appendAttributedString:attributedLoginText];
-    
-
-    //[attributedLoginText appendAttributedString:attachmentString];
-    
-    
-    
-    self.loginLabel.attributedText = s;
-}
-
 @end

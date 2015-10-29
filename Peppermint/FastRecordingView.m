@@ -66,9 +66,7 @@
 
 -(void) finishRecordingWithGestureIsValid:(BOOL) isGestureValid {
     [self.recordingModel stop];
-    
     if(!isAppGoingToBackground) {
-        
         BOOL isRecordingLong = self.totalSeconds >= MAX_RECORD_TIME;
         BOOL isRecordingShort = self.totalSeconds <= MIN_VOICE_MESSAGE_LENGTH;
         BOOL isLoginInfoValid = self.sendVoiceMessageModel.peppermintMessageSender.isValid;
@@ -79,10 +77,8 @@
             NSLog(@"Max time reached..."); //This action is handled in "timerUpdated:" delegate method
         } else if (isRecordingShort) {
             [self showAlertToRecordMoreThanMinimumMessageLength];
-        } else if ([self.sendVoiceMessageModel needsAuth]) { //  && !isLoginInfoValid ) {
+        } else if ([self.sendVoiceMessageModel needsAuth] && !isLoginInfoValid ) {
             [LoginNavigationViewController logUserInWithDelegate:self];
-#warning "Delete alert process when finished!"
-            //[self showAlertToCompleteLoginInformation];
         } else {
             [self dissmissWithFadeOut];
             [self performOperationsToSend];
@@ -334,6 +330,10 @@ SUBSCRIBE(ApplicationDidEnterBackground) {
 }
 
 SUBSCRIBE(ApplicationWillEnterForeground) {
+    [self handleAppIsActiveAgain];
+}
+
+-(void) handleAppIsActiveAgain {
     NSLog(@"ApplicationDidBecomeActive");
     isAppGoingToBackground = NO;
     CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];

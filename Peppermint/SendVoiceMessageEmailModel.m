@@ -40,7 +40,7 @@
         }
     }];
     UIViewController *activeViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    [self.delegate messageStatusIsUpdated:SendingStatusSending withCancelOption:YES];
+    [self.delegate messageStatusIsUpdated:SendingStatusSending withCancelOption:NO];
     [mailSender showFromViewController:activeViewController];
 }
 

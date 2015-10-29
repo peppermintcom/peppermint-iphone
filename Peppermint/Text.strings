@@ -51,7 +51,7 @@
 "Swipe in any direction to cancel" = "Swipe in any direction\nto cancel";
 "Tap to cancel" = "Tap to cancel";
 "Service is not available" = "Your device does not support this message service";
-"SMS Body Format" = "I send you a voice message %@";
+"SMS Body Format" = "I sent you a voice message %@";
 "Log In with Facebook" = "Log In With Facebook";
 "Log In with Google" = "Log In With Google";
 "Log In with Email" = "Log In With Email";
@@ -65,7 +65,7 @@
 "Feedback account error" = "Please add and configure at least one mail account on this device to be able to send feedbacks";
 "Feedback sent with success" = "Your feedback is sent successfully";
 "Feedback Subject" = "Peppermint Feedback";
-"Starting" = "Starting";
+"Starting" = "Preparing";
 "Uploading" = "Uploading";
 "Sending" = "Sending";
 "Sent" = "Sent";

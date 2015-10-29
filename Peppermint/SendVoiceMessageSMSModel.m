@@ -25,6 +25,7 @@
     if(!isCancelled) {
         if([self isServiceAvailable]) {
             [super sendVoiceMessageWithData:data withExtension:extension];
+            [self.delegate messageStatusIsUpdated:SendingStatusUploading withCancelOption:YES];
             [awsModel startToUploadData:data ofType:[self typeForExtension:extension]];
         } else {
             NSLog(@"Could not proceeed, cos device does not support!");
@@ -37,7 +38,6 @@
 #pragma mark - AWSModelDelegate
 
 -(void) fileUploadCompletedWithPublicUrl:(NSString*) url {
-    NSLog(@"File Upload is finished with url %@", url);
     if(!isCancelled) {
         [self fireSMSMessageWithUrl:url];
     } else {
@@ -58,8 +58,8 @@
     }
     
     smsComposerVC.body =  [NSString stringWithFormat:LOC(@"SMS Body Format", @"SMS Body Format"), url];
-    [rootViewController presentViewController:smsComposerVC animated:YES completion:nil];
-    [self.delegate messageStatusIsUpdated:SendingStatusSending withCancelOption:NO];
+    [self.delegate messageStatusIsUpdated:SendingStatusUploading withCancelOption:NO];
+    [rootViewController presentViewController:smsComposerVC animated:YES completion:nil];    
 }
 
 #pragma mark - MFMessageComposeViewControllerDelegate
@@ -86,7 +86,7 @@
 }
 
 -(void) messagePrepareIsStarting {
-    [self.delegate messageStatusIsUpdated:SendingStatusStarting withCancelOption:NO];
+    [self.delegate messageStatusIsUpdated:SendingStatusStarting withCancelOption:YES];
 }
 
 @end

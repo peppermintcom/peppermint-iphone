@@ -22,12 +22,6 @@
 #define ALLOWED_CHARS @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@."
 #define MESSAGE_SENDING_DURATION   2
 
-#define SENDING_ICON_HEIGHT     15
-#define SENT_ICON_HEIGHT        20
-
-#define CANCEL_BUTTON_VISIBLE_WIDTH 100
-#define CANCEL_BUTTON_HIDDEN_WIDTH  80
-
 @interface ContactsViewController ()
 
 @end
@@ -358,28 +352,33 @@
 }
 
 -(void) messageStatusIsUpdated:(SendingStatus)sendingStatus withCancelOption:(BOOL)cancelable {
+    self.cancelMessageSendingButton.hidden = !cancelable;
     NSMutableAttributedString *infoAttrText = [NSMutableAttributedString new];
     UIColor *textColor = [UIColor textFieldTintGreen];
     
     if(sendingStatus == SendingStatusUploading) {
         infoAttrText = [self addText:LOC(@"Uploading", @"Info") ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
+        [self messageSendingIndicatorSetMessageIsSending];
     } else if (sendingStatus == SendingStatusStarting) {
-        infoAttrText = [self addText:LOC(@"Starting", @"Info") ofSize:16 ofColor:textColor toAttributedText:infoAttrText];
+        infoAttrText = [self addText:LOC(@"Starting", @"Info") ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
+        [self messageSendingIndicatorSetMessageIsSending];
     } else if (sendingStatus == SendingStatusSending) {
         infoAttrText = [self addText:LOC(@"Sending", @"Info") ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
+        [self messageSendingIndicatorSetMessageIsSending];
     }  else if (sendingStatus == SendingStatusSent) {
         cancelable = NO;
         infoAttrText = [self addTick:infoAttrText ofSize:21];
         infoAttrText = [self addText:LOC(@"Sent", @"Info") ofSize:21 ofColor:textColor toAttributedText:infoAttrText];
+        [self messageSendingIndicatorSetMessageIsSent];
     }  else if (sendingStatus == SendingStatusCancelled) {
         infoAttrText = [self addText:LOC(@"Cancelled", @"Info") ofSize:19 ofColor:textColor toAttributedText:infoAttrText];
+        [self messageCancelButtonPressed:nil];
     }
     if(cancelable) {
         infoAttrText = [self addText:LOC(@"Tap to cancel", @"Info") ofSize:13
                              ofColor:[UIColor peppermintCancelOrange] toAttributedText:infoAttrText];
     }
     self.sendingInformationLabel.attributedText = [self centerText:infoAttrText];
-    self.sendingIndicatorView.hidden = NO;
 }
 
 -(NSMutableAttributedString*) centerText:(NSMutableAttributedString*) attrText {
@@ -408,31 +407,11 @@
     return attrMutableText;
 }
 
-/*
--(void) messageIsSendingWithInformationText:(NSString*)text cancelOption:(BOOL)cancelable {
-    self.cancelMessageSendingButton.hidden = !cancelable;
-    self.cancelMessageButtonWidthConstraint.constant = cancelable ? CANCEL_BUTTON_VISIBLE_WIDTH : CANCEL_BUTTON_HIDDEN_WIDTH;
-    [self.cancelMessageSendingButton.superview layoutIfNeeded];
-    [self messageSendingIndicatorSetMessageIsSending];
-}
-
--(void) messageSentWithSuccess {
-    [self messageSendingIndicatorSetMessageIsSent];
-}
-
--(void) messageIsCancelledByTheUserOutOfApp {
-    [self messageCancelButtonPressed:nil];
-}
-
 #pragma mark - MessageSending status indicators
 
 -(void) messageSendingIndicatorSetMessageIsSending {
     if(!callLockForCurrentMessage) {
         callLockForCurrentMessage  = YES;
-        
-        self.sendingImageHeightConstraint.constant = SENDING_ICON_HEIGHT;
-        [self.sendingImageView layoutIfNeeded];
-        self.sendingImageView.image = [UIImage imageNamed:@"icon_message_sending"];
         ++activeSendingCount;
         if(self.sendingIndicatorView.hidden) {
             self.sendingIndicatorView.alpha = 0;
@@ -447,9 +426,6 @@
 }
 
 -(void) messageSendingIndicatorSetMessageIsSent {
-    self.sendingImageHeightConstraint.constant = SENT_ICON_HEIGHT;
-    [self.sendingImageView layoutIfNeeded];
-    self.sendingImageView.image = [UIImage imageNamed:@"icon_message_sent"];
     [self performSelector:@selector(refreshTheScreen) withObject:nil afterDelay:MESSAGE_SENDING_DURATION];
     callLockForCurrentMessage = NO;
     --activeSendingCount;
@@ -473,14 +449,12 @@
         [self.recentContactsModel refreshRecentContactList];
     }
 }
- 
-*/
 
 #pragma mark - CancelMessageSendingButton
 
 -(IBAction)messageCancelButtonPressed:(id)sender {
     [self.fastRecordingView cancelMessageSending];
-    //[self messageSendingIsCancelled];
+    [self messageSendingIsCancelled];
 }
 
 #pragma mark - TextField
@@ -490,31 +464,42 @@
         [self.searchMenu close];
         self.contactsModel.filterText = [textField.text stringByReplacingCharactersInRange:range withString:string];
         textField.text = self.contactsModel.filterText;
-        
-        if(textField.text.length > 0
-           && activeCellTag == CELL_TAG_RECENT_CONTACTS) {
-            cachedActiveCellTag = CELL_TAG_RECENT_CONTACTS;
-            activeCellTag = CELL_TAG_ALL_CONTACTS;
-        } else if (textField.text.length == 0
-                   &&cachedActiveCellTag == CELL_TAG_RECENT_CONTACTS ) {
-            cachedActiveCellTag = CELL_TAG_ALL_CONTACTS;
-            activeCellTag = CELL_TAG_RECENT_CONTACTS;
-        }
-        
-        if(activeCellTag == CELL_TAG_RECENT_CONTACTS) {
-            [self.recentContactsModel refreshRecentContactList];
-        } else {
-            [self.contactsModel refreshContactList];
-        }
+        [self refreshContacts];
     } else {
         [textField resignFirstResponder];
     }
     return NO;
 }
 
+- (void) refreshContacts {
+    
+    if(self.searchContactsTextField.text.length > 0
+       && activeCellTag == CELL_TAG_RECENT_CONTACTS) {
+        cachedActiveCellTag = CELL_TAG_RECENT_CONTACTS;
+        activeCellTag = CELL_TAG_ALL_CONTACTS;
+    } else if (self.searchContactsTextField.text.length == 0
+               &&cachedActiveCellTag == CELL_TAG_RECENT_CONTACTS ) {
+        cachedActiveCellTag = CELL_TAG_ALL_CONTACTS;
+        activeCellTag = CELL_TAG_RECENT_CONTACTS;
+    }
+    
+    if(activeCellTag == CELL_TAG_RECENT_CONTACTS) {
+        [self.recentContactsModel refreshRecentContactList];
+    } else {
+        [self.contactsModel refreshContactList];
+    }
+}
+
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     [self.searchMenu close];
     return YES;
+}
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+    textField.text = @"";
+    [self refreshContacts];
+    return NO;
 }
 
 #pragma mark - ContactsModelDelegate
