@@ -8,10 +8,12 @@
 
 #import "ContactsModel.h"
 
+#define ALLOWED_CHARS @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@."
 #define ContactsOperationQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
 
 @implementation ContactsModel {
     volatile NSUInteger loadContactsTriggerCount;
+    NSCharacterSet *unwantedCharsSet;
     NSArray *emailContactList;
     NSArray *smsContactList;
 }
@@ -22,6 +24,7 @@
         self.contactList = [NSMutableArray new];
         self.filterText = @"";
         loadContactsTriggerCount = 0;
+        unwantedCharsSet = [[NSCharacterSet characterSetWithCharactersInString:ALLOWED_CHARS] invertedSet];
     }
     return self;
 }
@@ -74,15 +77,19 @@
                                     [NSSortDescriptor sortDescriptorWithKey:@"lastName" ascending:YES]];
     addressBook.filterBlock = ^BOOL(APContact *contact)
     {
+        BOOL containsText = [contact.compositeName rangeOfString:self.filterText options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch].length > 0;
+        
         return
         (contact.phones.count > 0 || contact.emails.count > 0)
-        && ( self.filterText.length == 0
-            || [contact.compositeName.lowercaseString containsString:self.filterText.lowercaseString]
-        );
+        && ( self.filterText.length == 0 || containsText);
     };
     [self refreshContactList];
 }
 
+-(NSString*)filterUnwantedChars:(NSString*) communicationChannelAddress {
+    NSString *filteredCommunicationChannelAddress = [[communicationChannelAddress componentsSeparatedByCharactersInSet:unwantedCharsSet] componentsJoinedByString:@""];
+    return filteredCommunicationChannelAddress;
+}
 
 -(void) refreshContactList {
     /*
@@ -100,33 +107,35 @@
                  NSMutableSet *uniqueSet = [NSMutableSet new];
                  NSMutableArray *peppermintContactsArray = [NSMutableArray new];
                  for(APContact *contact in contacts) {
-                     for(NSString *email in contact.emails) {
-                         NSString *key = [NSString stringWithFormat:@"%@,%@", contact.compositeName, email];
-                         if([uniqueSet containsObject:key]) {
-                             continue;
-                         } else {
-                             [uniqueSet addObject:key];
+                     if(contact.compositeName) {
+                         for(NSString *email in contact.emails) {
+                             NSString *key = [NSString stringWithFormat:@"%@,%@", contact.compositeName, email];
+                             if([uniqueSet containsObject:key]) {
+                                 continue;
+                             } else {
+                                 [uniqueSet addObject:key];
+                                 PeppermintContact *peppermintContact = [PeppermintContact new];
+                                 peppermintContact.communicationChannel = CommunicationChannelEmail;
+                                 peppermintContact.communicationChannelAddress = [self filterUnwantedChars:email];
+                                 peppermintContact.nameSurname = contact.compositeName;
+                                 peppermintContact.avatarImage = contact.thumbnail;
+                                 [peppermintContactsArray addObject:peppermintContact];
+                             }
+                         }
+                         for(NSString *phone in contact.phones) {
+                             NSString *key = [NSString stringWithFormat:@"%@,%@", contact.compositeName, phone];
+                             if([uniqueSet containsObject:key]) {
+                                 continue;
+                             } else {
+                                 [uniqueSet addObject:key];
+                             }
                              PeppermintContact *peppermintContact = [PeppermintContact new];
-                             peppermintContact.communicationChannel = CommunicationChannelEmail;
-                             peppermintContact.communicationChannelAddress = email;
+                             peppermintContact.communicationChannel = CommunicationChannelSMS;
+                             peppermintContact.communicationChannelAddress = [self filterUnwantedChars:phone];
                              peppermintContact.nameSurname = contact.compositeName;
                              peppermintContact.avatarImage = contact.thumbnail;
                              [peppermintContactsArray addObject:peppermintContact];
                          }
-                     }
-                     for(NSString *phone in contact.phones) {
-                         NSString *key = [NSString stringWithFormat:@"%@,%@", contact.compositeName, phone];
-                         if([uniqueSet containsObject:key]) {
-                             continue;
-                         } else {
-                             [uniqueSet addObject:key];
-                         }
-                         PeppermintContact *peppermintContact = [PeppermintContact new];
-                         peppermintContact.communicationChannel = CommunicationChannelSMS;
-                         peppermintContact.communicationChannelAddress = phone;
-                         peppermintContact.nameSurname = contact.compositeName;
-                         peppermintContact.avatarImage = contact.thumbnail;
-                         [peppermintContactsArray addObject:peppermintContact];
                      }
                  }
                  self.contactList = peppermintContactsArray;

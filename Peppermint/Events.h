@@ -24,6 +24,9 @@
 @interface ApplicationWillEnterForeground : NSObject
 @end
 
+@interface ApplicationDidBecomeActive : NSObject
+@end
+
 @interface RecorderSubmitSuccessful : NSObject
 @property (strong, nonatomic) NSString *jwt;
 @end

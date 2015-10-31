@@ -56,7 +56,7 @@
 "Log In with Google" = "Log In With Google";
 "Log In with Email" = "Log In With Email";
 "Please Login" = "To send your first message please select how to log in:";
-"Login" = "Login";
+"Done" = "Done";
 "Contacts" = "Contacts";
 "Settings" = "Settings";
 "Tutorial" = "Tutorial";
@@ -71,10 +71,5 @@
 "Sent" = "Sent";
 "Cancelled" = "Cancelled";
 "Tap to cancel" = "  Tap to cancel";
-
-
-
-
-
-
-
+"Internet connection is not valid" = "You need a valid internet connection to send messages";
+"Account" = "Account";

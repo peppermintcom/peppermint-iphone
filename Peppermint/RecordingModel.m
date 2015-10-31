@@ -35,7 +35,6 @@
                 [recordingModel performGrantedOperations];
                 dispatch_async(dispatch_get_main_queue(), ^{
 #warning "Will add beep in future!!"
-                    //[recordingModel beep];
                     [recordingModel.delegate accessRightsAreSupplied];
                 });
             };
@@ -172,6 +171,7 @@
 
 -(void)onTick:(NSTimer *)timer {
     CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
+    NSLog(@"ticTac recorder:%f, previous:%f", recorder.currentTime, previousFileLength);
     [self.delegate timerUpdated:recorder.currentTime + previousFileLength];
 }
 

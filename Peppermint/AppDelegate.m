@@ -91,6 +91,7 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+    PUBLISH([ApplicationDidBecomeActive new]);
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

@@ -13,6 +13,7 @@
 #import "M13ProgressViewPie.h"
 #import "ExplodingView.h"
 #import "LoginNavigationViewController.h"
+#import "PlayingModel.h"
 
 @protocol FastRecordingViewDelegate <SendVoiceMessageDelegate>
 -(void) fastRecordingViewDissappeared;
@@ -22,6 +23,7 @@
 @property (weak, nonatomic) UIViewController<FastRecordingViewDelegate>* delegate;
 @property (strong, nonatomic) RecordingModel *recordingModel;
 @property (strong, nonatomic) SendVoiceMessageModel *sendVoiceMessageModel;
+@property (strong, nonatomic) PlayingModel *playingModel;
 
 @property (weak, nonatomic) IBOutlet UILabel *navigationTitleLabel;
 @property (weak, nonatomic) IBOutlet UIView *progressContainerView;
@@ -30,6 +32,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *counterLabel;
 @property (nonatomic)   NSTimeInterval totalSeconds;
 @property (weak, nonatomic) IBOutlet UILabel *swipeInAnyDirectionLabel;
+@property (weak, nonatomic) IBOutlet UIVisualEffectView *backgroundView;
 
 +(FastRecordingView*) createInstanceWithDelegate:(UIViewController<FastRecordingViewDelegate>*) delegate;
 

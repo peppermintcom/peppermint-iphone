@@ -18,6 +18,7 @@
     CGPoint touchBeginPoint;
     NSTimer *timer;
     UIView *rootView;
+    BOOL isActionProcessCompleted;
 }
 
 - (void)awakeFromNib {
@@ -66,6 +67,7 @@
     NSDictionary *userInfo = [NSDictionary dictionaryWithObject:event forKey:EVENT];
     touchBeginPoint = CGPointMake(0, 0);
     timer = [NSTimer scheduledTimerWithTimeInterval:HOLD_LIMIT target:self selector:@selector(touchingHold) userInfo:userInfo repeats:NO];
+    isActionProcessCompleted = NO;
 }
 
 -(void) touchingHold {
@@ -92,14 +94,13 @@
             speedIsInLimit = speed <= SWIPE_SPEED_LIMIT;
         }
         
-        if(!speedIsInLimit
-           || bounds.origin.x >= location.x
-           || bounds.origin.y >= location.y
-           || bounds.size.width <= location.x
-           || bounds.size.height <= location.y
-           ) {
+        BOOL isOutOfBounds = bounds.origin.x >= location.x || bounds.origin.y >= location.y
+        || bounds.size.width <= location.x || bounds.size.height <= location.y;
+        
+        if(!isActionProcessCompleted && (!speedIsInLimit || isOutOfBounds)) {
+            isActionProcessCompleted = YES;
             if(timer.isValid)
-               [timer invalidate];
+                [timer invalidate];
             timer = nil;
             [self applyNonSelectedStyle];
             NSLog(@"didCancelItemSelectionOnIndexpath");
@@ -109,20 +110,23 @@
 }
 
 -(IBAction) touchDownFinishedOnIndexPath:(id) sender event:(UIEvent *)event {
-    if(timer) {
-        [self applyNonSelectedStyle];
-        if(timer.isValid)  {
-            [timer invalidate];
-            timer = nil;
-            
-            UITouch *touch = [[event allTouches] anyObject];
-            CGPoint endPoint = [touch locationInView:rootView];
-            NSLog(@"didShortTouchOnIndexPath");
-            [self.delegate didShortTouchOnIndexPath:self.indexPath location:endPoint];
-        } else {
-            timer = nil;
-            NSLog(@"didFinishItemSelectionOnIndexPath");
-            [self.delegate didFinishItemSelectionOnIndexPath:self.indexPath location:touchBeginPoint];
+    if(!isActionProcessCompleted) {
+        isActionProcessCompleted = YES;
+        if(timer != nil) {
+            [self applyNonSelectedStyle];
+            if(timer.isValid)  {
+                [timer invalidate];
+                timer = nil;
+                
+                UITouch *touch = [[event allTouches] anyObject];
+                CGPoint endPoint = [touch locationInView:rootView];
+                NSLog(@"didShortTouchOnIndexPath");
+                [self.delegate didShortTouchOnIndexPath:self.indexPath location:endPoint];
+            } else {
+                timer = nil;
+                NSLog(@"didFinishItemSelectionOnIndexPath");
+                [self.delegate didFinishItemSelectionOnIndexPath:self.indexPath location:touchBeginPoint];
+            }
         }
     }
 }

@@ -27,11 +27,6 @@ typedef enum : NSUInteger {
 @protocol SendVoiceMessageDelegate <BaseModelDelegate>
 @required
 -(void) messageStatusIsUpdated:(SendingStatus) sendingStatus withCancelOption:(BOOL) cancelable;
-/*
--(void) messageIsSendingWithInformationText:(NSString*)text cancelOption:(BOOL) cancelable;
--(void) messageSentWithSuccess;
--(void) messageIsCancelledByTheUserOutOfApp;
-*/
 @end
 
 @interface SendVoiceMessageModel : BaseModel <RecentContactsModelDelegate, AWSModelDelegate> {

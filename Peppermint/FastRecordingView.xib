@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view opaque="NO" clipsSubviews="YES" alpha="0.84999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yze-9c-yzA" userLabel="BackgroundView">
+                <view opaque="NO" clipsSubviews="YES" alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yze-9c-yzA" userLabel="BackgroundView" customClass="UIVisualEffectView">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <color key="backgroundColor" red="0.043129229085894422" green="0.18120390855457225" blue="0.15778756858651818" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
@@ -107,6 +107,7 @@ to cancel</string>
                 </mask>
             </variation>
             <connections>
+                <outlet property="backgroundView" destination="Yze-9c-yzA" id="QD1-Ma-Rwc"/>
                 <outlet property="counterLabel" destination="7Qx-iJ-3yh" id="KMT-Gt-F6F"/>
                 <outlet property="m13ProgressViewPie" destination="IPo-3k-itg" id="Azw-EA-Txr"/>
                 <outlet property="navigationTitleLabel" destination="PZg-zV-ZMy" id="35b-Kv-cAK"/>

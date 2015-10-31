@@ -11,6 +11,7 @@
 #import "SendVoiceMessageMandrillModel.h"
 #import "SendVoiceMessageSMSModel.h"
 #import "SlideMenuViewController.h"
+#import "ConnectionModel.h"
 
 #define SEGUE_RECORDING_VIEW_CONTROLLER         @"RecordingViewControllerSegue"
 
@@ -19,7 +20,6 @@
 #define CELL_TAG_EMAIL_CONTACTS     3
 #define CELL_TAG_SMS_CONTACTS       4
 
-#define ALLOWED_CHARS @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@."
 #define MESSAGE_SENDING_DURATION   2
 
 @interface ContactsViewController ()
@@ -29,12 +29,13 @@
 @implementation ContactsViewController {
     NSUInteger activeCellTag;
     NSUInteger cachedActiveCellTag;
-    NSCharacterSet *unwantedCharsSet;
     BOOL callLockForCurrentMessage;
     NSUInteger activeSendingCount;
     BOOL isScrolling;
     MBProgressHUD *_loadingHud;
     AWSModel *awsModel;
+    ConnectionModel *connectionModel;
+    BOOL isNewRecordAvailable;
 }
 
 - (void)viewDidLoad {
@@ -55,7 +56,6 @@
     [self initSearchMenu];
     activeCellTag = CELL_TAG_ALL_CONTACTS;
     cachedActiveCellTag = CELL_TAG_ALL_CONTACTS;
-    unwantedCharsSet = [[NSCharacterSet characterSetWithCharactersInString:ALLOWED_CHARS] invertedSet];
     self.sendingIndicatorView.hidden = YES;
     self.seperatorView.backgroundColor = [UIColor cellSeperatorGray];
     [self initRecordingView];
@@ -63,6 +63,13 @@
     activeSendingCount = 0;
     isScrolling  = NO;
     [self initHoldToRecordInfoView];
+    connectionModel = [ConnectionModel new];
+    [connectionModel beginTracking];
+    isNewRecordAvailable = YES;
+}
+
+-(void) dealloc {
+    [connectionModel stopTracking];
 }
 
 -(void) recorderInitIsSuccessful {
@@ -167,9 +174,8 @@
         } else {
             cell.avatarImageView.image = [UIImage imageNamed:@"avatar_empty"];
         }        
-        cell.contactNameLabel.text = peppermintContact.nameSurname;        
-        NSString *filteredCommunicationChannelAddress = [[peppermintContact.communicationChannelAddress componentsSeparatedByCharactersInSet:unwantedCharsSet] componentsJoinedByString:@""];
-        cell.contactViaInformationLabel.text = filteredCommunicationChannelAddress;
+        cell.contactNameLabel.text = peppermintContact.nameSurname;
+        cell.contactViaInformationLabel.text = peppermintContact.communicationChannelAddress;
                 
         NSPredicate *predicate = [self.recentContactsModel recentContactPredicate:peppermintContact];
         NSArray *filteredArray = [self.recentContactsModel.contactList filteredArrayUsingPredicate:predicate];
@@ -220,6 +226,8 @@
 }
 
 /*
+
+ If Recording View Controller will be used in the future, this below code will be available again!
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if([self activeContactList].count > indexPath.row) {
         PeppermintContact *selectedContact = [[self activeContactList] objectAtIndex:indexPath.row];
@@ -231,7 +239,17 @@
 }
 */
 
+#pragma mark - Internet Connection
+
+-(void) showAlertForInternetConnection {
+    NSString *title = LOC(@"Information", @"Information");
+    NSString *message = LOC(@"Internet connection is not valid", @"Connection error");
+    NSString *cancel = LOC(@"Ok", @"Ok");
+    [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancel otherButtonTitles:nil] show];
+}
+
 #pragma mark - LoadingView
+
 -(MBProgressHUD*) loadingHud {
     if(!_loadingHud) {
         _loadingHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -306,7 +324,6 @@
 
 -(void) didBeginItemSelectionOnIndexpath:(NSIndexPath*) indexPath location:(CGPoint) location {
     self.tableView.bounces = NO;
-    
     PeppermintContact *selectedContact = [[self activeContactList] objectAtIndex:indexPath.row];
     [self.searchContactsTextField resignFirstResponder];
     
@@ -317,12 +334,12 @@
         sendVoiceMessageModel = [SendVoiceMessageSMSModel new];
     }
     
-    if([sendVoiceMessageModel isServiceAvailable]) {
-        sendVoiceMessageModel.selectedPeppermintContact = selectedContact;
-        self.fastRecordingView.sendVoiceMessageModel = sendVoiceMessageModel;
-        self.reSideMenuContainerViewController.panGestureEnabled = NO;
-        [self.fastRecordingView presentWithAnimation];
-    } else {
+    if(!isNewRecordAvailable) {
+        NSLog(@"Please wait for a new record..");
+    } else if(![connectionModel isInternetReachable]) {
+#warning "NiceToHave! Internet connection checking can be moved into Models and error can be transferred with delegate"
+        [self showAlertForInternetConnection];
+    } else if(![sendVoiceMessageModel isServiceAvailable]) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.mode = MBProgressHUDModeText;
         hud.detailsLabelFont = [UIFont openSansSemiBoldFontOfSize:13];
@@ -332,6 +349,11 @@
         hud.yOffset = location.y - center;
         hud.removeFromSuperViewOnHide = YES;
         [hud hide:YES afterDelay:WARN_TIME/2];
+    } else {
+        sendVoiceMessageModel.selectedPeppermintContact = selectedContact;
+        self.fastRecordingView.sendVoiceMessageModel = sendVoiceMessageModel;
+        self.reSideMenuContainerViewController.panGestureEnabled = NO;
+        [self.fastRecordingView presentWithAnimation];
     }
 }
 
@@ -357,20 +379,25 @@
     UIColor *textColor = [UIColor textFieldTintGreen];
     
     if(sendingStatus == SendingStatusUploading) {
+        isNewRecordAvailable = NO;
         infoAttrText = [self addText:LOC(@"Uploading", @"Info") ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
         [self messageSendingIndicatorSetMessageIsSending];
     } else if (sendingStatus == SendingStatusStarting) {
+        isNewRecordAvailable = NO;
         infoAttrText = [self addText:LOC(@"Starting", @"Info") ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
         [self messageSendingIndicatorSetMessageIsSending];
     } else if (sendingStatus == SendingStatusSending) {
+        isNewRecordAvailable = YES;
         infoAttrText = [self addText:LOC(@"Sending", @"Info") ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
         [self messageSendingIndicatorSetMessageIsSending];
     }  else if (sendingStatus == SendingStatusSent) {
+        isNewRecordAvailable = YES;
         cancelable = NO;
         infoAttrText = [self addTick:infoAttrText ofSize:21];
         infoAttrText = [self addText:LOC(@"Sent", @"Info") ofSize:21 ofColor:textColor toAttributedText:infoAttrText];
         [self messageSendingIndicatorSetMessageIsSent];
     }  else if (sendingStatus == SendingStatusCancelled) {
+        isNewRecordAvailable = YES;
         infoAttrText = [self addText:LOC(@"Cancelled", @"Info") ofSize:19 ofColor:textColor toAttributedText:infoAttrText];
         [self messageCancelButtonPressed:nil];
     }
@@ -432,6 +459,7 @@
 }
 
 -(void) messageSendingIsCancelled {
+    isNewRecordAvailable = YES;
     callLockForCurrentMessage = NO;
     --activeSendingCount;
     [self refreshTheScreen];
@@ -497,7 +525,7 @@
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField
 {
-    textField.text = @"";
+    self.contactsModel.filterText = textField.text = @"";
     [self refreshContacts];
     return NO;
 }

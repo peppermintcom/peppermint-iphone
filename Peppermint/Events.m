@@ -23,6 +23,9 @@
 @implementation ApplicationWillEnterForeground
 @end
 
+@implementation ApplicationDidBecomeActive
+@end
+
 @implementation RecorderSubmitSuccessful
 @end
 

@@ -8,12 +8,14 @@
 
 #import "SlideMenuViewController.h"
 #import "LoginModel.h"
+#import "LoginNavigationViewController.h"
 
-#define NUMBER_OF_OPTIONS   3
+#define NUMBER_OF_OPTIONS   4
 #define INDEX_CONTACTS      0
 #define INDEX_FEEDBACK      1
 #define INDEX_TUTORIAL      2
-#define INDEX_SETTINGS    3
+#define INDEX_ACCOUNT       3
+#define INDEX_SETTINGS    4
 
 
 @interface SlideMenuViewController ()
@@ -32,12 +34,15 @@
     self.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
     self.avatarImageView.layer.borderWidth = 3;
     self.tableView.backgroundColor = [UIColor slideMenuTableViewColor];
-    
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender new];
     if(peppermintMessageSender.nameSurname.length > 0) {
         self.userLabel.text = peppermintMessageSender.nameSurname;
     } else {
-        self.userLabel.text = @"Logged in user name...";
+        self.userLabel.text = @"Peppermint";
     }
 }
 
@@ -57,7 +62,7 @@
             break;
         case INDEX_SETTINGS:
             cell.titleLabel.text = LOC(@"Settings",@"Settings Label");
-            cell.iconImageView.image = [UIImage imageNamed:@"dot"];
+            cell.iconImageView.image = [UIImage imageNamed:@"icon_settings"];
             break;
         case INDEX_TUTORIAL:
             cell.titleLabel.text = LOC(@"Tutorial",@"Tutorial Label");
@@ -66,6 +71,10 @@
         case INDEX_FEEDBACK:
             cell.titleLabel.text = LOC(@"Feedback",@"Feedback Label");
             cell.iconImageView.image = [UIImage imageNamed:@"icon_feedback"];
+            break;
+        case INDEX_ACCOUNT:
+            cell.titleLabel.text = LOC(@"Account", @"Account Label");
+            cell.iconImageView.image = [UIImage imageNamed:@"icon_settings"];
             break;
         default:
             break;
@@ -90,6 +99,8 @@
         [navigationController popToRootViewControllerAnimated:YES];
     } else if (indexPath.row == INDEX_TUTORIAL) {
         [self.reSideMenuContainerViewController.navigationController popToRootViewControllerAnimated:YES];
+    } else if (indexPath.row == INDEX_ACCOUNT) {
+        [LoginNavigationViewController logUserInWithDelegate:nil];
     }
 }
 

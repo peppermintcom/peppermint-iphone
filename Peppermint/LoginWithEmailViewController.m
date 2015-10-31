@@ -26,7 +26,7 @@
     self.tableView.delegate = self;    
     self.doneLabel.font = [UIFont openSansFontOfSize:14];
     self.doneLabel.textColor = [UIColor whiteColor];
-    self.doneLabel.text = LOC(@"Login",@"Login button text");
+    self.doneLabel.text = LOC(@"Done",@"Login button text");
 }
 
 - (void) viewWillAppear:(BOOL)animated {
