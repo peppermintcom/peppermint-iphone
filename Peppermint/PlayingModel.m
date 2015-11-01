@@ -22,6 +22,10 @@
         if (beginRecordingPath) {
             beginRecordingUrl = [NSURL fileURLWithPath:beginRecordingPath];
             player = [[AVAudioPlayer alloc] initWithContentsOfURL:beginRecordingUrl error:nil];
+            [player setNumberOfLoops:1];
+            [player prepareToPlay];
+            [player play];
+            [player stop];
         } else {
             NSLog(@"Resource not found");
         }
@@ -30,12 +34,8 @@
 }
 
 -(void) playBeginRecording {
-    [player setNumberOfLoops:1];
     [player play];
-    while ([player isPlaying]) {
-        //NSLog(@"playing now...");
-        //busyWait
-    }
+    //while ([player isPlaying]) {}
 }
 
 @end

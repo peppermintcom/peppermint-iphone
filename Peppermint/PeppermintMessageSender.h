@@ -11,6 +11,7 @@
 @interface PeppermintMessageSender : NSObject
 @property (strong, nonatomic) NSString *nameSurname;
 @property (strong, nonatomic) NSString *email;
+@property (strong, nonatomic) NSData *imageData;
 
 -(void) save;
 -(BOOL) isValid;

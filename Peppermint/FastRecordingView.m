@@ -22,6 +22,7 @@
     FastRecordingView *fastRecordingView = (FastRecordingView *)[topLevelObjects objectAtIndex:0];
     fastRecordingView.delegate = delegate;
     [fastRecordingView timerUpdated:0];
+    fastRecordingView.playingModel = [PlayingModel new];
     return fastRecordingView;
 }
 
@@ -42,7 +43,6 @@
     REGISTER();
     
     self.backgroundView.alpha = 0.95;
-    self.playingModel = [PlayingModel new];
     //[self initBlurView];
 }
 
@@ -107,7 +107,7 @@
                 NSLog(@"Max time reached..."); //This action is handled in "timerUpdated:" delegate method
             } else if (isRecordingShort) {
                 [self showAlertToRecordMoreThanMinimumMessageLength];
-            } else if ([self.sendVoiceMessageModel needsAuth] ) { //&& !isLoginInfoValid ) {
+            } else if ([self.sendVoiceMessageModel needsAuth] && !isLoginInfoValid ) {
                 [LoginNavigationViewController logUserInWithDelegate:self];
             } else {
                 [self dissmissWithFadeOut];

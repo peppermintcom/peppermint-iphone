@@ -329,6 +329,7 @@
 		B15B15AD1BDA44D200C0C171 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				B1F504141BE5CFFD009345B9 /* Facebook */,
 				B15B15AE1BDA44E200C0C171 /* TPAACAudioConverter.h */,
 				B15B15AF1BDA44E200C0C171 /* TPAACAudioConverter.m */,
 			);
@@ -728,6 +729,13 @@
 				B1F0456A1BCFB4E400A67942 /* Events.m */,
 			);
 			name = Events;
+			sourceTree = "<group>";
+		};
+		B1F504141BE5CFFD009345B9 /* Facebook */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Facebook;
 			sourceTree = "<group>";
 		};
 		B1F93E8D1BC8E1C2005F2128 /* CoreData */ = {
@@ -1133,6 +1141,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Peppermint",
+				);
 				GCC_PREFIX_HEADER = Peppermint/PrefixHeader.pch;
 				INFOPLIST_FILE = Peppermint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
@@ -1150,6 +1162,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Peppermint",
+				);
 				GCC_PREFIX_HEADER = Peppermint/PrefixHeader.pch;
 				INFOPLIST_FILE = Peppermint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;

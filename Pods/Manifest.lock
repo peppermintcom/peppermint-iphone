@@ -23,11 +23,28 @@ PODS:
   - APAddressBook (0.1.11):
     - APAddressBook/Core (= 0.1.11)
   - APAddressBook/Core (0.1.11)
+  - Bolts (1.4.0):
+    - Bolts/AppLinks (= 1.4.0)
+    - Bolts/Tasks (= 1.4.0)
+  - Bolts/AppLinks (1.4.0):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.4.0)
   - Crashlytics (3.3.4)
   - EasyMailSender (0.0.1)
   - Fabric (1.5.5):
     - Fabric/Base (= 1.5.5)
   - Fabric/Base (1.5.5)
+  - FBSDKCoreKit (4.7.1):
+    - Bolts (~> 1.1)
+    - FBSDKCoreKit/arc (= 4.7.1)
+    - FBSDKCoreKit/no-arc (= 4.7.1)
+  - FBSDKCoreKit/arc (4.7.1):
+    - Bolts (~> 1.1)
+  - FBSDKCoreKit/no-arc (4.7.1):
+    - Bolts (~> 1.1)
+    - FBSDKCoreKit/arc
+  - FBSDKLoginKit (4.7.1):
+    - FBSDKCoreKit
   - JPAttributedString (0.1.7)
   - JSONModel (1.1.0)
   - MBProgressHUD (0.9.1)
@@ -43,6 +60,8 @@ DEPENDENCIES:
   - Crashlytics (~> 3.3.1)
   - EasyMailSender
   - Fabric (~> 1.5.1)
+  - FBSDKCoreKit
+  - FBSDKLoginKit
   - JPAttributedString
   - JSONModel
   - MBProgressHUD (~> 0.9.1)
@@ -55,9 +74,12 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
   APAddressBook: 2c949367b190a993d2cce769a3b20bce8bcf000c
+  Bolts: 0e9bce58b9b9f5e8a7a4d47b16d2fabec289072b
   Crashlytics: 41c082440d2e14da444186fff65e79c0b4b35d4c
   EasyMailSender: f50b6b5fa49b47f4b60998a56345600b848f2121
   Fabric: 190bf1a6eb65f7500de1347d027d2e59a7e53db1
+  FBSDKCoreKit: 9141b70960a37930850370495fe565f4a27ac141
+  FBSDKLoginKit: c11ed3c2833472db3bb4a4aecf27af4a6f69b173
   JPAttributedString: a0868a1e07e76751cef78985f4e3dfa51f1c1334
   JSONModel: ec77e9865236a7a09d9cf7668df6b4b328d9ec1d
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad

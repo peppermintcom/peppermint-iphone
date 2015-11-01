@@ -16,6 +16,8 @@ pod 'Fabric', '~>1.5.1'
 pod 'Crashlytics', '~>3.3.1'
 pod 'RESideMenu', '~> 4.0.7'
 pod 'JPAttributedString'
+pod 'FBSDKCoreKit'
+pod 'FBSDKLoginKit'
 end
 
 target 'PeppermintTests' do

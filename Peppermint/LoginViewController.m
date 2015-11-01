@@ -34,7 +34,6 @@
     self.loginLabel.font = [UIFont openSansSemiBoldFontOfSize:18];
     self.loginLabel.text = LOC(@"Please Login", @"Login Message");
     [self.loginLabel sizeToFit];
-    
 }
 
 - (void)didReceiveMemoryWarning {

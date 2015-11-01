@@ -15,6 +15,8 @@
     if(self) {
         self.nameSurname = (NSString*) defaults_object(DEFAULTS_KEY_SENDER_NAMESURNAME);
         self.email = (NSString*) defaults_object(DEFAULTS_KEY_SENDER_EMAIL);
+        self.imageData = [NSData dataWithContentsOfURL:[self imageFileUrl]];
+        
         [self guessNameFromDeviceName];
     }
     return self;
@@ -23,6 +25,7 @@
 -(void) save {
     defaults_set_object(DEFAULTS_KEY_SENDER_NAMESURNAME, self.nameSurname);
     defaults_set_object(DEFAULTS_KEY_SENDER_EMAIL, self.email);
+    [self.imageData writeToURL:[self imageFileUrl] atomically:YES];
 }
 
 -(BOOL) isValid {
@@ -73,5 +76,13 @@
     }
     return names;
 }
+
+#pragma mark - ImageFilePath
+
+-(NSURL*) imageFileUrl {
+    NSArray *pathComponents = [NSArray arrayWithObjects: [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"ProfileImage.png", nil];
+    return [NSURL fileURLWithPathComponents:pathComponents];
+}
+
 
 @end

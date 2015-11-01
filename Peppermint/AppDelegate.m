@@ -12,6 +12,7 @@
 #import "AFNetworkActivityLogger.h"
 #import "Tolo.h"
 #import "Events.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 #define MAIN_STORYBOARD         @"Main"
 #define LOGIN_STORYBOARD        @"Login"
@@ -66,12 +67,18 @@
 #endif
 }
 
+-(void) initFacebookAppWithApplication:(UIApplication*) application launchOptions:(NSDictionary*)launchOptions {
+    [[FBSDKApplicationDelegate sharedInstance] application:application
+                             didFinishLaunchingWithOptions:launchOptions];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self initNavigationViewController];
     [self initFabric];
     [self initInitialViewController];
     //[self logServiceCalls];
+    [self initFacebookAppWithApplication:application launchOptions:launchOptions];
     return YES;
 }
 
@@ -91,12 +98,22 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+    [FBSDKAppEvents activateApp];
     PUBLISH([ApplicationDidBecomeActive new]);
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [self saveContext];
+}
+
+#pragma mark - Open URL
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                          openURL:url
+                                                sourceApplication:sourceApplication
+                                                       annotation:annotation];
 }
 
 #pragma mark - Core Data stack

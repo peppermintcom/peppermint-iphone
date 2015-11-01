@@ -44,6 +44,13 @@
     } else {
         self.userLabel.text = @"Peppermint";
     }
+    
+    if(peppermintMessageSender.imageData
+       && peppermintMessageSender.imageData.length > 0) {
+        self.avatarImageView.image = [UIImage imageWithData:peppermintMessageSender.imageData];
+    } else {
+        self.avatarImageView.image = [UIImage imageNamed:@"avatar_empty"];
+    }
 }
 
 #pragma mark - UITableViewDataSource
