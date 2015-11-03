@@ -16,6 +16,7 @@
     AVAudioRecorder *recorder;
     NSTimer *timer;
     TPAACAudioConverter *tPAACAudioConverter;
+    NSDate *pauseStart, *previousFireDate;
 }
 
 +(CGFloat) checkPreviousFileLength {
@@ -34,7 +35,6 @@
             void (^permissionGranted)(RecordingModel*) = ^(RecordingModel *recordingModel) {
                 [recordingModel performGrantedOperations];
                 dispatch_async(dispatch_get_main_queue(), ^{
-#warning "Will add beep in future!!"
                     [recordingModel.delegate accessRightsAreSupplied];
                 });
             };
@@ -43,7 +43,6 @@
             AVAudioSession *session = [AVAudioSession sharedInstance];
             if([session respondsToSelector:@selector(requestRecordPermission:)]) {
                 [session requestRecordPermission:^(BOOL granted) {
-                    self.grantedForMicrophone = granted;
                     if(granted) {
                         permissionGranted(weakSelf);
                     } else {
@@ -151,6 +150,7 @@
 
 -(void) pause {
     if(recorder.recording) {
+        [self pauseTimer];
         [recorder pause];
     } else {
         [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Recording is not acitve", @"Error message") code:0 userInfo:nil]];
@@ -160,6 +160,8 @@
 -(void) resume {
     if(![recorder record]) {
         [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Could not resume", @"Error message") code:0 userInfo:nil]];
+    } else {
+        [self resumeTimer];
     }
 }
 
@@ -268,7 +270,6 @@
             completion();
         }
     } else {
-        NSLog(@"Did not back up, cos there is no source! ;)");
         completion();
     }
     
@@ -369,6 +370,28 @@
     } else if ( type == AVAudioSessionInterruptionTypeBegan ) {
         if ( tPAACAudioConverter ) [tPAACAudioConverter interrupt];
     }
+}
+
+#pragma mark - Clean cached files
+
+-(void) cleanCache {
+    [self removeFileIfExistsAtUrl:[self recordFileUrl]];
+    [self removeFileIfExistsAtUrl:[self backUpFileUrl]];
+    [self removeFileIfExistsAtUrl:[self aacFileUrl]];
+}
+
+#pragma mark - Pause/Resume Timer
+
+-(void) pauseTimer {
+    pauseStart = [NSDate dateWithTimeIntervalSinceNow:0];
+    previousFireDate = [timer fireDate];
+    [timer setFireDate:[NSDate distantFuture]];
+}
+
+-(void) resumeTimer {
+    float pauseTime = -1*[pauseStart timeIntervalSinceNow];
+    [timer setFireDate:[previousFireDate initWithTimeInterval:pauseTime sinceDate:previousFireDate]];
+    pauseStart = previousFireDate = nil;
 }
 
 @end

@@ -164,7 +164,7 @@
     UITableViewCell *preparedCell = nil;
     if([self activeContactList].count == 0) {
         EmptyResultTableViewCell *cell = [CellFactory cellEmptyResultTableViewCellFromTable:tableView forIndexPath:indexPath];
-        [cell setVisibiltyOfExplanationLabels:self.contactsModel.filterText.length > 0];
+        [cell setVisibiltyOfExplanationLabels:YES];
         preparedCell = cell;
     } else if (indexPath.row < [self activeContactList].count) {
         ContactTableViewCell *cell = [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
@@ -755,5 +755,58 @@
     }
     return result;
 }
+
+#pragma mark - OpenUrl
+/*
++(BOOL) sendFastReplyToUserWithNameSurname:(NSString*) nameSurname withEmail:(NSString*) email {
+    UIViewController *rootViewController = [AppDelegate Instance].window.rootViewController;
+    ReSideMenuContainerViewController *reSideMenuContainerViewController = nil;
+    BOOL isFound = NO;
+    
+    UINavigationController *navigationController =
+    [rootViewController isKindOfClass:[UINavigationController class]] ?
+    (UINavigationController*)rootViewController : (UINavigationController*)rootViewController.navigationController;
+    
+    
+    
+    for(UIViewController *viewController in navigationController.viewControllers) {
+        if(viewController.class == [ReSideMenuContainerViewController class]) {
+            isFound = YES;
+            reSideMenuContainerViewController = (ReSideMenuContainerViewController*)viewController;
+            [rootViewController.navigationController popToViewController:reSideMenuContainerViewController animated:YES];
+        }
+    }
+    
+    if(!isFound) {
+        
+        UIStoryboard *storybord = [UIStoryboard storyboardWithName:STORYBOARD_MAIN bundle:nil];
+        reSideMenuContainerViewController = [storybord instantiateViewControllerWithIdentifier:VIEWCONTROLLER_MAIN];
+        
+        NSLog(@"Viewcontroller could not be found!");
+    }
+    
+    
+        ContactsViewController *contactsViewController = nil;
+    ReSideMenuContainerViewController *reSideMenuContainerViewController =
+    (ReSideMenuContainerViewController*) viewController;
+    navigationController = (UINavigationController*)reSideMenuContainerViewController.contentViewController;
+    contactsViewController = (ContactsViewController*) [navigationController.viewControllers objectAtIndex:0];
+    
+    NSLog(@"Found and navigated..");
+    
+    
+    
+    PeppermintContact *peppermintContact = [PeppermintContact new];
+    peppermintContact.nameSurname = nameSurname;
+    peppermintContact.communicationChannel = CommunicationChannelEmail;
+    peppermintContact.communicationChannelAddress = email;
+    peppermintContact.avatarImage = nil;
+    
+    contactsViewController.searchSourceIconImageView.image = [UIImage imageNamed:@"avatar_empty"];
+    contactsViewController.contactsModel.contactList = [NSMutableArray arrayWithObject:peppermintContact];
+    [contactsViewController.tableView reloadData];
+    return YES;
+}
+ */
 
 @end

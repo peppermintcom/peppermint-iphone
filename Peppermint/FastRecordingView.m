@@ -46,6 +46,7 @@
     //[self initBlurView];
 }
 
+/*
 -(void) initBlurView {
     self.backgroundColor = [UIColor clearColor];
     if (!UIAccessibilityIsReduceTransparencyEnabled()) {
@@ -64,6 +65,7 @@
         self.backgroundView.alpha = 0.9;
     }
 }
+*/
 
 -(void) prepareViewToPresent {
     self.navigationTitleLabel.text = [NSString stringWithFormat:

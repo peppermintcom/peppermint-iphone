@@ -10,12 +10,12 @@
 #import "LoginNavigationViewController.h"
 #import "LoginWithEmailViewController.h"
 
-#define NUMBER_OF_LOGIN_OPTIONS 3
-#define SECTION_LOGIN_WITH_FACEBOOK 0
-#define SECTION_LOGIN_WITH_GOOGLE   1
-#define SECTION_LOGIN_WITH_EMAIL    2
+#define NUMBER_OF_LOGIN_OPTIONS             3
+#define SECTION_LOGIN_WITH_FACEBOOK         0
+#define SECTION_LOGIN_WITH_GOOGLE           1
+#define SECTION_LOGIN_WITH_EMAIL            2
 
-#define DISTANCE_BTW_SECTIONS       24
+#define DISTANCE_BTW_SECTIONS               24
 
 #define SEGUE_LOGIN_WITH_EMAIL      @"LoginWithEmailSegue"
 

@@ -15,8 +15,7 @@
 #define INDEX_FEEDBACK      1
 #define INDEX_TUTORIAL      2
 #define INDEX_ACCOUNT       3
-#define INDEX_SETTINGS    4
-
+#define INDEX_SETTINGS      4
 
 @interface SlideMenuViewController ()
 
@@ -94,7 +93,6 @@
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"Selected %d", indexPath.row);
     [self.reSideMenuContainerViewController hideMenuViewController];
     if(indexPath.row == INDEX_CONTACTS) {
         UINavigationController *navigationController = (UINavigationController*)self.reSideMenuContainerViewController.contentViewController;

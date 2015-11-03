@@ -7,11 +7,10 @@
 //
 
 #import "RecordingViewController.h"
+#import "SendVoiceMessageMandrillModel.h"
+#import "MBProgressHud.h"
 
-@interface RecordingViewController () {
-    BOOL isFirstOpen;
-    UIAlertView *microphoneAccessAlertView;
-}
+@interface RecordingViewController ()
 
 @end
 
@@ -19,8 +18,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    isFirstOpen = YES;
-    microphoneAccessAlertView = nil;
     assert(self.sendVoiceMessageModel != nil);
     self.navigationTitleLabel.text = LOC(@"Record Message", @"Navigation title");
     self.navigationSubTitleLabel.textColor = [UIColor recordingNavigationsubTitleGreen];
@@ -34,11 +31,13 @@
     self.progressContainerView.layer.cornerRadius = 45;
     [self.m13ProgressViewPie setPrimaryColor:[UIColor progressCoverViewGreen]];
     [self.m13ProgressViewPie setSecondaryColor:[UIColor clearColor]];
-    [self registerAppNotifications];
+
+#warning "Open netifications again"
+    //[self registerAppNotifications];
 }
 
 -(void)dealloc {
-    [self deRegisterAppNotifications];
+    //[self deRegisterAppNotifications];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -49,12 +48,6 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if(isFirstOpen) {
-        isFirstOpen = NO;
-        if(self.recordingModel.grantedForMicrophone) {
-            [self rerecordButtonPressed:nil];
-        }
-    }
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -101,6 +94,7 @@
     self.resumeButton.enabled = NO;
     self.pauseButton.enabled = NO;
     [self.recordingModel stop];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self.recordingModel prepareRecordData];
 }
 
@@ -111,8 +105,7 @@
     NSString *message = LOC(@"Mic Access rights explanation", @"Directives to give access rights") ;
     NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
     NSString *settingsButtonTitle = LOC(@"Settings", @"Settings Message");
-    microphoneAccessAlertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:settingsButtonTitle, nil];
-    [microphoneAccessAlertView show];
+    [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:settingsButtonTitle, nil] show];
 }
 
 -(void) accessRightsAreSupplied {
@@ -132,7 +125,7 @@
         int minutes = totalSeconds / 60;
         int seconds = totalSeconds % 60;
         self.counterLabel.text = [NSString stringWithFormat:@"%.1d:%.2d", minutes, seconds];
-        [self.m13ProgressViewPie setProgress:timeInterval/MAX_RECORD_TIME animated:NO];
+        [self.m13ProgressViewPie setProgress:timeInterval/MAX_RECORD_TIME animated:YES];
     } else {
         [self.recordingModel stop];
         self.resumeButton.enabled = NO;
@@ -157,17 +150,16 @@
 -(void) messageStatusIsUpdated:(SendingStatus)sendingStatus withCancelOption:(BOOL)cancelable {
     id<SendVoiceMessageDelegate> voiceMessageDelegate = (id<SendVoiceMessageDelegate>)[self backViewController];
     [voiceMessageDelegate messageStatusIsUpdated:sendingStatus withCancelOption:cancelable];
-    if (sendingStatus == SendingStatusSent) {
-        [self.navigationController popViewControllerAnimated:NO];
-    } else if (sendingStatus == SendingStatusCancelled) {
-        [self.navigationController popViewControllerAnimated:YES];
+    if (sendingStatus == SendingStatusSent
+        || sendingStatus == SendingStatusCancelled) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
 #pragma mark - AlertView Delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
-    if(alertView == microphoneAccessAlertView) {
+    if([alertView.message isEqualToString:LOC(@"Mic Access rights explanation", @"Directives to give access rights")]) {
         switch (buttonIndex) {
             case ALERT_BUTTON_INDEX_CANCEL:
                 [self.navigationController popViewControllerAnimated:YES];
@@ -178,8 +170,6 @@
             default:
                 break;
         }
-    } else if([alertView.message isEqualToString:LOC(@"Message sent with success", @"Message sent information")]) {
-        [self backButtonPressed:nil];
     } else if ([alertView.message isEqualToString:LOC(@"Recording is cut", @"Recording is cut, how to continue question?")]) {
         switch (buttonIndex) {
             case ALERT_BUTTON_INDEX_CANCEL:
@@ -233,7 +223,31 @@
 #pragma mark - Navigation
 
 -(IBAction)backButtonPressed:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.recordingModel stop];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - FastReply
+
++(BOOL) sendFastReplyToUserWithNameSurname:(NSString*) nameSurname withEmail:(NSString*) email {
+    PeppermintContact *peppermintContact = [PeppermintContact new];
+    peppermintContact.nameSurname = nameSurname;
+    peppermintContact.communicationChannel = CommunicationChannelEmail;
+    peppermintContact.communicationChannelAddress = email;
+    peppermintContact.avatarImage = nil;
+    
+    UIViewController *rootViewController = [AppDelegate Instance].window.rootViewController;
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:STORYBOARD_MAIN bundle:nil];
+    RecordingViewController *recordingViewController = [storyboard instantiateViewControllerWithIdentifier:VIEWCONTROLLER_RECORDINGVIEWCONTROLLER];
+    
+    [recordingViewController.recordingModel cleanCache];
+    recordingViewController.sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
+    recordingViewController.sendVoiceMessageModel.delegate = recordingViewController;
+    recordingViewController.sendVoiceMessageModel.selectedPeppermintContact = peppermintContact;
+    
+    [rootViewController presentViewController:recordingViewController animated:YES completion:nil];
+    return YES;
 }
 
 @end

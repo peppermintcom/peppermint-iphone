@@ -18,6 +18,7 @@ pod 'RESideMenu', '~> 4.0.7'
 pod 'JPAttributedString'
 pod 'FBSDKCoreKit'
 pod 'FBSDKLoginKit'
+pod 'Google/SignIn'
 end
 
 target 'PeppermintTests' do

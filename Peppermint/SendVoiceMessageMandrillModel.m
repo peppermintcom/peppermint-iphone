@@ -49,7 +49,7 @@
     message.from_email = @"noreply@peppermint.com";
     message.from_name = nameSurname;
     message.subject = LOC(@"Mail Subject",@"Default Mail Subject");
-    NSString *body = [NSString stringWithFormat:LOC(@"Mail Body Format",@"Default Mail Body Format"), url];
+    NSString *body = [NSString stringWithFormat:LOC(@"Mail Body Format",@"Default Mail Body Format"), url, [self fastReplyUrlForSender]];
     message.html = body;
     MandrillToObject *recipient = [MandrillToObject new];
     recipient.email = self.selectedPeppermintContact.communicationChannelAddress;

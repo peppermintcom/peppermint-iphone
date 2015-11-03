@@ -24,7 +24,7 @@
 "Could not resume" = "Could not resume the recording";
 "Could not start record" = "Could not start recording";
 "Mail Subject" = "I sent you a voice message";
-"Mail Body Format" = "Here's my message.<br/>%@<br/><br/>Reply via <a href=\"http://www.peppermint.com\">Peppermint.com</a><br/><br/>";
+"Mail Body Format" = "Here's my message.<br/>%@<br/><br/>Reply via <a href=\"http://www.peppermint.com\">Peppermint.com</a><br/><br/><a href=\"%@\">Touch for a fast reply!</a><br/><br/>";
 "Please add an email account" = "Please add and configure at least one mail account on this device to be able to send voice messages over email";
 "Time is up" = "Time is up!\nYou may tap send to send current recorded message or tap cancel to dismiss the recorded message";
 "Message sent with success" = "Your message has been sent successfully";
@@ -51,7 +51,7 @@
 "Swipe in any direction to cancel" = "Swipe in any direction\nto cancel";
 "Tap to cancel" = "Tap to cancel";
 "Service is not available" = "Your device does not support this message service";
-"SMS Body Format" = "I sent you a voice message %@";
+"SMS Body Format" = "I sent you a voice message %@ ";
 "Log In with Facebook" = "Log In With Facebook";
 "Log In with Google" = "Log In With Google";
 "Log In with Email" = "Log In With Email";

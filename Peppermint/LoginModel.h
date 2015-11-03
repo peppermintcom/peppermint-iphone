@@ -8,13 +8,16 @@
 
 #import "BaseModel.h"
 #import "PeppermintMessageSender.h"
+#import <Google/SignIn.h>
 
 @protocol LoginModelDelegate <BaseModelDelegate>
+-(void) loginLoading;
+-(void) loginFinishedLoading;
 -(void) loginSucceed;
 @end
 
-@interface LoginModel : BaseModel
-@property (weak, nonatomic) id<LoginModelDelegate> delegate;
+@interface LoginModel : BaseModel <GIDSignInDelegate, GIDSignInUIDelegate>
+@property (weak, nonatomic) UIViewController<LoginModelDelegate>* delegate;
 @property (strong, nonatomic) PeppermintMessageSender *peppermintMessageSender;
 
 -(void) performGoogleLogin;

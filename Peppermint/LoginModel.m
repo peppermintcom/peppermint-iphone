@@ -10,6 +10,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
+
 @implementation LoginModel
 
 -(id) init {
@@ -21,17 +22,21 @@
 }
 
 -(void) performGoogleLogin {
-    self.peppermintMessageSender.nameSurname = @"Google User";
-    self.peppermintMessageSender.email = @"okankurtulus@yahoo.com";
-    [self.peppermintMessageSender save];
-    [self.delegate loginSucceed];
+    GIDSignIn *gIDSignIn = [GIDSignIn sharedInstance];
+    gIDSignIn.delegate = self;
+    gIDSignIn.uiDelegate = self;
+    [self.delegate loginLoading];
+    [gIDSignIn signIn];
 }
 
 -(void) performFacebookLogin {
     FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
-    [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];    
+    [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
+    [self.delegate loginLoading];
     [login logInWithReadPermissions: @[@"public_profile"]
+     fromViewController:self.delegate
      handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+         [self.delegate loginFinishedLoading];
          if (error) {
              NSLog(@"Process error");
              [self.delegate operationFailure:error];
@@ -75,6 +80,48 @@
     self.peppermintMessageSender.imageData = [NSData new];
     [self.peppermintMessageSender save];
     [self.delegate loginSucceed];
+}
+
+#pragma mark - GoogleSignInUIDelegate
+
+- (void)signInWillDispatch:(GIDSignIn *)signIn error:(NSError *)error {
+    NSLog(@"signInWillDispatch:__");
+    [self.delegate loginFinishedLoading];
+}
+
+- (void)signIn:(GIDSignIn *)signIn presentViewController:(UIViewController *)viewController {
+    NSLog(@"signIn:(GIDSignIn *)signIn presentViewController:");
+    [self.delegate presentViewController:viewController animated:YES completion:nil];;
+}
+
+- (void)signIn:(GIDSignIn *)signIn dismissViewController:(UIViewController *)viewController {
+    NSLog(@"signIn:(GIDSignIn *)signIn dismissViewController:");
+    [viewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error {
+    if(error) {
+        if(error.code == -5) {
+            NSLog(@"The user cancelled the login process");
+        } else {
+            [self.delegate operationFailure:error];
+        }
+    } else {
+        if(user.profile.name) {
+            self.peppermintMessageSender.nameSurname = user.profile.name;
+        }
+        if(user.profile.email) {
+            self.peppermintMessageSender.email = user.profile.email;
+        }
+        NSURL *imageUrl = [user.profile imageURLWithDimension:100];
+        self.peppermintMessageSender.imageData = [NSData dataWithContentsOfURL:imageUrl];
+        if([self.peppermintMessageSender isValid]) {
+            [self.peppermintMessageSender save];
+            [self.delegate loginFinishedLoading];
+            [self.delegate loginSucceed];
+        }
+        [signIn signOut];
+    }
 }
 
 @end

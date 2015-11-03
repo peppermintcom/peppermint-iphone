@@ -36,4 +36,6 @@
 
 -(IBAction)sendButtonDown:(id)sender;
 -(IBAction)sendButtonPressed:(id)sender;
+
++(BOOL) sendFastReplyToUserWithNameSurname:(NSString*) nameSurname withEmail:(NSString*) email;
 @end

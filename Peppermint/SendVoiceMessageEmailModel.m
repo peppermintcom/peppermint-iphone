@@ -17,7 +17,7 @@
     EasyMailAlertSender *mailSender = [EasyMailAlertSender easyMail:^(MFMailComposeViewController *controller) {
         [controller setToRecipients:[NSArray arrayWithObject:self.selectedPeppermintContact.communicationChannelAddress]];
         [controller setSubject:LOC(@"Mail Subject",@"Default Mail Subject")];
-        NSString *body = [NSString stringWithFormat:LOC(@"Mail Body Format",@"Default Mail Body Format"), @""];
+        NSString *body = [NSString stringWithFormat:LOC(@"Mail Body Format",@"Default Mail Body Format"), @"", [self fastReplyUrlForSender]];
         [controller setMessageBody:body isHTML:YES];
         NSString *fileName = [NSString stringWithFormat:@"Peppermint.%@", extension];
         NSString *mimeType = [self typeForExtension:extension];

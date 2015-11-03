@@ -21,7 +21,6 @@
 @interface RecordingModel : BaseModel <AVAudioRecorderDelegate, TPAACAudioConverterDelegate>
 @property (weak, nonatomic) id<RecordingModelDelegate> delegate;
 @property (strong, nonatomic) NSURL *fileUrl;
-@property (nonatomic) BOOL grantedForMicrophone;
 
 +(CGFloat) checkPreviousFileLength;
 +(void) setPreviousFileLength:(CGFloat) previousFileLength;
@@ -36,4 +35,6 @@
 -(void) prepareRecordData;
 
 -(void) beep;
+-(void) cleanCache;
+
 @end

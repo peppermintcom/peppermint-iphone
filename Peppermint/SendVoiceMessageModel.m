@@ -85,4 +85,18 @@ SUBSCRIBE(NetworkFailure) {
     isCancelled = YES;
 }
 
+-(NSString*) fastReplyUrlForSender {
+    NSString *urlPath = [NSString stringWithFormat:@"%@://%@?%@=%@&%@=%@",
+                         SCHEME_PEPPERMINT,
+                         HOST_FASTREPLY,
+                         QUERY_COMPONENT_NAMESURNAME,
+                         self.peppermintMessageSender.nameSurname,
+                         QUERY_COMPONENT_EMAIL,
+                         self.peppermintMessageSender.email
+                         ];
+    NSString* encodedUrlPath = [urlPath stringByAddingPercentEscapesUsingEncoding:
+                            NSUTF8StringEncoding];
+    return encodedUrlPath;
+}
+
 @end

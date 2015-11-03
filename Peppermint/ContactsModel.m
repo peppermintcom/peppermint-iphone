@@ -107,9 +107,19 @@
                  NSMutableSet *uniqueSet = [NSMutableSet new];
                  NSMutableArray *peppermintContactsArray = [NSMutableArray new];
                  for(APContact *contact in contacts) {
-                     if(contact.compositeName) {
+                     NSString *nameSurname = contact.compositeName;
+                     if(!nameSurname) {
+                         NSMutableArray *communicationChannels = [NSMutableArray new];
+                         [communicationChannels addObjectsFromArray:contact.phones];
+                         [communicationChannels addObjectsFromArray:contact.emails];
+                         for (NSString *communicationChannel in communicationChannels) {
+                             nameSurname = communicationChannel;
+                         }
+                     }
+                     
+                     if(nameSurname) {
                          for(NSString *email in contact.emails) {
-                             NSString *key = [NSString stringWithFormat:@"%@,%@", contact.compositeName, email];
+                             NSString *key = [NSString stringWithFormat:@"%@,%@", nameSurname, email];
                              if([uniqueSet containsObject:key]) {
                                  continue;
                              } else {
@@ -117,13 +127,13 @@
                                  PeppermintContact *peppermintContact = [PeppermintContact new];
                                  peppermintContact.communicationChannel = CommunicationChannelEmail;
                                  peppermintContact.communicationChannelAddress = [self filterUnwantedChars:email];
-                                 peppermintContact.nameSurname = contact.compositeName;
+                                 peppermintContact.nameSurname = nameSurname;
                                  peppermintContact.avatarImage = contact.thumbnail;
                                  [peppermintContactsArray addObject:peppermintContact];
                              }
                          }
                          for(NSString *phone in contact.phones) {
-                             NSString *key = [NSString stringWithFormat:@"%@,%@", contact.compositeName, phone];
+                             NSString *key = [NSString stringWithFormat:@"%@,%@", nameSurname, phone];
                              if([uniqueSet containsObject:key]) {
                                  continue;
                              } else {
@@ -132,7 +142,7 @@
                              PeppermintContact *peppermintContact = [PeppermintContact new];
                              peppermintContact.communicationChannel = CommunicationChannelSMS;
                              peppermintContact.communicationChannelAddress = [self filterUnwantedChars:phone];
-                             peppermintContact.nameSurname = contact.compositeName;
+                             peppermintContact.nameSurname = nameSurname;
                              peppermintContact.avatarImage = contact.thumbnail;
                              [peppermintContactsArray addObject:peppermintContact];
                          }

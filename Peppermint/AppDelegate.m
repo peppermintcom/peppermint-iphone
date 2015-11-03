@@ -13,10 +13,8 @@
 #import "Tolo.h"
 #import "Events.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
-
-#define MAIN_STORYBOARD         @"Main"
-#define LOGIN_STORYBOARD        @"Login"
-#define MAIN_VIEWCONTROLLER     @"ReSideMenuContainerViewController"
+#import <Google/SignIn.h>
+#import "RecordingViewController.h"
 
 @interface AppDelegate ()
 
@@ -31,19 +29,19 @@
 
 -(void) initInitialViewController {
     NSString *mainStoryBoardName = [UIStoryboard LDMainStoryboardName];
-    if([mainStoryBoardName isEqualToString:MAIN_STORYBOARD]) {
+    if([mainStoryBoardName isEqualToString:STORYBOARD_MAIN]) {
         [self initMainStoryBoardForTutorial];
     }
 }
 
 -(void) initMainStoryBoardForTutorial {
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:MAIN_STORYBOARD bundle:nil];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:STORYBOARD_MAIN bundle:nil];
     UINavigationController *nvc = [storyboard instantiateInitialViewController];
     
     BOOL isTutorialShowed = [defaults_object(DEFAULTS_KEY_ISTUTORIALSHOWED) boolValue];
     if(isTutorialShowed) {
-        UIViewController *vc = [storyboard instantiateViewControllerWithIdentifier:MAIN_VIEWCONTROLLER];
+        UIViewController *vc = [storyboard instantiateViewControllerWithIdentifier:VIEWCONTROLLER_MAIN];
         [nvc pushViewController:vc animated:NO];
     } else {
         defaults_set_object(DEFAULTS_KEY_ISTUTORIALSHOWED, @(YES));
@@ -72,6 +70,12 @@
                              didFinishLaunchingWithOptions:launchOptions];
 }
 
+-(void) initGoogleApp {
+    NSError* error;
+    [[GGLContext sharedInstance] configureWithError: &error];
+    NSLog(@"Error configuring Google services: %@", error);
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self initNavigationViewController];
@@ -79,6 +83,7 @@
     [self initInitialViewController];
     //[self logServiceCalls];
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
+    [self initGoogleApp];
     return YES;
 }
 
@@ -110,10 +115,55 @@
 #pragma mark - Open URL
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [[FBSDKApplicationDelegate sharedInstance] application:application
-                                                          openURL:url
-                                                sourceApplication:sourceApplication
-                                                       annotation:annotation];
+    BOOL result = false;
+    
+    NSLog(@"\n\n\n");
+    NSLog(@"url scheme: %@", [url scheme]);
+    NSLog(@"url recieved: %@", url);
+    NSLog(@"query string: %@", [url query]);
+    NSLog(@"host: %@", [url host]);
+    NSLog(@"url path: %@", [url path]);
+    NSLog(@"\n\n\n");
+    
+    if([url.scheme isEqualToString:SCHEME_FACEBOOK]) {
+        result = [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                                openURL:url
+                                                      sourceApplication:sourceApplication
+                                                             annotation:annotation];
+    } else if ([url.scheme isEqualToString:SCHEME_GOOGLE]) {
+        result = [[GIDSignIn sharedInstance] handleURL:url
+                            sourceApplication:sourceApplication
+                                   annotation:annotation];
+    } else if ([url.scheme isEqualToString:SCHEME_PEPPERMINT]) {
+        return [self handleOpenURL:url
+                 sourceApplication:sourceApplication
+                        annotation:annotation];
+    }
+    
+    return result;
+}
+
+-(BOOL) handleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    BOOL result = NO;
+    if([[url host] isEqualToString:HOST_FASTREPLY]) {
+        NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
+        NSString *nameSurname, *email = nil;
+        for(NSURLQueryItem *queryItem in urlComponents.queryItems) {
+            if([queryItem.name isEqualToString:QUERY_COMPONENT_NAMESURNAME]) {
+                nameSurname = queryItem.value;
+            } else if ([queryItem.name isEqual:QUERY_COMPONENT_EMAIL]) {
+                email = queryItem.value;
+            }
+        }
+        if(nameSurname && email) {
+            result = [RecordingViewController sendFastReplyToUserWithNameSurname:nameSurname withEmail:email];
+        } else {
+            NSLog(@"Query Parameters are not valid!");
+        }
+    } else {
+        NSLog(@"Host is not avaible to handle. Host : %@", url.host);
+    }
+    return result;
 }
 
 #pragma mark - Core Data stack
@@ -213,8 +263,8 @@ reset:
 
 #pragma mark - Instance
 + (AppDelegate*) Instance {
-    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    return appDelegate;
+    id<UIApplicationDelegate> appDelegate = [[UIApplication sharedApplication] delegate];
+    return (AppDelegate*) appDelegate;
 }
 
 @end

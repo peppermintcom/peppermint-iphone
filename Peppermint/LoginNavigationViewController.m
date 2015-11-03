@@ -8,12 +8,15 @@
 
 #import "LoginNavigationViewController.h"
 #import "AppDelegate.h"
+#import "MBProgressHUD.h"
 
 @interface LoginNavigationViewController ()
 @property (weak, nonatomic) id<LoginNavigationViewControllerDelegate> loginDelegate;
 @end
 
-@implementation LoginNavigationViewController
+@implementation LoginNavigationViewController {
+    MBProgressHUD *_loadingHud;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -25,7 +28,24 @@
     [super didReceiveMemoryWarning];
 }
 
+#pragma mark - LoadingView
+
+-(MBProgressHUD*) loadingHud {
+    if(!_loadingHud) {
+        _loadingHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    }
+    return _loadingHud;
+}
+
 #pragma mark - LoginModelDelegate
+
+-(void) loginLoading {
+    [[self loadingHud] show:YES];
+}
+
+-(void) loginFinishedLoading {
+    [[self loadingHud] hide:YES];
+}
 
 -(void) loginSucceed {
     [self dismissViewControllerAnimated:YES completion:^{
@@ -57,9 +77,7 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:[NSBundle mainBundle]];
     LoginNavigationViewController *loginNavigationViewController = [storyboard instantiateInitialViewController];
     loginNavigationViewController.loginDelegate = delegate;
-    [rootVC presentViewController:loginNavigationViewController animated:YES completion:^{
-        NSLog(@"Login is shown!");
-    }];
+    [rootVC presentViewController:loginNavigationViewController animated:YES completion:nil];
 }
 
 @end

@@ -62,8 +62,23 @@ NSLocalizedStringFromTable(\
 #define CHARS_FOR_USERNAME @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 "
 #define CHARS_FOR_PASSWORD @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@"
 
-#define VIEWCONTROLLER_CONTACTS     @"ContactsViewController"
-#define VIEWCONTROLLER_SLIDEMENU    @"SlideMenuViewController"
-#define VIEWCONTROLLER_TUTORIAL     @"TutorialViewController"
+#define STORYBOARD_MAIN         @"Main"
+#define STORYBOARD_LOGIN        @"Login"
+
+#define VIEWCONTROLLER_MAIN     @"ReSideMenuContainerViewController"
+
+#define VIEWCONTROLLER_CONTACTS                     @"ContactsViewController"
+#define VIEWCONTROLLER_SLIDEMENU                    @"SlideMenuViewController"
+#define VIEWCONTROLLER_TUTORIAL                     @"TutorialViewController"
+#define VIEWCONTROLLER_RECORDINGVIEWCONTROLLER      @"RecordingViewController"
+
+#define SCHEME_FACEBOOK     @"fb911276708950197"
+#define SCHEME_GOOGLE       @"com.googleusercontent.apps.606001356736-b0rl6grflti3e73hegidp7k8upq79n0j"
+#define SCHEME_PEPPERMINT   @"peppermint"
+
+#define HOST_FASTREPLY                  @"fastReply"
+
+#define QUERY_COMPONENT_NAMESURNAME     @"namesurname"
+#define QUERY_COMPONENT_EMAIL           @"email"
 
 #endif

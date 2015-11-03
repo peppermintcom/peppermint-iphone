@@ -352,7 +352,7 @@
         <!--Recording View Controller-->
         <scene sceneID="BFD-z9-9PG">
             <objects>
-                <viewController id="72p-Nj-Mys" customClass="RecordingViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RecordingViewController" id="72p-Nj-Mys" customClass="RecordingViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ivx-3r-iBM"/>
                         <viewControllerLayoutGuide type="bottom" id="IZW-Qj-bwP"/>
@@ -364,11 +364,11 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Fg-2m-Bqw" userLabel="NavigationView">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_back" translatesAutoresizingMaskIntoConstraints="NO" id="gte-9R-Cep">
-                                        <rect key="frame" x="14" y="28" width="10" height="18"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_close" translatesAutoresizingMaskIntoConstraints="NO" id="gte-9R-Cep">
+                                        <rect key="frame" x="14" y="28" width="18" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="AMj-NK-hcQ"/>
-                                            <constraint firstAttribute="width" constant="10" id="NkW-8K-ecb"/>
+                                            <constraint firstAttribute="width" constant="18" id="NkW-8K-ecb"/>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="egd-Fm-3Qs" userLabel="BackButton">
@@ -602,7 +602,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hsp-tK-r5C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="100" y="1122"/>
+            <point key="canvasLocation" x="152" y="1138"/>
         </scene>
         <!--Re Side Menu Container View Controller-->
         <scene sceneID="fBF-d0-pHc">
@@ -697,7 +697,7 @@
         <image name="dot" width="18" height="18"/>
         <image name="eye" width="18" height="18"/>
         <image name="hold_to_record_background" width="492" height="86"/>
-        <image name="icon_back" width="22" height="37"/>
+        <image name="icon_close" width="343" height="342"/>
         <image name="icon_down" width="6" height="6"/>
         <image name="icon_menu" width="16" height="14"/>
         <image name="icon_recent" width="14" height="14"/>

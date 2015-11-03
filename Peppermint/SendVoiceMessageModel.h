@@ -45,5 +45,6 @@ typedef enum : NSUInteger {
 -(BOOL) needsAuth;
 -(void) messagePrepareIsStarting;
 -(void) cancelSending;
+-(NSString*) fastReplyUrlForSender;
 
 @end

@@ -32,7 +32,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *counterLabel;
 @property (nonatomic)   NSTimeInterval totalSeconds;
 @property (weak, nonatomic) IBOutlet UILabel *swipeInAnyDirectionLabel;
-@property (weak, nonatomic) IBOutlet UIVisualEffectView *backgroundView;
+@property (weak, nonatomic) IBOutlet UIView *backgroundView;
 
 +(FastRecordingView*) createInstanceWithDelegate:(UIViewController<FastRecordingViewDelegate>*) delegate;
 

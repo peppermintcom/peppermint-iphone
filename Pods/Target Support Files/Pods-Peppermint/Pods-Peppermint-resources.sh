@@ -58,10 +58,12 @@ install_resource()
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "GoogleSignIn/Resources/GoogleSignIn.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/EasyMailSender.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/OpenSans.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "GoogleSignIn/Resources/GoogleSignIn.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/EasyMailSender.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/OpenSans.bundle"
 fi
