@@ -9,6 +9,7 @@
 #import "BaseViewController.h"
 #import "SwipeView.h"
 #import "ContactsModel.h"
+#import "LoginNavigationViewController.h"
 
 @interface TutorialViewController : BaseViewController <SwipeViewDataSource, SwipeViewDelegate, ContactsModelDelegate, UIAlertViewDelegate>
 

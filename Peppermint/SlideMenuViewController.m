@@ -105,7 +105,7 @@
     } else if (indexPath.row == INDEX_TUTORIAL) {
         [self.reSideMenuContainerViewController.navigationController popToRootViewControllerAnimated:YES];
     } else if (indexPath.row == INDEX_ACCOUNT) {
-        [LoginNavigationViewController logUserInWithDelegate:nil];
+        [LoginNavigationViewController logUserInWithDelegate:nil completion:nil];
     }
 }
 

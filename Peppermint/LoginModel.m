@@ -21,65 +21,14 @@
     return self;
 }
 
+#pragma mark - Google Login
+
 -(void) performGoogleLogin {
     GIDSignIn *gIDSignIn = [GIDSignIn sharedInstance];
     gIDSignIn.delegate = self;
     gIDSignIn.uiDelegate = self;
     [self.delegate loginLoading];
     [gIDSignIn signIn];
-}
-
--(void) performFacebookLogin {
-    FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
-    [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
-    [self.delegate loginLoading];
-    [login logInWithReadPermissions: @[@"public_profile"]
-     fromViewController:self.delegate
-     handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-         [self.delegate loginFinishedLoading];
-         if (error) {
-             NSLog(@"Process error");
-             [self.delegate operationFailure:error];
-         } else if (result.isCancelled) {
-             NSLog(@"Cancelled");
-         } else {
-             if ([FBSDKAccessToken currentAccessToken]) {
-                 [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields": @"name, email, picture"}]
-                  startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-                      if(error) {
-                          [self.delegate operationFailure:error];
-                      } else {
-                          NSDictionary *infoDictionary = (NSDictionary*)result;
-                          if([infoDictionary.allKeys containsObject:@"name"]) {
-                              self.peppermintMessageSender.nameSurname = [result valueForKey:@"name"];
-                          }
-                          if([infoDictionary.allKeys containsObject:@"email"]) {
-                              self.peppermintMessageSender.email = [result valueForKey:@"email"];
-                          }
-                          if([infoDictionary.allKeys containsObject:@"picture"]) {
-                              NSString *urlPath = [result valueForKeyPath:@"picture.data.url"];
-                              NSURL *url = [NSURL URLWithString:urlPath];
-                              NSData *data = [NSData dataWithContentsOfURL:url];
-                              self.peppermintMessageSender.imageData = data;
-                          }
-                          if([self.peppermintMessageSender isValid]) {
-                              [login logOut];
-                              [self.peppermintMessageSender save];
-                              [self.delegate loginSucceed];
-                          } else {
-                              NSLog(@"Could not get all needed information from facebook!");
-                          }
-                      }
-                  }];
-             }
-         }
-     }];
-}
-
--(void) performEmailLogin {
-    self.peppermintMessageSender.imageData = [NSData new];
-    [self.peppermintMessageSender save];
-    [self.delegate loginSucceed];
 }
 
 #pragma mark - GoogleSignInUIDelegate
@@ -107,6 +56,7 @@
             [self.delegate operationFailure:error];
         }
     } else {
+        self.peppermintMessageSender.loginSource = LOGINSOURCE_GOOGLE;
         if(user.profile.name) {
             self.peppermintMessageSender.nameSurname = user.profile.name;
         }
@@ -122,6 +72,73 @@
         }
         [signIn signOut];
     }
+}
+
+#pragma mark - Facebook Login
+
+-(void) performFacebookLogin {
+    FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
+    [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
+    [self.delegate loginLoading];
+    [login logInWithReadPermissions: @[@"public_profile",@"email"]
+     fromViewController:self.delegate
+     handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+         [self.delegate loginFinishedLoading];
+         if (error) {
+             NSLog(@"Process error");
+             [self.delegate operationFailure:error];
+         } else if (result.isCancelled) {
+             NSLog(@"Cancelled");
+         } else {
+             if ([FBSDKAccessToken currentAccessToken]) {
+                 [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields": @"name, email, picture"}]
+                  startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+                      if(error) {
+                          [self.delegate operationFailure:error];
+                      } else {
+                          NSDictionary *infoDictionary = (NSDictionary*)result;
+                          self.peppermintMessageSender.loginSource = LOGINSOURCE_FACEBOOK;
+                          if([infoDictionary.allKeys containsObject:@"name"]) {
+                              self.peppermintMessageSender.nameSurname = [result valueForKey:@"name"];
+                          }
+                          if([infoDictionary.allKeys containsObject:@"email"]) {
+                              self.peppermintMessageSender.email = [result valueForKey:@"email"];
+                          }
+                          if([infoDictionary.allKeys containsObject:@"picture"]) {
+                              NSString *urlPath = [result valueForKeyPath:@"picture.data.url"];
+                              NSURL *url = [NSURL URLWithString:urlPath];
+                              NSData *data = [NSData dataWithContentsOfURL:url];
+                              self.peppermintMessageSender.imageData = data;
+                          }
+                          if([self.peppermintMessageSender isValid]) {
+                              [login logOut];
+                              [self.peppermintMessageSender save];
+                              [self.delegate loginSucceed];
+                          } else {
+                              [self showErrorForInformationFromFacebook];
+                          }
+                      }
+                  }];
+             }
+         }
+     }];
+}
+
+-(void) showErrorForInformationFromFacebook
+{
+    NSString *title = LOC(@"Information", @"Title Message");
+    NSString *message = LOC(@"Could not get all needed information from facebook!", @"Information Message");
+    NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
+    [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
+}
+
+#pragma mark - Email Login
+
+-(void) performEmailLogin {
+    self.peppermintMessageSender.loginSource = LOGINSOURCE_PEPPERMINT;
+    self.peppermintMessageSender.imageData = [NSData new];
+    [self.peppermintMessageSender save];
+    [self.delegate loginSucceed];
 }
 
 @end

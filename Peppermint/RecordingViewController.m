@@ -32,7 +32,7 @@
     [self.m13ProgressViewPie setPrimaryColor:[UIColor progressCoverViewGreen]];
     [self.m13ProgressViewPie setSecondaryColor:[UIColor clearColor]];
 
-#warning "Open netifications again"
+#warning "Interruptions are not handled"
     //[self registerAppNotifications];
 }
 
@@ -148,10 +148,7 @@
 #pragma mark - SendVoiceMessage Delegate
 
 -(void) messageStatusIsUpdated:(SendingStatus)sendingStatus withCancelOption:(BOOL)cancelable {
-    id<SendVoiceMessageDelegate> voiceMessageDelegate = (id<SendVoiceMessageDelegate>)[self backViewController];
-    [voiceMessageDelegate messageStatusIsUpdated:sendingStatus withCancelOption:cancelable];
-    if (sendingStatus == SendingStatusSent
-        || sendingStatus == SendingStatusCancelled) {
+    if (sendingStatus == SendingStatusSent || sendingStatus == SendingStatusCancelled) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
@@ -185,7 +182,7 @@
 }
 
 #pragma mark - App Interruption Actions
-
+/*
 -(void) registerAppNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationWillResignActive)
@@ -219,6 +216,7 @@
     NSString *continueFromPreviousButtonTitle = LOC(@"Continue from previous", @"Continue from previous button title");
     [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:newRecordButtonTitle otherButtonTitles:continueFromPreviousButtonTitle, nil] show];
 }
+*/
 
 #pragma mark - Navigation
 
@@ -227,7 +225,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - FastReply
+#pragma mark - FastReply & OpenUrl
 
 +(BOOL) sendFastReplyToUserWithNameSurname:(NSString*) nameSurname withEmail:(NSString*) email {
     PeppermintContact *peppermintContact = [PeppermintContact new];

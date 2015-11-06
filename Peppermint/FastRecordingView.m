@@ -110,7 +110,7 @@
             } else if (isRecordingShort) {
                 [self showAlertToRecordMoreThanMinimumMessageLength];
             } else if ([self.sendVoiceMessageModel needsAuth] && !isLoginInfoValid ) {
-                [LoginNavigationViewController logUserInWithDelegate:self];
+                [LoginNavigationViewController logUserInWithDelegate:self completion:nil];
             } else {
                 [self dissmissWithFadeOut];
                 [self performOperationsToSend];

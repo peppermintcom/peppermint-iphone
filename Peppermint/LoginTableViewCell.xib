@@ -45,7 +45,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
                         <connections>
                             <action selector="buttonReleasedInside:" destination="Dk8-zA-rfK" eventType="touchUpInside" id="rNN-Lp-0XO"/>
+                            <action selector="buttonReleasedOutside:" destination="Dk8-zA-rfK" eventType="touchDragExit" id="NMJ-0Y-dyF"/>
                             <action selector="buttonReleasedOutside:" destination="Dk8-zA-rfK" eventType="touchUpOutside" id="Run-JG-19W"/>
+                            <action selector="buttonReleasedOutside:" destination="Dk8-zA-rfK" eventType="touchDownRepeat" id="fQb-7v-M3S"/>
+                            <action selector="buttonReleasedOutside:" destination="Dk8-zA-rfK" eventType="touchDragOutside" id="rXb-NA-9IR"/>
+                            <action selector="buttonReleasedOutside:" destination="Dk8-zA-rfK" eventType="touchCancel" id="snm-ZA-NdD"/>
+                            <action selector="buttonTouched:" destination="Dk8-zA-rfK" eventType="touchDragEnter" id="cAF-mx-z3g"/>
                             <action selector="buttonTouched:" destination="Dk8-zA-rfK" eventType="touchDown" id="hL1-PT-Sq7"/>
                         </connections>
                     </button>

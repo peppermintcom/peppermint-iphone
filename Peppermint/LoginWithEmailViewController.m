@@ -60,10 +60,10 @@
     
     NSInteger index = indexPath.section;
     if(index == INDEX_NAME_SURNAME) {
-        loginTextFieldCell.textField.placeholder = @"Name surname";
+        loginTextFieldCell.textField.placeholder = LOC(@"Your Name",@"Your Name");
         loginTextFieldCell.textField.text = self.loginModel.peppermintMessageSender.nameSurname;
     } else if (index == INDEX_EMAIL) {
-        loginTextFieldCell.textField.placeholder = @"Email";
+        loginTextFieldCell.textField.placeholder = LOC(@"Email", @"Email");
         loginTextFieldCell.textField.text = self.loginModel.peppermintMessageSender.email;
     }
     return loginTextFieldCell;

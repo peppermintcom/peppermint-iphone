@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		392D9C861A6F3945B758D95F /* libPods-Peppermint.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4568D87C1B184E71C2B112BE /* libPods-Peppermint.a */; };
+		B10125BC1BEB670500B5DD54 /* NSString_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B10125BB1BEB670500B5DD54 /* NSString_Addition.m */; };
 		B102BBB81BCD03EC001E1E7A /* UIViewController_AdditionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B102BBB71BCD03EC001E1E7A /* UIViewController_AdditionViewController.m */; };
 		B102DD5E1BD0802100D71D62 /* BaseCustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = B102DD5D1BD0802100D71D62 /* BaseCustomView.m */; };
 		B11F8A5C1BDCC45F000E79AA /* FinalizeUploadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5B1BDCC45F000E79AA /* FinalizeUploadRequest.m */; };
 		B11F8A5F1BDCC474000E79AA /* FinalizeUploadResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5E1BDCC474000E79AA /* FinalizeUploadResponse.m */; };
+		B1246D2A1BEB4AFE009A7873 /* InitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1246D291BEB4AFE009A7873 /* InitialViewController.m */; };
 		B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B12C03BA1BCFFC060085A55A /* FastRecordingView.m */; };
 		B12C03BD1BCFFC280085A55A /* FastRecordingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B12C03BC1BCFFC280085A55A /* FastRecordingView.xib */; };
 		B13B075A1BD3686500974AC3 /* MandrillInformationResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07591BD3686500974AC3 /* MandrillInformationResponse.m */; };
@@ -161,6 +163,8 @@
 /* Begin PBXFileReference section */
 		4568D87C1B184E71C2B112BE /* libPods-Peppermint.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Peppermint.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3AC8DCFCC2ADAD1159483F0 /* Pods-Peppermint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peppermint.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint.debug.xcconfig"; sourceTree = "<group>"; };
+		B10125BA1BEB670500B5DD54 /* NSString_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSString_Addition.h; sourceTree = "<group>"; };
+		B10125BB1BEB670500B5DD54 /* NSString_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSString_Addition.m; sourceTree = "<group>"; };
 		B102BBB51BCCE039001E1E7A /* nsuserdefaults-helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "nsuserdefaults-helper.h"; sourceTree = "<group>"; };
 		B102BBB61BCD03EC001E1E7A /* UIViewController_AdditionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIViewController_AdditionViewController.h; sourceTree = "<group>"; };
 		B102BBB71BCD03EC001E1E7A /* UIViewController_AdditionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIViewController_AdditionViewController.m; sourceTree = "<group>"; };
@@ -170,6 +174,8 @@
 		B11F8A5B1BDCC45F000E79AA /* FinalizeUploadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinalizeUploadRequest.m; sourceTree = "<group>"; };
 		B11F8A5D1BDCC474000E79AA /* FinalizeUploadResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinalizeUploadResponse.h; sourceTree = "<group>"; };
 		B11F8A5E1BDCC474000E79AA /* FinalizeUploadResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinalizeUploadResponse.m; sourceTree = "<group>"; };
+		B1246D281BEB4AFE009A7873 /* InitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialViewController.h; sourceTree = "<group>"; };
+		B1246D291BEB4AFE009A7873 /* InitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialViewController.m; sourceTree = "<group>"; };
 		B12C03B91BCFFC060085A55A /* FastRecordingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastRecordingView.h; sourceTree = "<group>"; };
 		B12C03BA1BCFFC060085A55A /* FastRecordingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = FastRecordingView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B12C03BC1BCFFC280085A55A /* FastRecordingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FastRecordingView.xib; sourceTree = "<group>"; };
@@ -8571,6 +8577,8 @@
 				B102BBB71BCD03EC001E1E7A /* UIViewController_AdditionViewController.m */,
 				B1BB601B1BDE16D400C1140B /* UIStoryboard_Addition.h */,
 				B1BB601C1BDE16D400C1140B /* UIStoryboard_Addition.m */,
+				B10125BA1BEB670500B5DD54 /* NSString_Addition.h */,
+				B10125BB1BEB670500B5DD54 /* NSString_Addition.m */,
 			);
 			name = Addition;
 			sourceTree = "<group>";
@@ -8627,6 +8635,8 @@
 			children = (
 				B16DA2111BE0F1CA00EBF043 /* Base */,
 				B16DA2101BE0F1BE00EBF043 /* Login */,
+				B1246D281BEB4AFE009A7873 /* InitialViewController.h */,
+				B1246D291BEB4AFE009A7873 /* InitialViewController.m */,
 				B1EF40FA1BB8786500042E4B /* TutorialViewController.h */,
 				B1EF40FB1BB8786500042E4B /* TutorialViewController.m */,
 				B17B3D5C1BB6A504009B8BC5 /* ContactsViewController.h */,
@@ -9030,6 +9040,7 @@
 				B17206D21BE4AAE40021D855 /* ConnectionModel.m in Sources */,
 				B17B3D741BB6C4B0009B8BC5 /* UIColor_Addition.m in Sources */,
 				B17B3D341BB6898C009B8BC5 /* AppDelegate.m in Sources */,
+				B10125BC1BEB670500B5DD54 /* NSString_Addition.m in Sources */,
 				B102BBB81BCD03EC001E1E7A /* UIViewController_AdditionViewController.m in Sources */,
 				B13B076A1BD3752900974AC3 /* MandrillRequest.m in Sources */,
 				B1EF40FC1BB8786500042E4B /* TutorialViewController.m in Sources */,
@@ -9044,6 +9055,7 @@
 				B1F93E901BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld in Sources */,
 				B17933151BE0C19C0016F158 /* LoginModel.m in Sources */,
 				B1EF40F21BB8579D00042E4B /* M13ProgressView.m in Sources */,
+				B1246D2A1BEB4AFE009A7873 /* InitialViewController.m in Sources */,
 				B1F93E9E1BC8ED58005F2128 /* RecentContact.m in Sources */,
 				B1BB601D1BDE16D400C1140B /* UIStoryboard_Addition.m in Sources */,
 			);

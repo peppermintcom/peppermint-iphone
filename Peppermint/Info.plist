@@ -31,7 +31,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb911276708950197</string>
+				<string>fb971024122959536</string>
 			</array>
 		</dict>
 		<dict>
@@ -52,7 +52,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>84</string>
+	<string>9</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -68,7 +68,7 @@
 		</array>
 	</dict>
 	<key>FacebookAppID</key>
-	<string>911276708950197</string>
+	<string>971024122959536</string>
 	<key>FacebookDisplayName</key>
 	<string>Peppermint</string>
 	<key>LSApplicationQueriesSchemes</key>

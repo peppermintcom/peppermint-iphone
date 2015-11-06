@@ -20,21 +20,34 @@
 @end
 
 @implementation TutorialViewController {
-    UIAlertView *contactsAlertView;
     ContactsModel* contactsModel;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    contactsAlertView = nil;
     contactsModel = nil;
     self.items = [NSArray arrayWithObjects:@"tutorial1",@"tutorial2",@"tutorial3",@"_NEXPAGE_", nil];
-    [self askUserForContactsReadPermission];
+    
 }
 
 -(void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self checkIfuserIsLoggedIn];
     [self.swipeView scrollToItemAtIndex:0 duration:DURATION];
+}
+
+#pragma mark - Login
+
+-(void) checkIfuserIsLoggedIn {    
+    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender new];
+    if(!peppermintMessageSender.isValid) {
+        self.view.alpha = 0;
+        [LoginNavigationViewController logUserInWithDelegate:nil completion:^{
+            self.view.alpha = 1;
+        }];
+    } else {
+        [self askUserForContactsReadPermission];
+    }
 }
 
 -(void) askUserForContactsReadPermission {
@@ -51,7 +64,9 @@
 
 - (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
 {
-    if(index == self.items.count -1) {
+    NSInteger lastItemIndex = self.items.count - 1;
+    if(index == lastItemIndex) {
+        defaults_set_object(DEFAULTS_KEY_ISTUTORIALSHOWED, @(YES));
         [self performSegueWithIdentifier:SEGUE_CONTACTS_VIEW_CONTROLLER sender:self];
     }
     
@@ -114,11 +129,10 @@
 
 -(void) contactsAccessRightsAreNotSupplied {
     NSString *title = LOC(@"Information", @"Title Message");
-    NSString *message = LOC(@"Contacts access rights explanation", @"Directives to give access rights") ;
+    NSString *message = LOC(@"Contacts access rights explanation", @"Directives to give access rights");
     NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
     NSString *settingsButtonTitle = LOC(@"Settings", @"Settings Message");
-    contactsAlertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:settingsButtonTitle, nil];
-    [contactsAlertView show];
+    [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:settingsButtonTitle, nil] show];
 }
 
 -(void) contactListRefreshed {
@@ -128,7 +142,8 @@
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if(alertView == contactsAlertView) {
+    
+    if([alertView.message isEqualToString:LOC(@"Contacts access rights explanation", @"Directives to give access rights")]) {
         switch (buttonIndex) {
             case ALERT_BUTTON_INDEX_OTHER_1:
                 [self redirectToSettingsPageForPermission];

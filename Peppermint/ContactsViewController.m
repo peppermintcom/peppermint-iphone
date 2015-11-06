@@ -13,8 +13,6 @@
 #import "SlideMenuViewController.h"
 #import "ConnectionModel.h"
 
-#define SEGUE_RECORDING_VIEW_CONTROLLER         @"RecordingViewControllerSegue"
-
 #define CELL_TAG_ALL_CONTACTS       1
 #define CELL_TAG_RECENT_CONTACTS    2
 #define CELL_TAG_EMAIL_CONTACTS     3
@@ -43,6 +41,8 @@
     if(!self.contactsModel) {
         self.contactsModel = [ContactsModel new];
         self.contactsModel.delegate = self;
+        [self.contactsModel setup];
+    } else if (self.contactsModel.contactList.count == 0) {
         [self.contactsModel setup];
     }
     self.recentContactsModel = [RecentContactsModel new];
@@ -93,17 +93,15 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[self loadingHud] show:YES];
     self.searchContactsTextField.text = self.contactsModel.filterText = @"";
     activeCellTag = CELL_TAG_RECENT_CONTACTS;
+    [[self loadingHud] show:YES];
     [self.recentContactsModel refreshRecentContactList];
     [self registerKeyboardActions];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if(self.recentContactsModel.contactList.count == 0)
-       [self.searchContactsTextField becomeFirstResponder];
 }
 
 -(void) initRecordingView {
@@ -224,20 +222,6 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     isScrolling = NO;
 }
-
-/*
-
- If Recording View Controller will be used in the future, this below code will be available again!
-- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if([self activeContactList].count > indexPath.row) {
-        PeppermintContact *selectedContact = [[self activeContactList] objectAtIndex:indexPath.row];
-        [self.searchContactsTextField resignFirstResponder];
-        if([self shouldPerformSegueWithIdentifier:SEGUE_RECORDING_VIEW_CONTROLLER sender:selectedContact]) {
-            [self performSegueWithIdentifier:SEGUE_RECORDING_VIEW_CONTROLLER sender:selectedContact];
-        }
-    }
-}
-*/
 
 #pragma mark - Internet Connection
 
@@ -554,10 +538,10 @@
 }
 
 -(void) recentPeppermintContactsRefreshed {
+    [[self loadingHud] hide:YES];
     if(self.recentContactsModel.contactList.count == 0) {
         [self cellSelectedWithTag:CELL_TAG_ALL_CONTACTS];
     } else {
-        [[self loadingHud] hide:YES];
         [self.tableView reloadData];
     }
 }
@@ -665,10 +649,14 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if([alertView.message isEqualToString:LOC(@"Contacts access rights explanation", @"Directives to give access rights")]) {
         switch (buttonIndex) {
+            case ALERT_BUTTON_INDEX_CANCEL:
+                [self contactsAccessRightsAreNotSupplied];
+                break;
             case ALERT_BUTTON_INDEX_OTHER_1:
                 [self redirectToSettingsPageForPermission];
                 break;
             default:
+                NSLog(@"Unhandled button....");
                 break;
         }
     }
@@ -720,93 +708,5 @@
         [self.tableView layoutIfNeeded];
     }];
 }
-
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:SEGUE_RECORDING_VIEW_CONTROLLER]) {
-        RecordingViewController *rvc = (RecordingViewController*)segue.destinationViewController;
-        PeppermintContact *selectedContact = (PeppermintContact*)sender;
-        
-        if(selectedContact.communicationChannel == CommunicationChannelEmail) {
-            SendVoiceMessageModel *sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
-            sendVoiceMessageModel.selectedPeppermintContact = selectedContact;
-            sendVoiceMessageModel.delegate = rvc;
-            rvc.sendVoiceMessageModel = sendVoiceMessageModel;
-        } else if (selectedContact.communicationChannel == CommunicationChannelSMS) {
-            NSLog(@"SMS functionality is not implemented yet");
-        }
-    }
-}
-
-- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
-    BOOL result = YES;    
-    if([identifier isEqualToString:SEGUE_RECORDING_VIEW_CONTROLLER]) {
-        PeppermintContact *selectedContact = (PeppermintContact*)sender;        
-        if(selectedContact.communicationChannel == CommunicationChannelEmail) {
-            //IF there is a possible limitation implement here...
-        } else if (selectedContact.communicationChannel == CommunicationChannelSMS) {
-            result = NO;
-            NSString *title = LOC(@"Information", @"Information");
-            NSString *message = LOC(@"SMS is not implemented", @"SMS implementation info");
-            NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
-            [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
-        }
-    }
-    return result;
-}
-
-#pragma mark - OpenUrl
-/*
-+(BOOL) sendFastReplyToUserWithNameSurname:(NSString*) nameSurname withEmail:(NSString*) email {
-    UIViewController *rootViewController = [AppDelegate Instance].window.rootViewController;
-    ReSideMenuContainerViewController *reSideMenuContainerViewController = nil;
-    BOOL isFound = NO;
-    
-    UINavigationController *navigationController =
-    [rootViewController isKindOfClass:[UINavigationController class]] ?
-    (UINavigationController*)rootViewController : (UINavigationController*)rootViewController.navigationController;
-    
-    
-    
-    for(UIViewController *viewController in navigationController.viewControllers) {
-        if(viewController.class == [ReSideMenuContainerViewController class]) {
-            isFound = YES;
-            reSideMenuContainerViewController = (ReSideMenuContainerViewController*)viewController;
-            [rootViewController.navigationController popToViewController:reSideMenuContainerViewController animated:YES];
-        }
-    }
-    
-    if(!isFound) {
-        
-        UIStoryboard *storybord = [UIStoryboard storyboardWithName:STORYBOARD_MAIN bundle:nil];
-        reSideMenuContainerViewController = [storybord instantiateViewControllerWithIdentifier:VIEWCONTROLLER_MAIN];
-        
-        NSLog(@"Viewcontroller could not be found!");
-    }
-    
-    
-        ContactsViewController *contactsViewController = nil;
-    ReSideMenuContainerViewController *reSideMenuContainerViewController =
-    (ReSideMenuContainerViewController*) viewController;
-    navigationController = (UINavigationController*)reSideMenuContainerViewController.contentViewController;
-    contactsViewController = (ContactsViewController*) [navigationController.viewControllers objectAtIndex:0];
-    
-    NSLog(@"Found and navigated..");
-    
-    
-    
-    PeppermintContact *peppermintContact = [PeppermintContact new];
-    peppermintContact.nameSurname = nameSurname;
-    peppermintContact.communicationChannel = CommunicationChannelEmail;
-    peppermintContact.communicationChannelAddress = email;
-    peppermintContact.avatarImage = nil;
-    
-    contactsViewController.searchSourceIconImageView.image = [UIImage imageNamed:@"avatar_empty"];
-    contactsViewController.contactsModel.contactList = [NSMutableArray arrayWithObject:peppermintContact];
-    [contactsViewController.tableView reloadData];
-    return YES;
-}
- */
 
 @end

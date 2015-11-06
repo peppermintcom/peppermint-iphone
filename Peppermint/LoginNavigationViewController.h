@@ -16,5 +16,5 @@
 @interface LoginNavigationViewController : UINavigationController <LoginModelDelegate>
 @property (strong, nonatomic) LoginModel *loginModel;
 
-+(void) logUserInWithDelegate:(id<LoginNavigationViewControllerDelegate>) delegate;
++(void) logUserInWithDelegate:(id<LoginNavigationViewControllerDelegate>) delegate completion:(void(^)(void))completion;
 @end

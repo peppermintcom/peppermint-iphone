@@ -43,8 +43,6 @@
     if(isTutorialShowed) {
         UIViewController *vc = [storyboard instantiateViewControllerWithIdentifier:VIEWCONTROLLER_MAIN];
         [nvc pushViewController:vc animated:NO];
-    } else {
-        defaults_set_object(DEFAULTS_KEY_ISTUTORIALSHOWED, @(YES));
     }
     self.window.rootViewController = nvc;
     [self.window makeKeyAndVisible];

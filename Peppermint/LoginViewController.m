@@ -23,7 +23,9 @@
 
 @end
 
-@implementation LoginViewController
+@implementation LoginViewController {
+    PeppermintMessageSender *peppermintMessageSender;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -34,6 +36,8 @@
     self.loginLabel.font = [UIFont openSansSemiBoldFontOfSize:18];
     self.loginLabel.text = LOC(@"Please Login", @"Login Message");
     [self.loginLabel sizeToFit];
+    
+    peppermintMessageSender = [PeppermintMessageSender new];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,7 +77,19 @@
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return CELL_HEIGHT_LOGIN_TABLEVIEWCELL;
+    CGFloat height = CELL_HEIGHT_LOGIN_TABLEVIEWCELL;
+    
+    NSInteger index = indexPath.section;
+    if(index == SECTION_LOGIN_WITH_FACEBOOK) {
+#warning "Implement logout suggestion"
+    } else if (index == SECTION_LOGIN_WITH_GOOGLE) {
+
+    } else if (index == SECTION_LOGIN_WITH_EMAIL) {
+        
+    }
+    
+    
+    return height;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

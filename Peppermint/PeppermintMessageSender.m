@@ -7,6 +7,9 @@
 //
 
 #import "PeppermintMessageSender.h"
+#import "A0SimpleKeychain.h"
+
+#define KEY @"PeppermintMessageSenderJson"
 
 @implementation PeppermintMessageSender
 
@@ -16,19 +19,20 @@
         self.nameSurname = (NSString*) defaults_object(DEFAULTS_KEY_SENDER_NAMESURNAME);
         self.email = (NSString*) defaults_object(DEFAULTS_KEY_SENDER_EMAIL);
         self.imageData = [NSData dataWithContentsOfURL:[self imageFileUrl]];
-        
+        self.loginSource = ((NSNumber*)defaults_object(DEFAULTS_KEY_SENDER_LOGIN_SOURCE)).intValue;
         [self guessNameFromDeviceName];
     }
     return self;
 }
 
 -(void) save {
+    defaults_set_object(DEFAULTS_KEY_SENDER_LOGIN_SOURCE, [NSNumber numberWithInt:self.loginSource]);
     defaults_set_object(DEFAULTS_KEY_SENDER_NAMESURNAME, self.nameSurname);
     defaults_set_object(DEFAULTS_KEY_SENDER_EMAIL, self.email);
     [self.imageData writeToURL:[self imageFileUrl] atomically:YES];
 }
 
--(BOOL) isValid {
+-(BOOL) isValid {    
     return self.nameSurname.length > 0
     && self.email.length > 0;
 }

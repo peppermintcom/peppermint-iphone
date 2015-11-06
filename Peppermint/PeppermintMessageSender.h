@@ -7,11 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JSONModel.h"
 
-@interface PeppermintMessageSender : NSObject
+typedef enum : NSUInteger {
+    LOGINSOURCE_FACEBOOK,
+    LOGINSOURCE_GOOGLE,
+    LOGINSOURCE_PEPPERMINT,
+} LoginSource;
+
+#warning "Implement save and load with json instead of ns user defaults!"
+@interface PeppermintMessageSender : JSONModel
 @property (strong, nonatomic) NSString *nameSurname;
 @property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSData *imageData;
+@property (nonatomic) LoginSource loginSource;
 
 -(void) save;
 -(BOOL) isValid;

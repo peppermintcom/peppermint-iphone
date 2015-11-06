@@ -21,12 +21,35 @@
                         </textAttributes>
                     </navigationBar>
                     <connections>
-                        <segue destination="291-YT-7kX" kind="relationship" relationship="rootViewController" id="Ikf-gY-d3W"/>
+                        <segue destination="291-YT-7kX" kind="relationship" relationship="rootViewController" id="bqm-RH-Mup"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z1A-p2-aIj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1638" y="154"/>
+            <point key="canvasLocation" x="-1612" y="154"/>
+        </scene>
+        <!--Initial View Controller-->
+        <scene sceneID="ZLx-8O-cm2">
+            <objects>
+                <viewController id="foJ-8h-BZ4" customClass="InitialViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MJW-Ha-eAs"/>
+                        <viewControllerLayoutGuide type="bottom" id="D1A-lk-bGd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="rnU-xB-SDS">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Jr4-Ow-y16"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <connections>
+                        <segue destination="291-YT-7kX" kind="show" identifier="TutorialViewControllerSegue" id="zem-os-tdA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8a6-tC-IGj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1028" y="-781"/>
         </scene>
         <!--Data Source-->
         <scene sceneID="ZnF-5d-yUK">
@@ -342,7 +365,6 @@
                         <outlet property="seperatorView" destination="gkl-pL-Y4B" id="jur-Qn-UjK"/>
                         <outlet property="tableView" destination="BhH-Ju-VVT" id="B8Q-tY-IdA"/>
                         <outlet property="tableViewBottomConstraint" destination="11Q-5a-Iz0" id="FDS-Yb-JA6"/>
-                        <segue destination="72p-Nj-Mys" kind="show" identifier="RecordingViewControllerSegue" id="U7X-PO-uZJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -586,6 +608,7 @@
                             <constraint firstItem="wBp-tO-dh3" firstAttribute="top" relation="greaterThanOrEqual" secondItem="mIn-yH-lj8" secondAttribute="bottom" constant="20" id="wLv-Pg-JWI"/>
                         </constraints>
                     </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="counterLabel" destination="DDk-IO-9d3" id="eCh-Xh-DIS"/>
                         <outlet property="m13ProgressViewPie" destination="EKe-vF-IZz" id="VRj-8q-v5m"/>
@@ -705,4 +728,7 @@
         <image name="tap_to_send" width="278" height="50"/>
         <image name="white_ellipse" width="596" height="60"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="zem-os-tdA"/>
+    </inferredMetricsTieBreakers>
 </document>

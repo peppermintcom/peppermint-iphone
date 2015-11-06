@@ -46,7 +46,7 @@
     }
     
     MandrillMessage *message = [MandrillMessage new];
-    message.from_email = @"noreply@peppermint.com";
+    message.from_email = self.peppermintMessageSender.email;
     message.from_name = nameSurname;
     message.subject = LOC(@"Mail Subject",@"Default Mail Subject");
     NSString *body = [NSString stringWithFormat:LOC(@"Mail Body Format",@"Default Mail Body Format"), url, [self fastReplyUrlForSender]];
