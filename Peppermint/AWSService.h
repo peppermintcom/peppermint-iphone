@@ -25,7 +25,7 @@
 @property(strong, nonatomic) NSString *apiKey;
 
 -(void) submitRecorderWithUdid:(NSString*) clientId;
--(void) retrieveSignedURLForContentType:(NSString*) contentType jwt:(NSString*) jwt;
+-(void) retrieveSignedURLForContentType:(NSString*) contentType jwt:(NSString*) jwt data:(NSData*)data;
 -(void) sendData:(NSData*) data ofContentType:(NSString*) contentType tosignedURL:(NSString*) signedUrl;
 -(void) finalizeFileUploadForSignedUrl:(NSString*) signedUrl withJwt:(NSString*) jwt;
 @end

@@ -15,5 +15,10 @@
 
 @dynamic data;
 @dynamic extension;
+@dynamic senderNameSurname;
+@dynamic senderEmail;
+@dynamic receiverNameSurname;
+@dynamic receiverEmail;
+@dynamic mailSenderClass;
 
 @end

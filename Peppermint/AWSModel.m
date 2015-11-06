@@ -62,22 +62,28 @@ SUBSCRIBE(RecorderSubmitSuccessful) {
     } else {
         _data = data;
         _contentType = contentType;
-        [awsService retrieveSignedURLForContentType:_contentType jwt:jwt];
+        [awsService retrieveSignedURLForContentType:_contentType jwt:jwt data:data];
     }
 }
 
 SUBSCRIBE(RetrieveSignedUrlSuccessful) {
-    _signedUrl = event.signedUrl;
-    [awsService sendData:_data ofContentType:_contentType tosignedURL:_signedUrl];
+    if([event.data isEqualToData:_data]) {
+        _signedUrl = event.signedUrl;
+        [awsService sendData:_data ofContentType:_contentType tosignedURL:_signedUrl];
+    }
 }
 
 SUBSCRIBE(FileUploadCompleted) {
-    [awsService finalizeFileUploadForSignedUrl:_signedUrl withJwt:jwt];
+    if([event.signedUrl isEqualToString:_signedUrl]) {
+        [awsService finalizeFileUploadForSignedUrl:_signedUrl withJwt:jwt];
+    }
 }
 
 SUBSCRIBE(FileUploadFinalized) {
-    NSString *shortUrl = event.shortUrl;
-    [self.delegate fileUploadCompletedWithPublicUrl:shortUrl];
+    if([event.signedUrl isEqualToString:_signedUrl]) {
+        NSString *shortUrl = event.shortUrl;
+        [self.delegate fileUploadCompletedWithPublicUrl:shortUrl];
+    }
 }
 
 @end

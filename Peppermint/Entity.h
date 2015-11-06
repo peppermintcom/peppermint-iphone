@@ -11,4 +11,5 @@
 
 //Import entity headers
 #import "RecentContact.h"
+#import "CachedEmailMessage.h"
 

@@ -77,7 +77,7 @@ NSLocalizedStringFromTable(\
 #define VIEWCONTROLLER_RECORDINGVIEWCONTROLLER      @"RecordingViewController"
 
 #define SCHEME_FACEBOOK     @"fb971024122959536"
-#define SCHEME_GOOGLE       @"com.googleusercontent.apps.606001356736-b0rl6grflti3e73hegidp7k8upq79n0j"
+#define SCHEME_GOOGLE       @"com.googleusercontent.apps.621894935907-jtqr6lt0uf74rlc5rgobkefv8dl16ka6"
 #define SCHEME_PEPPERMINT   @"peppermint"
 
 #define HOST_FASTREPLY                  @"fastReply"

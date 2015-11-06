@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Okan Kurtulus. All rights reserved.
 //
 
-#import "SendVoiceMessageModel.h"
+#import "SendVoiceMessageEmailModel.h"
 
-@interface SendVoiceMessageMailComposerModel : SendVoiceMessageModel
+@interface SendVoiceMessageMailComposerModel : SendVoiceMessageEmailModel
 
 @end

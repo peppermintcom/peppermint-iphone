@@ -60,7 +60,7 @@
     return [NSString stringWithFormat:@"%@ %@",BEARER, jwt];
 }
 
--(void) retrieveSignedURLForContentType:(NSString*) contentType jwt:(NSString*) jwt {
+-(void) retrieveSignedURLForContentType:(NSString*) contentType jwt:(NSString*) jwt data:(NSData*)data {
     NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_UPLOADS];
     NSString *tokenText = [self toketTextForJwt:jwt];
     
@@ -80,6 +80,7 @@
             [self failureWithOperation:nil andError:error];
         }
         RetrieveSignedUrlSuccessful *retrieveSignedUrlSuccessful = [RetrieveSignedUrlSuccessful new];
+        retrieveSignedUrlSuccessful.data = data;
         retrieveSignedUrlSuccessful.signedUrl = response.signed_url;
         PUBLISH(retrieveSignedUrlSuccessful);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -102,7 +103,9 @@
             if (error) {
                 [self failureWithOperation:nil andError:error];
             } else {
-                PUBLISH([FileUploadCompleted new]);
+                FileUploadCompleted *fileUploadCompleted = [FileUploadCompleted new];
+                fileUploadCompleted.signedUrl = signedUrl;
+                PUBLISH(fileUploadCompleted);
             }
         }];
         [dataTask resume];
@@ -129,6 +132,7 @@
             [self failureWithOperation:nil andError:error];
         }
         FileUploadFinalized *fileUploadFinalized = [FileUploadFinalized new];
+        fileUploadFinalized.signedUrl = signedUrl;
         fileUploadFinalized.shortUrl = response.short_url;
         PUBLISH(fileUploadFinalized);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

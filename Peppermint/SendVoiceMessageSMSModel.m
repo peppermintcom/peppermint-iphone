@@ -52,8 +52,6 @@
     
     NSArray *recipientsArray = [NSArray arrayWithObjects:self.selectedPeppermintContact.communicationChannelAddress, @"?", nil];
     smsComposerVC.recipients = recipientsArray;
-
-    smsComposerVC.subject = LOC(@"Peppermint",@"Peppermint");
     smsComposerVC.body =  [NSString stringWithFormat:LOC(@"SMS Body Format", @"SMS Body Format"), url];
     [smsComposerVC disableUserAttachments];
     [self.delegate messageStatusIsUpdated:SendingStatusUploading withCancelOption:NO];

@@ -11,7 +11,6 @@
 #import "SendVoiceMessageMandrillModel.h"
 #import "SendVoiceMessageSMSModel.h"
 #import "SlideMenuViewController.h"
-#import "ConnectionModel.h"
 
 #define CELL_TAG_ALL_CONTACTS       1
 #define CELL_TAG_RECENT_CONTACTS    2
@@ -32,7 +31,7 @@
     BOOL isScrolling;
     MBProgressHUD *_loadingHud;
     AWSModel *awsModel;
-    ConnectionModel *connectionModel;
+
     BOOL isNewRecordAvailable;
 }
 
@@ -63,13 +62,7 @@
     activeSendingCount = 0;
     isScrolling  = NO;
     [self initHoldToRecordInfoView];
-    connectionModel = [ConnectionModel new];
-    [connectionModel beginTracking];
     isNewRecordAvailable = YES;
-}
-
--(void) dealloc {
-    [connectionModel stopTracking];
 }
 
 -(void) recorderInitIsSuccessful {
@@ -223,15 +216,6 @@
     isScrolling = NO;
 }
 
-#pragma mark - Internet Connection
-
--(void) showAlertForInternetConnection {
-    NSString *title = LOC(@"Information", @"Information");
-    NSString *message = LOC(@"Internet connection is not valid", @"Connection error");
-    NSString *cancel = LOC(@"Ok", @"Ok");
-    [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancel otherButtonTitles:nil] show];
-}
-
 #pragma mark - LoadingView
 
 -(MBProgressHUD*) loadingHud {
@@ -320,9 +304,6 @@
     
     if(!isNewRecordAvailable) {
         NSLog(@"Please wait for a new record..");
-    } else if(![connectionModel isInternetReachable]) {
-#warning "NiceToHave! Internet connection checking can be moved into Models and error can be transferred with delegate"
-        [self showAlertForInternetConnection];
     } else if(![sendVoiceMessageModel isServiceAvailable]) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.mode = MBProgressHUDModeText;
@@ -384,7 +365,13 @@
         isNewRecordAvailable = YES;
         infoAttrText = [self addText:LOC(@"Cancelled", @"Info") ofSize:19 ofColor:textColor toAttributedText:infoAttrText];
         [self messageCancelButtonPressed:nil];
+    } else if (sendingStatus == SendingStatusCached) {
+        isNewRecordAvailable = YES;
+        infoAttrText = [self addText:LOC(@"Cached", @"Info") ofSize:19 ofColor:textColor toAttributedText:infoAttrText];
+        [self messageSendingIndicatorSetMessageIsSent];
     }
+    
+    
     if(cancelable) {
         infoAttrText = [self addText:LOC(@"Tap to cancel", @"Info") ofSize:13
                              ofColor:[UIColor peppermintCancelOrange] toAttributedText:infoAttrText];

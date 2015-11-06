@@ -17,6 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nullable, nonatomic, retain) NSData *data;
 @property (nullable, nonatomic, retain) NSString *extension;
+@property (nullable, nonatomic, retain) NSString *senderNameSurname;
+@property (nullable, nonatomic, retain) NSString *senderEmail;
+@property (nullable, nonatomic, retain) NSString *receiverNameSurname;
+@property (nullable, nonatomic, retain) NSString *receiverEmail;
+@property (nullable, nonatomic, retain) NSString *mailSenderClass;
 
 @end
 

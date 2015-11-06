@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Okan Kurtulus. All rights reserved.
 //
 
-#import "SendVoiceMessageModel.h"
+#import "SendVoiceMessageEmailModel.h"
 #import "MandrillService.h"
 
-@interface SendVoiceMessageMandrillModel : SendVoiceMessageModel
+@interface SendVoiceMessageMandrillModel : SendVoiceMessageEmailModel
 
 @end

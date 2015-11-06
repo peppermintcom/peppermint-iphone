@@ -16,6 +16,7 @@
         recentContactsModel = [RecentContactsModel new];
         recentContactsModel.delegate = self;
         self.peppermintMessageSender = [PeppermintMessageSender new];
+        isAwsModelReady = NO;
         awsModel = [AWSModel new];
         awsModel.delegate = self;
         [awsModel initRecorder];
@@ -26,6 +27,8 @@
 
 -(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension {
     [recentContactsModel save:self.selectedPeppermintContact];
+#warning "Busy wait, think to make it with a more smart way"
+    if(!isAwsModelReady) { NSLog(@"waiting aws model to be ready!"); }
 }
 
 #pragma mark - RecentContactsModelDelegate
@@ -40,6 +43,7 @@
 
 #pragma mark - AWSModelDelegate
 -(void) recorderInitIsSuccessful {
+    isAwsModelReady = YES;
     NSLog(@"awsrecorder is inited!");
 }
 

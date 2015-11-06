@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface UIViewController (UIViewController_AdditionViewController)
+@property (strong, nonatomic) NSMutableArray *mutableArray;
 
 - (UIViewController *)backViewController;
 

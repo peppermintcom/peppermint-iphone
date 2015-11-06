@@ -58,6 +58,7 @@
                 [self failureWithOperation:nil andError:error];
             } else {
                 MandrillMesssageSent *mandrillMesssageSent = [MandrillMesssageSent new];
+                mandrillMesssageSent.mandrillMessage = message;
                 PUBLISH(mandrillMesssageSent);
             }
         }];

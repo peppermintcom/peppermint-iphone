@@ -3,6 +3,11 @@
     <entity name="CachedEmailMessage" representedClassName="CachedEmailMessage" syncable="YES">
         <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="extension" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mailSenderClass" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="receiverEmail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="receiverNameSurname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="senderEmail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="senderNameSurname" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="RecentContact" representedClassName="RecentContact" syncable="YES">
         <attribute name="avatarImageData" optional="YES" attributeType="Binary" syncable="YES"/>
@@ -13,6 +18,6 @@
     </entity>
     <elements>
         <element name="RecentContact" positionX="-63" positionY="-18" width="128" height="120"/>
-        <element name="CachedEmailMessage" positionX="-63" positionY="18" width="128" height="75"/>
+        <element name="CachedEmailMessage" positionX="-63" positionY="18" width="128" height="150"/>
     </elements>
 </model>

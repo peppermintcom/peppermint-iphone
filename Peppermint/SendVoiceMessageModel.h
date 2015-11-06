@@ -22,6 +22,7 @@ typedef enum : NSUInteger {
     SendingStatusSending = 2,
     SendingStatusSent = 3,
     SendingStatusCancelled = -1,
+    SendingStatusCached = 4,
 } SendingStatus;
 
 @protocol SendVoiceMessageDelegate <BaseModelDelegate>
@@ -33,6 +34,7 @@ typedef enum : NSUInteger {
     RecentContactsModel *recentContactsModel;
     AWSModel *awsModel;
     BOOL isCancelled;
+    BOOL isAwsModelReady;
 }
 
 @property (strong, nonatomic) PeppermintMessageSender *peppermintMessageSender;
