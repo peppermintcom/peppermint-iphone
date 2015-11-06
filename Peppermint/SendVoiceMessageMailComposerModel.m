@@ -1,17 +1,17 @@
 //
-//  SendVoiceMessageEmailModel.m
+//  SendVoiceMessageMailComposerModel.m
 //  Peppermint
 //
 //  Created by Okan Kurtulus on 27/09/15.
 //  Copyright (c) 2015 Okan Kurtulus. All rights reserved.
 //
 
-#import "SendVoiceMessageEmailModel.h"
+#import "SendVoiceMessageMailComposerModel.h"
 #import <MessageUI/MessageUI.h>
 #import "EasyMailSender.h"
 #import "EasyMailAlertSender.h"
 
-@implementation SendVoiceMessageEmailModel
+@implementation SendVoiceMessageMailComposerModel
 
 -(void) sendVoiceMessageWithData:(NSData *)data withExtension:(NSString *)extension  {
     EasyMailAlertSender *mailSender = [EasyMailAlertSender easyMail:^(MFMailComposeViewController *controller) {

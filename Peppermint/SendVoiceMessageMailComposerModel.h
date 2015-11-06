@@ -1,5 +1,5 @@
 //
-//  SendVoiceMessageEmailModel.h
+//  SendVoiceMessageMailComposerModel.h
 //  Peppermint
 //
 //  Created by Okan Kurtulus on 27/09/15.
@@ -8,6 +8,6 @@
 
 #import "SendVoiceMessageModel.h"
 
-@interface SendVoiceMessageEmailModel : SendVoiceMessageModel
+@interface SendVoiceMessageMailComposerModel : SendVoiceMessageModel
 
 @end

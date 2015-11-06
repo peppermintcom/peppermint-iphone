@@ -11,6 +11,9 @@
 		B10125BC1BEB670500B5DD54 /* NSString_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B10125BB1BEB670500B5DD54 /* NSString_Addition.m */; };
 		B102BBB81BCD03EC001E1E7A /* UIViewController_AdditionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B102BBB71BCD03EC001E1E7A /* UIViewController_AdditionViewController.m */; };
 		B102DD5E1BD0802100D71D62 /* BaseCustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = B102DD5D1BD0802100D71D62 /* BaseCustomView.m */; };
+		B108F8591BECA70E00267DEC /* CachedEmailMessage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B108F8561BECA70D00267DEC /* CachedEmailMessage+CoreDataProperties.m */; };
+		B108F85A1BECA70E00267DEC /* CachedEmailMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B108F8581BECA70D00267DEC /* CachedEmailMessage.m */; };
+		B108F85D1BECA74200267DEC /* RecentContact+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B108F85C1BECA74200267DEC /* RecentContact+CoreDataProperties.m */; };
 		B11F8A5C1BDCC45F000E79AA /* FinalizeUploadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5B1BDCC45F000E79AA /* FinalizeUploadRequest.m */; };
 		B11F8A5F1BDCC474000E79AA /* FinalizeUploadResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5E1BDCC474000E79AA /* FinalizeUploadResponse.m */; };
 		B1246D2A1BEB4AFE009A7873 /* InitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1246D291BEB4AFE009A7873 /* InitialViewController.m */; };
@@ -79,7 +82,7 @@
 		B1C83A1B1BDEB0FC00EB14C2 /* LoginTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1C83A1A1BDEB0FC00EB14C2 /* LoginTextFieldTableViewCell.xib */; };
 		B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40E41BB7D58C00042E4B /* RecordingModel.m */; };
 		B1EF40EB1BB7E78C00042E4B /* SendVoiceMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40EA1BB7E78C00042E4B /* SendVoiceMessageModel.m */; };
-		B1EF40EE1BB7EAA200042E4B /* SendVoiceMessageEmailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40ED1BB7EAA200042E4B /* SendVoiceMessageEmailModel.m */; };
+		B1EF40EE1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40ED1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.m */; };
 		B1EF40F21BB8579D00042E4B /* M13ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40F11BB8579D00042E4B /* M13ProgressView.m */; };
 		B1EF40F51BB857C800042E4B /* M13ProgressViewPie.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40F41BB857C800042E4B /* M13ProgressViewPie.m */; };
 		B1EF40F91BB8782F00042E4B /* SwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40F81BB8782F00042E4B /* SwipeView.m */; };
@@ -170,6 +173,12 @@
 		B102BBB71BCD03EC001E1E7A /* UIViewController_AdditionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIViewController_AdditionViewController.m; sourceTree = "<group>"; };
 		B102DD5C1BD0802100D71D62 /* BaseCustomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseCustomView.h; sourceTree = "<group>"; };
 		B102DD5D1BD0802100D71D62 /* BaseCustomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseCustomView.m; sourceTree = "<group>"; };
+		B108F8551BECA70D00267DEC /* CachedEmailMessage+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CachedEmailMessage+CoreDataProperties.h"; sourceTree = "<group>"; };
+		B108F8561BECA70D00267DEC /* CachedEmailMessage+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CachedEmailMessage+CoreDataProperties.m"; sourceTree = "<group>"; };
+		B108F8571BECA70D00267DEC /* CachedEmailMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CachedEmailMessage.h; sourceTree = "<group>"; };
+		B108F8581BECA70D00267DEC /* CachedEmailMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CachedEmailMessage.m; sourceTree = "<group>"; };
+		B108F85B1BECA74200267DEC /* RecentContact+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RecentContact+CoreDataProperties.h"; sourceTree = "<group>"; };
+		B108F85C1BECA74200267DEC /* RecentContact+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RecentContact+CoreDataProperties.m"; sourceTree = "<group>"; };
 		B11F8A5A1BDCC45F000E79AA /* FinalizeUploadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinalizeUploadRequest.h; sourceTree = "<group>"; };
 		B11F8A5B1BDCC45F000E79AA /* FinalizeUploadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinalizeUploadRequest.m; sourceTree = "<group>"; };
 		B11F8A5D1BDCC474000E79AA /* FinalizeUploadResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinalizeUploadResponse.h; sourceTree = "<group>"; };
@@ -2135,8 +2144,8 @@
 		B1EF40E41BB7D58C00042E4B /* RecordingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RecordingModel.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B1EF40E91BB7E78C00042E4B /* SendVoiceMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SendVoiceMessageModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B1EF40EA1BB7E78C00042E4B /* SendVoiceMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SendVoiceMessageModel.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		B1EF40EC1BB7EAA200042E4B /* SendVoiceMessageEmailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVoiceMessageEmailModel.h; sourceTree = "<group>"; };
-		B1EF40ED1BB7EAA200042E4B /* SendVoiceMessageEmailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SendVoiceMessageEmailModel.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B1EF40EC1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVoiceMessageMailComposerModel.h; sourceTree = "<group>"; };
+		B1EF40ED1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SendVoiceMessageMailComposerModel.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B1EF40F01BB8579D00042E4B /* M13ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M13ProgressView.h; sourceTree = "<group>"; };
 		B1EF40F11BB8579D00042E4B /* M13ProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M13ProgressView.m; sourceTree = "<group>"; };
 		B1EF40F31BB857C800042E4B /* M13ProgressViewPie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M13ProgressViewPie.h; sourceTree = "<group>"; };
@@ -8360,8 +8369,8 @@
 				B1EF40E41BB7D58C00042E4B /* RecordingModel.m */,
 				B1EF40E91BB7E78C00042E4B /* SendVoiceMessageModel.h */,
 				B1EF40EA1BB7E78C00042E4B /* SendVoiceMessageModel.m */,
-				B1EF40EC1BB7EAA200042E4B /* SendVoiceMessageEmailModel.h */,
-				B1EF40ED1BB7EAA200042E4B /* SendVoiceMessageEmailModel.m */,
+				B1EF40EC1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.h */,
+				B1EF40ED1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.m */,
 				B13B076B1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.h */,
 				B13B076C1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m */,
 				B190F5B81BDD63400094B391 /* SendVoiceMessageSMSModel.h */,
@@ -8727,6 +8736,12 @@
 		B1F93E911BC8E2A0005F2128 /* NSManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
+				B108F85B1BECA74200267DEC /* RecentContact+CoreDataProperties.h */,
+				B108F85C1BECA74200267DEC /* RecentContact+CoreDataProperties.m */,
+				B108F8551BECA70D00267DEC /* CachedEmailMessage+CoreDataProperties.h */,
+				B108F8561BECA70D00267DEC /* CachedEmailMessage+CoreDataProperties.m */,
+				B108F8571BECA70D00267DEC /* CachedEmailMessage.h */,
+				B108F8581BECA70D00267DEC /* CachedEmailMessage.m */,
 				B1F93E9C1BC8ED58005F2128 /* RecentContact.h */,
 				B1F93E9D1BC8ED58005F2128 /* RecentContact.m */,
 			);
@@ -8994,6 +9009,7 @@
 				B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */,
 				B1EF40F51BB857C800042E4B /* M13ProgressViewPie.m in Sources */,
 				B16DA2201BE10A7A00EBF043 /* SlideMenuTableViewCell.m in Sources */,
+				B108F85D1BECA74200267DEC /* RecentContact+CoreDataProperties.m in Sources */,
 				B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */,
 				B15B15BB1BDBC29A00C0C171 /* RecorderRequest.m in Sources */,
 				B1F045671BCFB36900A67942 /* BaseService.m in Sources */,
@@ -9010,16 +9026,18 @@
 				B17B3D5B1BB6A49E009B8BC5 /* BaseViewController.m in Sources */,
 				B17206DC1BE4E2D40021D855 /* PlayingModel.m in Sources */,
 				B1714CC81BE11EE6004F13A4 /* ReSideMenuContainerViewController.m in Sources */,
+				B108F85A1BECA70E00267DEC /* CachedEmailMessage.m in Sources */,
 				B190F5BA1BDD63400094B391 /* SendVoiceMessageSMSModel.m in Sources */,
 				B11F8A5C1BDCC45F000E79AA /* FinalizeUploadRequest.m in Sources */,
 				B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */,
+				B108F8591BECA70E00267DEC /* CachedEmailMessage+CoreDataProperties.m in Sources */,
 				B1A366921BDC92DB00852B52 /* UploadsRequest.m in Sources */,
 				B13B075A1BD3686500974AC3 /* MandrillInformationResponse.m in Sources */,
 				B1F0456B1BCFB4E400A67942 /* Events.m in Sources */,
 				B15B15C41BDBC8CB00C0C171 /* RecorderResponse.m in Sources */,
 				B17B3D641BB6AE8B009B8BC5 /* RecordingViewController.m in Sources */,
 				B15B15B81BDBC17300C0C171 /* Recorder.m in Sources */,
-				B1EF40EE1BB7EAA200042E4B /* SendVoiceMessageEmailModel.m in Sources */,
+				B1EF40EE1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.m in Sources */,
 				B15B15BE1BDBC31F00C0C171 /* AWSService.m in Sources */,
 				B165EF181BB71EC0008C6F71 /* PeppermintContact.m in Sources */,
 				B1BB1E5F1BD35CD300A1CE45 /* MandrillService.m in Sources */,
@@ -9212,7 +9230,7 @@
 				INFOPLIST_FILE = Peppermint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "okankurtulus.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ppm.peppermint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -9234,7 +9252,7 @@
 				INFOPLIST_FILE = Peppermint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "okankurtulus.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ppm.peppermint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "18921fe0-120a-4ab1-940c-91112253db92";
 			};
@@ -9254,7 +9272,7 @@
 				);
 				INFOPLIST_FILE = PeppermintTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "okankurtulus.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ppm.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Peppermint.app/Peppermint";
 			};
@@ -9270,7 +9288,7 @@
 				);
 				INFOPLIST_FILE = PeppermintTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "okankurtulus.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ppm.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Peppermint.app/Peppermint";
 			};
