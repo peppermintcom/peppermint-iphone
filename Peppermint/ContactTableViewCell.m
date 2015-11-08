@@ -75,7 +75,6 @@
     [timer invalidate];
     UITouch *touch = [[event allTouches] anyObject];
     touchBeginPoint = [touch locationInView:rootView];
-    NSLog(@"didBeginItemSelectionOnIndexpath");
     [self.delegate didBeginItemSelectionOnIndexpath:self.indexPath location:touchBeginPoint];
 }
 
@@ -129,6 +128,11 @@
             }
         }
     }
+}
+
+-(IBAction) touchDownCancelledOnIndexPath:(id) sender event:(UIEvent *)event {
+    [self applyNonSelectedStyle];
+    NSLog(@"\n\nAction cancelled by the system!!!");
 }
 
 @end

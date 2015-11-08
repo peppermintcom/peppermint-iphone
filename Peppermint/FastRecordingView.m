@@ -10,9 +10,16 @@
 #import "ExplodingView.h"
 #import "SendVoiceMessageMandrillModel.h"
 
+typedef enum : NSUInteger {
+    FastRecordingViewStatusResignActive,
+    FastRecordingViewStatusRecoverFromBackUp,
+    FastRecordingViewStatusPresented,
+    FastRecordingViewStatusInit,
+    FastRecordingViewStatusFinishing,
+} FastRecordingViewStatus;
+
 @implementation FastRecordingView {
-    BOOL isAppGoingToBackground;
-    BOOL isPresented;
+    FastRecordingViewStatus fastRecordingViewStatus;
 }
 
 +(FastRecordingView*) createInstanceWithDelegate:(UIViewController<FastRecordingViewDelegate>*) delegate {
@@ -38,12 +45,12 @@
     [self.m13ProgressViewPie setSecondaryColor:[UIColor clearColor]];
     self.hidden = YES;
     defaults_set_object(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH, 0);
-    isAppGoingToBackground = NO;
     self.swipeInAnyDirectionLabel.text = LOC(@"Swipe in any direction to cancel", @"Swipe in any direction label");
     REGISTER();
     
     self.backgroundView.alpha = 0.95;
     //[self initBlurView];
+    fastRecordingViewStatus = FastRecordingViewStatusInit;
 }
 
 /*
@@ -81,8 +88,8 @@
 
 #pragma mark - Record Methods
 -(void) presentWithAnimation {
-    if(!isPresented) {
-        isPresented = YES;
+    if(fastRecordingViewStatus == FastRecordingViewStatusInit) {
+        fastRecordingViewStatus = FastRecordingViewStatusPresented;
         self.counterLabel.text = @"";
         self.alpha = 0;
         self.hidden = NO;
@@ -95,28 +102,26 @@
 }
 
 -(void) finishRecordingWithGestureIsValid:(BOOL) isGestureValid {
-    if(isPresented) {
-        isPresented = NO;
+    if(fastRecordingViewStatus == FastRecordingViewStatusPresented) {
+        fastRecordingViewStatus = FastRecordingViewStatusFinishing;
+        
         [self.recordingModel stop];
-        if(!isAppGoingToBackground) {
-            BOOL isRecordingLong = self.totalSeconds >= MAX_RECORD_TIME;
-            BOOL isRecordingShort = self.totalSeconds <= MIN_VOICE_MESSAGE_LENGTH;
-            BOOL isLoginInfoValid = self.sendVoiceMessageModel.peppermintMessageSender.isValid;
-            
-            if(!isGestureValid) {
-                [self dissmissWithExplode];
-            } else if (isRecordingLong) {
-                NSLog(@"Max time reached..."); //This action is handled in "timerUpdated:" delegate method
-            } else if (isRecordingShort) {
-                [self showAlertToRecordMoreThanMinimumMessageLength];
-            } else if ([self.sendVoiceMessageModel needsAuth] && !isLoginInfoValid ) {
-                [LoginNavigationViewController logUserInWithDelegate:self completion:nil];
-            } else {
-                [self dissmissWithFadeOut];
-                [self performOperationsToSend];
-            }
+        
+        BOOL isRecordingLong = self.totalSeconds >= MAX_RECORD_TIME;
+        BOOL isRecordingShort = self.totalSeconds <= MIN_VOICE_MESSAGE_LENGTH;
+        BOOL isLoginInfoValid = self.sendVoiceMessageModel.peppermintMessageSender.isValid;
+        
+        if(!isGestureValid) {
+            [self dissmissWithExplode];
+        } else if (isRecordingLong) {
+            NSLog(@"Max time reached..."); //This action is handled in "timerUpdated:" delegate method
+        } else if (isRecordingShort) {
+            [self showAlertToRecordMoreThanMinimumMessageLength];
+        } else if ([self.sendVoiceMessageModel needsAuth] && !isLoginInfoValid ) {
+            [LoginNavigationViewController logUserInWithDelegate:self completion:nil];
         } else {
-            NSLog(@"isAppGoingToBackground");
+            [self dissmissWithFadeOut];
+            [self performOperationsToSend];
         }
     } else {
         NSLog(@"FastRecordingView is not presented!");
@@ -141,6 +146,7 @@
         self.hidden = YES;
         self.alpha = 1;
         [self timerUpdated:0];
+        fastRecordingViewStatus = FastRecordingViewStatusInit;
         [self.delegate fastRecordingViewDissappeared];
     }];
 }
@@ -167,7 +173,7 @@
 }
 
 -(void) accessRightsAreSupplied {
-    if(isPresented) {
+    if(fastRecordingViewStatus == FastRecordingViewStatusPresented) {
         [self.recordingModel resetRecording];
         if([RecordingModel checkPreviousFileLength] < MIN_VOICE_MESSAGE_LENGTH) {
             [self.playingModel playBeginRecording];
@@ -177,7 +183,7 @@
             [self showAlertForRecordIsCut];
         }
     } else {
-        NSLog(@"Fastrecording view is cancelled before presenting!I'm not recording!");
+        NSLog(@"Fastrecording view is not in presented state! Will not show!");
     }
 }
 
@@ -290,6 +296,7 @@
                 break;
             case ALERT_BUTTON_INDEX_OTHER_1:
                 [self.recordingModel record];
+                fastRecordingViewStatus = FastRecordingViewStatusPresented;
                 [self finishRecordingWithGestureIsValid:YES];
                 break;
             default:
@@ -361,42 +368,37 @@
 
 SUBSCRIBE(ApplicationWillResignActive) {
     NSLog(@"ApplicationWillResignActive");
-    isAppGoingToBackground = YES;
+    fastRecordingViewStatus = FastRecordingViewStatusResignActive;
     [self.recordingModel backUpRecording];
 }
 
 SUBSCRIBE(ApplicationDidBecomeActive) {
-    isAppGoingToBackground = NO;
     [self handleAppIsActiveAgain];
 }
 
 -(void) handleAppIsActiveAgain {
-    NSLog(@"ApplicationDidBecomeActive");
-    CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
-    if( previousFileLength > MIN_VOICE_MESSAGE_LENGTH) {
-        if(!self.sendVoiceMessageModel) {
-            /*
-            id object = [[NSClassFromString(@"NameofClass") alloc] init];
-            self.sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
-            self.sendVoiceMessageModel.selectedPeppermintContact = [PeppermintContact new];
-            NSString *address = (NSString*)defaults_object(@"KEY1");
-            self.sendVoiceMessageModel.selectedPeppermintContact.communicationChannelAddress = address;
-             */
-            NSError *error = [NSError errorWithDomain:@"sendVoiceMessageModel was released. This message can not be sent! :(" code:-1 userInfo:nil];
-            [self.delegate operationFailure:error];
-        }
-        self.sendVoiceMessageModel.delegate = self;
-        
-        if(!self.recordingModel) {
-            self.recordingModel = [RecordingModel new];
-            self.recordingModel.delegate = self;
+    if(fastRecordingViewStatus == FastRecordingViewStatusResignActive) {
+        fastRecordingViewStatus = FastRecordingViewStatusRecoverFromBackUp;
+        NSLog(@"ApplicationDidBecomeActive");
+        CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
+        if( previousFileLength > MIN_VOICE_MESSAGE_LENGTH) {
+            if(!self.sendVoiceMessageModel) {
+                NSError *error = [NSError errorWithDomain:@"sendVoiceMessageModel was released. This message can not be sent! :(" code:-1 userInfo:nil];
+                [self.delegate operationFailure:error];
+            }
+            self.sendVoiceMessageModel.delegate = self;
+            
+            if(!self.recordingModel) {
+                self.recordingModel = [RecordingModel new];
+                self.recordingModel.delegate = self;
+            } else {
+                self.recordingModel.delegate = self;
+                [self showAlertForRecordIsCut];
+            }
         } else {
-            self.recordingModel.delegate = self;
-            [self showAlertForRecordIsCut];
+            [RecordingModel setPreviousFileLength:0];
+            [self dissmissWithFadeOut];
         }
-    } else {
-        [RecordingModel setPreviousFileLength:0];
-        [self dissmissWithFadeOut];
     }
 }
 

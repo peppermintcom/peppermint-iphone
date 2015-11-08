@@ -7,17 +7,8 @@
 //
 
 #import "SendVoiceMessageModel.h"
+#import "CacheModel.h"
 
-
-@interface SendVoiceMessageEmailModel : SendVoiceMessageModel {
-    NSData *_data;
-    NSString *_extension;
-}
-
-@property (nonatomic) BOOL isMessageProcessCompleted;
-
--(BOOL) isConnectionActive;
--(void) cacheMessage;
-+(void) triggerCachedMessages;
+@interface SendVoiceMessageEmailModel : SendVoiceMessageModel 
 
 @end

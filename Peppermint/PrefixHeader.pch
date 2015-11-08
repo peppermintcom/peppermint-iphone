@@ -23,6 +23,17 @@
 NSLocalizedStringFromTable(\
 (__key),@"Text",(__comment))
 
+#pragma mark - Shared Instance Macro Definition
+
+#define SHARED_INSTANCE(...) ({\
+static dispatch_once_t pred;\
+static id sharedObject;\
+dispatch_once(&pred, ^{\
+sharedObject = (__VA_ARGS__);\
+});\
+sharedObject;\
+})
+
 #pragma mark - Colors Addition
 #import "UIColor_Addition.h"
 

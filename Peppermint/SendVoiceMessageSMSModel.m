@@ -22,9 +22,10 @@
 }
 
 -(void) sendVoiceMessageWithData:(NSData *)data withExtension:(NSString *)extension  {
-    if(!isCancelled) {
+    if(![self isCancelled]) {
         if([self isServiceAvailable]) {
             [super sendVoiceMessageWithData:data withExtension:extension];
+            self.sendingStatus = SendingStatusUploading;
             [self.delegate messageStatusIsUpdated:SendingStatusUploading withCancelOption:YES];
             [awsModel startToUploadData:data ofType:[self typeForExtension:extension]];
         } else {
@@ -38,7 +39,7 @@
 #pragma mark - AWSModelDelegate
 
 -(void) fileUploadCompletedWithPublicUrl:(NSString*) url {
-    if(!isCancelled) {
+    if(![self isCancelled]) {
         [self fireSMSMessageWithUrl:url];
     } else {
         NSLog(@"Mandrill message sending is not fired, cos message is cancelled");
@@ -54,6 +55,7 @@
     smsComposerVC.recipients = recipientsArray;
     smsComposerVC.body =  [NSString stringWithFormat:LOC(@"SMS Body Format", @"SMS Body Format"), url];
     [smsComposerVC disableUserAttachments];
+    self.sendingStatus = SendingStatusUploading;
     [self.delegate messageStatusIsUpdated:SendingStatusUploading withCancelOption:NO];
     [rootViewController presentViewController:smsComposerVC animated:YES completion:nil];    
 }
@@ -64,12 +66,15 @@
     [controller dismissViewControllerAnimated:YES completion:nil];    
     switch (result) {
         case MessageComposeResultSent:
+            self.sendingStatus = SendingStatusSent;
             [self.delegate messageStatusIsUpdated:SendingStatusSent withCancelOption:NO];
             break;
         case MessageComposeResultCancelled:
+            self.sendingStatus = SendingStatusCancelled;
             [self.delegate messageStatusIsUpdated:SendingStatusCancelled withCancelOption:NO];
             break;
         case MessageComposeResultFailed:
+            self.sendingStatus = SendingStatusError;
             [self.delegate operationFailure: [NSError errorWithDomain:@"SMS sending is failed" code:-1 userInfo:nil]];
             break;
         default:
@@ -78,10 +83,12 @@
 }
 
 -(BOOL) isServiceAvailable {
-    return [MFMessageComposeViewController canSendText];
+    return [MFMessageComposeViewController canSendText]
+    && [self isConnectionActive];
 }
 
 -(void) messagePrepareIsStarting {
+    self.sendingStatus = SendingStatusStarting;
     [self.delegate messageStatusIsUpdated:SendingStatusStarting withCancelOption:YES];
 }
 

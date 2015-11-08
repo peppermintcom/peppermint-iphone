@@ -344,7 +344,7 @@
     UIColor *textColor = [UIColor textFieldTintGreen];
     
     if(sendingStatus == SendingStatusUploading) {
-        isNewRecordAvailable = NO;
+        isNewRecordAvailable = YES;
         infoAttrText = [self addText:LOC(@"Uploading", @"Info") ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
         [self messageSendingIndicatorSetMessageIsSending];
     } else if (sendingStatus == SendingStatusStarting) {

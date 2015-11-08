@@ -10,40 +10,39 @@
 
 @implementation SendVoiceMessageMandrillModel {
     MandrillMessage *mandrillMessage;
+    NSData *_data;
+    NSString *_extension;
 }
 
 -(void) sendVoiceMessageWithData:(NSData *)data withExtension:(NSString *)extension  {
     [super sendVoiceMessageWithData:data withExtension:extension];
-    _data = data;
-    _extension = extension;
+    
+#warning "Try nicer method to delay dealloc ing model objects when processing a message"
+    if(![AppDelegate Instance].mutableArray) {
+        [AppDelegate Instance].mutableArray = [NSMutableArray new];
+    }
     
     if([self isConnectionActive]) {
+        [[AppDelegate Instance].mutableArray addObject:self];
+        _data = data;
+        _extension = extension;
+        self.sendingStatus = SendingStatusUploading;
         [self.delegate messageStatusIsUpdated:SendingStatusUploading withCancelOption:YES];
         [awsModel startToUploadData:data ofType:[self typeForExtension:extension]];
         if(self.delegate != nil) {
-            [SendVoiceMessageEmailModel triggerCachedMessages];
+            [[CacheModel sharedInstance] triggerCachedMessages];
         }
     } else {
-        [self cacheMessage];
+        [[CacheModel sharedInstance] cache:self WithData:data extension:extension];
     }
 }
-
-/*
- #pragma mark - Internet Connection
- 
- -(void) showAlertForInternetConnection {
- NSString *title = LOC(@"Information", @"Information");
- NSString *message = LOC(@"Internet connection is not valid", @"Connection error");
- NSString *cancel = LOC(@"Ok", @"Ok");
- [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancel otherButtonTitles:nil] show];
- }
- */
 
 #pragma mark - AWSModelDelegate
 
 -(void) fileUploadCompletedWithPublicUrl:(NSString*) url {
     NSLog(@"File Upload is finished with url %@", url);
-    if(!isCancelled) {
+    if(![self isCancelled]) {
+        self.sendingStatus = SendingStatusSending;
         [self.delegate messageStatusIsUpdated:SendingStatusSending withCancelOption:YES];
         [self fireMandrillMessageWithUrl:url];
     } else {
@@ -52,7 +51,6 @@
 }
 
 -(void) fireMandrillMessageWithUrl:(NSString*) url {
-
     
     NSString* nameSurname = @"";
     if(self.peppermintMessageSender.nameSurname.length > 0) {
@@ -65,6 +63,7 @@
     
     mandrillMessage = [MandrillMessage new];
     mandrillMessage.from_email = self.peppermintMessageSender.email;
+    
     mandrillMessage.from_name = nameSurname;
     mandrillMessage.subject = LOC(@"Mail Subject",@"Default Mail Subject");
     NSString *body = [NSString stringWithFormat:LOC(@"Mail Body Format",@"Default Mail Body Format"), url, [self fastReplyUrlForSender]];
@@ -85,17 +84,19 @@
     
     [mandrillMessage.headers setObject:email forKey:@"Reply-To"];
     
-    if(!isCancelled) {
+    if(![self isCancelled]) {
+        self.sendingStatus = SendingStatusSending;
         [self.delegate messageStatusIsUpdated:SendingStatusSending withCancelOption:NO];
         [[MandrillService new] sendMessage:mandrillMessage];
     } else {
-        self.isMessageProcessCompleted = YES;
+        self.sendingStatus = SendingStatusCancelled;
     }
+    [[AppDelegate Instance].mutableArray removeObject:self];
 }
 
 SUBSCRIBE(MandrillMesssageSent) {
     if([event.mandrillMessage isEqual:mandrillMessage]) {
-        self.isMessageProcessCompleted = YES;
+        self.sendingStatus = SendingStatusSent;
         [self.delegate messageStatusIsUpdated:SendingStatusSent withCancelOption:NO];
     }
 }

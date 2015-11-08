@@ -23,6 +23,9 @@ typedef enum : NSUInteger {
     SendingStatusSent = 3,
     SendingStatusCancelled = -1,
     SendingStatusCached = 4,
+    SendingStatusError = 5,
+    SendingStatusIniting = 6,
+    SendingStatusInited = 7,
 } SendingStatus;
 
 @protocol SendVoiceMessageDelegate <BaseModelDelegate>
@@ -33,13 +36,12 @@ typedef enum : NSUInteger {
 @interface SendVoiceMessageModel : BaseModel <RecentContactsModelDelegate, AWSModelDelegate> {
     RecentContactsModel *recentContactsModel;
     AWSModel *awsModel;
-    BOOL isCancelled;
-    BOOL isAwsModelReady;
 }
 
 @property (strong, nonatomic) PeppermintMessageSender *peppermintMessageSender;
 @property (strong, nonatomic) PeppermintContact *selectedPeppermintContact;
 @property (weak, nonatomic) id<SendVoiceMessageDelegate> delegate;
+@property (nonatomic) SendingStatus sendingStatus;
 
 -(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension;
 -(NSString*) typeForExtension:(NSString*) extension;
@@ -47,6 +49,8 @@ typedef enum : NSUInteger {
 -(BOOL) needsAuth;
 -(void) messagePrepareIsStarting;
 -(void) cancelSending;
+-(BOOL) isCancelled;
 -(NSString*) fastReplyUrlForSender;
+-(BOOL) isConnectionActive;
 
 @end

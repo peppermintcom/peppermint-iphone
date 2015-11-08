@@ -340,7 +340,7 @@
 #pragma mark - TPAACAudioConverterDelegate
 
 - (void)AACAudioConverterDidFinishConversion:(TPAACAudioConverter*)converter {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVAudioSessionInterruptionNotification object: nil];
     NSData *data = [[NSData alloc] initWithContentsOfURL:[self aacFileUrl]];
     [self removeFileIfExistsAtUrl:[self fileUrl]];
     [self removeFileIfExistsAtUrl:[self aacFileUrl]];
@@ -351,7 +351,9 @@
 }
 
 - (void)AACAudioConverter:(TPAACAudioConverter*)converter didFailWithError:(NSError*)error {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVAudioSessionInterruptionNotification object: nil];
+    
+    
     [self.delegate operationFailure:error];
 }
 

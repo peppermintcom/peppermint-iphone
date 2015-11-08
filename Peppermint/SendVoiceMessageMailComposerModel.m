@@ -14,34 +14,43 @@
 @implementation SendVoiceMessageMailComposerModel
 
 -(void) sendVoiceMessageWithData:(NSData *)data withExtension:(NSString *)extension  {
-    EasyMailAlertSender *mailSender = [EasyMailAlertSender easyMail:^(MFMailComposeViewController *controller) {
-        [controller setToRecipients:[NSArray arrayWithObject:self.selectedPeppermintContact.communicationChannelAddress]];
-        [controller setSubject:LOC(@"Mail Subject",@"Default Mail Subject")];
-        NSString *body = [NSString stringWithFormat:LOC(@"Mail Body Format",@"Default Mail Body Format"), @"", [self fastReplyUrlForSender]];
-        [controller setMessageBody:body isHTML:YES];
-        NSString *fileName = [NSString stringWithFormat:@"Peppermint.%@", extension];
-        NSString *mimeType = [self typeForExtension:extension];
-        [controller addAttachmentData:data mimeType:mimeType fileName:fileName];
-    } complete:^(MFMailComposeViewController *controller, MFMailComposeResult result, NSError *error) {
-        
-        if(error) {
-            [controller dismissViewControllerAnimated:YES completion:nil];
-            [self.delegate operationFailure:error];
-        } else if (result == MFMailComposeResultFailed) {
-            [controller dismissViewControllerAnimated:YES completion:nil];
-            error = [NSError errorWithDomain:LOC(@"An error occured",@"Unknown Error Message") code:0 userInfo:nil];
-            [self.delegate operationFailure:error];
-        } else if (result == MFMailComposeResultSent) {
-            [super sendVoiceMessageWithData:data withExtension:extension];
-            [self.delegate messageStatusIsUpdated:SendingStatusSent withCancelOption:NO];
-            [controller dismissViewControllerAnimated:NO completion:nil];
-        } else {
-            [controller dismissViewControllerAnimated:YES completion:nil];
-        }
-    }];
-    UIViewController *activeViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    [self.delegate messageStatusIsUpdated:SendingStatusSending withCancelOption:NO];
-    [mailSender showFromViewController:activeViewController];
+    
+    if([self isConnectionActive]) {
+        EasyMailAlertSender *mailSender = [EasyMailAlertSender easyMail:^(MFMailComposeViewController *controller) {
+            [controller setToRecipients:[NSArray arrayWithObject:self.selectedPeppermintContact.communicationChannelAddress]];
+            [controller setSubject:LOC(@"Mail Subject",@"Default Mail Subject")];
+            NSString *body = [NSString stringWithFormat:LOC(@"Mail Body Format",@"Default Mail Body Format"), @"", [self fastReplyUrlForSender]];
+            [controller setMessageBody:body isHTML:YES];
+            NSString *fileName = [NSString stringWithFormat:@"Peppermint.%@", extension];
+            NSString *mimeType = [self typeForExtension:extension];
+            [controller addAttachmentData:data mimeType:mimeType fileName:fileName];
+        } complete:^(MFMailComposeViewController *controller, MFMailComposeResult result, NSError *error) {
+            
+            if(error) {
+                [controller dismissViewControllerAnimated:YES completion:nil];
+                self.sendingStatus = SendingStatusError;
+                [self.delegate operationFailure:error];
+            } else if (result == MFMailComposeResultFailed) {
+                [controller dismissViewControllerAnimated:YES completion:nil];
+                error = [NSError errorWithDomain:LOC(@"An error occured",@"Unknown Error Message") code:0 userInfo:nil];
+                self.sendingStatus = SendingStatusError;
+                [self.delegate operationFailure:error];
+            } else if (result == MFMailComposeResultSent) {
+                [super sendVoiceMessageWithData:data withExtension:extension];
+                self.sendingStatus = SendingStatusSent;
+                [self.delegate messageStatusIsUpdated:SendingStatusSent withCancelOption:NO];
+                [controller dismissViewControllerAnimated:NO completion:nil];
+            } else {
+                [controller dismissViewControllerAnimated:YES completion:nil];
+            }
+        }];
+        UIViewController *activeViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        self.sendingStatus = SendingStatusSending;
+        [self.delegate messageStatusIsUpdated:SendingStatusSending withCancelOption:NO];
+        [mailSender showFromViewController:activeViewController];
+    } else {
+        [[CacheModel sharedInstance] cache:self WithData:data extension:extension];
+    }
 }
 
 -(BOOL) isServiceAvailable {

@@ -7,8 +7,11 @@
 //
 
 #import "SendVoiceMessageModel.h"
+#import "ConnectionModel.h"
 
-@implementation SendVoiceMessageModel
+@implementation SendVoiceMessageModel {
+    ConnectionModel *connectionModel;
+}
 
 -(id) init {
     self = [super init];
@@ -16,19 +19,28 @@
         recentContactsModel = [RecentContactsModel new];
         recentContactsModel.delegate = self;
         self.peppermintMessageSender = [PeppermintMessageSender new];
-        isAwsModelReady = NO;
         awsModel = [AWSModel new];
         awsModel.delegate = self;
+        self.sendingStatus = SendingStatusIniting;
         [awsModel initRecorder];
-        isCancelled = NO;
+        connectionModel = [ConnectionModel new];
+        [connectionModel beginTracking];
     }
     return self;
+}
+
+-(void) dealloc {
+    [connectionModel stopTracking];
 }
 
 -(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension {
     [recentContactsModel save:self.selectedPeppermintContact];
 #warning "Busy wait, think to make it with a more smart way"
-    if(!isAwsModelReady) { NSLog(@"waiting aws model to be ready!"); }
+    if(self.sendingStatus == SendingStatusIniting) {
+        while (self.sendingStatus != SendingStatusInited ) {
+            NSLog(@"waiting aws model to be ready!");
+        }
+    }
 }
 
 #pragma mark - RecentContactsModelDelegate
@@ -38,17 +50,17 @@
 }
 
 -(void) operationFailure:(NSError*) error {
+    self.sendingStatus = SendingStatusError;
     [self.delegate operationFailure:error];
 }
 
 #pragma mark - AWSModelDelegate
 -(void) recorderInitIsSuccessful {
-    isAwsModelReady = YES;
-    NSLog(@"awsrecorder is inited!");
+    self.sendingStatus = SendingStatusInited;
 }
 
 -(void) fileUploadCompletedWithPublicUrl:(NSString*) url {
-    NSLog(@"File Upload is finished with url %@", url);
+    //NSLog(@"File Upload is finished with url %@", url);
 }
 
 #pragma mark - Type For Extension
@@ -66,6 +78,7 @@
 }
 
 SUBSCRIBE(NetworkFailure) {
+    self.sendingStatus = SendingStatusError;
     [self.delegate operationFailure:[event error]];
 }
 
@@ -78,6 +91,7 @@ SUBSCRIBE(NetworkFailure) {
 }
 
 -(void) messagePrepareIsStarting {
+    self.sendingStatus = SendingStatusStarting;
     [self.delegate messageStatusIsUpdated:SendingStatusStarting withCancelOption:YES];
 }
 
@@ -86,7 +100,11 @@ SUBSCRIBE(NetworkFailure) {
     awsModel.delegate = nil;
     awsModel = nil;
     recentContactsModel = nil;
-    isCancelled = YES;
+    self.sendingStatus = SendingStatusCancelled;
+}
+
+-(BOOL) isCancelled {
+    return self.sendingStatus == SendingStatusCancelled;
 }
 
 -(NSString*) fastReplyUrlForSender {
@@ -101,6 +119,12 @@ SUBSCRIBE(NetworkFailure) {
     NSString* encodedUrlPath = [urlPath stringByAddingPercentEscapesUsingEncoding:
                             NSUTF8StringEncoding];
     return encodedUrlPath;
+}
+
+#pragma mark - Internet Connection
+
+-(BOOL) isConnectionActive {
+    return [connectionModel isInternetReachable];
 }
 
 @end
