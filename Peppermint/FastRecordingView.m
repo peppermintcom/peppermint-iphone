@@ -288,9 +288,9 @@ typedef enum : NSUInteger {
         }
     }
     else if ([alertView.message isEqualToString:LOC(@"Recording is cut", @"Recording is cut, how to continue question?")]) {
+        [RecordingModel setPreviousFileLength:0];
         switch (buttonIndex) {
             case ALERT_BUTTON_INDEX_CANCEL:
-                [RecordingModel setPreviousFileLength:0];
                 [self dissmissWithFadeOut];
                 //__clear backup files
                 break;
@@ -385,15 +385,15 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
             if(!self.sendVoiceMessageModel) {
                 NSError *error = [NSError errorWithDomain:@"sendVoiceMessageModel was released. This message can not be sent! :(" code:-1 userInfo:nil];
                 [self.delegate operationFailure:error];
-            }
-            self.sendVoiceMessageModel.delegate = self;
-            
-            if(!self.recordingModel) {
-                self.recordingModel = [RecordingModel new];
-                self.recordingModel.delegate = self;
             } else {
-                self.recordingModel.delegate = self;
-                [self showAlertForRecordIsCut];
+                self.sendVoiceMessageModel.delegate = self;
+                if(!self.recordingModel) {
+                    self.recordingModel = [RecordingModel new];
+                    self.recordingModel.delegate = self;
+                } else {
+                    self.recordingModel.delegate = self;
+                    [self showAlertForRecordIsCut];
+                }
             }
         } else {
             [RecordingModel setPreviousFileLength:0];

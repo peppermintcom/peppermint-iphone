@@ -72,12 +72,10 @@
                         </state>
                         <connections>
                             <action selector="touchDownCancelledOnIndexPath:event:" destination="8e4-VB-87A" eventType="touchCancel" id="u68-II-Q7w"/>
-                            <action selector="touchDownFinishedOnIndexPath:event:" destination="8e4-VB-87A" eventType="touchUpOutside" id="SB5-QP-chY"/>
                             <action selector="touchDownFinishedOnIndexPath:event:" destination="8e4-VB-87A" eventType="touchUpInside" id="jwa-Jr-a9d"/>
+                            <action selector="touchDownFinishedOnIndexPath:event:" destination="8e4-VB-87A" eventType="touchUpOutside" id="wzB-As-aRi"/>
                             <action selector="touchDownOnIndexPath:event:" destination="8e4-VB-87A" eventType="touchDown" id="AVs-TW-Att"/>
-                            <action selector="touchDragging:event:" destination="8e4-VB-87A" eventType="touchDragEnter" id="98T-gx-yOG"/>
-                            <action selector="touchDragging:event:" destination="8e4-VB-87A" eventType="touchDragOutside" id="GKj-Jh-fDv"/>
-                            <action selector="touchDragging:event:" destination="8e4-VB-87A" eventType="touchDragExit" id="mb3-N2-kk6"/>
+                            <action selector="touchDragging:event:" destination="8e4-VB-87A" eventType="touchDragOutside" id="Skj-V1-xH0"/>
                             <action selector="touchDragging:event:" destination="8e4-VB-87A" eventType="touchDragInside" id="sDg-KG-stx"/>
                         </connections>
                     </button>

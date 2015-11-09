@@ -33,8 +33,10 @@
     [self applyNonSelectedStyle];
     timer = nil;
     rootView = [UIApplication sharedApplication].keyWindow.rootViewController.view;
+    isActionProcessCompleted = YES;
 }
 
+/*
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     if(selected) {
@@ -43,6 +45,7 @@
         [self applyNonSelectedStyle];
     }
 }
+*/
 
 -(void) applySelectedStyle {
     self.backgroundColor = [UIColor peppermintGreen];
@@ -63,19 +66,24 @@
 #pragma mark - Action Buttons
 
 -(IBAction) touchDownOnIndexPath:(id) sender event:(UIEvent *)event {
-    [self applySelectedStyle];
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:event forKey:EVENT];
-    touchBeginPoint = CGPointMake(0, 0);
-    timer = [NSTimer scheduledTimerWithTimeInterval:HOLD_LIMIT target:self selector:@selector(touchingHold) userInfo:userInfo repeats:NO];
-    isActionProcessCompleted = NO;
+    if(isActionProcessCompleted) {
+        NSLog(@"didTouchDown");
+        isActionProcessCompleted = NO;
+        [self applySelectedStyle];
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:event forKey:EVENT];
+        touchBeginPoint = CGPointMake(0, 0);
+        timer = [NSTimer scheduledTimerWithTimeInterval:HOLD_LIMIT target:self selector:@selector(touchingHold) userInfo:userInfo repeats:NO];
+    }
 }
 
 -(void) touchingHold {
-    UIEvent *event = [timer.userInfo valueForKey:EVENT];
-    [timer invalidate];
-    UITouch *touch = [[event allTouches] anyObject];
-    touchBeginPoint = [touch locationInView:rootView];
-    [self.delegate didBeginItemSelectionOnIndexpath:self.indexPath location:touchBeginPoint];
+    if(!isActionProcessCompleted) {
+        UIEvent *event = [timer.userInfo valueForKey:EVENT];
+        [timer invalidate];
+        UITouch *touch = [[event allTouches] anyObject];
+        touchBeginPoint = [touch locationInView:rootView];
+        [self.delegate didBeginItemSelectionOnIndexpath:self.indexPath location:touchBeginPoint];
+    }
 }
 
 -(IBAction) touchDragging:(id)sender event:(UIEvent *)event {
@@ -98,12 +106,7 @@
         
         if(!isActionProcessCompleted && (!speedIsInLimit || isOutOfBounds)) {
             isActionProcessCompleted = YES;
-            if(timer.isValid)
-                [timer invalidate];
-            timer = nil;
-            [self applyNonSelectedStyle];
-            NSLog(@"didCancelItemSelectionOnIndexpath");
-            [self.delegate didCancelItemSelectionOnIndexpath:self.indexPath location:touchBeginPoint];
+            [self touchDownCancelledOnIndexPath:sender event:event];
         }
     }
 }
@@ -131,8 +134,12 @@
 }
 
 -(IBAction) touchDownCancelledOnIndexPath:(id) sender event:(UIEvent *)event {
+    if(timer.isValid)
+        [timer invalidate];
+    timer = nil;
     [self applyNonSelectedStyle];
-    NSLog(@"\n\nAction cancelled by the system!!!");
+    isActionProcessCompleted = YES;
+    [self.delegate didCancelItemSelectionOnIndexpath:self.indexPath location:touchBeginPoint];
 }
 
 @end

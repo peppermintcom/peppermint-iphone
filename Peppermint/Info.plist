@@ -132,6 +132,13 @@
 				<key>NSIncludesSubdomains</key>
 				<true/>
 			</dict>
+            <key>tinyurl.com</key>
+            <dict>
+                <key>NSExceptionRequiresForwardSecrecy</key>
+                <false/>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+            </dict>
 		</dict>
 	</dict>
 	<key>UILaunchStoryboardName</key>

@@ -118,6 +118,19 @@ SUBSCRIBE(NetworkFailure) {
                          ];
     NSString* encodedUrlPath = [urlPath stringByAddingPercentEscapesUsingEncoding:
                             NSUTF8StringEncoding];
+    
+#warning "Now using tinyUrl to compress the link. It should use an api on peppermint.com or Universal URL for this work"
+    NSString *tinyUrlPath = [NSString stringWithFormat:@"https://tinyurl.com/api-create.php?url=%@", encodedUrlPath];
+    NSURL *tinyUrl = [NSURL URLWithString:tinyUrlPath];
+    NSError *error;
+    NSString *compressedLink = [NSString stringWithContentsOfURL:tinyUrl encoding:NSUTF8StringEncoding error:&error];
+    if(error) {
+        encodedUrlPath = @"http://www.peppermint.com";
+        [self.delegate operationFailure:error];
+    } else {
+        encodedUrlPath = compressedLink;
+        
+    }
     return encodedUrlPath;
 }
 
