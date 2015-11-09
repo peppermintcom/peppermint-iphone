@@ -8,12 +8,16 @@
 
 #import "LoginWithEmailViewController.h"
 #import "LoginNavigationViewController.h"
+#import "LoginValidateEmailViewController.h"
 
-#define NUMBER_OF_GROUPS    2
-#define INDEX_NAME_SURNAME    0
-#define INDEX_EMAIL           1
+#define NUMBER_OF_GROUPS        3
+#define INDEX_NAME_SURNAME      0
+#define INDEX_EMAIL             1
+#define INDEX_PASSWORD          2
 
 #define DISTANCE_BTW_SECTIONS       12
+
+#define SEGUE_LOGIN_VALIDATE_EMAIL      @"LoginValidateEmailSegue"
 
 @interface LoginWithEmailViewController ()
 @end
@@ -24,9 +28,9 @@
     [super viewDidLoad];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;    
-    self.doneLabel.font = [UIFont openSansFontOfSize:14];
+    self.doneLabel.font = [UIFont openSansFontOfSize:18];
     self.doneLabel.textColor = [UIColor whiteColor];
-    self.doneLabel.text = LOC(@"Done",@"Login button text");
+    self.doneLabel.text = LOC(@"Register",@"Login button text");
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -60,11 +64,17 @@
     
     NSInteger index = indexPath.section;
     if(index == INDEX_NAME_SURNAME) {
+        [loginTextFieldCell.textField setSecureTextEntry:NO];
         loginTextFieldCell.textField.placeholder = LOC(@"Your Name",@"Your Name");
         loginTextFieldCell.textField.text = self.loginModel.peppermintMessageSender.nameSurname;
     } else if (index == INDEX_EMAIL) {
+        [loginTextFieldCell.textField setSecureTextEntry:NO];
         loginTextFieldCell.textField.placeholder = LOC(@"Email", @"Email");
         loginTextFieldCell.textField.text = self.loginModel.peppermintMessageSender.email;
+    } else if (index == INDEX_PASSWORD) {
+        [loginTextFieldCell.textField setSecureTextEntry:YES];
+        loginTextFieldCell.textField.placeholder = LOC(@"Password", @"Password");
+        loginTextFieldCell.textField.text = self.loginModel.peppermintMessageSender.password;
     }
     return loginTextFieldCell;
 }
@@ -95,6 +105,8 @@
         self.loginModel.peppermintMessageSender.nameSurname = text;
     } else if (index == INDEX_EMAIL) {
         self.loginModel.peppermintMessageSender.email = text;
+    } else if (index == INDEX_PASSWORD) {
+        self.loginModel.peppermintMessageSender.password = text;
     }
 }
 
@@ -106,9 +118,20 @@
 
 -(IBAction) doneButtonPressed:(id)sender {
     if([self.loginModel.peppermintMessageSender isValid]) {
-        [self.loginModel performEmailLogin];
+        [self performSegueWithIdentifier:SEGUE_LOGIN_VALIDATE_EMAIL sender:self];
     } else {
-        NSLog(@"Please supply login information");
+        NSString *title = LOC(@"Information", @"Title Message");
+        NSString *message = LOC(@"Register Information Missing", @"Information Message");
+        NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
+        [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:SEGUE_LOGIN_VALIDATE_EMAIL]) {
+        LoginValidateEmailViewController *loginValidateEmailViewController =
+        (LoginValidateEmailViewController*) segue.destinationViewController;
+        loginValidateEmailViewController.loginModel = self.loginModel;
     }
 }
 

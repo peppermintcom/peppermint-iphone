@@ -21,6 +21,7 @@ typedef enum : NSUInteger {
 @property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSData *imageData;
 @property (nonatomic) LoginSource loginSource;
+@property (strong, nonatomic) NSString *password;
 
 -(void) save;
 -(BOOL) isValid;

@@ -76,3 +76,8 @@
 "Account" = "Account";
 "Your Name" = "Your Name";
 "Could not get all needed information from facebook!" = "Could not get all needed information from facebook! Seems your facebook account does not contain needed details. Please update your profile or use other login method.";
+"Validate Information Format" = "Please verify your email\nto start using Peppermint.\n\nVerification link has\nbeen sent to %@";
+"Resend Verification" = "Resend Verification";
+"Register" = "Register";
+"Register Information Missing" = "Register information you supplied is not correct. Please supply valid information and try again.";
+"Password" = "Password";

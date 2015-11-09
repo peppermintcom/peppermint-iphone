@@ -28,4 +28,10 @@
     return NO;
 }
 
+- (BOOL)textFieldShouldClear:(UITextField *)textField {
+    self.textField.text = @"";
+    [self.delegate updatedTextFor:self atIndexPath:self.indexPath];
+    return NO;
+}
+
 @end

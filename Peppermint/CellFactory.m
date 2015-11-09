@@ -77,4 +77,15 @@
     return cell;
 }
 
++(LoginValidateEmailTableViewCell*) cellLoginValidateEmailTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath withDelegate:(id<LoginValidateEmailTableViewCellDelegate>) delegate {
+    NSString *cellKey = @"LoginValidateEmailTableViewCell";
+    LoginValidateEmailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellKey];
+    if(!cell) {
+        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:cellKey owner:self options:nil];
+        cell = [topLevelObjects objectAtIndex:0];
+    }
+    cell.delegate = delegate;
+    return cell;
+}
+
 @end

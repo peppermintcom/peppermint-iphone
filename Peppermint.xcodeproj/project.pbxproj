@@ -12,6 +12,9 @@
 		B10125BC1BEB670500B5DD54 /* NSString_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B10125BB1BEB670500B5DD54 /* NSString_Addition.m */; };
 		B102BBB81BCD03EC001E1E7A /* UIViewController_AdditionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B102BBB71BCD03EC001E1E7A /* UIViewController_AdditionViewController.m */; };
 		B102DD5E1BD0802100D71D62 /* BaseCustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = B102DD5D1BD0802100D71D62 /* BaseCustomView.m */; };
+		B102F9821BF0CE2000EDF7E6 /* LoginValidateEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B102F9811BF0CE2000EDF7E6 /* LoginValidateEmailViewController.m */; };
+		B102F9861BF0CF0800EDF7E6 /* LoginValidateEmailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B102F9851BF0CF0800EDF7E6 /* LoginValidateEmailTableViewCell.m */; };
+		B102F9881BF0CF1500EDF7E6 /* LoginValidateEmailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B102F9871BF0CF1500EDF7E6 /* LoginValidateEmailTableViewCell.xib */; };
 		B108F8601BECAA5300267DEC /* SendVoiceMessageEmailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B108F85F1BECAA5300267DEC /* SendVoiceMessageEmailModel.m */; };
 		B108F86B1BECAEF200267DEC /* RecentContact+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B108F8661BECAEF200267DEC /* RecentContact+CoreDataProperties.m */; };
 		B108F86C1BECAEF200267DEC /* RecentContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B108F8681BECAEF200267DEC /* RecentContact.m */; };
@@ -121,6 +124,11 @@
 		B102BBB71BCD03EC001E1E7A /* UIViewController_AdditionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIViewController_AdditionViewController.m; sourceTree = "<group>"; };
 		B102DD5C1BD0802100D71D62 /* BaseCustomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseCustomView.h; sourceTree = "<group>"; };
 		B102DD5D1BD0802100D71D62 /* BaseCustomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseCustomView.m; sourceTree = "<group>"; };
+		B102F9801BF0CE2000EDF7E6 /* LoginValidateEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginValidateEmailViewController.h; sourceTree = "<group>"; };
+		B102F9811BF0CE2000EDF7E6 /* LoginValidateEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginValidateEmailViewController.m; sourceTree = "<group>"; };
+		B102F9841BF0CF0800EDF7E6 /* LoginValidateEmailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginValidateEmailTableViewCell.h; sourceTree = "<group>"; };
+		B102F9851BF0CF0800EDF7E6 /* LoginValidateEmailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginValidateEmailTableViewCell.m; sourceTree = "<group>"; };
+		B102F9871BF0CF1500EDF7E6 /* LoginValidateEmailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginValidateEmailTableViewCell.xib; sourceTree = "<group>"; };
 		B108F85E1BECAA5300267DEC /* SendVoiceMessageEmailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVoiceMessageEmailModel.h; sourceTree = "<group>"; };
 		B108F85F1BECAA5300267DEC /* SendVoiceMessageEmailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendVoiceMessageEmailModel.m; sourceTree = "<group>"; };
 		B108F8651BECAEF200267DEC /* RecentContact+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RecentContact+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -334,6 +342,16 @@
 			name = BaseCustomView;
 			sourceTree = "<group>";
 		};
+		B102F9831BF0CEE900EDF7E6 /* LoginValidateEmailTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				B102F9841BF0CF0800EDF7E6 /* LoginValidateEmailTableViewCell.h */,
+				B102F9851BF0CF0800EDF7E6 /* LoginValidateEmailTableViewCell.m */,
+				B102F9871BF0CF1500EDF7E6 /* LoginValidateEmailTableViewCell.xib */,
+			);
+			name = LoginValidateEmailTableViewCell;
+			sourceTree = "<group>";
+		};
 		B12C03B81BCFFBDC0085A55A /* FastRecordingView */ = {
 			isa = PBXGroup;
 			children = (
@@ -473,6 +491,8 @@
 				B1BB60191BDE127500C1140B /* LoginViewController.m */,
 				B1BB605D1BDE36AF00C1140B /* LoginWithEmailViewController.h */,
 				B1BB605E1BDE36AF00C1140B /* LoginWithEmailViewController.m */,
+				B102F9801BF0CE2000EDF7E6 /* LoginValidateEmailViewController.h */,
+				B102F9811BF0CE2000EDF7E6 /* LoginValidateEmailViewController.m */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -606,6 +626,7 @@
 		B17B3D6A1BB6BCEC009B8BC5 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				B102F9831BF0CEE900EDF7E6 /* LoginValidateEmailTableViewCell */,
 				B16DA21D1BE10A5F00EBF043 /* SlideMenuTableViewCell */,
 				B1C83A161BDEB0C300EB14C2 /* LoginTextFieldTableViewCell */,
 				B1BB60121BDE0DD200C1140B /* LoginTableViewCell */,
@@ -882,6 +903,7 @@
 				B17B3D571BB68A39009B8BC5 /* Text.strings in Resources */,
 				B17206D91BE4E1450021D855 /* begin_record.mp3 in Resources */,
 				B179F83C1BC931820089D709 /* SearchMenuTableViewCell.xib in Resources */,
+				B102F9881BF0CF1500EDF7E6 /* LoginValidateEmailTableViewCell.xib in Resources */,
 				B165EF1F1BB72254008C6F71 /* EmptyResultTableViewCell.xib in Resources */,
 				B12C03BD1BCFFC280085A55A /* FastRecordingView.xib in Resources */,
 				B17B3D3F1BB6898C009B8BC5 /* LaunchScreen.xib in Resources */,
@@ -964,6 +986,7 @@
 				B11F8A5F1BDCC474000E79AA /* FinalizeUploadResponse.m in Sources */,
 				B13B075D1BD3716100974AC3 /* MandrillSendRequest.m in Sources */,
 				B165EF151BB71A99008C6F71 /* ContactsModel.m in Sources */,
+				B102F9861BF0CF0800EDF7E6 /* LoginValidateEmailTableViewCell.m in Sources */,
 				B179F83A1BC9316F0089D709 /* SearchMenuTableViewCell.m in Sources */,
 				B15B15B01BDA44E200C0C171 /* TPAACAudioConverter.m in Sources */,
 				B102DD5E1BD0802100D71D62 /* BaseCustomView.m in Sources */,
@@ -1013,6 +1036,7 @@
 				B165EF121BB71A85008C6F71 /* BaseModel.m in Sources */,
 				B17B3D311BB6898C009B8BC5 /* main.m in Sources */,
 				B108F8601BECAA5300267DEC /* SendVoiceMessageEmailModel.m in Sources */,
+				B102F9821BF0CE2000EDF7E6 /* LoginValidateEmailViewController.m in Sources */,
 				B1EF40F91BB8782F00042E4B /* SwipeView.m in Sources */,
 				B1BB60151BDE0E0200C1140B /* LoginTableViewCell.m in Sources */,
 				B13B07671BD3736400974AC3 /* MandrillMailAttachment.m in Sources */,

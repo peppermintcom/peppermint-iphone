@@ -93,7 +93,6 @@
     //PUBLISH([ApplicationDidEnterBackground new]);
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    NSLog(@"I'm in background now!!!");
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -115,15 +114,6 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     BOOL result = false;
-    
-    NSLog(@"\n\n\n");
-    NSLog(@"url scheme: %@", [url scheme]);
-    NSLog(@"url recieved: %@", url);
-    NSLog(@"query string: %@", [url query]);
-    NSLog(@"host: %@", [url host]);
-    NSLog(@"url path: %@", [url path]);
-    NSLog(@"\n\n\n");
-    
     if([url.scheme isEqualToString:SCHEME_FACEBOOK]) {
         result = [[FBSDKApplicationDelegate sharedInstance] application:application
                                                                 openURL:url
@@ -138,7 +128,6 @@
                  sourceApplication:sourceApplication
                         annotation:annotation];
     }
-    
     return result;
 }
 

@@ -367,7 +367,6 @@ typedef enum : NSUInteger {
 #pragma mark - App Interruption Actions
 
 SUBSCRIBE(ApplicationWillResignActive) {
-    NSLog(@"ApplicationWillResignActive");
     fastRecordingViewStatus = FastRecordingViewStatusResignActive;
     [self.recordingModel backUpRecording];
 }
@@ -379,7 +378,6 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
 -(void) handleAppIsActiveAgain {
     if(fastRecordingViewStatus == FastRecordingViewStatusResignActive) {
         fastRecordingViewStatus = FastRecordingViewStatusRecoverFromBackUp;
-        NSLog(@"ApplicationDidBecomeActive");
         CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
         if( previousFileLength > MIN_VOICE_MESSAGE_LENGTH) {
             if(!self.sendVoiceMessageModel) {

@@ -18,6 +18,7 @@
     if(self) {
         self.nameSurname = (NSString*) defaults_object(DEFAULTS_KEY_SENDER_NAMESURNAME);
         self.email = (NSString*) defaults_object(DEFAULTS_KEY_SENDER_EMAIL);
+        self.password = (NSString*) defaults_object(DEFAULTS_KEY_SENDER_PASSWORD);
         self.imageData = [NSData dataWithContentsOfURL:[self imageFileUrl]];
         self.loginSource = ((NSNumber*)defaults_object(DEFAULTS_KEY_SENDER_LOGIN_SOURCE)).intValue;
         [self guessNameFromDeviceName];
@@ -29,12 +30,16 @@
     defaults_set_object(DEFAULTS_KEY_SENDER_LOGIN_SOURCE, [NSNumber numberWithInt:self.loginSource]);
     defaults_set_object(DEFAULTS_KEY_SENDER_NAMESURNAME, self.nameSurname);
     defaults_set_object(DEFAULTS_KEY_SENDER_EMAIL, self.email);
+    defaults_set_object(DEFAULTS_KEY_SENDER_PASSWORD, self.password);
+    
     [self.imageData writeToURL:[self imageFileUrl] atomically:YES];
 }
 
 -(BOOL) isValid {    
     return self.nameSurname.length > 0
-    && self.email.length > 0;
+    && self.email.length > 0
+    && [self.email isValidEmail]
+    && self.password.length > 0;
 }
 
 #pragma mark - Guess Name From Device Name
@@ -87,6 +92,5 @@
     NSArray *pathComponents = [NSArray arrayWithObjects: [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"ProfileImage.png", nil];
     return [NSURL fileURLWithPathComponents:pathComponents];
 }
-
 
 @end
