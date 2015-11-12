@@ -15,6 +15,7 @@
 @interface LoginTableViewCell : BaseTableViewCell
 @property (weak, nonatomic) id<LoginTableViewCellDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UIImageView *loginIconImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *loginIconImageViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *loginLabel;
 
 @end

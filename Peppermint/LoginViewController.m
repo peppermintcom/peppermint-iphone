@@ -37,7 +37,7 @@
     self.loginLabel.text = LOC(@"Please Login", @"Login Message");
     [self.loginLabel sizeToFit];
     
-    peppermintMessageSender = [PeppermintMessageSender new];
+    peppermintMessageSender = [PeppermintMessageSender savedSender];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -77,19 +77,7 @@
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat height = CELL_HEIGHT_LOGIN_TABLEVIEWCELL;
-    
-    NSInteger index = indexPath.section;
-    if(index == SECTION_LOGIN_WITH_FACEBOOK) {
-#warning "Implement logout suggestion"
-    } else if (index == SECTION_LOGIN_WITH_GOOGLE) {
-
-    } else if (index == SECTION_LOGIN_WITH_EMAIL) {
-        
-    }
-    
-    
-    return height;
+    return CELL_HEIGHT_LOGIN_TABLEVIEWCELL;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

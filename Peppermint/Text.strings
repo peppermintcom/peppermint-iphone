@@ -84,3 +84,7 @@
 "Verification Mail Sent" = "Peppermint just sent you a verification email. Please check your email inbox!";
 "This field is mandatory" = "This field is mandatory";
 "Mail Format is not correct" = "Mail Format is not correct";
+"Facebook" = "Facebook";
+"Google" = "Google";
+"Logged in message format" = "You are currently logged in\nusing %@";
+"Log Out" = "Log Out";

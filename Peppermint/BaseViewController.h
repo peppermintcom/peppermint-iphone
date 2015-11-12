@@ -14,4 +14,6 @@
 
 @interface BaseViewController : UIViewController <BaseModelDelegate>
 -(void) redirectToSettingsPageForPermission;
+
+-(BOOL) checkIfuserIsLoggedIn;
 @end

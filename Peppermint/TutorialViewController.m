@@ -32,22 +32,10 @@
 
 -(void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self checkIfuserIsLoggedIn];
-    [self.swipeView scrollToItemAtIndex:0 duration:DURATION];
-}
-
-#pragma mark - Login
-
--(void) checkIfuserIsLoggedIn {    
-    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender new];
-    if(!peppermintMessageSender.isValid) {
-        self.view.alpha = 0;
-        [LoginNavigationViewController logUserInWithDelegate:nil completion:^{
-            self.view.alpha = 1;
-        }];
-    } else {
+    if([self checkIfuserIsLoggedIn]) {
         [self askUserForContactsReadPermission];
     }
+    [self.swipeView scrollToItemAtIndex:0 duration:DURATION];
 }
 
 -(void) askUserForContactsReadPermission {

@@ -16,7 +16,7 @@
 -(id) init {
     self = [super init];
     if(self) {
-        self.peppermintMessageSender = [PeppermintMessageSender new];
+        self.peppermintMessageSender = [PeppermintMessageSender savedSender];
     }
     return self;
 }

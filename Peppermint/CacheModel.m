@@ -76,7 +76,7 @@
                 SendVoiceMessageEmailModel *mailSenderModel = [[NSClassFromString(cachedEmailMessage.mailSenderClass) alloc] init];
                 mailSenderModel.delegate = nil;
                 
-                PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender new];
+                PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender savedSender];
                 peppermintMessageSender.nameSurname = cachedEmailMessage.senderNameSurname;
                 peppermintMessageSender.email = cachedEmailMessage.senderEmail;
                 PeppermintContact *selectedContact = [PeppermintContact new];

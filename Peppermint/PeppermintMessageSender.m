@@ -13,25 +13,32 @@
 
 @implementation PeppermintMessageSender
 
++(instancetype) savedSender {
+    NSError *error;
+    PeppermintMessageSender *sender;
+    NSString *jsonString = [[A0SimpleKeychain keychain] stringForKey:KEYCHAIN_MESSAGE_SENDER];
+    if(jsonString.length > 0) {
+        sender = [[PeppermintMessageSender alloc] initWithString:jsonString error:&error];
+    }
+    if(!jsonString || error) {
+        NSLog(@"JSON init Error : %@", error);
+        sender = [PeppermintMessageSender savedSender];
+    }
+    return sender;
+}
+
 -(id) init {
     self = [super init];
     if(self) {
-        self.nameSurname = (NSString*) defaults_object(DEFAULTS_KEY_SENDER_NAMESURNAME);
-        self.email = (NSString*) defaults_object(DEFAULTS_KEY_SENDER_EMAIL);
-        self.password = (NSString*) defaults_object(DEFAULTS_KEY_SENDER_PASSWORD);
         self.imageData = [NSData dataWithContentsOfURL:[self imageFileUrl]];
-        self.loginSource = ((NSNumber*)defaults_object(DEFAULTS_KEY_SENDER_LOGIN_SOURCE)).intValue;
         [self guessNameFromDeviceName];
     }
     return self;
 }
 
 -(void) save {
-    defaults_set_object(DEFAULTS_KEY_SENDER_LOGIN_SOURCE, [NSNumber numberWithInt:self.loginSource]);
-    defaults_set_object(DEFAULTS_KEY_SENDER_NAMESURNAME, self.nameSurname);
-    defaults_set_object(DEFAULTS_KEY_SENDER_EMAIL, self.email);
-    defaults_set_object(DEFAULTS_KEY_SENDER_PASSWORD, self.password);
-    
+    NSString *jsonString = [self toJSONString];
+    [[A0SimpleKeychain keychain] setString:jsonString forKey:KEYCHAIN_MESSAGE_SENDER];
     [self.imageData writeToURL:[self imageFileUrl] atomically:YES];
 }
 
@@ -91,6 +98,27 @@
 -(NSURL*) imageFileUrl {
     NSArray *pathComponents = [NSArray arrayWithObjects: [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"ProfileImage.png", nil];
     return [NSURL fileURLWithPathComponents:pathComponents];
+}
+
+-(NSString*) loginMethod {
+    NSString *loginMethodString;
+    if(self.loginSource == LOGINSOURCE_FACEBOOK) {
+        loginMethodString = LOC(@"Facebook", @"Facebook");
+    } else if(self.loginSource == LOGINSOURCE_GOOGLE) {
+        loginMethodString = LOC(@"Google", @"Google");
+    } else if(self.loginSource == LOGINSOURCE_PEPPERMINT) {
+        loginMethodString = LOC(@"Peppermint", @"Peppermint");
+    }
+    return loginMethodString;
+}
+
+-(void) clearSender {
+    self.nameSurname = @"";
+    self.email = @"";
+    self.password = @"";
+    self.imageData = nil;
+    self.loginSource = -9;
+    [self save];
 }
 
 @end

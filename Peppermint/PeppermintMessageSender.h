@@ -15,15 +15,17 @@ typedef enum : NSUInteger {
     LOGINSOURCE_PEPPERMINT,
 } LoginSource;
 
-#warning "Implement save and load with json instead of ns user defaults!"
 @interface PeppermintMessageSender : JSONModel
 @property (strong, nonatomic) NSString *nameSurname;
 @property (strong, nonatomic) NSString *email;
-@property (strong, nonatomic) NSData *imageData;
+@property (strong, nonatomic) NSData<Ignore> *imageData;
 @property (nonatomic) LoginSource loginSource;
 @property (strong, nonatomic) NSString *password;
 
++(instancetype) savedSender;
 -(void) save;
 -(BOOL) isValid;
+-(NSString*) loginMethod;
+-(void) clearSender;
 
 @end

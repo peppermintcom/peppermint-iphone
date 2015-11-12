@@ -8,7 +8,7 @@
 
 #import "SlideMenuViewController.h"
 #import "LoginModel.h"
-#import "LoginNavigationViewController.h"
+#import "AccountViewController.h"
 
 #define NUMBER_OF_OPTIONS   4
 #define INDEX_CONTACTS      0
@@ -37,7 +37,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender new];
+    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender savedSender];
     if(peppermintMessageSender.nameSurname.length > 0) {
         self.userLabel.text = peppermintMessageSender.nameSurname;
     } else {
@@ -104,8 +104,11 @@
         [navigationController popToRootViewControllerAnimated:YES];
     } else if (indexPath.row == INDEX_TUTORIAL) {
         [self.reSideMenuContainerViewController.navigationController popToRootViewControllerAnimated:YES];
-    } else if (indexPath.row == INDEX_ACCOUNT) {
-        [LoginNavigationViewController logUserInWithDelegate:nil completion:nil];
+    } else if (indexPath.row == INDEX_ACCOUNT) {        
+        UINavigationController *navigationController = (UINavigationController*)self.reSideMenuContainerViewController.contentViewController;
+        
+        AccountViewController *accountViewController = [AccountViewController createInstance];
+        [navigationController pushViewController:accountViewController animated:YES];
     }
 }
 

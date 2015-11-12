@@ -7,6 +7,7 @@
 //
 
 #import "BaseViewController.h"
+#import "LoginNavigationViewController.h"
 
 @interface BaseViewController ()
 
@@ -47,5 +48,21 @@
         [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
     }
 }
+
+#pragma mark - Login
+
+-(BOOL) checkIfuserIsLoggedIn {
+    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender savedSender];
+    if(!peppermintMessageSender.isValid) {
+        self.view.alpha = 0;
+        [LoginNavigationViewController logUserInWithDelegate:nil completion:^{
+            self.view.alpha = 1;
+        }];
+        return NO;
+    }
+    return YES;
+}
+
+
 
 @end

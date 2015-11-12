@@ -146,6 +146,10 @@
 
 #pragma mark - SendVoiceMessage Delegate
 
+-(void) newRecentContactisSaved {
+    //New recent contact is saved
+}
+
 -(void) messageStatusIsUpdated:(SendingStatus)sendingStatus withCancelOption:(BOOL)cancelable {
     NSLog(@"Status is updated!");
     if (sendingStatus == SendingStatusSent || sendingStatus == SendingStatusCancelled) {

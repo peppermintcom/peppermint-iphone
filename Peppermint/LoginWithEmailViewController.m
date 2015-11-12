@@ -273,43 +273,4 @@
     }
 }
 
-#pragma mark - Blink Animation
-#warning "Add some animation"
-/*
--(void) startFlashingbutton
-{
-    if (buttonFlashing) return;
-    buttonFlashing = YES;
-    self.button.alpha = 1.0f;
-    [UIView animateWithDuration:0.12
-                          delay:0.0
-                        options:UIViewAnimationOptionCurveEaseInOut |
-     UIViewAnimationOptionRepeat |
-     UIViewAnimationOptionAutoreverse |
-     UIViewAnimationOptionAllowUserInteraction
-                     animations:^{
-                         self.button.alpha = 0.0f;
-                     }
-                     completion:^(BOOL finished){
-                         // Do nothing
-                     }];
-}
-
--(void) stopFlashingbutton
-{
-    if (!buttonFlashing) return;
-    buttonFlashing = NO;
-    [UIView animateWithDuration:0.12
-                          delay:0.0
-                        options:UIViewAnimationOptionCurveEaseInOut |
-     UIViewAnimationOptionBeginFromCurrentState
-                     animations:^{
-                         self.button.alpha = 1.0f;
-                     }
-                     completion:^(BOOL finished){
-                         // Do nothing
-                     }];
-}
-*/
-
 @end

@@ -78,7 +78,7 @@
 
 +(void) logUserInWithDelegate:(id<LoginNavigationViewControllerDelegate>) delegate completion:(void(^)(void))completion {
     UIViewController *rootVC = [AppDelegate Instance].window.rootViewController;
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:[NSBundle mainBundle]];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:STORYBOARD_LOGIN bundle:[NSBundle mainBundle]];
     LoginNavigationViewController *loginNavigationViewController = [storyboard instantiateInitialViewController];
     loginNavigationViewController.loginDelegate = delegate;
     [rootVC presentViewController:loginNavigationViewController animated:YES completion:completion];

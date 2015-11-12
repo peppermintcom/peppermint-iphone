@@ -81,11 +81,13 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.searchContactsTextField.text = self.contactsModel.filterText = @"";
-    activeCellTag = CELL_TAG_RECENT_CONTACTS;
-    [[self loadingHud] show:YES];
-    [self.recentContactsModel refreshRecentContactList];
-    [self registerKeyboardActions];
+    if([self checkIfuserIsLoggedIn]) {
+        self.searchContactsTextField.text = self.contactsModel.filterText = @"";
+        activeCellTag = CELL_TAG_RECENT_CONTACTS;
+        [[self loadingHud] show:YES];
+        [self.recentContactsModel refreshRecentContactList];
+        [self registerKeyboardActions];
+    }
 }
 
 - (void) viewDidAppear:(BOOL)animated {
