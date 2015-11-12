@@ -22,7 +22,7 @@
     }
     if(!jsonString || error) {
         NSLog(@"JSON init Error : %@", error);
-        sender = [PeppermintMessageSender savedSender];
+        sender = [PeppermintMessageSender new];
     }
     return sender;
 }
