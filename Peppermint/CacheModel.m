@@ -16,10 +16,15 @@
 }
 
 + (instancetype) sharedInstance {
-    return SHARED_INSTANCE( [[self alloc] init] );
+    return SHARED_INSTANCE( [[self alloc] initShared] );
 }
 
 -(id) init {
+    NSAssert(false, @"This model instance is singleton so should not be inited - %@", self);
+    return nil;
+}
+
+-(id) initShared {
     self = [super init];
     if(self) {
         numberOfActiveCalls = 0;

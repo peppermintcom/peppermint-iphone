@@ -18,7 +18,16 @@
     NSArray *smsContactList;
 }
 
++ (instancetype) sharedInstance {
+    return SHARED_INSTANCE( [[self alloc] initShared] );
+}
+
 -(id) init {
+    NSAssert(false, @"This model instance is singleton so should not be inited - %@", self);
+    return nil;
+}
+
+-(id) initShared {
     self = [super init];
     if(self) {
         self.contactList = [NSMutableArray new];
@@ -148,6 +157,18 @@
                          }
                      }
                  }
+                 
+                 
+#ifdef DEBUG
+                 PeppermintContact *peppermintContact = [PeppermintContact new];
+                 peppermintContact.communicationChannel = CommunicationChannelEmail;
+                 peppermintContact.communicationChannelAddress = @"okankurtulus@gmail.com";
+                 peppermintContact.nameSurname = @"Okan Kurtulus";
+                 peppermintContact.avatarImage = [UIImage imageNamed:@"recording_logo_pressed"];;
+                 [peppermintContactsArray addObject:peppermintContact];
+#endif
+                 
+                 
                  self.contactList = peppermintContactsArray;
                  NSArray *sortedList = [self.contactList sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
                      NSString *first = [(PeppermintContact*)a nameSurname];

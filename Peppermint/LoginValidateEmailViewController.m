@@ -58,7 +58,7 @@
 
 -(void) resendValidation {
     NSString *title = LOC(@"Information", @"Title Message");
-    NSString *message = @"Test Note: Validation email will be triggered again!";
+    NSString *message = LOC(@"Verification Mail Sent", @"Verification Mail Sent");
     NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
     [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
 }

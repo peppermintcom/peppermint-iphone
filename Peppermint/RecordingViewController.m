@@ -8,7 +8,6 @@
 
 #import "RecordingViewController.h"
 #import "SendVoiceMessageMandrillModel.h"
-#import "MBProgressHud.h"
 
 @interface RecordingViewController ()
 
@@ -94,8 +93,8 @@
     self.resumeButton.enabled = NO;
     self.pauseButton.enabled = NO;
     [self.recordingModel stop];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self.recordingModel prepareRecordData];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - RecordingModel Delegate
@@ -148,8 +147,8 @@
 #pragma mark - SendVoiceMessage Delegate
 
 -(void) messageStatusIsUpdated:(SendingStatus)sendingStatus withCancelOption:(BOOL)cancelable {
+    NSLog(@"Status is updated!");
     if (sendingStatus == SendingStatusSent || sendingStatus == SendingStatusCancelled) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }

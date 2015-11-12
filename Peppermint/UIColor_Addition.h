@@ -24,5 +24,6 @@
 + (UIColor *) emailLoginColor;
 + (UIColor *) slideMenuTableViewColor;
 + (UIColor *) slideMenuTableViewCellTextLabelColor;
++ (UIColor *) warningColor;
 
 @end

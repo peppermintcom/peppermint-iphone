@@ -67,7 +67,6 @@
 
 -(IBAction) touchDownOnIndexPath:(id) sender event:(UIEvent *)event {
     if(isActionProcessCompleted) {
-        NSLog(@"didTouchDown");
         isActionProcessCompleted = NO;
         [self applySelectedStyle];
         NSDictionary *userInfo = [NSDictionary dictionaryWithObject:event forKey:EVENT];
@@ -119,14 +118,11 @@
             if(timer.isValid)  {
                 [timer invalidate];
                 timer = nil;
-                
                 UITouch *touch = [[event allTouches] anyObject];
                 CGPoint endPoint = [touch locationInView:rootView];
-                NSLog(@"didShortTouchOnIndexPath");
                 [self.delegate didShortTouchOnIndexPath:self.indexPath location:endPoint];
             } else {
                 timer = nil;
-                NSLog(@"didFinishItemSelectionOnIndexPath");
                 [self.delegate didFinishItemSelectionOnIndexPath:self.indexPath location:touchBeginPoint];
             }
         }

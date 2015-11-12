@@ -81,3 +81,6 @@
 "Register" = "Register";
 "Register Information Missing" = "Register information you supplied is not correct. Please supply valid information and try again.";
 "Password" = "Password";
+"Verification Mail Sent" = "Peppermint just sent you a verification email. Please check your email inbox!";
+"This field is mandatory" = "This field is mandatory";
+"Mail Format is not correct" = "Mail Format is not correct";

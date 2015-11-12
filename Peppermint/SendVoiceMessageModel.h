@@ -17,15 +17,17 @@
 #define TYPE_AAC    @"audio/aac"
 
 typedef enum : NSUInteger {
-    SendingStatusStarting = 0,
-    SendingStatusUploading = 1,
-    SendingStatusSending = 2,
-    SendingStatusSent = 3,
-    SendingStatusCancelled = -1,
-    SendingStatusCached = 4,
-    SendingStatusError = 5,
-    SendingStatusIniting = 6,
-    SendingStatusInited = 7,
+    SendingStatusError = 0,
+    SendingStatusCancelled = 1,
+    
+    SendingStatusIniting = 2,
+    SendingStatusInited = 3,
+    
+    SendingStatusStarting = 4,
+    SendingStatusCached = 5,
+    SendingStatusUploading = 6,
+    SendingStatusSending = 7,
+    SendingStatusSent = 8,
 } SendingStatus;
 
 @protocol SendVoiceMessageDelegate <BaseModelDelegate>
@@ -52,5 +54,6 @@ typedef enum : NSUInteger {
 -(BOOL) isCancelled;
 -(NSString*) fastReplyUrlForSender;
 -(BOOL) isConnectionActive;
++(SendVoiceMessageModel*) activeSendVoiceMessageModel;
 
 @end

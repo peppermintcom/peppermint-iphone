@@ -36,6 +36,8 @@
 
 +(FastRecordingView*) createInstanceWithDelegate:(UIViewController<FastRecordingViewDelegate>*) delegate;
 
+-(void) activeOnScreen;
+
 -(void) presentWithAnimation;
 -(void) finishRecordingWithGestureIsValid:(BOOL) isGestureValid;
 -(void) cancelMessageSending;

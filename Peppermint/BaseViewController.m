@@ -7,19 +7,15 @@
 //
 
 #import "BaseViewController.h"
-#import "ConnectionModel.h"
 
 @interface BaseViewController ()
 
 @end
 
-@implementation BaseViewController {
-    ConnectionModel *connectionModel;
-}
+@implementation BaseViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    connectionModel = [ConnectionModel new];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"colorfill"]];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
 }

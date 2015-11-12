@@ -22,6 +22,12 @@
 
 @implementation AppDelegate
 
+-(void) initMutableArray {
+    if(!self.mutableArray) {
+        self.mutableArray = [NSMutableArray new];
+    }
+}
+
 -(void) initNavigationViewController {
     [[UINavigationBar appearance] setBarTintColor:[UIColor peppermintGreen]];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
@@ -76,6 +82,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [self initMutableArray];
     [self initNavigationViewController];
     [self initFabric];
     [self initInitialViewController];
@@ -113,7 +120,7 @@
 #pragma mark - Open URL
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    BOOL result = false;
+    BOOL result = NO;
     if([url.scheme isEqualToString:SCHEME_FACEBOOK]) {
         result = [[FBSDKApplicationDelegate sharedInstance] application:application
                                                                 openURL:url
@@ -131,9 +138,19 @@
     return result;
 }
 
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
+    if ([NSUserActivityTypeBrowsingWeb isEqualToString: userActivity.activityType]) {
+        if(![self handleOpenURL:userActivity.webpageURL sourceApplication:nil annotation:nil]) {
+            [[UIApplication sharedApplication] openURL:userActivity.webpageURL];
+        }
+    }
+    return NO;
+}
+
 -(BOOL) handleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     BOOL result = NO;
-    if([[url host] isEqualToString:HOST_FASTREPLY]) {
+    if([[url host] isEqualToString:HOST_FASTREPLY]
+       || [[[url path] lowercaseString] containsString:PATH_FASTREPLY]) {
         NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
         NSString *nameSurname, *email = nil;
         for(NSURLQueryItem *queryItem in urlComponents.queryItems) {

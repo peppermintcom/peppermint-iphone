@@ -26,19 +26,16 @@
 @implementation ContactsViewController {
     NSUInteger activeCellTag;
     NSUInteger cachedActiveCellTag;
-    BOOL callLockForCurrentMessage;
-    NSUInteger activeSendingCount;
     BOOL isScrolling;
     MBProgressHUD *_loadingHud;
     AWSModel *awsModel;
-
     BOOL isNewRecordAvailable;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     if(!self.contactsModel) {
-        self.contactsModel = [ContactsModel new];
+        self.contactsModel = [ContactsModel sharedInstance];
         self.contactsModel.delegate = self;
         [self.contactsModel setup];
     } else if (self.contactsModel.contactList.count == 0) {
@@ -58,8 +55,6 @@
     self.sendingIndicatorView.hidden = YES;
     self.seperatorView.backgroundColor = [UIColor cellSeperatorGray];
     [self initRecordingView];
-    callLockForCurrentMessage = NO;
-    activeSendingCount = 0;
     isScrolling  = NO;
     [self initHoldToRecordInfoView];
     isNewRecordAvailable = YES;
@@ -95,6 +90,7 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [self.fastRecordingView activeOnScreen];
 }
 
 -(void) initRecordingView {
@@ -407,37 +403,16 @@
 
 #pragma mark - MessageSending status indicators
 
--(void) messageSendingIndicatorSetMessageIsSending {
-    if(!callLockForCurrentMessage) {
-        callLockForCurrentMessage  = YES;
-        ++activeSendingCount;
-        if(self.sendingIndicatorView.hidden) {
-            self.sendingIndicatorView.alpha = 0;
-            self.sendingIndicatorView.hidden = NO;
-            [UIView animateWithDuration:0.15 animations:^{
-                self.sendingIndicatorView.alpha = 1;
-            } completion:^(BOOL finished) {
-                
-            }];
-        }
-    }
-}
-
--(void) messageSendingIndicatorSetMessageIsSent {
-    [self performSelector:@selector(refreshTheScreen) withObject:nil afterDelay:MESSAGE_SENDING_DURATION];
-    callLockForCurrentMessage = NO;
-    --activeSendingCount;
-}
-
--(void) messageSendingIsCancelled {
-    isNewRecordAvailable = YES;
-    callLockForCurrentMessage = NO;
-    --activeSendingCount;
-    [self refreshTheScreen];
-}
-
--(void) refreshTheScreen {
-    if(activeSendingCount == 0) {
+-(void) setVisibilityOfSendingInfo:(BOOL) show {
+    if(show && self.sendingIndicatorView.hidden) {
+        self.sendingIndicatorView.alpha = 0;
+        self.sendingIndicatorView.hidden = NO;
+        [UIView animateWithDuration:0.15 animations:^{
+            self.sendingIndicatorView.alpha = 1;
+        } completion:^(BOOL finished) {
+            
+        }];
+    } else if (!show && !self.sendingIndicatorView.hidden) {
         self.sendingIndicatorView.alpha = 1;
         [UIView animateWithDuration:0.15 animations:^{
             self.sendingIndicatorView.alpha = 0;
@@ -447,6 +422,18 @@
         }];
         [self.recentContactsModel refreshRecentContactList];
     }
+}
+
+-(void) messageSendingIndicatorSetMessageIsSending {
+    [self setVisibilityOfSendingInfo:YES];
+}
+
+-(void) messageSendingIndicatorSetMessageIsSent {
+    [self performSelector:@selector(setVisibilityOfSendingInfo:) withObject:[NSNumber numberWithBool:NO] afterDelay:MESSAGE_SENDING_DURATION];
+}
+
+-(void) messageSendingIsCancelled {
+    [self setVisibilityOfSendingInfo:NO];
 }
 
 #pragma mark - CancelMessageSendingButton

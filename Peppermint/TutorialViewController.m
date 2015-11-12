@@ -51,7 +51,7 @@
 }
 
 -(void) askUserForContactsReadPermission {
-    contactsModel = [ContactsModel new];
+    contactsModel = [ContactsModel sharedInstance];
     contactsModel.delegate = self;
     [contactsModel setup];
 }

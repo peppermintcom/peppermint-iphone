@@ -28,29 +28,6 @@
             </objects>
             <point key="canvasLocation" x="-1612" y="154"/>
         </scene>
-        <!--Initial View Controller-->
-        <scene sceneID="ZLx-8O-cm2">
-            <objects>
-                <viewController id="foJ-8h-BZ4" customClass="InitialViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="MJW-Ha-eAs"/>
-                        <viewControllerLayoutGuide type="bottom" id="D1A-lk-bGd"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="rnU-xB-SDS">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="Jr4-Ow-y16"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
-                    <connections>
-                        <segue destination="291-YT-7kX" kind="show" identifier="TutorialViewControllerSegue" id="zem-os-tdA"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8a6-tC-IGj" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1028" y="-781"/>
-        </scene>
         <!--Data Source-->
         <scene sceneID="ZnF-5d-yUK">
             <objects>
@@ -728,7 +705,4 @@
         <image name="tap_to_send" width="278" height="50"/>
         <image name="white_ellipse" width="596" height="60"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="zem-os-tdA"/>
-    </inferredMetricsTieBreakers>
 </document>

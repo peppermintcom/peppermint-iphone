@@ -66,6 +66,8 @@ sharedObject;\
 #define ANIM_TIME                   0.3
 #define WARN_TIME                   1.5
 
+#define LOGIN_CORNER_RADIUS         15
+
 #pragma mark - Alert Button Index Definition
 #define ALERT_BUTTON_INDEX_CANCEL   0
 #define ALERT_BUTTON_INDEX_OTHER_1  1
@@ -95,6 +97,7 @@ sharedObject;\
 #define SCHEME_PEPPERMINT   @"peppermint"
 
 #define HOST_FASTREPLY                  @"fastReply"
+#define PATH_FASTREPLY                  @"/fastreply/"
 
 #define QUERY_COMPONENT_NAMESURNAME     @"namesurname"
 #define QUERY_COMPONENT_EMAIL           @"email"

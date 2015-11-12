@@ -13,5 +13,6 @@
 @property (weak, nonatomic) LoginModel *loginModel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *doneLabel;
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
 
 @end

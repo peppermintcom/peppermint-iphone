@@ -88,4 +88,14 @@
     return cell;
 }
 
++(InformationTextTableViewCell*) cellInformationTextTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath  {
+    NSString *cellKey = @"InformationTextTableViewCell";
+    InformationTextTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellKey];
+    if(!cell) {
+        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:cellKey owner:self options:nil];
+        cell = [topLevelObjects objectAtIndex:0];
+    }
+    return cell;
+}
+
 @end

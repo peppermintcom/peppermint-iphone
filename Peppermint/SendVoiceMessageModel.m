@@ -9,8 +9,11 @@
 #import "SendVoiceMessageModel.h"
 #import "ConnectionModel.h"
 
+#define TIMER_PERIOD    3
+
 @implementation SendVoiceMessageModel {
     ConnectionModel *connectionModel;
+    NSTimer *timer;
 }
 
 -(id) init {
@@ -25,16 +28,31 @@
         [awsModel initRecorder];
         connectionModel = [ConnectionModel new];
         [connectionModel beginTracking];
+        timer = nil;
     }
     return self;
 }
 
 -(void) dealloc {
+    
+    if(self.sendingStatus != SendingStatusCached
+       && self.sendingStatus != SendingStatusCancelled
+       && self.sendingStatus != SendingStatusError
+       && self.sendingStatus != SendingStatusInited
+       && self.sendingStatus != SendingStatusIniting
+       && self.sendingStatus != SendingStatusSent
+       ) {
+        NSLog(@"Dealloc a sendVoiceMessageModel during %d state", (int)self.sendingStatus);
+    }
+    
     [connectionModel stopTracking];
+    connectionModel = nil;
 }
 
 -(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension {
     [recentContactsModel save:self.selectedPeppermintContact];
+    [self attachProcessToAppDelegate];
+    
 #warning "Busy wait, think to make it with a more smart way"
     if(self.sendingStatus == SendingStatusIniting) {
         while (self.sendingStatus != SendingStatusInited ) {
@@ -116,9 +134,20 @@ SUBSCRIBE(NetworkFailure) {
                          QUERY_COMPONENT_EMAIL,
                          self.peppermintMessageSender.email
                          ];
+    
+    urlPath = [NSString stringWithFormat:@"https://%@.com/%@/user?%@=%@&%@=%@",
+                         SCHEME_PEPPERMINT,
+                         HOST_FASTREPLY,
+                         QUERY_COMPONENT_NAMESURNAME,
+                         self.peppermintMessageSender.nameSurname,
+                         QUERY_COMPONENT_EMAIL,
+                         self.peppermintMessageSender.email
+                         ];
+    
     NSString* encodedUrlPath = [urlPath stringByAddingPercentEscapesUsingEncoding:
                             NSUTF8StringEncoding];
-    
+
+    /*
 #warning "Now using tinyUrl to compress the link. It should use an api on peppermint.com or Universal URL for this work"
     NSString *tinyUrlPath = [NSString stringWithFormat:@"https://tinyurl.com/api-create.php?url=%@", encodedUrlPath];
     NSURL *tinyUrl = [NSURL URLWithString:tinyUrlPath];
@@ -131,6 +160,9 @@ SUBSCRIBE(NetworkFailure) {
         encodedUrlPath = compressedLink;
         
     }
+    */
+    
+    
     return encodedUrlPath;
 }
 
@@ -140,4 +172,52 @@ SUBSCRIBE(NetworkFailure) {
     return [connectionModel isInternetReachable];
 }
 
+#pragma mark - Attachment with AppDelegate
+
+-(void) attachProcessToAppDelegate {
+    NSMutableArray *array = [AppDelegate Instance].mutableArray;
+    if(![array containsObject:self]) {
+        NSLog(@"Attached and timer started!!");
+        [array addObject:self];
+        if(timer) { [timer invalidate]; NSLog(@"invalidated a timer!!"); }
+        timer = [NSTimer scheduledTimerWithTimeInterval:TIMER_PERIOD target:self selector:@selector(detachProcessFromAppDelegate) userInfo:nil repeats:YES];
+        timer.tolerance = TIMER_PERIOD * 0.1;
+        
+    } else {
+        NSLog(@"Attach is called on a pre-attached item");
+    }
+}
+
+-(void) detachProcessFromAppDelegate {
+    NSLog(@"Check for detach!");
+    if(self.sendingStatus != SendingStatusStarting
+       && self.sendingStatus != SendingStatusUploading
+       && self.sendingStatus != SendingStatusSending
+       ) {
+        NSMutableArray *array = [AppDelegate Instance].mutableArray;
+        if([array containsObject:self]) {
+            [array removeObject:self];
+            NSLog(@"Detached!!");
+            [timer invalidate];
+            timer = nil;
+        } else {
+            NSLog(@"Detach is called on a non-attached item");
+        }
+    }
+}
+
+#pragma mark - Active SendVoiceMessageModel
+
++(SendVoiceMessageModel*) activeSendVoiceMessageModel {
+    SendVoiceMessageModel *sendVoiceMessageModel = nil;
+    NSMutableArray *array = [AppDelegate Instance].mutableArray;
+    for(SendVoiceMessageModel *item in array) {
+        if(!sendVoiceMessageModel
+           || sendVoiceMessageModel.sendingStatus > item.sendingStatus) {
+            sendVoiceMessageModel = item;
+        }
+    }
+    return sendVoiceMessageModel;
+}
+ 
 @end

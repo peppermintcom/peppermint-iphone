@@ -14,7 +14,7 @@
     [super awakeFromNib];
     [self.loginLabel setFont:[UIFont openSansSemiBoldFontOfSize:17]];
     self.backgroundColor = [UIColor whiteColor];
-    self.layer.cornerRadius = 15;
+    self.layer.cornerRadius = LOGIN_CORNER_RADIUS;
 }
 
 -(IBAction)buttonTouched:(id)sender {

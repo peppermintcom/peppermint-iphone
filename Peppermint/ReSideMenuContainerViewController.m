@@ -56,7 +56,11 @@
 -(void) initContactsViewControllerWithContactsModel:(ContactsModel*) contactsModel {    
     UINavigationController *navigationController = (UINavigationController*) self.contentViewController;
     ContactsViewController *contactsViewController = (ContactsViewController*) [navigationController.viewControllers objectAtIndex:0];
-    contactsViewController.contactsModel = contactsModel;
+    if(!contactsViewController.contactsModel) {
+        contactsViewController.contactsModel = contactsModel;
+    } else {
+        NSLog(@"Contacts model already exists");
+    }
     contactsViewController.contactsModel.delegate = contactsViewController;
 }
 

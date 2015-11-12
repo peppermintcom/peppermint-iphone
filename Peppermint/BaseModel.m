@@ -14,6 +14,7 @@
     self = [super init];
     if(self) {
         REGISTER();
+        NSLog(@"Created:%@", self.description);
     }
     return self;
 }

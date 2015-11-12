@@ -22,7 +22,6 @@
 		B108F8781BECB0BD00267DEC /* CachedEmailMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B108F8761BECB0BD00267DEC /* CachedEmailMessage.m */; };
 		B11F8A5C1BDCC45F000E79AA /* FinalizeUploadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5B1BDCC45F000E79AA /* FinalizeUploadRequest.m */; };
 		B11F8A5F1BDCC474000E79AA /* FinalizeUploadResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5E1BDCC474000E79AA /* FinalizeUploadResponse.m */; };
-		B1246D2A1BEB4AFE009A7873 /* InitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1246D291BEB4AFE009A7873 /* InitialViewController.m */; };
 		B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B12C03BA1BCFFC060085A55A /* FastRecordingView.m */; };
 		B12C03BD1BCFFC280085A55A /* FastRecordingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B12C03BC1BCFFC280085A55A /* FastRecordingView.xib */; };
 		B13B075A1BD3686500974AC3 /* MandrillInformationResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07591BD3686500974AC3 /* MandrillInformationResponse.m */; };
@@ -32,6 +31,8 @@
 		B13B07671BD3736400974AC3 /* MandrillMailAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07661BD3736400974AC3 /* MandrillMailAttachment.m */; };
 		B13B076A1BD3752900974AC3 /* MandrillRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07691BD3752900974AC3 /* MandrillRequest.m */; };
 		B13B076D1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B076C1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m */; };
+		B13B50261BF38D48009D3348 /* InformationTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B50251BF38D48009D3348 /* InformationTextTableViewCell.m */; };
+		B13B50281BF38D57009D3348 /* InformationTextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13B50271BF38D56009D3348 /* InformationTextTableViewCell.xib */; };
 		B15B15AC1BD9D8B800C0C171 /* ExplodingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15AB1BD9D8B800C0C171 /* ExplodingView.m */; };
 		B15B15B01BDA44E200C0C171 /* TPAACAudioConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15AF1BDA44E200C0C171 /* TPAACAudioConverter.m */; };
 		B15B15B21BDBBAB200C0C171 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B15B15B11BDBBAB200C0C171 /* Login.storyboard */; };
@@ -76,6 +77,7 @@
 		B190F5BC1BDD7F040094B391 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190F5BB1BDD7F040094B391 /* AudioToolbox.framework */; };
 		B1A366921BDC92DB00852B52 /* UploadsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A366911BDC92DB00852B52 /* UploadsRequest.m */; };
 		B1A366951BDC92FF00852B52 /* UploadsResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A366941BDC92FF00852B52 /* UploadsResponse.m */; };
+		B1A936651BF1F11000EE465B /* Peppermint.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = B1A936641BF1F0D000EE465B /* Peppermint.entitlements */; };
 		B1BB1E5F1BD35CD300A1CE45 /* MandrillService.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB1E5E1BD35CD300A1CE45 /* MandrillService.m */; };
 		B1BB1E631BD364FB00A1CE45 /* AFNetworkActivityLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB1E621BD364FB00A1CE45 /* AFNetworkActivityLogger.m */; };
 		B1BB2A531BE6AA2000A4BFB4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1BB2A521BE6AA2000A4BFB4 /* GoogleService-Info.plist */; };
@@ -143,8 +145,6 @@
 		B11F8A5B1BDCC45F000E79AA /* FinalizeUploadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinalizeUploadRequest.m; sourceTree = "<group>"; };
 		B11F8A5D1BDCC474000E79AA /* FinalizeUploadResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinalizeUploadResponse.h; sourceTree = "<group>"; };
 		B11F8A5E1BDCC474000E79AA /* FinalizeUploadResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinalizeUploadResponse.m; sourceTree = "<group>"; };
-		B1246D281BEB4AFE009A7873 /* InitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialViewController.h; sourceTree = "<group>"; };
-		B1246D291BEB4AFE009A7873 /* InitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialViewController.m; sourceTree = "<group>"; };
 		B12C03B91BCFFC060085A55A /* FastRecordingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastRecordingView.h; sourceTree = "<group>"; };
 		B12C03BA1BCFFC060085A55A /* FastRecordingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = FastRecordingView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B12C03BC1BCFFC280085A55A /* FastRecordingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FastRecordingView.xib; sourceTree = "<group>"; };
@@ -162,6 +162,9 @@
 		B13B07691BD3752900974AC3 /* MandrillRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MandrillRequest.m; sourceTree = "<group>"; };
 		B13B076B1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVoiceMessageMandrillModel.h; sourceTree = "<group>"; };
 		B13B076C1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SendVoiceMessageMandrillModel.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B13B50241BF38D48009D3348 /* InformationTextTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationTextTableViewCell.h; sourceTree = "<group>"; };
+		B13B50251BF38D48009D3348 /* InformationTextTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationTextTableViewCell.m; sourceTree = "<group>"; };
+		B13B50271BF38D56009D3348 /* InformationTextTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InformationTextTableViewCell.xib; sourceTree = "<group>"; };
 		B15228541BE898DF00C400C6 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		B15228561BE898F500C400C6 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		B15B15AA1BD9D8B800C0C171 /* ExplodingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExplodingView.h; sourceTree = "<group>"; };
@@ -244,6 +247,7 @@
 		B1A366911BDC92DB00852B52 /* UploadsRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadsRequest.m; sourceTree = "<group>"; };
 		B1A366931BDC92FF00852B52 /* UploadsResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadsResponse.h; sourceTree = "<group>"; };
 		B1A366941BDC92FF00852B52 /* UploadsResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadsResponse.m; sourceTree = "<group>"; };
+		B1A936641BF1F0D000EE465B /* Peppermint.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Peppermint.entitlements; sourceTree = "<group>"; };
 		B1BB1E5D1BD35CD300A1CE45 /* MandrillService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrillService.h; sourceTree = "<group>"; };
 		B1BB1E5E1BD35CD300A1CE45 /* MandrillService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MandrillService.m; sourceTree = "<group>"; };
 		B1BB1E611BD364FB00A1CE45 /* AFNetworkActivityLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityLogger.h; sourceTree = "<group>"; };
@@ -360,6 +364,16 @@
 				B12C03BC1BCFFC280085A55A /* FastRecordingView.xib */,
 			);
 			name = FastRecordingView;
+			sourceTree = "<group>";
+		};
+		B13B50231BF38D29009D3348 /* InformationTextTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				B13B50241BF38D48009D3348 /* InformationTextTableViewCell.h */,
+				B13B50251BF38D48009D3348 /* InformationTextTableViewCell.m */,
+				B13B50271BF38D56009D3348 /* InformationTextTableViewCell.xib */,
+			);
+			name = InformationTextTableViewCell;
 			sourceTree = "<group>";
 		};
 		B15B15A91BD9D8A100C0C171 /* ExplodingView */ = {
@@ -557,6 +571,7 @@
 		B17B3D2D1BB6898C009B8BC5 /* Peppermint */ = {
 			isa = PBXGroup;
 			children = (
+				B1A936641BF1F0D000EE465B /* Peppermint.entitlements */,
 				B17B3D711BB6C3CD009B8BC5 /* Addition */,
 				B17B3D541BB689D2009B8BC5 /* App */,
 				B165EF0F1BB71A31008C6F71 /* Model */,
@@ -626,6 +641,7 @@
 		B17B3D6A1BB6BCEC009B8BC5 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				B13B50231BF38D29009D3348 /* InformationTextTableViewCell */,
 				B102F9831BF0CEE900EDF7E6 /* LoginValidateEmailTableViewCell */,
 				B16DA21D1BE10A5F00EBF043 /* SlideMenuTableViewCell */,
 				B1C83A161BDEB0C300EB14C2 /* LoginTextFieldTableViewCell */,
@@ -717,8 +733,6 @@
 			children = (
 				B16DA2111BE0F1CA00EBF043 /* Base */,
 				B16DA2101BE0F1BE00EBF043 /* Login */,
-				B1246D281BEB4AFE009A7873 /* InitialViewController.h */,
-				B1246D291BEB4AFE009A7873 /* InitialViewController.m */,
 				B1EF40FA1BB8786500042E4B /* TutorialViewController.h */,
 				B1EF40FB1BB8786500042E4B /* TutorialViewController.m */,
 				B17B3D5C1BB6A504009B8BC5 /* ContactsViewController.h */,
@@ -867,6 +881,11 @@
 					B17B3D2A1BB6898C009B8BC5 = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = 8V9FEAB5WD;
+						SystemCapabilities = {
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
+						};
 					};
 					B17B3D431BB6898C009B8BC5 = {
 						CreatedOnToolsVersion = 6.4;
@@ -903,12 +922,14 @@
 				B17B3D571BB68A39009B8BC5 /* Text.strings in Resources */,
 				B17206D91BE4E1450021D855 /* begin_record.mp3 in Resources */,
 				B179F83C1BC931820089D709 /* SearchMenuTableViewCell.xib in Resources */,
+				B1A936651BF1F11000EE465B /* Peppermint.entitlements in Resources */,
 				B102F9881BF0CF1500EDF7E6 /* LoginValidateEmailTableViewCell.xib in Resources */,
 				B165EF1F1BB72254008C6F71 /* EmptyResultTableViewCell.xib in Resources */,
 				B12C03BD1BCFFC280085A55A /* FastRecordingView.xib in Resources */,
 				B17B3D3F1BB6898C009B8BC5 /* LaunchScreen.xib in Resources */,
 				B17B3D701BB6BD2E009B8BC5 /* ContactTableViewCell.xib in Resources */,
 				B16DA2221BE10A8B00EBF043 /* SlideMenuTableViewCell.xib in Resources */,
+				B13B50281BF38D57009D3348 /* InformationTextTableViewCell.xib in Resources */,
 				B1BB60171BDE0E3200C1140B /* LoginTableViewCell.xib in Resources */,
 				B17B3D3C1BB6898C009B8BC5 /* Images.xcassets in Resources */,
 				B15B15B21BDBBAB200C0C171 /* Login.storyboard in Resources */,
@@ -996,6 +1017,7 @@
 				B1BB605F1BDE36AF00C1140B /* LoginWithEmailViewController.m in Sources */,
 				B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */,
 				B17B3D5B1BB6A49E009B8BC5 /* BaseViewController.m in Sources */,
+				B13B50261BF38D48009D3348 /* InformationTextTableViewCell.m in Sources */,
 				B17206DC1BE4E2D40021D855 /* PlayingModel.m in Sources */,
 				B1714CC81BE11EE6004F13A4 /* ReSideMenuContainerViewController.m in Sources */,
 				B190F5BA1BDD63400094B391 /* SendVoiceMessageSMSModel.m in Sources */,
@@ -1048,7 +1070,6 @@
 				B17933151BE0C19C0016F158 /* LoginModel.m in Sources */,
 				B100A54A1BEDD6F800EEB573 /* CacheModel.m in Sources */,
 				B1EF40F21BB8579D00042E4B /* M13ProgressView.m in Sources */,
-				B1246D2A1BEB4AFE009A7873 /* InitialViewController.m in Sources */,
 				B1BB601D1BDE16D400C1140B /* UIStoryboard_Addition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1177,6 +1198,7 @@
 			baseConfigurationReference = A3AC8DCFCC2ADAD1159483F0 /* Pods-Peppermint.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Peppermint/Peppermint.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
@@ -1186,9 +1208,9 @@
 				);
 				GCC_PREFIX_HEADER = Peppermint/PrefixHeader.pch;
 				INFOPLIST_FILE = Peppermint/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ppm.peppermint;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1199,8 +1221,9 @@
 			baseConfigurationReference = C388433C48F87557ED2F3C2D /* Pods-Peppermint.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = Peppermint/Peppermint.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1208,9 +1231,9 @@
 				);
 				GCC_PREFIX_HEADER = Peppermint/PrefixHeader.pch;
 				INFOPLIST_FILE = Peppermint/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ppm.peppermint;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

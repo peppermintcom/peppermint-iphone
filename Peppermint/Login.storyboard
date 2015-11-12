@@ -176,6 +176,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="doneButton" destination="X8L-Ph-XdZ" id="AtN-b4-cuW"/>
                         <outlet property="doneLabel" destination="Ahn-gk-Hqg" id="YgA-DC-SdU"/>
                         <outlet property="tableView" destination="kLE-J5-PmJ" id="591-aL-XsH"/>
                         <segue destination="B1M-ov-reU" kind="show" identifier="LoginValidateEmailSegue" id="KSQ-92-Bv0"/>

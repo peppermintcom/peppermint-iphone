@@ -14,5 +14,12 @@
 
 @interface LoginTextFieldTableViewCell : BaseTableViewCell <UITextFieldDelegate>
 @property (weak, nonatomic) id<LoginTextFieldTableViewCellDelegate> delegate;
+@property (weak, nonatomic) IBOutlet UIView *coverView;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLabelWidthConstraint;
+
+-(void) setTitles:(NSArray*) array;
+-(void) setValid:(BOOL) isValid;
+
 @end

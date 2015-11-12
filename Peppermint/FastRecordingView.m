@@ -53,6 +53,15 @@ typedef enum : NSUInteger {
     fastRecordingViewStatus = FastRecordingViewStatusInit;
 }
 
+-(void) activeOnScreen {
+    self.sendVoiceMessageModel = [SendVoiceMessageModel activeSendVoiceMessageModel];
+    if(self.sendVoiceMessageModel) {
+        self.sendVoiceMessageModel.delegate = self;
+#warning "Cancel option değeri tartışılacak!"
+        [self messageStatusIsUpdated:self.sendVoiceMessageModel.sendingStatus withCancelOption:YES];
+    }
+}
+
 /*
 -(void) initBlurView {
     self.backgroundColor = [UIColor clearColor];

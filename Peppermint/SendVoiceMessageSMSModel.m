@@ -39,6 +39,7 @@
 #pragma mark - AWSModelDelegate
 
 -(void) fileUploadCompletedWithPublicUrl:(NSString*) url {
+    [super fileUploadCompletedWithPublicUrl:url];
     if(![self isCancelled]) {
         [self fireSMSMessageWithUrl:url];
     } else {
@@ -63,7 +64,7 @@
 #pragma mark - MFMessageComposeViewControllerDelegate
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
-    [controller dismissViewControllerAnimated:YES completion:nil];    
+    [controller dismissViewControllerAnimated:YES completion:nil];
     switch (result) {
         case MessageComposeResultSent:
             self.sendingStatus = SendingStatusSent;

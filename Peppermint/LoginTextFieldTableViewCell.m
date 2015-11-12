@@ -8,15 +8,33 @@
 
 #import "LoginTextFieldTableViewCell.h"
 
-@implementation LoginTextFieldTableViewCell
+#define TITLE_LABEL_WIDTH   60
+
+@implementation LoginTextFieldTableViewCell {
+    NSArray *titlesArray;
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    self.layer.cornerRadius = 5;
-    self.textField.font = [UIFont openSansSemiBoldFontOfSize:12];
+    
+    self.backgroundColor = [UIColor clearColor];
+    self.layer.shadowOffset = CGSizeMake(0, 3);
+    self.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.layer.shadowOpacity = 0.1;
+    self.layer.shadowRadius = 1;
+    
+    self.coverView.backgroundColor = [UIColor whiteColor];
+    self.coverView.layer.cornerRadius = LOGIN_CORNER_RADIUS;
+    
+    self.textField.font = [UIFont openSansSemiBoldFontOfSize:16];
     self.textField.textColor = [UIColor blackColor];
     self.textField.tintColor = [UIColor textFieldTintGreen];
     self.textField.delegate = self;
+    
+    titlesArray = nil;
+    self.titleLabel.font = [UIFont openSansSemiBoldFontOfSize:16];
+    self.titleLabel.textColor = [UIColor viaInformationLabelTextGreen];
+    self.titleLabelWidthConstraint.constant = 0;
 }
 
 #pragma mark - UITextFieldDelegate
@@ -32,6 +50,33 @@
     self.textField.text = @"";
     [self.delegate updatedTextFor:self atIndexPath:self.indexPath];
     return NO;
+}
+
+-(IBAction)titleButtonPressed:(id)sender {
+    NSUInteger index =  [titlesArray indexOfObject:self.titleLabel.text];
+    NSUInteger nextIndex = ++index % titlesArray.count;
+    self.titleLabel.text = [titlesArray objectAtIndex:nextIndex];
+}
+
+-(void) setTitles:(NSArray*) array {
+    titlesArray = array;
+    if(titlesArray.count > 0) {
+        self.titleLabelWidthConstraint.constant = TITLE_LABEL_WIDTH;
+        self.titleLabel.text = [titlesArray objectAtIndex:0];
+    } else {
+        self.titleLabelWidthConstraint.constant = 0;
+    }
+}
+
+-(void) setValid:(BOOL) isValid {
+    if(isValid) {
+        self.coverView.layer.borderWidth = 0;
+        self.textField.textColor = [UIColor blackColor];
+    } else {
+        self.coverView.layer.borderWidth = 3;
+        self.coverView.layer.borderColor = [UIColor warningColor].CGColor;
+        self.textField.textColor = [UIColor warningColor];
+    }
 }
 
 @end

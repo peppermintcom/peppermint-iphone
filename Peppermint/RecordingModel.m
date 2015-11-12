@@ -71,7 +71,6 @@
 
 -(void) initRecordFile {
     self.fileUrl = [self recordFileUrl];
-    NSLog(@"File Url is %@", self.fileUrl);
 }
 
 -(void) initRecorder {
@@ -173,7 +172,7 @@
 
 -(void)onTick:(NSTimer *)timer {
     CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
-    NSLog(@"ticTac recorder:%f, previous:%f", recorder.currentTime, previousFileLength);
+    //NSLog(@"ticTac recorder:%f, previous:%f", recorder.currentTime, previousFileLength);
     [self.delegate timerUpdated:recorder.currentTime + previousFileLength];
 }
 

@@ -25,6 +25,8 @@
 @property (strong, nonatomic) NSMutableArray *contactList;
 @property (strong, nonatomic) NSString *filterText;
 
++ (instancetype) sharedInstance;
+
 -(void) setup;
 -(void) refreshContactList;
 

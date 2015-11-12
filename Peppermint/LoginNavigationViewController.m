@@ -48,15 +48,19 @@
 }
 
 -(void) loginSucceed {
-    [self dismissViewControllerAnimated:YES completion:^{
-        PeppermintMessageSender *peppermintMessageSender = self.loginModel.peppermintMessageSender;
-        [self.loginDelegate loginSucceedWithMessageSender:peppermintMessageSender];
-    }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self loginFinishedLoading];
+            PeppermintMessageSender *peppermintMessageSender = self.loginModel.peppermintMessageSender;
+            [self.loginDelegate loginSucceedWithMessageSender:peppermintMessageSender];
+        }];
+    });
 }
 
 #pragma mark - BaseModelDelegate
 
 -(void) operationFailure:(NSError*) error {
+    [self loginFinishedLoading];
     NSString *title = LOC(@"An error occured", @"Error Title Message");
     NSString *message = error.description;
     NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");

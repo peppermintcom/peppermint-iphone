@@ -35,7 +35,6 @@
 
 - (void)signInWillDispatch:(GIDSignIn *)signIn error:(NSError *)error {
     NSLog(@"signInWillDispatch:__");
-    [self.delegate loginFinishedLoading];
 }
 
 - (void)signIn:(GIDSignIn *)signIn presentViewController:(UIViewController *)viewController {
@@ -51,12 +50,14 @@
 - (void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error {
     if(error) {
         if(error.code == -5) {
+            [self.delegate loginFinishedLoading];
             NSLog(@"The user cancelled the login process");
         } else {
             [self.delegate operationFailure:error];
         }
     } else {
         self.peppermintMessageSender.loginSource = LOGINSOURCE_GOOGLE;
+        self.peppermintMessageSender.password = @"***";
         if(user.profile.name) {
             self.peppermintMessageSender.nameSurname = user.profile.name;
         }
@@ -67,7 +68,6 @@
         self.peppermintMessageSender.imageData = [NSData dataWithContentsOfURL:imageUrl];
         if([self.peppermintMessageSender isValid]) {
             [self.peppermintMessageSender save];
-            [self.delegate loginFinishedLoading];
             [self.delegate loginSucceed];
         }
         [signIn signOut];
@@ -83,14 +83,15 @@
     [login logInWithReadPermissions: @[@"public_profile",@"email"]
      fromViewController:self.delegate
      handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-         [self.delegate loginFinishedLoading];
          if (error) {
              NSLog(@"Process error");
              [self.delegate operationFailure:error];
          } else if (result.isCancelled) {
              NSLog(@"Cancelled");
+             [self.delegate loginFinishedLoading];
          } else {
              if ([FBSDKAccessToken currentAccessToken]) {
+                 [self.delegate loginLoading];
                  [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields": @"name, email, picture"}]
                   startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
                       if(error) {
@@ -98,6 +99,7 @@
                       } else {
                           NSDictionary *infoDictionary = (NSDictionary*)result;
                           self.peppermintMessageSender.loginSource = LOGINSOURCE_FACEBOOK;
+                          self.peppermintMessageSender.password = @"***";
                           if([infoDictionary.allKeys containsObject:@"name"]) {
                               self.peppermintMessageSender.nameSurname = [result valueForKey:@"name"];
                           }

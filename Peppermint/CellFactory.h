@@ -14,6 +14,7 @@
 #import "LoginTextFieldTableViewCell.h"
 #import "SlideMenuTableViewCell.h"
 #import "LoginValidateEmailTableViewCell.h"
+#import "InformationTextTableViewCell.h"
 
 @interface CellFactory : NSObject
 
@@ -37,5 +38,8 @@
 
 #define CELL_HEIGHT_VALIDATE_EMAIL_TABLEVIEWCELL 300
 +(LoginValidateEmailTableViewCell*) cellLoginValidateEmailTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath withDelegate:(id<LoginValidateEmailTableViewCellDelegate>) delegate;
+
+#define CELL_HEIGHT_INFORMATION_TABLEVIEWCELL    28
++(InformationTextTableViewCell*) cellInformationTextTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath;
 
 @end

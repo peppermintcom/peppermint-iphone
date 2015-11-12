@@ -15,15 +15,8 @@
 }
 
 -(void) sendVoiceMessageWithData:(NSData *)data withExtension:(NSString *)extension  {
-    [super sendVoiceMessageWithData:data withExtension:extension];
-    
-#warning "Try nicer method to delay dealloc ing model objects when processing a message"
-    if(![AppDelegate Instance].mutableArray) {
-        [AppDelegate Instance].mutableArray = [NSMutableArray new];
-    }
-    
+    [super sendVoiceMessageWithData:data withExtension:extension];    
     if([self isConnectionActive]) {
-        [[AppDelegate Instance].mutableArray addObject:self];
         _data = data;
         _extension = extension;
         self.sendingStatus = SendingStatusUploading;
@@ -40,7 +33,7 @@
 #pragma mark - AWSModelDelegate
 
 -(void) fileUploadCompletedWithPublicUrl:(NSString*) url {
-    NSLog(@"File Upload is finished with url %@", url);
+    [super fileUploadCompletedWithPublicUrl:url];
     if(![self isCancelled]) {
         self.sendingStatus = SendingStatusSending;
         [self.delegate messageStatusIsUpdated:SendingStatusSending withCancelOption:YES];
@@ -95,7 +88,6 @@
     } else {
         self.sendingStatus = SendingStatusCancelled;
     }
-    [[AppDelegate Instance].mutableArray removeObject:self];
 }
 
 SUBSCRIBE(MandrillMesssageSent) {

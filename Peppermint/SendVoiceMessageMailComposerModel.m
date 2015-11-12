@@ -27,7 +27,6 @@
             NSString *mimeType = [self typeForExtension:extension];
             [controller addAttachmentData:data mimeType:mimeType fileName:fileName];
         } complete:^(MFMailComposeViewController *controller, MFMailComposeResult result, NSError *error) {
-            
             if(error) {
                 [controller dismissViewControllerAnimated:YES completion:nil];
                 self.sendingStatus = SendingStatusError;
