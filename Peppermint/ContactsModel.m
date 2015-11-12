@@ -86,7 +86,15 @@
                                     [NSSortDescriptor sortDescriptorWithKey:@"lastName" ascending:YES]];
     addressBook.filterBlock = ^BOOL(APContact *contact)
     {
-        BOOL containsText = [contact.compositeName rangeOfString:self.filterText options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch].length > 0;
+        NSMutableString *searchString = [NSMutableString stringWithFormat:@"%@", contact.compositeName];
+        for(NSString *phone in contact.phones) {
+            [searchString appendFormat:@";%@", phone];
+        }
+        for(NSString *email in contact.emails) {
+            [searchString appendFormat:@";%@", email];
+        }
+        
+        BOOL containsText = [searchString rangeOfString:self.filterText options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch].length > 0;
         
         return
         (contact.phones.count > 0 || contact.emails.count > 0)
