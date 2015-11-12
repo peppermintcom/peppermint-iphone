@@ -33,6 +33,7 @@ typedef enum : NSUInteger {
 @protocol SendVoiceMessageDelegate <BaseModelDelegate>
 @required
 -(void) messageStatusIsUpdated:(SendingStatus) sendingStatus withCancelOption:(BOOL) cancelable;
+-(void) newRecentContactisSaved;
 @end
 
 @interface SendVoiceMessageModel : BaseModel <RecentContactsModelDelegate, AWSModelDelegate> {

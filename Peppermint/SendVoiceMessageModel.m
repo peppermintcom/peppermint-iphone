@@ -64,7 +64,7 @@
 #pragma mark - RecentContactsModelDelegate
 
 -(void) recentPeppermintContactSavedSucessfully:(PeppermintContact*) recentContact {
-    //Contact is saved...
+    [self.delegate newRecentContactisSaved];
 }
 
 -(void) operationFailure:(NSError*) error {

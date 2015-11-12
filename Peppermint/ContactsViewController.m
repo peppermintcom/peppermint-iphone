@@ -334,6 +334,10 @@
     self.reSideMenuContainerViewController.panGestureEnabled = YES;
 }
 
+-(void) newRecentContactisSaved {
+    [self cellSelectedWithTag:CELL_TAG_RECENT_CONTACTS];
+}
+
 -(void) messageStatusIsUpdated:(SendingStatus)sendingStatus withCancelOption:(BOOL)cancelable {
     self.cancelMessageSendingButton.hidden = !cancelable;
     NSMutableAttributedString *infoAttrText = [NSMutableAttributedString new];
@@ -366,7 +370,6 @@
         infoAttrText = [self addText:LOC(@"Cached", @"Info") ofSize:19 ofColor:textColor toAttributedText:infoAttrText];
         [self messageSendingIndicatorSetMessageIsSent];
     }
-    
     
     if(cancelable) {
         infoAttrText = [self addText:LOC(@"Tap to cancel", @"Info") ofSize:13

@@ -223,6 +223,10 @@ typedef enum : NSUInteger {
 
 #pragma mark - SendVoiceMessage Delegate
 
+-(void) newRecentContactisSaved {
+    [self.delegate newRecentContactisSaved];
+}
+
 -(void) messageStatusIsUpdated:(SendingStatus) sendingStatus withCancelOption:(BOOL) cancelable {
     [self.delegate messageStatusIsUpdated:sendingStatus withCancelOption:cancelable];
 }
