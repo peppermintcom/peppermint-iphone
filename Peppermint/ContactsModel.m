@@ -97,7 +97,7 @@
         BOOL containsText = [searchString rangeOfString:self.filterText options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch].length > 0;
         
         return
-        (contact.phones.count > 0 ||
+        (//contact.phones.count > 0 ||
          contact.emails.count > 0)
         && ( self.filterText.length == 0 || containsText);
     };
@@ -128,7 +128,7 @@
                      NSString *nameSurname = contact.compositeName;
                      if(!nameSurname) {
                          NSMutableArray *communicationChannels = [NSMutableArray new];
-                         [communicationChannels addObjectsFromArray:contact.phones];
+                         //[communicationChannels addObjectsFromArray:contact.phones];
                          [communicationChannels addObjectsFromArray:contact.emails];
                          for (NSString *communicationChannel in communicationChannels) {
                              nameSurname = communicationChannel;
@@ -150,6 +150,7 @@
                                  [peppermintContactsArray addObject:peppermintContact];
                              }
                          }
+                         /*
                          for(NSString *phone in contact.phones) {
                              NSString *key = [NSString stringWithFormat:@"%@,%@", nameSurname, phone];
                              if([uniqueSet containsObject:key]) {
@@ -164,6 +165,7 @@
                              peppermintContact.avatarImage = contact.thumbnail;
                              [peppermintContactsArray addObject:peppermintContact];
                          }
+                         */
                      }
                  }
                  

@@ -578,10 +578,8 @@
     emailContactsMenuItem.font    = [UIFont openSansSemiBoldFontOfSize:emailContactsMenuItem.font.pointSize];
     smsContactsMenuItem.font    = [UIFont openSansSemiBoldFontOfSize:smsContactsMenuItem.font.pointSize];
     
-    self.searchMenu = [[REMenu alloc] initWithItems:@[allContactsMenuItem,
-                                                      recentContactsMenuItem,
-                                                      emailContactsMenuItem,
-                                                      smsContactsMenuItem]];
+    //self.searchMenu = [[REMenu alloc] initWithItems:@[allContactsMenuItem, recentContactsMenuItem, emailContactsMenuItem, smsContactsMenuItem]];
+    self.searchMenu = [[REMenu alloc] initWithItems:@[allContactsMenuItem, recentContactsMenuItem]];
     
     self.searchMenu.bounce = NO;
     self.searchMenu.cornerRadius = 5;
