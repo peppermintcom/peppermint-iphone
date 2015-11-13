@@ -241,11 +241,7 @@
 }
 
 -(void) validateDoneButton {
-    self.doneLabel.enabled = self.doneButton.enabled =
-    isValidNameSurnameEmptyValidation
-    &&isValidEmailEmptyValidation
-    &&isValidEmailFormatValidation
-    &&isValidPasswordEmptyValidation;
+    self.doneLabel.enabled = self.doneButton.enabled = self.loginModel.peppermintMessageSender.isValid;
 }
 
 #pragma mark - Navigation

@@ -134,7 +134,7 @@ SUBSCRIBE(NetworkFailure) {
                          QUERY_COMPONENT_EMAIL,
                          self.peppermintMessageSender.email
                          ];
-    
+    /*
     urlPath = [NSString stringWithFormat:@"https://%@.com/%@/user?%@=%@&%@=%@",
                          SCHEME_PEPPERMINT,
                          HOST_FASTREPLY,
@@ -143,6 +143,7 @@ SUBSCRIBE(NetworkFailure) {
                          QUERY_COMPONENT_EMAIL,
                          self.peppermintMessageSender.email
                          ];
+    */
     
     NSString* encodedUrlPath = [urlPath stringByAddingPercentEscapesUsingEncoding:
                             NSUTF8StringEncoding];
@@ -161,7 +162,6 @@ SUBSCRIBE(NetworkFailure) {
         
     }
     */
-    
     
     return encodedUrlPath;
 }
@@ -190,19 +190,28 @@ SUBSCRIBE(NetworkFailure) {
 
 -(void) detachProcessFromAppDelegate {
     NSLog(@"Check for detach!");
-    if(self.sendingStatus != SendingStatusStarting
-       && self.sendingStatus != SendingStatusUploading
-       && self.sendingStatus != SendingStatusSending
+    if(self.sendingStatus == SendingStatusError
+       || self.sendingStatus == SendingStatusCancelled
+       || self.sendingStatus == SendingStatusIniting
+       || self.sendingStatus == SendingStatusInited
+       || self.sendingStatus == SendingStatusCached
+       || self.sendingStatus == SendingStatusSent
        ) {
-        NSMutableArray *array = [AppDelegate Instance].mutableArray;
-        if([array containsObject:self]) {
-            [array removeObject:self];
-            NSLog(@"Detached!!");
-            [timer invalidate];
-            timer = nil;
-        } else {
-            NSLog(@"Detach is called on a non-attached item");
-        }
+        [timer invalidate];
+        timer = nil;
+        NSLog(@"trigger detach");
+        [self performSelector:@selector(performDetach) withObject:nil afterDelay:TIMER_PERIOD*2];
+    }
+    
+}
+
+-(void) performDetach {
+    NSMutableArray *array = [AppDelegate Instance].mutableArray;
+    if([array containsObject:self]) {
+        [array removeObject:self];
+        NSLog(@"Detached!!");
+    } else {
+        NSLog(@"Detach is called on a non-attached item");
     }
 }
 

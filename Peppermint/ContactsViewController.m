@@ -434,7 +434,7 @@
 }
 
 -(void) messageSendingIndicatorSetMessageIsSent {
-    [self performSelector:@selector(setVisibilityOfSendingInfo:) withObject:[NSNumber numberWithBool:NO] afterDelay:MESSAGE_SENDING_DURATION];
+    [self performSelector:@selector(messageSendingIsCancelled) withObject:nil afterDelay:MESSAGE_SENDING_DURATION];
 }
 
 -(void) messageSendingIsCancelled {

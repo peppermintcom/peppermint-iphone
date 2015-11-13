@@ -97,7 +97,8 @@
         BOOL containsText = [searchString rangeOfString:self.filterText options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch].length > 0;
         
         return
-        (contact.phones.count > 0 || contact.emails.count > 0)
+        (contact.phones.count > 0 ||
+         contact.emails.count > 0)
         && ( self.filterText.length == 0 || containsText);
     };
     [self refreshContactList];
