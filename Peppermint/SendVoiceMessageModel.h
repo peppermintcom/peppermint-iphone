@@ -19,10 +19,8 @@
 typedef enum : NSUInteger {
     SendingStatusError = 0,
     SendingStatusCancelled = 1,
-    
     SendingStatusIniting = 2,
     SendingStatusInited = 3,
-    
     SendingStatusStarting = 4,
     SendingStatusCached = 5,
     SendingStatusUploading = 6,

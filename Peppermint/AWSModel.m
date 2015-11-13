@@ -86,4 +86,8 @@ SUBSCRIBE(FileUploadFinalized) {
     }
 }
 
+SUBSCRIBE(NetworkFailure) {
+    [self.delegate operationFailure:[event error]];
+}
+
 @end

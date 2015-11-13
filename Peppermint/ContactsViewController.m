@@ -360,7 +360,7 @@
     }  else if (sendingStatus == SendingStatusSent) {
         isNewRecordAvailable = YES;
         cancelable = NO;
-        infoAttrText = [self addTick:infoAttrText ofSize:21];
+        infoAttrText = [self addImageNamed:@"icon_tick" toAttrText:infoAttrText ofSize:21];
         infoAttrText = [self addText:LOC(@"Sent", @"Info") ofSize:21 ofColor:textColor toAttributedText:infoAttrText];
         [self messageSendingIndicatorSetMessageIsSent];
     }  else if (sendingStatus == SendingStatusCancelled) {
@@ -370,6 +370,12 @@
     } else if (sendingStatus == SendingStatusCached) {
         isNewRecordAvailable = YES;
         infoAttrText = [self addText:LOC(@"Cached", @"Info") ofSize:19 ofColor:textColor toAttributedText:infoAttrText];
+        [self messageSendingIndicatorSetMessageIsSent];
+    } else if (sendingStatus == SendingStatusError) {
+        isNewRecordAvailable = YES;
+        infoAttrText = [self addImageNamed:@"icon_warning" toAttrText:infoAttrText ofSize:13];
+        infoAttrText = [self addText:@" " ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
+        infoAttrText = [self addText:LOC(@"An error occured", @"Info") ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
         [self messageSendingIndicatorSetMessageIsSent];
     }
     
@@ -387,9 +393,9 @@
     return attrText;
 }
 
--(NSMutableAttributedString*) addTick:(NSMutableAttributedString*) attrText ofSize:(NSInteger) size {
+-(NSMutableAttributedString*) addImageNamed:(NSString*) imageName toAttrText:(NSMutableAttributedString*) attrText ofSize:(NSInteger) size {
     NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
-    attachment.image = [UIImage imageNamed:@"icon_tick"];
+    attachment.image = [UIImage imageNamed:imageName];
     attachment.bounds = CGRectMake(0, 0, size, size);
     NSAttributedString *tickAttachment = [NSAttributedString attributedStringWithAttachment:attachment];
     [attrText appendAttributedString:tickAttachment];

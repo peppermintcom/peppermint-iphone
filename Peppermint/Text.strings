@@ -79,7 +79,7 @@
 "Validate Information Format" = "Please verify your email\nto start using Peppermint.\n\nVerification link has\nbeen sent to %@";
 "Resend Verification" = "Resend Verification";
 "Register" = "Register";
-"Register Information Missing" = "Register information you supplied is not correct. Please supply valid information and try again.";
+"Register Information Missing" = "Please complete all fields";
 "Password" = "Password";
 "Verification Mail Sent" = "Peppermint just sent you a verification email. Please check your email inbox!";
 "This field is mandatory" = "This field is mandatory";

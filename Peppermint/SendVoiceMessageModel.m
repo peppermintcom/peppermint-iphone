@@ -61,18 +61,22 @@
     }
 }
 
+#pragma mark - BaseModelDelegate
+
+-(void) operationFailure:(NSError*) error {
+    self.sendingStatus = SendingStatusError;
+    [self.delegate messageStatusIsUpdated:self.sendingStatus withCancelOption:NO];
+    [self.delegate operationFailure:error];
+}
+
 #pragma mark - RecentContactsModelDelegate
 
 -(void) recentPeppermintContactSavedSucessfully:(PeppermintContact*) recentContact {
     [self.delegate newRecentContactisSaved];
 }
 
--(void) operationFailure:(NSError*) error {
-    self.sendingStatus = SendingStatusError;
-    [self.delegate operationFailure:error];
-}
-
 #pragma mark - AWSModelDelegate
+
 -(void) recorderInitIsSuccessful {
     self.sendingStatus = SendingStatusInited;
 }
@@ -93,11 +97,6 @@
         NSAssert(false, @"MIME Type could not be read!");
     }
     return type;
-}
-
-SUBSCRIBE(NetworkFailure) {
-    self.sendingStatus = SendingStatusError;
-    [self.delegate operationFailure:[event error]];
 }
 
 -(BOOL) isServiceAvailable {
