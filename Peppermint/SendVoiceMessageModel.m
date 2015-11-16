@@ -125,16 +125,9 @@
 }
 
 -(NSString*) fastReplyUrlForSender {
-    NSString *urlPath = [NSString stringWithFormat:@"%@://%@?%@=%@&%@=%@",
-                         SCHEME_PEPPERMINT,
-                         HOST_FASTREPLY,
-                         QUERY_COMPONENT_NAMESURNAME,
-                         self.peppermintMessageSender.nameSurname,
-                         QUERY_COMPONENT_EMAIL,
-                         self.peppermintMessageSender.email
-                         ];
     /*
-    urlPath = [NSString stringWithFormat:@"https://%@.com/%@/user?%@=%@&%@=%@",
+     //Scheme Link
+    NSString *urlPath = [NSString stringWithFormat:@"%@://%@?%@=%@&%@=%@",
                          SCHEME_PEPPERMINT,
                          HOST_FASTREPLY,
                          QUERY_COMPONENT_NAMESURNAME,
@@ -144,23 +137,19 @@
                          ];
     */
     
+    //Universal Link
+    NSString *urlPath = [NSString stringWithFormat:@"https://%@.com/%@/user?%@=%@&%@=%@",
+                         SCHEME_PEPPERMINT,
+                         HOST_FASTREPLY,
+                         QUERY_COMPONENT_NAMESURNAME,
+                         self.peppermintMessageSender.nameSurname,
+                         QUERY_COMPONENT_EMAIL,
+                         self.peppermintMessageSender.email
+                         ];
+    
+    
     NSString* encodedUrlPath = [urlPath stringByAddingPercentEscapesUsingEncoding:
                             NSUTF8StringEncoding];
-
-    /*
-#warning "Now using tinyUrl to compress the link. It should use an api on peppermint.com or Universal URL for this work"
-    NSString *tinyUrlPath = [NSString stringWithFormat:@"https://tinyurl.com/api-create.php?url=%@", encodedUrlPath];
-    NSURL *tinyUrl = [NSURL URLWithString:tinyUrlPath];
-    NSError *error;
-    NSString *compressedLink = [NSString stringWithContentsOfURL:tinyUrl encoding:NSUTF8StringEncoding error:&error];
-    if(error) {
-        encodedUrlPath = @"http://www.peppermint.com";
-        [self.delegate operationFailure:error];
-    } else {
-        encodedUrlPath = compressedLink;
-        
-    }
-    */
     
     return encodedUrlPath;
 }

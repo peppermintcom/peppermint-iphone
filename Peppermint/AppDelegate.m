@@ -140,11 +140,13 @@
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
     if ([NSUserActivityTypeBrowsingWeb isEqualToString: userActivity.activityType]) {
-        if(![self handleOpenURL:userActivity.webpageURL sourceApplication:nil annotation:nil]) {
+        return  [self handleOpenURL:userActivity.webpageURL sourceApplication:nil annotation:nil];
+        /*
+        if(!) {
             [[UIApplication sharedApplication] openURL:userActivity.webpageURL];
-        }
+        }*/
     }
-    return NO;
+    return YES;
 }
 
 -(BOOL) handleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {

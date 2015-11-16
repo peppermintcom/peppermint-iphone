@@ -40,10 +40,17 @@
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    NSString* text = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    self.textField.text = text;
-    [self.delegate updatedTextFor:self atIndexPath:self.indexPath];
-    return NO;
+    BOOL result = NO;
+    if( range.location < textField.text.length - 1 ) {
+        [self.delegate updatedTextFor:self atIndexPath:self.indexPath];
+        result = YES;
+    } else {
+        NSString* text = [textField.text stringByReplacingCharactersInRange:range withString:string];
+        self.textField.text = text;
+        [self.delegate updatedTextFor:self atIndexPath:self.indexPath];
+        result = NO;
+    }
+    return result;
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
