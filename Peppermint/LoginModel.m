@@ -10,13 +10,14 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
-
-@implementation LoginModel
+@implementation LoginModel {
+    AccountModel *accountModel;
+}
 
 -(id) init {
     self = [super init];
     if(self) {
-        self.peppermintMessageSender = [PeppermintMessageSender savedSender];
+        self.peppermintMessageSender = [PeppermintMessageSender sharedInstance];
     }
     return self;
 }
@@ -49,15 +50,14 @@
 
 - (void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error {
     if(error) {
+        [self.delegate loginFinishedLoading];
         if(error.code == -5) {
-            [self.delegate loginFinishedLoading];
             NSLog(@"The user cancelled the login process");
         } else {
             [self.delegate operationFailure:error];
         }
     } else {
         self.peppermintMessageSender.loginSource = LOGINSOURCE_GOOGLE;
-        self.peppermintMessageSender.password = @"***";
         if(user.profile.name) {
             self.peppermintMessageSender.nameSurname = user.profile.name;
         }
@@ -95,11 +95,11 @@
                  [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields": @"name, email, picture"}]
                   startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
                       if(error) {
+                          [self.delegate loginFinishedLoading];
                           [self.delegate operationFailure:error];
                       } else {
                           NSDictionary *infoDictionary = (NSDictionary*)result;
                           self.peppermintMessageSender.loginSource = LOGINSOURCE_FACEBOOK;
-                          self.peppermintMessageSender.password = @"***";
                           if([infoDictionary.allKeys containsObject:@"name"]) {
                               self.peppermintMessageSender.nameSurname = [result valueForKey:@"name"];
                           }
@@ -117,6 +117,7 @@
                               [self.peppermintMessageSender save];
                               [self.delegate loginSucceed];
                           } else {
+                              [self.delegate loginFinishedLoading];
                               [self showErrorForInformationFromFacebook];
                           }
                       }
@@ -136,9 +137,38 @@
 
 #pragma mark - Email Login
 
--(void) performEmailLogin {
-    self.peppermintMessageSender.loginSource = LOGINSOURCE_PEPPERMINT;
-    self.peppermintMessageSender.imageData = [NSData new];
+-(void) performEmailLogin {    
+    if(self.peppermintMessageSender.isValid) {
+        self.peppermintMessageSender.loginSource = LOGINSOURCE_PEPPERMINT;
+        self.peppermintMessageSender.imageData = [NSData new];
+        accountModel = [AccountModel new];
+        accountModel.delegate = self;
+        [self.delegate loginLoading];
+        [accountModel authenticate:self.peppermintMessageSender];
+    } else {
+        [self.delegate operationFailure:[NSError errorWithDomain:@"peppermintMessageSender is not valid!" code:-1 userInfo:nil]];
+    }
+}
+
+#pragma mark - AccountModelDelegate
+
+-(void) operationFailure:(NSError*) error {
+    [self.delegate loginFinishedLoading];
+    [self.delegate operationFailure:error];
+}
+
+-(void) userRegisterSuccessWithEmail:(NSString*) email password:(NSString *)password jwt:(NSString *)jwt {
+    [self.delegate loginFinishedLoading];
+    self.peppermintMessageSender.email = email;
+    self.peppermintMessageSender.password = password;
+    self.peppermintMessageSender.jwt = jwt;
+    self.peppermintMessageSender.isEmailVerified = NO;
+    [self.peppermintMessageSender save];
+    [self.delegate loginRequireEmailVerification];
+}
+
+-(void) userLogInSuccessWithEmail:(NSString*) email {
+    [self.delegate loginFinishedLoading];
     [self.peppermintMessageSender save];
     [self.delegate loginSucceed];
 }

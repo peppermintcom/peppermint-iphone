@@ -21,7 +21,7 @@
     if(self) {
         recentContactsModel = [RecentContactsModel new];
         recentContactsModel.delegate = self;
-        self.peppermintMessageSender = [PeppermintMessageSender savedSender];
+        self.peppermintMessageSender = [PeppermintMessageSender sharedInstance];
         awsModel = [AWSModel new];
         awsModel.delegate = self;
         self.sendingStatus = SendingStatusIniting;

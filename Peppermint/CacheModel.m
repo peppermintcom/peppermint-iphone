@@ -76,12 +76,13 @@
                 SendVoiceMessageEmailModel *mailSenderModel = [[NSClassFromString(cachedEmailMessage.mailSenderClass) alloc] init];
                 mailSenderModel.delegate = nil;
                 
-                PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender savedSender];
+                PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
                 peppermintMessageSender.nameSurname = cachedEmailMessage.senderNameSurname;
                 peppermintMessageSender.email = cachedEmailMessage.senderEmail;
                 PeppermintContact *selectedContact = [PeppermintContact new];
                 selectedContact.nameSurname = cachedEmailMessage.receiverNameSurname;
                 selectedContact.communicationChannelAddress = cachedEmailMessage.receiverEmail;
+#warning "Check& be sure, if peppermintMessageSender change will effect the behaviour or not!"
                 mailSenderModel.peppermintMessageSender = peppermintMessageSender;
                 mailSenderModel.selectedPeppermintContact = selectedContact;
                 

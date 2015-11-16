@@ -86,7 +86,7 @@
     [self initNavigationViewController];
     [self initFabric];
     [self initInitialViewController];
-    //[self logServiceCalls];
+    [self logServiceCalls];
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
     [self initGoogleApp];
     return YES;

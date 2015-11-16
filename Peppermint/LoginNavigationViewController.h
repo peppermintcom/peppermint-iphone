@@ -17,4 +17,5 @@
 @property (strong, nonatomic) LoginModel *loginModel;
 
 +(void) logUserInWithDelegate:(id<LoginNavigationViewControllerDelegate>) delegate completion:(void(^)(void))completion;
+-(void) loginRequireEmailVerification;
 @end

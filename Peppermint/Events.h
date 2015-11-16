@@ -8,12 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "MandrillMessage.h"
+#import "User.h"
 
 @interface NetworkFailure : NSObject
 @property(nonatomic) NSError *error;
 @end
 
-//locked
+//Needs a unique handler
 @interface MandrillMesssageSent : NSObject
 @property (strong, nonatomic) MandrillMessage *mandrillMessage;
 @end
@@ -34,19 +35,37 @@
 @property (strong, nonatomic) NSString *jwt;
 @end
 
-//locked
+//Needs a unique handler
 @interface RetrieveSignedUrlSuccessful : NSObject
 @property (strong, nonatomic) NSString *signedUrl;
 @property (strong, nonatomic) NSData* data;
 @end
 
-//locked
+//Needs a unique handler
 @interface FileUploadCompleted : NSObject
 @property (strong, nonatomic) NSString *signedUrl;
 @end
 
-//locked
+//Needs a unique handler
 @interface FileUploadFinalized : NSObject
 @property (strong, nonatomic) NSString *signedUrl;
 @property (strong, nonatomic) NSString *shortUrl;
+@end
+
+@interface AccountRegisterIsSuccessful : NSObject
+@property (strong, nonatomic) NSString *jwt;
+@property (strong, nonatomic) User *user;
+@end
+
+@interface AccountLoginIsSuccessful : NSObject
+@property (strong, nonatomic) User *user;
+@end
+
+@interface AccountRegisterConflictTryLogin : NSObject
+@property (strong, nonatomic) NSString *email;
+@property (strong, nonatomic) NSString *password;
+@end
+
+@interface VerificationEmailSent : NSObject
+@property (strong, nonatomic) NSString* jwt;
 @end

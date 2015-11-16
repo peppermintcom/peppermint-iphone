@@ -17,7 +17,9 @@
 
 @end
 
-@implementation AccountViewController
+@implementation AccountViewController {
+    PeppermintMessageSender *peppermintMessageSender;
+}
 
 #pragma mark - PresentLoginModalView
 
@@ -29,11 +31,10 @@
 
 +(void) presentAccountViewControllerWithCompletion:(void(^)(void))completion {
     UIViewController *rootVC = [AppDelegate Instance].window.rootViewController;
-    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender savedSender];
+    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
     
     if([peppermintMessageSender isValid]) {
         AccountViewController *accountViewController = [AccountViewController createInstance];
-        accountViewController.peppermintMessageSender = peppermintMessageSender;
         accountViewController.iconCloseImageView.image = [UIImage imageNamed:@"icon_close"];
         [rootVC presentViewController:accountViewController animated:YES completion:completion];
     } else {
@@ -47,17 +48,9 @@
     self.tableView.delegate = self;
     
     self.iconCloseImageView.image = [UIImage imageNamed:@"icon_back"];
-    if(!self.peppermintMessageSender) {
-        self.peppermintMessageSender = [PeppermintMessageSender savedSender];
-    }
     
     self.titleLabel.textColor = [UIColor whiteColor];
     self.titleLabel.font = [UIFont openSansSemiBoldFontOfSize:18];
-    self.titleLabel.text = [NSString stringWithFormat:
-                            LOC(@"Logged in message format", @"Logged in message format"),
-                            [self.peppermintMessageSender loginMethod]
-                            ];
-    [self.titleLabel sizeToFit];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -66,6 +59,13 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+    self.titleLabel.text = [NSString stringWithFormat:
+                            LOC(@"Logged in message format", @"Logged in message format"),
+                            [peppermintMessageSender loginMethod]
+                            ];
+    [self.titleLabel sizeToFit];    
+    
     self.tableViewWidthConstraint.constant = self.view.frame.size.width / 2;
     [self.view setNeedsDisplay];
 }
@@ -107,8 +107,8 @@
 -(void) selectedLoginTableViewCell:(UITableViewCell*) cell atIndexPath:(NSIndexPath*) indexPath {
     NSInteger option = indexPath.section;
     if(option == OPTION_LOG_OUT) {
-        [self.peppermintMessageSender clearSender];
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [peppermintMessageSender clearSender];
+        [self.navigationController popViewControllerAnimated:NO];
         [LoginNavigationViewController logUserInWithDelegate:nil completion:nil];
     }
 }

@@ -37,3 +37,15 @@
 
 @implementation FileUploadFinalized
 @end
+
+@implementation AccountRegisterIsSuccessful
+@end
+
+@implementation AccountLoginIsSuccessful
+@end
+
+@implementation AccountRegisterConflictTryLogin
+@end
+
+@implementation VerificationEmailSent
+@end

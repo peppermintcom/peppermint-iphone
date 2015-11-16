@@ -52,17 +52,12 @@
 #pragma mark - Login
 
 -(BOOL) checkIfuserIsLoggedIn {
-    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender savedSender];
+    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
     if(!peppermintMessageSender.isValid) {
-        self.view.alpha = 0;
-        [LoginNavigationViewController logUserInWithDelegate:nil completion:^{
-            self.view.alpha = 1;
-        }];
+        [LoginNavigationViewController logUserInWithDelegate:nil completion:nil];
         return NO;
     }
     return YES;
 }
-
-
 
 @end

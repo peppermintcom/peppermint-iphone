@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Okan Kurtulus. All rights reserved.
 //
 
-#import "JSonModel.h"
+#import "JSONModel.h"
 #import "Recorder.h"
 
 @interface RecorderRequest : JSONModel

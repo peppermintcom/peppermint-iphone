@@ -179,7 +179,6 @@
                         <outlet property="doneButton" destination="X8L-Ph-XdZ" id="AtN-b4-cuW"/>
                         <outlet property="doneLabel" destination="Ahn-gk-Hqg" id="YgA-DC-SdU"/>
                         <outlet property="tableView" destination="kLE-J5-PmJ" id="591-aL-XsH"/>
-                        <segue destination="B1M-ov-reU" kind="show" identifier="LoginValidateEmailSegue" id="KSQ-92-Bv0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tyv-YC-Qbl" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -189,7 +188,7 @@
         <!--Login Validate Email View Controller-->
         <scene sceneID="OYd-Np-Bbv">
             <objects>
-                <viewController id="B1M-ov-reU" customClass="LoginValidateEmailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginValidateEmailViewController" id="B1M-ov-reU" customClass="LoginValidateEmailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ExR-IX-U81"/>
                         <viewControllerLayoutGuide type="bottom" id="lRf-rv-bOk"/>
@@ -267,6 +266,7 @@
                             <constraint firstItem="Vwo-Ft-ZJA" firstAttribute="top" secondItem="ExR-IX-U81" secondAttribute="bottom" constant="28" id="rWM-JG-LO7"/>
                         </constraints>
                     </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="doneLabel" destination="Vwo-Ft-ZJA" id="tHi-hF-pPR"/>
                         <outlet property="tableView" destination="MPx-9i-2JP" id="CRG-97-kG5"/>

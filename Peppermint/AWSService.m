@@ -140,4 +140,101 @@
     }];
 }
 
+-(void) registerAccount:(User*) user {
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_ACCOUNTS];
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    AccountRequest *accountRequest = [AccountRequest new];
+    accountRequest.api_key = self.apiKey;
+    accountRequest.u = user;
+    NSDictionary *parameterDictionary = [accountRequest toDictionary];
+    
+    NSError *error;
+    NSURLRequest *request = [[AFJSONRequestSerializer serializer] requestWithMethod:@"POST" URLString:url parameters:parameterDictionary error:&error];
+    if(error) {
+        [self failureDuringRequestCreationWithError:error];
+    } else {
+        NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+            if(((NSHTTPURLResponse*)response).statusCode == 409) {
+                AccountRegisterConflictTryLogin *accountRegisterConflictTryLogin = [AccountRegisterConflictTryLogin new];
+                accountRegisterConflictTryLogin.email = user.email;
+                accountRegisterConflictTryLogin.password = user.password;
+                PUBLISH(accountRegisterConflictTryLogin);
+            }
+            else if (error) {
+                [self failureWithOperation:nil andError:error];
+            } else {
+                AccountResponse *accountResponse = [[AccountResponse alloc] initWithDictionary:responseObject error:&error];
+                if (error) {
+                    [self failureWithOperation:nil andError:error];
+                }
+                
+                AccountRegisterIsSuccessful *accountRegisterIsSuccessful = [AccountRegisterIsSuccessful new];
+                accountRegisterIsSuccessful.jwt = accountResponse.at;
+                accountRegisterIsSuccessful.user = accountResponse.u;
+                PUBLISH(accountRegisterIsSuccessful);
+            }
+        }];
+        [dataTask resume];
+    }
+}
+
+-(NSString*) base64Encode:(NSString*) text {
+    NSData *data = [text dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *base64Data = [data base64EncodedDataWithOptions:0];
+    text = [NSString stringWithUTF8String:[base64Data bytes]];
+    return text;
+}
+
+-(void) logUserInWithEmail:(NSString*) email password:(NSString*) password {
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_ACCOUNTS_TOKENS];
+    AFHTTPRequestOperationManager *requestOperationManager = [[AFHTTPRequestOperationManager alloc]
+                                                              initWithBaseURL:[NSURL URLWithString:url]];
+    
+    NSString *authText = [NSString stringWithFormat:@"%@:%@", email, password];
+    authText = [self base64Encode:authText];
+    authText = [NSString stringWithFormat:@"Basic %@", authText];
+    
+    requestOperationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [requestOperationManager.requestSerializer setValue:authText forHTTPHeaderField:AUTHORIZATION];
+    
+    LoginRequest *loginRequest = [LoginRequest new];
+    loginRequest.api_key = self.apiKey;
+    NSDictionary *parameterDictionary = [loginRequest toDictionary];
+    
+    [requestOperationManager POST:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSError *error;
+        LoginResponse *loginResponse = [[LoginResponse alloc] initWithDictionary:responseObject error:&error];
+        if (error) {
+            [self failureWithOperation:nil andError:error];
+        }
+        AccountLoginIsSuccessful *accountLoginIsSuccessful = [AccountLoginIsSuccessful new];
+        accountLoginIsSuccessful.user = loginResponse.u;
+        PUBLISH(accountLoginIsSuccessful);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self failureWithOperation:nil andError:error];
+    }];
+}
+
+-(void) resendVerificationEmailForJwt:(NSString*) jwt {
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_ACCOUNTS_VERIFY];
+    AFHTTPRequestOperationManager *requestOperationManager = [[AFHTTPRequestOperationManager alloc]
+                                                              initWithBaseURL:[NSURL URLWithString:url]];
+    
+    NSString *tokenText = [self toketTextForJwt:jwt];
+    requestOperationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [requestOperationManager.requestSerializer setValue:tokenText forHTTPHeaderField:AUTHORIZATION];
+    
+    [requestOperationManager POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        VerificationEmailSent *verificationEmailSent = [VerificationEmailSent new];
+        verificationEmailSent.jwt = jwt;
+        PUBLISH(verificationEmailSent);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self failureWithOperation:nil andError:error];
+    }];
+}
+
+
+
 @end

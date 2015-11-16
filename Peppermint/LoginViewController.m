@@ -37,7 +37,7 @@
     self.loginLabel.text = LOC(@"Please Login", @"Login Message");
     [self.loginLabel sizeToFit];
     
-    peppermintMessageSender = [PeppermintMessageSender savedSender];
+    peppermintMessageSender = [PeppermintMessageSender sharedInstance];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -96,14 +96,20 @@
 
 -(void) selectedLoginTableViewCell:(UITableViewCell*) cell atIndexPath:(NSIndexPath*) indexPath {
     NSInteger index = indexPath.section;
+    LoginNavigationViewController *loginNavigationViewController = (LoginNavigationViewController*)self.navigationController;
     if(index == SECTION_LOGIN_WITH_GOOGLE) {
-        LoginNavigationViewController *loginNavigationViewController = (LoginNavigationViewController*)self.navigationController;
+        peppermintMessageSender.loginSource = LOGINSOURCE_GOOGLE;
         [loginNavigationViewController.loginModel performGoogleLogin];
     } else if (index == SECTION_LOGIN_WITH_FACEBOOK) {
-        LoginNavigationViewController *loginNavigationViewController = (LoginNavigationViewController*)self.navigationController;
+        peppermintMessageSender.loginSource = LOGINSOURCE_FACEBOOK;
         [loginNavigationViewController.loginModel performFacebookLogin];
     } else if (index == SECTION_LOGIN_WITH_EMAIL) {
-        [self performSegueWithIdentifier:SEGUE_LOGIN_WITH_EMAIL sender:self];
+        peppermintMessageSender.loginSource = LOGINSOURCE_PEPPERMINT;        
+        if([peppermintMessageSender isInMailVerificationProcess]) {
+            [loginNavigationViewController loginRequireEmailVerification];
+        } else {
+            [self performSegueWithIdentifier:SEGUE_LOGIN_WITH_EMAIL sender:self];
+        }
     }
 }
 

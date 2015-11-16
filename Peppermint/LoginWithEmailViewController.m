@@ -30,8 +30,6 @@
 
 #define DISTANCE_BTW_SECTIONS      12
 
-#define SEGUE_LOGIN_VALIDATE_EMAIL      @"LoginValidateEmailSegue"
-
 @interface LoginWithEmailViewController ()
 @end
 
@@ -49,7 +47,7 @@
     self.tableView.delegate = self;    
     self.doneLabel.font = [UIFont openSansFontOfSize:18];
     self.doneLabel.textColor = [UIColor whiteColor];
-    self.doneLabel.text = LOC(@"Register",@"Login button text");
+    self.doneLabel.text = LOC(@"Done",@"Login button text");
     
     isValidNameSurnameEmptyValidation = YES;
     isValidEmailEmptyValidation = YES;
@@ -61,6 +59,7 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     NSAssert(self.loginModel != nil, @"LoginModel must be initiated before LoginWithEmailViewController is shown");
+    [self validateDoneButton];
 }
 
 -(void) viewDidAppear:(BOOL)animated {
@@ -252,20 +251,12 @@
 
 -(IBAction) doneButtonPressed:(id)sender {
     if([self.loginModel.peppermintMessageSender isValid]) {
-        [self performSegueWithIdentifier:SEGUE_LOGIN_VALIDATE_EMAIL sender:self];
+        [self.loginModel performEmailLogin];
     } else {
         NSString *title = LOC(@"Information", @"Title Message");
         NSString *message = LOC(@"Register Information Missing", @"Information Message");
         NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
         [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
-    }
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:SEGUE_LOGIN_VALIDATE_EMAIL]) {
-        LoginValidateEmailViewController *loginValidateEmailViewController =
-        (LoginValidateEmailViewController*) segue.destinationViewController;
-        loginValidateEmailViewController.loginModel = self.loginModel;
     }
 }
 

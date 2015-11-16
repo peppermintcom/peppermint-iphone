@@ -14,7 +14,9 @@
 
 @end
 
-@implementation LoginValidateEmailViewController
+@implementation LoginValidateEmailViewController {
+    AccountModel *accountModel;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -57,6 +59,18 @@
 #pragma mark - LoginValidateEmailTableViewCellDelegate
 
 -(void) resendValidation {
+    if(!accountModel) {
+        accountModel = [AccountModel new];
+        accountModel.delegate = self;
+    }
+    [self.loginModel.delegate loginLoading];
+    [accountModel resendVerificationEmail:self.loginModel.peppermintMessageSender];
+}
+
+#pragma mark - AccountModelDelegate
+
+-(void) verificationEmailSendSuccess {
+    [self.loginModel.delegate loginFinishedLoading];
     NSString *title = LOC(@"Information", @"Title Message");
     NSString *message = LOC(@"Verification Mail Sent", @"Verification Mail Sent");
     NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
@@ -70,14 +84,9 @@
 }
 
 -(IBAction) doneButtonPressed:(id)sender {
-     if([self.loginModel.peppermintMessageSender isValid]) {
-         [self.loginModel performEmailLogin];
-     } else {
-         NSString *title = LOC(@"Information", @"Title Message");
-         NSString *message = LOC(@"Register Information Missing", @"Information Message");
-         NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
-         [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
-     }
+    self.loginModel.peppermintMessageSender.isEmailVerified = YES;
+    [self.loginModel.peppermintMessageSender save];
+    [self.loginModel.delegate loginSucceed];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

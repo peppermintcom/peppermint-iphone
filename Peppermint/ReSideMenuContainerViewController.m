@@ -30,9 +30,9 @@
 #pragma mark - SlidingMenu
 
 -(void) initSlideMenu {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    ContactsViewController *contactsVC = (ContactsViewController*)[storyboard instantiateViewControllerWithIdentifier:@"ContactsViewController"];
-    SlideMenuViewController *slideMenuVC = (SlideMenuViewController*)[storyboard instantiateViewControllerWithIdentifier:@"SlideMenuViewController"];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:STORYBOARD_MAIN bundle:nil];
+    ContactsViewController *contactsVC = (ContactsViewController*)[storyboard instantiateViewControllerWithIdentifier:VIEWCONTROLLER_CONTACTS];
+    SlideMenuViewController *slideMenuVC = (SlideMenuViewController*)[storyboard instantiateViewControllerWithIdentifier: VIEWCONTROLLER_SLIDEMENU];
     
     contactsVC.reSideMenuContainerViewController = self;
     slideMenuVC.reSideMenuContainerViewController = self;

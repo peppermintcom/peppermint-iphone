@@ -9,14 +9,13 @@
 #import "LoginNavigationViewController.h"
 #import "AppDelegate.h"
 #import "MBProgressHUD.h"
+#import "LoginValidateEmailViewController.h"
 
 @interface LoginNavigationViewController ()
 @property (weak, nonatomic) id<LoginNavigationViewControllerDelegate> loginDelegate;
 @end
 
-@implementation LoginNavigationViewController {
-    MBProgressHUD *_loadingHud;
-}
+@implementation LoginNavigationViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -28,23 +27,14 @@
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - LoadingView
-
--(MBProgressHUD*) loadingHud {
-    if(!_loadingHud) {
-        _loadingHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    }
-    return _loadingHud;
-}
-
 #pragma mark - LoginModelDelegate
 
 -(void) loginLoading {
-    [[self loadingHud] show:YES];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
 -(void) loginFinishedLoading {
-    [[self loadingHud] hide:YES];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 -(void) loginSucceed {
@@ -55,6 +45,13 @@
             [self.loginDelegate loginSucceedWithMessageSender:peppermintMessageSender];
         }];
     });
+}
+
+-(void) loginRequireEmailVerification {
+    LoginValidateEmailViewController *loginValidateEmailViewController =
+    (LoginValidateEmailViewController*) [self.storyboard instantiateViewControllerWithIdentifier:VIEWCONTROLLER_LOGINVALIDATE];
+    loginValidateEmailViewController.loginModel = self.loginModel;
+    [self pushViewController:loginValidateEmailViewController animated:YES];
 }
 
 #pragma mark - BaseModelDelegate
@@ -81,7 +78,13 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:STORYBOARD_LOGIN bundle:[NSBundle mainBundle]];
     LoginNavigationViewController *loginNavigationViewController = [storyboard instantiateInitialViewController];
     loginNavigationViewController.loginDelegate = delegate;
-    [rootVC presentViewController:loginNavigationViewController animated:YES completion:completion];
+    
+    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+    [rootVC presentViewController:loginNavigationViewController animated:YES completion:^{
+        if([peppermintMessageSender isInMailVerificationProcess]) {
+            [loginNavigationViewController loginRequireEmailVerification];
+        }
+    }];
 }
 
 @end

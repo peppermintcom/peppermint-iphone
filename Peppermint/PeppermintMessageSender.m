@@ -13,17 +13,30 @@
 
 @implementation PeppermintMessageSender
 
++ (instancetype) sharedInstance {
+    return SHARED_INSTANCE([self savedSender]);
+}
+
 +(instancetype) savedSender {
     NSError *error;
     PeppermintMessageSender *sender;
     NSString *jsonString = [[A0SimpleKeychain keychain] stringForKey:KEYCHAIN_MESSAGE_SENDER];
-    if(jsonString.length > 0) {
+    
+    BOOL isJsonStringValid = jsonString.length > 0;
+    if(isJsonStringValid) {
+        NSLog(@"\n\n\nCreate from Json: %@\n\n\n", jsonString);
         sender = [[PeppermintMessageSender alloc] initWithString:jsonString error:&error];
-    }
-    if(!jsonString || error) {
-        NSLog(@"JSON init Error : %@", error);
+        if(error) {
+            NSLog(@"JSON init Error : %@", error);
+            isJsonStringValid = NO;
+        }
+    }    
+    if(!isJsonStringValid) {
         sender = [PeppermintMessageSender new];
+        [sender clearSender];
+        [sender guessNameFromDeviceName];
     }
+    NSAssert(sender != nil, @"sender must not be nil. Please be sure that it is inited!");
     return sender;
 }
 
@@ -31,7 +44,6 @@
     self = [super init];
     if(self) {
         self.imageData = [NSData dataWithContentsOfURL:[self imageFileUrl]];
-        [self guessNameFromDeviceName];
     }
     return self;
 }
@@ -42,11 +54,24 @@
     [self.imageData writeToURL:[self imageFileUrl] atomically:YES];
 }
 
--(BOOL) isValid {    
-    return self.nameSurname.length > 0
+-(BOOL) isValid {
+    BOOL result = self.nameSurname.length > 0
     && self.email.length > 0
-    && [self.email isValidEmail]
-    && self.password.length > 0;
+    && [self.email isValidEmail];
+    
+    if(self.loginSource == LOGINSOURCE_GOOGLE) {
+        //Google extra checks..
+    } else if (self.loginSource == LOGINSOURCE_FACEBOOK) {
+        //Facebook extra checks...
+    } else if (self.loginSource == LOGINSOURCE_PEPPERMINT) {
+        result = result
+        && self.password.length > 0
+        && (self.jwt.length == 0
+            || (self.jwt.length > 0
+                && self.isEmailVerified))
+        ;
+    }
+    return result;
 }
 
 #pragma mark - Guess Name From Device Name
@@ -117,8 +142,16 @@
     self.email = @"";
     self.password = @"";
     self.imageData = nil;
-    self.loginSource = -9;
+    self.loginSource = -1;
+    self.jwt = @"";
+    self.isEmailVerified = NO;
     [self save];
+}
+
+-(BOOL) isInMailVerificationProcess {
+    return self.loginSource == LOGINSOURCE_PEPPERMINT
+    && self.jwt.length > 0
+    && !self.isEmailVerified;
 }
 
 @end

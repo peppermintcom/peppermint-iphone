@@ -37,7 +37,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender savedSender];
+    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
     if(peppermintMessageSender.nameSurname.length > 0) {
         self.userLabel.text = peppermintMessageSender.nameSurname;
     } else {
