@@ -23,6 +23,8 @@ typedef enum : NSUInteger {
 @property (strong, nonatomic) NSString *password;
 @property (strong, nonatomic) NSString<Optional> *jwt;
 @property (nonatomic) BOOL isEmailVerified;
+@property (strong, nonatomic) NSString <Optional> * signature;
+@property (strong, nonatomic) NSString <Optional> * subject;
 
 + (instancetype) sharedInstance;
 -(void) save;

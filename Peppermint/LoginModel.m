@@ -64,6 +64,9 @@
         if(user.profile.email) {
             self.peppermintMessageSender.email = user.profile.email;
         }
+      
+      self.peppermintMessageSender.subject = LOC(@"Mail Subject",@"Default Mail Subject");
+
         NSURL *imageUrl = [user.profile imageURLWithDimension:100];
         self.peppermintMessageSender.imageData = [NSData dataWithContentsOfURL:imageUrl];
         if([self.peppermintMessageSender isValid]) {
@@ -112,6 +115,8 @@
                               NSData *data = [NSData dataWithContentsOfURL:url];
                               self.peppermintMessageSender.imageData = data;
                           }
+                        self.peppermintMessageSender.subject = LOC(@"Mail Subject",@"Default Mail Subject");
+
                           if([self.peppermintMessageSender isValid]) {
                               [login logOut];
                               [self.peppermintMessageSender save];
@@ -141,6 +146,7 @@
     if(self.peppermintMessageSender.isValid) {
         self.peppermintMessageSender.loginSource = LOGINSOURCE_PEPPERMINT;
         self.peppermintMessageSender.imageData = [NSData new];
+        self.peppermintMessageSender.subject = LOC(@"Mail Subject",@"Default Mail Subject");
         accountModel = [AccountModel new];
         accountModel.delegate = self;
         [self.delegate loginLoading];

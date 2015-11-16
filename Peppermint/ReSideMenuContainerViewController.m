@@ -36,6 +36,7 @@
     
     contactsVC.reSideMenuContainerViewController = self;
     slideMenuVC.reSideMenuContainerViewController = self;
+    self.delegate = slideMenuVC;
     [self setLeftMenuViewController:slideMenuVC];
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:contactsVC];

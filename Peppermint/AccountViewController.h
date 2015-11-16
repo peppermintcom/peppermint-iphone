@@ -14,7 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewWidthConstraint;
-
+@property (strong, nonatomic) PeppermintMessageSender *peppermintMessageSender;
 
 +(instancetype) createInstance;
 +(void) presentAccountViewControllerWithCompletion:(void(^)(void))completion;

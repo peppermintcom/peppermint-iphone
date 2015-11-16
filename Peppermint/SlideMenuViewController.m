@@ -37,19 +37,6 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
-    if(peppermintMessageSender.nameSurname.length > 0) {
-        self.userLabel.text = peppermintMessageSender.nameSurname;
-    } else {
-        self.userLabel.text = @"Peppermint";
-    }
-    
-    if(peppermintMessageSender.imageData
-       && peppermintMessageSender.imageData.length > 0) {
-        self.avatarImageView.image = [UIImage imageWithData:peppermintMessageSender.imageData];
-    } else {
-        self.avatarImageView.image = [UIImage imageNamed:@"avatar_empty"];
-    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -110,6 +97,28 @@
         AccountViewController *accountViewController = [AccountViewController createInstance];
         [navigationController pushViewController:accountViewController animated:YES];
     }
+}
+
+#pragma mark - RESideMenuDelegate
+
+- (void)sideMenu:(RESideMenu *)sideMenu willShowMenuViewController:(UIViewController *)menuViewController {
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+        if(peppermintMessageSender.nameSurname.length > 0) {
+            self.userLabel.text = peppermintMessageSender.nameSurname;
+        } else {
+            self.userLabel.text = @"Peppermint";
+        }
+        
+        if(peppermintMessageSender.imageData
+           && peppermintMessageSender.imageData.length > 0) {
+            self.avatarImageView.image = [UIImage imageWithData:peppermintMessageSender.imageData];
+        } else {
+            self.avatarImageView.image = [UIImage imageNamed:@"avatar_empty"];
+        }
+    });
+    
 }
 
 @end

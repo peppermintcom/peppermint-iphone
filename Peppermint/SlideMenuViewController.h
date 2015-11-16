@@ -9,7 +9,7 @@
 #import "BaseViewController.h"
 #import "ReSideMenuContainerViewController.h"
 
-@interface SlideMenuViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate>
+@interface SlideMenuViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, RESideMenuDelegate>
 @property (weak, nonatomic) ReSideMenuContainerViewController *reSideMenuContainerViewController;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *userLabel;
