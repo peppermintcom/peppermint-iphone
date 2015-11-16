@@ -10,10 +10,12 @@
 #import "AppDelegate.h"
 #import "LoginNavigationViewController.h"
 
-#define NUMBER_OF_OPTIONS       1
-#define OPTION_LOG_OUT          0
+#define NUMBER_OF_OPTIONS       3
+#define OPTION_SIGNATURE        1
+#define OPTION_DISPLAY_NAME    0
+#define OPTION_LOG_OUT          2
 
-@interface AccountViewController ()
+@interface AccountViewController () <UIAlertViewDelegate, LoginNavigationViewControllerDelegate>
 
 @end
 
@@ -88,11 +90,21 @@
     LoginTableViewCell *logOutCell = [CellFactory cellLoginTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
     
     NSInteger index = indexPath.section;
-    if(index == OPTION_LOG_OUT) {        
+    if (index == OPTION_LOG_OUT) {
         logOutCell.loginIconImageViewWidthConstraint.constant = 0;
         logOutCell.loginIconImageView.image = nil;
         logOutCell.loginLabel.text = LOC(@"Log Out", @"Title");
         logOutCell.loginLabel.textColor = [UIColor googleLoginColor];
+    } else if (index == OPTION_SIGNATURE) {
+      logOutCell.loginIconImageViewWidthConstraint.constant = 0;
+      logOutCell.loginIconImageView.image = nil;
+      logOutCell.loginLabel.text = LOC(@"Subject", nil);
+      logOutCell.loginLabel.textColor = [UIColor facebookLoginColor];
+    } else {
+      logOutCell.loginIconImageViewWidthConstraint.constant = 0;
+      logOutCell.loginIconImageView.image = nil;
+      logOutCell.loginLabel.text = LOC(@"Display Name", nil);
+      logOutCell.loginLabel.textColor = [UIColor emailLoginColor];
     }
     [logOutCell.loginLabel sizeToFit];
     return logOutCell;
@@ -102,14 +114,38 @@
     return CELL_HEIGHT_LOGIN_TABLEVIEWCELL;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+  if (section == OPTION_DISPLAY_NAME) {
+    return 0;
+  } else {
+    return CELL_HEIGHT_LOGIN_TABLEVIEWCELL/2;
+  }
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+  return [UIView new];
+}
+
 #pragma mark - LoginTableViewCellDelegate
 
 -(void) selectedLoginTableViewCell:(UITableViewCell*) cell atIndexPath:(NSIndexPath*) indexPath {
     NSInteger option = indexPath.section;
-    if(option == OPTION_LOG_OUT) {
+    if (option == OPTION_LOG_OUT) {
         [self.peppermintMessageSender clearSender];
         [self dismissViewControllerAnimated:YES completion:nil];
-        [LoginNavigationViewController logUserInWithDelegate:nil completion:nil];
+      [LoginNavigationViewController logUserInWithDelegate:self completion:nil];
+    } else if (option == OPTION_DISPLAY_NAME) {
+      UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:LOC(@"Display Name", nil) message:LOC(@"Display Name Description", nil) delegate:self cancelButtonTitle:LOC(@"Cancel", nil) otherButtonTitles:LOC(@"Save", nil), nil];
+      alertView.alertViewStyle=UIAlertViewStylePlainTextInput;
+      UITextField *textField = [alertView textFieldAtIndex:0];
+      textField.text = self.peppermintMessageSender.nameSurname;
+      [alertView show];
+    } else {
+      UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:LOC(@"Subject", nil) message:LOC(@"Subject Description", nil) delegate:self cancelButtonTitle:LOC(@"Cancel", nil) otherButtonTitles:LOC(@"Save", nil), nil];
+      alertView.alertViewStyle=UIAlertViewStylePlainTextInput;
+      UITextField *textField = [alertView textFieldAtIndex:0];
+      textField.text = self.peppermintMessageSender.subject;
+      [alertView show];
     }
 }
 
@@ -122,5 +158,34 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
+
+#pragma mark- UIAlertView Delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+  if (buttonIndex == alertView.cancelButtonIndex) {
+    return;
+  }
+  
+  NSString * text = [[alertView textFieldAtIndex:0] text];
+
+  if ([alertView.title isEqualToString:LOC(@"Display Name", nil)]) {
+    if (text.length > 0) {
+      self.peppermintMessageSender.nameSurname = text;
+    } else {
+      [[[UIAlertView alloc] initWithTitle:LOC(@"Error", nil) message:LOC(@"Display Name can not be empty", nil) delegate:nil cancelButtonTitle:LOC(@"Ok", nil) otherButtonTitles: nil] show];
+    }
+  } else {
+    self.peppermintMessageSender.subject = text ? text : @"";
+  }
+}
+
+- (void)loginSucceedWithMessageSender:(PeppermintMessageSender *)peppermintMessageSender {
+  self.peppermintMessageSender = peppermintMessageSender;
+  self.titleLabel.text = [NSString stringWithFormat:
+                          LOC(@"Logged in message format", @"Logged in message format"),
+                          [self.peppermintMessageSender loginMethod]
+                          ];
+}
+
 
 @end

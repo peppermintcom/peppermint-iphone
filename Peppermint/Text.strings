@@ -25,7 +25,7 @@
 "Could not start record" = "Could not start recording";
 "Mail Subject" = "I sent you a voice message";
 "Mail Body Format" = "Here's my message.<br/>%@<br/><br/><a href=\"%@\" >Touch to reply via Peppermint</a><br/><br/>";
-"Mail Text Format" = "Here's my message (%@). Touch %@ for a fastReply";
+"Mail Text Format" = "Here's my message (%@). Touch %@ for a fastReply \n%@";
 "Please add an email account" = "Please add and configure at least one mail account on this device to be able to send voice messages over email";
 "Time is up" = "Time is up!\nYou may tap send to send current recorded message or tap cancel to dismiss the recorded message";
 "Message sent with success" = "Your message has been sent successfully";
@@ -88,3 +88,10 @@
 "Google" = "Google";
 "Logged in message format" = "You are currently logged in\nusing %@";
 "Log Out" = "Log Out";
+"Signature" = "Signature";
+"Signature Description" = "Signature appended to the end of your in-app email";
+"Display Name" = "Display Name";
+"Display Name Description" = "Your Display Name (used when sending in-app emails)";
+"Save" = "Save";
+"Subject" = "Subject";
+"Subject Description" = "The email subject";

@@ -53,16 +53,28 @@
     if(self.peppermintMessageSender.email.length > 0) {
         email = self.peppermintMessageSender.email;
     }
+  
+    NSString * signature = @"";
+  
+  if (self.peppermintMessageSender.signature.length > 0) {
+    signature = self.peppermintMessageSender.signature;
+  }
+  
+  NSString * subject = @"";
+  
+  if (self.peppermintMessageSender.subject.length > 0) {
+    subject = self.peppermintMessageSender.subject;
+  }
     
     mandrillMessage = [MandrillMessage new];
     mandrillMessage.from_email = @"noreply@peppermint.com"; //self.peppermintMessageSender.email;
     
     mandrillMessage.from_name = nameSurname;
-    mandrillMessage.subject = LOC(@"Mail Subject",@"Default Mail Subject");
+    mandrillMessage.subject = subject;
     NSString *body = [NSString stringWithFormat:LOC(@"Mail Body Format",@"Default Mail Body Format"), url, [self fastReplyUrlForSender]];
     mandrillMessage.html = body;
     
-    NSString *textBody = [NSString stringWithFormat:LOC(@"Mail Text Format",@"Default Mail Text Format"), url, [self fastReplyUrlForSender]];
+    NSString *textBody = [NSString stringWithFormat:LOC(@"Mail Text Format",@"Default Mail Text Format"), url, [self fastReplyUrlForSender], signature];
     mandrillMessage.text = textBody;
     
     MandrillToObject *recipient = [MandrillToObject new];

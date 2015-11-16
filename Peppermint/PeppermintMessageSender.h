@@ -21,6 +21,9 @@ typedef enum : NSUInteger {
 @property (strong, nonatomic) NSData<Ignore> *imageData;
 @property (nonatomic) LoginSource loginSource;
 @property (strong, nonatomic) NSString *password;
+@property (strong, nonatomic) NSString <Optional> * signature;
+@property (strong, nonatomic) NSString <Optional> * subject;
+
 
 +(instancetype) savedSender;
 -(void) save;
