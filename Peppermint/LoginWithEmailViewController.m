@@ -60,7 +60,10 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     NSAssert(self.loginModel != nil, @"LoginModel must be initiated before LoginWithEmailViewController is shown");
-    [self validateDoneButton];
+  
+  NSIndexPath * indexPath = [NSIndexPath indexPathForRow:ROW_INPUT_NAME_SURNAME inSection:INDEX_NAME_SURNAME];
+  [self validateCellForNameSurname:[CellFactory cellLoginTextFieldTableViewCellFromTable:self.tableView forIndexPath:indexPath withDelegate:self]];
+  [self validateDoneButton];
 }
 
 -(void) viewDidAppear:(BOOL)animated {
@@ -105,7 +108,7 @@
             cell = loginTextFieldCell;
         } else if (indexPath.row == ROW_NAME_SURNAME_EMPTY_VALIDATION) {
             InformationTextTableViewCell *informationTextTableViewCell = [CellFactory cellInformationTextTableViewCellFromTable:tableView forIndexPath:indexPath];
-            informationTextTableViewCell.label.text = LOC(@"This field is mandatory",@"This field is mandatory");
+            informationTextTableViewCell.label.text = LOC(@"What is your name?",@"What is your name?");
             cell = informationTextTableViewCell;
         }
     } else if (indexPath.section == INDEX_EMAIL) {
@@ -131,7 +134,7 @@
             LoginTextFieldTableViewCell *loginTextFieldCell = [CellFactory cellLoginTextFieldTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
             [loginTextFieldCell.textField setSecureTextEntry:YES];
             loginTextFieldCell.textField.placeholder = LOC(@"Password", @"Password");
-            loginTextFieldCell.textField.keyboardType = UIKeyboardTypeNamePhonePad;
+            loginTextFieldCell.textField.keyboardType = UIKeyboardTypeDefault;
             loginTextFieldCell.textField.text = self.loginModel.peppermintMessageSender.password;
             [loginTextFieldCell setTitles:nil];
             cell = loginTextFieldCell;

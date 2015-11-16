@@ -10,6 +10,8 @@
 #import <MessageUI/MessageUI.h>
 #import "EasyMailSender.h"
 #import "EasyMailAlertSender.h"
+#import "DeviceModel.h"
+
 
 @implementation FeedBackModel
 
@@ -38,7 +40,7 @@
         NSString *supportEmail = LOC(@"support@peppermint.com", @"Support Email");
         [controller setToRecipients:[NSArray arrayWithObject:supportEmail]];
         [controller setSubject:LOC(@"Feedback Subject",@"Feedback Subject")];
-        NSString *body = @"";
+        NSString *body = [DeviceModel summary];
         [controller setMessageBody:body isHTML:YES];
     } complete:^(MFMailComposeViewController *controller, MFMailComposeResult result, NSError *error) {
         if(error) {
@@ -58,5 +60,6 @@
     UIViewController *activeViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     [mailSender showFromViewController:activeViewController];
 }
+
 
 @end
