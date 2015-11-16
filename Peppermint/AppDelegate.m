@@ -139,6 +139,7 @@
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
+#warning "Add url redirect for possible unhandled url"
     if ([NSUserActivityTypeBrowsingWeb isEqualToString: userActivity.activityType]) {
         return  [self handleOpenURL:userActivity.webpageURL sourceApplication:nil annotation:nil];
         /*
