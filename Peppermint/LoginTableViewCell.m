@@ -15,6 +15,11 @@
     [self.loginLabel setFont:[UIFont openSansSemiBoldFontOfSize:17]];
     self.backgroundColor = [UIColor whiteColor];
     self.layer.cornerRadius = LOGIN_CORNER_RADIUS;
+    
+    self.layer.shadowOffset = CGSizeMake(0, 3);
+    self.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.layer.shadowOpacity = 0.1;
+    self.layer.shadowRadius = 1;
 }
 
 -(IBAction)buttonTouched:(id)sender {

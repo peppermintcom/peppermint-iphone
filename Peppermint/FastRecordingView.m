@@ -258,6 +258,7 @@ typedef enum : NSUInteger {
     });
 }
 
+/*
 -(void) showAlertToCompleteLoginInformation {
     NSString *title = LOC(@"Information", @"Title Message");
     NSString *message = LOC(@"Account details message", @"Account details message") ;
@@ -276,7 +277,7 @@ typedef enum : NSUInteger {
     emailTextField.keyboardType = UIKeyboardTypeEmailAddress;
     emailTextField.text = self.sendVoiceMessageModel.peppermintMessageSender.email;
     [alertView show];
-}
+}*/
 
 -(void) showAlertForRecordIsCut {
     NSString *title = LOC(@"Information", @"Information");
@@ -329,6 +330,7 @@ typedef enum : NSUInteger {
                 break;
         }
     }
+    /* //This option is removed
     else if ([alertView.message isEqualToString:LOC(@"Account details message", @"Account details message")]) {
         UITextField *nameSurnameTextField = [alertView textFieldAtIndex:0];
         UITextField *emailTextField = [alertView textFieldAtIndex:1];
@@ -351,6 +353,7 @@ typedef enum : NSUInteger {
                 break;
         }
     }
+    */
     else {
         NSLog(@"Unhandled alertview Message: %@", alertView.message);
     }
