@@ -513,7 +513,7 @@
                                     <constraint firstItem="KTd-Hk-2oP" firstAttribute="leading" secondItem="wBp-tO-dh3" secondAttribute="leading" id="tT5-xP-Edv"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DDk-IO-9d3">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DDk-IO-9d3">
                                 <rect key="frame" x="20" y="96" width="374" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="vJO-az-VVx"/>

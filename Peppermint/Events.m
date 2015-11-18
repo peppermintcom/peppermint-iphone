@@ -49,3 +49,6 @@
 
 @implementation VerificationEmailSent
 @end
+
+@implementation AccountInfoRefreshed
+@end

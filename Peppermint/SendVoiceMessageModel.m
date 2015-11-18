@@ -22,7 +22,7 @@
         recentContactsModel = [RecentContactsModel new];
         recentContactsModel.delegate = self;
         self.peppermintMessageSender = [PeppermintMessageSender sharedInstance];
-        awsModel = [AWSModel new];
+        awsModel = [AWSModel sharedInstance];
         awsModel.delegate = self;
         self.sendingStatus = SendingStatusIniting;
         [awsModel initRecorder];

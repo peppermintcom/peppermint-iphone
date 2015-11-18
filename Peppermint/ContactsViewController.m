@@ -28,7 +28,6 @@
     NSUInteger cachedActiveCellTag;
     BOOL isScrolling;
     MBProgressHUD *_loadingHud;
-    AWSModel *awsModel;
     BOOL isNewRecordAvailable;
 }
 
@@ -61,10 +60,7 @@
 }
 
 -(void) recorderInitIsSuccessful {
-    NSLog(@"recorder is inited");    
-    UIImage *image = [UIImage imageNamed:@"recording_logo_pressed"];
-    NSData *data = UIImagePNGRepresentation(image);
-    [awsModel startToUploadData:data ofType:@"image/png"];
+    NSLog(@"recorder is inited");
 }
 
 -(void) fileUploadCompletedWithPublicUrl:(NSString*) url {

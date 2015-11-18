@@ -141,11 +141,9 @@
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
 #warning "Add url redirect for possible unhandled url"
     if ([NSUserActivityTypeBrowsingWeb isEqualToString: userActivity.activityType]) {
-        return  [self handleOpenURL:userActivity.webpageURL sourceApplication:nil annotation:nil];
-        /*
-        if(!) {
+        if(![self handleOpenURL:userActivity.webpageURL sourceApplication:nil annotation:nil]) {
             [[UIApplication sharedApplication] openURL:userActivity.webpageURL];
-        }*/
+        }
     }
     return YES;
 }
@@ -168,6 +166,16 @@
         } else {
             NSLog(@"Query Parameters are not valid!");
         }
+    } else if ([[[url path] lowercaseString] containsString:PATH_VERIFIY_EMAIL]) {
+        result = YES;
+        UIViewController *rootVC = [AppDelegate Instance].window.rootViewController;
+        [MBProgressHUD showHUDAddedTo:rootVC.view animated:YES];
+        dispatch_async(LOW_PRIORITY_QUEUE, ^{
+            [NSData dataWithContentsOfURL:url]; //Verify email on the server
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:rootVC.view animated:YES];
+            });
+        });
     } else {
         NSLog(@"Host is not avaible to handle. Host : %@", url.host);
     }

@@ -19,6 +19,7 @@ pod 'JPAttributedString'
 pod 'FBSDKCoreKit'
 pod 'FBSDKLoginKit'
 pod 'Google/SignIn'
+pod 'GData', :podspec => 'GData.podspec.json'
 end
 
 target 'PeppermintTests' do

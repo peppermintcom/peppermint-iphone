@@ -25,6 +25,7 @@ typedef enum : NSUInteger {
 @property (nonatomic) BOOL isEmailVerified;
 @property (strong, nonatomic) NSString <Optional> * signature;
 @property (strong, nonatomic) NSString <Optional> * subject;
+@property (strong, nonatomic) NSString <Optional> * accountId;
 
 + (instancetype) sharedInstance;
 -(void) save;
@@ -32,5 +33,6 @@ typedef enum : NSUInteger {
 -(NSString*) loginMethod;
 -(void) clearSender;
 -(BOOL) isInMailVerificationProcess;
+-(void) verifyEmail;
 
 @end

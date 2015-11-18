@@ -69,3 +69,7 @@
 @interface VerificationEmailSent : NSObject
 @property (strong, nonatomic) NSString* jwt;
 @end
+
+@interface AccountInfoRefreshed : NSObject
+@property (strong, nonatomic) User *user;
+@end

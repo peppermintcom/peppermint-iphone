@@ -154,4 +154,10 @@
     && !self.isEmailVerified;
 }
 
+-(void) verifyEmail {
+    self.isEmailVerified = YES;
+    [self save];
+    
+}
+
 @end

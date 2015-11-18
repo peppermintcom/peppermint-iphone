@@ -881,6 +881,7 @@
 				B17B3D291BB6898C009B8BC5 /* Resources */,
 				99E5888A4AEAE0B8E8705C03 /* Copy Pods Resources */,
 				B1B6528C1BDDF8C0006987EA /* ShellScript */,
+				5C384387C21CFA56C1AB394F /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -987,6 +988,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		5C384387C21CFA56C1AB394F /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		99E5888A4AEAE0B8E8705C03 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
