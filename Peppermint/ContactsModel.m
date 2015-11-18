@@ -144,7 +144,7 @@
                                  [uniqueSet addObject:key];
                                  PeppermintContact *peppermintContact = [PeppermintContact new];
                                  peppermintContact.communicationChannel = CommunicationChannelEmail;
-                                 peppermintContact.communicationChannelAddress = [self filterUnwantedChars:email];
+                                 peppermintContact.communicationChannelAddress = email;
                                  peppermintContact.nameSurname = nameSurname;
                                  peppermintContact.avatarImage = contact.thumbnail;
                                  [peppermintContactsArray addObject:peppermintContact];

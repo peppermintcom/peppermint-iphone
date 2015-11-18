@@ -77,6 +77,14 @@
     [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
 }
 
+- (void)userLogInSuccessWithEmail:(NSString *)email {
+    NSLog(@"userLogInSuccessWithEmail: %@", email);
+}
+
+-(void) userRegisterSuccessWithEmail:(NSString *)email password:(NSString *)password jwt:(NSString *)jwt {
+    NSLog(@"userRegisterSuccessWithEmail:%@ password:%@ jwt:%@", email, password, jwt);
+}
+
 #pragma mark - Navigation
 
 -(IBAction) backButtonPressed:(id)sender {

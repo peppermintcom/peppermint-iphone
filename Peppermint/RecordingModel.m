@@ -143,7 +143,7 @@
             [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Could not start record", @"Error message") code:0 userInfo:nil]];
         }
     } else {
-        [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Recording is already acitve", @"Error message") code:0 userInfo:nil]];
+        [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Recording is already active", @"Error message") code:0 userInfo:nil]];
     }
 }
 
@@ -152,7 +152,7 @@
         [self pauseTimer];
         [recorder pause];
     } else {
-        [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Recording is not acitve", @"Error message") code:0 userInfo:nil]];
+        [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Recording is not active", @"Error message") code:0 userInfo:nil]];
     }
 }
 

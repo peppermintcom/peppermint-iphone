@@ -216,6 +216,7 @@
     NSString *title = LOC(@"Information", @"Information");
     NSString *message = LOC(@"Recording is cut", @"Recording is cut, how to continue question?");
     NSString *newRecordButtonTitle = LOC(@"Restart record", @"Restart record button title");
+ #warning "Continue from previous text is deleted. DO not forget to check in Text.strings"
     NSString *continueFromPreviousButtonTitle = LOC(@"Continue from previous", @"Continue from previous button title");
     [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:newRecordButtonTitle otherButtonTitles:continueFromPreviousButtonTitle, nil] show];
 }

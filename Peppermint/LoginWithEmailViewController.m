@@ -39,6 +39,7 @@
     isValidEmailEmptyValidation,
     isValidEmailFormatValidation,
     isValidPasswordEmptyValidation;
+    UITextField *activeTextField;
 }
 
 - (void)viewDidLoad {
@@ -188,6 +189,7 @@
 
 -(void) updatedTextFor:(UITableViewCell*) cell atIndexPath:(NSIndexPath*) indexPath {
     LoginTextFieldTableViewCell* loginTextCell = (LoginTextFieldTableViewCell*) cell;
+    activeTextField = loginTextCell.textField;
     NSString *text = loginTextCell.textField.text;
     NSInteger index = indexPath.section;
     if(index == INDEX_NAME_SURNAME) {
@@ -253,6 +255,7 @@
 }
 
 -(IBAction) doneButtonPressed:(id)sender {
+    [activeTextField resignFirstResponder];
     if([self.loginModel.peppermintMessageSender isValid]) {
         [self.loginModel performEmailLogin];
     } else {

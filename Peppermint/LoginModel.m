@@ -179,4 +179,8 @@
     [self.delegate loginSucceed];
 }
 
+-(void) verificationEmailSendSuccess {
+    NSLog(@"verificationEmailSendSuccess");
+}
+
 @end

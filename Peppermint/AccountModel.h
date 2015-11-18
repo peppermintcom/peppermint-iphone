@@ -10,7 +10,6 @@
 #import "PeppermintMessageSender.h"
 
 @protocol AccountModelDelegate <BaseModelDelegate>
-@optional
 -(void) userRegisterSuccessWithEmail:(NSString*) email password:(NSString*) password jwt:(NSString*) jwt;
 -(void) userLogInSuccessWithEmail:(NSString*) email;
 -(void) verificationEmailSendSuccess;
