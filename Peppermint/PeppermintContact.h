@@ -19,4 +19,6 @@ typedef enum : NSUInteger {
 @property (strong, nonatomic) NSString* communicationChannelAddress;
 @property (nonatomic) CommunicationChannel communicationChannel;
 
+- (void)addToCoreSpotlightSearch;
+
 @end

@@ -7,7 +7,12 @@
 //
 
 #import "PeppermintContact.h"
+#import "SpotlightModel.h"
 
 @implementation PeppermintContact
+
+- (void)addToCoreSpotlightSearch {
+  [SpotlightModel createSearchableItemForContact:self];
+}
 
 @end

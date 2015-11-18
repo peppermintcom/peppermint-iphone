@@ -15,6 +15,10 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <Google/SignIn.h>
 #import "RecordingViewController.h"
+#import "SpotlightModel.h"
+
+@import CoreSpotlight;
+@import MobileCoreServices;
 
 @interface AppDelegate ()
 
@@ -146,6 +150,12 @@
         if(!) {
             [[UIApplication sharedApplication] openURL:userActivity.webpageURL];
         }*/
+    } else if ([userActivity.activityType isEqualToString:CSSearchableItemActionType]) {
+      NSString *uniqueIdentifier = userActivity.userInfo[CSSearchableItemActivityIdentifier];
+      
+      // Handle 'uniqueIdentifier'
+      NSLog(@"searh item uniqueIdentifier: %@", uniqueIdentifier);
+      return [SpotlightModel handleSearchItemUniqueIdentifier:uniqueIdentifier];
     }
     return YES;
 }
