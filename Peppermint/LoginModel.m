@@ -160,6 +160,45 @@
 #pragma mark - Facebook Login
 
 -(void) performFacebookLogin {
+    if ([FBSDKAccessToken currentAccessToken]) {
+        [self.delegate loginLoading];
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields": @"name, email, picture"}]
+         startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+             if(error) {
+                 [self.delegate loginFinishedLoading];
+                 [self.delegate operationFailure:error];
+             } else {
+                 NSDictionary *infoDictionary = (NSDictionary*)result;
+                 self.peppermintMessageSender.loginSource = LOGINSOURCE_FACEBOOK;
+                 if([infoDictionary.allKeys containsObject:@"name"]) {
+                     self.peppermintMessageSender.nameSurname = [result valueForKey:@"name"];
+                 }
+                 if([infoDictionary.allKeys containsObject:@"email"]) {
+                     self.peppermintMessageSender.email = [result valueForKey:@"email"];
+                 }
+                 if([infoDictionary.allKeys containsObject:@"picture"]) {
+                     NSString *urlPath = [result valueForKeyPath:@"picture.data.url"];
+                     NSURL *url = [NSURL URLWithString:urlPath];
+                     NSData *data = [NSData dataWithContentsOfURL:url];
+                     self.peppermintMessageSender.imageData = data;
+                 }
+                 self.peppermintMessageSender.subject = LOC(@"Mail Subject",@"Default Mail Subject");
+                 
+                 if([self.peppermintMessageSender isValid]) {
+                     [self.peppermintMessageSender save];
+                     [self.delegate loginSucceed];
+                 } else {
+                     [self.delegate loginFinishedLoading];
+                     [self showErrorForInformationFromFacebook];
+                 }
+             }
+         }];
+    } else {
+        [self authorizeFacebook];
+    }
+}
+
+-(void) authorizeFacebook {
     FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
     [login logOut]; //Fix, if user changes account,(http://stackoverflow.com/a/30388750/5171866)
     [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
@@ -174,41 +213,7 @@
              NSLog(@"Cancelled");
              [self.delegate loginFinishedLoading];
          } else {
-             if ([FBSDKAccessToken currentAccessToken]) {
-                 [self.delegate loginLoading];
-                 [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields": @"name, email, picture"}]
-                  startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-                      if(error) {
-                          [self.delegate loginFinishedLoading];
-                          [self.delegate operationFailure:error];
-                      } else {
-                          NSDictionary *infoDictionary = (NSDictionary*)result;
-                          self.peppermintMessageSender.loginSource = LOGINSOURCE_FACEBOOK;
-                          if([infoDictionary.allKeys containsObject:@"name"]) {
-                              self.peppermintMessageSender.nameSurname = [result valueForKey:@"name"];
-                          }
-                          if([infoDictionary.allKeys containsObject:@"email"]) {
-                              self.peppermintMessageSender.email = [result valueForKey:@"email"];
-                          }
-                          if([infoDictionary.allKeys containsObject:@"picture"]) {
-                              NSString *urlPath = [result valueForKeyPath:@"picture.data.url"];
-                              NSURL *url = [NSURL URLWithString:urlPath];
-                              NSData *data = [NSData dataWithContentsOfURL:url];
-                              self.peppermintMessageSender.imageData = data;
-                          }
-                        self.peppermintMessageSender.subject = LOC(@"Mail Subject",@"Default Mail Subject");
-
-                          if([self.peppermintMessageSender isValid]) {
-                              [login logOut];
-                              [self.peppermintMessageSender save];
-                              [self.delegate loginSucceed];
-                          } else {
-                              [self.delegate loginFinishedLoading];
-                              [self showErrorForInformationFromFacebook];
-                          }
-                      }
-                  }];
-             }
+             [self performFacebookLogin];
          }
      }];
 }
@@ -262,6 +267,10 @@
 
 -(void) verificationEmailSendSuccess {
     NSLog(@"verificationEmailSendSuccess");
+}
+
+-(void) accountInfoRefreshSuccess {
+    NSLog(@"accountInfoRefreshSuccess");
 }
 
 @end

@@ -13,7 +13,6 @@
 #define ROW_COUNT           1
 #define ROW_RESEND          0
 
-#warning "Add some loading animation when refreshing!"
 #define REFRESH_PERIOD              1
 
 @interface LoginValidateEmailViewController ()
@@ -95,6 +94,11 @@
 }
 
 #pragma mark - AccountModelDelegate
+
+-(void) operationFailure:(NSError*) error {
+    [self.loginModel.delegate loginFinishedLoading];
+    [super operationFailure:error];
+}
 
 -(void) verificationEmailSendSuccess {
     [self.loginModel.delegate loginFinishedLoading];

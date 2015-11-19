@@ -86,7 +86,7 @@
     [self initNavigationViewController];
     [self initFabric];
     [self initInitialViewController];
-    //[self logServiceCalls];
+    [self logServiceCalls];
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
     [self initGoogleApp];
     return YES;
@@ -104,7 +104,7 @@
     if(self.mutableArray.count > 0) {
         weakself_create()
         __block UIBackgroundTaskIdentifier bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
-            NSLog(@"Still it exists %d items\nConsider caching the ongoing messages.", weakSelf.mutableArray.count);
+            NSLog(@"Still it exists %lu items\nConsider caching the ongoing messages.", (unsigned long)weakSelf.mutableArray.count);
             [application endBackgroundTask:bgTask];
              bgTask = UIBackgroundTaskInvalid;
         }];
@@ -158,7 +158,6 @@
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
-#warning "Add url redirect for possible unhandled url"
     if ([NSUserActivityTypeBrowsingWeb isEqualToString: userActivity.activityType]) {
         if(![self handleOpenURL:userActivity.webpageURL sourceApplication:nil annotation:nil]) {
             [[UIApplication sharedApplication] openURL:userActivity.webpageURL];
@@ -307,8 +306,27 @@ reset:
 +(NSString*) messageForError:(NSError*) error {
     NSString *message = error.description;
     if([error.domain isEqualToString:NSURLErrorDomain]) {
-        if(error.code == NSURLErrorNotConnectedToInternet) {
-            message = LOC(@"Please check your internet connection and try again", @"message");
+        switch (error.code) {
+            case NSURLErrorNotConnectedToInternet:
+                message = LOC(@"Please check your internet connection and try again", @"message");
+            case NSURLErrorNetworkConnectionLost:
+                message = LOC(@"Please connect to the internet to upload the message", @"message");
+                break;
+            default:
+                message = LOC(@"Connection error", @"message");
+                break;
+        }
+    } else if ([error.domain isEqualToString:@"com.google.GIDSignIn"]) {
+        switch (error.code) {
+            default:
+                message = LOC(@"Please connect to the Internet then Log In", @"message");
+                break;
+        }
+    } else if ([error.domain isEqualToString:AFURLResponseSerializationErrorDomain]) {
+        switch (error.code) {
+            default:
+                message = LOC(@"Please check your login information", @"message");
+                break;
         }
     }
     return message;

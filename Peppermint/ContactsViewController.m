@@ -57,6 +57,7 @@
     isScrolling  = NO;
     [self initHoldToRecordInfoView];
     isNewRecordAvailable = YES;
+    REGISTER();
 }
 
 -(void) recorderInitIsSuccessful {
@@ -73,6 +74,10 @@
     self.recentContactsModel = nil;
     self.searchMenu = nil;
     self.fastRecordingView = nil;
+}
+
+SUBSCRIBE(ApplicationDidBecomeActive) {
+    [self cellSelectedWithTag:activeCellTag];
 }
 
 - (void) viewWillAppear:(BOOL)animated {

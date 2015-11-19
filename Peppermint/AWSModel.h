@@ -18,7 +18,6 @@
 @interface AWSModel : BaseModel
 @property (weak, nonatomic) id<AWSModelDelegate> delegate;
 
-+ (instancetype) sharedInstance;
 -(void) initRecorder;
 -(void) startToUploadData:(NSData*) data ofType:(NSString*) contentType;
 

@@ -56,8 +56,8 @@ typedef enum : NSUInteger {
     self.sendVoiceMessageModel = [SendVoiceMessageModel activeSendVoiceMessageModel];
     if(self.sendVoiceMessageModel) {
         self.sendVoiceMessageModel.delegate = self;
-#warning "Cancel option değeri tartışılacak!"
-        [self messageStatusIsUpdated:self.sendVoiceMessageModel.sendingStatus withCancelOption:YES];
+        BOOL isCancelable = self.sendVoiceMessageModel.sendingStatus < SendingStatusSending;
+        [self messageStatusIsUpdated:self.sendVoiceMessageModel.sendingStatus withCancelOption:isCancelable];
     }
 }
 
@@ -223,14 +223,15 @@ typedef enum : NSUInteger {
 -(void) showAlertToRecordMoreThanMinimumMessageLength {
     MBProgressHUD * hud =  [MBProgressHUD showHUDAddedTo:self animated:YES];
     hud.mode = MBProgressHUDModeText;
-    hud.detailsLabelFont = [UIFont openSansFontOfSize:12];
+    
+    hud.detailsLabelFont = [UIFont openSansSemiBoldFontOfSize:22];
     hud.detailsLabelText = [NSString stringWithFormat:LOC(@"Record More Than Limit Format", @"Format of minimum recording warning text"),
                             MIN_VOICE_MESSAGE_LENGTH];
     hud.removeFromSuperViewOnHide = YES;
-    hud.yOffset += (self.frame.size.height * 0.3);
+    hud.yOffset -= (self.frame.size.height * 0.075);
     
-    [hud hide:YES afterDelay:WARN_TIME];
-    dispatch_time_t hideTime = dispatch_time(DISPATCH_TIME_NOW, WARN_TIME * 1.2 * NSEC_PER_SEC);
+    [hud hide:YES afterDelay:WARN_TIME * 2];
+    dispatch_time_t hideTime = dispatch_time(DISPATCH_TIME_NOW, WARN_TIME * 2 * 1.1 * NSEC_PER_SEC);
     dispatch_after(hideTime, dispatch_get_main_queue(), ^(void){
         [self dissmissWithFadeOut];
     });

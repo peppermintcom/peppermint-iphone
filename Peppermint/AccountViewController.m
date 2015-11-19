@@ -169,13 +169,13 @@
 
   if ([alertView.title isEqualToString:LOC(@"Display Name", nil)]) {
       if (text.length > 0) {
-          self.peppermintMessageSender.nameSurname = text;
+          self.peppermintMessageSender.nameSurname = [text capitalizedString];
           [self.peppermintMessageSender save];
       } else {
           [[[UIAlertView alloc] initWithTitle:LOC(@"Error", nil) message:LOC(@"Display Name can not be empty", nil) delegate:nil cancelButtonTitle:LOC(@"Ok", nil) otherButtonTitles: nil] show];
       }
   } else if ([alertView.title isEqualToString:LOC(@"Subject", nil)]) {
-      self.peppermintMessageSender.subject = text ? text : @"";
+      self.peppermintMessageSender.subject = text.length > 0 ? text : LOC(@"Peppermint", @"Peppermint");
       [self.peppermintMessageSender save];
   }
 }

@@ -24,7 +24,6 @@
     
     BOOL isJsonStringValid = jsonString.length > 0;
     if(isJsonStringValid) {
-        NSLog(@"\n\n\nCreate from Json: %@\n\n\n", jsonString);
         sender = [[PeppermintMessageSender alloc] initWithString:jsonString error:&error];
         if(error) {
             NSLog(@"JSON init Error : %@", error);
@@ -65,7 +64,7 @@
         //Facebook extra checks...
     } else if (self.loginSource == LOGINSOURCE_PEPPERMINT) {
         result = result
-        && self.password.length > 0
+        && [self.password isPasswordLengthValid]
         && (self.jwt.length == 0
             || (self.jwt.length > 0
                 && self.isEmailVerified))

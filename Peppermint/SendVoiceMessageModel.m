@@ -8,21 +8,24 @@
 
 #import "SendVoiceMessageModel.h"
 #import "ConnectionModel.h"
+#import "CacheModel.h"
 
 #define TIMER_PERIOD    3
 
 @implementation SendVoiceMessageModel {
     ConnectionModel *connectionModel;
     NSTimer *timer;
+    NSLock *arrayLock;
 }
 
 -(id) init {
     self = [super init];
     if(self) {
+        arrayLock = [[NSLock alloc] init];
         recentContactsModel = [RecentContactsModel new];
         recentContactsModel.delegate = self;
         self.peppermintMessageSender = [PeppermintMessageSender sharedInstance];
-        awsModel = [AWSModel sharedInstance];
+        awsModel = [AWSModel new];
         awsModel.delegate = self;
         self.sendingStatus = SendingStatusIniting;
         [awsModel initRecorder];
@@ -50,6 +53,8 @@
 }
 
 -(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension {
+    _data = data;
+    _extension = extension;
     [recentContactsModel save:self.selectedPeppermintContact];
     [self attachProcessToAppDelegate];
     
@@ -65,6 +70,11 @@
 
 -(void) operationFailure:(NSError*) error {
     self.sendingStatus = SendingStatusError;
+    
+    if(self.delegate) {
+        [[CacheModel sharedInstance] cache:self WithData:_data extension:_extension];
+    }
+    
     [self.delegate messageStatusIsUpdated:self.sendingStatus withCancelOption:NO];
     [self.delegate operationFailure:error];
 }
@@ -166,7 +176,9 @@
     NSMutableArray *array = [AppDelegate Instance].mutableArray;
     if(![array containsObject:self]) {
         NSLog(@"Attached and timer started!!");
+        [arrayLock lock];
         [array addObject:self];
+        [arrayLock unlock];
         if(timer) { [timer invalidate]; NSLog(@"invalidated a timer!!"); }
         timer = [NSTimer scheduledTimerWithTimeInterval:TIMER_PERIOD target:self selector:@selector(detachProcessFromAppDelegate) userInfo:nil repeats:YES];
         timer.tolerance = TIMER_PERIOD * 0.1;
@@ -196,7 +208,9 @@
 -(void) performDetach {
     NSMutableArray *array = [AppDelegate Instance].mutableArray;
     if([array containsObject:self]) {
+        [arrayLock lock];
         [array removeObject:self];
+        [arrayLock unlock];
         NSLog(@"Detached!!");
     } else {
         NSLog(@"Detach is called on a non-attached item");

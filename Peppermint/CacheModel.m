@@ -59,9 +59,6 @@
             } else {
                 sendVoiceMessageEmailModel.sendingStatus = SendingStatusCached;
                 [sendVoiceMessageEmailModel.delegate messageStatusIsUpdated:SendingStatusCached withCancelOption:NO];
-                
-                
-                [[CacheModel sharedInstance] triggerCachedMessages];
             }
         });
     });

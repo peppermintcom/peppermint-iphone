@@ -32,13 +32,11 @@ habe been found</string>
                             <constraint firstAttribute="height" constant="137" id="3gV-fs-ElV"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NSp-vo-3VN">
-                        <rect key="frame" x="8" y="206" width="304" height="50"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Enter an email address to send your first message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NSp-vo-3VN">
+                        <rect key="frame" x="8" y="218" width="304" height="50"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="50" id="0kY-FN-nTm"/>
                         </constraints>
-                        <string key="text">_Add some friends to your contactbook first
-and then come back to Peppermint</string>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -48,7 +46,7 @@ and then come back to Peppermint</string>
                 <constraints>
                     <constraint firstItem="NSp-vo-3VN" firstAttribute="leading" secondItem="88e-Lp-HvR" secondAttribute="leading" constant="8" id="0Hr-oZ-8qk"/>
                     <constraint firstAttribute="trailing" secondItem="GRo-Nl-2Ld" secondAttribute="trailing" constant="8" id="1gf-OG-c5N"/>
-                    <constraint firstItem="NSp-vo-3VN" firstAttribute="top" secondItem="6OV-Bj-hRK" secondAttribute="bottom" constant="8" id="43t-ER-O6S"/>
+                    <constraint firstItem="NSp-vo-3VN" firstAttribute="top" secondItem="6OV-Bj-hRK" secondAttribute="bottom" constant="20" id="43t-ER-O6S"/>
                     <constraint firstAttribute="trailing" secondItem="NSp-vo-3VN" secondAttribute="trailing" constant="8" id="URg-f7-VLQ"/>
                     <constraint firstItem="GRo-Nl-2Ld" firstAttribute="top" secondItem="88e-Lp-HvR" secondAttribute="top" constant="8" id="cTW-RQ-9vg"/>
                     <constraint firstItem="6OV-Bj-hRK" firstAttribute="top" secondItem="GRo-Nl-2Ld" secondAttribute="bottom" constant="8" id="cwe-eB-PNZ"/>
