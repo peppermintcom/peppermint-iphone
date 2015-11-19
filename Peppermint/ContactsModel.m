@@ -149,6 +149,8 @@
                                  peppermintContact.nameSurname = nameSurname;
                                  peppermintContact.avatarImage = contact.thumbnail;
                                  [peppermintContactsArray addObject:peppermintContact];
+                               
+                               [peppermintContact addToCoreSpotlightSearch];
                              }
                          }
                          /*

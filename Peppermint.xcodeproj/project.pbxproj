@@ -110,6 +110,9 @@
 		B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */; };
 		B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FE184F1BE1676D002772B4 /* FeedBackModel.m */; };
 		D0A7C0DA1BFA0C7900ACD33E /* DeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A7C0D91BFA0C7900ACD33E /* DeviceModel.m */; };
+		D0A7C0EE1BFC589B00ACD33E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A7C0ED1BFC589B00ACD33E /* MobileCoreServices.framework */; };
+		D0A7C0F01BFC58A300ACD33E /* CoreSpotlight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A7C0EF1BFC58A300ACD33E /* CoreSpotlight.framework */; };
+		D0A7C0F31BFC5BC200ACD33E /* SpotlightModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A7C0F21BFC5BC200ACD33E /* SpotlightModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -317,6 +320,10 @@
 		C388433C48F87557ED2F3C2D /* Pods-Peppermint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peppermint.release.xcconfig"; path = "Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint.release.xcconfig"; sourceTree = "<group>"; };
 		D0A7C0D81BFA0C7900ACD33E /* DeviceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceModel.h; sourceTree = "<group>"; };
 		D0A7C0D91BFA0C7900ACD33E /* DeviceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceModel.m; sourceTree = "<group>"; };
+		D0A7C0ED1BFC589B00ACD33E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		D0A7C0EF1BFC58A300ACD33E /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
+		D0A7C0F11BFC5BC200ACD33E /* SpotlightModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotlightModel.h; sourceTree = "<group>"; };
+		D0A7C0F21BFC5BC200ACD33E /* SpotlightModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotlightModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -324,6 +331,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0A7C0F01BFC58A300ACD33E /* CoreSpotlight.framework in Frameworks */,
+				D0A7C0EE1BFC589B00ACD33E /* MobileCoreServices.framework in Frameworks */,
 				B190F5BC1BDD7F040094B391 /* AudioToolbox.framework in Frameworks */,
 				B1F93E8C1BC8E0D9005F2128 /* CoreData.framework in Frameworks */,
 				392D9C861A6F3945B758D95F /* libPods-Peppermint.a in Frameworks */,
@@ -352,6 +361,8 @@
 		6C8541A65356EA01C859C162 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D0A7C0EF1BFC58A300ACD33E /* CoreSpotlight.framework */,
+				D0A7C0ED1BFC589B00ACD33E /* MobileCoreServices.framework */,
 				B15228561BE898F500C400C6 /* libz.tbd */,
 				B15228541BE898DF00C400C6 /* AdSupport.framework */,
 				B190F5BB1BDD7F040094B391 /* AudioToolbox.framework */,
@@ -509,6 +520,8 @@
 				B10C39361BF718960070B49F /* AccountModel.m */,
 				D0A7C0D81BFA0C7900ACD33E /* DeviceModel.h */,
 				D0A7C0D91BFA0C7900ACD33E /* DeviceModel.m */,
+				D0A7C0F11BFC5BC200ACD33E /* SpotlightModel.h */,
+				D0A7C0F21BFC5BC200ACD33E /* SpotlightModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1110,6 +1123,7 @@
 				B1BB1E631BD364FB00A1CE45 /* AFNetworkActivityLogger.m in Sources */,
 				B15B15AC1BD9D8B800C0C171 /* ExplodingView.m in Sources */,
 				B10C39311BF6FB150070B49F /* User.m in Sources */,
+				D0A7C0F31BFC5BC200ACD33E /* SpotlightModel.m in Sources */,
 				B1EF40EB1BB7E78C00042E4B /* SendVoiceMessageModel.m in Sources */,
 				B17B3D5E1BB6A504009B8BC5 /* ContactsViewController.m in Sources */,
 				B13B07601BD3719500974AC3 /* MandrillToObject.m in Sources */,
