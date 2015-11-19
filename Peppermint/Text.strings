@@ -91,3 +91,7 @@
 "Subject" = "Subject";
 "Subject Description" = "The email subject";
 "What is your name?" = "What's your name?";
+"Please enter at least 6 characters" = "Please enter at least 6 characters";
+"Please connect to the Internet then Log In" = "Please connect to the Internet then Log In";
+"Continue" = "Continue";
+"Please check your internet connection and try again" = "Please check your internet connection and try again";

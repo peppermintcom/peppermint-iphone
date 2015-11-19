@@ -49,7 +49,6 @@ typedef enum : NSUInteger {
     REGISTER();
     
     self.backgroundView.alpha = 0.95;
-    //[self initBlurView];
     fastRecordingViewStatus = FastRecordingViewStatusInit;
 }
 
@@ -61,27 +60,6 @@ typedef enum : NSUInteger {
         [self messageStatusIsUpdated:self.sendVoiceMessageModel.sendingStatus withCancelOption:YES];
     }
 }
-
-/*
--(void) initBlurView {
-    self.backgroundColor = [UIColor clearColor];
-    if (!UIAccessibilityIsReduceTransparencyEnabled()) {
-        self.backgroundView.backgroundColor = [UIColor clearColor];
-        self.backgroundView.alpha = 1;
-        
-        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-        UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-        
-        blurEffectView.frame = self.backgroundView.bounds;
-        blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        [self.backgroundView addSubview:blurEffectView];
-    }
-    else {
-        self.backgroundView.backgroundColor = [UIColor blackColor];
-        self.backgroundView.alpha = 0.9;
-    }
-}
-*/
 
 -(void) prepareViewToPresent {
     self.navigationTitleLabel.text = [NSString stringWithFormat:
@@ -120,10 +98,10 @@ typedef enum : NSUInteger {
         BOOL isRecordingShort = self.totalSeconds <= MIN_VOICE_MESSAGE_LENGTH;
         BOOL isLoginInfoValid = self.sendVoiceMessageModel.peppermintMessageSender.isValid;
         
-        if(!isGestureValid) {
-            [self dissmissWithExplode];
-        } else if (isRecordingLong) {
+        if (isRecordingLong) {
             NSLog(@"Max time reached..."); //This action is handled in "timerUpdated:" delegate method
+        } else if(!isGestureValid) {
+            [self dissmissWithExplode];
         } else if (isRecordingShort) {
             [self showAlertToRecordMoreThanMinimumMessageLength];
         } else if ([self.sendVoiceMessageModel needsAuth] && !isLoginInfoValid ) {
@@ -198,11 +176,11 @@ typedef enum : NSUInteger {
 
 -(void) timerUpdated:(NSTimeInterval) timeInterval {
     self.totalSeconds = timeInterval;
-    if(self.totalSeconds <= MAX_RECORD_TIME + 0.3) {
+    if(self.totalSeconds <= MAX_RECORD_TIME) {
         int minutes = self.totalSeconds / 60;
         int seconds = ((int)self.totalSeconds) % 60;
         self.counterLabel.text = [NSString stringWithFormat:@"%.1d:%.2d", minutes, seconds];
-        [self.m13ProgressViewPie setProgress:timeInterval/MAX_RECORD_TIME animated:YES];
+        [self.m13ProgressViewPie setProgress:timeInterval/(MAX_RECORD_TIME + -2 * PING_INTERVAL) animated:YES];
     } else {
         [self.recordingModel stop];
         [self showTimeFinishedInformation];

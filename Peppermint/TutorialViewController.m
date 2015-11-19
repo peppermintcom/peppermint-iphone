@@ -27,7 +27,7 @@
     [super viewDidLoad];
     contactsModel = nil;
     self.items = [NSArray arrayWithObjects:@"tutorial1",@"tutorial2",@"tutorial3",@"_NEXPAGE_", nil];
-    
+    [self initContinueButton];
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -54,8 +54,7 @@
 {
     NSInteger lastItemIndex = self.items.count - 1;
     if(index == lastItemIndex) {
-        defaults_set_object(DEFAULTS_KEY_ISTUTORIALSHOWED, @(YES));
-        [self performSegueWithIdentifier:SEGUE_CONTACTS_VIEW_CONTROLLER sender:self];
+        [self finishTutorial];
     }
     
     UIImageView *imageView = nil;
@@ -93,6 +92,11 @@
     [self.page1Button setSelected:(swipeView.currentItemIndex == 0)];
     [self.page2Button setSelected:(swipeView.currentItemIndex == 1)];
     [self.page3Button setSelected:(swipeView.currentItemIndex == 2)];
+    
+    CGFloat newAlpha = (swipeView.currentItemIndex != 2) ? 0 : 1;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.continueButton.alpha = newAlpha;
+    }];
 }
 
 #pragma mark - Button Actions
@@ -125,6 +129,33 @@
 
 -(void) contactListRefreshed {
     //No need to implement.
+}
+
+#pragma mark - Continue Button
+
+-(void) initContinueButton {
+    self.continueButton.backgroundColor = [UIColor whiteColor];
+    [self.continueButton setTitleColor:[UIColor continueButtonTitle] forState:UIControlStateNormal];
+    [self.continueButton.titleLabel setFont:[UIFont openSansSemiBoldFontOfSize:16]];
+    [self.continueButton setTitle:LOC(@"Continue", @"Continue") forState:UIControlStateNormal];
+    self.continueButton.alpha = 0;
+    
+    self.continueButton.layer.cornerRadius = CONTINUE_BUTTON_CORNER_RADIUS;
+    self.continueButton.layer.shadowOffset = CGSizeMake(0, 3);
+    self.continueButton.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.continueButton.layer.shadowOpacity = 0.1;
+    self.continueButton.layer.shadowRadius = 1;
+}
+
+-(IBAction)continueButtonPressed:(id)sender {
+    [self finishTutorial];
+}
+
+#pragma mark - FinishTutorial
+
+-(void) finishTutorial {
+    defaults_set_object(DEFAULTS_KEY_ISTUTORIALSHOWED, @(YES));
+    [self performSegueWithIdentifier:SEGUE_CONTACTS_VIEW_CONTROLLER sender:self];
 }
 
 #pragma mark - UIAlertViewDelegate

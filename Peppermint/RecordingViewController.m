@@ -135,7 +135,7 @@
         int minutes = totalSeconds / 60;
         int seconds = totalSeconds % 60;
         self.counterLabel.text = [NSString stringWithFormat:@"%.1d:%.2d", minutes, seconds];
-        [self.m13ProgressViewPie setProgress:timeInterval/MAX_RECORD_TIME animated:YES];
+        [self.m13ProgressViewPie setProgress:timeInterval/(MAX_RECORD_TIME + -2 * PING_INTERVAL) animated:YES];
     } else {
         [self.recordingModel stop];
         self.resumeButton.enabled = NO;

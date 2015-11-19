@@ -15,7 +15,8 @@
 }
 
 -(void) sendVoiceMessageWithData:(NSData *)data withExtension:(NSString *)extension  {
-    [super sendVoiceMessageWithData:data withExtension:extension];    
+    
+    [super sendVoiceMessageWithData:data withExtension:extension];
     if([self isConnectionActive]) {
         _data = data;
         _extension = extension;
@@ -28,6 +29,21 @@
     } else {
         [[CacheModel sharedInstance] cache:self WithData:data extension:extension];
     }
+    
+#warning "Consider different method below for sending messages"
+    /*
+    if(self.delegate) {
+        [[CacheModel sharedInstance] cache:self WithData:data extension:extension];
+    } else {
+        if([self isConnectionActive] ) {
+            _data = data;
+            _extension = extension;
+            self.sendingStatus = SendingStatusUploading;
+            [self.delegate messageStatusIsUpdated:SendingStatusUploading withCancelOption:YES];
+            [awsModel startToUploadData:data ofType:[self typeForExtension:extension]];
+            
+        }
+    }*/
 }
 
 #pragma mark - AWSModelDelegate

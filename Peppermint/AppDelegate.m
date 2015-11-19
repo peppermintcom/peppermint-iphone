@@ -86,7 +86,7 @@
     [self initNavigationViewController];
     [self initFabric];
     [self initInitialViewController];
-    [self logServiceCalls];
+    //[self logServiceCalls];
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
     [self initGoogleApp];
     return YES;
@@ -100,6 +100,25 @@
     //PUBLISH([ApplicationDidEnterBackground new]);
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    if(self.mutableArray.count > 0) {
+        weakself_create()
+        __block UIBackgroundTaskIdentifier bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
+            NSLog(@"Still it exists %d items\nConsider caching the ongoing messages.", weakSelf.mutableArray.count);
+            [application endBackgroundTask:bgTask];
+             bgTask = UIBackgroundTaskInvalid;
+        }];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSLog(@"Waiting for all messages to be sent!");
+#warning "Think a smarter way than busy wait!"
+            while (weakSelf.mutableArray.count > 0) {
+                //Busy wait
+            }
+            [application endBackgroundTask:bgTask];
+            bgTask = UIBackgroundTaskInvalid;
+        });
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -281,6 +300,25 @@ reset:
 + (AppDelegate*) Instance {
     id<UIApplicationDelegate> appDelegate = [[UIApplication sharedApplication] delegate];
     return (AppDelegate*) appDelegate;
+}
+
+#pragma mark - Handle Error
+
++(NSString*) messageForError:(NSError*) error {
+    NSString *message = error.description;
+    if([error.domain isEqualToString:NSURLErrorDomain]) {
+        if(error.code == NSURLErrorNotConnectedToInternet) {
+            message = LOC(@"Please check your internet connection and try again", @"message");
+        }
+    }
+    return message;
+}
+
++(void) handleError:(NSError*) error {
+    NSString *title = LOC(@"An error occured", @"Error Title Message");
+    NSString *message = [self messageForError:error];
+    NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
+    [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
 }
 
 @end

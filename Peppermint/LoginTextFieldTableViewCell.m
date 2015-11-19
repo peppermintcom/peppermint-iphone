@@ -39,18 +39,24 @@
 
 #pragma mark - UITextFieldDelegate
 
+- (void)selectTextForInput:(UITextField *)textField atRange:(NSRange)range {
+    UITextPosition *start = [textField positionFromPosition:[textField beginningOfDocument]
+                                                 offset:range.location];
+    UITextPosition *end = [textField positionFromPosition:start
+                                               offset:range.length];
+    [textField setSelectedTextRange:[textField textRangeFromPosition:start toPosition:end]];
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    BOOL result = NO;
-    if( range.location < textField.text.length - 1 ) {
-        [self.delegate updatedTextFor:self atIndexPath:self.indexPath];
-        result = YES;
-    } else {
+    if(self.disallowedCharsText.length == 0
+       || ![self.disallowedCharsText containsString:string]) {
+        NSRange newRange = NSMakeRange(range.location + string.length, 0);
         NSString* text = [textField.text stringByReplacingCharactersInRange:range withString:string];
         self.textField.text = text;
+        [self selectTextForInput:textField atRange:newRange];
         [self.delegate updatedTextFor:self atIndexPath:self.indexPath];
-        result = NO;
     }
-    return result;
+    return NO;
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {

@@ -10,6 +10,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import "TPAACAudioConverter.h"
 
+#define PING_INTERVAL   0.2
+
 @protocol RecordingModelDelegate <BaseModelDelegate>
 @required
 -(void) microphoneAccessRightsAreNotSupplied;

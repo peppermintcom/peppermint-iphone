@@ -10,4 +10,5 @@
 
 @interface NSString (NSString_Addition)
 - (BOOL)isValidEmail;
+-(BOOL)isPasswordLengthValid;
 @end

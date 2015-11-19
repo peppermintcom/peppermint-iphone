@@ -19,9 +19,10 @@
 @property (nonatomic, weak) IBOutlet UIButton *page1Button;
 @property (nonatomic, weak) IBOutlet UIButton *page2Button;
 @property (nonatomic, weak) IBOutlet UIButton *page3Button;
+@property (nonatomic, weak) IBOutlet UIButton *continueButton;
 
 -(IBAction)page1ButtonPressed:(id)sender;
 -(IBAction)page2ButtonPressed:(id)sender;
 -(IBAction)page3ButtonPressed:(id)sender;
-
+-(IBAction)continueButtonPressed:(id)sender;
 @end

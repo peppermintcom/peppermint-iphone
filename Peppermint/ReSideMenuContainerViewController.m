@@ -76,10 +76,7 @@
 #pragma mark - FeedBackModelDelegate
 
 -(void) operationFailure:(NSError*) error {
-    NSString *title = LOC(@"An error occured", @"Error Title Message");
-    NSString *message = error.description;
-    NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
-    [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
+    [AppDelegate handleError:error];
 }
 
 -(void) feedBackSentWithSuccess {

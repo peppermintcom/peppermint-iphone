@@ -60,12 +60,6 @@ SUBSCRIBE(AccountRegisterConflictTryLogin) {
 
 SUBSCRIBE(NetworkFailure) {
     NSError *error = event.error;
-    NSDictionary *userInfo = error.userInfo;
-    if([userInfo.allKeys containsObject:NSLocalizedDescriptionKey]) {
-        NSString *errorText = [userInfo valueForKey:NSLocalizedDescriptionKey];
-        errorText = [NSString stringWithFormat:@"TEST NOTE: Username/Password is incorrect!\n%@", errorText];
-        error = [NSError errorWithDomain:errorText code:401 userInfo:nil];
-    }
     [self.delegate operationFailure:error];
 }
 

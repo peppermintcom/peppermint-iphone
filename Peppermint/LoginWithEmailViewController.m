@@ -24,9 +24,10 @@
 #define ROW_EMAIL_EMPTY_VALIDATION                  1
 #define ROW_EMAIL_FORMAT_VALIDATION                 2
 
-#define ROW_COUNT_FOR_PASSWORD                      2
+#define ROW_COUNT_FOR_PASSWORD                      3
 #define ROW_INPUT_PASSWORD                          0
 #define ROW_PASSWORD_EMPTY_VALIDATION               1
+#define ROW_PASSWORD_LENGTH_VALIDATION              2
 
 #define DISTANCE_BTW_SECTIONS      12
 
@@ -38,7 +39,8 @@
     isValidNameSurnameEmptyValidation,
     isValidEmailEmptyValidation,
     isValidEmailFormatValidation,
-    isValidPasswordEmptyValidation;
+    isValidPasswordEmptyValidation,
+    isValidPassowrdLengthValidation;
     UITextField *activeTextField;
 }
 
@@ -50,20 +52,17 @@
     self.doneLabel.textColor = [UIColor whiteColor];
     self.doneLabel.text = LOC(@"Done",@"Login button text");
     
-    isValidNameSurnameEmptyValidation = YES;
+    isValidNameSurnameEmptyValidation = NO;
     isValidEmailEmptyValidation = YES;
     isValidEmailFormatValidation = YES;
     isValidPasswordEmptyValidation = YES;
+    isValidPassowrdLengthValidation = YES;
     self.doneLabel.enabled = self.doneButton.enabled = NO;
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     NSAssert(self.loginModel != nil, @"LoginModel must be initiated before LoginWithEmailViewController is shown");
-  
-  NSIndexPath * indexPath = [NSIndexPath indexPathForRow:ROW_INPUT_NAME_SURNAME inSection:INDEX_NAME_SURNAME];
-  [self validateCellForNameSurname:[CellFactory cellLoginTextFieldTableViewCellFromTable:self.tableView forIndexPath:indexPath withDelegate:self]];
-  [self validateDoneButton];
 }
 
 -(void) viewDidAppear:(BOOL)animated {
@@ -104,6 +103,7 @@
             loginTextFieldCell.textField.placeholder = LOC(@"Your Name",@"Your Name");
             loginTextFieldCell.textField.keyboardType = UIKeyboardTypeAlphabet;
             loginTextFieldCell.textField.text = self.loginModel.peppermintMessageSender.nameSurname;
+            loginTextFieldCell.disallowedCharsText = @"";
             [loginTextFieldCell setTitles:[NSArray arrayWithObjects:@"Mr",@"Mrs",@"Miss", nil]];
             cell = loginTextFieldCell;
         } else if (indexPath.row == ROW_NAME_SURNAME_EMPTY_VALIDATION) {
@@ -118,6 +118,7 @@
             loginTextFieldCell.textField.placeholder = LOC(@"Email", @"Email");
             loginTextFieldCell.textField.keyboardType = UIKeyboardTypeEmailAddress;
             loginTextFieldCell.textField.text = self.loginModel.peppermintMessageSender.email;
+            loginTextFieldCell.disallowedCharsText = @" ";
             [loginTextFieldCell setTitles:nil];
             cell = loginTextFieldCell;
         } else if (indexPath.row == ROW_EMAIL_EMPTY_VALIDATION) {
@@ -136,11 +137,16 @@
             loginTextFieldCell.textField.placeholder = LOC(@"Password", @"Password");
             loginTextFieldCell.textField.keyboardType = UIKeyboardTypeDefault;
             loginTextFieldCell.textField.text = self.loginModel.peppermintMessageSender.password;
+            loginTextFieldCell.disallowedCharsText = @" ";
             [loginTextFieldCell setTitles:nil];
             cell = loginTextFieldCell;
         } else if (indexPath.row == ROW_PASSWORD_EMPTY_VALIDATION) {
             InformationTextTableViewCell *informationTextTableViewCell = [CellFactory cellInformationTextTableViewCellFromTable:tableView forIndexPath:indexPath];
             informationTextTableViewCell.label.text = LOC(@"This field is mandatory",@"This field is mandatory");
+            cell = informationTextTableViewCell;
+        } else if (indexPath.row == ROW_PASSWORD_LENGTH_VALIDATION) {
+            InformationTextTableViewCell *informationTextTableViewCell = [CellFactory cellInformationTextTableViewCellFromTable:tableView forIndexPath:indexPath];
+            informationTextTableViewCell.label.text = LOC(@"Please enter at least 6 characters","Please enter at least 6 characters");
             cell = informationTextTableViewCell;
         }
     }
@@ -168,6 +174,8 @@
             height = CELL_HEIGHT_LOGIN_TABLEVIEWCELL;
         } else if (indexPath.row == ROW_PASSWORD_EMPTY_VALIDATION) {
             height = (isValidPasswordEmptyValidation) ? 0 : CELL_HEIGHT_INFORMATION_TABLEVIEWCELL;
+        } else if (indexPath.row == ROW_PASSWORD_LENGTH_VALIDATION) {
+            height = (isValidPassowrdLengthValidation) ? 0: CELL_HEIGHT_INFORMATION_TABLEVIEWCELL;
         }
     }
     return height;
@@ -235,12 +243,15 @@
 -(void) validateCellForPassword:(LoginTextFieldTableViewCell*) cell {
     PeppermintMessageSender *sender = self.loginModel.peppermintMessageSender;
     isValidPasswordEmptyValidation = sender.password.length > 0 ;
+    isValidPassowrdLengthValidation = [sender.password isPasswordLengthValid];
     
+    BOOL isValid = isValidPasswordEmptyValidation && isValidPassowrdLengthValidation;
     [self validateDoneButton];
-    [cell setValid:isValidPasswordEmptyValidation];
+    [cell setValid:isValid];
     
     NSMutableArray *indexpathsToReload = [NSMutableArray new];
     [indexpathsToReload addObject:[NSIndexPath indexPathForItem:ROW_PASSWORD_EMPTY_VALIDATION inSection:INDEX_PASSWORD]];
+    [indexpathsToReload addObject:[NSIndexPath indexPathForItem:ROW_PASSWORD_LENGTH_VALIDATION inSection:INDEX_PASSWORD]];
     [self.tableView reloadRowsAtIndexPaths:indexpathsToReload withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 

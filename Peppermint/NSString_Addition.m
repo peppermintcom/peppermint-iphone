@@ -20,4 +20,10 @@
     return [emailTest evaluateWithObject:self];
 }
 
+-(BOOL)isPasswordLengthValid
+{
+    NSString *filteredString = [self stringByReplacingOccurrencesOfString:@" " withString:@""];
+    return filteredString.length >= 6;
+}
+
 @end
