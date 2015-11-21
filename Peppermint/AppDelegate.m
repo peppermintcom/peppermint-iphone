@@ -16,6 +16,7 @@
 #import <Google/SignIn.h>
 #import "RecordingViewController.h"
 #import "SpotlightModel.h"
+#import "FastReplyModel.h"
 
 @import CoreSpotlight;
 @import MobileCoreServices;
@@ -189,14 +190,13 @@
             }
         }
         if(nameSurname && email) {
-            result = [RecordingViewController sendFastReplyToUserWithNameSurname:nameSurname withEmail:email];
+            result = [FastReplyModel setFastReplyContactWithNameSurname:nameSurname email:email];
         } else {
             NSLog(@"Query Parameters are not valid!");
         }
     } else if ([[[url path] lowercaseString] containsString:PATH_VERIFIY_EMAIL]) {
         
-#warning "Verify email locally with parsing the url parameters from base64 encoded json data"
-        
+#warning "Verify email locally with parsing the url parameters from base64 encoded json data"        
         result = YES;
         UIViewController *rootVC = [AppDelegate Instance].window.rootViewController;
         dispatch_async(dispatch_get_main_queue(), ^{

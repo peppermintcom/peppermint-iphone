@@ -20,5 +20,6 @@ typedef enum : NSUInteger {
 @property (nonatomic) CommunicationChannel communicationChannel;
 
 - (void)addToCoreSpotlightSearch;
+- (BOOL) equals:(PeppermintContact*)peppermintContact;
 
 @end

@@ -7,8 +7,7 @@
 //
 
 #import "SpotlightModel.h"
-#import "PeppermintContact.h"
-#import "RecordingViewController.h"
+#import "FastReplyModel.h"
 
 @import CoreSpotlight;
 @import MobileCoreServices;
@@ -61,7 +60,7 @@
   NSString * email = [components lastObject];
   
   if (nameSurname && email) {
-    return [RecordingViewController sendFastReplyToUserWithNameSurname:nameSurname withEmail:email];
+      return [FastReplyModel setFastReplyContactWithNameSurname:nameSurname email:email];
   }
   
   return NO;

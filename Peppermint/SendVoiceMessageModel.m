@@ -9,6 +9,7 @@
 #import "SendVoiceMessageModel.h"
 #import "ConnectionModel.h"
 #import "CacheModel.h"
+#import "FastReplyModel.h"
 
 #define TIMER_PERIOD    3
 
@@ -57,6 +58,7 @@
     _extension = extension;
     [recentContactsModel save:self.selectedPeppermintContact];
     [self attachProcessToAppDelegate];
+    [self checkAndCleanFastReplyModel];
     
 #warning "Busy wait, think to make it with a more smart way"
     if(self.sendingStatus == SendingStatusIniting) {
@@ -230,5 +232,14 @@
     }
     return sendVoiceMessageModel;
 }
- 
+
+#pragma mark - FastReplyModel
+
+-(void) checkAndCleanFastReplyModel {
+    PeppermintContact *fastReplyContact = [FastReplyModel sharedInstance].peppermintContact;
+    if([self.selectedPeppermintContact equals:fastReplyContact]) {
+        [FastReplyModel cleanFastReplyContact];
+    }
+}
+
 @end
