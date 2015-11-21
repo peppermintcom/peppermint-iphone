@@ -194,9 +194,14 @@
             NSLog(@"Query Parameters are not valid!");
         }
     } else if ([[[url path] lowercaseString] containsString:PATH_VERIFIY_EMAIL]) {
+        
+#warning "Verify email locally with parsing the url parameters from base64 encoded json data"
+        
         result = YES;
         UIViewController *rootVC = [AppDelegate Instance].window.rootViewController;
-        [MBProgressHUD showHUDAddedTo:rootVC.view animated:YES];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBProgressHUD showHUDAddedTo:rootVC.view animated:YES];
+        });
         dispatch_async(LOW_PRIORITY_QUEUE, ^{
             [NSData dataWithContentsOfURL:url]; //Verify email on the server
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -317,9 +322,10 @@ reset:
     if([error.domain isEqualToString:NSURLErrorDomain]) {
         switch (error.code) {
             case NSURLErrorNotConnectedToInternet:
-                message = LOC(@"Please check your internet connection and try again", @"message");
             case NSURLErrorNetworkConnectionLost:
-                message = LOC(@"Please connect to the internet to upload the message", @"message");
+                message = LOC(@"Please check your internet connection and try again", @"message");
+#warning "Handle the below message. Maybe in view controller"
+                //message = LOC(@"Please connect to the internet to upload the message", @"message");
                 break;
             default:
                 message = LOC(@"Connection error", @"message");

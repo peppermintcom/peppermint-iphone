@@ -104,7 +104,7 @@
             loginTextFieldCell.textField.keyboardType = UIKeyboardTypeAlphabet;
             loginTextFieldCell.textField.text = self.loginModel.peppermintMessageSender.nameSurname;
             loginTextFieldCell.disallowedCharsText = @"";
-            [loginTextFieldCell setTitles:[NSArray arrayWithObjects:@"Mr",@"Mrs",@"Miss", nil]];
+            [loginTextFieldCell setTitles:[NSArray arrayWithObjects:@"Mr.",@"Mrs.",@"Miss", nil]];
             cell = loginTextFieldCell;
         } else if (indexPath.row == ROW_NAME_SURNAME_EMPTY_VALIDATION) {
             InformationTextTableViewCell *informationTextTableViewCell = [CellFactory cellInformationTextTableViewCellFromTable:tableView forIndexPath:indexPath];

@@ -33,7 +33,7 @@
     
     self.doneLabel.font = [UIFont openSansFontOfSize:18];
     self.doneLabel.textColor = [UIColor whiteColor];
-    self.doneLabel.text = LOC(@"Log Out", @"Log Out");
+    self.doneLabel.text = LOC(@"Cancel", @"Cancel");
 }
 
 -(void) viewWillAppear:(BOOL)animated {

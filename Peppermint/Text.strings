@@ -35,7 +35,7 @@
 "Mic Access rights explanation" = "To be able to use Peppermint you should give access to your microphone. You can change the access rights from your phone settings.";
 "Settings URL is not supported" = "Your iOS version does not support redirecting to the Settings Page. Please go to the Home Screen -> Settings -> Peppermint to change permissions";
 "Settings" = "Settings";
-"Recording is cut" = "Your voice recording is cut. How would you like to proceed?";
+"Recording is cut" = "Your voice recording was stopped. Would you like to send it?";
 "Restart record" = "Re-start recording";
 "Recording for contact format" = "Recording for %@\n%@";
 "Hold to record message" = "Hold to record, release to send";
@@ -60,7 +60,7 @@
 "Feedback" = "Feedback";
 "support@peppermint.com" = "support@peppermint.com";
 "Feedback account error" = "Please add and configure at least one mail account on this device to be able to send feedbacks";
-"Feedback sent with success" = "Your feedback is sent successfully";
+"Feedback sent with success" = "Your feedback was sent";
 "Feedback Subject" = "Peppermint Feedback";
 "Starting" = "Preparing";
 "Uploading" = "Uploading";
@@ -68,7 +68,6 @@
 "Sent" = "Sent";
 "Cancelled" = "Cancelled";
 "Tap to cancel" = "  Tap to cancel";
-"Internet connection is not valid" = "You need a valid internet connection to send messages";
 "Account" = "Account";
 "Your Name" = "Your Name";
 "Could not get all needed information from facebook!" = "Could not get all needed information from facebook! Seems your facebook account does not contain needed details. Please update your profile or use other login method.";
@@ -78,7 +77,7 @@
 "Password" = "Password";
 "Verification Mail Sent" = "Peppermint just sent you a verification email. Please check your email inbox!";
 "This field is mandatory" = "This field is mandatory";
-"Mail Format is not correct" = "Please enter a valid email address.";
+"Mail Format is not correct" = "Please enter a valid email";
 "Facebook" = "Facebook";
 "Google" = "Google";
 "Logged in message format" = "You are currently logged in\nusing %@";
