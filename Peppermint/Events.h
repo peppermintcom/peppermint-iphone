@@ -11,6 +11,7 @@
 #import "User.h"
 
 @interface NetworkFailure : NSObject
+@property (nonatomic) id sender;
 @property(nonatomic) NSError *error;
 @end
 

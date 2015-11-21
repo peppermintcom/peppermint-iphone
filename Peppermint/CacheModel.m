@@ -90,6 +90,7 @@
                 while (mailSenderModel.sendingStatus != SendingStatusSent
                        && mailSenderModel.sendingStatus != SendingStatusCancelled
                        && mailSenderModel.sendingStatus != SendingStatusError) {
+                    #warning "Find smarter way than busy waiting"
                     //Busy wait...
                 }
                 

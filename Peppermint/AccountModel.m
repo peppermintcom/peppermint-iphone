@@ -59,8 +59,10 @@ SUBSCRIBE(AccountRegisterConflictTryLogin) {
 }
 
 SUBSCRIBE(NetworkFailure) {
-    NSError *error = event.error;
-    [self.delegate operationFailure:error];
+    if(event.sender == awsService) {
+        NSError *error = event.error;
+        [self.delegate operationFailure:error];
+    }
 }
 
 SUBSCRIBE(AccountLoginIsSuccessful) {
