@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		34FE5288FE5CB504EFF4052A /* libPods-Watch Extension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A90F17D47CA704113948271 /* libPods-Watch Extension.a */; };
 		392D9C861A6F3945B758D95F /* libPods-Peppermint.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4568D87C1B184E71C2B112BE /* libPods-Peppermint.a */; };
 		B100A54A1BEDD6F800EEB573 /* CacheModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B100A5491BEDD6F800EEB573 /* CacheModel.m */; };
 		B10125BC1BEB670500B5DD54 /* NSString_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B10125BB1BEB670500B5DD54 /* NSString_Addition.m */; };
@@ -113,10 +114,18 @@
 		D0A7C0FA1BFC73FE00ACD33E /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0A7C0F81BFC73FE00ACD33E /* Interface.storyboard */; };
 		D0A7C0FC1BFC73FF00ACD33E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0A7C0FB1BFC73FF00ACD33E /* Assets.xcassets */; };
 		D0A7C1031BFC73FF00ACD33E /* Watch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D0A7C1021BFC73FF00ACD33E /* Watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		D0A7C1091BFC73FF00ACD33E /* InterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A7C1081BFC73FF00ACD33E /* InterfaceController.m */; };
+		D0A7C1091BFC73FF00ACD33E /* ContactsInterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A7C1081BFC73FF00ACD33E /* ContactsInterfaceController.m */; };
 		D0A7C10C1BFC73FF00ACD33E /* ExtensionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A7C10B1BFC73FF00ACD33E /* ExtensionDelegate.m */; };
 		D0A7C10E1BFC73FF00ACD33E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0A7C10D1BFC73FF00ACD33E /* Assets.xcassets */; };
 		D0A7C1121BFC73FF00ACD33E /* Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = D0A7C0F61BFC73FE00ACD33E /* Watch.app */; };
+		D0D70C341BFF31440068AB20 /* ContactsTableRowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70C331BFF31440068AB20 /* ContactsTableRowController.m */; };
+		D0D70C361BFF34F00068AB20 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D70C351BFF34F00068AB20 /* Contacts.framework */; };
+		D0D70C3A1BFF35AB0068AB20 /* WKContact.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70C391BFF35AB0068AB20 /* WKContact.m */; };
+		D0D70C421BFF997C0068AB20 /* WKInterfaceTable+IGInterfaceDataTable.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70C411BFF997C0068AB20 /* WKInterfaceTable+IGInterfaceDataTable.m */; };
+		D0D70C431BFFA71B0068AB20 /* PeppermintContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF171BB71EC0008C6F71 /* PeppermintContact.m */; };
+		D0D70C471C00499B0068AB20 /* RecordingInterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70C461C00499B0068AB20 /* RecordingInterfaceController.m */; };
+		D0D70C521C0056E50068AB20 /* WKServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70C511C0056E50068AB20 /* WKServerManager.m */; };
+		D0D70C7A1C005FF40068AB20 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D70C791C005FF40068AB20 /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -170,6 +179,8 @@
 
 /* Begin PBXFileReference section */
 		4568D87C1B184E71C2B112BE /* libPods-Peppermint.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Peppermint.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A90F17D47CA704113948271 /* libPods-Watch Extension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Watch Extension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A0FF4878BDBABA38B44F8C7 /* Pods-Watch Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Watch Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Watch Extension/Pods-Watch Extension.debug.xcconfig"; sourceTree = "<group>"; };
 		A3AC8DCFCC2ADAD1159483F0 /* Pods-Peppermint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peppermint.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint.debug.xcconfig"; sourceTree = "<group>"; };
 		B100A5481BEDD6F800EEB573 /* CacheModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheModel.h; sourceTree = "<group>"; };
 		B100A5491BEDD6F800EEB573 /* CacheModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheModel.m; sourceTree = "<group>"; };
@@ -361,6 +372,7 @@
 		B1FE184E1BE1676D002772B4 /* FeedBackModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedBackModel.h; sourceTree = "<group>"; };
 		B1FE184F1BE1676D002772B4 /* FeedBackModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedBackModel.m; sourceTree = "<group>"; };
 		C388433C48F87557ED2F3C2D /* Pods-Peppermint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peppermint.release.xcconfig"; path = "Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint.release.xcconfig"; sourceTree = "<group>"; };
+		CD9ED7696C27E289BEEE24D8 /* Pods-Watch Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Watch Extension.release.xcconfig"; path = "Pods/Target Support Files/Pods-Watch Extension/Pods-Watch Extension.release.xcconfig"; sourceTree = "<group>"; };
 		D0A7C0D81BFA0C7900ACD33E /* DeviceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceModel.h; sourceTree = "<group>"; };
 		D0A7C0D91BFA0C7900ACD33E /* DeviceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceModel.m; sourceTree = "<group>"; };
 		D0A7C0F61BFC73FE00ACD33E /* Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Watch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -368,12 +380,25 @@
 		D0A7C0FB1BFC73FF00ACD33E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0A7C0FD1BFC73FF00ACD33E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0A7C1021BFC73FF00ACD33E /* Watch Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Watch Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D0A7C1071BFC73FF00ACD33E /* InterfaceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterfaceController.h; sourceTree = "<group>"; };
-		D0A7C1081BFC73FF00ACD33E /* InterfaceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterfaceController.m; sourceTree = "<group>"; };
+		D0A7C1071BFC73FF00ACD33E /* ContactsInterfaceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactsInterfaceController.h; sourceTree = "<group>"; };
+		D0A7C1081BFC73FF00ACD33E /* ContactsInterfaceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContactsInterfaceController.m; sourceTree = "<group>"; };
 		D0A7C10A1BFC73FF00ACD33E /* ExtensionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExtensionDelegate.h; sourceTree = "<group>"; };
 		D0A7C10B1BFC73FF00ACD33E /* ExtensionDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExtensionDelegate.m; sourceTree = "<group>"; };
 		D0A7C10D1BFC73FF00ACD33E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0A7C10F1BFC73FF00ACD33E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0D70C321BFF31440068AB20 /* ContactsTableRowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactsTableRowController.h; path = InterfaceControllers/ContactsTableRowController/ContactsTableRowController.h; sourceTree = "<group>"; };
+		D0D70C331BFF31440068AB20 /* ContactsTableRowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContactsTableRowController.m; path = InterfaceControllers/ContactsTableRowController/ContactsTableRowController.m; sourceTree = "<group>"; };
+		D0D70C351BFF34F00068AB20 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS2.0.sdk/System/Library/Frameworks/Contacts.framework; sourceTree = DEVELOPER_DIR; };
+		D0D70C381BFF35AB0068AB20 /* WKContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WKContact.h; path = Module/WKContact/WKContact.h; sourceTree = "<group>"; };
+		D0D70C391BFF35AB0068AB20 /* WKContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WKContact.m; path = Module/WKContact/WKContact.m; sourceTree = "<group>"; };
+		D0D70C3B1BFF91380068AB20 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS2.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		D0D70C401BFF997C0068AB20 /* WKInterfaceTable+IGInterfaceDataTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKInterfaceTable+IGInterfaceDataTable.h"; sourceTree = "<group>"; };
+		D0D70C411BFF997C0068AB20 /* WKInterfaceTable+IGInterfaceDataTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKInterfaceTable+IGInterfaceDataTable.m"; sourceTree = "<group>"; };
+		D0D70C451C00499B0068AB20 /* RecordingInterfaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecordingInterfaceController.h; path = InterfaceControllers/RecordingInterfaceController/RecordingInterfaceController.h; sourceTree = "<group>"; };
+		D0D70C461C00499B0068AB20 /* RecordingInterfaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecordingInterfaceController.m; path = InterfaceControllers/RecordingInterfaceController/RecordingInterfaceController.m; sourceTree = "<group>"; };
+		D0D70C501C0056E50068AB20 /* WKServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WKServerManager.h; path = Module/ServerManager/WKServerManager.h; sourceTree = "<group>"; };
+		D0D70C511C0056E50068AB20 /* WKServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WKServerManager.m; path = Module/ServerManager/WKServerManager.m; sourceTree = "<group>"; };
+		D0D70C791C005FF40068AB20 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -381,6 +406,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0D70C7A1C005FF40068AB20 /* SystemConfiguration.framework in Frameworks */,
 				B190F5BC1BDD7F040094B391 /* AudioToolbox.framework in Frameworks */,
 				B1F93E8C1BC8E0D9005F2128 /* CoreData.framework in Frameworks */,
 				392D9C861A6F3945B758D95F /* libPods-Peppermint.a in Frameworks */,
@@ -398,6 +424,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0D70C361BFF34F00068AB20 /* Contacts.framework in Frameworks */,
+				34FE5288FE5CB504EFF4052A /* libPods-Watch Extension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,6 +437,8 @@
 			children = (
 				A3AC8DCFCC2ADAD1159483F0 /* Pods-Peppermint.debug.xcconfig */,
 				C388433C48F87557ED2F3C2D /* Pods-Peppermint.release.xcconfig */,
+				7A0FF4878BDBABA38B44F8C7 /* Pods-Watch Extension.debug.xcconfig */,
+				CD9ED7696C27E289BEEE24D8 /* Pods-Watch Extension.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -416,11 +446,15 @@
 		6C8541A65356EA01C859C162 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D0D70C791C005FF40068AB20 /* SystemConfiguration.framework */,
+				D0D70C3B1BFF91380068AB20 /* UIKit.framework */,
+				D0D70C351BFF34F00068AB20 /* Contacts.framework */,
 				B15228561BE898F500C400C6 /* libz.tbd */,
 				B15228541BE898DF00C400C6 /* AdSupport.framework */,
 				B190F5BB1BDD7F040094B391 /* AudioToolbox.framework */,
 				B1F93E8B1BC8E0D9005F2128 /* CoreData.framework */,
 				4568D87C1B184E71C2B112BE /* libPods-Peppermint.a */,
+				6A90F17D47CA704113948271 /* libPods-Watch Extension.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -949,14 +983,97 @@
 		D0A7C1061BFC73FF00ACD33E /* Watch Extension */ = {
 			isa = PBXGroup;
 			children = (
-				D0A7C1071BFC73FF00ACD33E /* InterfaceController.h */,
-				D0A7C1081BFC73FF00ACD33E /* InterfaceController.m */,
+				D0D70C3D1BFF994C0068AB20 /* Categories */,
+				D0D70C371BFF35850068AB20 /* Module */,
+				D0D70C2E1BFF30750068AB20 /* InterfaceControllers */,
 				D0A7C10A1BFC73FF00ACD33E /* ExtensionDelegate.h */,
 				D0A7C10B1BFC73FF00ACD33E /* ExtensionDelegate.m */,
 				D0A7C10D1BFC73FF00ACD33E /* Assets.xcassets */,
 				D0A7C10F1BFC73FF00ACD33E /* Info.plist */,
 			);
 			path = "Watch Extension";
+			sourceTree = "<group>";
+		};
+		D0D70C2E1BFF30750068AB20 /* InterfaceControllers */ = {
+			isa = PBXGroup;
+			children = (
+				D0D70C441C0049680068AB20 /* RecordingInterfaceController */,
+				D0D70C311BFF30A50068AB20 /* ContactsTableRowController */,
+				D0D70C301BFF30940068AB20 /* ContactsInterfaceController */,
+			);
+			name = InterfaceControllers;
+			sourceTree = "<group>";
+		};
+		D0D70C301BFF30940068AB20 /* ContactsInterfaceController */ = {
+			isa = PBXGroup;
+			children = (
+				D0A7C1071BFC73FF00ACD33E /* ContactsInterfaceController.h */,
+				D0A7C1081BFC73FF00ACD33E /* ContactsInterfaceController.m */,
+			);
+			name = ContactsInterfaceController;
+			sourceTree = "<group>";
+		};
+		D0D70C311BFF30A50068AB20 /* ContactsTableRowController */ = {
+			isa = PBXGroup;
+			children = (
+				D0D70C321BFF31440068AB20 /* ContactsTableRowController.h */,
+				D0D70C331BFF31440068AB20 /* ContactsTableRowController.m */,
+			);
+			name = ContactsTableRowController;
+			sourceTree = "<group>";
+		};
+		D0D70C371BFF35850068AB20 /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				D0D70C4F1C0056C20068AB20 /* Manager */,
+				D0D70C4E1C00569D0068AB20 /* Entity */,
+			);
+			name = Module;
+			sourceTree = "<group>";
+		};
+		D0D70C3D1BFF994C0068AB20 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				D0D70C3E1BFF997C0068AB20 /* IGInterfaceDataTable */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		D0D70C3E1BFF997C0068AB20 /* IGInterfaceDataTable */ = {
+			isa = PBXGroup;
+			children = (
+				D0D70C401BFF997C0068AB20 /* WKInterfaceTable+IGInterfaceDataTable.h */,
+				D0D70C411BFF997C0068AB20 /* WKInterfaceTable+IGInterfaceDataTable.m */,
+			);
+			name = IGInterfaceDataTable;
+			path = Categories/IGInterfaceDataTable;
+			sourceTree = "<group>";
+		};
+		D0D70C441C0049680068AB20 /* RecordingInterfaceController */ = {
+			isa = PBXGroup;
+			children = (
+				D0D70C451C00499B0068AB20 /* RecordingInterfaceController.h */,
+				D0D70C461C00499B0068AB20 /* RecordingInterfaceController.m */,
+			);
+			name = RecordingInterfaceController;
+			sourceTree = "<group>";
+		};
+		D0D70C4E1C00569D0068AB20 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				D0D70C381BFF35AB0068AB20 /* WKContact.h */,
+				D0D70C391BFF35AB0068AB20 /* WKContact.m */,
+			);
+			name = Entity;
+			sourceTree = "<group>";
+		};
+		D0D70C4F1C0056C20068AB20 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				D0D70C501C0056E50068AB20 /* WKServerManager.h */,
+				D0D70C511C0056E50068AB20 /* WKServerManager.m */,
+			);
+			name = Manager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -973,6 +1090,7 @@
 				99E5888A4AEAE0B8E8705C03 /* Copy Pods Resources */,
 				B1B6528C1BDDF8C0006987EA /* ShellScript */,
 				D0A7C11A1BFC73FF00ACD33E /* Embed Watch Content */,
+				E128F0A435CD495581B040CF /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1023,9 +1141,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D0A7C1171BFC73FF00ACD33E /* Build configuration list for PBXNativeTarget "Watch Extension" */;
 			buildPhases = (
+				B8274B39F83B72F45C801191 /* Check Pods Manifest.lock */,
 				D0A7C0FE1BFC73FF00ACD33E /* Sources */,
 				D0A7C0FF1BFC73FF00ACD33E /* Frameworks */,
 				D0A7C1001BFC73FF00ACD33E /* Resources */,
+				65FB65ACE3C079C3BAA27604 /* Embed Pods Frameworks */,
+				CF6B843AE176085ABFA6E1C6 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1047,10 +1168,10 @@
 				TargetAttributes = {
 					B17B3D2A1BB6898C009B8BC5 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = 8V9FEAB5WD;
+						DevelopmentTeam = 6PUQ7TWUAW;
 						SystemCapabilities = {
 							com.apple.SafariKeychain = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -1060,7 +1181,7 @@
 					};
 					D0A7C0F51BFC73FD00ACD33E = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = 8V9FEAB5WD;
+						DevelopmentTeam = 6PUQ7TWUAW;
 					};
 					D0A7C1011BFC73FF00ACD33E = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -1140,6 +1261,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		65FB65ACE3C079C3BAA27604 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Watch Extension/Pods-Watch Extension-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		99E5888A4AEAE0B8E8705C03 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1168,6 +1304,21 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" b0f9447ce570c6a59d66e84fd53f91a0fadc63cc de219f36d61063c1e338d39f9fe3a31f1860ef71964ea41cce98a4a3d2dcabb5";
 		};
+		B8274B39F83B72F45C801191 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		BA057164F91858255C6D867A /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1181,6 +1332,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		CF6B843AE176085ABFA6E1C6 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Watch Extension/Pods-Watch Extension-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E128F0A435CD495581B040CF /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1287,8 +1468,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0D70C521C0056E50068AB20 /* WKServerManager.m in Sources */,
+				D0D70C3A1BFF35AB0068AB20 /* WKContact.m in Sources */,
 				D0A7C10C1BFC73FF00ACD33E /* ExtensionDelegate.m in Sources */,
-				D0A7C1091BFC73FF00ACD33E /* InterfaceController.m in Sources */,
+				D0D70C431BFFA71B0068AB20 /* PeppermintContact.m in Sources */,
+				D0D70C341BFF31440068AB20 /* ContactsTableRowController.m in Sources */,
+				D0A7C1091BFC73FF00ACD33E /* ContactsInterfaceController.m in Sources */,
+				D0D70C421BFF997C0068AB20 /* WKInterfaceTable+IGInterfaceDataTable.m in Sources */,
+				D0D70C471C00499B0068AB20 /* RecordingInterfaceController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1369,6 +1556,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					"SAMPLE_BUNDLE_PREFIX_STRING=@\\\"${SAMPLE_BUNDLE_PREFIX}\\\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1377,7 +1565,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1401,20 +1589,21 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "SAMPLE_BUNDLE_PREFIX_STRING=@\\\"${SAMPLE_BUNDLE_PREFIX}\\\"";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1427,9 +1616,8 @@
 			baseConfigurationReference = A3AC8DCFCC2ADAD1159483F0 /* Pods-Peppermint.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Peppermint/Peppermint.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Okan Kurtulus (K5K5GA54D8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Okan Kurtulus (K5K5GA54D8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1437,7 +1625,7 @@
 				);
 				GCC_PREFIX_HEADER = Peppermint/PrefixHeader.pch;
 				INFOPLIST_FILE = Peppermint/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint;
@@ -1451,9 +1639,8 @@
 			baseConfigurationReference = C388433C48F87557ED2F3C2D /* Pods-Peppermint.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Peppermint/Peppermint.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Okan Kurtulus (8V9FEAB5WD)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Okan Kurtulus (8V9FEAB5WD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1461,7 +1648,7 @@
 				);
 				GCC_PREFIX_HEADER = Peppermint/PrefixHeader.pch;
 				INFOPLIST_FILE = Peppermint/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint;
@@ -1510,13 +1697,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Okan Kurtulus (K5K5GA54D8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Okan Kurtulus (K5K5GA54D8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				IBSC_MODULE = Watch_Extension;
 				INFOPLIST_FILE = Watch/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1528,12 +1717,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Okan Kurtulus (8V9FEAB5WD)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Okan Kurtulus (8V9FEAB5WD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				IBSC_MODULE = Watch_Extension;
 				INFOPLIST_FILE = Watch/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1543,6 +1734,7 @@
 		};
 		D0A7C1151BFC73FF00ACD33E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7A0FF4878BDBABA38B44F8C7 /* Pods-Watch Extension.debug.xcconfig */;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				INFOPLIST_FILE = "Watch Extension/Info.plist";
@@ -1558,6 +1750,7 @@
 		};
 		D0A7C1161BFC73FF00ACD33E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CD9ED7696C27E289BEEE24D8 /* Pods-Watch Extension.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = "Watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -1607,6 +1800,7 @@
 				D0A7C1161BFC73FF00ACD33E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D0A7C1191BFC73FF00ACD33E /* Build configuration list for PBXNativeTarget "Watch" */ = {
 			isa = XCConfigurationList;
@@ -1615,6 +1809,7 @@
 				D0A7C1141BFC73FF00ACD33E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

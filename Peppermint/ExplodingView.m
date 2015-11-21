@@ -28,6 +28,7 @@
     UIGraphicsBeginImageContext(view.bounds.size);
     [view.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
+  
     UIGraphicsEndImageContext();
     return viewImage;
 }
@@ -63,7 +64,6 @@ float randomFloat()
 
 - (void)lp_explodeWithCallback:(ExplodeCompletion)callback
 {
-    
     self.userInteractionEnabled = NO;
     
     if (callback)

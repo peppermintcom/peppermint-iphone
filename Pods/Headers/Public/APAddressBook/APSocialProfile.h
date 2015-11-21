@@ -1,1 +1,1 @@
-../../../APAddressBook/Pod/Core/APSocialProfile.h
+../../../APAddressBook/Pod/Core/Public/Models/APSocialProfile.h

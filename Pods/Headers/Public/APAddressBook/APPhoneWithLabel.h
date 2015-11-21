@@ -1,1 +1,1 @@
-../../../APAddressBook/Pod/Core/APPhoneWithLabel.h
+../../../APAddressBook/Pod/Core/Public/Models/APPhoneWithLabel.h

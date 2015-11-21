@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@import UIKit;
+
 typedef enum : NSUInteger {
     CommunicationChannelEmail,
     CommunicationChannelSMS,

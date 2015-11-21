@@ -1,1 +1,1 @@
-../../../APAddressBook/Pod/Core/APAddress.h
+../../../APAddressBook/Pod/Core/Public/Models/APAddress.h
