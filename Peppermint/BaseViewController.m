@@ -9,6 +9,7 @@
 #import "BaseViewController.h"
 #import "LoginNavigationViewController.h"
 #import "AppDelegate.h"
+#import <Crashlytics/Crashlytics.h>
 
 @interface BaseViewController ()
 
@@ -24,6 +25,7 @@
 
 -(void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [Answers logContentViewWithName:self.title contentType:@"ViewController" contentId:self.description customAttributes:@{}];
     [self.navigationController setNavigationBarHidden:YES];
 }
 

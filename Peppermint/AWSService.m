@@ -156,7 +156,7 @@
         [self failureDuringRequestCreationWithError:error];
     } else {
         NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
-            if(((NSHTTPURLResponse*)response).statusCode == 409) {
+            if(((NSHTTPURLResponse*)response).statusCode == RESPONSE_CODE_CONFLICT) {
                 AccountRegisterConflictTryLogin *accountRegisterConflictTryLogin = [AccountRegisterConflictTryLogin new];
                 accountRegisterConflictTryLogin.email = user.email;
                 accountRegisterConflictTryLogin.password = user.password;

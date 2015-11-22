@@ -12,29 +12,46 @@
 @implementation DeviceModel
 
 + (NSString *)summary {
-  NSArray * bodyComponents = @[[DeviceModel platform], [DeviceModel deviceName], [DeviceModel systemVersion], [DeviceModel applicationVersion], @"\n"];
-  return [bodyComponents componentsJoinedByString:@"\n"];
+  NSArray * bodyComponents = @[
+                               @"",
+                               @"",
+                               @"",
+                               @"",
+                            [NSString stringWithFormat:@"Platform: %@",[DeviceModel platform]],
+                            [NSString stringWithFormat:@"Device Name: %@", [DeviceModel deviceName]],
+                            [NSString stringWithFormat:@"System Version: %@", [DeviceModel systemVersion]],
+                            [NSString stringWithFormat:@"Version: %@", [DeviceModel applicationVersion]]
+                               ];
+  return [bodyComponents componentsJoinedByString:@"<br/>"];
+}
+
++ (NSDictionary*)summaryDictionary {
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            [self platform],                    @"Platform",
+            [self deviceName],                  @"Device",
+            [DeviceModel systemVersion],        @"System Version",
+            [DeviceModel applicationVersion],   @"Version:",
+            nil];
 }
 
 + (NSString *)deviceName {
-  struct utsname systemInfo;
-  uname(&systemInfo);
-  
-  NSString * device = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
-  return [NSString stringWithFormat:@"Device: %@", device];
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    NSString * device = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+    return device;
 }
 
 + (NSString *)systemVersion {
-  NSString * systemVersion = [[UIDevice currentDevice] systemVersion];
-  return [NSString stringWithFormat:@"System Version: %@", systemVersion];
+    NSString * systemVersion = [[UIDevice currentDevice] systemVersion];
+    return systemVersion;
 }
 
 + (NSString *)applicationVersion {
-  return [NSString stringWithFormat:@"Version: %@",[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+    return [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
 }
 
 + (NSString *)platform {
-  return @"Platform: iOS";
+  return @"iOS";
 }
 
 @end

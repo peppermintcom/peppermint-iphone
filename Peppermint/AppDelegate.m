@@ -91,7 +91,7 @@
     [self initNavigationViewController];
     [self initFabric];
     [self initInitialViewController];
-    [self logServiceCalls];
+    //[self logServiceCalls];
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
     [self initGoogleApp];
     return YES;
@@ -178,6 +178,13 @@
 
 -(BOOL) handleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     BOOL result = NO;
+    
+    NSDictionary *customAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      url, @"url",
+                                      sourceApplication, @"sourceApplication",
+                                      nil];
+    [Answers logCustomEventWithName:@"HandleUrl" customAttributes:customAttributes];
+    
     if([[url host] isEqualToString:HOST_FASTREPLY]
        || [[[url path] lowercaseString] containsString:PATH_FASTREPLY]) {
         NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];

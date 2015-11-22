@@ -10,6 +10,7 @@
 #import "ConnectionModel.h"
 #import "CacheModel.h"
 #import "FastReplyModel.h"
+#import <Crashlytics/Crashlytics.h>
 
 #define TIMER_PERIOD    3
 
@@ -202,6 +203,9 @@
         [timer invalidate];
         timer = nil;
         NSLog(@"trigger detach");
+        
+        NSString *contentName = [NSString stringWithFormat:@"%lu bytes", (unsigned long)_data.length];
+        [Answers logShareWithMethod:@"SendVoiceMessage" contentName:contentName contentType:_extension contentId:self.description customAttributes:nil];
         [self performSelector:@selector(performDetach) withObject:nil afterDelay:TIMER_PERIOD*2];
     }
     
