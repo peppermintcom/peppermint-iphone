@@ -102,8 +102,8 @@ sharedObject;\
 #define SCHEME_GOOGLE       @"com.googleusercontent.apps.621894935907-jtqr6lt0uf74rlc5rgobkefv8dl16ka6"
 #define SCHEME_PEPPERMINT   @"peppermint"
 
-#define HOST_FASTREPLY                  @"fastReply"
-#define PATH_FASTREPLY                  @"/fastreply/"
+#define HOST_FASTREPLY                  @"reply"
+#define PATH_FASTREPLY                  @"/reply/"
 #define PATH_VERIFIY_EMAIL              @"/verify-email"
 
 #define QUERY_COMPONENT_NAMESURNAME     @"namesurname"

@@ -9,7 +9,7 @@
 #import "LoginModel.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
-#import "GDataContacts.h"
+#import "GoogleContactsModel.h"
 
 @implementation LoginModel {
     AccountModel *accountModel;
@@ -30,9 +30,9 @@
     gIDSignIn.delegate = self;
     gIDSignIn.uiDelegate = self;
     
-    gIDSignIn.scopes = [NSArray arrayWithObject:@"https://www.googleapis.com/auth/contacts.readonly"];
-    
-    
+    NSMutableArray *scopesArray = [NSMutableArray new];
+    [scopesArray addObject:[GoogleContactsModel scopeForGoogleContacts]];
+    gIDSignIn.scopes = scopesArray;
     [self.delegate loginLoading];
     [gIDSignIn signIn];
 }
@@ -79,83 +79,12 @@
             [self.delegate loginSucceed];
         }
         
-        //[self testGoogleContacts:signIn didSignInForUser:user];
-        [signIn signOut];
-    }
-}
-
-#pragma mark - Google Contacts
-/*
-- (GDataServiceGoogleContact *)contactService {
-    
-    static GDataServiceGoogleContact* service = nil;
-    
-    if (!service) {
-        service = [[GDataServiceGoogleContact alloc] init];
         
-        [service setShouldCacheResponseData:YES];
-        [service setServiceShouldFollowNextLinks:YES];
-    }
-    
-    // update the username/password each time the service is requested
-    NSString *username = @"okankurtulus@gmail.com";
-    NSString *password = @"OkanMilica123";
-    
-    [service setUserCredentialsWithUsername:username
-                                   password:password];
-    
-    return service;
-}
-
--(void) testGoogleContacts:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user
-{
-    
-    [self setGroupFeed:nil];
-    [self setGroupFetchError:nil];
-    [self setGroupFetchTicket:nil];
-    
-    // we will fetch contacts next
-    [self setContactFeed:nil];
-    
-    GDataServiceGoogleContact *service = [self contactService];
-    GDataServiceTicket *ticket;
-    
-    BOOL showDeleted = ([mShowDeletedCheckbox state] == NSOnState);
-    
-    // request a whole buncha groups; our service object is set to
-    // follow next links as well in case there are more than 2000
-    const int kBuncha = 2000;
-    
-    NSURL *feedURL = [self groupFeedURL];
-    
-    GDataQueryContact *query = [GDataQueryContact contactQueryWithFeedURL:feedURL];
-    [query setShouldShowDeleted:showDeleted];
-    [query setMaxResults:kBuncha];
-    
-    ticket = [service fetchFeedWithQuery:query
-                                delegate:self
-                       didFinishSelector:@selector(groupsFetchTicket:finishedWithFeed:error:)];
-    
-    [self setGroupFetchTicket:ticket];
-    
-    [self updateUI];
-}
-
--(void) contactsFetchTicket:(GDataServiceTicket*)ticket finishedWithFeed:(NSArray*)contacts error:(NSError*)error {
-    NSLog(@"contacts : %@", contacts);
-    
-    for (int i = 0; i < [contacts count]; i++) {
-        GDataEntryContact *contact = [contacts objectAtIndex:i];
-        //        NSLog(@">>>>>>>>>>>>>>>> elementname contact :%@", [[[contact name] fullName] contentStringValue]);
-        NSString *ContactName = [[[contact name] fullName] contentStringValue];
-        GDataEmail *email = [[contact emailAddresses] objectAtIndex:0];
-        //        NSLog(@">>>>>>>>>>>>>>>> Contact's email id :%@ contact name :%@", [email address], ContactName);
-        NSString *ContactEmail = [email address];
-        
-        NSLog(@"Contact : %@, %@", ContactName, ContactEmail);
+        GoogleContactsModel *googleContactsModel = [GoogleContactsModel new];
+        [googleContactsModel syncGoogleContactsWithFetcherAuthorizer:user.authentication.fetcherAuthorizer];
+        //[signIn signOut];        
     }
 }
-*/
 
 #pragma mark - Facebook Login
 
