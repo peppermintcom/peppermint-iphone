@@ -10,10 +10,9 @@
 #import "AppDelegate.h"
 #import "LoginNavigationViewController.h"
 
-#define NUMBER_OF_OPTIONS       3
-#define OPTION_DISPLAY_NAME     0
-#define OPTION_SIGNATURE        1
-#define OPTION_LOG_OUT          2
+#define NUMBER_OF_OPTIONS       2
+#define OPTION_SIGNATURE        0
+#define OPTION_LOG_OUT          1
 
 @interface AccountViewController () <UIAlertViewDelegate, LoginNavigationViewControllerDelegate>
 
@@ -98,12 +97,14 @@
       logOutCell.loginIconImageView.image = nil;
       logOutCell.loginLabel.text = LOC(@"Subject", nil);
       logOutCell.loginLabel.textColor = [UIColor facebookLoginColor];
-    } else if (index == OPTION_DISPLAY_NAME){
+    }
+  //uncomment below if you want to return display name
+    /*else if (index == OPTION_DISPLAY_NAME){
       logOutCell.loginIconImageViewWidthConstraint.constant = 0;
       logOutCell.loginIconImageView.image = nil;
       logOutCell.loginLabel.text = LOC(@"Display Name", nil);
       logOutCell.loginLabel.textColor = [UIColor emailLoginColor];
-    }
+    }*/
     [logOutCell.loginLabel sizeToFit];
     return logOutCell;
 }
@@ -113,7 +114,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-  if (section == OPTION_DISPLAY_NAME) {
+  if (section == OPTION_SIGNATURE) {
     return 0;
   } else {
     return CELL_HEIGHT_LOGIN_TABLEVIEWCELL/2;
@@ -133,12 +134,13 @@
         [self.peppermintMessageSender clearSender];
         [self.navigationController popViewControllerAnimated:NO];
         [LoginNavigationViewController logUserInWithDelegate:nil completion:nil];
-    } else if (option == OPTION_DISPLAY_NAME) {
+    //} uncomment below if you want to return display name
+    /*else if (option == OPTION_DISPLAY_NAME) {
       UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:LOC(@"Display Name", nil) message:LOC(@"Display Name Description", nil) delegate:self cancelButtonTitle:LOC(@"Cancel", nil) otherButtonTitles:LOC(@"Save", nil), nil];
       alertView.alertViewStyle=UIAlertViewStylePlainTextInput;
       UITextField *textField = [alertView textFieldAtIndex:0];
       textField.text = self.peppermintMessageSender.nameSurname;
-      [alertView show];
+      [alertView show];*/
     } else {
       UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:LOC(@"Subject", nil) message:LOC(@"Subject Description", nil) delegate:self cancelButtonTitle:LOC(@"Cancel", nil) otherButtonTitles:LOC(@"Save", nil), nil];
       alertView.alertViewStyle=UIAlertViewStylePlainTextInput;
