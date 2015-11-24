@@ -156,7 +156,7 @@
         [self failureDuringRequestCreationWithError:error];
     } else {
         NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
-            if(((NSHTTPURLResponse*)response).statusCode == 409) {
+            if(((NSHTTPURLResponse*)response).statusCode == RESPONSE_CODE_CONFLICT) {
                 AccountRegisterConflictTryLogin *accountRegisterConflictTryLogin = [AccountRegisterConflictTryLogin new];
                 accountRegisterConflictTryLogin.email = user.email;
                 accountRegisterConflictTryLogin.password = user.password;
@@ -236,5 +236,28 @@
 }
 
 
+-(void) refreshAccountWithId:(NSString*) accountId andJwt:(NSString*) jwt {
+    NSString *url = [NSString stringWithFormat:@"%@%@%@", self.baseUrl, AWS_ENDPOINT_ACCOUNT_QUERY, accountId];
+    AFHTTPRequestOperationManager *requestOperationManager = [[AFHTTPRequestOperationManager alloc]
+                                                              initWithBaseURL:[NSURL URLWithString:url]];
+    
+    NSString *tokenText = [self toketTextForJwt:jwt];
+    requestOperationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [requestOperationManager.requestSerializer setValue:tokenText forHTTPHeaderField:AUTHORIZATION];
+    
+    [requestOperationManager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSError *error;
+        User *user = [[User alloc] initWithDictionary:responseObject error:&error];
+        if (error) {
+            [self failureWithOperation:nil andError:error];
+        }
+        
+        AccountInfoRefreshed *accountInfoRefreshed = [AccountInfoRefreshed new];
+        accountInfoRefreshed.user = user;
+        PUBLISH(accountInfoRefreshed);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self failureWithOperation:nil andError:error];
+    }];
+}
 
 @end

@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLabelWidthConstraint;
+@property (strong, nonatomic) NSString* disallowedCharsText;
 
 -(void) setTitles:(NSArray*) array;
 -(void) setValid:(BOOL) isValid;

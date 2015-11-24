@@ -11,6 +11,7 @@
 #import "EasyMailSender.h"
 #import "EasyMailAlertSender.h"
 #import "DeviceModel.h"
+#import <Crashlytics/Crashlytics.h>
 
 
 @implementation FeedBackModel
@@ -36,11 +37,12 @@
 }
 
 -(void) presentMailModalView {
+    __block NSString *body;
     EasyMailAlertSender *mailSender = [EasyMailAlertSender easyMail:^(MFMailComposeViewController *controller) {
         NSString *supportEmail = LOC(@"support@peppermint.com", @"Support Email");
         [controller setToRecipients:[NSArray arrayWithObject:supportEmail]];
         [controller setSubject:LOC(@"Feedback Subject",@"Feedback Subject")];
-        NSString *body = [DeviceModel summary];
+        body = [DeviceModel summary];
         [controller setMessageBody:body isHTML:YES];
     } complete:^(MFMailComposeViewController *controller, MFMailComposeResult result, NSError *error) {
         if(error) {
@@ -53,6 +55,9 @@
         } else if (result == MFMailComposeResultSent) {
             [self.delegate feedBackSentWithSuccess];
             [controller dismissViewControllerAnimated:NO completion:nil];
+            NSMutableDictionary *messageDict = [NSMutableDictionary dictionaryWithDictionary:[DeviceModel summaryDictionary]];
+            [messageDict setValue:body forKey:@"message"];
+            [Answers logCustomEventWithName:@"Feedback" customAttributes:messageDict];
         } else {
             [controller dismissViewControllerAnimated:YES completion:nil];
         }

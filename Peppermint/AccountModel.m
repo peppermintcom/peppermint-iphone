@@ -14,7 +14,16 @@
     PeppermintMessageSender *cachedSender;
 }
 
++ (instancetype) sharedInstance {
+    return SHARED_INSTANCE( [[self alloc] initShared] );
+}
+
 -(id) init {
+    NSAssert(false, @"This model instance is singleton so should not be inited - %@", self);
+    return nil;
+}
+
+-(id) initShared {
     self = [super init];
     if(self) {
         awsService = [AWSService new];
@@ -34,6 +43,7 @@
 SUBSCRIBE(AccountRegisterIsSuccessful) {
     if([event.user.email isEqualToString:cachedSender.email]) {
         cachedSender.jwt = event.jwt;
+        cachedSender.accountId = event.user.account_id;
         [self.delegate userRegisterSuccessWithEmail:cachedSender.email password:cachedSender.password jwt:cachedSender.jwt];
     }
 }
@@ -49,14 +59,10 @@ SUBSCRIBE(AccountRegisterConflictTryLogin) {
 }
 
 SUBSCRIBE(NetworkFailure) {
-    NSError *error = event.error;
-    NSDictionary *userInfo = error.userInfo;
-    if([userInfo.allKeys containsObject:NSLocalizedDescriptionKey]) {
-        NSString *errorText = [userInfo valueForKey:NSLocalizedDescriptionKey];
-        errorText = [NSString stringWithFormat:@"TEST NOTE: Username/Password is incorrect!\n%@", errorText];
-        error = [NSError errorWithDomain:errorText code:401 userInfo:nil];
+    if(event.sender == awsService) {
+        NSError *error = event.error;
+        [self.delegate operationFailure:error];
     }
-    [self.delegate operationFailure:error];
 }
 
 SUBSCRIBE(AccountLoginIsSuccessful) {
@@ -75,6 +81,21 @@ SUBSCRIBE(AccountLoginIsSuccessful) {
 SUBSCRIBE(VerificationEmailSent) {
     if([event.jwt isEqualToString:cachedSender.jwt]) {
         [self.delegate verificationEmailSendSuccess];
+    }
+}
+
+#pragma mark - Refresh Account
+
+-(void)refreshAccountInfo:(PeppermintMessageSender*) peppermintMessageSender {
+    cachedSender = peppermintMessageSender;
+    [awsService refreshAccountWithId:cachedSender.accountId andJwt:cachedSender.jwt];
+}
+
+SUBSCRIBE(AccountInfoRefreshed) {
+    if([event.user.account_id isEqualToString:cachedSender.accountId]) {
+        cachedSender.isEmailVerified = event.user.is_verified.boolValue;
+        [cachedSender save];
+        [self.delegate accountInfoRefreshSuccess];
     }
 }
 

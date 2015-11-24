@@ -21,6 +21,7 @@
 -(void)failureDuringRequestCreationWithError:(NSError*) error {
     NSLog(@"Create Request error: %@", error);
     NetworkFailure *failure = [NetworkFailure new];
+    failure.sender = self;
     failure.error = error;
     PUBLISH(failure);
 }
@@ -28,6 +29,7 @@
 -(void)failureWithOperation:(AFHTTPRequestOperation*) operation andError:(NSError*) error {
     NSLog(@"Network Error: %@", error);
     NetworkFailure *failure = [NetworkFailure new];
+    failure.sender = self;
     failure.error = error;
     PUBLISH(failure);
 }
@@ -35,6 +37,7 @@
 -(void)failureDuringJSONCastWithError:(NSError*) error {
     NSLog(@"JSON cast error: %@", error);
     NetworkFailure *failure = [NetworkFailure new];
+    failure.sender = self;
     failure.error = error;
     PUBLISH(failure);
 }

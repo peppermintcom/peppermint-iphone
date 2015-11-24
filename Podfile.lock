@@ -45,6 +45,14 @@ PODS:
     - FBSDKCoreKit/arc
   - FBSDKLoginKit (4.7.1):
     - FBSDKCoreKit
+  - GData (1.12.0):
+    - GData/Core (= 1.12.0)
+    - GData/XMLNode (= 1.12.0)
+    - gtm-oauth2
+  - GData/Core (1.12.0):
+    - gtm-oauth2
+  - GData/XMLNode (1.12.0):
+    - gtm-oauth2
   - Google/Core (1.1.1):
     - GoogleInterchangeUtilities (~> 1.0)
     - GoogleNetworkingUtilities (~> 1.0)
@@ -70,6 +78,9 @@ PODS:
   - GoogleSymbolUtilities (1.0.0)
   - GoogleUtilities (1.1.0):
     - GoogleSymbolUtilities (~> 1.0.0)
+  - gtm-http-fetcher (1.0.141)
+  - gtm-oauth2 (1.0.126):
+    - gtm-http-fetcher (~> 1.0.141)
   - JPAttributedString (0.1.7)
   - JSONModel (1.1.0)
   - MBProgressHUD (0.9.1)
@@ -87,6 +98,7 @@ DEPENDENCIES:
   - Fabric (~> 1.5.1)
   - FBSDKCoreKit
   - FBSDKLoginKit
+  - GData (from `GData.podspec.json`)
   - Google/SignIn
   - JPAttributedString
   - JSONModel
@@ -97,6 +109,15 @@ DEPENDENCIES:
   - SimpleKeychain
   - tolo (~> 1.0)
 
+EXTERNAL SOURCES:
+  GData:
+    :podspec: GData.podspec.json
+
+CHECKOUT OPTIONS:
+  GData:
+    :revision: '143'
+    :svn: http://gdata-objectivec-client.googlecode.com/svn/trunk
+
 SPEC CHECKSUMS:
   AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
   APAddressBook: 2c949367b190a993d2cce769a3b20bce8bcf000c
@@ -106,6 +127,7 @@ SPEC CHECKSUMS:
   Fabric: 190bf1a6eb65f7500de1347d027d2e59a7e53db1
   FBSDKCoreKit: 9141b70960a37930850370495fe565f4a27ac141
   FBSDKLoginKit: c11ed3c2833472db3bb4a4aecf27af4a6f69b173
+  GData: 1bc4ad973458d611ff0c9c56815c172f2c97d495
   Google: 529a5d8719dff90ea2e7cba5f45302cd359b5456
   GoogleAppUtilities: c01c6a5671e9da8b9d690fdaec5959d6c2aac699
   GoogleAuthUtilities: 049ffd3a297cdffd271451b82fd4e75304f15ef3
@@ -114,6 +136,8 @@ SPEC CHECKSUMS:
   GoogleSignIn: 79929b51e6299c69f1197bbd9c7a1367d523ecd8
   GoogleSymbolUtilities: a7b0feed1fe667c8d5e647177938d0ecd62d6948
   GoogleUtilities: 8ed9134debe11719097881711464752900668f10
+  gtm-http-fetcher: 6d4617e7d343b6e4c082b777541c334eb6f5d81e
+  gtm-oauth2: 2a18b824e4f8a02df6cfe987beb59ae9d9697f9d
   JPAttributedString: a0868a1e07e76751cef78985f4e3dfa51f1c1334
   JSONModel: ec77e9865236a7a09d9cf7668df6b4b328d9ec1d
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
@@ -123,4 +147,4 @@ SPEC CHECKSUMS:
   SimpleKeychain: ae04c7ca6a960a146081010b412cf0ba2ecb10fe
   tolo: 906f6fe2943451e7354c694ce968d76ea344c01d
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0

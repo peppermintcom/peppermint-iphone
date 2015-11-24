@@ -24,6 +24,7 @@
 		B10C39311BF6FB150070B49F /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = B10C39301BF6FB150070B49F /* User.m */; };
 		B10C39341BF6FC840070B49F /* AccountResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B10C39331BF6FC840070B49F /* AccountResponse.m */; };
 		B10C39371BF718960070B49F /* AccountModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B10C39361BF718960070B49F /* AccountModel.m */; };
+		B116F3B11C008E570091994C /* FastReplyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B116F3B01C008E570091994C /* FastReplyModel.m */; };
 		B11F8A5C1BDCC45F000E79AA /* FinalizeUploadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5B1BDCC45F000E79AA /* FinalizeUploadRequest.m */; };
 		B11F8A5F1BDCC474000E79AA /* FinalizeUploadResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5E1BDCC474000E79AA /* FinalizeUploadResponse.m */; };
 		B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B12C03BA1BCFFC060085A55A /* FastRecordingView.m */; };
@@ -95,6 +96,7 @@
 		B1C4A7761BF73E4900272AD7 /* LoginResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C4A7751BF73E4900272AD7 /* LoginResponse.m */; };
 		B1C83A191BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C83A181BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m */; };
 		B1C83A1B1BDEB0FC00EB14C2 /* LoginTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1C83A1A1BDEB0FC00EB14C2 /* LoginTextFieldTableViewCell.xib */; };
+		B1C978771C02EB6A00F402C2 /* GoogleContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C978761C02EB6A00F402C2 /* GoogleContactsModel.m */; };
 		B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40E41BB7D58C00042E4B /* RecordingModel.m */; };
 		B1EF40EB1BB7E78C00042E4B /* SendVoiceMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40EA1BB7E78C00042E4B /* SendVoiceMessageModel.m */; };
 		B1EF40EE1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40ED1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.m */; };
@@ -160,6 +162,8 @@
 		B10C39331BF6FC840070B49F /* AccountResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountResponse.m; sourceTree = "<group>"; };
 		B10C39351BF718960070B49F /* AccountModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountModel.h; sourceTree = "<group>"; };
 		B10C39361BF718960070B49F /* AccountModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountModel.m; sourceTree = "<group>"; };
+		B116F3AF1C008E570091994C /* FastReplyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastReplyModel.h; sourceTree = "<group>"; };
+		B116F3B01C008E570091994C /* FastReplyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FastReplyModel.m; sourceTree = "<group>"; };
 		B11F8A5A1BDCC45F000E79AA /* FinalizeUploadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinalizeUploadRequest.h; sourceTree = "<group>"; };
 		B11F8A5B1BDCC45F000E79AA /* FinalizeUploadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinalizeUploadRequest.m; sourceTree = "<group>"; };
 		B11F8A5D1BDCC474000E79AA /* FinalizeUploadResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinalizeUploadResponse.h; sourceTree = "<group>"; };
@@ -290,6 +294,8 @@
 		B1C83A171BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTextFieldTableViewCell.h; sourceTree = "<group>"; };
 		B1C83A181BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTextFieldTableViewCell.m; sourceTree = "<group>"; };
 		B1C83A1A1BDEB0FC00EB14C2 /* LoginTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginTextFieldTableViewCell.xib; sourceTree = "<group>"; };
+		B1C978751C02EB6A00F402C2 /* GoogleContactsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleContactsModel.h; sourceTree = "<group>"; };
+		B1C978761C02EB6A00F402C2 /* GoogleContactsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleContactsModel.m; sourceTree = "<group>"; };
 		B1EF40E31BB7D58C00042E4B /* RecordingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RecordingModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B1EF40E41BB7D58C00042E4B /* RecordingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RecordingModel.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B1EF40E91BB7E78C00042E4B /* SendVoiceMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SendVoiceMessageModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -522,6 +528,10 @@
 				D0A7C0D91BFA0C7900ACD33E /* DeviceModel.m */,
 				D0A7C0F11BFC5BC200ACD33E /* SpotlightModel.h */,
 				D0A7C0F21BFC5BC200ACD33E /* SpotlightModel.m */,
+				B116F3AF1C008E570091994C /* FastReplyModel.h */,
+				B116F3B01C008E570091994C /* FastReplyModel.m */,
+				B1C978751C02EB6A00F402C2 /* GoogleContactsModel.h */,
+				B1C978761C02EB6A00F402C2 /* GoogleContactsModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -894,6 +904,7 @@
 				B17B3D291BB6898C009B8BC5 /* Resources */,
 				99E5888A4AEAE0B8E8705C03 /* Copy Pods Resources */,
 				B1B6528C1BDDF8C0006987EA /* ShellScript */,
+				5C384387C21CFA56C1AB394F /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -935,6 +946,12 @@
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = 8V9FEAB5WD;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
 							com.apple.SafariKeychain = {
 								enabled = 1;
 							};
@@ -1000,6 +1017,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		5C384387C21CFA56C1AB394F /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		99E5888A4AEAE0B8E8705C03 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1112,6 +1144,7 @@
 				B17B3D741BB6C4B0009B8BC5 /* UIColor_Addition.m in Sources */,
 				B17B3D341BB6898C009B8BC5 /* AppDelegate.m in Sources */,
 				B10125BC1BEB670500B5DD54 /* NSString_Addition.m in Sources */,
+				B116F3B11C008E570091994C /* FastReplyModel.m in Sources */,
 				B102BBB81BCD03EC001E1E7A /* UIViewController_AdditionViewController.m in Sources */,
 				B13B076A1BD3752900974AC3 /* MandrillRequest.m in Sources */,
 				B1EF40FC1BB8786500042E4B /* TutorialViewController.m in Sources */,
@@ -1131,6 +1164,7 @@
 				B100A54A1BEDD6F800EEB573 /* CacheModel.m in Sources */,
 				B10C39371BF718960070B49F /* AccountModel.m in Sources */,
 				B1C4A7731BF73E3B00272AD7 /* LoginRequest.m in Sources */,
+				B1C978771C02EB6A00F402C2 /* GoogleContactsModel.m in Sources */,
 				B1EF40F21BB8579D00042E4B /* M13ProgressView.m in Sources */,
 				B1BB601D1BDE16D400C1140B /* UIStoryboard_Addition.m in Sources */,
 			);
@@ -1262,8 +1296,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Peppermint/Peppermint.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Okan Kurtulus (K5K5GA54D8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Okan Kurtulus (K5K5GA54D8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1286,8 +1320,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Peppermint/Peppermint.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Okan Kurtulus (8V9FEAB5WD)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Okan Kurtulus (8V9FEAB5WD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1297,7 +1331,7 @@
 				INFOPLIST_FILE = Peppermint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

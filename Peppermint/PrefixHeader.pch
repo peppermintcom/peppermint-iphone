@@ -37,6 +37,9 @@ sharedObject;\
 #pragma mark - WeakSelf Definition
 #define weakself_create() __weak __typeof__(self) weakSelf = self;
 
+#pragma mark - Low Priority Queue
+#define LOW_PRIORITY_QUEUE dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
+
 #pragma mark - Colors Addition
 #import "UIColor_Addition.h"
 
@@ -63,7 +66,10 @@ sharedObject;\
 #define ANIM_TIME                   0.3
 #define WARN_TIME                   1.5
 
-#define LOGIN_CORNER_RADIUS         15
+#define LOGIN_CORNER_RADIUS             15
+#define CONTINUE_BUTTON_CORNER_RADIUS   10
+
+#define MIN_PASSWORD_LENGTH             6
 
 #pragma mark - Alert Button Index Definition
 #define ALERT_BUTTON_INDEX_CANCEL   0
@@ -96,8 +102,9 @@ sharedObject;\
 #define SCHEME_GOOGLE       @"com.googleusercontent.apps.621894935907-jtqr6lt0uf74rlc5rgobkefv8dl16ka6"
 #define SCHEME_PEPPERMINT   @"peppermint"
 
-#define HOST_FASTREPLY                  @"fastReply"
-#define PATH_FASTREPLY                  @"/fastreply/"
+#define HOST_FASTREPLY                  @"reply"
+#define PATH_FASTREPLY                  @"/reply/"
+#define PATH_VERIFIY_EMAIL              @"/verify-email"
 
 #define QUERY_COMPONENT_NAMESURNAME     @"namesurname"
 #define QUERY_COMPONENT_EMAIL           @"email"

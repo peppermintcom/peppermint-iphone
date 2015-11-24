@@ -8,6 +8,8 @@
 
 #import "BaseViewController.h"
 #import "LoginNavigationViewController.h"
+#import "AppDelegate.h"
+#import <Crashlytics/Crashlytics.h>
 
 @interface BaseViewController ()
 
@@ -23,16 +25,14 @@
 
 -(void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [Answers logContentViewWithName:self.title contentType:@"ViewController" contentId:self.description customAttributes:@{}];
     [self.navigationController setNavigationBarHidden:YES];
 }
 
 #pragma mark - BaseModelDelegate
 
 -(void) operationFailure:(NSError*) error {
-    NSString *title = LOC(@"An error occured", @"Error Title Message");
-    NSString *message = error.description;
-    NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
-    [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
+    [AppDelegate handleError:error];
 }
 
 #pragma mark - Settings Page

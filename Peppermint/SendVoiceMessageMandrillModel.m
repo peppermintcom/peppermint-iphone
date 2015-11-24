@@ -10,12 +10,11 @@
 
 @implementation SendVoiceMessageMandrillModel {
     MandrillMessage *mandrillMessage;
-    NSData *_data;
-    NSString *_extension;
 }
 
 -(void) sendVoiceMessageWithData:(NSData *)data withExtension:(NSString *)extension  {
-    [super sendVoiceMessageWithData:data withExtension:extension];    
+    
+    [super sendVoiceMessageWithData:data withExtension:extension];
     if([self isConnectionActive]) {
         _data = data;
         _extension = extension;

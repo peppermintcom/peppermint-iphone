@@ -82,7 +82,6 @@
                 PeppermintContact *selectedContact = [PeppermintContact new];
                 selectedContact.nameSurname = cachedEmailMessage.receiverNameSurname;
                 selectedContact.communicationChannelAddress = cachedEmailMessage.receiverEmail;
-#warning "Check& be sure, if peppermintMessageSender change will effect the behaviour or not!"
                 mailSenderModel.peppermintMessageSender = peppermintMessageSender;
                 mailSenderModel.selectedPeppermintContact = selectedContact;
                 
@@ -90,7 +89,10 @@
                 
                 while (mailSenderModel.sendingStatus != SendingStatusSent
                        && mailSenderModel.sendingStatus != SendingStatusCancelled
-                       && mailSenderModel.sendingStatus != SendingStatusError) {}
+                       && mailSenderModel.sendingStatus != SendingStatusError) {
+                    #warning "Find smarter way than busy waiting"
+                    //Busy wait...
+                }
                 
                 if(mailSenderModel.sendingStatus == SendingStatusSent) {
                     [repository deleteEntity:cachedEmailMessage];

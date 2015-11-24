@@ -1,0 +1,1 @@
+../../../GData/Source/Clients/Photos/GDataFeedPhotoBase.h

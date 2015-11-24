@@ -16,6 +16,7 @@
 #import <Google/SignIn.h>
 #import "RecordingViewController.h"
 #import "SpotlightModel.h"
+#import "FastReplyModel.h"
 
 @import CoreSpotlight;
 @import MobileCoreServices;
@@ -90,7 +91,7 @@
     [self initNavigationViewController];
     [self initFabric];
     [self initInitialViewController];
-    [self logServiceCalls];
+    //[self logServiceCalls];
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
     [self initGoogleApp];
     return YES;
@@ -104,6 +105,25 @@
     //PUBLISH([ApplicationDidEnterBackground new]);
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    if(self.mutableArray.count > 0) {
+        weakself_create()
+        __block UIBackgroundTaskIdentifier bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
+            NSLog(@"Still it exists %lu items\nConsider caching the ongoing messages.", (unsigned long)weakSelf.mutableArray.count);
+            [application endBackgroundTask:bgTask];
+             bgTask = UIBackgroundTaskInvalid;
+        }];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSLog(@"Waiting for all messages to be sent!");
+#warning "Think a smarter way than busy wait!"
+            while (weakSelf.mutableArray.count > 0) {
+                //Busy wait
+            }
+            [application endBackgroundTask:bgTask];
+            bgTask = UIBackgroundTaskInvalid;
+        });
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -143,26 +163,29 @@
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
-#warning "Add url redirect for possible unhandled url"
     if ([NSUserActivityTypeBrowsingWeb isEqualToString: userActivity.activityType]) {
-        return  [self handleOpenURL:userActivity.webpageURL sourceApplication:nil annotation:nil];
-        /*
-        if(!) {
+        if(![self handleOpenURL:userActivity.webpageURL sourceApplication:nil annotation:nil]) {
             [[UIApplication sharedApplication] openURL:userActivity.webpageURL];
-        }*/
+        }
     } else if ([userActivity.activityType isEqualToString:CSSearchableItemActionType]) {
-      NSString *uniqueIdentifier = userActivity.userInfo[CSSearchableItemActivityIdentifier];
-      
-      // Handle 'uniqueIdentifier'
-      NSLog(@"searh item uniqueIdentifier: %@", uniqueIdentifier);
-      return [SpotlightModel handleSearchItemUniqueIdentifier:uniqueIdentifier];
+        NSString *uniqueIdentifier = userActivity.userInfo[CSSearchableItemActivityIdentifier];
+        // Handle 'uniqueIdentifier'
+        NSLog(@"searh item uniqueIdentifier: %@", uniqueIdentifier);
+        return [SpotlightModel handleSearchItemUniqueIdentifier:uniqueIdentifier];
     }
     return YES;
 }
 
 -(BOOL) handleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     BOOL result = NO;
-    if([[url host] isEqualToString:HOST_FASTREPLY]
+    
+    NSDictionary *customAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      url, @"url",
+                                      sourceApplication, @"sourceApplication",
+                                      nil];
+    [Answers logCustomEventWithName:@"HandleUrl" customAttributes:customAttributes];
+    
+    if([[[url host] lowercaseString] isEqualToString:HOST_FASTREPLY]
        || [[[url path] lowercaseString] containsString:PATH_FASTREPLY]) {
         NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
         NSString *nameSurname, *email = nil;
@@ -174,10 +197,24 @@
             }
         }
         if(nameSurname && email) {
-            result = [RecordingViewController sendFastReplyToUserWithNameSurname:nameSurname withEmail:email];
+            result = [FastReplyModel setFastReplyContactWithNameSurname:nameSurname email:email];
         } else {
             NSLog(@"Query Parameters are not valid!");
         }
+    } else if ([[[url path] lowercaseString] containsString:PATH_VERIFIY_EMAIL]) {
+        
+#warning "Verify email locally with parsing the url parameters from base64 encoded json data"        
+        result = YES;
+        UIViewController *rootVC = [AppDelegate Instance].window.rootViewController;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBProgressHUD showHUDAddedTo:rootVC.view animated:YES];
+        });
+        dispatch_async(LOW_PRIORITY_QUEUE, ^{
+            [NSData dataWithContentsOfURL:url]; //Verify email on the server
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:rootVC.view animated:YES];
+            });
+        });
     } else {
         NSLog(@"Host is not avaible to handle. Host : %@", url.host);
     }
@@ -283,6 +320,45 @@ reset:
 + (AppDelegate*) Instance {
     id<UIApplicationDelegate> appDelegate = [[UIApplication sharedApplication] delegate];
     return (AppDelegate*) appDelegate;
+}
+
+#pragma mark - Handle Error
+
++(NSString*) messageForError:(NSError*) error {
+    NSString *message = error.description;
+    if([error.domain isEqualToString:NSURLErrorDomain]) {
+        switch (error.code) {
+            case NSURLErrorNotConnectedToInternet:
+            case NSURLErrorNetworkConnectionLost:
+                message = LOC(@"Please check your internet connection and try again", @"message");
+#warning "Handle the below message. Maybe in view controller"
+                //message = LOC(@"Please connect to the internet to upload the message", @"message");
+                break;
+            default:
+                message = LOC(@"Connection error", @"message");
+                break;
+        }
+    } else if ([error.domain isEqualToString:@"com.google.GIDSignIn"]) {
+        switch (error.code) {
+            default:
+                message = LOC(@"Please connect to the Internet then Log In", @"message");
+                break;
+        }
+    } else if ([error.domain isEqualToString:AFURLResponseSerializationErrorDomain]) {
+        switch (error.code) {
+            default:
+                message = LOC(@"Please check your login information", @"message");
+                break;
+        }
+    }
+    return message;
+}
+
++(void) handleError:(NSError*) error {
+    NSString *title = LOC(@"An error occured", @"Error Title Message");
+    NSString *message = [self messageForError:error];
+    NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
+    [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
 }
 
 @end

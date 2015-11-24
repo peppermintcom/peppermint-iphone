@@ -37,6 +37,8 @@ typedef enum : NSUInteger {
 @interface SendVoiceMessageModel : BaseModel <RecentContactsModelDelegate, AWSModelDelegate> {
     RecentContactsModel *recentContactsModel;
     AWSModel *awsModel;
+    NSData *_data;
+    NSString *_extension;
 }
 
 @property (strong, nonatomic) PeppermintMessageSender *peppermintMessageSender;

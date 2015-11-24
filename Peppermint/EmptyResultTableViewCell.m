@@ -24,9 +24,9 @@
 
 -(void) setFooterLabelText {
     NSString *footerLabelText = LOC(@"No contacts explanation", @"Text that will give information");
-    NSRange peppermintRange = [footerLabelText rangeOfString:LOC(@"Peppermint", @"Text to be with attribute")];
     NSMutableAttributedString *footerAttributedText = [[NSMutableAttributedString alloc] initWithString:footerLabelText];
-    [footerAttributedText addAttribute:NSForegroundColorAttributeName value:[UIColor peppermintGreen] range:peppermintRange];
+    //NSRange peppermintRange = [footerLabelText rangeOfString:LOC(@"Peppermint", @"Text to be with attribute")];
+    //[footerAttributedText addAttribute:NSForegroundColorAttributeName value:[UIColor peppermintGreen] range:peppermintRange];
     self.footerLabel.textColor = [UIColor textFieldTintGreen];
     self.footerLabel.attributedText = footerAttributedText;
 }

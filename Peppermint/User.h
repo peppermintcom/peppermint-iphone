@@ -10,8 +10,10 @@
 
 @interface User : JSONModel
 
+@property (weak, nonatomic) NSString<Optional> *account_id;
 @property (weak, nonatomic) NSString *email;
-@property (weak, nonatomic) NSString *password;
+@property (weak, nonatomic) NSString<Optional> *password;
 @property (weak, nonatomic) NSString *full_name;
+@property (weak, nonatomic) NSNumber<Optional> *is_verified;
 
 @end

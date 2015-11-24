@@ -58,10 +58,7 @@
 
 -(void) operationFailure:(NSError*) error {
     [self loginFinishedLoading];
-    NSString *title = LOC(@"An error occured", @"Error Title Message");
-    NSString *message = error.description;
-    NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
-    [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
+    [AppDelegate handleError:error];
 }
 
 #pragma mark - Navigation
@@ -80,7 +77,10 @@
     loginNavigationViewController.loginDelegate = delegate;
     
     PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+    
+    rootVC.view.alpha = 0.2;
     [rootVC presentViewController:loginNavigationViewController animated:YES completion:^{
+        rootVC.view.alpha = 1;
         if([peppermintMessageSender isInMailVerificationProcess]) {
             [loginNavigationViewController loginRequireEmailVerification];
         }

@@ -13,12 +13,15 @@
 -(void) userRegisterSuccessWithEmail:(NSString*) email password:(NSString*) password jwt:(NSString*) jwt;
 -(void) userLogInSuccessWithEmail:(NSString*) email;
 -(void) verificationEmailSendSuccess;
+-(void) accountInfoRefreshSuccess;
 @end
 
 @interface AccountModel : BaseModel
 @property (weak, nonatomic) id<AccountModelDelegate> delegate;
 
++ (instancetype) sharedInstance;
 -(void) authenticate:(PeppermintMessageSender*) peppermintMessageSender;
 -(void) resendVerificationEmail:(PeppermintMessageSender*) peppermintMessageSender;
+-(void)refreshAccountInfo:(PeppermintMessageSender*) peppermintMessageSender;
 
 @end

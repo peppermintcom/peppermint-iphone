@@ -10,7 +10,6 @@
 #import <AudioToolbox/AudioServices.h>
 
 #define DEFAULT_GAIN    0.8 //Input Gain must be a value btw 0.0 - 1.0
-#define PING_INTERVAL   0.2
 
 @implementation RecordingModel {
     AVAudioRecorder *recorder;

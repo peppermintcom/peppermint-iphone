@@ -136,6 +136,7 @@
                      }
                      
                      if(nameSurname) {
+                         nameSurname = [nameSurname capitalizedString];
                          for(NSString *email in contact.emails) {
                              NSString *key = [NSString stringWithFormat:@"%@,%@", nameSurname, email];
                              if([uniqueSet containsObject:key]) {
@@ -171,7 +172,6 @@
                      }
                  }
                  
-                 
 #ifdef DEBUG
                  PeppermintContact *peppermintContact = [PeppermintContact new];
                  peppermintContact.communicationChannel = CommunicationChannelEmail;
@@ -180,7 +180,6 @@
                  peppermintContact.avatarImage = [UIImage imageNamed:@"recording_logo_pressed"];;
                  [peppermintContactsArray addObject:peppermintContact];
 #endif
-                 
                  
                  self.contactList = peppermintContactsArray;
                  NSArray *sortedList = [self.contactList sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {

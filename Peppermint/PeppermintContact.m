@@ -15,4 +15,10 @@
   [SpotlightModel createSearchableItemForContact:self];
 }
 
+- (BOOL) equals:(PeppermintContact*)peppermintContact {
+    return ([self.nameSurname isEqualToString:peppermintContact.nameSurname]
+            && self.communicationChannel == peppermintContact.communicationChannel
+            && [self.communicationChannelAddress isEqualToString:peppermintContact.communicationChannelAddress]);
+}
+
 @end

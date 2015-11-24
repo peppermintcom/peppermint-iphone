@@ -11,13 +11,19 @@
 #import "SendVoiceMessageMandrillModel.h"
 #import "SendVoiceMessageSMSModel.h"
 #import "SlideMenuViewController.h"
+#import "FastReplyModel.h"
 
-#define CELL_TAG_ALL_CONTACTS       1
-#define CELL_TAG_RECENT_CONTACTS    2
-#define CELL_TAG_EMAIL_CONTACTS     3
-#define CELL_TAG_SMS_CONTACTS       4
+#define SECTION_COUNT                   2
+#define SECTION_FAST_REPLY_CONTACT      0
+#define ROW_COUNT_FAST_REPLY            1
 
-#define MESSAGE_SENDING_DURATION   2
+#define SECTION_CONTACTS                1
+#define CELL_TAG_ALL_CONTACTS           1
+#define CELL_TAG_RECENT_CONTACTS        2
+#define CELL_TAG_EMAIL_CONTACTS         3
+#define CELL_TAG_SMS_CONTACTS           4
+
+#define MESSAGE_SENDING_DURATION        2
 
 @interface ContactsViewController ()
 
@@ -28,7 +34,6 @@
     NSUInteger cachedActiveCellTag;
     BOOL isScrolling;
     MBProgressHUD *_loadingHud;
-    AWSModel *awsModel;
     BOOL isNewRecordAvailable;
 }
 
@@ -58,13 +63,11 @@
     isScrolling  = NO;
     [self initHoldToRecordInfoView];
     isNewRecordAvailable = YES;
+    REGISTER();
 }
 
 -(void) recorderInitIsSuccessful {
-    NSLog(@"recorder is inited");    
-    UIImage *image = [UIImage imageNamed:@"recording_logo_pressed"];
-    NSData *data = UIImagePNGRepresentation(image);
-    [awsModel startToUploadData:data ofType:@"image/png"];
+    NSLog(@"recorder is inited");
 }
 
 -(void) fileUploadCompletedWithPublicUrl:(NSString*) url {
@@ -77,6 +80,10 @@
     self.recentContactsModel = nil;
     self.searchMenu = nil;
     self.fastRecordingView = nil;
+}
+
+SUBSCRIBE(ApplicationDidBecomeActive) {
+    [self cellSelectedWithTag:activeCellTag];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -145,51 +152,79 @@
 
 #pragma mark - UITableView
 
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
+    return SECTION_COUNT;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self activeContactList].count == 0 ? 1 : [self activeContactList].count;
+    NSInteger numberOfRows = 0;
+    if(section == SECTION_FAST_REPLY_CONTACT) {
+        numberOfRows = [self activeContactList].count == 0 ? 0 : [FastReplyModel sharedInstance].peppermintContact ? ROW_COUNT_FAST_REPLY : 0;
+    } else if (section == SECTION_CONTACTS) {
+        numberOfRows = [self activeContactList].count == 0 ? 1 : [self activeContactList].count;
+    }
+    return numberOfRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *preparedCell = nil;
-    if([self activeContactList].count == 0) {
-        EmptyResultTableViewCell *cell = [CellFactory cellEmptyResultTableViewCellFromTable:tableView forIndexPath:indexPath];
-        [cell setVisibiltyOfExplanationLabels:YES];
-        preparedCell = cell;
-    } else if (indexPath.row < [self activeContactList].count) {
+    
+    if(indexPath.section == SECTION_FAST_REPLY_CONTACT) {
         ContactTableViewCell *cell = [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
-        PeppermintContact *peppermintContact = [[self activeContactList] objectAtIndex:indexPath.row];
-        if(peppermintContact.avatarImage) {
-            cell.avatarImageView.image = peppermintContact.avatarImage;
-        } else {
-            cell.avatarImageView.image = [UIImage imageNamed:@"avatar_empty"];
-        }        
-        cell.contactNameLabel.text = peppermintContact.nameSurname;
-        cell.contactViaInformationLabel.text = peppermintContact.communicationChannelAddress;
-                
-        NSPredicate *predicate = [self.recentContactsModel recentContactPredicate:peppermintContact];
-        NSArray *filteredArray = [self.recentContactsModel.contactList filteredArrayUsingPredicate:predicate];
-        
-        if(filteredArray.count > 0) {
-            cell.rightIconImageView.image = [UIImage imageNamed:@"icon_recent"];
-        } else if(peppermintContact.communicationChannel == CommunicationChannelEmail) {
-            cell.rightIconImageView.image = [UIImage imageNamed:@"icon_mail"];
-        } else if (peppermintContact.communicationChannel == CommunicationChannelSMS) {
-            cell.rightIconImageView.image = [UIImage imageNamed:@"icon_phone"];
-        }
-        
+        PeppermintContact *contact = [FastReplyModel sharedInstance].peppermintContact;
+        cell.avatarImageView.image = contact.avatarImage;
+        cell.contactNameLabel.text = contact.nameSurname;
+        cell.contactViaInformationLabel.text = contact.communicationChannelAddress;
         preparedCell = cell;
-    } else {
-        return [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:nil];
+    } else if (indexPath.section == SECTION_CONTACTS) {
+        if([self activeContactList].count == 0) {
+            EmptyResultTableViewCell *cell = [CellFactory cellEmptyResultTableViewCellFromTable:tableView forIndexPath:indexPath];
+            [cell setVisibiltyOfExplanationLabels:YES];
+            preparedCell = cell;
+        } else if (indexPath.row < [self activeContactList].count) {
+            ContactTableViewCell *cell = [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
+            PeppermintContact *peppermintContact = [[self activeContactList] objectAtIndex:indexPath.row];
+            if(peppermintContact.avatarImage) {
+                cell.avatarImageView.image = peppermintContact.avatarImage;
+            } else {
+                cell.avatarImageView.image = [UIImage imageNamed:@"avatar_empty"];
+            }
+            cell.contactNameLabel.text = peppermintContact.nameSurname;
+            cell.contactViaInformationLabel.text = peppermintContact.communicationChannelAddress;
+            
+            NSPredicate *predicate = [self.recentContactsModel recentContactPredicate:peppermintContact];
+            NSArray *filteredArray = [self.recentContactsModel.contactList filteredArrayUsingPredicate:predicate];
+            
+            if(filteredArray.count > 0) {
+                cell.rightIconImageView.image = [UIImage imageNamed:@"icon_recent"];
+            } else if(peppermintContact.communicationChannel == CommunicationChannelEmail) {
+                cell.rightIconImageView.image = [UIImage imageNamed:@"icon_mail"];
+            } else if (peppermintContact.communicationChannel == CommunicationChannelSMS) {
+                cell.rightIconImageView.image = [UIImage imageNamed:@"icon_phone"];
+            }
+            
+            preparedCell = cell;
+        } else {
+            return [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:nil];
+        }
     }
     return preparedCell;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat height = 0;
-    if([self activeContactList].count == 0) {
-        height = CELL_HEIGHT_EMPTYRESULT_TABLEVIEWCELL;
-    } else {
-        height = CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
+    
+    if(indexPath.section == SECTION_FAST_REPLY_CONTACT) {
+        height = [self activeContactList].count == 0 ? 0 :
+        [FastReplyModel sharedInstance].peppermintContact ? CELL_HEIGHT_CONTACT_TABLEVIEWCELL : 0;
+    } else if (indexPath.section == SECTION_CONTACTS) {
+        if([self activeContactList].count == 0) {
+            height = CELL_HEIGHT_EMPTYRESULT_TABLEVIEWCELL;
+        } else {
+            PeppermintContact *fastReplyContact = [FastReplyModel sharedInstance].peppermintContact;
+            PeppermintContact *activeContact = [[self activeContactList] objectAtIndex:indexPath.row];
+            height = [fastReplyContact equals:activeContact] ? 0 : CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
+        }
     }
     return height;
 }
@@ -290,7 +325,11 @@
 
 -(void) didBeginItemSelectionOnIndexpath:(NSIndexPath*) indexPath location:(CGPoint) location {
     self.tableView.bounces = NO;
-    PeppermintContact *selectedContact = [[self activeContactList] objectAtIndex:indexPath.row];
+    
+    PeppermintContact *selectedContact = [FastReplyModel sharedInstance].peppermintContact;
+    if(indexPath.section == SECTION_CONTACTS) {
+        selectedContact = [[self activeContactList] objectAtIndex:indexPath.row];
+    }
     [self.searchContactsTextField resignFirstResponder];
     
     SendVoiceMessageModel *sendVoiceMessageModel = nil;

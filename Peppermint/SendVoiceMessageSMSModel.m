@@ -8,7 +8,6 @@
 
 #import "SendVoiceMessageSMSModel.h"
 
-
 @implementation SendVoiceMessageSMSModel {
     UIViewController *rootViewController;
 }

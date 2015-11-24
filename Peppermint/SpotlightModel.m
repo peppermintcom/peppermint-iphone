@@ -7,11 +7,12 @@
 //
 
 #import "SpotlightModel.h"
-#import "PeppermintContact.h"
-#import "RecordingViewController.h"
+#import "FastReplyModel.h"
 
 @import CoreSpotlight;
 @import MobileCoreServices;
+
+NSString * const CSSearchItemIdentifierJoinString = @".PPM.";
 
 @implementation SpotlightModel
 
@@ -40,7 +41,7 @@
   NSData *imageData = [NSData dataWithData:UIImagePNGRepresentation(image)];
   attibuteSet.thumbnailData = imageData;
   
-  NSString * uniqueKey = [@[contact.nameSurname, contact.communicationChannelAddress] componentsJoinedByString:@" "];
+  NSString * uniqueKey = [@[contact.nameSurname, contact.communicationChannelAddress] componentsJoinedByString:CSSearchItemIdentifierJoinString];
   
   CSSearchableItem *item = [[CSSearchableItem alloc] initWithUniqueIdentifier:uniqueKey
                                                              domainIdentifier:@"com.peppemint"
@@ -55,13 +56,13 @@
 }
 
 + (BOOL)handleSearchItemUniqueIdentifier:(NSString *)uniqueId {
-  //our unique id has @"%@ - %@" format
-  NSArray * components = [uniqueId componentsSeparatedByString:@" "];
+  //our unique id has @"%@.PPM.%@" format
+  NSArray * components = [uniqueId componentsSeparatedByString:CSSearchItemIdentifierJoinString];
   NSString * nameSurname = [components firstObject];
   NSString * email = [components lastObject];
   
   if (nameSurname && email) {
-    return [RecordingViewController sendFastReplyToUserWithNameSurname:nameSurname withEmail:email];
+      return [FastReplyModel setFastReplyContactWithNameSurname:nameSurname email:email];
   }
   
   return NO;

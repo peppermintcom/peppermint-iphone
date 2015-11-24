@@ -16,5 +16,6 @@
 + (NSString *)platform;
 
 + (NSString *)summary;
++ (NSDictionary*)summaryDictionary;
 
 @end

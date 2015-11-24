@@ -13,10 +13,13 @@
 
 @end
 
-@implementation RecordingViewController 
+@implementation RecordingViewController {
+    BOOL viewDidAppear, isAccessRigtsSupplied;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    viewDidAppear = isAccessRigtsSupplied = NO;
     assert(self.sendVoiceMessageModel != nil);
     self.navigationTitleLabel.text = LOC(@"Record Message", @"Navigation title");
     self.navigationSubTitleLabel.textColor = [UIColor recordingNavigationsubTitleGreen];
@@ -30,7 +33,8 @@
     self.progressContainerView.layer.cornerRadius = 45;
     [self.m13ProgressViewPie setPrimaryColor:[UIColor progressCoverViewGreen]];
     [self.m13ProgressViewPie setSecondaryColor:[UIColor clearColor]];
-
+    
+    
 #warning "Interruptions are not handled"
     //[self registerAppNotifications];
 }
@@ -45,13 +49,17 @@
     self.sendVoiceMessageModel = nil;
 }
 
-- (void) viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-
 - (void) viewWillDisappear:(BOOL)animated {
     [self.recordingModel stop];
     [super viewWillDisappear:animated];
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    viewDidAppear = YES;
+    if(viewDidAppear && isAccessRigtsSupplied) {
+        [self rerecordButtonPressed:nil];
+    }
 }
 
 #pragma mark - Button Actions
@@ -108,8 +116,11 @@
 }
 
 -(void) accessRightsAreSupplied {
+    isAccessRigtsSupplied = YES;
     if([RecordingModel checkPreviousFileLength] < 0.01) {
-        [self rerecordButtonPressed:nil];
+        if(isAccessRigtsSupplied && viewDidAppear) {
+            [self rerecordButtonPressed:nil];
+        }
     }
 }
 
@@ -124,7 +135,7 @@
         int minutes = totalSeconds / 60;
         int seconds = totalSeconds % 60;
         self.counterLabel.text = [NSString stringWithFormat:@"%.1d:%.2d", minutes, seconds];
-        [self.m13ProgressViewPie setProgress:timeInterval/MAX_RECORD_TIME animated:YES];
+        [self.m13ProgressViewPie setProgress:timeInterval/(MAX_RECORD_TIME + -2 * PING_INTERVAL) animated:YES];
     } else {
         [self.recordingModel stop];
         self.resumeButton.enabled = NO;

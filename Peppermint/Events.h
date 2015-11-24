@@ -11,6 +11,7 @@
 #import "User.h"
 
 @interface NetworkFailure : NSObject
+@property (nonatomic) id sender;
 @property(nonatomic) NSError *error;
 @end
 
@@ -68,4 +69,8 @@
 
 @interface VerificationEmailSent : NSObject
 @property (strong, nonatomic) NSString* jwt;
+@end
+
+@interface AccountInfoRefreshed : NSObject
+@property (strong, nonatomic) User *user;
 @end

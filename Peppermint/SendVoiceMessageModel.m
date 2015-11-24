@@ -8,17 +8,22 @@
 
 #import "SendVoiceMessageModel.h"
 #import "ConnectionModel.h"
+#import "CacheModel.h"
+#import "FastReplyModel.h"
+#import <Crashlytics/Crashlytics.h>
 
 #define TIMER_PERIOD    3
 
 @implementation SendVoiceMessageModel {
     ConnectionModel *connectionModel;
     NSTimer *timer;
+    NSLock *arrayLock;
 }
 
 -(id) init {
     self = [super init];
     if(self) {
+        arrayLock = [[NSLock alloc] init];
         recentContactsModel = [RecentContactsModel new];
         recentContactsModel.delegate = self;
         self.peppermintMessageSender = [PeppermintMessageSender sharedInstance];
@@ -50,8 +55,11 @@
 }
 
 -(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension {
+    _data = data;
+    _extension = extension;
     [recentContactsModel save:self.selectedPeppermintContact];
     [self attachProcessToAppDelegate];
+    [self checkAndCleanFastReplyModel];
     
 #warning "Busy wait, think to make it with a more smart way"
     if(self.sendingStatus == SendingStatusIniting) {
@@ -65,6 +73,11 @@
 
 -(void) operationFailure:(NSError*) error {
     self.sendingStatus = SendingStatusError;
+    
+    if(self.delegate) {
+        [[CacheModel sharedInstance] cache:self WithData:_data extension:_extension];
+    }
+    
     [self.delegate messageStatusIsUpdated:self.sendingStatus withCancelOption:NO];
     [self.delegate operationFailure:error];
 }
@@ -166,7 +179,9 @@
     NSMutableArray *array = [AppDelegate Instance].mutableArray;
     if(![array containsObject:self]) {
         NSLog(@"Attached and timer started!!");
+        [arrayLock lock];
         [array addObject:self];
+        [arrayLock unlock];
         if(timer) { [timer invalidate]; NSLog(@"invalidated a timer!!"); }
         timer = [NSTimer scheduledTimerWithTimeInterval:TIMER_PERIOD target:self selector:@selector(detachProcessFromAppDelegate) userInfo:nil repeats:YES];
         timer.tolerance = TIMER_PERIOD * 0.1;
@@ -188,6 +203,9 @@
         [timer invalidate];
         timer = nil;
         NSLog(@"trigger detach");
+        
+        NSString *contentName = [NSString stringWithFormat:@"%lu bytes", (unsigned long)_data.length];
+        [Answers logShareWithMethod:@"SendVoiceMessage" contentName:contentName contentType:_extension contentId:self.description customAttributes:nil];
         [self performSelector:@selector(performDetach) withObject:nil afterDelay:TIMER_PERIOD*2];
     }
     
@@ -196,7 +214,9 @@
 -(void) performDetach {
     NSMutableArray *array = [AppDelegate Instance].mutableArray;
     if([array containsObject:self]) {
+        [arrayLock lock];
         [array removeObject:self];
+        [arrayLock unlock];
         NSLog(@"Detached!!");
     } else {
         NSLog(@"Detach is called on a non-attached item");
@@ -216,5 +236,14 @@
     }
     return sendVoiceMessageModel;
 }
- 
+
+#pragma mark - FastReplyModel
+
+-(void) checkAndCleanFastReplyModel {
+    PeppermintContact *fastReplyContact = [FastReplyModel sharedInstance].peppermintContact;
+    if([self.selectedPeppermintContact equals:fastReplyContact]) {
+        [FastReplyModel cleanFastReplyContact];
+    }
+}
+
 @end

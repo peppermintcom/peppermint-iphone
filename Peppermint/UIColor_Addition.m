@@ -146,4 +146,13 @@
 }
 
 
++ (UIColor *) continueButtonTitle {
+    static dispatch_once_t onceToken;
+    static UIColor *color;
+    dispatch_once(&onceToken, ^{
+        color = [UIColor colorWithRed:0.400f green:0.769f blue:0.639f alpha:1.00f];
+    });
+    return color;
+}
+
 @end
