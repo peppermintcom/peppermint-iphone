@@ -103,10 +103,9 @@ sharedObject;\
 #define SCHEME_PEPPERMINT   @"peppermint"
 
 #define HOST_FASTREPLY                  @"reply"
-#define PATH_FASTREPLY                  @"/reply/"
 #define PATH_VERIFIY_EMAIL              @"/verify-email"
 
-#define QUERY_COMPONENT_NAMESURNAME     @"namesurname"
-#define QUERY_COMPONENT_EMAIL           @"email"
+#define QUERY_COMPONENT_NAMESURNAME     @"name"
+#define QUERY_COMPONENT_EMAIL           @"mail"
 
 #endif

@@ -86,6 +86,10 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
     [self cellSelectedWithTag:activeCellTag];
 }
 
+SUBSCRIBE(RetrieveGoogleContactsIsSuccessful) {
+    [self cellSelectedWithTag:activeCellTag];
+}
+
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if([self checkIfuserIsLoggedIn]) {
@@ -175,6 +179,7 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
         cell.avatarImageView.image = contact.avatarImage;
         cell.contactNameLabel.text = contact.nameSurname;
         cell.contactViaInformationLabel.text = contact.communicationChannelAddress;
+        cell.rightIconImageView.image = [UIImage imageNamed:@"icon_reply"];
         preparedCell = cell;
     } else if (indexPath.section == SECTION_CONTACTS) {
         if([self activeContactList].count == 0) {
@@ -223,6 +228,9 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
         } else {
             PeppermintContact *fastReplyContact = [FastReplyModel sharedInstance].peppermintContact;
             PeppermintContact *activeContact = [[self activeContactList] objectAtIndex:indexPath.row];
+            if([activeContact equals:fastReplyContact]) {
+                fastReplyContact.avatarImage = activeContact.avatarImage;
+            }
             height = [fastReplyContact equals:activeContact] ? 0 : CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
         }
     }

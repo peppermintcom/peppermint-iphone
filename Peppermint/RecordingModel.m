@@ -10,6 +10,7 @@
 #import <AudioToolbox/AudioServices.h>
 
 #define DEFAULT_GAIN    0.8 //Input Gain must be a value btw 0.0 - 1.0
+#define SAMPLE_RATE     16000.0   //44100 -> 44.1kHz = 44100, 16 kHz -> 16000
 
 @implementation RecordingModel {
     AVAudioRecorder *recorder;
@@ -80,7 +81,7 @@
                                            [NSNumber numberWithInt:kAudioFormatMPEG4AAC], AVFormatIDKey,
                                            [NSNumber numberWithInt:AVAudioQualityHigh], AVEncoderAudioQualityKey,
                                            [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,
-                                           [NSNumber numberWithFloat:44100.0], AVSampleRateKey,
+                                           [NSNumber numberWithFloat:SAMPLE_RATE], AVSampleRateKey,
                                            nil];
             recorder = [[AVAudioRecorder alloc] initWithURL:self.fileUrl settings:recordSetting error:&error];
             if(error) {
@@ -224,7 +225,10 @@
 -(void) prepareRecordData {
     //Completion block for preparing Record
     void (^preparingProcess)(void) = ^(void) {
-        if(![TPAACAudioConverter AACConverterAvailable]) {
+        //convertM4aToAAC is disabled. m4a is acceptable
+        //if([TPAACAudioConverter AACConverterAvailable]) {
+        //   [self convertM4aToAAC];
+        //} else {
             NSLog(@"Can not convert to aac for this device!");
             NSData *data = [[NSData alloc] initWithContentsOfURL:self.fileUrl];
             [self removeFileIfExistsAtUrl:[self fileUrl]];
@@ -232,9 +236,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.delegate recordDataIsPrepared:data withExtension:[self.fileUrl pathExtension]];
             });
-        } else {
-            [self convertM4aToAAC];
-        }
+        //}
     };
     
     //If there is a backUp - MixRecordings

@@ -66,7 +66,7 @@
   }
     
     mandrillMessage = [MandrillMessage new];
-    mandrillMessage.from_email = @"noreply@peppermint.com"; //self.peppermintMessageSender.email;
+    mandrillMessage.from_email = @"support@peppermint.com"; //self.peppermintMessageSender.email;
     
     mandrillMessage.from_name = nameSurname;
     mandrillMessage.subject = subject;

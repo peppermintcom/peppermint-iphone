@@ -74,3 +74,7 @@
 @interface AccountInfoRefreshed : NSObject
 @property (strong, nonatomic) User *user;
 @end
+
+@interface RetrieveGoogleContactsIsSuccessful : NSObject
+@property (nonatomic) BOOL hasNext;
+@end

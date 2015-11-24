@@ -83,7 +83,6 @@
 "Logged in message format" = "You are currently logged in\nusing %@";
 "Log Out" = "Log Out";
 "Signature" = "Signature";
-"Signature Description" = "Signature appended to the end of your in-app email";
 "Display Name" = "Display Name";
 "Display Name Description" = "Your Display Name (used when sending in-app emails)";
 "Save" = "Save";

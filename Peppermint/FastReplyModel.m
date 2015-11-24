@@ -32,7 +32,7 @@
     contact.nameSurname = nameSurname;
     contact.communicationChannel = CommunicationChannelEmail;
     contact.communicationChannelAddress = email;
-    contact.avatarImage = [UIImage imageNamed:@"icon_defaultstate"];
+    contact.avatarImage = nil;
     [FastReplyModel sharedInstance].peppermintContact = contact;
     return YES;
 }

@@ -109,7 +109,7 @@
                                     <outlet property="delegate" destination="291-YT-7kX" id="Med-WE-J70"/>
                                 </connections>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DWJ-9W-nyk">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DWJ-9W-nyk">
                                 <rect key="frame" x="147" y="687" width="120" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -127,7 +127,9 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="continueButtonDown:" destination="291-YT-7kX" eventType="touchDown" id="dBU-Sw-GKX"/>
                                     <action selector="continueButtonPressed:" destination="291-YT-7kX" eventType="touchUpInside" id="4sn-Sr-sjK"/>
+                                    <action selector="continueButtonReleased:" destination="291-YT-7kX" eventType="touchUpOutside" id="7Bh-mO-p4j"/>
                                 </connections>
                             </button>
                         </subviews>

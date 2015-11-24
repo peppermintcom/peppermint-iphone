@@ -186,7 +186,7 @@
     [Answers logCustomEventWithName:@"HandleUrl" customAttributes:customAttributes];
     
     if([[[url host] lowercaseString] isEqualToString:HOST_FASTREPLY]
-       || [[[url path] lowercaseString] containsString:PATH_FASTREPLY]) {
+       || [[[url path] lowercaseString] containsString:HOST_FASTREPLY]) {
         NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
         NSString *nameSurname, *email = nil;
         for(NSURLQueryItem *queryItem in urlComponents.queryItems) {
