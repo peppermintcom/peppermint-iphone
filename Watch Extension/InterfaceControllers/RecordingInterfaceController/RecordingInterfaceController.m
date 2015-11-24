@@ -8,9 +8,10 @@
 
 #import "RecordingInterfaceController.h"
 #import "PeppermintContact.h"
+#import "PeppermintMessageSender.h"
+#import "WKServerManager.h"
 
-NSString *const AppConfigurationApplicationGroupsPrimary = @"group."SAMPLE_BUNDLE_PREFIX_STRING@".WatchKitAudioRecorder";
-
+@import WatchConnectivity;
 
 @interface RecordingInterfaceController ()
 
@@ -48,7 +49,8 @@ NSString *const AppConfigurationApplicationGroupsPrimary = @"group."SAMPLE_BUNDL
   NSLog(@"preset: %d", preset);
   
   // Get the directory from the app group.
-  NSURL *directory = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:AppConfigurationApplicationGroupsPrimary];
+  NSURL * directory = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask].firstObject;
+
   NSUInteger timeAtRecording = (NSUInteger)[NSDate timeIntervalSinceReferenceDate];
   __block NSString *recordingName = [NSString stringWithFormat:@"AudioRecording-%d.mp4", timeAtRecording];
   __block NSURL * outputURL = [directory URLByAppendingPathComponent:recordingName];
@@ -85,7 +87,12 @@ NSString *const AppConfigurationApplicationGroupsPrimary = @"group."SAMPLE_BUNDL
         NSLog(@"lastRecordingURL: %@.", strongSelf.lastRecordingURL);
         
         // Activate the session before transferring the file.
-        //[[WCSession defaultSession] transferFile:outputExtensionURL metadata:nil];
+        if ([WCSession isSupported]) {
+          WCSession *session = [WCSession defaultSession];
+          [session activateSession];
+        }
+
+        [[WCSession defaultSession] transferFile:outputExtensionURL metadata:nil];
       }
     }
     
@@ -96,7 +103,7 @@ NSString *const AppConfigurationApplicationGroupsPrimary = @"group."SAMPLE_BUNDL
 }
 
 - (IBAction)sendPressed:(id)sender {
-  
+  [[WKServerManager sharedManager] sendFileURL:nil recipient:self.ppm_contact];
 }
 
 

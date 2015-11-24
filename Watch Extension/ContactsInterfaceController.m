@@ -12,6 +12,7 @@
 #import "PeppermintContact.h"
 #import "RecordingInterfaceController.h"
 #import "WKInterfaceTable+IGInterfaceDataTable.h"
+#import "PeppermintMessageSender.h"
 
 @interface ContactsInterfaceController() <IGInterfaceTableDataSource>
 

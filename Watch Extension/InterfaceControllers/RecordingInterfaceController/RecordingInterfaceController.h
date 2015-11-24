@@ -9,7 +9,6 @@
 #import <WatchKit/WatchKit.h>
 #import <Foundation/Foundation.h>
 
-extern NSString *const AppConfigurationApplicationGroupsPrimary;
 
 @interface RecordingInterfaceController : WKInterfaceController
 

@@ -11,4 +11,9 @@
 
 @interface WKServerManager : NSObject
 
++ (WKServerManager *)sharedManager;
+
+- (void)sendFileURL:(NSURL *)fileURL recipient:(PeppermintContact *)recipient;
+
+
 @end

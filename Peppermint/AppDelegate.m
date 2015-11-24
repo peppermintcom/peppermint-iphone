@@ -16,7 +16,9 @@
 #import <Google/SignIn.h>
 #import "RecordingViewController.h"
 
-@interface AppDelegate ()
+@import WatchConnectivity;
+
+@interface AppDelegate () <WCSessionDelegate>
 
 @end
 
@@ -80,6 +82,15 @@
     NSLog(@"Error configuring Google services: %@", error);
 }
 
+-(void) initWatchKitSession {
+  if (NSClassFromString(@"WCSession")) {
+    if ([WCSession isSupported]) {
+      [WCSession defaultSession].delegate = self;
+      [[WCSession defaultSession] activateSession];
+    }
+  }
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self initMutableArray];
@@ -89,6 +100,7 @@
     [self logServiceCalls];
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
     [self initGoogleApp];
+  
     return YES;
 }
 

@@ -121,11 +121,44 @@
 		D0D70C341BFF31440068AB20 /* ContactsTableRowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70C331BFF31440068AB20 /* ContactsTableRowController.m */; };
 		D0D70C361BFF34F00068AB20 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D70C351BFF34F00068AB20 /* Contacts.framework */; };
 		D0D70C3A1BFF35AB0068AB20 /* WKContact.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70C391BFF35AB0068AB20 /* WKContact.m */; };
-		D0D70C421BFF997C0068AB20 /* WKInterfaceTable+IGInterfaceDataTable.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70C411BFF997C0068AB20 /* WKInterfaceTable+IGInterfaceDataTable.m */; };
 		D0D70C431BFFA71B0068AB20 /* PeppermintContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF171BB71EC0008C6F71 /* PeppermintContact.m */; };
 		D0D70C471C00499B0068AB20 /* RecordingInterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70C461C00499B0068AB20 /* RecordingInterfaceController.m */; };
 		D0D70C521C0056E50068AB20 /* WKServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70C511C0056E50068AB20 /* WKServerManager.m */; };
 		D0D70C7A1C005FF40068AB20 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D70C791C005FF40068AB20 /* SystemConfiguration.framework */; };
+		D0D70D001C02F64D0068AB20 /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70CE91C02F64D0068AB20 /* JSONModel.m */; };
+		D0D70D011C02F64D0068AB20 /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70CE91C02F64D0068AB20 /* JSONModel.m */; };
+		D0D70D021C02F64D0068AB20 /* JSONModelArray.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70CEB1C02F64D0068AB20 /* JSONModelArray.m */; };
+		D0D70D031C02F64D0068AB20 /* JSONModelArray.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70CEB1C02F64D0068AB20 /* JSONModelArray.m */; };
+		D0D70D041C02F64D0068AB20 /* JSONModelClassProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70CED1C02F64D0068AB20 /* JSONModelClassProperty.m */; };
+		D0D70D051C02F64D0068AB20 /* JSONModelClassProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70CED1C02F64D0068AB20 /* JSONModelClassProperty.m */; };
+		D0D70D061C02F64D0068AB20 /* JSONModelError.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70CEF1C02F64D0068AB20 /* JSONModelError.m */; };
+		D0D70D071C02F64D0068AB20 /* JSONModelError.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70CEF1C02F64D0068AB20 /* JSONModelError.m */; };
+		D0D70D081C02F64D0068AB20 /* NSArray+JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70CF21C02F64D0068AB20 /* NSArray+JSONModel.m */; };
+		D0D70D091C02F64D0068AB20 /* NSArray+JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70CF21C02F64D0068AB20 /* NSArray+JSONModel.m */; };
+		D0D70D0A1C02F64D0068AB20 /* JSONAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70CF61C02F64D0068AB20 /* JSONAPI.m */; };
+		D0D70D0C1C02F64D0068AB20 /* JSONHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70CF81C02F64D0068AB20 /* JSONHTTPClient.m */; };
+		D0D70D0E1C02F64D0068AB20 /* JSONModel+networking.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70CFA1C02F64D0068AB20 /* JSONModel+networking.m */; };
+		D0D70D101C02F64D0068AB20 /* JSONKeyMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70CFD1C02F64D0068AB20 /* JSONKeyMapper.m */; };
+		D0D70D111C02F64D0068AB20 /* JSONKeyMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70CFD1C02F64D0068AB20 /* JSONKeyMapper.m */; };
+		D0D70D121C02F64D0068AB20 /* JSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70CFF1C02F64D0068AB20 /* JSONValueTransformer.m */; };
+		D0D70D131C02F64D0068AB20 /* JSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70CFF1C02F64D0068AB20 /* JSONValueTransformer.m */; };
+		D0D70D141C02F6B70068AB20 /* MandrillRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07691BD3752900974AC3 /* MandrillRequest.m */; };
+		D0D70D151C02F6BA0068AB20 /* MandrillInformationResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07591BD3686500974AC3 /* MandrillInformationResponse.m */; };
+		D0D70D161C02F6BD0068AB20 /* MandrillSendRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B075C1BD3716100974AC3 /* MandrillSendRequest.m */; };
+		D0D70D171C02F6C00068AB20 /* MandrillToObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B075F1BD3719500974AC3 /* MandrillToObject.m */; };
+		D0D70D181C02F6C60068AB20 /* MandrillMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07621BD3720100974AC3 /* MandrillMessage.m */; };
+		D0D70D191C02F6CA0068AB20 /* MandrillMailAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07661BD3736400974AC3 /* MandrillMailAttachment.m */; };
+		D0D70D1B1C0304A30068AB20 /* begin_record.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B17206D81BE4E1450021D855 /* begin_record.mp3 */; };
+		D0D70D231C0306930068AB20 /* A0SimpleKeychain+KeyPair.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70D1E1C0306930068AB20 /* A0SimpleKeychain+KeyPair.m */; };
+		D0D70D241C0306930068AB20 /* A0SimpleKeychain+KeyPair.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70D1E1C0306930068AB20 /* A0SimpleKeychain+KeyPair.m */; };
+		D0D70D251C0306930068AB20 /* A0SimpleKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70D201C0306930068AB20 /* A0SimpleKeychain.m */; };
+		D0D70D261C0306930068AB20 /* A0SimpleKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70D201C0306930068AB20 /* A0SimpleKeychain.m */; };
+		D0D70D271C0306930068AB20 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0D70D211C0306930068AB20 /* Info.plist */; };
+		D0D70D281C0306930068AB20 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0D70D211C0306930068AB20 /* Info.plist */; };
+		D0D70D291C0308E90068AB20 /* PeppermintMessageSender.m in Sources */ = {isa = PBXBuildFile; fileRef = B18BF95D1BD674CD009B665E /* PeppermintMessageSender.m */; };
+		D0D70D2B1C0328AB0068AB20 /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D70D2A1C0328AB0068AB20 /* WatchConnectivity.framework */; };
+		D0D70D301C03297B0068AB20 /* WKInterfaceTable+IGInterfaceDataTable.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70D2F1C03297B0068AB20 /* WKInterfaceTable+IGInterfaceDataTable.m */; };
+		D0D70D331C032C1C0068AB20 /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D70D321C032C1C0068AB20 /* WatchConnectivity.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -392,13 +425,43 @@
 		D0D70C381BFF35AB0068AB20 /* WKContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WKContact.h; path = Module/WKContact/WKContact.h; sourceTree = "<group>"; };
 		D0D70C391BFF35AB0068AB20 /* WKContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WKContact.m; path = Module/WKContact/WKContact.m; sourceTree = "<group>"; };
 		D0D70C3B1BFF91380068AB20 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS2.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		D0D70C401BFF997C0068AB20 /* WKInterfaceTable+IGInterfaceDataTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKInterfaceTable+IGInterfaceDataTable.h"; sourceTree = "<group>"; };
-		D0D70C411BFF997C0068AB20 /* WKInterfaceTable+IGInterfaceDataTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKInterfaceTable+IGInterfaceDataTable.m"; sourceTree = "<group>"; };
 		D0D70C451C00499B0068AB20 /* RecordingInterfaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecordingInterfaceController.h; path = InterfaceControllers/RecordingInterfaceController/RecordingInterfaceController.h; sourceTree = "<group>"; };
 		D0D70C461C00499B0068AB20 /* RecordingInterfaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecordingInterfaceController.m; path = InterfaceControllers/RecordingInterfaceController/RecordingInterfaceController.m; sourceTree = "<group>"; };
 		D0D70C501C0056E50068AB20 /* WKServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WKServerManager.h; path = Module/ServerManager/WKServerManager.h; sourceTree = "<group>"; };
 		D0D70C511C0056E50068AB20 /* WKServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WKServerManager.m; path = Module/ServerManager/WKServerManager.m; sourceTree = "<group>"; };
 		D0D70C791C005FF40068AB20 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		D0D70CE81C02F64D0068AB20 /* JSONModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModel.h; sourceTree = "<group>"; };
+		D0D70CE91C02F64D0068AB20 /* JSONModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONModel.m; sourceTree = "<group>"; };
+		D0D70CEA1C02F64D0068AB20 /* JSONModelArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModelArray.h; sourceTree = "<group>"; };
+		D0D70CEB1C02F64D0068AB20 /* JSONModelArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONModelArray.m; sourceTree = "<group>"; };
+		D0D70CEC1C02F64D0068AB20 /* JSONModelClassProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModelClassProperty.h; sourceTree = "<group>"; };
+		D0D70CED1C02F64D0068AB20 /* JSONModelClassProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONModelClassProperty.m; sourceTree = "<group>"; };
+		D0D70CEE1C02F64D0068AB20 /* JSONModelError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModelError.h; sourceTree = "<group>"; };
+		D0D70CEF1C02F64D0068AB20 /* JSONModelError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONModelError.m; sourceTree = "<group>"; };
+		D0D70CF11C02F64D0068AB20 /* NSArray+JSONModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+JSONModel.h"; sourceTree = "<group>"; };
+		D0D70CF21C02F64D0068AB20 /* NSArray+JSONModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+JSONModel.m"; sourceTree = "<group>"; };
+		D0D70CF31C02F64D0068AB20 /* JSONModelLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModelLib.h; sourceTree = "<group>"; };
+		D0D70CF51C02F64D0068AB20 /* JSONAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONAPI.h; sourceTree = "<group>"; };
+		D0D70CF61C02F64D0068AB20 /* JSONAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONAPI.m; sourceTree = "<group>"; };
+		D0D70CF71C02F64D0068AB20 /* JSONHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONHTTPClient.h; sourceTree = "<group>"; };
+		D0D70CF81C02F64D0068AB20 /* JSONHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONHTTPClient.m; sourceTree = "<group>"; };
+		D0D70CF91C02F64D0068AB20 /* JSONModel+networking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JSONModel+networking.h"; sourceTree = "<group>"; };
+		D0D70CFA1C02F64D0068AB20 /* JSONModel+networking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JSONModel+networking.m"; sourceTree = "<group>"; };
+		D0D70CFC1C02F64D0068AB20 /* JSONKeyMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKeyMapper.h; sourceTree = "<group>"; };
+		D0D70CFD1C02F64D0068AB20 /* JSONKeyMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKeyMapper.m; sourceTree = "<group>"; };
+		D0D70CFE1C02F64D0068AB20 /* JSONValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONValueTransformer.h; sourceTree = "<group>"; };
+		D0D70CFF1C02F64D0068AB20 /* JSONValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONValueTransformer.m; sourceTree = "<group>"; };
+		D0D70D1D1C0306930068AB20 /* A0SimpleKeychain+KeyPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "A0SimpleKeychain+KeyPair.h"; sourceTree = "<group>"; };
+		D0D70D1E1C0306930068AB20 /* A0SimpleKeychain+KeyPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "A0SimpleKeychain+KeyPair.m"; sourceTree = "<group>"; };
+		D0D70D1F1C0306930068AB20 /* A0SimpleKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A0SimpleKeychain.h; sourceTree = "<group>"; };
+		D0D70D201C0306930068AB20 /* A0SimpleKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A0SimpleKeychain.m; sourceTree = "<group>"; };
+		D0D70D211C0306930068AB20 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0D70D221C0306930068AB20 /* SimpleKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleKeychain.h; sourceTree = "<group>"; };
+		D0D70D2A1C0328AB0068AB20 /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS2.0.sdk/System/Library/Frameworks/WatchConnectivity.framework; sourceTree = DEVELOPER_DIR; };
+		D0D70D2E1C03297B0068AB20 /* WKInterfaceTable+IGInterfaceDataTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKInterfaceTable+IGInterfaceDataTable.h"; sourceTree = "<group>"; };
+		D0D70D2F1C03297B0068AB20 /* WKInterfaceTable+IGInterfaceDataTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKInterfaceTable+IGInterfaceDataTable.m"; sourceTree = "<group>"; };
+		D0D70D311C0329DC0068AB20 /* Watch Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Watch Extension.entitlements"; sourceTree = "<group>"; };
+		D0D70D321C032C1C0068AB20 /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = System/Library/Frameworks/WatchConnectivity.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -406,6 +469,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0D70D331C032C1C0068AB20 /* WatchConnectivity.framework in Frameworks */,
 				D0D70C7A1C005FF40068AB20 /* SystemConfiguration.framework in Frameworks */,
 				B190F5BC1BDD7F040094B391 /* AudioToolbox.framework in Frameworks */,
 				B1F93E8C1BC8E0D9005F2128 /* CoreData.framework in Frameworks */,
@@ -424,6 +488,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0D70D2B1C0328AB0068AB20 /* WatchConnectivity.framework in Frameworks */,
 				D0D70C361BFF34F00068AB20 /* Contacts.framework in Frameworks */,
 				34FE5288FE5CB504EFF4052A /* libPods-Watch Extension.a in Frameworks */,
 			);
@@ -446,6 +511,8 @@
 		6C8541A65356EA01C859C162 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D0D70D321C032C1C0068AB20 /* WatchConnectivity.framework */,
+				D0D70D2A1C0328AB0068AB20 /* WatchConnectivity.framework */,
 				D0D70C791C005FF40068AB20 /* SystemConfiguration.framework */,
 				D0D70C3B1BFF91380068AB20 /* UIKit.framework */,
 				D0D70C351BFF34F00068AB20 /* Contacts.framework */,
@@ -510,6 +577,7 @@
 		B15B15AD1BDA44D200C0C171 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				D0D70D1C1C0306930068AB20 /* SimpleKeychain */,
 				B15B15AE1BDA44E200C0C171 /* TPAACAudioConverter.h */,
 				B15B15AF1BDA44E200C0C171 /* TPAACAudioConverter.m */,
 			);
@@ -569,6 +637,7 @@
 		B165EF0F1BB71A31008C6F71 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D0D70CE61C02F64D0068AB20 /* JSONModel */,
 				B15B15AD1BDA44D200C0C171 /* Vendor */,
 				B165EF191BB71F50008C6F71 /* Entity */,
 				B1F93E8D1BC8E1C2005F2128 /* CoreData */,
@@ -983,7 +1052,8 @@
 		D0A7C1061BFC73FF00ACD33E /* Watch Extension */ = {
 			isa = PBXGroup;
 			children = (
-				D0D70C3D1BFF994C0068AB20 /* Categories */,
+				D0D70D311C0329DC0068AB20 /* Watch Extension.entitlements */,
+				D0D70D2C1C03297B0068AB20 /* Categories */,
 				D0D70C371BFF35850068AB20 /* Module */,
 				D0D70C2E1BFF30750068AB20 /* InterfaceControllers */,
 				D0A7C10A1BFC73FF00ACD33E /* ExtensionDelegate.h */,
@@ -1031,24 +1101,6 @@
 			name = Module;
 			sourceTree = "<group>";
 		};
-		D0D70C3D1BFF994C0068AB20 /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				D0D70C3E1BFF997C0068AB20 /* IGInterfaceDataTable */,
-			);
-			name = Categories;
-			sourceTree = "<group>";
-		};
-		D0D70C3E1BFF997C0068AB20 /* IGInterfaceDataTable */ = {
-			isa = PBXGroup;
-			children = (
-				D0D70C401BFF997C0068AB20 /* WKInterfaceTable+IGInterfaceDataTable.h */,
-				D0D70C411BFF997C0068AB20 /* WKInterfaceTable+IGInterfaceDataTable.m */,
-			);
-			name = IGInterfaceDataTable;
-			path = Categories/IGInterfaceDataTable;
-			sourceTree = "<group>";
-		};
 		D0D70C441C0049680068AB20 /* RecordingInterfaceController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1074,6 +1126,96 @@
 				D0D70C511C0056E50068AB20 /* WKServerManager.m */,
 			);
 			name = Manager;
+			sourceTree = "<group>";
+		};
+		D0D70CE61C02F64D0068AB20 /* JSONModel */ = {
+			isa = PBXGroup;
+			children = (
+				D0D70CE71C02F64D0068AB20 /* JSONModel */,
+				D0D70CF01C02F64D0068AB20 /* JSONModelCategories */,
+				D0D70CF31C02F64D0068AB20 /* JSONModelLib.h */,
+				D0D70CF41C02F64D0068AB20 /* JSONModelNetworking */,
+				D0D70CFB1C02F64D0068AB20 /* JSONModelTransformations */,
+			);
+			path = JSONModel;
+			sourceTree = "<group>";
+		};
+		D0D70CE71C02F64D0068AB20 /* JSONModel */ = {
+			isa = PBXGroup;
+			children = (
+				D0D70CE81C02F64D0068AB20 /* JSONModel.h */,
+				D0D70CE91C02F64D0068AB20 /* JSONModel.m */,
+				D0D70CEA1C02F64D0068AB20 /* JSONModelArray.h */,
+				D0D70CEB1C02F64D0068AB20 /* JSONModelArray.m */,
+				D0D70CEC1C02F64D0068AB20 /* JSONModelClassProperty.h */,
+				D0D70CED1C02F64D0068AB20 /* JSONModelClassProperty.m */,
+				D0D70CEE1C02F64D0068AB20 /* JSONModelError.h */,
+				D0D70CEF1C02F64D0068AB20 /* JSONModelError.m */,
+			);
+			path = JSONModel;
+			sourceTree = "<group>";
+		};
+		D0D70CF01C02F64D0068AB20 /* JSONModelCategories */ = {
+			isa = PBXGroup;
+			children = (
+				D0D70CF11C02F64D0068AB20 /* NSArray+JSONModel.h */,
+				D0D70CF21C02F64D0068AB20 /* NSArray+JSONModel.m */,
+			);
+			path = JSONModelCategories;
+			sourceTree = "<group>";
+		};
+		D0D70CF41C02F64D0068AB20 /* JSONModelNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				D0D70CF51C02F64D0068AB20 /* JSONAPI.h */,
+				D0D70CF61C02F64D0068AB20 /* JSONAPI.m */,
+				D0D70CF71C02F64D0068AB20 /* JSONHTTPClient.h */,
+				D0D70CF81C02F64D0068AB20 /* JSONHTTPClient.m */,
+				D0D70CF91C02F64D0068AB20 /* JSONModel+networking.h */,
+				D0D70CFA1C02F64D0068AB20 /* JSONModel+networking.m */,
+			);
+			path = JSONModelNetworking;
+			sourceTree = "<group>";
+		};
+		D0D70CFB1C02F64D0068AB20 /* JSONModelTransformations */ = {
+			isa = PBXGroup;
+			children = (
+				D0D70CFC1C02F64D0068AB20 /* JSONKeyMapper.h */,
+				D0D70CFD1C02F64D0068AB20 /* JSONKeyMapper.m */,
+				D0D70CFE1C02F64D0068AB20 /* JSONValueTransformer.h */,
+				D0D70CFF1C02F64D0068AB20 /* JSONValueTransformer.m */,
+			);
+			path = JSONModelTransformations;
+			sourceTree = "<group>";
+		};
+		D0D70D1C1C0306930068AB20 /* SimpleKeychain */ = {
+			isa = PBXGroup;
+			children = (
+				D0D70D1D1C0306930068AB20 /* A0SimpleKeychain+KeyPair.h */,
+				D0D70D1E1C0306930068AB20 /* A0SimpleKeychain+KeyPair.m */,
+				D0D70D1F1C0306930068AB20 /* A0SimpleKeychain.h */,
+				D0D70D201C0306930068AB20 /* A0SimpleKeychain.m */,
+				D0D70D211C0306930068AB20 /* Info.plist */,
+				D0D70D221C0306930068AB20 /* SimpleKeychain.h */,
+			);
+			path = SimpleKeychain;
+			sourceTree = "<group>";
+		};
+		D0D70D2C1C03297B0068AB20 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				D0D70D2D1C03297B0068AB20 /* IGInterfaceDataTable */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		D0D70D2D1C03297B0068AB20 /* IGInterfaceDataTable */ = {
+			isa = PBXGroup;
+			children = (
+				D0D70D2E1C03297B0068AB20 /* WKInterfaceTable+IGInterfaceDataTable.h */,
+				D0D70D2F1C03297B0068AB20 /* WKInterfaceTable+IGInterfaceDataTable.m */,
+			);
+			path = IGInterfaceDataTable;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1168,8 +1310,14 @@
 				TargetAttributes = {
 					B17B3D2A1BB6898C009B8BC5 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = 6PUQ7TWUAW;
+						DevelopmentTeam = 8V9FEAB5WD;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.Keychain = {
+								enabled = 1;
+							};
 							com.apple.SafariKeychain = {
 								enabled = 0;
 							};
@@ -1185,6 +1333,15 @@
 					};
 					D0A7C1011BFC73FF00ACD33E = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = 8V9FEAB5WD;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -1216,6 +1373,7 @@
 			files = (
 				B1C83A1B1BDEB0FC00EB14C2 /* LoginTextFieldTableViewCell.xib in Resources */,
 				B17B3D3A1BB6898C009B8BC5 /* Main.storyboard in Resources */,
+				D0D70D271C0306930068AB20 /* Info.plist in Resources */,
 				B17B3D571BB68A39009B8BC5 /* Text.strings in Resources */,
 				B17206D91BE4E1450021D855 /* begin_record.mp3 in Resources */,
 				B179F83C1BC931820089D709 /* SearchMenuTableViewCell.xib in Resources */,
@@ -1255,6 +1413,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0A7C10E1BFC73FF00ACD33E /* Assets.xcassets in Resources */,
+				D0D70D1B1C0304A30068AB20 /* begin_record.mp3 in Resources */,
+				D0D70D281C0306930068AB20 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1373,6 +1533,7 @@
 			files = (
 				B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */,
 				B1EF40F51BB857C800042E4B /* M13ProgressViewPie.m in Sources */,
+				D0D70D061C02F64D0068AB20 /* JSONModelError.m in Sources */,
 				B16DA2201BE10A7A00EBF043 /* SlideMenuTableViewCell.m in Sources */,
 				B108F86B1BECAEF200267DEC /* RecentContact+CoreDataProperties.m in Sources */,
 				B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */,
@@ -1388,6 +1549,7 @@
 				B13B07631BD3720100974AC3 /* MandrillMessage.m in Sources */,
 				B108F86C1BECAEF200267DEC /* RecentContact.m in Sources */,
 				B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */,
+				D0D70D101C02F64D0068AB20 /* JSONKeyMapper.m in Sources */,
 				B1BB605F1BDE36AF00C1140B /* LoginWithEmailViewController.m in Sources */,
 				B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */,
 				B1A4AA511BF4DA9D005D55CB /* AccountViewController.m in Sources */,
@@ -1402,6 +1564,8 @@
 				B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */,
 				B1A366921BDC92DB00852B52 /* UploadsRequest.m in Sources */,
 				B13B075A1BD3686500974AC3 /* MandrillInformationResponse.m in Sources */,
+				D0D70D0C1C02F64D0068AB20 /* JSONHTTPClient.m in Sources */,
+				D0D70D251C0306930068AB20 /* A0SimpleKeychain.m in Sources */,
 				B1F0456B1BCFB4E400A67942 /* Events.m in Sources */,
 				B15B15C41BDBC8CB00C0C171 /* RecorderResponse.m in Sources */,
 				B17B3D641BB6AE8B009B8BC5 /* RecordingViewController.m in Sources */,
@@ -1414,6 +1578,7 @@
 				B1F93E981BC8E328005F2128 /* Repository.m in Sources */,
 				B17B3D6E1BB6BD13009B8BC5 /* ContactTableViewCell.m in Sources */,
 				B17B3D691BB6BCE5009B8BC5 /* CellFactory.m in Sources */,
+				D0D70D231C0306930068AB20 /* A0SimpleKeychain+KeyPair.m in Sources */,
 				B15B15C11BDBC55A00C0C171 /* AWSModel.m in Sources */,
 				B13B076D1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m in Sources */,
 				D0A7C0DA1BFA0C7900ACD33E /* DeviceModel.m in Sources */,
@@ -1431,23 +1596,30 @@
 				B17206D21BE4AAE40021D855 /* ConnectionModel.m in Sources */,
 				B17B3D741BB6C4B0009B8BC5 /* UIColor_Addition.m in Sources */,
 				B17B3D341BB6898C009B8BC5 /* AppDelegate.m in Sources */,
+				D0D70D121C02F64D0068AB20 /* JSONValueTransformer.m in Sources */,
 				B10125BC1BEB670500B5DD54 /* NSString_Addition.m in Sources */,
 				B102BBB81BCD03EC001E1E7A /* UIViewController_AdditionViewController.m in Sources */,
 				B13B076A1BD3752900974AC3 /* MandrillRequest.m in Sources */,
+				D0D70D0A1C02F64D0068AB20 /* JSONAPI.m in Sources */,
 				B1EF40FC1BB8786500042E4B /* TutorialViewController.m in Sources */,
+				D0D70D0E1C02F64D0068AB20 /* JSONModel+networking.m in Sources */,
 				B165EF121BB71A85008C6F71 /* BaseModel.m in Sources */,
 				B17B3D311BB6898C009B8BC5 /* main.m in Sources */,
 				B108F8601BECAA5300267DEC /* SendVoiceMessageEmailModel.m in Sources */,
 				B102F9821BF0CE2000EDF7E6 /* LoginValidateEmailViewController.m in Sources */,
 				B1EF40F91BB8782F00042E4B /* SwipeView.m in Sources */,
+				D0D70D021C02F64D0068AB20 /* JSONModelArray.m in Sources */,
 				B1BB60151BDE0E0200C1140B /* LoginTableViewCell.m in Sources */,
 				B13B07671BD3736400974AC3 /* MandrillMailAttachment.m in Sources */,
 				B1C83A191BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m in Sources */,
 				B108F8771BECB0BD00267DEC /* CachedEmailMessage+CoreDataProperties.m in Sources */,
 				B17933121BE0B7B00016F158 /* LoginNavigationViewController.m in Sources */,
+				D0D70D081C02F64D0068AB20 /* NSArray+JSONModel.m in Sources */,
 				B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */,
 				B1F93E901BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld in Sources */,
+				D0D70D041C02F64D0068AB20 /* JSONModelClassProperty.m in Sources */,
 				B17933151BE0C19C0016F158 /* LoginModel.m in Sources */,
+				D0D70D001C02F64D0068AB20 /* JSONModel.m in Sources */,
 				B100A54A1BEDD6F800EEB573 /* CacheModel.m in Sources */,
 				B10C39371BF718960070B49F /* AccountModel.m in Sources */,
 				B1C4A7731BF73E3B00272AD7 /* LoginRequest.m in Sources */,
@@ -1468,13 +1640,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0D70D171C02F6C00068AB20 /* MandrillToObject.m in Sources */,
+				D0D70D191C02F6CA0068AB20 /* MandrillMailAttachment.m in Sources */,
+				D0D70D241C0306930068AB20 /* A0SimpleKeychain+KeyPair.m in Sources */,
+				D0D70D071C02F64D0068AB20 /* JSONModelError.m in Sources */,
 				D0D70C521C0056E50068AB20 /* WKServerManager.m in Sources */,
+				D0D70D151C02F6BA0068AB20 /* MandrillInformationResponse.m in Sources */,
 				D0D70C3A1BFF35AB0068AB20 /* WKContact.m in Sources */,
+				D0D70D261C0306930068AB20 /* A0SimpleKeychain.m in Sources */,
 				D0A7C10C1BFC73FF00ACD33E /* ExtensionDelegate.m in Sources */,
 				D0D70C431BFFA71B0068AB20 /* PeppermintContact.m in Sources */,
+				D0D70D051C02F64D0068AB20 /* JSONModelClassProperty.m in Sources */,
+				D0D70D301C03297B0068AB20 /* WKInterfaceTable+IGInterfaceDataTable.m in Sources */,
+				D0D70D091C02F64D0068AB20 /* NSArray+JSONModel.m in Sources */,
+				D0D70D141C02F6B70068AB20 /* MandrillRequest.m in Sources */,
+				D0D70D161C02F6BD0068AB20 /* MandrillSendRequest.m in Sources */,
+				D0D70D291C0308E90068AB20 /* PeppermintMessageSender.m in Sources */,
 				D0D70C341BFF31440068AB20 /* ContactsTableRowController.m in Sources */,
+				D0D70D031C02F64D0068AB20 /* JSONModelArray.m in Sources */,
+				D0D70D131C02F64D0068AB20 /* JSONValueTransformer.m in Sources */,
+				D0D70D111C02F64D0068AB20 /* JSONKeyMapper.m in Sources */,
 				D0A7C1091BFC73FF00ACD33E /* ContactsInterfaceController.m in Sources */,
-				D0D70C421BFF997C0068AB20 /* WKInterfaceTable+IGInterfaceDataTable.m in Sources */,
+				D0D70D011C02F64D0068AB20 /* JSONModel.m in Sources */,
+				D0D70D181C02F6C60068AB20 /* MandrillMessage.m in Sources */,
 				D0D70C471C00499B0068AB20 /* RecordingInterfaceController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1556,7 +1744,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
-					"SAMPLE_BUNDLE_PREFIX_STRING=@\\\"${SAMPLE_BUNDLE_PREFIX}\\\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1596,7 +1783,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = "SAMPLE_BUNDLE_PREFIX_STRING=@\\\"${SAMPLE_BUNDLE_PREFIX}\\\"";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1616,6 +1803,7 @@
 			baseConfigurationReference = A3AC8DCFCC2ADAD1159483F0 /* Pods-Peppermint.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Peppermint/Peppermint.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
@@ -1624,6 +1812,10 @@
 					"$(PROJECT_DIR)/Peppermint",
 				);
 				GCC_PREFIX_HEADER = Peppermint/PrefixHeader.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"COCOAPODS=1",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = Peppermint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1639,6 +1831,7 @@
 			baseConfigurationReference = C388433C48F87557ED2F3C2D /* Pods-Peppermint.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Peppermint/Peppermint.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
@@ -1647,6 +1840,10 @@
 					"$(PROJECT_DIR)/Peppermint",
 				);
 				GCC_PREFIX_HEADER = Peppermint/PrefixHeader.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"COCOAPODS=1",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = Peppermint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1701,6 +1898,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
 				IBSC_MODULE = Watch_Extension;
 				INFOPLIST_FILE = Watch/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint.watchkitapp;
@@ -1720,6 +1921,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				IBSC_MODULE = Watch_Extension;
 				INFOPLIST_FILE = Watch/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint.watchkitapp;
@@ -1736,11 +1938,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7A0FF4878BDBABA38B44F8C7 /* Pods-Watch Extension.debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Watch Extension/Watch Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				INFOPLIST_FILE = "Watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1752,10 +1958,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CD9ED7696C27E289BEEE24D8 /* Pods-Watch Extension.release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Watch Extension/Watch Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;

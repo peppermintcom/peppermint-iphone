@@ -10,8 +10,6 @@ pod 'REMenu', '~> 1.10'
 pod 'OpenSans'
 pod "tolo", "~> 1.0"
 pod 'MBProgressHUD', '~> 0.9.1'
-pod "JSONModel"
-pod "SimpleKeychain"
 pod 'Fabric', '~>1.5.1'
 pod 'Crashlytics', '~>3.3.1'
 pod 'RESideMenu', '~> 4.0.7'

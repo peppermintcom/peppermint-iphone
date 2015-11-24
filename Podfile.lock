@@ -74,12 +74,10 @@ PODS:
   - GoogleUtilities (1.1.0):
     - GoogleSymbolUtilities (~> 1.0.0)
   - JPAttributedString (0.1.7)
-  - JSONModel (1.1.2)
   - MBProgressHUD (0.9.1)
   - OpenSans (1.0.3)
   - REMenu (1.10)
   - RESideMenu (4.0.7)
-  - SimpleKeychain (0.6.1)
   - tolo (1.0.0)
 
 DEPENDENCIES:
@@ -93,12 +91,10 @@ DEPENDENCIES:
   - FBSDKLoginKit
   - Google/SignIn
   - JPAttributedString
-  - JSONModel
   - MBProgressHUD (~> 0.9.1)
   - OpenSans
   - REMenu (~> 1.10)
   - RESideMenu (~> 4.0.7)
-  - SimpleKeychain
   - tolo (~> 1.0)
 
 SPEC CHECKSUMS:
@@ -121,12 +117,10 @@ SPEC CHECKSUMS:
   GoogleSymbolUtilities: 82ad9f93d3615244b3f4ce440f5ab2515e8b4f56
   GoogleUtilities: 8ed9134debe11719097881711464752900668f10
   JPAttributedString: a0868a1e07e76751cef78985f4e3dfa51f1c1334
-  JSONModel: 216584d0311b053ff714f1d6cb700dbf890847bc
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   OpenSans: 33078846463eae780aa5f82986b51cce085f970d
   REMenu: 30dad195930adf6c5eeb8041e3257aa60bf9fa49
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
-  SimpleKeychain: 150d76f3b9200de58f033228f6e976c6241a221c
   tolo: 906f6fe2943451e7354c694ce968d76ea344c01d
 
 COCOAPODS: 0.39.0

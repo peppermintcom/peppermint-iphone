@@ -81,6 +81,9 @@
                             <items>
                                 <button width="1" alignment="left" title="Send" id="s7Z-HT-CPe">
                                     <color key="backgroundColor" red="0.77734375" green="0.0" blue="0.36202286073825501" alpha="1" colorSpace="calibratedRGB"/>
+                                    <connections>
+                                        <action selector="sendPressed:" destination="h51-dX-Lfl" id="Ql3-xM-FEc"/>
+                                    </connections>
                                 </button>
                             </items>
                         </group>

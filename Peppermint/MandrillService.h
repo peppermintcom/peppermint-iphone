@@ -10,15 +10,6 @@
 #import "MandrillInformationResponse.h"
 #import "MandrillRequest.h"
 
-//REMOTE ENDPOINT SETINGS
-
-#ifdef DEBUG
-//#define MANDRILL_API_KEY    @"B5YC37ztRDo4ZmBsmppelQ"   //okankurtulus@yahoo.com
-#define MANDRILL_API_KEY    @"Z8ZJYcld1Ppop-OUHgK06g"   //Rob@peppermint.com
-#else
-#define MANDRILL_API_KEY    @"Z8ZJYcld1Ppop-OUHgK06g"   //Rob@peppermint.com
-#endif
-
 
 #define MND_BASE_URL            @"https://mandrillapp.com/api/1.0"
 #define MND_ENDPOINT_INFO       @"/users/info.json"

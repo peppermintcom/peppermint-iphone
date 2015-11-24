@@ -11,17 +11,32 @@
 
 #define KEY @"PeppermintMessageSenderJson"
 
+
+@import WatchConnectivity;
+
+NSString * const AppConfigurationApplicationGroupsPrimary = @"group.com.peppermint.watch";
+
+@interface PeppermintMessageSender () <WCSessionDelegate>
+
+@end
+
 @implementation PeppermintMessageSender
 
+#if !(TARGET_OS_WATCH)
 + (instancetype) sharedInstance {
-    return SHARED_INSTANCE([self savedSender]);
+  return SHARED_INSTANCE([self savedSender]);
 }
+#else
++ (instancetype) sharedInstance {
+  return [self savedSender];
+}
+#endif
 
-+(instancetype) savedSender {
++(instancetype)savedSender {
     NSError *error;
     PeppermintMessageSender *sender;
     NSString *jsonString = [[A0SimpleKeychain keychain] stringForKey:KEYCHAIN_MESSAGE_SENDER];
-    
+ 
     BOOL isJsonStringValid = jsonString.length > 0;
     if(isJsonStringValid) {
         NSLog(@"\n\n\nCreate from Json: %@\n\n\n", jsonString);
@@ -33,17 +48,22 @@
     }    
     if(!isJsonStringValid) {
         sender = [PeppermintMessageSender new];
-        [sender clearSender];
-        [sender guessNameFromDeviceName];
+#if !(TARGET_OS_WATCH)
+      [sender clearSender];
+      [sender guessNameFromDeviceName];
+#endif
     }
     NSAssert(sender != nil, @"sender must not be nil. Please be sure that it is inited!");
+
     return sender;
 }
 
 -(id) init {
     self = [super init];
     if(self) {
-        self.imageData = [NSData dataWithContentsOfURL:[self imageFileUrl]];
+#if !(TARGET_OS_WATCH)
+      self.imageData = [NSData dataWithContentsOfURL:[self imageFileUrl]];
+#endif
     }
     return self;
 }
@@ -51,8 +71,18 @@
 -(void) save {
     NSString *jsonString = [self toJSONString];
     [[A0SimpleKeychain keychain] setString:jsonString forKey:KEYCHAIN_MESSAGE_SENDER];
+  
+  if (NSClassFromString(@"WCSession")) {
+    if ([WCSession isSupported]) {
+      [[WCSession defaultSession] updateApplicationContext:@{@"user":[self toJSONString]} error:nil];
+    }
+  }
+#if !(TARGET_OS_WATCH)
     [self.imageData writeToURL:[self imageFileUrl] atomically:YES];
+#endif
 }
+
+#if !(TARGET_OS_WATCH)
 
 -(BOOL) isValid {
     BOOL result = self.nameSurname.length > 0
@@ -153,5 +183,7 @@
     && self.jwt.length > 0
     && !self.isEmailVerified;
 }
+
+#endif
 
 @end
