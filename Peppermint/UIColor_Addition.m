@@ -140,7 +140,7 @@
     static dispatch_once_t onceToken;
     static UIColor *color;
     dispatch_once(&onceToken, ^{
-        color = [UIColor colorWithRed:0.945f green:0.412f blue:0.247f alpha:1.00f];
+        color = [UIColor colorWithRed:60/255.0 green:157.0/255.0 blue:140.0/255.0 alpha:1.00f];
     });
     return color;
 }

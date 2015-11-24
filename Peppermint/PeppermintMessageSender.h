@@ -17,6 +17,8 @@ typedef enum : NSUInteger {
 
 @interface PeppermintMessageSender : JSONModel
 @property (strong, nonatomic) NSString *nameSurname;
+@property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString * surname;
 @property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSData<Ignore> *imageData;
 @property (nonatomic) LoginSource loginSource;

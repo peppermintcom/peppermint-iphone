@@ -54,7 +54,7 @@
 }
 
 -(BOOL) isValid {
-    BOOL result = self.nameSurname.length > 0
+    BOOL result = self.name.length > 0 && self.surname.length > 0
     && self.email.length > 0
     && [self.email isValidEmail];
     
