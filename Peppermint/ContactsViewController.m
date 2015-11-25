@@ -228,10 +228,11 @@ SUBSCRIBE(RetrieveGoogleContactsIsSuccessful) {
         } else {
             PeppermintContact *fastReplyContact = [FastReplyModel sharedInstance].peppermintContact;
             PeppermintContact *activeContact = [[self activeContactList] objectAtIndex:indexPath.row];
-            if([activeContact equals:fastReplyContact]) {
+            if(activeContact.communicationChannel == fastReplyContact.communicationChannel
+               && [activeContact.communicationChannelAddress isEqualToString:fastReplyContact.communicationChannelAddress]) {
                 fastReplyContact.avatarImage = activeContact.avatarImage;
             }
-            height = [fastReplyContact equals:activeContact] ? 0 : CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
+            height = [activeContact equals:fastReplyContact] ? 0 : CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
         }
     }
     return height;
@@ -416,7 +417,7 @@ SUBSCRIBE(RetrieveGoogleContactsIsSuccessful) {
         [self messageCancelButtonPressed:nil];
     } else if (sendingStatus == SendingStatusCached) {
         isNewRecordAvailable = YES;
-        infoAttrText = [self addText:LOC(@"Cached", @"Info") ofSize:19 ofColor:textColor toAttributedText:infoAttrText];
+        infoAttrText = [self addText:LOC(@"No Internet connection: Your message will be sent later", @"Cached Info") ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
         [self messageSendingIndicatorSetMessageIsSent];
     } else if (sendingStatus == SendingStatusError) {
         isNewRecordAvailable = YES;

@@ -85,6 +85,7 @@ sharedObject;\
 
 #define CHARS_FOR_USERNAME @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 "
 #define CHARS_FOR_PASSWORD @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@"
+#define CHARS_FOR_BASE_64  @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
 
 #define STORYBOARD_MAIN         @"Main"
 #define STORYBOARD_LOGIN        @"Login"

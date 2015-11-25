@@ -184,6 +184,8 @@
     NSData *data = [text dataUsingEncoding:NSUTF8StringEncoding];
     NSData *base64Data = [data base64EncodedDataWithOptions:0];
     text = [NSString stringWithUTF8String:[base64Data bytes]];
+    NSCharacterSet *unwantedCharsSet = [[NSCharacterSet characterSetWithCharactersInString:CHARS_FOR_BASE_64] invertedSet];
+    text = [text stringByTrimmingCharactersInSet:unwantedCharsSet];
     return text;
 }
 
