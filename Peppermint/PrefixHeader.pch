@@ -83,9 +83,10 @@ sharedObject;\
 #define KEYCHAIN_AWS_JWT            @"keychain-aws-jwt"
 #define KEYCHAIN_MESSAGE_SENDER     @"keychainMessageSender"
 
-#define CHARS_FOR_USERNAME @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 "
-#define CHARS_FOR_PASSWORD @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@"
-#define CHARS_FOR_BASE_64  @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
+#define CHARS_FOR_USERNAME  @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 "
+#define CHARS_FOR_PASSWORD  @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@"
+#define CHARS_FOR_BASE_64   @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
+#define CHARS_FOR_PHONE     @"1234567890*#"
 
 #define STORYBOARD_MAIN         @"Main"
 #define STORYBOARD_LOGIN        @"Login"

@@ -35,6 +35,10 @@
 -(NSArray*) emailContactList;
 -(NSArray*) smsContactList;
 
--(void) addExternalContact:(PeppermintContact*) peppermintContact;
+#pragma mark - NSPredicate
+
++(NSPredicate*) contactPredicateWithNameSurname:(NSString*) nameSurname communicationChannelAddress:(NSString*)communicationChannelAddress communicationChannel:(CommunicationChannel)communicationChannel;
++(NSPredicate*) contactPredicateWithNameSurname:(NSString*) nameSurname;
++(NSPredicate*) contactPredicateWithCommunicationChannelAddress:(NSString*)communicationChannelAddress communicationChannel:(CommunicationChannel)communicationChannel;
 
 @end

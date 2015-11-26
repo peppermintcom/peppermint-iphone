@@ -1,5 +1,5 @@
 //
-//  RecentContact+CoreDataProperties.h
+//  GoogleContact+CoreDataProperties.h
 //  Peppermint
 //
 //  Created by Okan Kurtulus on 25/11/15.
@@ -9,13 +9,13 @@
 //  to delete and recreate this implementation file for your updated model.
 //
 
-#import "RecentContact.h"
+#import "GoogleContact.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RecentContact (CoreDataProperties)
+@interface GoogleContact (CoreDataProperties)
 
-@property (nullable, nonatomic, retain) NSDate *contactDate;
+@property (nullable, nonatomic, retain) NSString *accountEmail;
 
 @end
 

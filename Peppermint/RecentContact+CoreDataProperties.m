@@ -2,7 +2,7 @@
 //  RecentContact+CoreDataProperties.m
 //  Peppermint
 //
-//  Created by Okan Kurtulus on 06/11/15.
+//  Created by Okan Kurtulus on 25/11/15.
 //  Copyright © 2015 Okan Kurtulus. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -13,10 +13,6 @@
 
 @implementation RecentContact (CoreDataProperties)
 
-@dynamic avatarImageData;
-@dynamic communicationChannel;
-@dynamic communicationChannelAddress;
 @dynamic contactDate;
-@dynamic nameSurname;
 
 @end

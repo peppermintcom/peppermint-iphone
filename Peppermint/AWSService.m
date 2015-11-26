@@ -230,6 +230,7 @@
     
     [requestOperationManager POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         VerificationEmailSent *verificationEmailSent = [VerificationEmailSent new];
+        verificationEmailSent.sender = self;
         verificationEmailSent.jwt = jwt;
         PUBLISH(verificationEmailSent);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

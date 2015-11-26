@@ -10,6 +10,7 @@
 #import "ContactsModel.h"
 #import <Google/SignIn.h>
 #import "Events.h"
+#import "Repository.h"
 
 #define CONTACTS_URL_PATH       @"https://www.google.com/m8/feeds/contacts/default/full"
 #define NEXT_RELATION           @"next"
@@ -50,10 +51,6 @@
     if(error) {
         [self.delegate operationFailure:error];
     } else if (data) {
-        
-        NSString* responseText = [NSString stringWithUTF8String:[data bytes]];
-        NSLog(@"\nr:\n%@", responseText);
-        
         GDataFeedBase *feed = [GDataFeedBase feedWithXMLData:data];
         [self processEntries:feed.entries];
         [self checkForNextUrl:feed];
@@ -69,12 +66,17 @@
         }
     }
     
-    RetrieveGoogleContactsIsSuccessful *retrieveGoogleContactsIsSuccessful = [RetrieveGoogleContactsIsSuccessful new];
-    retrieveGoogleContactsIsSuccessful.hasNext = nextUrlPath.length > 0;
-    PUBLISH(retrieveGoogleContactsIsSuccessful);
-    
     if(nextUrlPath) {
         [self queryForUrlPath:nextUrlPath];
+    } else {
+        NSLog(@"SyncGoogleContactsSuccess");
+        if(self.delegate != nil && [self.delegate respondsToSelector:@selector(syncGoogleContactsSuccess)]) {
+            [self.delegate syncGoogleContactsSuccess];
+        } else {
+            SyncGoogleContactsSuccess *syncGoogleContactsSuccess = [SyncGoogleContactsSuccess new];
+            syncGoogleContactsSuccess.sender = self;
+            PUBLISH(syncGoogleContactsSuccess);
+        }
     }
 }
 
@@ -95,29 +97,73 @@
                     image = [UIImage imageWithData:photoData];
                     if(image != nil) {
                         for(GDataEmail* gDataEmail in contactEntry.emailAddresses) {
-                            [self addContactAsExternalContactWithName:name email:gDataEmail.address image:image];
+                            [self saveContactWithName:name email:gDataEmail.address image:image];
                         }
                     }
                 }
             }];
         } else {
             for(GDataEmail* gDataEmail in contactEntry.emailAddresses) {
-                [self addContactAsExternalContactWithName:name email:gDataEmail.address image:nil];
+                [self saveContactWithName:name email:gDataEmail.address image:nil];
             }
         }
     }
 }
 
--(void) addContactAsExternalContactWithName:(NSString*) name email:(NSString*) email image:(UIImage*) image {
+-(void) saveContactWithName:(NSString*) name email:(NSString*) email image:(UIImage*) image {
     if([email isValidEmail]) {
         name = name && name.length > 0 ? name : email;
-        PeppermintContact *peppermintContact = [PeppermintContact new];
-        peppermintContact.communicationChannel = CommunicationChannelEmail;
-        peppermintContact.communicationChannelAddress = email;
-        peppermintContact.nameSurname = name;
-        peppermintContact.avatarImage = image;
-        [[ContactsModel sharedInstance] addExternalContact:peppermintContact];
+        Repository *repository = [Repository beginTransaction];
+        
+        NSPredicate *predicate = [ContactsModel contactPredicateWithNameSurname:name
+                                                    communicationChannelAddress:email
+                                                           communicationChannel:CommunicationChannelEmail];
+        NSArray *matchedContacts = [repository getResultsFromEntity:[GoogleContact class] predicateOrNil:predicate];
+        if(matchedContacts.count == 0) {
+            GoogleContact *googleContact = (GoogleContact*)[repository createEntity:[GoogleContact class]];
+            googleContact.nameSurname = name;
+            googleContact.communicationChannelAddress = email;
+            googleContact.communicationChannel = [NSNumber numberWithInt:CommunicationChannelEmail];
+            googleContact.avatarImageData = UIImagePNGRepresentation(image);
+            googleContact.accountEmail = [_fetcherAuthorizer userEmail];
+            NSError *err = [repository endTransaction];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if(err) {
+                    [self.delegate operationFailure:err];
+                }
+            });
+        } else {
+            NSLog(@"Contact is not saved because it already exists.");
+        }
     }
+}
+
+#pragma mark - Fetch PeppermintContact Array
+
++(NSArray*) peppermintContactsArrayWithFilterText:(NSString*) filterText {
+    
+    NSMutableArray *peppermintContactArray = [NSMutableArray new];
+    NSPredicate *namePredicate = [ContactsModel contactPredicateWithNameSurname:filterText];
+    NSPredicate *mailPredicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:filterText communicationChannel:CommunicationChannelEmail];
+    NSPredicate *googlePredicate = nil;
+    if(filterText.length > 0) {
+        googlePredicate = [NSCompoundPredicate orPredicateWithSubpredicates:
+                           [NSArray arrayWithObjects:namePredicate, mailPredicate, nil]];
+    }
+    
+    Repository *repository = [Repository beginTransaction];
+    NSArray *matchingGoogleContacts = [repository getResultsFromEntity:[GoogleContact class] predicateOrNil:googlePredicate];
+    
+    for(GoogleContact *matchedGoogleContact in matchingGoogleContacts) {
+        PeppermintContact *peppermintContact = [PeppermintContact new];
+        peppermintContact.avatarImage = [UIImage imageWithData:matchedGoogleContact.avatarImageData];
+        peppermintContact.nameSurname = matchedGoogleContact.nameSurname;
+        peppermintContact.communicationChannel = matchedGoogleContact.communicationChannel.intValue;
+        peppermintContact.communicationChannelAddress = matchedGoogleContact.communicationChannelAddress;
+        [peppermintContactArray addObject:peppermintContact];
+    }
+    [repository endTransaction];
+    return peppermintContactArray;
 }
 
 @end

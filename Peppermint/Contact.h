@@ -1,5 +1,5 @@
 //
-//  RecentContact.h
+//  Contact.h
 //  Peppermint
 //
 //  Created by Okan Kurtulus on 25/11/15.
@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Contact.h"
+#import <CoreData/CoreData.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RecentContact : Contact
+@interface Contact : NSManagedObject
 
 // Insert code here to declare functionality of your managed object subclass
 
@@ -19,4 +19,4 @@ NS_ASSUME_NONNULL_BEGIN
 
 NS_ASSUME_NONNULL_END
 
-#import "RecentContact+CoreDataProperties.h"
+#import "Contact+CoreDataProperties.h"

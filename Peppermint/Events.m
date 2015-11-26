@@ -8,6 +8,9 @@
 
 #import "Events.h"
 
+@implementation BaseEvent
+@end
+
 @implementation NetworkFailure
 @end
 
@@ -53,5 +56,5 @@
 @implementation AccountInfoRefreshed
 @end
 
-@implementation RetrieveGoogleContactsIsSuccessful
+@implementation SyncGoogleContactsSuccess
 @end

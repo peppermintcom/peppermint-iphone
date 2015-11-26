@@ -10,71 +10,73 @@
 #import "MandrillMessage.h"
 #import "User.h"
 
-@interface NetworkFailure : NSObject
+@interface BaseEvent : NSObject
 @property (nonatomic) id sender;
+@end
+
+@interface NetworkFailure : BaseEvent
 @property(nonatomic) NSError *error;
 @end
 
 //Needs a unique handler
-@interface MandrillMesssageSent : NSObject
+@interface MandrillMesssageSent : BaseEvent
 @property (strong, nonatomic) MandrillMessage *mandrillMessage;
 @end
 
-@interface ApplicationWillResignActive : NSObject
+@interface ApplicationWillResignActive : BaseEvent
 @end
 
-@interface ApplicationDidEnterBackground : NSObject
+@interface ApplicationDidEnterBackground : BaseEvent
 @end
 
-@interface ApplicationWillEnterForeground : NSObject
+@interface ApplicationWillEnterForeground : BaseEvent
 @end
 
-@interface ApplicationDidBecomeActive : NSObject
+@interface ApplicationDidBecomeActive : BaseEvent
 @end
 
-@interface RecorderSubmitSuccessful : NSObject
+@interface RecorderSubmitSuccessful : BaseEvent
 @property (strong, nonatomic) NSString *jwt;
 @end
 
 //Needs a unique handler
-@interface RetrieveSignedUrlSuccessful : NSObject
+@interface RetrieveSignedUrlSuccessful : BaseEvent
 @property (strong, nonatomic) NSString *signedUrl;
 @property (strong, nonatomic) NSData* data;
 @end
 
 //Needs a unique handler
-@interface FileUploadCompleted : NSObject
+@interface FileUploadCompleted : BaseEvent
 @property (strong, nonatomic) NSString *signedUrl;
 @end
 
 //Needs a unique handler
-@interface FileUploadFinalized : NSObject
+@interface FileUploadFinalized : BaseEvent
 @property (strong, nonatomic) NSString *signedUrl;
 @property (strong, nonatomic) NSString *shortUrl;
 @end
 
-@interface AccountRegisterIsSuccessful : NSObject
+@interface AccountRegisterIsSuccessful : BaseEvent
 @property (strong, nonatomic) NSString *jwt;
 @property (strong, nonatomic) User *user;
 @end
 
-@interface AccountLoginIsSuccessful : NSObject
+@interface AccountLoginIsSuccessful : BaseEvent
 @property (strong, nonatomic) User *user;
 @end
 
-@interface AccountRegisterConflictTryLogin : NSObject
+@interface AccountRegisterConflictTryLogin : BaseEvent
 @property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSString *password;
 @end
 
-@interface VerificationEmailSent : NSObject
+@interface VerificationEmailSent : BaseEvent
 @property (strong, nonatomic) NSString* jwt;
 @end
 
-@interface AccountInfoRefreshed : NSObject
+@interface AccountInfoRefreshed : BaseEvent
 @property (strong, nonatomic) User *user;
 @end
 
-@interface RetrieveGoogleContactsIsSuccessful : NSObject
-@property (nonatomic) BOOL hasNext;
+@interface SyncGoogleContactsSuccess : BaseEvent
 @end

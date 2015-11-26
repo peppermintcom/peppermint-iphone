@@ -1,5 +1,5 @@
 //
-//  RecentContact.h
+//  GoogleContact.h
 //  Peppermint
 //
 //  Created by Okan Kurtulus on 25/11/15.
@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RecentContact : Contact
+@interface GoogleContact : Contact
 
 // Insert code here to declare functionality of your managed object subclass
 
@@ -19,4 +19,4 @@ NS_ASSUME_NONNULL_BEGIN
 
 NS_ASSUME_NONNULL_END
 
-#import "RecentContact+CoreDataProperties.h"
+#import "GoogleContact+CoreDataProperties.h"

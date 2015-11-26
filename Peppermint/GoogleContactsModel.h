@@ -19,4 +19,5 @@
 +(NSString*) scopeForGoogleContacts;
 -(void) syncGoogleContactsWithFetcherAuthorizer:(id<GTMFetcherAuthorizationProtocol>)fetcherAuthorizer;
 
++(NSArray*) peppermintContactsArrayWithFilterText:(NSString*) filterText;
 @end
