@@ -229,7 +229,7 @@
         //if([TPAACAudioConverter AACConverterAvailable]) {
         //   [self convertM4aToAAC];
         //} else {
-            NSLog(@"Can not convert to aac for this device!");
+        //    NSLog(@"Can not convert to aac for this device!");
             NSData *data = [[NSData alloc] initWithContentsOfURL:self.fileUrl];
             [self removeFileIfExistsAtUrl:[self fileUrl]];
             [self setAudioSession:NO];

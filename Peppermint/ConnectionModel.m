@@ -7,10 +7,33 @@
 //
 
 #import "ConnectionModel.h"
+#import "CacheModel.h"
 
 @implementation ConnectionModel
 
-#pragma mark - nextwork
++ (instancetype) sharedInstance {
+    return SHARED_INSTANCE( [[self alloc] initShared] );
+}
+
+-(id) init {
+    NSAssert(false, @"This model instance is singleton so should not be inited - %@", self);
+    return nil;
+}
+
+-(id) initShared {
+    self = [super init];
+    if(self) {
+        [self beginTracking];
+        [self trackConnectionChange];
+    }
+    return self;
+}
+
+-(void) dealloc {
+    [self stopTracking];
+}
+
+#pragma mark - Network
 
 -(BOOL) isInternetReachable
 {
@@ -25,8 +48,25 @@
     [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
 }
 
--(void) dealloc {
-    [self stopTracking];
+#pragma mark - Network status change
+
+-(void) trackConnectionChange {
+    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch (status) {
+            case AFNetworkReachabilityStatusUnknown:
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+                //available
+                [[CacheModel sharedInstance] triggerCachedMessages];
+                break;
+            case AFNetworkReachabilityStatusNotReachable:
+                //not available
+                break;
+            default:
+                break;
+        }
+        NSLog(@"Reachability: %@", AFStringFromNetworkReachabilityStatus(status));
+    }];
 }
 
 @end

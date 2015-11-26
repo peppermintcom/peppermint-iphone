@@ -212,6 +212,10 @@
     }
 }
 
+-(void) doneButtonPressed {
+    [self doneButtonPressed:nil];
+}
+
 #pragma mark - Validation
 
 -(void) validateCellForNameSurname:(LoginTextFieldTableViewCell*) cell {
@@ -266,14 +270,16 @@
 }
 
 -(IBAction) doneButtonPressed:(id)sender {
-    [activeTextField resignFirstResponder];
-    if([self.loginModel.peppermintMessageSender isValid]) {
-        [self.loginModel performEmailLogin];
-    } else {
-        NSString *title = LOC(@"Information", @"Title Message");
-        NSString *message = LOC(@"Register Information Missing", @"Information Message");
-        NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
-        [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
+    if(self.doneButton.enabled) {
+        [activeTextField resignFirstResponder];
+        if([self.loginModel.peppermintMessageSender isValid]) {
+            [self.loginModel performEmailLogin];
+        } else {
+            NSString *title = LOC(@"Information", @"Title Message");
+            NSString *message = LOC(@"Register Information Missing", @"Information Message");
+            NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
+            [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
+        }
     }
 }
 

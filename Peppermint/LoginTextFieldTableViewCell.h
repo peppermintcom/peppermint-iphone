@@ -10,6 +10,7 @@
 
 @protocol LoginTextFieldTableViewCellDelegate <BaseTableViewCellDelegate>
 -(void) updatedTextFor:(UITableViewCell*) cell atIndexPath:(NSIndexPath*) indexPath;
+-(void) doneButtonPressed;
 @end
 
 @interface LoginTextFieldTableViewCell : BaseTableViewCell <UITextFieldDelegate>

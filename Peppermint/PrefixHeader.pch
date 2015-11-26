@@ -52,6 +52,9 @@ sharedObject;\
 #pragma mark - NSString Addition
 #import "NSString_Addition.h"
 
+#pragma mark - UITextField Addition
+#import "UITextField_Addition.h"
+
 #pragma mark - NSUserDefaults Helper
 #import "nsuserdefaults-helper.h"
 #define DEFAULTS_KEY_ISTUTORIALSHOWED           @"isTutorialShowed"
@@ -84,6 +87,7 @@ sharedObject;\
 #define KEYCHAIN_MESSAGE_SENDER     @"keychainMessageSender"
 
 #define CHARS_FOR_USERNAME  @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 "
+#define CHARS_FOR_EMAIL     @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@._-"
 #define CHARS_FOR_PASSWORD  @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@"
 #define CHARS_FOR_BASE_64   @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
 #define CHARS_FOR_PHONE     @"1234567890*#"

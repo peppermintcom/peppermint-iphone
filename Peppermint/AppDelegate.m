@@ -17,6 +17,7 @@
 #import "RecordingViewController.h"
 #import "SpotlightModel.h"
 #import "FastReplyModel.h"
+#import "ConnectionModel.h"
 
 @import CoreSpotlight;
 @import MobileCoreServices;
@@ -85,6 +86,10 @@
     NSLog(@"Error configuring Google services: %@", error);
 }
 
+-(void) initConnectionStatusChangeListening {
+    [ConnectionModel sharedInstance];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self initMutableArray];
@@ -94,6 +99,7 @@
     //[self logServiceCalls];
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
     [self initGoogleApp];
+    [self initConnectionStatusChangeListening];
     return YES;
 }
 

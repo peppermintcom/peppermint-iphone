@@ -80,6 +80,7 @@
             [self failureWithOperation:nil andError:error];
         }
         RetrieveSignedUrlSuccessful *retrieveSignedUrlSuccessful = [RetrieveSignedUrlSuccessful new];
+        retrieveSignedUrlSuccessful.sender = self;
         retrieveSignedUrlSuccessful.data = data;
         retrieveSignedUrlSuccessful.signedUrl = response.signed_url;
         PUBLISH(retrieveSignedUrlSuccessful);
@@ -104,6 +105,7 @@
                 [self failureWithOperation:nil andError:error];
             } else {
                 FileUploadCompleted *fileUploadCompleted = [FileUploadCompleted new];
+                fileUploadCompleted.sender = self;
                 fileUploadCompleted.signedUrl = signedUrl;
                 PUBLISH(fileUploadCompleted);
             }
@@ -132,6 +134,7 @@
             [self failureWithOperation:nil andError:error];
         }
         FileUploadFinalized *fileUploadFinalized = [FileUploadFinalized new];
+        fileUploadFinalized.sender = self;
         fileUploadFinalized.signedUrl = signedUrl;
         fileUploadFinalized.shortUrl = response.short_url;
         PUBLISH(fileUploadFinalized);

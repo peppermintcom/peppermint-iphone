@@ -97,7 +97,7 @@
         BOOL containsText = [searchString rangeOfString:self.filterText options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch].length > 0;
         
         return
-        (//contact.phones.count > 0 ||
+        (contact.phones.count > 0 ||
          contact.emails.count > 0)
         && ( self.filterText.length == 0 || containsText);
     };
@@ -128,7 +128,7 @@
                      NSString *nameSurname = contact.compositeName;
                      if(!nameSurname) {
                          NSMutableArray *communicationChannels = [NSMutableArray new];
-                         //[communicationChannels addObjectsFromArray:contact.phones];
+                         [communicationChannels addObjectsFromArray:contact.phones];
                          [communicationChannels addObjectsFromArray:contact.emails];
                          for (NSString *communicationChannel in communicationChannels) {
                              nameSurname = communicationChannel;
@@ -153,7 +153,7 @@
                                [peppermintContact addToCoreSpotlightSearch];
                              }
                          }
-                         /*
+
                          for(NSString *phone in contact.phones) {
                              NSString *key = [NSString stringWithFormat:@"%@,%@", nameSurname, phone];
                              if([uniqueSet containsObject:key]) {
@@ -168,22 +168,13 @@
                              peppermintContact.avatarImage = contact.thumbnail;
                              [peppermintContactsArray addObject:peppermintContact];
                          }
-                         */
                      }
                  }
-/*
-#ifdef DEBUG
-                 PeppermintContact *peppermintContact = [PeppermintContact new];
-                 peppermintContact.communicationChannel = CommunicationChannelEmail;
-                 peppermintContact.communicationChannelAddress = @"okankurtulus@gmail.com";
-                 peppermintContact.nameSurname = @"Okan Kurtulus";
-                 peppermintContact.avatarImage = [UIImage imageNamed:@"recording_logo_pressed"];;
-                 [peppermintContactsArray addObject:peppermintContact];
-#endif
-*/                 
-                 NSArray *googleContactsArray = [GoogleContactsModel peppermintContactsArrayWithFilterText:self.filterText];
+                 
+                 NSArray *googleContactsArray =
+                 [GoogleContactsModel peppermintContactsArrayWithFilterText:self.filterText];
                  [peppermintContactsArray addObjectsFromArray:googleContactsArray];
-
+                 
                  self.contactList = peppermintContactsArray;
                  NSArray *sortedList = [self.contactList sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
                      NSString *first = [(PeppermintContact*)a nameSurname];

@@ -50,12 +50,13 @@
 		B15B15BE1BDBC31F00C0C171 /* AWSService.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15BD1BDBC31F00C0C171 /* AWSService.m */; };
 		B15B15C11BDBC55A00C0C171 /* AWSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15C01BDBC55A00C0C171 /* AWSModel.m */; };
 		B15B15C41BDBC8CB00C0C171 /* RecorderResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15C31BDBC8CB00C0C171 /* RecorderResponse.m */; };
+		B161EAED1C07525700D2B716 /* UITextField_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B161EAEC1C07525700D2B716 /* UITextField_Addition.m */; };
+		B161EAEE1C07636900D2B716 /* Peppermint.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = B1678A701BFA2EF3009CE0E2 /* Peppermint.entitlements */; };
 		B165EF121BB71A85008C6F71 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF111BB71A85008C6F71 /* BaseModel.m */; };
 		B165EF151BB71A99008C6F71 /* ContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF141BB71A99008C6F71 /* ContactsModel.m */; };
 		B165EF181BB71EC0008C6F71 /* PeppermintContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF171BB71EC0008C6F71 /* PeppermintContact.m */; };
 		B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF1C1BB72242008C6F71 /* EmptyResultTableViewCell.m */; };
 		B165EF1F1BB72254008C6F71 /* EmptyResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B165EF1E1BB72254008C6F71 /* EmptyResultTableViewCell.xib */; };
-		B1678A711BFA2F15009CE0E2 /* Peppermint.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = B1678A701BFA2EF3009CE0E2 /* Peppermint.entitlements */; };
 		B16DA2171BE0F2C100EBF043 /* SlideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B16DA2161BE0F2C100EBF043 /* SlideMenuViewController.m */; };
 		B16DA2201BE10A7A00EBF043 /* SlideMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B16DA21F1BE10A7A00EBF043 /* SlideMenuTableViewCell.m */; };
 		B16DA2221BE10A8B00EBF043 /* SlideMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B16DA2211BE10A8B00EBF043 /* SlideMenuTableViewCell.xib */; };
@@ -217,6 +218,8 @@
 		B15B15C01BDBC55A00C0C171 /* AWSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSModel.m; sourceTree = "<group>"; };
 		B15B15C21BDBC8CB00C0C171 /* RecorderResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecorderResponse.h; sourceTree = "<group>"; };
 		B15B15C31BDBC8CB00C0C171 /* RecorderResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecorderResponse.m; sourceTree = "<group>"; };
+		B161EAEB1C07525700D2B716 /* UITextField_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextField_Addition.h; sourceTree = "<group>"; };
+		B161EAEC1C07525700D2B716 /* UITextField_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITextField_Addition.m; sourceTree = "<group>"; };
 		B165EF101BB71A85008C6F71 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
 		B165EF111BB71A85008C6F71 /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
 		B165EF131BB71A99008C6F71 /* ContactsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ContactsModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -752,6 +755,8 @@
 				B1BB601C1BDE16D400C1140B /* UIStoryboard_Addition.m */,
 				B10125BA1BEB670500B5DD54 /* NSString_Addition.h */,
 				B10125BB1BEB670500B5DD54 /* NSString_Addition.m */,
+				B161EAEB1C07525700D2B716 /* UITextField_Addition.h */,
+				B161EAEC1C07525700D2B716 /* UITextField_Addition.m */,
 			);
 			name = Addition;
 			sourceTree = "<group>";
@@ -1019,7 +1024,7 @@
 				B17B3D701BB6BD2E009B8BC5 /* ContactTableViewCell.xib in Resources */,
 				B16DA2221BE10A8B00EBF043 /* SlideMenuTableViewCell.xib in Resources */,
 				B13B50281BF38D57009D3348 /* InformationTextTableViewCell.xib in Resources */,
-				B1678A711BFA2F15009CE0E2 /* Peppermint.entitlements in Resources */,
+				B161EAEE1C07636900D2B716 /* Peppermint.entitlements in Resources */,
 				B1BB60171BDE0E3200C1140B /* LoginTableViewCell.xib in Resources */,
 				B17B3D3C1BB6898C009B8BC5 /* Images.xcassets in Resources */,
 				B15B15B21BDBBAB200C0C171 /* Login.storyboard in Resources */,
@@ -1179,6 +1184,7 @@
 				B13B07671BD3736400974AC3 /* MandrillMailAttachment.m in Sources */,
 				B1C83A191BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m in Sources */,
 				B17933121BE0B7B00016F158 /* LoginNavigationViewController.m in Sources */,
+				B161EAED1C07525700D2B716 /* UITextField_Addition.m in Sources */,
 				B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */,
 				B1F93E901BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld in Sources */,
 				B10455D81C0603A500D2AB0F /* Contact+CoreDataProperties.m in Sources */,
@@ -1334,7 +1340,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "84ea5c0f-156e-49f0-bc3d-57049a93d0d0";
 			};
 			name = Debug;
 		};

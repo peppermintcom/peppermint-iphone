@@ -34,6 +34,7 @@
     [scopesArray addObject:[GoogleContactsModel scopeForGoogleContacts]];
     gIDSignIn.scopes = scopesArray;
     [self.delegate loginLoading];
+    [gIDSignIn signOut];
     [gIDSignIn signIn];
 }
 
@@ -82,13 +83,40 @@
         
         GoogleContactsModel *googleContactsModel = [GoogleContactsModel new];
         [googleContactsModel syncGoogleContactsWithFetcherAuthorizer:user.authentication.fetcherAuthorizer];
-        //[signIn signOut];        
     }
 }
 
 #pragma mark - Facebook Login
 
 -(void) performFacebookLogin {
+    //[self performFacebookLoginOperations];
+    [self authorizeFacebook];
+}
+
+-(void) authorizeFacebook {
+    FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
+    [login logOut]; //Fix, if user changes account,(http://stackoverflow.com/a/30388750/5171866)
+    [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
+    [self.delegate loginLoading];
+    
+    login.loginBehavior = FBSDKLoginBehaviorBrowser;
+    
+    [login logInWithReadPermissions: @[@"public_profile",@"email"]
+     fromViewController:self.delegate
+     handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+         if (error) {
+             NSLog(@"Process error");
+             [self.delegate operationFailure:error];
+         } else if (result.isCancelled) {
+             NSLog(@"Cancelled");
+             [self.delegate loginFinishedLoading];
+         } else {
+             [self performFacebookLoginOperations];
+         }
+     }];
+}
+
+-(void) performFacebookLoginOperations {
     if ([FBSDKAccessToken currentAccessToken]) {
         [self.delegate loginLoading];
         [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields": @"name, email, picture"}]
@@ -125,26 +153,6 @@
     } else {
         [self authorizeFacebook];
     }
-}
-
--(void) authorizeFacebook {
-    FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
-    [login logOut]; //Fix, if user changes account,(http://stackoverflow.com/a/30388750/5171866)
-    [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
-    [self.delegate loginLoading];
-    [login logInWithReadPermissions: @[@"public_profile",@"email"]
-     fromViewController:self.delegate
-     handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-         if (error) {
-             NSLog(@"Process error");
-             [self.delegate operationFailure:error];
-         } else if (result.isCancelled) {
-             NSLog(@"Cancelled");
-             [self.delegate loginFinishedLoading];
-         } else {
-             [self performFacebookLogin];
-         }
-     }];
 }
 
 -(void) showErrorForInformationFromFacebook

@@ -23,6 +23,9 @@
 #define CELL_TAG_EMAIL_CONTACTS         3
 #define CELL_TAG_SMS_CONTACTS           4
 
+#define SECTION_SHOW_ALL_CONTACTS       2
+#define ROW_COUNT_SHOW_ALL_CONTACTS     1
+
 #define MESSAGE_SENDING_DURATION        2
 
 @interface ContactsViewController ()
@@ -166,6 +169,8 @@ SUBSCRIBE(SyncGoogleContactsSuccess) {
         numberOfRows = [self activeContactList].count == 0 ? 0 : [FastReplyModel sharedInstance].peppermintContact ? ROW_COUNT_FAST_REPLY : 0;
     } else if (section == SECTION_CONTACTS) {
         numberOfRows = [self activeContactList].count == 0 ? 1 : [self activeContactList].count;
+    } else if (section == SECTION_SHOW_ALL_CONTACTS) {
+        numberOfRows = ROW_COUNT_SHOW_ALL_CONTACTS;
     }
     return numberOfRows;
 }
@@ -186,7 +191,8 @@ SUBSCRIBE(SyncGoogleContactsSuccess) {
             EmptyResultTableViewCell *cell = [CellFactory cellEmptyResultTableViewCellFromTable:tableView forIndexPath:indexPath];
             [cell setVisibiltyOfExplanationLabels:YES];
             preparedCell = cell;
-        } else if (indexPath.row < [self activeContactList].count) {
+        }
+        else if (indexPath.row < [self activeContactList].count) {
             ContactTableViewCell *cell = [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
             PeppermintContact *peppermintContact = [[self activeContactList] objectAtIndex:indexPath.row];
             if(peppermintContact.avatarImage) {
@@ -209,11 +215,23 @@ SUBSCRIBE(SyncGoogleContactsSuccess) {
             }
             
             preparedCell = cell;
-        } else {
+        }
+        else {
             return [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:nil];
         }
+    } else if (indexPath.section == SECTION_SHOW_ALL_CONTACTS) {
+#warning "Will be updated!"
+        preparedCell = [CellFactory cellLoginTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
+        preparedCell.clipsToBounds = YES;
     }
     return preparedCell;
+}
+
+-(BOOL) isContactSameForImage:(PeppermintContact*) contact1 withContact:(PeppermintContact*) contact2 {
+    return contact1
+    && contact2
+    && contact1.communicationChannel == contact2.communicationChannel
+    && [contact1.communicationChannelAddress isEqualToString:contact2.communicationChannelAddress];
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -223,19 +241,26 @@ SUBSCRIBE(SyncGoogleContactsSuccess) {
         height = [self activeContactList].count == 0 ? 0 :
         [FastReplyModel sharedInstance].peppermintContact ? CELL_HEIGHT_CONTACT_TABLEVIEWCELL : 0;
     } else if (indexPath.section == SECTION_CONTACTS) {
-        if([self activeContactList].count == 0) {
+        if([self activeContactList].count == 0 && indexPath.row == 0) {
             height = CELL_HEIGHT_EMPTYRESULT_TABLEVIEWCELL;
-        } else {
+        } else if (indexPath.row < [self activeContactList].count) {
             PeppermintContact *fastReplyContact = [FastReplyModel sharedInstance].peppermintContact;
             PeppermintContact *activeContact = [[self activeContactList] objectAtIndex:indexPath.row];
-            if(activeContact.communicationChannel == fastReplyContact.communicationChannel
-               && [activeContact.communicationChannelAddress isEqualToString:fastReplyContact.communicationChannelAddress]) {
+            if([self isContactSameForImage:activeContact withContact:fastReplyContact]) {
                 fastReplyContact.avatarImage = activeContact.avatarImage;
             }
             height = [activeContact equals:fastReplyContact] ? 0 : CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
         }
+    } else if (indexPath.section == SECTION_SHOW_ALL_CONTACTS) {
+        height = [self activeContactList].count > 0 && (activeCellTag != CELL_TAG_ALL_CONTACTS) ? CELL_HEIGHT_LOGIN_TABLEVIEWCELL : 0;
     }
     return height;
+}
+
+#pragma mark - LoginTableViewCellDelegate
+
+-(void) selectedLoginTableViewCell:(UITableViewCell*) cell atIndexPath:(NSIndexPath*) indexPath {
+    [self cellSelectedWithTag:CELL_TAG_ALL_CONTACTS];
 }
 
 #pragma mark - ScrollView Delegate
@@ -277,15 +302,19 @@ SUBSCRIBE(SyncGoogleContactsSuccess) {
         CGFloat height = totalHeight/5;
         imageView.frame = CGRectMake((totalWidth-width) / 2, height*1.5 , width, height);
         [customView bringSubviewToFront:imageView];
-
-        _loadingHud.minShowTime = 1;
-        _loadingHud.graceTime = 0.2;
+        
+        _loadingHud.graceTime = 0.4;
+        _loadingHud.minShowTime = _loadingHud.graceTime  + 0.2;
         _loadingHud.color = [UIColor clearColor];
         _loadingHud.margin = 0;
         _loadingHud.mode = MBProgressHUDModeCustomView;
         _loadingHud.customView = customView;
     }
     return _loadingHud;
+}
+
+-(void) hideLoading {
+    [_loadingHud hide:YES];
 }
 
 #pragma mark - HoldToRecordInfoView
@@ -313,7 +342,8 @@ SUBSCRIBE(SyncGoogleContactsSuccess) {
         self.holdToRecordInfoView.hidden = YES;
         CGFloat cellHeight = CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
         location.y +=  cellHeight * (3/4);
-        if(location.y + self.holdToRecordInfoView.frame.size.height <= self.view.frame.size.height) {
+        if(location.y + self.holdToRecordInfoView.frame.size.height
+           <= self.view.frame.size.height) {
             self.holdToRecordInfoViewYValueConstraint.constant = location.y;
             [self.view layoutIfNeeded];
             self.holdToRecordInfoView.alpha = 0;
@@ -325,6 +355,7 @@ SUBSCRIBE(SyncGoogleContactsSuccess) {
                 dispatch_after(hideTime, dispatch_get_main_queue(), ^(void){
                     [self hideHoldToRecordInfoView];
                 });
+                [RecordingModel new];   //Init recording model to get permission for microphone!
             }];
         } else {
             NSLog(@"Can not show holdToRecordView out of the view");
@@ -417,7 +448,9 @@ SUBSCRIBE(SyncGoogleContactsSuccess) {
         [self messageCancelButtonPressed:nil];
     } else if (sendingStatus == SendingStatusCached) {
         isNewRecordAvailable = YES;
-        infoAttrText = [self addText:LOC(@"No Internet connection: Your message will be sent later", @"Cached Info") ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
+        infoAttrText = [self addImageNamed:@"icon_warning" toAttrText:infoAttrText ofSize:10];
+        infoAttrText = [self addText:@" " ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
+        infoAttrText = [self addText:LOC(@"No Internet connection: Your message will be sent later", @"Cached Info") ofSize:10 ofColor:textColor toAttributedText:infoAttrText];
         [self messageSendingIndicatorSetMessageIsSent];
     } else if (sendingStatus == SendingStatusError) {
         isNewRecordAvailable = YES;
@@ -508,7 +541,7 @@ SUBSCRIBE(SyncGoogleContactsSuccess) {
     if(![string isEqual:@"\n"]) {
         [self.searchMenu close];
         self.contactsModel.filterText = [textField.text stringByReplacingCharactersInRange:range withString:string];
-        textField.text = self.contactsModel.filterText;
+        [textField setTextContentInRange:range replacementString:string];
         [self refreshContacts];
     } else {
         [textField resignFirstResponder];
@@ -560,7 +593,7 @@ SUBSCRIBE(SyncGoogleContactsSuccess) {
 }
 
 -(void) contactListRefreshed {
-    [[self loadingHud] hide:YES];
+    [self hideLoading];
     [self.tableView reloadData];
 }
 
@@ -571,7 +604,7 @@ SUBSCRIBE(SyncGoogleContactsSuccess) {
 }
 
 -(void) recentPeppermintContactsRefreshed {
-    [[self loadingHud] hide:YES];
+    [self hideLoading];
     if(self.recentContactsModel.contactList.count == 0) {
         [self cellSelectedWithTag:CELL_TAG_ALL_CONTACTS];
     } else {
@@ -632,8 +665,7 @@ SUBSCRIBE(SyncGoogleContactsSuccess) {
     emailContactsMenuItem.font    = [UIFont openSansSemiBoldFontOfSize:emailContactsMenuItem.font.pointSize];
     smsContactsMenuItem.font    = [UIFont openSansSemiBoldFontOfSize:smsContactsMenuItem.font.pointSize];
     
-    //self.searchMenu = [[REMenu alloc] initWithItems:@[allContactsMenuItem, recentContactsMenuItem, emailContactsMenuItem, smsContactsMenuItem]];
-    self.searchMenu = [[REMenu alloc] initWithItems:@[allContactsMenuItem, recentContactsMenuItem]];
+    self.searchMenu = [[REMenu alloc] initWithItems:@[allContactsMenuItem, recentContactsMenuItem, emailContactsMenuItem, smsContactsMenuItem]];
     
     self.searchMenu.bounce = NO;
     self.searchMenu.cornerRadius = 5;
@@ -647,7 +679,7 @@ SUBSCRIBE(SyncGoogleContactsSuccess) {
     self.searchMenu.shadowOpacity = 1;
     self.searchMenu.shadowRadius = 1;
     
-    __weak __typeof__(self) weakSelf = self;
+    weakself_create();
     self.searchMenu.closeCompletionHandler = ^{
         weakSelf.searchMenuView.hidden = YES;
     };

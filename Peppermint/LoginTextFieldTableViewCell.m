@@ -9,6 +9,7 @@
 #import "LoginTextFieldTableViewCell.h"
 
 #define TITLE_LABEL_WIDTH   60
+#define DONE_STRING         @"\n"
 
 @implementation LoginTextFieldTableViewCell {
     NSArray *titlesArray;
@@ -29,6 +30,7 @@
     self.textField.font = [UIFont openSansSemiBoldFontOfSize:16];
     self.textField.textColor = [UIColor blackColor];
     self.textField.tintColor = [UIColor textFieldTintGreen];
+    self.textField.returnKeyType = UIReturnKeyDone;
     self.textField.delegate = self;
     
     titlesArray = nil;
@@ -39,22 +41,20 @@
 
 #pragma mark - UITextFieldDelegate
 
-- (void)selectTextForInput:(UITextField *)textField atRange:(NSRange)range {
-    UITextPosition *start = [textField positionFromPosition:[textField beginningOfDocument]
-                                                 offset:range.location];
-    UITextPosition *end = [textField positionFromPosition:start
-                                               offset:range.length];
-    [textField setSelectedTextRange:[textField textRangeFromPosition:start toPosition:end]];
-}
-
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    if(self.disallowedCharsText.length == 0
-       || ![self.disallowedCharsText containsString:string]) {
-        NSRange newRange = NSMakeRange(range.location + string.length, 0);
-        NSString* text = [textField.text stringByReplacingCharactersInRange:range withString:string];
-        self.textField.text = text;
-        [self selectTextForInput:textField atRange:newRange];
-        [self.delegate updatedTextFor:self atIndexPath:self.indexPath];
+    
+    if([string isEqualToString:DONE_STRING]) {
+        [self.delegate doneButtonPressed];
+    } else {
+        string = [string stringByTrimmingCharactersInSet:[NSCharacterSet controlCharacterSet]];
+        string = [string stringByTrimmingCharactersInSet:[NSCharacterSet decomposableCharacterSet]];
+        string = [string stringByTrimmingCharactersInSet:[NSCharacterSet illegalCharacterSet]];
+        
+        if(self.disallowedCharsText.length == 0 || ![self.disallowedCharsText containsString:string])
+        {
+            [textField setTextContentInRange:range replacementString:string];
+            [self.delegate updatedTextFor:self atIndexPath:self.indexPath];
+        }
     }
     return NO;
 }

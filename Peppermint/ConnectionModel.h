@@ -11,8 +11,7 @@
 
 @interface ConnectionModel : BaseModel
 
++ (instancetype) sharedInstance;
 -(BOOL) isInternetReachable;
--(void) beginTracking;
--(void) stopTracking;
 
 @end

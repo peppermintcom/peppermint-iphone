@@ -67,20 +67,23 @@ SUBSCRIBE(RecorderSubmitSuccessful) {
 }
 
 SUBSCRIBE(RetrieveSignedUrlSuccessful) {
-    if([event.data isEqualToData:_data]) {
+    if([event.data isEqualToData:_data]
+       && event.sender == awsService) {
         _signedUrl = event.signedUrl;
         [awsService sendData:_data ofContentType:_contentType tosignedURL:_signedUrl];
     }
 }
 
 SUBSCRIBE(FileUploadCompleted) {
-    if([event.signedUrl isEqualToString:_signedUrl]) {
+    if([event.signedUrl isEqualToString:_signedUrl]
+       && event.sender == awsService) {
         [awsService finalizeFileUploadForSignedUrl:_signedUrl withJwt:jwt];
     }
 }
 
 SUBSCRIBE(FileUploadFinalized) {
-    if([event.signedUrl isEqualToString:_signedUrl]) {
+    if([event.signedUrl isEqualToString:_signedUrl]
+        && event.sender == awsService) {
         NSString *shortUrl = event.shortUrl;
         [self.delegate fileUploadCompletedWithPublicUrl:shortUrl];
     }
