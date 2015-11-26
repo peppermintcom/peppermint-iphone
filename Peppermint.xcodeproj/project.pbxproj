@@ -95,7 +95,7 @@
 		B1BB60171BDE0E3200C1140B /* LoginTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1BB60161BDE0E3200C1140B /* LoginTableViewCell.xib */; };
 		B1BB601A1BDE127500C1140B /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB60191BDE127500C1140B /* LoginViewController.m */; };
 		B1BB601D1BDE16D400C1140B /* UIStoryboard_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB601C1BDE16D400C1140B /* UIStoryboard_Addition.m */; };
-		B1BB605F1BDE36AF00C1140B /* LoginWithEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB605E1BDE36AF00C1140B /* LoginWithEmailViewController.m */; };
+		B1BB605F1BDE36AF00C1140B /* SignUpWithEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB605E1BDE36AF00C1140B /* SignUpWithEmailViewController.m */; };
 		B1C4A7731BF73E3B00272AD7 /* LoginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C4A7721BF73E3B00272AD7 /* LoginRequest.m */; };
 		B1C4A7761BF73E4900272AD7 /* LoginResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C4A7751BF73E4900272AD7 /* LoginResponse.m */; };
 		B1C83A191BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C83A181BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m */; };
@@ -119,6 +119,9 @@
 		D0A7C0EE1BFC589B00ACD33E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A7C0ED1BFC589B00ACD33E /* MobileCoreServices.framework */; };
 		D0A7C0F01BFC58A300ACD33E /* CoreSpotlight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A7C0EF1BFC58A300ACD33E /* CoreSpotlight.framework */; };
 		D0A7C0F31BFC5BC200ACD33E /* SpotlightModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A7C0F21BFC5BC200ACD33E /* SpotlightModel.m */; };
+		D0D70D421C0464800068AB20 /* UIView+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70D411C0464800068AB20 /* UIView+Addition.m */; };
+		D0D70D451C0495680068AB20 /* LoginWithEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70D441C0495680068AB20 /* LoginWithEmailViewController.m */; };
+		D0D70D491C049DC80068AB20 /* BaseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70D481C049DC80068AB20 /* BaseButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -297,8 +300,8 @@
 		B1BB60191BDE127500C1140B /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		B1BB601B1BDE16D400C1140B /* UIStoryboard_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIStoryboard_Addition.h; sourceTree = "<group>"; };
 		B1BB601C1BDE16D400C1140B /* UIStoryboard_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIStoryboard_Addition.m; sourceTree = "<group>"; };
-		B1BB605D1BDE36AF00C1140B /* LoginWithEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginWithEmailViewController.h; sourceTree = "<group>"; };
-		B1BB605E1BDE36AF00C1140B /* LoginWithEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginWithEmailViewController.m; sourceTree = "<group>"; };
+		B1BB605D1BDE36AF00C1140B /* SignUpWithEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpWithEmailViewController.h; sourceTree = "<group>"; };
+		B1BB605E1BDE36AF00C1140B /* SignUpWithEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpWithEmailViewController.m; sourceTree = "<group>"; };
 		B1C4A7711BF73E3B00272AD7 /* LoginRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRequest.h; sourceTree = "<group>"; };
 		B1C4A7721BF73E3B00272AD7 /* LoginRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginRequest.m; sourceTree = "<group>"; };
 		B1C4A7741BF73E4900272AD7 /* LoginResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginResponse.h; sourceTree = "<group>"; };
@@ -342,6 +345,12 @@
 		D0A7C0EF1BFC58A300ACD33E /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
 		D0A7C0F11BFC5BC200ACD33E /* SpotlightModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotlightModel.h; sourceTree = "<group>"; };
 		D0A7C0F21BFC5BC200ACD33E /* SpotlightModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotlightModel.m; sourceTree = "<group>"; };
+		D0D70D401C0464800068AB20 /* UIView+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Addition.h"; sourceTree = "<group>"; };
+		D0D70D411C0464800068AB20 /* UIView+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Addition.m"; sourceTree = "<group>"; };
+		D0D70D431C0495680068AB20 /* LoginWithEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginWithEmailViewController.h; sourceTree = "<group>"; };
+		D0D70D441C0495680068AB20 /* LoginWithEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginWithEmailViewController.m; sourceTree = "<group>"; };
+		D0D70D471C049DC80068AB20 /* BaseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseButton.h; sourceTree = "<group>"; };
+		D0D70D481C049DC80068AB20 /* BaseButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -578,10 +587,12 @@
 				B17933111BE0B7B00016F158 /* LoginNavigationViewController.m */,
 				B1BB60181BDE127500C1140B /* LoginViewController.h */,
 				B1BB60191BDE127500C1140B /* LoginViewController.m */,
-				B1BB605D1BDE36AF00C1140B /* LoginWithEmailViewController.h */,
-				B1BB605E1BDE36AF00C1140B /* LoginWithEmailViewController.m */,
+				B1BB605D1BDE36AF00C1140B /* SignUpWithEmailViewController.h */,
+				B1BB605E1BDE36AF00C1140B /* SignUpWithEmailViewController.m */,
 				B102F9801BF0CE2000EDF7E6 /* LoginValidateEmailViewController.h */,
 				B102F9811BF0CE2000EDF7E6 /* LoginValidateEmailViewController.m */,
+				D0D70D431C0495680068AB20 /* LoginWithEmailViewController.h */,
+				D0D70D441C0495680068AB20 /* LoginWithEmailViewController.m */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -702,6 +713,7 @@
 		B17B3D551BB689F1009B8BC5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D0D70D461C049DA00068AB20 /* BaseButton */,
 				B102DD5B1BD0800B00D71D62 /* BaseCustomView */,
 				B15B15A91BD9D8A100C0C171 /* ExplodingView */,
 				B12C03B81BCFFBDC0085A55A /* FastRecordingView */,
@@ -752,6 +764,8 @@
 				B1BB601C1BDE16D400C1140B /* UIStoryboard_Addition.m */,
 				B10125BA1BEB670500B5DD54 /* NSString_Addition.h */,
 				B10125BB1BEB670500B5DD54 /* NSString_Addition.m */,
+				D0D70D401C0464800068AB20 /* UIView+Addition.h */,
+				D0D70D411C0464800068AB20 /* UIView+Addition.m */,
 			);
 			name = Addition;
 			sourceTree = "<group>";
@@ -909,6 +923,15 @@
 				B10455D11C0603A500D2AB0F /* Contact.m */,
 			);
 			name = NSManagedObjects;
+			sourceTree = "<group>";
+		};
+		D0D70D461C049DA00068AB20 /* BaseButton */ = {
+			isa = PBXGroup;
+			children = (
+				D0D70D471C049DC80068AB20 /* BaseButton.h */,
+				D0D70D481C049DC80068AB20 /* BaseButton.m */,
+			);
+			name = BaseButton;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1102,9 +1125,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0D70D451C0495680068AB20 /* LoginWithEmailViewController.m in Sources */,
 				B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */,
 				B1EF40F51BB857C800042E4B /* M13ProgressViewPie.m in Sources */,
 				B16DA2201BE10A7A00EBF043 /* SlideMenuTableViewCell.m in Sources */,
+				B108F86B1BECAEF200267DEC /* RecentContact+CoreDataProperties.m in Sources */,
+				D0D70D421C0464800068AB20 /* UIView+Addition.m in Sources */,
 				B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */,
 				B15B15BB1BDBC29A00C0C171 /* RecorderRequest.m in Sources */,
 				B10455D71C0603A500D2AB0F /* GoogleContact.m in Sources */,
@@ -1120,7 +1146,7 @@
 				B102DD5E1BD0802100D71D62 /* BaseCustomView.m in Sources */,
 				B13B07631BD3720100974AC3 /* MandrillMessage.m in Sources */,
 				B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */,
-				B1BB605F1BDE36AF00C1140B /* LoginWithEmailViewController.m in Sources */,
+				B1BB605F1BDE36AF00C1140B /* SignUpWithEmailViewController.m in Sources */,
 				B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */,
 				B1A4AA511BF4DA9D005D55CB /* AccountViewController.m in Sources */,
 				B10C39341BF6FC840070B49F /* AccountResponse.m in Sources */,
@@ -1141,6 +1167,7 @@
 				B10455D91C0603A500D2AB0F /* Contact.m in Sources */,
 				B10455D61C0603A500D2AB0F /* GoogleContact+CoreDataProperties.m in Sources */,
 				B10C392E1BF6F9520070B49F /* AccountRequest.m in Sources */,
+				D0D70D491C049DC80068AB20 /* BaseButton.m in Sources */,
 				B1EF40EE1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.m in Sources */,
 				B15B15BE1BDBC31F00C0C171 /* AWSService.m in Sources */,
 				B165EF181BB71EC0008C6F71 /* PeppermintContact.m in Sources */,

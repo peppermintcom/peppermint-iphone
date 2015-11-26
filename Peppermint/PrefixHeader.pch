@@ -52,6 +52,9 @@ sharedObject;\
 #pragma mark - NSString Addition
 #import "NSString_Addition.h"
 
+#pragma mark - UIView Addition
+#import "UIView+Addition.h"
+
 #pragma mark - NSUserDefaults Helper
 #import "nsuserdefaults-helper.h"
 #define DEFAULTS_KEY_ISTUTORIALSHOWED           @"isTutorialShowed"

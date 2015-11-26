@@ -18,17 +18,19 @@
     [super awakeFromNib];
     
     self.backgroundColor = [UIColor clearColor];
-    self.layer.shadowOffset = CGSizeMake(0, 3);
+  //uncomment to create shadow
+  
+    /*self.layer.shadowOffset = CGSizeMake(0, 3);
     self.layer.shadowColor = [UIColor blackColor].CGColor;
     self.layer.shadowOpacity = 0.1;
-    self.layer.shadowRadius = 1;
+    self.layer.shadowRadius = 1;*/ 
     
-    self.coverView.backgroundColor = [UIColor whiteColor];
-    self.coverView.layer.cornerRadius = LOGIN_CORNER_RADIUS;
+    //self.coverView.backgroundColor = [UIColor whiteColor];
+    //self.coverView.layer.cornerRadius = LOGIN_CORNER_RADIUS;
     
     self.textField.font = [UIFont openSansSemiBoldFontOfSize:16];
-    self.textField.textColor = [UIColor blackColor];
-    self.textField.tintColor = [UIColor textFieldTintGreen];
+    self.textField.textColor = [UIColor whiteColor];
+    self.textField.tintColor = [UIColor whiteColor];
     self.textField.delegate = self;
     
     titlesArray = nil;
@@ -84,7 +86,7 @@
 -(void) setValid:(BOOL) isValid {
     if(isValid) {
         self.coverView.layer.borderWidth = 0;
-        self.textField.textColor = [UIColor blackColor];
+        self.textField.textColor = [UIColor whiteColor];
     } else {
         self.coverView.layer.borderWidth = 3;
         self.coverView.layer.borderColor = [UIColor warningColor].CGColor;

@@ -31,6 +31,8 @@
     [super viewDidLoad];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+  
+  self.tableView.clipsToBounds = NO;
     
     self.loginLabel.textColor = [UIColor whiteColor];
     self.loginLabel.font = [UIFont openSansSemiBoldFontOfSize:18];
@@ -81,15 +83,44 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    CGFloat headerHeight = DISTANCE_BTW_SECTIONS;
-    return headerHeight;
+  CGFloat headerHeight = DISTANCE_BTW_SECTIONS;
+
+  if (section == SECTION_LOGIN_WITH_FACEBOOK) {
+    return 0;
+  } else if (section == SECTION_LOGIN_WITH_EMAIL) {
+    headerHeight = 4 * DISTANCE_BTW_SECTIONS;
+  }
+  
+  return headerHeight;
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, DISTANCE_BTW_SECTIONS)];
-    view.backgroundColor = [UIColor clearColor];
-    return view;
+  CGFloat headerHeight = DISTANCE_BTW_SECTIONS;
+
+  UILabel * headerTitle;
+  if (section == SECTION_LOGIN_WITH_FACEBOOK) {
+    return nil;
+  } else if (section == SECTION_LOGIN_WITH_EMAIL) {
+    headerHeight = 4 * DISTANCE_BTW_SECTIONS;
+    headerTitle = [[UILabel alloc] init];
+    headerTitle.text = LOC(@"EMAIL_HEADER_TITLE", nil);
+    headerTitle.numberOfLines = 0;
+    [headerTitle sizeToFit];
+    headerTitle.textColor = [UIColor whiteColor];
+    headerTitle.textAlignment = NSTextAlignmentCenter;
+    headerTitle.font = [UIFont openSansBoldFontOfSize:16];
+  }
+
+  UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, headerHeight)];
+  headerTitle.translatesAutoresizingMaskIntoConstraints = NO;
+  if (headerTitle) {
+    [view addSubview:headerTitle];
+    [view pinSubview:headerTitle toEdge:NSLayoutAttributeLeft constant:-20];
+    [view pinSubview:headerTitle toEdge:NSLayoutAttributeRight constant:20];
+    [view pinSubview:headerTitle toEdge:NSLayoutAttributeBottom constant:-12];
+  }
+  return view;
 }
 
 #pragma mark - LoginTableViewCellDelegate
