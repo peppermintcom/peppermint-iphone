@@ -8,7 +8,6 @@
 
 #import "LoginValidateEmailViewController.h"
 
-#define SEGUE_LOGIN_WITH_EMAIL      @"LoginWithEmailSegue"
 
 #define ROW_COUNT           1
 #define ROW_RESEND          0

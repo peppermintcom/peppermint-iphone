@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -25,6 +26,7 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ooy-st-Q2L">
                                 <rect key="frame" x="0.0" y="0.0" width="410" height="137"/>
+                                <animations/>
                                 <string key="text">_Please verify your email to start using Peppermint.
 
 _Verification link has been sent to abcdefg@abcdef.com</string>
@@ -33,6 +35,7 @@ _Verification link has been sent to abcdefg@abcdef.com</string>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
+                        <animations/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Ooy-st-Q2L" firstAttribute="leading" secondItem="gac-eR-sap" secondAttribute="leading" id="DrA-LW-eSO"/>
@@ -46,11 +49,13 @@ _Verification link has been sent to abcdefg@abcdef.com</string>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Resend Verification" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XwP-kA-MID">
                                 <rect key="frame" x="8" y="8" width="394" height="26"/>
+                                <animations/>
                                 <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="24"/>
                                 <color key="textColor" red="0.24313725490196078" green="0.74901960784313726" blue="0.61568627450980395" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
+                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="XwP-kA-MID" firstAttribute="bottom" secondItem="0tQ-6y-qwx" secondAttribute="bottomMargin" id="JYL-D8-yIs"/>
@@ -62,6 +67,7 @@ _Verification link has been sent to abcdefg@abcdef.com</string>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HxR-aB-AgG">
                         <rect key="frame" x="0.0" y="230" width="426" height="58"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="58" id="72F-tl-760"/>
                         </constraints>
@@ -74,6 +80,7 @@ _Verification link has been sent to abcdefg@abcdef.com</string>
                         </connections>
                     </button>
                 </subviews>
+                <animations/>
                 <color key="backgroundColor" red="0.18039215689999999" green="0.74901960779999999" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="0tQ-6y-qwx" secondAttribute="trailing" constant="8" id="5Xr-Bp-0Ev"/>
@@ -88,6 +95,7 @@ _Verification link has been sent to abcdefg@abcdef.com</string>
                     <constraint firstAttribute="bottom" secondItem="HxR-aB-AgG" secondAttribute="bottom" id="the-fm-mYN"/>
                 </constraints>
             </tableViewCellContentView>
+            <animations/>
             <connections>
                 <outlet property="button" destination="HxR-aB-AgG" id="ecN-qV-ykO"/>
                 <outlet property="buttonBorderView" destination="0tQ-6y-qwx" id="Fas-k8-HOS"/>
