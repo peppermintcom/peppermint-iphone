@@ -86,6 +86,10 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
     [self cellSelectedWithTag:activeCellTag];
 }
 
+SUBSCRIBE(RetrieveGoogleContactsIsSuccessful) {
+    [self cellSelectedWithTag:activeCellTag];
+}
+
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if([self checkIfuserIsLoggedIn]) {
@@ -175,6 +179,7 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
         cell.avatarImageView.image = contact.avatarImage;
         cell.contactNameLabel.text = contact.nameSurname;
         cell.contactViaInformationLabel.text = contact.communicationChannelAddress;
+        cell.rightIconImageView.image = [UIImage imageNamed:@"icon_reply"];
         preparedCell = cell;
     } else if (indexPath.section == SECTION_CONTACTS) {
         if([self activeContactList].count == 0) {
@@ -223,7 +228,11 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
         } else {
             PeppermintContact *fastReplyContact = [FastReplyModel sharedInstance].peppermintContact;
             PeppermintContact *activeContact = [[self activeContactList] objectAtIndex:indexPath.row];
-            height = [fastReplyContact equals:activeContact] ? 0 : CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
+            if(activeContact.communicationChannel == fastReplyContact.communicationChannel
+               && [activeContact.communicationChannelAddress isEqualToString:fastReplyContact.communicationChannelAddress]) {
+                fastReplyContact.avatarImage = activeContact.avatarImage;
+            }
+            height = [activeContact equals:fastReplyContact] ? 0 : CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
         }
     }
     return height;
@@ -408,7 +417,7 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
         [self messageCancelButtonPressed:nil];
     } else if (sendingStatus == SendingStatusCached) {
         isNewRecordAvailable = YES;
-        infoAttrText = [self addText:LOC(@"Cached", @"Info") ofSize:19 ofColor:textColor toAttributedText:infoAttrText];
+        infoAttrText = [self addText:LOC(@"No Internet connection: Your message will be sent later", @"Cached Info") ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
         [self messageSendingIndicatorSetMessageIsSent];
     } else if (sendingStatus == SendingStatusError) {
         isNewRecordAvailable = YES;

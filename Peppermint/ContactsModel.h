@@ -35,4 +35,6 @@
 -(NSArray*) emailContactList;
 -(NSArray*) smsContactList;
 
+-(void) addExternalContact:(PeppermintContact*) peppermintContact;
+
 @end

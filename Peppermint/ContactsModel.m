@@ -16,6 +16,7 @@
     NSCharacterSet *unwantedCharsSet;
     NSArray *emailContactList;
     NSArray *smsContactList;
+    NSMutableArray *contactsFromExternalSources;
 }
 
 + (instancetype) sharedInstance {
@@ -34,6 +35,7 @@
         self.filterText = @"";
         loadContactsTriggerCount = 0;
         unwantedCharsSet = [[NSCharacterSet characterSetWithCharactersInString:ALLOWED_CHARS] invertedSet];
+        contactsFromExternalSources = [NSMutableArray new];
     }
     return self;
 }
@@ -181,6 +183,8 @@
                  [peppermintContactsArray addObject:peppermintContact];
 #endif
                  
+                 [peppermintContactsArray addObjectsFromArray:contactsFromExternalSources];
+                 
                  self.contactList = peppermintContactsArray;
                  NSArray *sortedList = [self.contactList sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
                      NSString *first = [(PeppermintContact*)a nameSurname];
@@ -220,6 +224,14 @@
         smsContactList = [self.contactList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.communicationChannel == %d", CommunicationChannelSMS]];
     }
     return smsContactList;
+}
+
+#pragma mark - External Sources
+
+-(void) addExternalContact:(PeppermintContact*) peppermintContact {
+    if(peppermintContact) {
+        [contactsFromExternalSources addObject:peppermintContact];
+    }
 }
 
 @end

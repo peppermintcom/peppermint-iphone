@@ -83,7 +83,6 @@
 "Logged in message format" = "You are currently logged in\nusing %@";
 "Log Out" = "Log Out";
 "Signature" = "Signature";
-"Signature Description" = "Signature appended to the end of your in-app email";
 "Display Name" = "Display Name";
 "Display Name Description" = "Your Display Name (used when sending in-app emails)";
 "Save" = "Save";
@@ -98,3 +97,4 @@
 "Please connect to the internet to upload the message" = "Please connect to the internet to upload the message";
 "Please check your login information" = "Please check your login information";
 "EMAIL_HEADER_TITLE" = "Don't have Google or Facebook?\nLog in with email and password";
+"No Internet connection: Your message will be sent later" = "No Internet connection: Your message will be sent later";

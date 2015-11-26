@@ -151,7 +151,7 @@
     */
     
     //Universal Link
-    NSString *urlPath = [NSString stringWithFormat:@"https://%@.com/%@/user?%@=%@&%@=%@",
+    NSString *urlPath = [NSString stringWithFormat:@"https://%@.com/%@?%@=%@&%@=%@",
                          SCHEME_PEPPERMINT,
                          HOST_FASTREPLY,
                          QUERY_COMPONENT_NAMESURNAME,

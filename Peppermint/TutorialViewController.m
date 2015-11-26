@@ -134,10 +134,11 @@
 #pragma mark - Continue Button
 
 -(void) initContinueButton {
-    self.continueButton.backgroundColor = [UIColor whiteColor];
-    [self.continueButton setTitleColor:[UIColor continueButtonTitle] forState:UIControlStateNormal];
     [self.continueButton.titleLabel setFont:[UIFont openSansSemiBoldFontOfSize:16]];
     [self.continueButton setTitle:LOC(@"Continue", @"Continue") forState:UIControlStateNormal];
+    [self.continueButton setTitleColor:[UIColor continueButtonTitle] forState:UIControlStateNormal];
+    [self.continueButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+    [self continueButtonReleased:nil];
     self.continueButton.alpha = 0;
     
     self.continueButton.layer.cornerRadius = CONTINUE_BUTTON_CORNER_RADIUS;
@@ -147,7 +148,16 @@
     self.continueButton.layer.shadowRadius = 1;
 }
 
+-(IBAction)continueButtonDown:(id)sender {
+    self.continueButton.backgroundColor = [UIColor blackColor];
+}
+
+-(IBAction)continueButtonReleased:(id)sender {
+    self.continueButton.backgroundColor = [UIColor whiteColor];
+}
+
 -(IBAction)continueButtonPressed:(id)sender {
+    [self continueButtonReleased:sender];
     [self finishTutorial];
 }
 

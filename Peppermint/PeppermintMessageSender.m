@@ -8,6 +8,7 @@
 
 #import "PeppermintMessageSender.h"
 #import "A0SimpleKeychain.h"
+#import "GoogleContactsModel.h"
 
 #define KEY @"PeppermintMessageSenderJson"
 

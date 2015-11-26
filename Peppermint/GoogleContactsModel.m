@@ -7,6 +7,9 @@
 //
 
 #import "GoogleContactsModel.h"
+#import "ContactsModel.h"
+#import <Google/SignIn.h>
+#import "Events.h"
 
 #define CONTACTS_URL_PATH       @"https://www.google.com/m8/feeds/contacts/default/full"
 #define NEXT_RELATION           @"next"
@@ -21,7 +24,7 @@
     return @"https://www.googleapis.com/auth/contacts.readonly";
 }
 
--(void) syncGoogleContactsWithFetcherAuthorizer:(id<GTMFetcherAuthorizationProtocol>)fetcherAuthorizer {
+-(void) syncGoogleContactsWithFetcherAuthorizer:(id<GTMFetcherAuthorizationProtocol>)fetcherAuthorizer {    
     _fetcherAuthorizer = fetcherAuthorizer;
     dispatch_async(LOW_PRIORITY_QUEUE, ^{
         [self queryForUrlPath:CONTACTS_URL_PATH];
@@ -47,6 +50,10 @@
     if(error) {
         [self.delegate operationFailure:error];
     } else if (data) {
+        
+        NSString* responseText = [NSString stringWithUTF8String:[data bytes]];
+        NSLog(@"\nr:\n%@", responseText);
+        
         GDataFeedBase *feed = [GDataFeedBase feedWithXMLData:data];
         [self processEntries:feed.entries];
         [self checkForNextUrl:feed];
@@ -61,6 +68,11 @@
             break;
         }
     }
+    
+    RetrieveGoogleContactsIsSuccessful *retrieveGoogleContactsIsSuccessful = [RetrieveGoogleContactsIsSuccessful new];
+    retrieveGoogleContactsIsSuccessful.hasNext = nextUrlPath.length > 0;
+    PUBLISH(retrieveGoogleContactsIsSuccessful);
+    
     if(nextUrlPath) {
         [self queryForUrlPath:nextUrlPath];
     }
@@ -68,9 +80,43 @@
 
 -(void) processEntries:(NSArray*) entries {
     for (GDataEntryContact *contactEntry in entries) {
-        for(GDataEmail* gDataEmail in contactEntry.emailAddresses) {
-            NSLog(@"Contact : %@ %@", contactEntry.title.stringValue, gDataEmail.address);
+        NSString *name = [[contactEntry name] fullName].stringValue;
+        __block UIImage *image = nil;
+        GDataLink *link = [contactEntry photoLink];
+        if(link != nil) {
+            NSURL *photoUrl = [NSURL URLWithString:link.href];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:photoUrl];
+            [_fetcherAuthorizer authorizeRequest:request completionHandler:^(NSError* error) {
+                if(error) {
+                    [self.delegate operationFailure:error];
+                } else {
+                    NSURLResponse *response = nil;
+                    NSData *photoData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+                    image = [UIImage imageWithData:photoData];
+                    if(image != nil) {
+                        for(GDataEmail* gDataEmail in contactEntry.emailAddresses) {
+                            [self addContactAsExternalContactWithName:name email:gDataEmail.address image:image];
+                        }
+                    }
+                }
+            }];
+        } else {
+            for(GDataEmail* gDataEmail in contactEntry.emailAddresses) {
+                [self addContactAsExternalContactWithName:name email:gDataEmail.address image:nil];
+            }
         }
+    }
+}
+
+-(void) addContactAsExternalContactWithName:(NSString*) name email:(NSString*) email image:(UIImage*) image {
+    if([email isValidEmail]) {
+        name = name && name.length > 0 ? name : email;
+        PeppermintContact *peppermintContact = [PeppermintContact new];
+        peppermintContact.communicationChannel = CommunicationChannelEmail;
+        peppermintContact.communicationChannelAddress = email;
+        peppermintContact.nameSurname = name;
+        peppermintContact.avatarImage = image;
+        [[ContactsModel sharedInstance] addExternalContact:peppermintContact];
     }
 }
 

@@ -52,3 +52,6 @@
 
 @implementation AccountInfoRefreshed
 @end
+
+@implementation RetrieveGoogleContactsIsSuccessful
+@end

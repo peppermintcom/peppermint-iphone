@@ -10,15 +10,18 @@
 #import "AppDelegate.h"
 #import "LoginNavigationViewController.h"
 
-#define NUMBER_OF_OPTIONS       2
-#define OPTION_SIGNATURE        0
-#define OPTION_LOG_OUT          1
+int NUMBER_OF_OPTIONS           = 2;
+//int OPTION_DISPLAY_NAME         = 0;
+int OPTION_SIGNATURE            = 0;
+int OPTION_LOG_OUT              = 1;
 
 @interface AccountViewController () <UIAlertViewDelegate, LoginNavigationViewControllerDelegate>
 
 @end
 
 @implementation AccountViewController
+
+
 
 #pragma mark - PresentLoginModalView
 
@@ -50,6 +53,25 @@
     
     self.titleLabel.textColor = [UIColor whiteColor];
     self.titleLabel.font = [UIFont openSansSemiBoldFontOfSize:18];
+    [self setTableContent];
+}
+
+-(void) setTableContent {
+    switch ([PeppermintMessageSender sharedInstance].loginSource) {
+        case LOGINSOURCE_FACEBOOK:
+        case LOGINSOURCE_GOOGLE:
+            OPTION_SIGNATURE = 0;
+            OPTION_LOG_OUT = 1;
+            NUMBER_OF_OPTIONS = 2;
+            break;
+        case LOGINSOURCE_PEPPERMINT:
+            OPTION_SIGNATURE = 0;
+            OPTION_LOG_OUT = 1;
+            NUMBER_OF_OPTIONS = 2;
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -110,15 +132,17 @@
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return CELL_HEIGHT_LOGIN_TABLEVIEWCELL;
+    CGFloat height = 0;
+    height = CELL_HEIGHT_LOGIN_TABLEVIEWCELL;
+    return height;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-  if (section == OPTION_SIGNATURE) {
-    return 0;
-  } else {
-    return CELL_HEIGHT_LOGIN_TABLEVIEWCELL/2;
-  }
+    CGFloat headerHeight = 0;
+    if(section > 0) {
+        headerHeight = CELL_HEIGHT_LOGIN_TABLEVIEWCELL/2;
+    }
+    return headerHeight;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
