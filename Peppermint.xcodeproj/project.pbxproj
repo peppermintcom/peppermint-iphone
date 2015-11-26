@@ -111,10 +111,14 @@
 		B1F93E981BC8E328005F2128 /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E971BC8E328005F2128 /* Repository.m */; };
 		B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */; };
 		B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FE184F1BE1676D002772B4 /* FeedBackModel.m */; };
+		D074A66D1C07174D0017EAC3 /* CountryFormatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D074A66C1C07174D0017EAC3 /* CountryFormatModel.m */; };
+		D074A6721C07275B0017EAC3 /* CountryRow.m in Sources */ = {isa = PBXBuildFile; fileRef = D074A6711C07275B0017EAC3 /* CountryRow.m */; };
+		D074A6741C0727700017EAC3 /* CountryRow.xib in Resources */ = {isa = PBXBuildFile; fileRef = D074A6731C0727700017EAC3 /* CountryRow.xib */; };
 		D0A7C0DA1BFA0C7900ACD33E /* DeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A7C0D91BFA0C7900ACD33E /* DeviceModel.m */; };
 		D0A7C0EE1BFC589B00ACD33E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A7C0ED1BFC589B00ACD33E /* MobileCoreServices.framework */; };
 		D0A7C0F01BFC58A300ACD33E /* CoreSpotlight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A7C0EF1BFC58A300ACD33E /* CoreSpotlight.framework */; };
 		D0A7C0F31BFC5BC200ACD33E /* SpotlightModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A7C0F21BFC5BC200ACD33E /* SpotlightModel.m */; };
+		D0BA6E8A1C070A1C00B8D85B /* AddContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BA6E891C070A1C00B8D85B /* AddContactViewController.m */; };
 		D0D70D421C0464800068AB20 /* UIView+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70D411C0464800068AB20 /* UIView+Addition.m */; };
 		D0D70D451C0495680068AB20 /* LoginWithEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70D441C0495680068AB20 /* LoginWithEmailViewController.m */; };
 		D0D70D491C049DC80068AB20 /* BaseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70D481C049DC80068AB20 /* BaseButton.m */; };
@@ -327,12 +331,19 @@
 		B1FE184E1BE1676D002772B4 /* FeedBackModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedBackModel.h; sourceTree = "<group>"; };
 		B1FE184F1BE1676D002772B4 /* FeedBackModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedBackModel.m; sourceTree = "<group>"; };
 		C388433C48F87557ED2F3C2D /* Pods-Peppermint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peppermint.release.xcconfig"; path = "Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint.release.xcconfig"; sourceTree = "<group>"; };
+		D074A66B1C07174D0017EAC3 /* CountryFormatModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryFormatModel.h; sourceTree = "<group>"; };
+		D074A66C1C07174D0017EAC3 /* CountryFormatModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryFormatModel.m; sourceTree = "<group>"; };
+		D074A6701C07275B0017EAC3 /* CountryRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryRow.h; sourceTree = "<group>"; };
+		D074A6711C07275B0017EAC3 /* CountryRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryRow.m; sourceTree = "<group>"; };
+		D074A6731C0727700017EAC3 /* CountryRow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryRow.xib; sourceTree = "<group>"; };
 		D0A7C0D81BFA0C7900ACD33E /* DeviceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceModel.h; sourceTree = "<group>"; };
 		D0A7C0D91BFA0C7900ACD33E /* DeviceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceModel.m; sourceTree = "<group>"; };
 		D0A7C0ED1BFC589B00ACD33E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		D0A7C0EF1BFC58A300ACD33E /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
 		D0A7C0F11BFC5BC200ACD33E /* SpotlightModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotlightModel.h; sourceTree = "<group>"; };
 		D0A7C0F21BFC5BC200ACD33E /* SpotlightModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotlightModel.m; sourceTree = "<group>"; };
+		D0BA6E881C070A1C00B8D85B /* AddContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddContactViewController.h; sourceTree = "<group>"; };
+		D0BA6E891C070A1C00B8D85B /* AddContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddContactViewController.m; sourceTree = "<group>"; };
 		D0D70D401C0464800068AB20 /* UIView+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Addition.h"; sourceTree = "<group>"; };
 		D0D70D411C0464800068AB20 /* UIView+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Addition.m"; sourceTree = "<group>"; };
 		D0D70D431C0495680068AB20 /* LoginWithEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginWithEmailViewController.h; sourceTree = "<group>"; };
@@ -541,6 +552,8 @@
 				B116F3B01C008E570091994C /* FastReplyModel.m */,
 				B1C978751C02EB6A00F402C2 /* GoogleContactsModel.h */,
 				B1C978761C02EB6A00F402C2 /* GoogleContactsModel.m */,
+				D074A66B1C07174D0017EAC3 /* CountryFormatModel.h */,
+				D074A66C1C07174D0017EAC3 /* CountryFormatModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -701,6 +714,7 @@
 		B17B3D551BB689F1009B8BC5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D074A66F1C07271B0017EAC3 /* RowViewForPicker */,
 				D0D70D461C049DA00068AB20 /* BaseButton */,
 				B102DD5B1BD0800B00D71D62 /* BaseCustomView */,
 				B15B15A91BD9D8A100C0C171 /* ExplodingView */,
@@ -820,6 +834,8 @@
 				B16DA2161BE0F2C100EBF043 /* SlideMenuViewController.m */,
 				B1714CC61BE11EE6004F13A4 /* ReSideMenuContainerViewController.h */,
 				B1714CC71BE11EE6004F13A4 /* ReSideMenuContainerViewController.m */,
+				D0BA6E881C070A1C00B8D85B /* AddContactViewController.h */,
+				D0BA6E891C070A1C00B8D85B /* AddContactViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -903,6 +919,16 @@
 				B108F8681BECAEF200267DEC /* RecentContact.m */,
 			);
 			name = NSManagedObjects;
+			sourceTree = "<group>";
+		};
+		D074A66F1C07271B0017EAC3 /* RowViewForPicker */ = {
+			isa = PBXGroup;
+			children = (
+				D074A6701C07275B0017EAC3 /* CountryRow.h */,
+				D074A6711C07275B0017EAC3 /* CountryRow.m */,
+				D074A6731C0727700017EAC3 /* CountryRow.xib */,
+			);
+			name = RowViewForPicker;
 			sourceTree = "<group>";
 		};
 		D0D70D461C049DA00068AB20 /* BaseButton */ = {
@@ -1021,6 +1047,7 @@
 				B17B3D3F1BB6898C009B8BC5 /* LaunchScreen.xib in Resources */,
 				B17B3D701BB6BD2E009B8BC5 /* ContactTableViewCell.xib in Resources */,
 				B16DA2221BE10A8B00EBF043 /* SlideMenuTableViewCell.xib in Resources */,
+				D074A6741C0727700017EAC3 /* CountryRow.xib in Resources */,
 				B13B50281BF38D57009D3348 /* InformationTextTableViewCell.xib in Resources */,
 				B1678A711BFA2F15009CE0E2 /* Peppermint.entitlements in Resources */,
 				B1BB60171BDE0E3200C1140B /* LoginTableViewCell.xib in Resources */,
@@ -1152,6 +1179,7 @@
 				B17B3D6E1BB6BD13009B8BC5 /* ContactTableViewCell.m in Sources */,
 				B17B3D691BB6BCE5009B8BC5 /* CellFactory.m in Sources */,
 				B15B15C11BDBC55A00C0C171 /* AWSModel.m in Sources */,
+				D074A6721C07275B0017EAC3 /* CountryRow.m in Sources */,
 				B13B076D1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m in Sources */,
 				D0A7C0DA1BFA0C7900ACD33E /* DeviceModel.m in Sources */,
 				B16DA2171BE0F2C100EBF043 /* SlideMenuViewController.m in Sources */,
@@ -1173,6 +1201,7 @@
 				B116F3B11C008E570091994C /* FastReplyModel.m in Sources */,
 				B102BBB81BCD03EC001E1E7A /* UIViewController_AdditionViewController.m in Sources */,
 				B13B076A1BD3752900974AC3 /* MandrillRequest.m in Sources */,
+				D074A66D1C07174D0017EAC3 /* CountryFormatModel.m in Sources */,
 				B1EF40FC1BB8786500042E4B /* TutorialViewController.m in Sources */,
 				B165EF121BB71A85008C6F71 /* BaseModel.m in Sources */,
 				B17B3D311BB6898C009B8BC5 /* main.m in Sources */,
@@ -1191,6 +1220,7 @@
 				B10C39371BF718960070B49F /* AccountModel.m in Sources */,
 				B1C4A7731BF73E3B00272AD7 /* LoginRequest.m in Sources */,
 				B1C978771C02EB6A00F402C2 /* GoogleContactsModel.m in Sources */,
+				D0BA6E8A1C070A1C00B8D85B /* AddContactViewController.m in Sources */,
 				B1EF40F21BB8579D00042E4B /* M13ProgressView.m in Sources */,
 				B1BB601D1BDE16D400C1140B /* UIStoryboard_Addition.m in Sources */,
 			);
