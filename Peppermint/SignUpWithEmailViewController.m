@@ -333,6 +333,7 @@
 -(IBAction) doneButtonPressed:(id)sender {
     [activeTextField resignFirstResponder];
     if([self.loginModel.peppermintMessageSender isValid]) {
+      self.loginModel.peppermintMessageSender.nameSurname = [@[self.loginModel.peppermintMessageSender.name, self.loginModel.peppermintMessageSender.surname] componentsJoinedByString:@" "];
         [self.loginModel performEmailLogin];
     } else {
         NSString *title = LOC(@"Information", @"Title Message");
