@@ -66,11 +66,7 @@
 
 -(void) operationFailure:(NSError*) error {
     self.sendingStatus = SendingStatusError;
-    
-    if(self.delegate) {
-        [[CacheModel sharedInstance] cache:self WithData:_data extension:_extension];
-        [self.delegate messageStatusIsUpdated:self.sendingStatus withCancelOption:NO];
-    }
+    [self cacheMessage];
 }
 
 #pragma mark - RecentContactsModelDelegate
@@ -114,6 +110,16 @@
 -(void) messagePrepareIsStarting {
     self.sendingStatus = SendingStatusStarting;
     [self.delegate messageStatusIsUpdated:SendingStatusStarting withCancelOption:YES];
+}
+
+-(void) cacheMessage {
+    if(self.delegate) {
+        [[CacheModel sharedInstance] cache:self WithData:_data extension:_extension];
+        NSLog(@"Message is cached.");
+        [self.delegate messageStatusIsUpdated:self.sendingStatus withCancelOption:NO];
+    } else {
+        NSLog(@"not cached...");
+    }
 }
 
 -(void) cancelSending {
@@ -209,6 +215,10 @@
         [array removeObject:self];
         [arrayLock unlock];
         NSLog(@"Detached!!");
+        
+        DetachSuccess *detachSuccess = [DetachSuccess new];
+        detachSuccess.sender = self;
+        PUBLISH(detachSuccess);
     } else {
         NSLog(@"Detach is called on a non-attached item");
     }

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="14F27" minimumToolsVersion="Xcode 4.3">
-    <entity name="CachedEmailMessage" representedClassName="CachedEmailMessage" syncable="YES">
+    <entity name="CachedMessage" representedClassName="CachedMessage" syncable="YES">
         <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="extension" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mailSenderClass" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="receiverEmail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="receiverCommunicationChannel" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="receiverCommunicationChannelAddress" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="receiverNameSurname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="senderEmail" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="senderNameSurname" optional="YES" attributeType="String" syncable="YES"/>
@@ -22,9 +23,9 @@
         <attribute name="contactDate" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CachedEmailMessage" positionX="-135" positionY="-63" width="128" height="150"/>
+        <element name="CachedMessage" positionX="-135" positionY="-63" width="128" height="165"/>
         <element name="Contact" positionX="-353" positionY="3" width="128" height="103"/>
-        <element name="RecentContact" positionX="-189" positionY="171" width="128" height="60"/>
         <element name="GoogleContact" positionX="-333" positionY="174" width="128" height="60"/>
+        <element name="RecentContact" positionX="-189" positionY="171" width="128" height="60"/>
     </elements>
 </model>

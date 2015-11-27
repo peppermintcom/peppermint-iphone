@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'BA85D6C62AF7EAEBE8D903C9'
+               BlueprintIdentifier = 'B56297AF745D7130B9B46F88'
                BlueprintName = 'EasyMailSender-EasyMailSender'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'EasyMailSender.bundle'>

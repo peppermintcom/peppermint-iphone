@@ -80,3 +80,6 @@
 
 @interface SyncGoogleContactsSuccess : BaseEvent
 @end
+
+@interface DetachSuccess : BaseEvent
+@end

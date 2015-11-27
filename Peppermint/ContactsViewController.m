@@ -69,24 +69,12 @@
     REGISTER();
 }
 
--(void) recorderInitIsSuccessful {
-    NSLog(@"recorder is inited");
-}
-
--(void) fileUploadCompletedWithPublicUrl:(NSString*) url {
-    NSLog(@"Url is %@", url);
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     self.contactsModel = nil;
     self.recentContactsModel = nil;
     self.searchMenu = nil;
     self.fastRecordingView = nil;
-}
-
-SUBSCRIBE(ApplicationDidBecomeActive) {
-    [self cellSelectedWithTag:activeCellTag];
 }
 
 SUBSCRIBE(SyncGoogleContactsSuccess) {

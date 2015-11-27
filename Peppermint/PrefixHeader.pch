@@ -55,6 +55,9 @@ sharedObject;\
 #pragma mark - UITextField Addition
 #import "UITextField_Addition.h"
 
+#pragma mark - Base64 Additions
+#import "MF_Base64Additions.h"
+
 #pragma mark - NSUserDefaults Helper
 #import "nsuserdefaults-helper.h"
 #define DEFAULTS_KEY_ISTUTORIALSHOWED           @"isTutorialShowed"
@@ -107,6 +110,8 @@ sharedObject;\
 #define SCHEME_FACEBOOK     @"fb971024122959536"
 #define SCHEME_GOOGLE       @"com.googleusercontent.apps.621894935907-jtqr6lt0uf74rlc5rgobkefv8dl16ka6"
 #define SCHEME_PEPPERMINT   @"peppermint"
+
+#define DOMAIN_PEPPERMINT               @"peppermint.com"
 
 #define HOST_FASTREPLY                  @"reply"
 #define PATH_VERIFIY_EMAIL              @"/verify-email"

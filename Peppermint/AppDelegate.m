@@ -18,6 +18,7 @@
 #import "SpotlightModel.h"
 #import "FastReplyModel.h"
 #import "ConnectionModel.h"
+#import "CacheModel.h"
 
 @import CoreSpotlight;
 @import MobileCoreServices;
@@ -26,7 +27,9 @@
 
 @end
 
-@implementation AppDelegate
+@implementation AppDelegate {
+    __block UIBackgroundTaskIdentifier bgTask;
+}
 
 -(void) initMutableArray {
     if(!self.mutableArray) {
@@ -108,27 +111,21 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    //PUBLISH([ApplicationDidEnterBackground new]);
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    
     if(self.mutableArray.count > 0) {
-        weakself_create()
-        __block UIBackgroundTaskIdentifier bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
-            NSLog(@"Still it exists %lu items\nConsider caching the ongoing messages.", (unsigned long)weakSelf.mutableArray.count);
+        REGISTER();
+        bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
+            [[CacheModel sharedInstance] cacheOngoingMessages];
             [application endBackgroundTask:bgTask];
              bgTask = UIBackgroundTaskInvalid;
         }];
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSLog(@"Waiting for all messages to be sent!");
-#warning "Think a smarter way than busy wait!"
-            while (weakSelf.mutableArray.count > 0) {
-                //Busy wait
-            }
-            [application endBackgroundTask:bgTask];
-            bgTask = UIBackgroundTaskInvalid;
-        });
+    }
+}
+
+SUBSCRIBE(DetachSuccess) {
+    if(self.mutableArray.count == 0 ) {
+        NSLog(@"Finished!!!!");
+        [[UIApplication sharedApplication] endBackgroundTask:bgTask];
+        bgTask = UIBackgroundTaskInvalid;
     }
 }
 
@@ -144,6 +141,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [[CacheModel sharedInstance] cacheOngoingMessages];
     [self saveContext];
 }
 
@@ -171,15 +169,16 @@
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
     if ([NSUserActivityTypeBrowsingWeb isEqualToString: userActivity.activityType]) {
         if(![self handleOpenURL:userActivity.webpageURL sourceApplication:nil annotation:nil]) {
-            [[UIApplication sharedApplication] openURL:userActivity.webpageURL];
+           return [application openURL:userActivity.webpageURL];
         }
+        return YES;
     } else if ([userActivity.activityType isEqualToString:CSSearchableItemActionType]) {
         NSString *uniqueIdentifier = userActivity.userInfo[CSSearchableItemActivityIdentifier];
         // Handle 'uniqueIdentifier'
         NSLog(@"searh item uniqueIdentifier: %@", uniqueIdentifier);
         return [SpotlightModel handleSearchItemUniqueIdentifier:uniqueIdentifier];
     }
-    return YES;
+    return NO;
 }
 
 -(BOOL) handleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
@@ -222,7 +221,7 @@
             });
         });
     } else {
-        NSLog(@"Host is not avaible to handle. Host : %@", url.host);
+        NSLog(@"handleOpenURL failed for URL: %@", url.host);
     }
     return result;
 }

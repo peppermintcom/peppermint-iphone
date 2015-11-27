@@ -23,7 +23,7 @@
 "Could not resume" = "Could not resume the recording";
 "Could not start record" = "Could not start recording";
 "Mail Subject" = "I sent you a voice message";
-"Mail Body Format" = "Here's my message.<br/>%@<br/><br/><a href=\"%@\" >Touch to reply via Peppermint</a><br/><br/>%@<br/>";
+"Mail Body Format" = "Here's my message.<br/>%@<br/><br/><a href=\"%@\" >Peppermint Quick Reply</a><br/><br/>%@<br/>";
 "Mail Text Format" = "Here's my message (%@). Touch %@ for a fast reply\n%@";
 "Time is up" = "Time is up! You may tap to send the recorded message or tap cancel";
 "Message sent with success" = "Your message has been sent successfully";

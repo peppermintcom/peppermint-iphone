@@ -9,7 +9,9 @@
 #import "ConnectionModel.h"
 #import "CacheModel.h"
 
-@implementation ConnectionModel
+@implementation ConnectionModel {
+    AFNetworkReachabilityManager *afNetworkReachabilityManager;
+}
 
 + (instancetype) sharedInstance {
     return SHARED_INSTANCE( [[self alloc] initShared] );
@@ -23,8 +25,9 @@
 -(id) initShared {
     self = [super init];
     if(self) {
+        afNetworkReachabilityManager = [AFNetworkReachabilityManager managerForDomain:DOMAIN_PEPPERMINT];
+        [self trackConnectionChangeBlock];
         [self beginTracking];
-        [self trackConnectionChange];
     }
     return self;
 }
@@ -37,21 +40,22 @@
 
 -(BOOL) isInternetReachable
 {
-    return [AFNetworkReachabilityManager sharedManager].reachable;
+    [self beginTracking];
+    return afNetworkReachabilityManager.reachable;
 }
 
 -(void) beginTracking {
-    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    [afNetworkReachabilityManager startMonitoring];
 }
 
 -(void) stopTracking {
-    [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
+    [afNetworkReachabilityManager stopMonitoring];
 }
 
 #pragma mark - Network status change
 
--(void) trackConnectionChange {
-    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+-(void) trackConnectionChangeBlock {
+    [afNetworkReachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         switch (status) {
             case AFNetworkReachabilityStatusUnknown:
             case AFNetworkReachabilityStatusReachableViaWWAN:
