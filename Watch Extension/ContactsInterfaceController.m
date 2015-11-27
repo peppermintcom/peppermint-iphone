@@ -13,10 +13,12 @@
 #import "RecordingInterfaceController.h"
 #import "WKInterfaceTable+IGInterfaceDataTable.h"
 #import "PeppermintMessageSender.h"
+#import "PeppermintContact.h"
 
 @interface ContactsInterfaceController() <IGInterfaceTableDataSource>
 
 @property (strong, nonatomic) NSMutableArray * datasource;
+@property (strong, nonatomic) NSMutableArray * allContacts;
 
 @end
 
@@ -44,6 +46,7 @@
   [WKContact allContacts:^(NSArray * results) {
     __strong typeof(self) strongSelf = weakSelf;
     strongSelf.datasource = [results mutableCopy];
+    strongSelf.allContacts = [results mutableCopy];
     [strongSelf loadTableData];
   }];
 }
@@ -63,6 +66,13 @@
 - (IBAction)searchPressed:(id)sender {
   [self presentTextInputControllerWithSuggestions:nil allowedInputMode:WKTextInputModePlain completion:^(NSArray * results) {
     NSLog(@"WK input result: %@", results);
+    if (!results) {
+      return;
+    }
+    
+    NSString * text = [results componentsJoinedByString:@" "];
+    self.datasource = [[self.allContacts filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"communicationChannelAddress contains[c] %@ OR nameSurname contains[c] %@", text, text]] mutableCopy];
+    [self.tableView reloadData];
   }];
 }
 

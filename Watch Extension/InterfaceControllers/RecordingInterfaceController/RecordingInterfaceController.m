@@ -103,7 +103,7 @@
 }
 
 - (IBAction)sendPressed:(id)sender {
-  [[WKServerManager sharedManager] sendFileURL:nil recipient:self.ppm_contact];
+  [[WKServerManager sharedManager] sendFileURL:self.lastRecordingURL recipient:self.ppm_contact];
 }
 
 

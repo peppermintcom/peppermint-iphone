@@ -14,15 +14,6 @@
 @implementation WKContact
 
 + (void)allContacts:(void (^)(NSArray <PeppermintContact *> * contacts))block {
-  
-#ifdef DEBUG
-  PeppermintContact * ppm_contact = [[PeppermintContact alloc] init];
-  ppm_contact.communicationChannelAddress = @"yansaraev@mail.ru";
-  ppm_contact.nameSurname = @"Yan Saraev";
-  block(@[ppm_contact]);
-  return;
-#endif
-
   CNContactStore * store = [[CNContactStore alloc] init];
 
   [store requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * error) {
