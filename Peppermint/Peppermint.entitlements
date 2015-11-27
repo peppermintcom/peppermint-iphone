@@ -2,14 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>com.apple.security.application-groups</key>
-	<array>
-		<string>group.com.peppermint.watch</string>
-	</array>
-	<key>keychain-access-groups</key>
-	<array>
-		<string>com.ppl.peppermint</string>
-		<string>com.ppl.peppermint.watchkitapp.watchkitextension</string>
-	</array>
+	<key>com.apple.developer.associated-domains</key>
+	<array/>
 </dict>
 </plist>

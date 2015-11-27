@@ -1313,13 +1313,13 @@
 						DevelopmentTeam = 8V9FEAB5WD;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.Keychain = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.SafariKeychain = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -1329,7 +1329,7 @@
 					};
 					D0A7C0F51BFC73FD00ACD33E = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = 6PUQ7TWUAW;
+						DevelopmentTeam = 8V9FEAB5WD;
 					};
 					D0A7C1011BFC73FF00ACD33E = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -1339,7 +1339,7 @@
 								enabled = 0;
 							};
 							com.apple.Keychain = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -1833,7 +1833,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Peppermint/Peppermint.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Okan Kurtulus (8V9FEAB5WD)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1850,7 +1850,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "831b2811-f3c7-442f-bcd2-dd1ba5249238";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -1920,15 +1920,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Okan Kurtulus (8V9FEAB5WD)";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution: Okan Kurtulus (8V9FEAB5WD)";
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				IBSC_MODULE = Watch_Extension;
 				INFOPLIST_FILE = Watch/Info.plist;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5f876a13-f55b-4104-b3b7-2168a48c3975";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1940,7 +1940,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7A0FF4878BDBABA38B44F8C7 /* Pods-Watch Extension.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Watch Extension/Watch Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
@@ -1962,16 +1961,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CD9ED7696C27E289BEEE24D8 /* Pods-Watch Extension.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Watch Extension/Watch Extension.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Okan Kurtulus (8V9FEAB5WD)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Okan Kurtulus (8V9FEAB5WD)";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution: Okan Kurtulus (8V9FEAB5WD)";
 				INFOPLIST_FILE = "Watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "dfdaa4d4-34ce-4987-bf41-6c616fed7887";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
