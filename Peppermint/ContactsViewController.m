@@ -26,7 +26,7 @@
 #define SECTION_SHOW_ALL_CONTACTS       2
 #define ROW_COUNT_SHOW_ALL_CONTACTS     1
 
-#define MESSAGE_SENDING_DURATION        2
+#define MESSAGE_SHOW_DURATION        2
 
 @interface ContactsViewController ()
 
@@ -444,7 +444,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
         cancelable = NO;
         infoAttrText = [self addImageNamed:@"icon_tick" toAttrText:infoAttrText ofSize:21];
         infoAttrText = [self addText:LOC(@"Sent", @"Info") ofSize:21 ofColor:textColor toAttributedText:infoAttrText];
-        [self messageSendingIndicatorSetMessageIsSent];
+        [self performSelector:@selector(messageSendingIsCancelled) withObject:nil afterDelay:MESSAGE_SHOW_DURATION];
     }  else if (sendingStatus == SendingStatusCancelled) {
         isNewRecordAvailable = YES;
         infoAttrText = [self addText:LOC(@"Cancelled", @"Info") ofSize:19 ofColor:textColor toAttributedText:infoAttrText];
@@ -454,13 +454,13 @@ SUBSCRIBE(ReplyContactIsAdded) {
         infoAttrText = [self addImageNamed:@"icon_warning" toAttrText:infoAttrText ofSize:10];
         infoAttrText = [self addText:@" " ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
         infoAttrText = [self addText:LOC(@"No Internet connection: Your message will be sent later", @"Cached Info") ofSize:10 ofColor:textColor toAttributedText:infoAttrText];
-        [self messageSendingIndicatorSetMessageIsSent];
+        [self performSelector:@selector(messageSendingIsCancelled) withObject:nil afterDelay:MESSAGE_SHOW_DURATION*2];
     } else if (sendingStatus == SendingStatusError) {
         isNewRecordAvailable = YES;
         infoAttrText = [self addImageNamed:@"icon_warning" toAttrText:infoAttrText ofSize:13];
         infoAttrText = [self addText:@" " ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
         infoAttrText = [self addText:LOC(@"An error occured", @"Info") ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
-        [self messageSendingIndicatorSetMessageIsSent];
+        [self performSelector:@selector(messageSendingIsCancelled) withObject:nil afterDelay:MESSAGE_SHOW_DURATION];
     }
     
     if(cancelable) {
@@ -521,10 +521,6 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 -(void) messageSendingIndicatorSetMessageIsSending {
     [self setVisibilityOfSendingInfo:YES];
-}
-
--(void) messageSendingIndicatorSetMessageIsSent {
-    [self performSelector:@selector(messageSendingIsCancelled) withObject:nil afterDelay:MESSAGE_SENDING_DURATION];
 }
 
 -(void) messageSendingIsCancelled {
