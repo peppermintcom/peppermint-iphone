@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Aby-2L-00n">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="VGM-ZD-Cwv">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
@@ -1097,7 +1097,7 @@ email contact or both</string>
     </scenes>
     <resources>
         <image name="US" width="48" height="48"/>
-        <image name="avatar" width="1" height="1136"/>
+        <image name="avatar" width="70" height="70"/>
         <image name="avatar_empty" width="73" height="72"/>
         <image name="button_pause" width="320" height="128"/>
         <image name="button_pause_pressed" width="320" height="128"/>

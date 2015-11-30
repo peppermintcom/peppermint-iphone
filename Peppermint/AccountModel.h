@@ -14,6 +14,9 @@
 -(void) userLogInSuccessWithEmail:(NSString*) email;
 -(void) verificationEmailSendSuccess;
 -(void) accountInfoRefreshSuccess;
+
+@optional
+-(void) emailChecked:(BOOL)free;
 @end
 
 @interface AccountModel : BaseModel
@@ -22,6 +25,9 @@
 + (instancetype) sharedInstance;
 -(void) authenticate:(PeppermintMessageSender*) peppermintMessageSender;
 -(void) resendVerificationEmail:(PeppermintMessageSender*) peppermintMessageSender;
--(void)refreshAccountInfo:(PeppermintMessageSender*) peppermintMessageSender;
+-(void) refreshAccountInfo:(PeppermintMessageSender*) peppermintMessageSender;
+-(void) checkEmailIsRegistered:(NSString *)email;
+-(void) logUserIn:(NSString*) email password:(NSString*) password;
+
 
 @end

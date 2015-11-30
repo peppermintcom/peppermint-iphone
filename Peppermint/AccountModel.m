@@ -86,6 +86,18 @@ SUBSCRIBE(VerificationEmailSent) {
     }
 }
 
+- (void)checkEmailIsRegistered:(NSString *)email {
+  [awsService checkEmailIsRegistered:email];
+}
+
+SUBSCRIBE(AccountCheckEmail) {
+  if ([self.delegate respondsToSelector:@selector(emailChecked:)]) {
+    [self.delegate emailChecked:event.isFree];
+  }
+}
+
+
+
 #pragma mark - Refresh Account
 
 -(void)refreshAccountInfo:(PeppermintMessageSender*) peppermintMessageSender {

@@ -109,12 +109,13 @@
 		B1EF40F91BB8782F00042E4B /* SwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40F81BB8782F00042E4B /* SwipeView.m */; };
 		B1EF40FC1BB8786500042E4B /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40FB1BB8786500042E4B /* TutorialViewController.m */; };
 		B1F045671BCFB36900A67942 /* BaseService.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F045661BCFB36900A67942 /* BaseService.m */; };
-		B1F0456B1BCFB4E400A67942 /* Events.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F0456A1BCFB4E400A67942 /* Events.m */; };
 		B1F93E8C1BC8E0D9005F2128 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1F93E8B1BC8E0D9005F2128 /* CoreData.framework */; };
 		B1F93E901BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E8E1BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld */; };
 		B1F93E981BC8E328005F2128 /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E971BC8E328005F2128 /* Repository.m */; };
 		B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */; };
 		B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FE184F1BE1676D002772B4 /* FeedBackModel.m */; };
+		D02D2D061C0C379E00092A23 /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D02D2D051C0C379E00092A23 /* BaseTableViewController.m */; };
+		D02D2D071C0C3A8500092A23 /* Events.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F0456A1BCFB4E400A67942 /* Events.m */; };
 		D074A66D1C07174D0017EAC3 /* CountryFormatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D074A66C1C07174D0017EAC3 /* CountryFormatModel.m */; };
 		D074A6721C07275B0017EAC3 /* CountryRow.m in Sources */ = {isa = PBXBuildFile; fileRef = D074A6711C07275B0017EAC3 /* CountryRow.m */; };
 		D074A6741C0727700017EAC3 /* CountryRow.xib in Resources */ = {isa = PBXBuildFile; fileRef = D074A6731C0727700017EAC3 /* CountryRow.xib */; };
@@ -343,6 +344,8 @@
 		B1FE184E1BE1676D002772B4 /* FeedBackModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedBackModel.h; sourceTree = "<group>"; };
 		B1FE184F1BE1676D002772B4 /* FeedBackModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedBackModel.m; sourceTree = "<group>"; };
 		C388433C48F87557ED2F3C2D /* Pods-Peppermint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peppermint.release.xcconfig"; path = "Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint.release.xcconfig"; sourceTree = "<group>"; };
+		D02D2D041C0C379E00092A23 /* BaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableViewController.h; sourceTree = "<group>"; };
+		D02D2D051C0C379E00092A23 /* BaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewController.m; sourceTree = "<group>"; };
 		D074A66B1C07174D0017EAC3 /* CountryFormatModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryFormatModel.h; sourceTree = "<group>"; };
 		D074A66C1C07174D0017EAC3 /* CountryFormatModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryFormatModel.m; sourceTree = "<group>"; };
 		D074A6701C07275B0017EAC3 /* CountryRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryRow.h; sourceTree = "<group>"; };
@@ -615,6 +618,8 @@
 			children = (
 				B17B3D591BB6A49E009B8BC5 /* BaseViewController.h */,
 				B17B3D5A1BB6A49E009B8BC5 /* BaseViewController.m */,
+				D02D2D041C0C379E00092A23 /* BaseTableViewController.h */,
+				D02D2D051C0C379E00092A23 /* BaseTableViewController.m */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -1156,7 +1161,6 @@
 				B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */,
 				B1EF40F51BB857C800042E4B /* M13ProgressViewPie.m in Sources */,
 				B16DA2201BE10A7A00EBF043 /* SlideMenuTableViewCell.m in Sources */,
-				B108F86B1BECAEF200267DEC /* RecentContact+CoreDataProperties.m in Sources */,
 				D0D70D421C0464800068AB20 /* UIView+Addition.m in Sources */,
 				B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */,
 				B15B15BB1BDBC29A00C0C171 /* RecorderRequest.m in Sources */,
@@ -1175,7 +1179,9 @@
 				B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */,
 				B1BB605F1BDE36AF00C1140B /* SignUpWithEmailViewController.m in Sources */,
 				B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */,
+				D02D2D061C0C379E00092A23 /* BaseTableViewController.m in Sources */,
 				B1A4AA511BF4DA9D005D55CB /* AccountViewController.m in Sources */,
+				D02D2D071C0C3A8500092A23 /* Events.m in Sources */,
 				B10C39341BF6FC840070B49F /* AccountResponse.m in Sources */,
 				B17B3D5B1BB6A49E009B8BC5 /* BaseViewController.m in Sources */,
 				B13B50261BF38D48009D3348 /* InformationTextTableViewCell.m in Sources */,
@@ -1187,7 +1193,6 @@
 				B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */,
 				B1A366921BDC92DB00852B52 /* UploadsRequest.m in Sources */,
 				B13B075A1BD3686500974AC3 /* MandrillInformationResponse.m in Sources */,
-				B1F0456B1BCFB4E400A67942 /* Events.m in Sources */,
 				B15B15C41BDBC8CB00C0C171 /* RecorderResponse.m in Sources */,
 				B17B3D641BB6AE8B009B8BC5 /* RecordingViewController.m in Sources */,
 				B15B15B81BDBC17300C0C171 /* Recorder.m in Sources */,
@@ -1386,7 +1391,7 @@
 				);
 				GCC_PREFIX_HEADER = Peppermint/PrefixHeader.pch;
 				INFOPLIST_FILE = Peppermint/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint;
@@ -1410,7 +1415,7 @@
 				);
 				GCC_PREFIX_HEADER = Peppermint/PrefixHeader.pch;
 				INFOPLIST_FILE = Peppermint/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint;

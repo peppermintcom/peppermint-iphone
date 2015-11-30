@@ -11,11 +11,12 @@
 #import "LoginTextFieldTableViewCell.h"
 #import "PeppermintMessageSender.h"
 #import "SignUpWithEmailViewController.h"
+#import "AWSService.h"
 
 #define WelcomeBackSegue @"WelcomeBackSegue"
 #define SEGUE_SIGNUP_WITH_EMAIL      @"SignUpWithEmailSegue"
 
-@interface LoginWithEmailViewController () <LoginTextFieldTableViewCellDelegate>
+@interface LoginWithEmailViewController () <LoginTextFieldTableViewCellDelegate, AccountModelDelegate>
 
 @property (weak, nonatomic) IBOutlet LoginTextFieldTableViewCell * emailCell;
 @property (weak, nonatomic) IBOutlet LoginTextFieldTableViewCell * passwordCell;
@@ -31,6 +32,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  [[AccountModel sharedInstance] setDelegate:self];
   
   self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background_gradient"]];
   self.tableView.tableHeaderView.backgroundColor = [UIColor clearColor];
@@ -80,14 +82,39 @@
   if (isValidEmailEmptyValidation && isValidEmailFormatValidation) {
     PeppermintMessageSender *sender = self.loginModel.peppermintMessageSender;
     sender.email = self.emailCell.textField.text;
-#warning API request to check if email already exists
-    //[self performSegueWithIdentifier:WelcomeBackSegue sender:nil];
-    [self performSegueWithIdentifier:SEGUE_SIGNUP_WITH_EMAIL sender:nil];
-    //
+    
+    [[AccountModel sharedInstance] checkEmailIsRegistered:sender.email];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+  } else {
+    [[[UIAlertView alloc] initWithTitle:LOC(@"Invalid email", nil) message:nil delegate:nil cancelButtonTitle:LOC(@"OK", nil) otherButtonTitles:nil] show];
   }
 }
 
+-(void) emailChecked:(BOOL)free {
+  [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+
+  if (free) {
+    [self performSegueWithIdentifier:SEGUE_SIGNUP_WITH_EMAIL sender:nil];
+  } else {
+    [self performSegueWithIdentifier:WelcomeBackSegue sender:nil];
+  }
+}
+
+- (void)operationFailure:(NSError *)error {
+  [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+}
+
 - (IBAction)loginPressed:(id)sender {
+  if (isValidPasswordValidation) {
+    PeppermintMessageSender *sender = self.loginModel.peppermintMessageSender;
+    sender.password = self.passwordCell.textField.text;
+    
+    [[AccountModel sharedInstance] logUserIn:sender.email password:sender.password];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+  }
+}
+
+- (void)userLogInSuccessWithEmail:(NSString *)email {
   
 }
 

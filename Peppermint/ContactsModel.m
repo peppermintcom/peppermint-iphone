@@ -84,8 +84,7 @@
         | APContactFieldThumbnail;
     addressBook.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"firstName" ascending:YES],
                                     [NSSortDescriptor sortDescriptorWithKey:@"lastName" ascending:YES]];
-    addressBook.filterBlock = ^BOOL(APContact *contact)
-    {
+    addressBook.filterBlock = ^BOOL(APContact *contact) {
         NSMutableString *searchString = [NSMutableString stringWithFormat:@"%@", contact.compositeName];
         for(NSString *phone in contact.phones) {
             [searchString appendFormat:@";%@", phone];
