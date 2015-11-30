@@ -154,7 +154,8 @@
                              }
                          }
 
-                         for(NSString *phone in contact.phones) {
+                         for(NSString *rawPhone in contact.phones) {
+                             NSString *phone = [self filterUnwantedChars:rawPhone];
                              NSString *key = [NSString stringWithFormat:@"%@,%@", nameSurname, phone];
                              if([uniqueSet containsObject:key]) {
                                  continue;
@@ -163,7 +164,7 @@
                              }
                              PeppermintContact *peppermintContact = [PeppermintContact new];
                              peppermintContact.communicationChannel = CommunicationChannelSMS;
-                             peppermintContact.communicationChannelAddress = [self filterUnwantedChars:phone];
+                             peppermintContact.communicationChannelAddress = phone;
                              peppermintContact.nameSurname = nameSurname;
                              peppermintContact.avatarImage = contact.thumbnail;
                              [peppermintContactsArray addObject:peppermintContact];
