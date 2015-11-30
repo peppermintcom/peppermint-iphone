@@ -100,6 +100,7 @@
     [self logServiceCalls];
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
     [self initGoogleApp];
+
   
     return YES;
 }
