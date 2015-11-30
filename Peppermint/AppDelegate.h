@@ -20,7 +20,7 @@
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 + (AppDelegate*) Instance;
-+(void) handleError:(NSError*) error;
++ (void) handleError:(NSError*) error;
 
 @end
 

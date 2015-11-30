@@ -30,6 +30,9 @@
 #define AWS_ENDPOINT_ACCOUNT_QUERY  @"/accounts/"    // Add account id to the path. For example : /accounts/{account_id}
 
 #define RESPONSE_CODE_CONFLICT      409
+#define RESPONSE_CODE_NOT_FOUND     404
+#define RESPONSE_CODE_NOT_AUTH      401
+
 
 @interface AWSService : BaseService
 @property(strong, nonatomic) NSString *apiKey;
@@ -42,4 +45,6 @@
 -(void) logUserInWithEmail:(NSString*) email password:(NSString*) password;
 -(void) resendVerificationEmailForJwt:(NSString*) jwt;
 -(void) refreshAccountWithId:(NSString*) accountId andJwt:(NSString*) jwt;
+-(void) checkEmailIsRegistered:(NSString *)email;
+
 @end

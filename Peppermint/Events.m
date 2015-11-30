@@ -56,5 +56,9 @@
 @implementation AccountInfoRefreshed
 @end
 
+@implementation AccountCheckEmail
+
+@end
+
 @implementation SyncGoogleContactsSuccess
 @end

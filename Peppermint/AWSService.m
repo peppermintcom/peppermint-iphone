@@ -10,6 +10,7 @@
 
 #define AUTHORIZATION   @"Authorization"
 #define BEARER          @"Bearer"
+#define X_API_KEY @"X-Api-Key"
 
 @implementation AWSService
 
@@ -178,6 +179,40 @@
         }];
         [dataTask resume];
     }
+}
+
+- (void)checkEmailIsRegistered:(NSString *)email {
+  NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_ACCOUNTS];
+  NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+  AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+  
+  User * user = [User new];
+  user.email = email;
+  
+  
+  NSDictionary *parameterDictionary = [user toDictionary];
+  NSError *error;
+  NSMutableURLRequest *request = [[[AFJSONRequestSerializer serializer] requestWithMethod:@"GET" URLString:url parameters:parameterDictionary error:&error] mutableCopy];
+  [request setValue:self.apiKey forHTTPHeaderField:X_API_KEY];
+  
+  if (error) {
+    [self failureDuringRequestCreationWithError:error];
+  } else {
+    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+      AccountCheckEmail * checkEmail = [AccountCheckEmail new];
+      NSInteger statusCode = ((NSHTTPURLResponse*)response).statusCode;
+      if (statusCode == RESPONSE_CODE_NOT_AUTH) {
+        checkEmail.isFree = NO;
+        PUBLISH(checkEmail);
+      } else if (statusCode == RESPONSE_CODE_NOT_FOUND) {
+        checkEmail.isFree = YES;
+        PUBLISH(checkEmail);
+      } else if (error) {
+        [self failureDuringRequestCreationWithError:error];
+      }
+    }];
+    [dataTask resume];
+  }
 }
 
 -(NSString*) base64Encode:(NSString*) text {

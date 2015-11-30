@@ -70,6 +70,12 @@
 @property (strong, nonatomic) NSString *password;
 @end
 
+@interface AccountCheckEmail : BaseEvent
+
+@property (assign, nonatomic) BOOL isFree;
+
+@end
+
 @interface VerificationEmailSent : BaseEvent
 @property (strong, nonatomic) NSString* jwt;
 @end

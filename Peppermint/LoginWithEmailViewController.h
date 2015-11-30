@@ -6,14 +6,12 @@
 //  Copyright © 2015 Okan Kurtulus. All rights reserved.
 //
 
-#import "BaseViewController.h"
+#import "BaseTableViewController.h"
 
 @class LoginModel;
 
-@interface LoginWithEmailViewController : UITableViewController
+@interface LoginWithEmailViewController : BaseTableViewController
 
 @property (strong, nonatomic) LoginModel *loginModel;
-
-- (IBAction)textFieldDidChange:(UITextField *)textField;
 
 @end
