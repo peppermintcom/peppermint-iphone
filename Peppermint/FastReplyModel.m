@@ -34,6 +34,11 @@
     contact.communicationChannelAddress = email;
     contact.avatarImage = [UIImage imageNamed:@"avatar_empty"];;
     [FastReplyModel sharedInstance].peppermintContact = contact;
+    
+    ReplyContactIsAdded *replyContactIsAdded = [ReplyContactIsAdded new];
+    replyContactIsAdded.sender = self;
+    PUBLISH(replyContactIsAdded);
+    
     return YES;
 }
 

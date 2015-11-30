@@ -61,3 +61,6 @@
 
 @implementation DetachSuccess
 @end
+
+@implementation ReplyContactIsAdded
+@end

@@ -81,6 +81,10 @@ SUBSCRIBE(SyncGoogleContactsSuccess) {
     [self cellSelectedWithTag:activeCellTag];
 }
 
+SUBSCRIBE(ReplyContactIsAdded) {
+    [self cellSelectedWithTag:activeCellTag];
+}
+
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if([self checkIfuserIsLoggedIn]) {

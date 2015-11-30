@@ -83,3 +83,6 @@
 
 @interface DetachSuccess : BaseEvent
 @end
+
+@interface ReplyContactIsAdded : BaseEvent
+@end
