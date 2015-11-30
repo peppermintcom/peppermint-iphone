@@ -71,7 +71,7 @@
             self.peppermintMessageSender.email = user.profile.email;
         }
       
-      self.peppermintMessageSender.subject = LOC(@"Mail Subject",@"Default Mail Subject");
+        self.peppermintMessageSender.subject = LOC(@"Mail Subject",@"Default Mail Subject");
 
         NSURL *imageUrl = [user.profile imageURLWithDimension:100];
         self.peppermintMessageSender.imageData = [NSData dataWithContentsOfURL:imageUrl];
@@ -95,7 +95,7 @@
 
 -(void) authorizeFacebook {
     FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
-    [login logOut]; //Fix, if user changes account,(http://stackoverflow.com/a/30388750/5171866)
+    [login logOut]; //this is added to fix, if user changes account,(http://stackoverflow.com/a/30388750/5171866)
     [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
     [self.delegate loginLoading];
     
@@ -104,6 +104,7 @@
     [login logInWithReadPermissions: @[@"public_profile",@"email"]
      fromViewController:self.delegate
      handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+         [self.delegate loginFinishedLoading];
          if (error) {
              NSLog(@"Process error");
              [self.delegate operationFailure:error];
@@ -121,8 +122,8 @@
         [self.delegate loginLoading];
         [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields": @"name, email, picture"}]
          startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+             [self.delegate loginFinishedLoading];
              if(error) {
-                 [self.delegate loginFinishedLoading];
                  [self.delegate operationFailure:error];
              } else {
                  NSDictionary *infoDictionary = (NSDictionary*)result;
@@ -145,7 +146,6 @@
                      [self.peppermintMessageSender save];
                      [self.delegate loginSucceed];
                  } else {
-                     [self.delegate loginFinishedLoading];
                      [self showErrorForInformationFromFacebook];
                  }
              }
