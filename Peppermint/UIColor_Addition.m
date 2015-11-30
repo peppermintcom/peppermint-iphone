@@ -155,4 +155,14 @@
     return color;
 }
 
++ (UIColor *) shadowGreen {
+    static dispatch_once_t onceToken;
+    static UIColor *color;
+    dispatch_once(&onceToken, ^{
+        color = [UIColor colorWithRed:0.212f green:0.690f blue:0.620f alpha:1.00f];
+    });
+    return color;
+}
+
+
 @end

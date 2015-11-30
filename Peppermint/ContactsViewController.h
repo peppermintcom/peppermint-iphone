@@ -14,7 +14,7 @@
 #import "ReSideMenuContainerViewController.h"
 
 
-@interface ContactsViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ContactsModelDelegate, RecentContactsModelDelegate, SearchMenuTableViewCellDelegate, UIAlertViewDelegate, ContactTableViewCellDelegate, FastRecordingViewDelegate>
+@interface ContactsViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ContactsModelDelegate, RecentContactsModelDelegate, SearchMenuTableViewCellDelegate, UIAlertViewDelegate, ContactTableViewCellDelegate, FastRecordingViewDelegate, ShowAllContactsTableViewCellDelegate>
 @property (strong, nonatomic) ContactsModel *contactsModel;
 @property (strong, nonatomic) RecentContactsModel *recentContactsModel;
 @property (strong, nonatomic) REMenu *searchMenu;

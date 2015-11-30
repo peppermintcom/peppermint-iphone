@@ -148,7 +148,12 @@ SUBSCRIBE(SyncGoogleContactsSuccess) {
 #pragma mark - UITableView
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
-    return SECTION_COUNT;
+    int sectionCount = SECTION_COUNT;
+    if([self activeContactList].count > 0
+       && (activeCellTag != CELL_TAG_ALL_CONTACTS)) {
+        sectionCount++;
+    }
+    return sectionCount;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -208,9 +213,9 @@ SUBSCRIBE(SyncGoogleContactsSuccess) {
             return [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:nil];
         }
     } else if (indexPath.section == SECTION_SHOW_ALL_CONTACTS) {
-#warning "Will be updated!"
-        preparedCell = [CellFactory cellLoginTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
-        preparedCell.clipsToBounds = YES;
+        ShowAllContactsTableViewCell *cell = [CellFactory cellShowAllContactsTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
+        cell.clipsToBounds = YES;
+        preparedCell = cell;
     }
     return preparedCell;
 }
@@ -240,7 +245,7 @@ SUBSCRIBE(SyncGoogleContactsSuccess) {
             height = [activeContact equals:fastReplyContact] ? 0 : CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
         }
     } else if (indexPath.section == SECTION_SHOW_ALL_CONTACTS) {
-        height = [self activeContactList].count > 0 && (activeCellTag != CELL_TAG_ALL_CONTACTS) ? CELL_HEIGHT_LOGIN_TABLEVIEWCELL : 0;
+        height = CELL_HEIGHT_SHOW_ALL_CONTACTS_TABLEVIEWCELL;
     }
     return height;
 }
@@ -395,6 +400,12 @@ SUBSCRIBE(SyncGoogleContactsSuccess) {
 -(void) didFinishItemSelectionOnIndexPath:(NSIndexPath*) indexPath location:(CGPoint) location {
     self.tableView.bounces = YES;
     [self.fastRecordingView finishRecordingWithGestureIsValid:YES];
+}
+
+#pragma mark - ShowAllContactsTableViewCellDelegate
+
+-(void) showAllContactsButtonPressed {
+    [self cellSelectedWithTag:CELL_TAG_ALL_CONTACTS];
 }
 
 #pragma mark - FastRecordingViewDelegate
