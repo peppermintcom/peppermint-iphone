@@ -4,7 +4,7 @@
         <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="extension" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mailSenderClass" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="receiverCommunicationChannel" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="receiverCommunicationChannel" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="receiverCommunicationChannelAddress" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="receiverNameSurname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="senderEmail" optional="YES" attributeType="String" syncable="YES"/>
