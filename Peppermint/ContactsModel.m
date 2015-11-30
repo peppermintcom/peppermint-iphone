@@ -7,8 +7,8 @@
 //
 
 #import "ContactsModel.h"
+#import "GoogleContactsModel.h"
 
-#define ALLOWED_CHARS @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@."
 #define ContactsOperationQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
 
 @implementation ContactsModel {
@@ -16,7 +16,6 @@
     NSCharacterSet *unwantedCharsSet;
     NSArray *emailContactList;
     NSArray *smsContactList;
-    NSMutableArray *contactsFromExternalSources;
 }
 
 + (instancetype) sharedInstance {
@@ -34,8 +33,7 @@
         self.contactList = [NSMutableArray new];
         self.filterText = @"";
         loadContactsTriggerCount = 0;
-        unwantedCharsSet = [[NSCharacterSet characterSetWithCharactersInString:ALLOWED_CHARS] invertedSet];
-        contactsFromExternalSources = [NSMutableArray new];
+        unwantedCharsSet = [[NSCharacterSet characterSetWithCharactersInString:CHARS_FOR_PHONE] invertedSet];
     }
     return self;
 }
@@ -173,7 +171,7 @@
                          */
                      }
                  }
-                 
+/*
 #ifdef DEBUG
                  PeppermintContact *peppermintContact = [PeppermintContact new];
                  peppermintContact.communicationChannel = CommunicationChannelEmail;
@@ -182,9 +180,10 @@
                  peppermintContact.avatarImage = [UIImage imageNamed:@"recording_logo_pressed"];;
                  [peppermintContactsArray addObject:peppermintContact];
 #endif
-                 
-                 [peppermintContactsArray addObjectsFromArray:contactsFromExternalSources];
-                 
+*/                 
+                 NSArray *googleContactsArray = [GoogleContactsModel peppermintContactsArrayWithFilterText:self.filterText];
+                 [peppermintContactsArray addObjectsFromArray:googleContactsArray];
+
                  self.contactList = peppermintContactsArray;
                  NSArray *sortedList = [self.contactList sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
                      NSString *first = [(PeppermintContact*)a nameSurname];
@@ -226,12 +225,26 @@
     return smsContactList;
 }
 
-#pragma mark - External Sources
+#pragma mark - Contacts CoreData
 
--(void) addExternalContact:(PeppermintContact*) peppermintContact {
-    if(peppermintContact) {
-        [contactsFromExternalSources addObject:peppermintContact];
-    }
++(NSPredicate*) contactPredicateWithNameSurname:(NSString*) nameSurname communicationChannelAddress:(NSString*)communicationChannelAddress communicationChannel:(CommunicationChannel)communicationChannel
+{
+    NSPredicate* namePredicate = [self contactPredicateWithNameSurname:nameSurname];
+    NSPredicate* mailPredicate = [self contactPredicateWithCommunicationChannelAddress:communicationChannelAddress communicationChannel:communicationChannel];
+    return [NSCompoundPredicate andPredicateWithSubpredicates:
+            [NSArray arrayWithObjects:namePredicate, mailPredicate, nil]];
+}
+
++(NSPredicate*) contactPredicateWithNameSurname:(NSString*) nameSurname {
+    return [NSPredicate predicateWithFormat:@"self.nameSurname CONTAINS %@",
+            nameSurname];
+}
+
++(NSPredicate*) contactPredicateWithCommunicationChannelAddress:(NSString*)communicationChannelAddress communicationChannel:(CommunicationChannel)communicationChannel
+{
+    return [NSPredicate predicateWithFormat:@"self.communicationChannelAddress CONTAINS %@ AND self.communicationChannel = %@ ",
+            communicationChannelAddress,
+            [NSNumber numberWithInt:communicationChannel]];
 }
 
 @end

@@ -78,9 +78,11 @@ SUBSCRIBE(AccountLoginIsSuccessful) {
     [awsService resendVerificationEmailForJwt:cachedSender.jwt];
 }
 
-SUBSCRIBE(VerificationEmailSent) {
-    if([event.jwt isEqualToString:cachedSender.jwt]) {
-        [self.delegate verificationEmailSendSuccess];
+SUBSCRIBE(VerificationEmailSent) {    
+    if(event.sender == awsService && [event.jwt isEqualToString:cachedSender.jwt]) {
+        if([self.delegate respondsToSelector:@selector(verificationEmailSendSuccess)]) {
+            [self.delegate verificationEmailSendSuccess];
+        }
     }
 }
 

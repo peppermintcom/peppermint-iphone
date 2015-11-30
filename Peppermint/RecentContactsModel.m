@@ -7,6 +7,7 @@
 //
 
 #import "RecentContactsModel.h"
+#import "ContactsModel.h"
 
 #define DBQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
 
@@ -38,12 +39,9 @@
 }
 
 -(NSPredicate*) recentContactPredicate:(PeppermintContact*) peppermintContact {
-    return [NSPredicate predicateWithFormat:@"self.nameSurname CONTAINS %@ AND self.communicationChannelAddress CONTAINS %@ AND self.communicationChannel = %@ ",
-            peppermintContact.nameSurname,
-            peppermintContact.communicationChannelAddress,
-            [NSNumber numberWithInt:peppermintContact.communicationChannel]
-            ];
+    return [ContactsModel contactPredicateWithNameSurname:peppermintContact.nameSurname communicationChannelAddress:peppermintContact.communicationChannelAddress communicationChannel:peppermintContact.communicationChannel];
 }
+
 
 -(void) promtMultipleRecordsWithSameValueErrorForPeppermintContact:(PeppermintContact*)peppermintContact {
     dispatch_async(dispatch_get_main_queue(), ^{

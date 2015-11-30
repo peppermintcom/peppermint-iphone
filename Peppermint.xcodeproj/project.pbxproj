@@ -15,11 +15,15 @@
 		B102F9821BF0CE2000EDF7E6 /* LoginValidateEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B102F9811BF0CE2000EDF7E6 /* LoginValidateEmailViewController.m */; };
 		B102F9861BF0CF0800EDF7E6 /* LoginValidateEmailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B102F9851BF0CF0800EDF7E6 /* LoginValidateEmailTableViewCell.m */; };
 		B102F9881BF0CF1500EDF7E6 /* LoginValidateEmailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B102F9871BF0CF1500EDF7E6 /* LoginValidateEmailTableViewCell.xib */; };
+		B10455D21C0603A500D2AB0F /* RecentContact+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B10455C31C0603A500D2AB0F /* RecentContact+CoreDataProperties.m */; };
+		B10455D31C0603A500D2AB0F /* RecentContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B10455C51C0603A500D2AB0F /* RecentContact.m */; };
+		B10455D41C0603A500D2AB0F /* CachedEmailMessage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B10455C71C0603A500D2AB0F /* CachedEmailMessage+CoreDataProperties.m */; };
+		B10455D51C0603A500D2AB0F /* CachedEmailMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B10455C91C0603A500D2AB0F /* CachedEmailMessage.m */; };
+		B10455D61C0603A500D2AB0F /* GoogleContact+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B10455CB1C0603A500D2AB0F /* GoogleContact+CoreDataProperties.m */; };
+		B10455D71C0603A500D2AB0F /* GoogleContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B10455CD1C0603A500D2AB0F /* GoogleContact.m */; };
+		B10455D81C0603A500D2AB0F /* Contact+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B10455CF1C0603A500D2AB0F /* Contact+CoreDataProperties.m */; };
+		B10455D91C0603A500D2AB0F /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = B10455D11C0603A500D2AB0F /* Contact.m */; };
 		B108F8601BECAA5300267DEC /* SendVoiceMessageEmailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B108F85F1BECAA5300267DEC /* SendVoiceMessageEmailModel.m */; };
-		B108F86B1BECAEF200267DEC /* RecentContact+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B108F8661BECAEF200267DEC /* RecentContact+CoreDataProperties.m */; };
-		B108F86C1BECAEF200267DEC /* RecentContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B108F8681BECAEF200267DEC /* RecentContact.m */; };
-		B108F8771BECB0BD00267DEC /* CachedEmailMessage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B108F8741BECB0BD00267DEC /* CachedEmailMessage+CoreDataProperties.m */; };
-		B108F8781BECB0BD00267DEC /* CachedEmailMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B108F8761BECB0BD00267DEC /* CachedEmailMessage.m */; };
 		B10C392E1BF6F9520070B49F /* AccountRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B10C392D1BF6F9520070B49F /* AccountRequest.m */; };
 		B10C39311BF6FB150070B49F /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = B10C39301BF6FB150070B49F /* User.m */; };
 		B10C39341BF6FC840070B49F /* AccountResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B10C39331BF6FC840070B49F /* AccountResponse.m */; };
@@ -151,16 +155,24 @@
 		B102F9841BF0CF0800EDF7E6 /* LoginValidateEmailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginValidateEmailTableViewCell.h; sourceTree = "<group>"; };
 		B102F9851BF0CF0800EDF7E6 /* LoginValidateEmailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginValidateEmailTableViewCell.m; sourceTree = "<group>"; };
 		B102F9871BF0CF1500EDF7E6 /* LoginValidateEmailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginValidateEmailTableViewCell.xib; sourceTree = "<group>"; };
+		B10455C21C0603A500D2AB0F /* RecentContact+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RecentContact+CoreDataProperties.h"; sourceTree = "<group>"; };
+		B10455C31C0603A500D2AB0F /* RecentContact+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RecentContact+CoreDataProperties.m"; sourceTree = "<group>"; };
+		B10455C41C0603A500D2AB0F /* RecentContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentContact.h; sourceTree = "<group>"; };
+		B10455C51C0603A500D2AB0F /* RecentContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentContact.m; sourceTree = "<group>"; };
+		B10455C61C0603A500D2AB0F /* CachedEmailMessage+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CachedEmailMessage+CoreDataProperties.h"; sourceTree = "<group>"; };
+		B10455C71C0603A500D2AB0F /* CachedEmailMessage+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CachedEmailMessage+CoreDataProperties.m"; sourceTree = "<group>"; };
+		B10455C81C0603A500D2AB0F /* CachedEmailMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CachedEmailMessage.h; sourceTree = "<group>"; };
+		B10455C91C0603A500D2AB0F /* CachedEmailMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CachedEmailMessage.m; sourceTree = "<group>"; };
+		B10455CA1C0603A500D2AB0F /* GoogleContact+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GoogleContact+CoreDataProperties.h"; sourceTree = "<group>"; };
+		B10455CB1C0603A500D2AB0F /* GoogleContact+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GoogleContact+CoreDataProperties.m"; sourceTree = "<group>"; };
+		B10455CC1C0603A500D2AB0F /* GoogleContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleContact.h; sourceTree = "<group>"; };
+		B10455CD1C0603A500D2AB0F /* GoogleContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleContact.m; sourceTree = "<group>"; };
+		B10455CE1C0603A500D2AB0F /* Contact+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Contact+CoreDataProperties.h"; sourceTree = "<group>"; };
+		B10455CF1C0603A500D2AB0F /* Contact+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Contact+CoreDataProperties.m"; sourceTree = "<group>"; };
+		B10455D01C0603A500D2AB0F /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
+		B10455D11C0603A500D2AB0F /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
 		B108F85E1BECAA5300267DEC /* SendVoiceMessageEmailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVoiceMessageEmailModel.h; sourceTree = "<group>"; };
 		B108F85F1BECAA5300267DEC /* SendVoiceMessageEmailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendVoiceMessageEmailModel.m; sourceTree = "<group>"; };
-		B108F8651BECAEF200267DEC /* RecentContact+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RecentContact+CoreDataProperties.h"; sourceTree = "<group>"; };
-		B108F8661BECAEF200267DEC /* RecentContact+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RecentContact+CoreDataProperties.m"; sourceTree = "<group>"; };
-		B108F8671BECAEF200267DEC /* RecentContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentContact.h; sourceTree = "<group>"; };
-		B108F8681BECAEF200267DEC /* RecentContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentContact.m; sourceTree = "<group>"; };
-		B108F8731BECB0BD00267DEC /* CachedEmailMessage+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CachedEmailMessage+CoreDataProperties.h"; sourceTree = "<group>"; };
-		B108F8741BECB0BD00267DEC /* CachedEmailMessage+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CachedEmailMessage+CoreDataProperties.m"; sourceTree = "<group>"; };
-		B108F8751BECB0BD00267DEC /* CachedEmailMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CachedEmailMessage.h; sourceTree = "<group>"; };
-		B108F8761BECB0BD00267DEC /* CachedEmailMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CachedEmailMessage.m; sourceTree = "<group>"; };
 		B10C392C1BF6F9520070B49F /* AccountRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountRequest.h; sourceTree = "<group>"; };
 		B10C392D1BF6F9520070B49F /* AccountRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountRequest.m; sourceTree = "<group>"; };
 		B10C392F1BF6FB150070B49F /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
@@ -909,14 +921,22 @@
 		B1F93E911BC8E2A0005F2128 /* NSManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
-				B108F8731BECB0BD00267DEC /* CachedEmailMessage+CoreDataProperties.h */,
-				B108F8741BECB0BD00267DEC /* CachedEmailMessage+CoreDataProperties.m */,
-				B108F8751BECB0BD00267DEC /* CachedEmailMessage.h */,
-				B108F8761BECB0BD00267DEC /* CachedEmailMessage.m */,
-				B108F8651BECAEF200267DEC /* RecentContact+CoreDataProperties.h */,
-				B108F8661BECAEF200267DEC /* RecentContact+CoreDataProperties.m */,
-				B108F8671BECAEF200267DEC /* RecentContact.h */,
-				B108F8681BECAEF200267DEC /* RecentContact.m */,
+				B10455C21C0603A500D2AB0F /* RecentContact+CoreDataProperties.h */,
+				B10455C31C0603A500D2AB0F /* RecentContact+CoreDataProperties.m */,
+				B10455C41C0603A500D2AB0F /* RecentContact.h */,
+				B10455C51C0603A500D2AB0F /* RecentContact.m */,
+				B10455C61C0603A500D2AB0F /* CachedEmailMessage+CoreDataProperties.h */,
+				B10455C71C0603A500D2AB0F /* CachedEmailMessage+CoreDataProperties.m */,
+				B10455C81C0603A500D2AB0F /* CachedEmailMessage.h */,
+				B10455C91C0603A500D2AB0F /* CachedEmailMessage.m */,
+				B10455CA1C0603A500D2AB0F /* GoogleContact+CoreDataProperties.h */,
+				B10455CB1C0603A500D2AB0F /* GoogleContact+CoreDataProperties.m */,
+				B10455CC1C0603A500D2AB0F /* GoogleContact.h */,
+				B10455CD1C0603A500D2AB0F /* GoogleContact.m */,
+				B10455CE1C0603A500D2AB0F /* Contact+CoreDataProperties.h */,
+				B10455CF1C0603A500D2AB0F /* Contact+CoreDataProperties.m */,
+				B10455D01C0603A500D2AB0F /* Contact.h */,
+				B10455D11C0603A500D2AB0F /* Contact.m */,
 			);
 			name = NSManagedObjects;
 			sourceTree = "<group>";
@@ -1140,7 +1160,10 @@
 				D0D70D421C0464800068AB20 /* UIView+Addition.m in Sources */,
 				B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */,
 				B15B15BB1BDBC29A00C0C171 /* RecorderRequest.m in Sources */,
+				B10455D71C0603A500D2AB0F /* GoogleContact.m in Sources */,
+				B10455D51C0603A500D2AB0F /* CachedEmailMessage.m in Sources */,
 				B1F045671BCFB36900A67942 /* BaseService.m in Sources */,
+				B10455D41C0603A500D2AB0F /* CachedEmailMessage+CoreDataProperties.m in Sources */,
 				B11F8A5F1BDCC474000E79AA /* FinalizeUploadResponse.m in Sources */,
 				B13B075D1BD3716100974AC3 /* MandrillSendRequest.m in Sources */,
 				B165EF151BB71A99008C6F71 /* ContactsModel.m in Sources */,
@@ -1149,7 +1172,6 @@
 				B15B15B01BDA44E200C0C171 /* TPAACAudioConverter.m in Sources */,
 				B102DD5E1BD0802100D71D62 /* BaseCustomView.m in Sources */,
 				B13B07631BD3720100974AC3 /* MandrillMessage.m in Sources */,
-				B108F86C1BECAEF200267DEC /* RecentContact.m in Sources */,
 				B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */,
 				B1BB605F1BDE36AF00C1140B /* SignUpWithEmailViewController.m in Sources */,
 				B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */,
@@ -1169,6 +1191,8 @@
 				B15B15C41BDBC8CB00C0C171 /* RecorderResponse.m in Sources */,
 				B17B3D641BB6AE8B009B8BC5 /* RecordingViewController.m in Sources */,
 				B15B15B81BDBC17300C0C171 /* Recorder.m in Sources */,
+				B10455D91C0603A500D2AB0F /* Contact.m in Sources */,
+				B10455D61C0603A500D2AB0F /* GoogleContact+CoreDataProperties.m in Sources */,
 				B10C392E1BF6F9520070B49F /* AccountRequest.m in Sources */,
 				D0D70D491C049DC80068AB20 /* BaseButton.m in Sources */,
 				B1EF40EE1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.m in Sources */,
@@ -1185,7 +1209,6 @@
 				B16DA2171BE0F2C100EBF043 /* SlideMenuViewController.m in Sources */,
 				B1BB601A1BDE127500C1140B /* LoginViewController.m in Sources */,
 				B18BF95E1BD674CD009B665E /* PeppermintMessageSender.m in Sources */,
-				B108F8781BECB0BD00267DEC /* CachedEmailMessage.m in Sources */,
 				B1A366951BDC92FF00852B52 /* UploadsResponse.m in Sources */,
 				B1BB1E631BD364FB00A1CE45 /* AFNetworkActivityLogger.m in Sources */,
 				B15B15AC1BD9D8B800C0C171 /* ExplodingView.m in Sources */,
@@ -1211,13 +1234,15 @@
 				B1BB60151BDE0E0200C1140B /* LoginTableViewCell.m in Sources */,
 				B13B07671BD3736400974AC3 /* MandrillMailAttachment.m in Sources */,
 				B1C83A191BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m in Sources */,
-				B108F8771BECB0BD00267DEC /* CachedEmailMessage+CoreDataProperties.m in Sources */,
 				B17933121BE0B7B00016F158 /* LoginNavigationViewController.m in Sources */,
 				B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */,
 				B1F93E901BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld in Sources */,
+				B10455D81C0603A500D2AB0F /* Contact+CoreDataProperties.m in Sources */,
 				B17933151BE0C19C0016F158 /* LoginModel.m in Sources */,
+				B10455D21C0603A500D2AB0F /* RecentContact+CoreDataProperties.m in Sources */,
 				B100A54A1BEDD6F800EEB573 /* CacheModel.m in Sources */,
 				B10C39371BF718960070B49F /* AccountModel.m in Sources */,
+				B10455D31C0603A500D2AB0F /* RecentContact.m in Sources */,
 				B1C4A7731BF73E3B00272AD7 /* LoginRequest.m in Sources */,
 				B1C978771C02EB6A00F402C2 /* GoogleContactsModel.m in Sources */,
 				D0BA6E8A1C070A1C00B8D85B /* AddContactViewController.m in Sources */,

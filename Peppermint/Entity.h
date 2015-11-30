@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 
 //Import entity headers
+#import "Contact.h"
 #import "RecentContact.h"
+#import "GoogleContact.h"
 #import "CachedEmailMessage.h"
-

@@ -86,7 +86,7 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
     [self cellSelectedWithTag:activeCellTag];
 }
 
-SUBSCRIBE(RetrieveGoogleContactsIsSuccessful) {
+SUBSCRIBE(SyncGoogleContactsSuccess) {
     [self cellSelectedWithTag:activeCellTag];
 }
 

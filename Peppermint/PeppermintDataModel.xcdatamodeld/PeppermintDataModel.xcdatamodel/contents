@@ -9,15 +9,22 @@
         <attribute name="senderEmail" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="senderNameSurname" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="RecentContact" representedClassName="RecentContact" syncable="YES">
+    <entity name="Contact" representedClassName="Contact" isAbstract="YES" syncable="YES">
         <attribute name="avatarImageData" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="communicationChannel" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="communicationChannelAddress" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="contactDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="nameSurname" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="GoogleContact" representedClassName="GoogleContact" parentEntity="Contact" syncable="YES">
+        <attribute name="accountEmail" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="RecentContact" representedClassName="RecentContact" parentEntity="Contact" syncable="YES">
+        <attribute name="contactDate" optional="YES" attributeType="Date" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="RecentContact" positionX="-63" positionY="-18" width="128" height="120"/>
-        <element name="CachedEmailMessage" positionX="-63" positionY="18" width="128" height="150"/>
+        <element name="CachedEmailMessage" positionX="-135" positionY="-63" width="128" height="150"/>
+        <element name="Contact" positionX="-353" positionY="3" width="128" height="103"/>
+        <element name="RecentContact" positionX="-189" positionY="171" width="128" height="60"/>
+        <element name="GoogleContact" positionX="-333" positionY="174" width="128" height="60"/>
     </elements>
 </model>

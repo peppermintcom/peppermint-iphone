@@ -18,7 +18,7 @@
                                @"",
                                @"",
                             [NSString stringWithFormat:@"Platform: %@",[DeviceModel platform]],
-                            [NSString stringWithFormat:@"Device Name: %@", [DeviceModel deviceName]],
+                            [NSString stringWithFormat:@"Device Hardware: %@", [DeviceModel deviceName]],
                             [NSString stringWithFormat:@"System Version: %@", [DeviceModel systemVersion]],
                             [NSString stringWithFormat:@"Version: %@", [DeviceModel applicationVersion]]
                                ];
@@ -28,7 +28,7 @@
 + (NSDictionary*)summaryDictionary {
     return [NSDictionary dictionaryWithObjectsAndKeys:
             [self platform],                    @"Platform",
-            [self deviceName],                  @"Device",
+            [self deviceName],                  @"Hardware",
             [DeviceModel systemVersion],        @"System Version",
             [DeviceModel applicationVersion],   @"Version:",
             nil];
