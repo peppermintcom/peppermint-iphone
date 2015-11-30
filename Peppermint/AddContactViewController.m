@@ -223,6 +223,31 @@
   }
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+  if (textField == self.phoneNumberTextField) {
+    if (string.length == 0 && textField.text.length == 1) {
+      textField.text = @"+";
+      return NO;
+    } else if (textField.text.length == 0 && string.length != 0) {
+      textField.text = [NSString stringWithFormat:@"+%@", string];
+      return NO;
+    }
+    return YES;
+  } else {
+    return YES;
+  }
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+  if (textField == self.phoneNumberTextField) {
+    if ([textField.text isEqualToString:@"+"]) {
+      textField.text = @"";
+      self.phoneImageView.highlighted = NO;
+    }
+  }
+}
+
+
 #pragma mark- UIImagePickerController
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {

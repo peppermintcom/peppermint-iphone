@@ -13,7 +13,6 @@
             <string>OpenSans-Semibold</string>
             <string>OpenSans-Semibold</string>
             <string>OpenSans-Semibold</string>
-            <string>OpenSans-Semibold</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -52,10 +51,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="yIj-mg-WsJ">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                                <animations/>
-                            </imageView>
                             <view opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lcd-bo-1RH" customClass="SwipeView">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="683"/>
                                 <subviews>
@@ -155,13 +150,9 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="DWJ-9W-nyk" firstAttribute="top" secondItem="Lcd-bo-1RH" secondAttribute="bottom" constant="4" id="3F7-hW-5t4"/>
-                            <constraint firstItem="v6u-zx-4Dz" firstAttribute="top" secondItem="yIj-mg-WsJ" secondAttribute="bottom" id="3G5-xU-BPu"/>
-                            <constraint firstItem="yIj-mg-WsJ" firstAttribute="top" secondItem="7FG-oV-f4Q" secondAttribute="top" id="QFn-0n-nbo"/>
                             <constraint firstItem="v6u-zx-4Dz" firstAttribute="top" secondItem="DWJ-9W-nyk" secondAttribute="bottom" constant="19" id="QZ3-V0-gMy"/>
                             <constraint firstItem="DWJ-9W-nyk" firstAttribute="centerX" secondItem="7FG-oV-f4Q" secondAttribute="centerX" id="dt8-TL-H8a"/>
-                            <constraint firstItem="yIj-mg-WsJ" firstAttribute="leading" secondItem="7FG-oV-f4Q" secondAttribute="leading" id="eej-ja-81V"/>
                             <constraint firstItem="Lcd-bo-1RH" firstAttribute="leading" secondItem="7FG-oV-f4Q" secondAttribute="leading" id="l6I-B9-SAk"/>
-                            <constraint firstAttribute="trailing" secondItem="yIj-mg-WsJ" secondAttribute="trailing" id="m3b-9L-vSF"/>
                             <constraint firstAttribute="trailing" secondItem="Lcd-bo-1RH" secondAttribute="trailing" id="t5S-ZI-MuX"/>
                             <constraint firstItem="Lcd-bo-1RH" firstAttribute="top" secondItem="7FG-oV-f4Q" secondAttribute="top" id="xor-Zg-oil"/>
                         </constraints>
@@ -836,62 +827,14 @@ email contact or both</string>
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ctY-TI-ACe" customClass="CountryRow">
-                                                    <rect key="frame" x="0.0" y="0.0" width="78" height="50"/>
-                                                    <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="US" translatesAutoresizingMaskIntoConstraints="NO" id="fCv-Rc-elA">
-                                                            <rect key="frame" x="8" y="11" width="28" height="27"/>
-                                                            <animations/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" secondItem="fCv-Rc-elA" secondAttribute="height" multiplier="28:27" id="Llb-Ey-dSM"/>
-                                                                <constraint firstAttribute="height" constant="27" id="xxS-AS-Vx9"/>
-                                                            </constraints>
-                                                        </imageView>
-                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="+1" textAlignment="center" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="I3P-WG-OEO">
-                                                            <rect key="frame" x="38" y="15" width="38" height="20"/>
-                                                            <animations/>
-                                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="14"/>
-                                                            <textInputTraits key="textInputTraits"/>
-                                                        </textField>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xg8-9k-fdt">
-                                                            <rect key="frame" x="0.0" y="0.0" width="78" height="50"/>
-                                                            <animations/>
-                                                            <connections>
-                                                                <action selector="phoneCodePressed:" destination="pyr-NR-460" eventType="touchUpInside" id="2It-EZ-uf2"/>
-                                                            </connections>
-                                                        </button>
-                                                    </subviews>
-                                                    <animations/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstItem="Xg8-9k-fdt" firstAttribute="top" secondItem="ctY-TI-ACe" secondAttribute="top" id="ClL-Zh-ggc"/>
-                                                        <constraint firstItem="fCv-Rc-elA" firstAttribute="centerY" secondItem="ctY-TI-ACe" secondAttribute="centerY" id="Fte-8o-6l0"/>
-                                                        <constraint firstAttribute="width" constant="78" id="H9t-Ec-P71"/>
-                                                        <constraint firstAttribute="bottom" secondItem="Xg8-9k-fdt" secondAttribute="bottom" id="QkL-Kx-lAc"/>
-                                                        <constraint firstAttribute="trailing" secondItem="I3P-WG-OEO" secondAttribute="trailing" constant="2" id="Y8P-4f-Mo6"/>
-                                                        <constraint firstItem="I3P-WG-OEO" firstAttribute="centerY" secondItem="fCv-Rc-elA" secondAttribute="centerY" id="aoi-kq-mKy"/>
-                                                        <constraint firstAttribute="trailing" secondItem="Xg8-9k-fdt" secondAttribute="trailing" id="mT5-Jw-LtZ"/>
-                                                        <constraint firstItem="Xg8-9k-fdt" firstAttribute="leading" secondItem="ctY-TI-ACe" secondAttribute="leading" id="oSQ-M8-lQY"/>
-                                                        <constraint firstItem="I3P-WG-OEO" firstAttribute="leading" secondItem="fCv-Rc-elA" secondAttribute="trailing" constant="2" id="wvE-V7-8Fa"/>
-                                                        <constraint firstItem="fCv-Rc-elA" firstAttribute="leading" secondItem="ctY-TI-ACe" secondAttribute="leading" constant="8" id="yhR-m7-upv"/>
-                                                    </constraints>
-                                                </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Iw-HS-ZXl" userLabel="divider">
-                                                    <rect key="frame" x="78" y="0.0" width="1" height="50"/>
-                                                    <animations/>
-                                                    <color key="backgroundColor" red="0.73725490199999999" green="0.73333333329999995" blue="0.75686274509999996" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="1" id="LGJ-6Q-Acu"/>
-                                                    </constraints>
-                                                </view>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uHi-Kg-2Nv">
-                                                    <rect key="frame" x="101" y="14" width="159" height="22"/>
+                                                    <rect key="frame" x="8" y="14" width="252" height="22"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                                                     <connections>
                                                         <action selector="textFieldDidChange:" destination="pyr-NR-460" eventType="editingChanged" id="Na1-0d-wPI"/>
+                                                        <outlet property="delegate" destination="pyr-NR-460" id="dca-SZ-xbJ"/>
                                                     </connections>
                                                 </textField>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="phone_inactive" highlightedImage="phone_active" translatesAutoresizingMaskIntoConstraints="NO" id="6Ku-Oo-U2k">
@@ -913,19 +856,13 @@ email contact or both</string>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="6Ku-Oo-U2k" secondAttribute="trailing" constant="20" id="AdO-p6-X9x"/>
-                                                <constraint firstItem="ctY-TI-ACe" firstAttribute="top" secondItem="yVa-ny-Ewv" secondAttribute="top" id="GHH-JO-EOh"/>
-                                                <constraint firstAttribute="bottom" secondItem="ctY-TI-ACe" secondAttribute="bottom" id="NLg-Lp-d0B"/>
                                                 <constraint firstItem="6Ku-Oo-U2k" firstAttribute="leading" secondItem="uHi-Kg-2Nv" secondAttribute="trailing" constant="20" id="Scl-BU-cju"/>
                                                 <constraint firstAttribute="trailing" secondItem="Bgj-c7-7Y9" secondAttribute="trailing" id="TUa-nW-FCr"/>
                                                 <constraint firstAttribute="bottom" secondItem="Bgj-c7-7Y9" secondAttribute="bottom" id="Xqf-VK-iLg"/>
                                                 <constraint firstItem="6Ku-Oo-U2k" firstAttribute="centerY" secondItem="uHi-Kg-2Nv" secondAttribute="centerY" id="bpY-aM-E0a"/>
-                                                <constraint firstItem="uHi-Kg-2Nv" firstAttribute="leading" secondItem="6Iw-HS-ZXl" secondAttribute="trailing" constant="22" id="cyc-93-wcg"/>
-                                                <constraint firstItem="6Iw-HS-ZXl" firstAttribute="top" secondItem="yVa-ny-Ewv" secondAttribute="top" id="ehV-mL-LQc"/>
-                                                <constraint firstItem="6Iw-HS-ZXl" firstAttribute="leading" secondItem="yVa-ny-Ewv" secondAttribute="leading" constant="78" id="en8-wx-oGA"/>
-                                                <constraint firstAttribute="bottom" secondItem="6Iw-HS-ZXl" secondAttribute="bottom" id="fgZ-VJ-mhT"/>
                                                 <constraint firstItem="6Ku-Oo-U2k" firstAttribute="centerY" secondItem="yVa-ny-Ewv" secondAttribute="centerY" id="q7E-6d-Io1"/>
                                                 <constraint firstItem="Bgj-c7-7Y9" firstAttribute="leading" secondItem="yVa-ny-Ewv" secondAttribute="leading" id="sPe-hT-yKI"/>
-                                                <constraint firstItem="ctY-TI-ACe" firstAttribute="leading" secondItem="yVa-ny-Ewv" secondAttribute="leading" id="u31-0X-cjL"/>
+                                                <constraint firstItem="uHi-Kg-2Nv" firstAttribute="leading" secondItem="yVa-ny-Ewv" secondAttribute="leading" constant="8" id="t9i-9G-1cS"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
@@ -946,8 +883,8 @@ email contact or both</string>
                                                         <action selector="textFieldDidChange:" destination="pyr-NR-460" eventType="editingChanged" id="b6p-fJ-MMm"/>
                                                     </connections>
                                                 </textField>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sms_inactive" highlightedImage="sms_active" translatesAutoresizingMaskIntoConstraints="NO" id="sqM-B5-gnk">
-                                                    <rect key="frame" x="280" y="15" width="20" height="20"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="email_inactive" highlightedImage="email_active" translatesAutoresizingMaskIntoConstraints="NO" id="sqM-B5-gnk">
+                                                    <rect key="frame" x="280" y="18" width="20" height="14"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="20" id="w3U-ls-oMv"/>
@@ -994,11 +931,9 @@ email contact or both</string>
                     </navigationItem>
                     <connections>
                         <outlet property="avatarImageView" destination="P5y-eU-OxC" id="lSC-WK-BTg"/>
-                        <outlet property="countryCodeTextField" destination="I3P-WG-OEO" id="ajs-6j-7kE"/>
                         <outlet property="emailImageView" destination="sqM-B5-gnk" id="Iqf-bU-dBF"/>
                         <outlet property="emailTextField" destination="HCM-xd-FfJ" id="F19-Cn-9LW"/>
                         <outlet property="firstNameTextField" destination="dv5-8A-bHh" id="1V7-2u-vzP"/>
-                        <outlet property="flagImageView" destination="fCv-Rc-elA" id="ktE-az-WgT"/>
                         <outlet property="lastNameTextField" destination="QWV-QQ-i2D" id="38H-Ve-MrA"/>
                         <outlet property="phoneImageView" destination="6Ku-Oo-U2k" id="eqH-z2-Mhf"/>
                         <outlet property="phoneNumberTextField" destination="uHi-Kg-2Nv" id="fbp-cP-anD"/>
@@ -1096,7 +1031,6 @@ email contact or both</string>
         </scene>
     </scenes>
     <resources>
-        <image name="US" width="48" height="48"/>
         <image name="avatar" width="70" height="70"/>
         <image name="avatar_empty" width="73" height="72"/>
         <image name="button_pause" width="320" height="128"/>
@@ -1107,6 +1041,8 @@ email contact or both</string>
         <image name="button_resume_pressed" width="320" height="128"/>
         <image name="cancel" width="14" height="14"/>
         <image name="dot" width="18" height="18"/>
+        <image name="email_active" width="18" height="14"/>
+        <image name="email_inactive" width="18" height="14"/>
         <image name="eye" width="18" height="18"/>
         <image name="hold_to_record_background" width="492" height="86"/>
         <image name="icon_close" width="343" height="342"/>
@@ -1116,8 +1052,6 @@ email contact or both</string>
         <image name="phone_active" width="20" height="20"/>
         <image name="phone_inactive" width="20" height="20"/>
         <image name="recording_logo" width="402" height="399"/>
-        <image name="sms_active" width="20" height="20"/>
-        <image name="sms_inactive" width="20" height="20"/>
         <image name="tap_to_send" width="278" height="50"/>
         <image name="white_ellipse" width="596" height="60"/>
     </resources>
