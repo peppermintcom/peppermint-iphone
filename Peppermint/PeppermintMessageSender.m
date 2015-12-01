@@ -55,7 +55,7 @@
 }
 
 -(BOOL) isValid {
-    BOOL result = self.name.length > 0 && self.surname.length > 0
+    BOOL result = self.nameSurname.length > 0
     && self.email.length > 0
     && [self.email isValidEmail];
     
@@ -65,6 +65,8 @@
         //Facebook extra checks...
     } else if (self.loginSource == LOGINSOURCE_PEPPERMINT) {
         result = result
+        && self.name.length > 0
+        && self.surname.length > 0
         && [self.password isPasswordLengthValid]
         && (self.jwt.length == 0
             || (self.jwt.length > 0
@@ -74,6 +76,24 @@
     return result;
 }
 
+#pragma mark - NameSurname
+
+-(NSString*) nameSurname {
+    NSString *nameSurname = [NSString stringWithFormat:@"%@ %@",
+                             self.name ? self.name : @"",
+                             self.surname ? self.surname : @""
+                             ];
+    nameSurname = [nameSurname stringByTrimmingCharactersInSet:
+     [NSCharacterSet whitespaceCharacterSet]];
+    nameSurname = [nameSurname capitalizedString];    
+    return nameSurname;
+}
+
+-(void) setNameSurname:(NSString*)nameSurname {
+    self.name = nameSurname;
+    self.surname = @"";
+}
+
 #pragma mark - Guess Name From Device Name
 
 -(void) guessNameFromDeviceName {
@@ -81,7 +101,7 @@
         NSString *deviceName = [UIDevice currentDevice].name;
         NSArray *names =  [self parseNamesFromDeviceName:deviceName];
         if(names.count > 0) {
-            self.nameSurname = [names firstObject];
+            self.name = [names firstObject];
         }
     }
 }
@@ -138,7 +158,8 @@
 }
 
 -(void) clearSender {
-    self.nameSurname = @"";
+    self.name = @"";
+    self.surname = @"";
     self.email = @"";
     self.password = @"";
     self.imageData = nil;

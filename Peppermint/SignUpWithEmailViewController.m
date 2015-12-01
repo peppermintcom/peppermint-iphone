@@ -282,10 +282,6 @@
   [self validateDoneButton];
   [cell setValid:isValidSurnameEmptyValidation];
   
-  if (sender.name.length > 0 && isValidSurnameEmptyValidation) {
-    sender.surname = [@[sender.name, sender.surname] componentsJoinedByString:@" "];
-  }
-  
   NSMutableArray *indexpathsToReload = [NSMutableArray new];
   [indexpathsToReload addObject:[NSIndexPath indexPathForItem:ROW_SURNAME_EMPTY_VALIDATION inSection:INDEX_SURNAME]];
   [self.tableView reloadRowsAtIndexPaths:indexpathsToReload withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -333,7 +329,6 @@
 -(IBAction) doneButtonPressed:(id)sender {
     [activeTextField resignFirstResponder];
     if([self.loginModel.peppermintMessageSender isValid]) {
-      self.loginModel.peppermintMessageSender.nameSurname = [@[self.loginModel.peppermintMessageSender.name, self.loginModel.peppermintMessageSender.surname] componentsJoinedByString:@" "];
         [self.loginModel performEmailLogin];
     } else {
         NSString *title = LOC(@"Information", @"Title Message");

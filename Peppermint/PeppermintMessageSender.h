@@ -16,9 +16,8 @@ typedef enum : NSUInteger {
 } LoginSource;
 
 @interface PeppermintMessageSender : JSONModel
-@property (strong, nonatomic) NSString *nameSurname;
 @property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSString * surname;
+@property (strong, nonatomic) NSString *surname;
 @property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSData<Ignore> *imageData;
 @property (nonatomic) LoginSource loginSource;
@@ -36,5 +35,8 @@ typedef enum : NSUInteger {
 -(void) clearSender;
 -(BOOL) isInMailVerificationProcess;
 -(void) verifyEmail;
+
+-(NSString*) nameSurname;
+-(void) setNameSurname:(NSString*)nameSurname;
 
 @end
