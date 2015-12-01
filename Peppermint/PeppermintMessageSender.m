@@ -10,7 +10,8 @@
 #import "A0SimpleKeychain.h"
 #import "GoogleContactsModel.h"
 
-#define KEY @"PeppermintMessageSenderJson"
+#define KEY                     @"PeppermintMessageSenderJson"
+#define SURNAME_EMPTY           @"   "  //We use spaces, cos surname length must be bigger than 0
 
 @implementation PeppermintMessageSender
 
@@ -91,7 +92,7 @@
 
 -(void) setNameSurname:(NSString*)nameSurname {
     self.name = nameSurname;
-    self.surname = @"   ";
+    self.surname = SURNAME_EMPTY;
 }
 
 #pragma mark - Guess Name From Device Name
