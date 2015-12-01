@@ -1,14 +1,14 @@
 //
-//  CachedEmailMessage.m
+//  CachedMessage.m
 //  Peppermint
 //
-//  Created by Okan Kurtulus on 25/11/15.
+//  Created by Okan Kurtulus on 27/11/15.
 //  Copyright © 2015 Okan Kurtulus. All rights reserved.
 //
 
-#import "CachedEmailMessage.h"
+#import "CachedMessage.h"
 
-@implementation CachedEmailMessage
+@implementation CachedMessage
 
 // Insert code here to add functionality to your managed object subclass
 

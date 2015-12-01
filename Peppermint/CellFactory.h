@@ -15,6 +15,7 @@
 #import "SlideMenuTableViewCell.h"
 #import "LoginValidateEmailTableViewCell.h"
 #import "InformationTextTableViewCell.h"
+#import "ShowAllContactsTableViewCell.h"
 
 @interface CellFactory : NSObject
 
@@ -41,5 +42,8 @@
 
 #define CELL_HEIGHT_INFORMATION_TABLEVIEWCELL    28
 +(InformationTextTableViewCell*) cellInformationTextTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath;
+
+#define CELL_HEIGHT_SHOW_ALL_CONTACTS_TABLEVIEWCELL    105
++(ShowAllContactsTableViewCell*) cellShowAllContactsTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath withDelegate:(id<ShowAllContactsTableViewCellDelegate>)delegate;
 
 @end

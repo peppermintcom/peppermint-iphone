@@ -104,7 +104,7 @@
   } else if (section == SECTION_LOGIN_WITH_EMAIL) {
     headerHeight = 4 * DISTANCE_BTW_SECTIONS;
     headerTitle = [[UILabel alloc] init];
-    headerTitle.text = LOC(@"EMAIL_HEADER_TITLE", nil);
+    headerTitle.text = LOC(@"Login with email", nil);
     headerTitle.numberOfLines = 0;
     [headerTitle sizeToFit];
     headerTitle.textColor = [UIColor whiteColor];

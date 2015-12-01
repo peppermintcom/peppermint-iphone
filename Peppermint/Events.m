@@ -62,3 +62,9 @@
 
 @implementation SyncGoogleContactsSuccess
 @end
+
+@implementation DetachSuccess
+@end
+
+@implementation ReplyContactIsAdded
+@end

@@ -23,7 +23,7 @@
 "Could not resume" = "Could not resume the recording";
 "Could not start record" = "Could not start recording";
 "Mail Subject" = "I sent you a voice message";
-"Mail Body Format" = "Here's my message.<br/>%@<br/><br/><a href=\"%@\" >Touch to reply via Peppermint</a><br/><br/>%@<br/>";
+"Mail Body Format" = "Here's my message.<br/>%@<br/><br/><a href=\"%@\" >Peppermint Quick Reply</a><br/><br/>%@<br/>";
 "Mail Text Format" = "Here's my message (%@). Touch %@ for a fast reply\n%@";
 "Time is up" = "Time is up! You may tap to send the recorded message or tap cancel";
 "Message sent with success" = "Your message has been sent successfully";
@@ -96,6 +96,8 @@
 "Connection error" = "Connection error";
 "Please connect to the internet to upload the message" = "Please connect to the internet to upload the message";
 "Please check your login information" = "Please check your login information";
-"EMAIL_HEADER_TITLE" = "Don't have Google or Facebook?\nLog in with email and password";
+"Login with email" = "Don't have Google or Facebook?\nLog in with email and password";
 "No Internet connection: Your message will be sent later" = "No Internet connection: Your message will be sent later";
 "Invalid email" = "Invalid email";
+"No Internet connection: Your message will be sent later" = "No Internet connection: Your message will be sent later";
+"Show All Contacts" = "Show All Contacts";

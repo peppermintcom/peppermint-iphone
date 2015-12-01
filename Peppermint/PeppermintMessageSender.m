@@ -91,7 +91,7 @@
 
 -(void) setNameSurname:(NSString*)nameSurname {
     self.name = nameSurname;
-    self.surname = @"";
+    self.surname = @"   ";
 }
 
 #pragma mark - Guess Name From Device Name

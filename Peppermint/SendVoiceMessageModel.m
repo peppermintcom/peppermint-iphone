@@ -15,7 +15,6 @@
 #define TIMER_PERIOD    3
 
 @implementation SendVoiceMessageModel {
-    ConnectionModel *connectionModel;
     NSTimer *timer;
     NSLock *arrayLock;
 }
@@ -31,15 +30,12 @@
         awsModel.delegate = self;
         self.sendingStatus = SendingStatusIniting;
         [awsModel initRecorder];
-        connectionModel = [ConnectionModel new];
-        [connectionModel beginTracking];
         timer = nil;
     }
     return self;
 }
 
 -(void) dealloc {
-    
     if(self.sendingStatus != SendingStatusCached
        && self.sendingStatus != SendingStatusCancelled
        && self.sendingStatus != SendingStatusError
@@ -49,9 +45,6 @@
        ) {
         NSLog(@"Dealloc a sendVoiceMessageModel during %d state", (int)self.sendingStatus);
     }
-    
-    [connectionModel stopTracking];
-    connectionModel = nil;
 }
 
 -(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension {
@@ -73,13 +66,7 @@
 
 -(void) operationFailure:(NSError*) error {
     self.sendingStatus = SendingStatusError;
-    
-    if(self.delegate) {
-        [[CacheModel sharedInstance] cache:self WithData:_data extension:_extension];
-    }
-    
-    [self.delegate messageStatusIsUpdated:self.sendingStatus withCancelOption:NO];
-    [self.delegate operationFailure:error];
+    [self cacheMessage];
 }
 
 #pragma mark - RecentContactsModelDelegate
@@ -123,6 +110,16 @@
 -(void) messagePrepareIsStarting {
     self.sendingStatus = SendingStatusStarting;
     [self.delegate messageStatusIsUpdated:SendingStatusStarting withCancelOption:YES];
+}
+
+-(void) cacheMessage {
+    if(self.delegate) {
+        [[CacheModel sharedInstance] cache:self WithData:_data extension:_extension];
+        NSLog(@"Message is cached.");
+        [self.delegate messageStatusIsUpdated:self.sendingStatus withCancelOption:NO];
+    } else {
+        NSLog(@"not cached...");
+    }
 }
 
 -(void) cancelSending {
@@ -170,7 +167,7 @@
 #pragma mark - Internet Connection
 
 -(BOOL) isConnectionActive {
-    return [connectionModel isInternetReachable];
+    return [[ConnectionModel sharedInstance] isInternetReachable];
 }
 
 #pragma mark - Attachment with AppDelegate
@@ -218,6 +215,10 @@
         [array removeObject:self];
         [arrayLock unlock];
         NSLog(@"Detached!!");
+        
+        DetachSuccess *detachSuccess = [DetachSuccess new];
+        detachSuccess.sender = self;
+        PUBLISH(detachSuccess);
     } else {
         NSLog(@"Detach is called on a non-attached item");
     }

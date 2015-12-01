@@ -26,5 +26,6 @@
 + (UIColor *) slideMenuTableViewCellTextLabelColor;
 + (UIColor *) warningColor;
 + (UIColor *) continueButtonTitle;
++ (UIColor *) shadowGreen;
 
 @end

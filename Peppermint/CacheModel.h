@@ -13,5 +13,5 @@
 + (instancetype) sharedInstance;
 -(void) cache:(BaseModel*) model WithData:(NSData*) data extension:(NSString*) extension;
 -(void) triggerCachedMessages;
-
+-(void) cacheOngoingMessages;
 @end

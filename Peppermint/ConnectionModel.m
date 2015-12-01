@@ -7,26 +7,70 @@
 //
 
 #import "ConnectionModel.h"
+#import "CacheModel.h"
 
-@implementation ConnectionModel
-
-#pragma mark - nextwork
-
--(BOOL) isInternetReachable
-{
-    return [AFNetworkReachabilityManager sharedManager].reachable;
+@implementation ConnectionModel {
+    AFNetworkReachabilityManager *afNetworkReachabilityManager;
 }
 
--(void) beginTracking {
-    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
++ (instancetype) sharedInstance {
+    return SHARED_INSTANCE( [[self alloc] initShared] );
 }
 
--(void) stopTracking {
-    [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
+-(id) init {
+    NSAssert(false, @"This model instance is singleton so should not be inited - %@", self);
+    return nil;
+}
+
+-(id) initShared {
+    self = [super init];
+    if(self) {
+        afNetworkReachabilityManager = [AFNetworkReachabilityManager managerForDomain:DOMAIN_PEPPERMINT];
+        [self trackConnectionChangeBlock];
+        [self beginTracking];
+    }
+    return self;
 }
 
 -(void) dealloc {
     [self stopTracking];
+}
+
+#pragma mark - Network
+
+-(BOOL) isInternetReachable
+{
+    [self beginTracking];
+    return afNetworkReachabilityManager.reachable;
+}
+
+-(void) beginTracking {
+    [afNetworkReachabilityManager startMonitoring];
+}
+
+-(void) stopTracking {
+    [afNetworkReachabilityManager stopMonitoring];
+}
+
+#pragma mark - Network status change
+
+-(void) trackConnectionChangeBlock {
+    [afNetworkReachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch (status) {
+            case AFNetworkReachabilityStatusUnknown:
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+                //available
+                [[CacheModel sharedInstance] triggerCachedMessages];
+                break;
+            case AFNetworkReachabilityStatusNotReachable:
+                //not available
+                break;
+            default:
+                break;
+        }
+        NSLog(@"Reachability: %@", AFStringFromNetworkReachabilityStatus(status));
+    }];
 }
 
 @end

@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Base64.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Bolts.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -112,6 +117,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>098E91B9A5CCA1042329C5366DB530C3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>09FA060F1A0492FB25232F489AC4E573</key>
 		<dict>
 			<key>primary</key>
@@ -152,6 +162,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>686546CBBBD95BB9320AD4EDE5AB5A6B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>69BF9C954B82732CC113C2769C9CC76E</key>
 		<dict>
 			<key>primary</key>
@@ -167,7 +182,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>89AD00BD1A8EED89C1068531C9ED4B05</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>8F458B41382B039582AA989692741702</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8F96CBAE82C9E121730BC882C7408843</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -178,6 +203,11 @@
 			<true/>
 		</dict>
 		<key>A48601FEE4437A924848DB48369BA809</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AF4E429E2B66ED5C71EE4F2F218B0132</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -203,6 +233,11 @@
 			<true/>
 		</dict>
 		<key>FE2F1D7B9D9FCEA148517E4657B243F4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FE8B1E1CEE73DF04F1DB3D9B81C170A2</key>
 		<dict>
 			<key>primary</key>
 			<true/>

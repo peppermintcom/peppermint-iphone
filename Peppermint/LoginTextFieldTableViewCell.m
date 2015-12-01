@@ -9,16 +9,17 @@
 #import "LoginTextFieldTableViewCell.h"
 
 #define TITLE_LABEL_WIDTH   60
+#define DONE_STRING         @"\n"
 
 @implementation LoginTextFieldTableViewCell {
-    NSArray *titlesArray;
+    //NSArray *titlesArray;
 }
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     
     self.backgroundColor = [UIColor clearColor];
-  //uncomment to create shadow
+    //uncomment to create shadow
   
     /*self.layer.shadowOffset = CGSizeMake(0, 3);
     self.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -31,31 +32,27 @@
     self.textField.font = [UIFont openSansSemiBoldFontOfSize:16];
     self.textField.textColor = [UIColor whiteColor];
     self.textField.tintColor = [UIColor whiteColor];
+    self.textField.returnKeyType = UIReturnKeyDone;
     self.textField.delegate = self;
     
-    titlesArray = nil;
-    self.titleLabel.font = [UIFont openSansSemiBoldFontOfSize:16];
-    self.titleLabel.textColor = [UIColor viaInformationLabelTextGreen];
-    self.titleLabelWidthConstraint.constant = 0;
+    //titlesArray = nil;
+    //self.titleLabel.font = [UIFont openSansSemiBoldFontOfSize:16];
+    //self.titleLabel.textColor = [UIColor viaInformationLabelTextGreen];
+    //self.titleLabelWidthConstraint.constant = 0;
 }
 
 #pragma mark - UITextFieldDelegate
 
-- (void)selectTextForInput:(UITextField *)textField atRange:(NSRange)range {
-    UITextPosition *start = [textField positionFromPosition:[textField beginningOfDocument]
-                                                 offset:range.location];
-    UITextPosition *end = [textField positionFromPosition:start
-                                               offset:range.length];
-    [textField setSelectedTextRange:[textField textRangeFromPosition:start toPosition:end]];
-}
-
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    if(self.disallowedCharsText.length == 0
-       || ![self.disallowedCharsText containsString:string]) {
-        NSRange newRange = NSMakeRange(range.location + string.length, 0);
-        NSString* text = [textField.text stringByReplacingCharactersInRange:range withString:string];
-        self.textField.text = text;
-        [self selectTextForInput:textField atRange:newRange];
+    
+    if([string isEqualToString:DONE_STRING]) {
+        [self.delegate doneButtonPressed];
+    } else {
+        string = [string stringByTrimmingCharactersInSet:[NSCharacterSet controlCharacterSet]];
+        string = [string stringByTrimmingCharactersInSet:[NSCharacterSet decomposableCharacterSet]];
+        string = [string stringByTrimmingCharactersInSet:[NSCharacterSet illegalCharacterSet]];
+        
+        [textField setTextContentInRange:range replacementString:string];
         [self.delegate updatedTextFor:self atIndexPath:self.indexPath];
     }
     return NO;
@@ -67,6 +64,7 @@
     return NO;
 }
 
+/*
 -(IBAction)titleButtonPressed:(id)sender {
     NSUInteger index =  [titlesArray indexOfObject:self.titleLabel.text];
     NSUInteger nextIndex = ++index % titlesArray.count;
@@ -82,6 +80,7 @@
         self.titleLabelWidthConstraint.constant = 0;
     }
 }
+*/
 
 -(void) setValid:(BOOL) isValid {
     if(isValid) {

@@ -20,6 +20,7 @@ pod 'FBSDKCoreKit'
 pod 'FBSDKLoginKit'
 pod 'Google/SignIn'
 pod 'GData', :podspec => 'GData.podspec.json'
+pod 'Base64'
 end
 
 target 'PeppermintTests' do

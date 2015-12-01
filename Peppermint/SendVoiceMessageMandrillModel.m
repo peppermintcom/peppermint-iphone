@@ -25,7 +25,7 @@
             [[CacheModel sharedInstance] triggerCachedMessages];
         }
     } else {
-        [[CacheModel sharedInstance] cache:self WithData:data extension:extension];
+        [self cacheMessage];
     }
 }
 

@@ -57,7 +57,7 @@
         [self.delegate messageStatusIsUpdated:SendingStatusSending withCancelOption:NO];
         [mailSender showFromViewController:activeViewController];
     } else {
-        [[CacheModel sharedInstance] cache:self WithData:data extension:extension];
+        [self cacheMessage];
     }
 }
 

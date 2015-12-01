@@ -55,6 +55,9 @@ SUBSCRIBE(AccountRegisterConflictTryLogin) {
 }
 
 -(void) logUserIn:(NSString*) email password:(NSString*) password {
+    if(!cachedSender) {
+        cachedSender = [PeppermintMessageSender sharedInstance];
+    }
     [awsService logUserInWithEmail:email password:password];
 }
 

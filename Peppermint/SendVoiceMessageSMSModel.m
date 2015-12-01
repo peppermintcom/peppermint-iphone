@@ -47,17 +47,20 @@
 }
 
 -(void) fireSMSMessageWithUrl:(NSString*) url {
-    
-    MFMessageComposeViewController *smsComposerVC = [MFMessageComposeViewController new];
-    smsComposerVC.messageComposeDelegate = self;
-    
-    NSArray *recipientsArray = [NSArray arrayWithObjects:self.selectedPeppermintContact.communicationChannelAddress, @"?", nil];
-    smsComposerVC.recipients = recipientsArray;
-    smsComposerVC.body =  [NSString stringWithFormat:LOC(@"SMS Body Format", @"SMS Body Format"), url];
-    [smsComposerVC disableUserAttachments];
-    self.sendingStatus = SendingStatusUploading;
-    [self.delegate messageStatusIsUpdated:SendingStatusUploading withCancelOption:NO];
-    [rootViewController presentViewController:smsComposerVC animated:YES completion:nil];    
+    if([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
+        [self cacheMessage];
+    } else {
+        MFMessageComposeViewController *smsComposerVC = [MFMessageComposeViewController new];
+        smsComposerVC.messageComposeDelegate = self;
+        
+        NSArray *recipientsArray = [NSArray arrayWithObjects:self.selectedPeppermintContact.communicationChannelAddress, @"?", nil];
+        smsComposerVC.recipients = recipientsArray;
+        smsComposerVC.body =  [NSString stringWithFormat:LOC(@"SMS Body Format", @"SMS Body Format"), url];
+        [smsComposerVC disableUserAttachments];
+        self.sendingStatus = SendingStatusUploading;
+        [self.delegate messageStatusIsUpdated:SendingStatusUploading withCancelOption:NO];
+        [rootViewController presentViewController:smsComposerVC animated:YES completion:nil];
+    }
 }
 
 #pragma mark - MFMessageComposeViewControllerDelegate

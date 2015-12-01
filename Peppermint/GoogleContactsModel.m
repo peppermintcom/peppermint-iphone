@@ -51,6 +51,7 @@
     if(error) {
         [self.delegate operationFailure:error];
     } else if (data) {
+        //NSString * myString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         GDataFeedBase *feed = [GDataFeedBase feedWithXMLData:data];
         [self processEntries:feed.entries];
         [self checkForNextUrl:feed];
@@ -82,7 +83,10 @@
 
 -(void) processEntries:(NSArray*) entries {
     for (GDataEntryContact *contactEntry in entries) {
+        
         NSString *name = [[contactEntry name] fullName].stringValue;
+        name = name ? name : contactEntry.title.stringValue;
+
         __block UIImage *image = nil;
         GDataLink *link = [contactEntry photoLink];
         if(link != nil) {

@@ -142,6 +142,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <animations/>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_back" translatesAutoresizingMaskIntoConstraints="NO" id="z7s-7c-dOj">
+                                <rect key="frame" x="18" y="20" width="10" height="18"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="Mfk-Ns-q7n"/>
+                                    <constraint firstAttribute="width" constant="10" id="QoU-tK-cS7"/>
+                                </constraints>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3S4-yk-exg">
                                 <rect key="frame" x="10" y="10" width="100" height="64"/>
                                 <animations/>
@@ -162,14 +170,6 @@
                                     <outlet property="delegate" destination="gYd-Oo-fUs" id="vUk-7q-mEI"/>
                                 </connections>
                             </tableView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_back" translatesAutoresizingMaskIntoConstraints="NO" id="z7s-7c-dOj">
-                                <rect key="frame" x="18" y="48" width="10" height="18"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="18" id="Mfk-Ns-q7n"/>
-                                    <constraint firstAttribute="width" constant="10" id="QoU-tK-cS7"/>
-                                </constraints>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Register" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ahn-gk-Hqg">
                                 <rect key="frame" x="294" y="39" width="100" height="35"/>
                                 <animations/>
@@ -228,7 +228,7 @@
                             <constraint firstAttribute="trailing" secondItem="VV3-gT-Ui5" secondAttribute="trailing" id="Ujw-Y5-bc0"/>
                             <constraint firstAttribute="bottom" secondItem="VV3-gT-Ui5" secondAttribute="bottom" id="aLj-iM-cJA"/>
                             <constraint firstItem="ONR-uK-FRP" firstAttribute="centerX" secondItem="BxQ-dH-hPN" secondAttribute="centerX" id="bo8-mr-1Vc"/>
-                            <constraint firstItem="z7s-7c-dOj" firstAttribute="top" secondItem="tsu-zU-dGQ" secondAttribute="bottom" constant="28" id="dw1-kA-CLH"/>
+                            <constraint firstItem="z7s-7c-dOj" firstAttribute="top" secondItem="tsu-zU-dGQ" secondAttribute="bottom" id="dw1-kA-CLH"/>
                             <constraint firstAttribute="trailing" secondItem="nfk-2v-RdL" secondAttribute="trailing" id="eQ8-1k-ulD"/>
                             <constraint firstItem="kLE-J5-PmJ" firstAttribute="top" secondItem="X8L-Ph-XdZ" secondAttribute="bottom" constant="75" id="hFz-Cl-NFq"/>
                             <constraint firstItem="Ahn-gk-Hqg" firstAttribute="top" secondItem="tsu-zU-dGQ" secondAttribute="bottom" constant="19" id="lRu-cI-k3P"/>
@@ -249,7 +249,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tyv-YC-Qbl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-62" y="1004"/>
+            <point key="canvasLocation" x="-57" y="1066"/>
         </scene>
         <!--Delegate-->
         <scene sceneID="USR-aG-9ks">
@@ -264,6 +264,13 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="155"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_back" translatesAutoresizingMaskIntoConstraints="NO" id="kA6-3f-Tek">
+                                    <rect key="frame" x="18" y="20" width="10" height="18"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="18" id="Jd4-gy-TNm"/>
+                                        <constraint firstAttribute="width" constant="10" id="xNI-Tw-sgb"/>
+                                    </constraints>
+                                </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tNU-iW-Eu5">
                                     <rect key="frame" x="10" y="0.0" width="100" height="54"/>
                                     <animations/>
@@ -272,7 +279,6 @@
                                         <constraint firstAttribute="width" constant="100" id="XmS-6C-DfH"/>
                                     </constraints>
                                     <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="10"/>
-                                    <state key="normal" image="back_white"/>
                                     <connections>
                                         <action selector="backButtonPressed:" destination="APx-dK-0Mz" eventType="touchUpInside" id="Ngp-pW-Pjy"/>
                                     </connections>
@@ -293,12 +299,14 @@
                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="dVf-Ee-bdC" firstAttribute="centerX" secondItem="i8b-sI-0S8" secondAttribute="centerX" id="1ua-GE-z0Y"/>
+                                <constraint firstItem="kA6-3f-Tek" firstAttribute="leading" secondItem="i8b-sI-0S8" secondAttribute="leading" constant="18" id="3Xi-V2-8c8"/>
                                 <constraint firstItem="1Sf-z9-GHN" firstAttribute="centerX" secondItem="i8b-sI-0S8" secondAttribute="centerX" id="LQe-af-1i3"/>
                                 <constraint firstItem="tNU-iW-Eu5" firstAttribute="leading" secondItem="i8b-sI-0S8" secondAttribute="leading" constant="10" id="PBy-yc-NW7"/>
                                 <constraint firstItem="dVf-Ee-bdC" firstAttribute="top" secondItem="i8b-sI-0S8" secondAttribute="topMargin" constant="8" id="Uz3-bR-d4P"/>
                                 <constraint firstItem="dVf-Ee-bdC" firstAttribute="centerX" secondItem="i8b-sI-0S8" secondAttribute="centerX" id="ZO8-Ul-UsK"/>
                                 <constraint firstItem="tNU-iW-Eu5" firstAttribute="top" secondItem="i8b-sI-0S8" secondAttribute="top" id="hPf-xp-x5m"/>
                                 <constraint firstItem="1Sf-z9-GHN" firstAttribute="top" secondItem="dVf-Ee-bdC" secondAttribute="bottom" constant="12" id="ixl-dJ-Wpf"/>
+                                <constraint firstItem="kA6-3f-Tek" firstAttribute="top" secondItem="i8b-sI-0S8" secondAttribute="top" constant="20" id="zFk-fq-Sv0"/>
                             </constraints>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="1qo-vz-U6T">
@@ -411,7 +419,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UFk-zb-tRN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-564" y="1004"/>
+            <point key="canvasLocation" x="-588" y="1066"/>
         </scene>
         <!--Delegate-->
         <scene sceneID="HJm-2e-SeT">
@@ -426,6 +434,13 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="155"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_back" translatesAutoresizingMaskIntoConstraints="NO" id="FXP-4U-i8D">
+                                    <rect key="frame" x="18" y="20" width="10" height="18"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="18" id="Mf7-Gr-fkt"/>
+                                        <constraint firstAttribute="width" constant="10" id="dzw-Ou-6yD"/>
+                                    </constraints>
+                                </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cdk-r6-xE0">
                                     <rect key="frame" x="10" y="0.0" width="100" height="54"/>
                                     <animations/>
@@ -434,7 +449,6 @@
                                         <constraint firstAttribute="height" constant="54" id="FIa-bo-gzj"/>
                                     </constraints>
                                     <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="10"/>
-                                    <state key="normal" image="back_white"/>
                                     <connections>
                                         <action selector="backButtonPressed:" destination="ubE-6j-oGD" eventType="touchUpInside" id="388-pU-C99"/>
                                     </connections>
@@ -470,6 +484,8 @@
                                 <constraint firstItem="7Ex-xP-dXR" firstAttribute="centerX" secondItem="GyT-Xy-UjJ" secondAttribute="centerX" id="mn3-Lt-BS9"/>
                                 <constraint firstItem="Cdk-r6-xE0" firstAttribute="leading" secondItem="GyT-Xy-UjJ" secondAttribute="leading" constant="10" id="sut-4X-gNX"/>
                                 <constraint firstItem="7Ex-xP-dXR" firstAttribute="top" secondItem="2r6-sx-ucD" secondAttribute="bottom" constant="12" id="urV-I0-RxT"/>
+                                <constraint firstItem="FXP-4U-i8D" firstAttribute="top" secondItem="GyT-Xy-UjJ" secondAttribute="top" constant="20" id="v9u-mn-S4X"/>
+                                <constraint firstItem="FXP-4U-i8D" firstAttribute="leading" secondItem="GyT-Xy-UjJ" secondAttribute="leading" constant="18" id="yF4-QF-dP0"/>
                             </constraints>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="vNb-m1-6S9">
@@ -596,7 +612,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zlW-2F-vt6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-62" y="1906"/>
+            <point key="canvasLocation" x="-46" y="1978"/>
         </scene>
         <!--Login Validate Email View Controller-->
         <scene sceneID="OYd-Np-Bbv">
@@ -799,7 +815,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="back_white" width="8" height="14"/>
         <image name="background_gradient" width="1" height="1136"/>
         <image name="bordered_logo" width="54" height="54"/>
         <image name="icon_back" width="22" height="37"/>

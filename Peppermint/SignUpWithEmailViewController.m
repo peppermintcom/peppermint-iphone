@@ -125,8 +125,6 @@
             loginTextFieldCell.textField.placeholder = LOC(@"Your Name",@"Your Name");
             loginTextFieldCell.textField.keyboardType = UIKeyboardTypeAlphabet;
             loginTextFieldCell.textField.text = self.loginModel.peppermintMessageSender.name;
-            loginTextFieldCell.disallowedCharsText = @"";
-            [loginTextFieldCell setTitles:[NSArray arrayWithObjects:@"Mr.",@"Mrs.",@"Miss", nil]];
             cell = loginTextFieldCell;
         } else if (indexPath.row == ROW_NAME_EMPTY_VALIDATION) {
             InformationTextTableViewCell *informationTextTableViewCell = [CellFactory cellInformationTextTableViewCellFromTable:tableView forIndexPath:indexPath];
@@ -140,8 +138,6 @@
             loginTextFieldCell.textField.placeholder = LOC(@"Email", @"Email");
             loginTextFieldCell.textField.keyboardType = UIKeyboardTypeEmailAddress;
             loginTextFieldCell.textField.text = self.loginModel.peppermintMessageSender.email;
-            loginTextFieldCell.disallowedCharsText = @" ";
-            [loginTextFieldCell setTitles:nil];
             cell = loginTextFieldCell;
         } else if (indexPath.row == ROW_EMAIL_EMPTY_VALIDATION) {
             InformationTextTableViewCell *informationTextTableViewCell = [CellFactory cellInformationTextTableViewCellFromTable:tableView forIndexPath:indexPath];
@@ -159,8 +155,6 @@
             loginTextFieldCell.textField.placeholder = LOC(@"Password", @"Password");
             loginTextFieldCell.textField.keyboardType = UIKeyboardTypeDefault;
             loginTextFieldCell.textField.text = self.loginModel.peppermintMessageSender.password;
-            loginTextFieldCell.disallowedCharsText = @" ";
-            [loginTextFieldCell setTitles:nil];
             cell = loginTextFieldCell;
         } else if (indexPath.row == ROW_PASSWORD_EMPTY_VALIDATION) {
             InformationTextTableViewCell *informationTextTableViewCell = [CellFactory cellInformationTextTableViewCellFromTable:tableView forIndexPath:indexPath];
@@ -178,7 +172,6 @@
         loginTextFieldCell.textField.placeholder = LOC(@"Your Surname",@"Your Surname");
         loginTextFieldCell.textField.keyboardType = UIKeyboardTypeAlphabet;
         loginTextFieldCell.textField.text = self.loginModel.peppermintMessageSender.surname;
-        loginTextFieldCell.disallowedCharsText = @"";
         cell = loginTextFieldCell;
       } else if (indexPath.row == ROW_SURNAME_EMPTY_VALIDATION) {
         InformationTextTableViewCell *informationTextTableViewCell = [CellFactory cellInformationTextTableViewCellFromTable:tableView forIndexPath:indexPath];

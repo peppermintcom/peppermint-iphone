@@ -12,6 +12,7 @@
 #import "PeppermintMessageSender.h"
 #import "SignUpWithEmailViewController.h"
 #import "AWSService.h"
+#import "LoginNavigationViewController.h"
 
 #define WelcomeBackSegue @"WelcomeBackSegue"
 #define SEGUE_SIGNUP_WITH_EMAIL      @"SignUpWithEmailSegue"
@@ -104,6 +105,10 @@
   [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
 }
 
+-(void) doneButtonPressed {
+    [self loginPressed:nil];
+}
+
 - (IBAction)loginPressed:(id)sender {
   if (isValidPasswordValidation) {
     PeppermintMessageSender *sender = self.loginModel.peppermintMessageSender;
@@ -114,12 +119,28 @@
   }
 }
 
-- (void)userLogInSuccessWithEmail:(NSString *)email {
-  
+- (IBAction)forgetPasswordPressed:(id)sender {
+    NSLog(@"forgetPasswordPressed...");
 }
 
-- (IBAction)forgetPasswordPressed:(id)sender {
-  
+#pragma mark - AccountModelDelegate
+
+-(void) userRegisterSuccessWithEmail:(NSString*) email password:(NSString*) password jwt:(NSString*) jwt {
+    NSLog(@"userRegisterSuccessWithEmail:%@ password:%@ jwt:%@", email, password, jwt);
+}
+
+-(void) userLogInSuccessWithEmail:(NSString*) email {
+    NSLog(@"userLogInSuccessWithEmail:%@", email);
+    LoginNavigationViewController *loginNavigationViewController = (LoginNavigationViewController*)self.navigationController;
+    [loginNavigationViewController loginSucceed];
+}
+
+-(void) verificationEmailSendSuccess {
+    NSLog(@"verificationEmailSendSuccess");
+}
+
+-(void) accountInfoRefreshSuccess {
+    NSLog(@"accountInfoRefreshSuccess");
 }
 
 #pragma mark- LoginTextFieldTableViewCellDelegate

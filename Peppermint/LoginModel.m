@@ -34,6 +34,7 @@
     [scopesArray addObject:[GoogleContactsModel scopeForGoogleContacts]];
     gIDSignIn.scopes = scopesArray;
     [self.delegate loginLoading];
+    [gIDSignIn signOut];
     [gIDSignIn signIn];
 }
 
@@ -70,7 +71,7 @@
             self.peppermintMessageSender.email = user.profile.email;
         }
       
-      self.peppermintMessageSender.subject = LOC(@"Mail Subject",@"Default Mail Subject");
+        self.peppermintMessageSender.subject = LOC(@"Mail Subject",@"Default Mail Subject");
 
         NSURL *imageUrl = [user.profile imageURLWithDimension:100];
         self.peppermintMessageSender.imageData = [NSData dataWithContentsOfURL:imageUrl];
@@ -82,19 +83,47 @@
         
         GoogleContactsModel *googleContactsModel = [GoogleContactsModel new];
         [googleContactsModel syncGoogleContactsWithFetcherAuthorizer:user.authentication.fetcherAuthorizer];
-        //[signIn signOut];        
     }
 }
 
 #pragma mark - Facebook Login
 
 -(void) performFacebookLogin {
+    //[self performFacebookLoginOperations];
+    [self authorizeFacebook];
+}
+
+-(void) authorizeFacebook {
+    FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
+    [login logOut]; //this is added to fix, if user changes account,(http://stackoverflow.com/a/30388750/5171866)
+    [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
+    [self.delegate loginLoading];
+    
+    login.loginBehavior = FBSDKLoginBehaviorBrowser;
+    
+    [login logInWithReadPermissions: @[@"public_profile",@"email"]
+     fromViewController:self.delegate
+     handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+         [self.delegate loginFinishedLoading];
+         if (error) {
+             NSLog(@"Process error");
+             [self.delegate operationFailure:error];
+         } else if (result.isCancelled) {
+             NSLog(@"Cancelled");
+             [self.delegate loginFinishedLoading];
+         } else {
+             [self performFacebookLoginOperations];
+         }
+     }];
+}
+
+-(void) performFacebookLoginOperations {
     if ([FBSDKAccessToken currentAccessToken]) {
         [self.delegate loginLoading];
         [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields": @"name, email, picture"}]
          startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+             [self.delegate loginFinishedLoading];
              if(error) {
-                 [self.delegate loginFinishedLoading];
                  [self.delegate operationFailure:error];
              } else {
                  NSDictionary *infoDictionary = (NSDictionary*)result;
@@ -117,7 +146,6 @@
                      [self.peppermintMessageSender save];
                      [self.delegate loginSucceed];
                  } else {
-                     [self.delegate loginFinishedLoading];
                      [self showErrorForInformationFromFacebook];
                  }
              }
@@ -125,26 +153,6 @@
     } else {
         [self authorizeFacebook];
     }
-}
-
--(void) authorizeFacebook {
-    FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
-    [login logOut]; //Fix, if user changes account,(http://stackoverflow.com/a/30388750/5171866)
-    [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
-    [self.delegate loginLoading];
-    [login logInWithReadPermissions: @[@"public_profile",@"email"]
-     fromViewController:self.delegate
-     handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-         if (error) {
-             NSLog(@"Process error");
-             [self.delegate operationFailure:error];
-         } else if (result.isCancelled) {
-             NSLog(@"Cancelled");
-             [self.delegate loginFinishedLoading];
-         } else {
-             [self performFacebookLogin];
-         }
-     }];
 }
 
 -(void) showErrorForInformationFromFacebook

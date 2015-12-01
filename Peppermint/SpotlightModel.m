@@ -49,7 +49,7 @@ NSString * const CSSearchItemIdentifierJoinString = @".PPM.";
   if (item) {
     [[CSSearchableIndex defaultSearchableIndex] indexSearchableItems:@[item] completionHandler:^(NSError * _Nullable error) {
       if (!error) {
-        NSLog(@"Search item indexed");
+        //NSLog(@"Search item indexed");
       }
     }];
   }

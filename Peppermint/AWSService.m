@@ -81,6 +81,7 @@
             [self failureWithOperation:nil andError:error];
         }
         RetrieveSignedUrlSuccessful *retrieveSignedUrlSuccessful = [RetrieveSignedUrlSuccessful new];
+        retrieveSignedUrlSuccessful.sender = self;
         retrieveSignedUrlSuccessful.data = data;
         retrieveSignedUrlSuccessful.signedUrl = response.signed_url;
         PUBLISH(retrieveSignedUrlSuccessful);
@@ -105,6 +106,7 @@
                 [self failureWithOperation:nil andError:error];
             } else {
                 FileUploadCompleted *fileUploadCompleted = [FileUploadCompleted new];
+                fileUploadCompleted.sender = self;
                 fileUploadCompleted.signedUrl = signedUrl;
                 PUBLISH(fileUploadCompleted);
             }
@@ -133,6 +135,7 @@
             [self failureWithOperation:nil andError:error];
         }
         FileUploadFinalized *fileUploadFinalized = [FileUploadFinalized new];
+        fileUploadFinalized.sender = self;
         fileUploadFinalized.signedUrl = signedUrl;
         fileUploadFinalized.shortUrl = response.short_url;
         PUBLISH(fileUploadFinalized);
@@ -215,22 +218,13 @@
   }
 }
 
--(NSString*) base64Encode:(NSString*) text {
-    NSData *data = [text dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *base64Data = [data base64EncodedDataWithOptions:0];
-    text = [NSString stringWithUTF8String:[base64Data bytes]];
-    NSCharacterSet *unwantedCharsSet = [[NSCharacterSet characterSetWithCharactersInString:CHARS_FOR_BASE_64] invertedSet];
-    text = [text stringByTrimmingCharactersInSet:unwantedCharsSet];
-    return text;
-}
-
 -(void) logUserInWithEmail:(NSString*) email password:(NSString*) password {
     NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_ACCOUNTS_TOKENS];
     AFHTTPRequestOperationManager *requestOperationManager = [[AFHTTPRequestOperationManager alloc]
                                                               initWithBaseURL:[NSURL URLWithString:url]];
     
     NSString *authText = [NSString stringWithFormat:@"%@:%@", email, password];
-    authText = [self base64Encode:authText];
+    authText =  [authText base64String];
     authText = [NSString stringWithFormat:@"Basic %@", authText];
     
     requestOperationManager.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -247,6 +241,7 @@
             [self failureWithOperation:nil andError:error];
         }
         AccountLoginIsSuccessful *accountLoginIsSuccessful = [AccountLoginIsSuccessful new];
+        accountLoginIsSuccessful.sender = self;
         accountLoginIsSuccessful.user = loginResponse.u;
         PUBLISH(accountLoginIsSuccessful);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

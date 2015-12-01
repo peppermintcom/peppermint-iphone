@@ -11,7 +11,7 @@
 #import "LoginNavigationViewController.h"
 
 int NUMBER_OF_OPTIONS           = 2;
-//int OPTION_DISPLAY_NAME         = 0;
+int OPTION_DISPLAY_NAME         = 0;
 int OPTION_SIGNATURE            = 0;
 int OPTION_LOG_OUT              = 1;
 
@@ -20,8 +20,6 @@ int OPTION_LOG_OUT              = 1;
 @end
 
 @implementation AccountViewController
-
-
 
 #pragma mark - PresentLoginModalView
 
@@ -60,14 +58,16 @@ int OPTION_LOG_OUT              = 1;
     switch ([PeppermintMessageSender sharedInstance].loginSource) {
         case LOGINSOURCE_FACEBOOK:
         case LOGINSOURCE_GOOGLE:
+            OPTION_DISPLAY_NAME = -1;
             OPTION_SIGNATURE = 0;
             OPTION_LOG_OUT = 1;
             NUMBER_OF_OPTIONS = 2;
             break;
         case LOGINSOURCE_PEPPERMINT:
-            OPTION_SIGNATURE = 0;
-            OPTION_LOG_OUT = 1;
-            NUMBER_OF_OPTIONS = 2;
+            OPTION_DISPLAY_NAME = 0;
+            OPTION_SIGNATURE = 1;
+            OPTION_LOG_OUT = 2;
+            NUMBER_OF_OPTIONS = 3;
             break;
         default:
             break;
@@ -120,13 +120,12 @@ int OPTION_LOG_OUT              = 1;
       logOutCell.loginLabel.text = LOC(@"Subject", nil);
       logOutCell.loginLabel.textColor = [UIColor facebookLoginColor];
     }
-  //uncomment below if you want to return display name
-    /*else if (index == OPTION_DISPLAY_NAME){
+    else if (index == OPTION_DISPLAY_NAME){
       logOutCell.loginIconImageViewWidthConstraint.constant = 0;
       logOutCell.loginIconImageView.image = nil;
       logOutCell.loginLabel.text = LOC(@"Display Name", nil);
       logOutCell.loginLabel.textColor = [UIColor emailLoginColor];
-    }*/
+    }
     [logOutCell.loginLabel sizeToFit];
     return logOutCell;
 }
@@ -158,13 +157,13 @@ int OPTION_LOG_OUT              = 1;
         [self.peppermintMessageSender clearSender];
         [self.navigationController popViewControllerAnimated:NO];
         [LoginNavigationViewController logUserInWithDelegate:nil completion:nil];
-    //} uncomment below if you want to return display name
-    /*else if (option == OPTION_DISPLAY_NAME) {
+    }
+    else if (option == OPTION_DISPLAY_NAME) {
       UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:LOC(@"Display Name", nil) message:LOC(@"Display Name Description", nil) delegate:self cancelButtonTitle:LOC(@"Cancel", nil) otherButtonTitles:LOC(@"Save", nil), nil];
       alertView.alertViewStyle=UIAlertViewStylePlainTextInput;
       UITextField *textField = [alertView textFieldAtIndex:0];
       textField.text = self.peppermintMessageSender.nameSurname;
-      [alertView show];*/
+      [alertView show];
     } else {
       UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:LOC(@"Subject", nil) message:LOC(@"Subject Description", nil) delegate:self cancelButtonTitle:LOC(@"Cancel", nil) otherButtonTitles:LOC(@"Save", nil), nil];
       alertView.alertViewStyle=UIAlertViewStylePlainTextInput;
