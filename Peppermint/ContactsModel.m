@@ -228,13 +228,13 @@
 }
 
 +(NSPredicate*) contactPredicateWithNameSurname:(NSString*) nameSurname {
-    return [NSPredicate predicateWithFormat:@"self.nameSurname CONTAINS %@",
+    return [NSPredicate predicateWithFormat:@"self.nameSurname CONTAINS[cd] %@",
             nameSurname];
 }
 
 +(NSPredicate*) contactPredicateWithCommunicationChannelAddress:(NSString*)communicationChannelAddress communicationChannel:(CommunicationChannel)communicationChannel
 {
-    return [NSPredicate predicateWithFormat:@"self.communicationChannelAddress CONTAINS %@ AND self.communicationChannel = %@ ",
+    return [NSPredicate predicateWithFormat:@"self.communicationChannelAddress CONTAINS[cd] %@ AND self.communicationChannel = %@ ",
             communicationChannelAddress,
             [NSNumber numberWithInt:communicationChannel]];
 }
