@@ -10,5 +10,5 @@
 #import "CacheModel.h"
 
 @interface SendVoiceMessageEmailModel : SendVoiceMessageModel 
-
+-(NSString*) mailBodyHTMLForUrlPath:(NSString*)urlPath extension:(NSString*)extension signature:(NSString*) signature;
 @end

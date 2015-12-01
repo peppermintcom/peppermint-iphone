@@ -28,7 +28,7 @@
             [controller setSubject:[PeppermintMessageSender sharedInstance].subject];
             NSString *textBody = [NSString stringWithFormat:LOC(@"Mail Text Format",@"Default Mail Text Format"), @"", [self fastReplyUrlForSender], signature];
             [controller setMessageBody:textBody isHTML:NO];
-            NSString *body = [NSString stringWithFormat:LOC(@"Mail Body Format",@"Default Mail Body Format"), @"", [self fastReplyUrlForSender], signature];
+            NSString *body = [self mailBodyHTMLForUrlPath:nil extension:nil signature:signature];
             [controller setMessageBody:body isHTML:YES];
             NSString *fileName = [NSString stringWithFormat:@"Peppermint.%@", extension];
             NSString *mimeType = [self typeForExtension:extension];

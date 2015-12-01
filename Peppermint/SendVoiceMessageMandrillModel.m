@@ -70,7 +70,7 @@
     
     mandrillMessage.from_name = nameSurname;
     mandrillMessage.subject = subject;
-    NSString *body = [NSString stringWithFormat:LOC(@"Mail Body Format",@"Default Mail Body Format"), url, [self fastReplyUrlForSender], signature];
+    NSString *body = [self mailBodyHTMLForUrlPath:url extension:_extension signature:signature];
     mandrillMessage.html = body;
     
     NSString *textBody = [NSString stringWithFormat:LOC(@"Mail Text Format",@"Default Mail Text Format"), url, [self fastReplyUrlForSender], signature];
