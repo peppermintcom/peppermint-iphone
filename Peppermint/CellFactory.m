@@ -98,14 +98,15 @@
     return cell;
 }
 
-+(ShowAllContactsTableViewCell*) cellShowAllContactsTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath withDelegate:(id<ShowAllContactsTableViewCellDelegate>)delegate {
-    NSString *cellKey = @"ShowAllContactsTableViewCell";
-    ShowAllContactsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellKey];
++(ContactInformationTableViewCell*) cellContactInformationTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath withDelegate:(id<ContactInformationTableViewCellDelegate>)delegate {
+    NSString *cellKey = @"ContactInformationTableViewCell";
+    ContactInformationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellKey];
     if(!cell) {
         NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:cellKey owner:self options:nil];
         cell = [topLevelObjects objectAtIndex:0];
     }
     cell.delegate = delegate;
+    cell.indexPath = indexPath;
     return cell;
 }
 

@@ -12,8 +12,9 @@
 #import "SendVoiceMessageSMSModel.h"
 #import "SlideMenuViewController.h"
 #import "FastReplyModel.h"
+#import "AddContactViewController.h"
 
-#define SECTION_COUNT                   2
+#define SECTION_COUNT                   3
 #define SECTION_FAST_REPLY_CONTACT      0
 #define ROW_COUNT_FAST_REPLY            1
 
@@ -23,10 +24,10 @@
 #define CELL_TAG_EMAIL_CONTACTS         3
 #define CELL_TAG_SMS_CONTACTS           4
 
-#define SECTION_SHOW_ALL_CONTACTS       2
+#define SECTION_CELL_INFORMATION        2
 #define ROW_COUNT_SHOW_ALL_CONTACTS     1
 
-#define MESSAGE_SHOW_DURATION        2
+#define MESSAGE_SHOW_DURATION           2
 
 @interface ContactsViewController ()
 
@@ -153,9 +154,8 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
     int sectionCount = SECTION_COUNT;
-    if([self activeContactList].count > 0
-       && (activeCellTag != CELL_TAG_ALL_CONTACTS)) {
-        sectionCount++;
+    if(activeCellTag == CELL_TAG_ALL_CONTACTS && [self activeContactList].count > 0) {
+        sectionCount--;
     }
     return sectionCount;
 }
@@ -166,7 +166,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
         numberOfRows = [self activeContactList].count == 0 ? 0 : [FastReplyModel sharedInstance].peppermintContact ? ROW_COUNT_FAST_REPLY : 0;
     } else if (section == SECTION_CONTACTS) {
         numberOfRows = [self activeContactList].count == 0 ? 1 : [self activeContactList].count;
-    } else if (section == SECTION_SHOW_ALL_CONTACTS) {
+    } else if (section == SECTION_CELL_INFORMATION) {
         numberOfRows = ROW_COUNT_SHOW_ALL_CONTACTS;
     }
     return numberOfRows;
@@ -216,8 +216,14 @@ SUBSCRIBE(ReplyContactIsAdded) {
         else {
             return [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:nil];
         }
-    } else if (indexPath.section == SECTION_SHOW_ALL_CONTACTS) {
-        ShowAllContactsTableViewCell *cell = [CellFactory cellShowAllContactsTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
+    } else if (indexPath.section == SECTION_CELL_INFORMATION) {
+        ContactInformationTableViewCell *cell = [CellFactory cellContactInformationTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
+        
+        if( self.activeContactList.count == 0) {
+            [cell setViewForAddNewContact];
+        } else {
+            [cell setViewForShowAllContacts];
+        }
         cell.clipsToBounds = YES;
         preparedCell = cell;
     }
@@ -248,8 +254,8 @@ SUBSCRIBE(ReplyContactIsAdded) {
             }
             height = [activeContact equals:fastReplyContact] ? 0 : CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
         }
-    } else if (indexPath.section == SECTION_SHOW_ALL_CONTACTS) {
-        height = CELL_HEIGHT_SHOW_ALL_CONTACTS_TABLEVIEWCELL;
+    } else if (indexPath.section == SECTION_CELL_INFORMATION) {
+        height = CELL_HEIGHT_CONTACT_INFORMATION_TABLEVIEWCELL;
     }
     return height;
 }
@@ -406,10 +412,15 @@ SUBSCRIBE(ReplyContactIsAdded) {
     [self.fastRecordingView finishRecordingWithGestureIsValid:YES];
 }
 
-#pragma mark - ShowAllContactsTableViewCellDelegate
+#pragma mark - ContactInformationTableViewCellDelegate
 
--(void) showAllContactsButtonPressed {
-    [self cellSelectedWithTag:CELL_TAG_ALL_CONTACTS];
+-(void) contactInformationButtonPressed {
+    if( self.activeContactList.count == 0) {
+        NSLog(@"Add a contact..");
+        [AddContactViewController presentAddContactControllerWithCompletion:nil];
+    } else {
+        [self cellSelectedWithTag:CELL_TAG_ALL_CONTACTS];
+    }
 }
 
 #pragma mark - FastRecordingViewDelegate

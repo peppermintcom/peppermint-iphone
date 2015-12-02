@@ -8,7 +8,7 @@
 
 "via" = "via";
 "Search for Contacts" = "Search for Contacts";
-"No contacts have been found" = "No contacts\nhave been found";
+"No contacts have been found" = "No contacts have been found.";
 "No contacts explanation" = "Enter an email address to send your first message";
 "Peppermint" = "Peppermint";
 "Ok" = "Ok";
@@ -101,4 +101,4 @@
 "No Internet connection: Your message will be sent later" = "No Internet connection: Your message will be sent later";
 "Invalid email" = "Invalid email";
 "No Internet connection: Your message will be sent later" = "No Internet connection: Your message will be sent later";
-"Show All Contacts" = "Show All Contacts";
+"Add Contact" = "Add Contact";

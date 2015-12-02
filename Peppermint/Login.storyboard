@@ -413,7 +413,7 @@
                     </tableView>
                     <connections>
                         <outlet property="emailCell" destination="Zpn-nz-VW0" id="vcW-h6-YVQ"/>
-                        <segue destination="gYd-Oo-fUs" kind="push" identifier="SignUpWithEmailSegue" id="gfe-oG-gBX"/>
+                        <segue destination="gYd-Oo-fUs" kind="show" identifier="SignUpWithEmailSegue" id="gfe-oG-gBX"/>
                         <segue destination="ubE-6j-oGD" kind="show" identifier="WelcomeBackSegue" id="R5b-Yv-7q6"/>
                     </connections>
                 </tableViewController>

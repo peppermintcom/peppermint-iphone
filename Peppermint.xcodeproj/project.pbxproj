@@ -27,8 +27,8 @@
 		B10C39341BF6FC840070B49F /* AccountResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B10C39331BF6FC840070B49F /* AccountResponse.m */; };
 		B10C39371BF718960070B49F /* AccountModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B10C39361BF718960070B49F /* AccountModel.m */; };
 		B116F3B11C008E570091994C /* FastReplyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B116F3B01C008E570091994C /* FastReplyModel.m */; };
-		B11B13541C0C5EAD00782FC4 /* ShowAllContactsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B11B13531C0C5EAD00782FC4 /* ShowAllContactsTableViewCell.m */; };
-		B11B13561C0C5ECA00782FC4 /* ShowAllContactsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B11B13551C0C5ECA00782FC4 /* ShowAllContactsTableViewCell.xib */; };
+		B11B13541C0C5EAD00782FC4 /* ContactInformationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B11B13531C0C5EAD00782FC4 /* ContactInformationTableViewCell.m */; };
+		B11B13561C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B11B13551C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib */; };
 		B11F8A5C1BDCC45F000E79AA /* FinalizeUploadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5B1BDCC45F000E79AA /* FinalizeUploadRequest.m */; };
 		B11F8A5F1BDCC474000E79AA /* FinalizeUploadResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5E1BDCC474000E79AA /* FinalizeUploadResponse.m */; };
 		B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B12C03BA1BCFFC060085A55A /* FastRecordingView.m */; };
@@ -182,9 +182,9 @@
 		B10C39361BF718960070B49F /* AccountModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountModel.m; sourceTree = "<group>"; };
 		B116F3AF1C008E570091994C /* FastReplyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastReplyModel.h; sourceTree = "<group>"; };
 		B116F3B01C008E570091994C /* FastReplyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FastReplyModel.m; sourceTree = "<group>"; };
-		B11B13521C0C5EAD00782FC4 /* ShowAllContactsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowAllContactsTableViewCell.h; sourceTree = "<group>"; };
-		B11B13531C0C5EAD00782FC4 /* ShowAllContactsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowAllContactsTableViewCell.m; sourceTree = "<group>"; };
-		B11B13551C0C5ECA00782FC4 /* ShowAllContactsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShowAllContactsTableViewCell.xib; sourceTree = "<group>"; };
+		B11B13521C0C5EAD00782FC4 /* ContactInformationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactInformationTableViewCell.h; sourceTree = "<group>"; };
+		B11B13531C0C5EAD00782FC4 /* ContactInformationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactInformationTableViewCell.m; sourceTree = "<group>"; };
+		B11B13551C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactInformationTableViewCell.xib; sourceTree = "<group>"; };
 		B11F8A5A1BDCC45F000E79AA /* FinalizeUploadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinalizeUploadRequest.h; sourceTree = "<group>"; };
 		B11F8A5B1BDCC45F000E79AA /* FinalizeUploadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinalizeUploadRequest.m; sourceTree = "<group>"; };
 		B11F8A5D1BDCC474000E79AA /* FinalizeUploadResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinalizeUploadResponse.h; sourceTree = "<group>"; };
@@ -439,14 +439,14 @@
 			name = LoginValidateEmailTableViewCell;
 			sourceTree = "<group>";
 		};
-		B11B13511C0C5E8800782FC4 /* ShowAllContactsTableViewCell */ = {
+		B11B13511C0C5E8800782FC4 /* ContactInformationTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				B11B13521C0C5EAD00782FC4 /* ShowAllContactsTableViewCell.h */,
-				B11B13531C0C5EAD00782FC4 /* ShowAllContactsTableViewCell.m */,
-				B11B13551C0C5ECA00782FC4 /* ShowAllContactsTableViewCell.xib */,
+				B11B13521C0C5EAD00782FC4 /* ContactInformationTableViewCell.h */,
+				B11B13531C0C5EAD00782FC4 /* ContactInformationTableViewCell.m */,
+				B11B13551C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib */,
 			);
-			name = ShowAllContactsTableViewCell;
+			name = ContactInformationTableViewCell;
 			sourceTree = "<group>";
 		};
 		B12C03B81BCFFBDC0085A55A /* FastRecordingView */ = {
@@ -764,7 +764,7 @@
 		B17B3D6A1BB6BCEC009B8BC5 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				B11B13511C0C5E8800782FC4 /* ShowAllContactsTableViewCell */,
+				B11B13511C0C5E8800782FC4 /* ContactInformationTableViewCell */,
 				B13B50231BF38D29009D3348 /* InformationTextTableViewCell */,
 				B102F9831BF0CEE900EDF7E6 /* LoginValidateEmailTableViewCell */,
 				B16DA21D1BE10A5F00EBF043 /* SlideMenuTableViewCell */,
@@ -1087,7 +1087,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B11B13561C0C5ECA00782FC4 /* ShowAllContactsTableViewCell.xib in Resources */,
+				B11B13561C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib in Resources */,
 				B1C83A1B1BDEB0FC00EB14C2 /* LoginTextFieldTableViewCell.xib in Resources */,
 				B17B3D3A1BB6898C009B8BC5 /* Main.storyboard in Resources */,
 				B17B3D571BB68A39009B8BC5 /* Text.strings in Resources */,
@@ -1199,7 +1199,7 @@
 				B102F9861BF0CF0800EDF7E6 /* LoginValidateEmailTableViewCell.m in Sources */,
 				B179F83A1BC9316F0089D709 /* SearchMenuTableViewCell.m in Sources */,
 				B15B15B01BDA44E200C0C171 /* TPAACAudioConverter.m in Sources */,
-				B11B13541C0C5EAD00782FC4 /* ShowAllContactsTableViewCell.m in Sources */,
+				B11B13541C0C5EAD00782FC4 /* ContactInformationTableViewCell.m in Sources */,
 				B102DD5E1BD0802100D71D62 /* BaseCustomView.m in Sources */,
 				B13B07631BD3720100974AC3 /* MandrillMessage.m in Sources */,
 				B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */,

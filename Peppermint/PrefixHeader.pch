@@ -75,7 +75,7 @@ sharedObject;\
 #define ANIM_TIME                   0.3
 #define WARN_TIME                   1.5
 
-#define SHOW_ALL_CONTACRS_CORNER_RADIUS 12
+#define SHOW_ALL_CONTACRS_CORNER_RADIUS 10
 #define LOGIN_CORNER_RADIUS             15
 #define CONTINUE_BUTTON_CORNER_RADIUS   10
 

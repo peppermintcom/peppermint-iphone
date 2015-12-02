@@ -11,7 +11,6 @@
 @interface EmptyResultTableViewCell : BaseTableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *headerLabel;
-@property (weak, nonatomic) IBOutlet UILabel *footerLabel;
 
 -(void) setVisibiltyOfExplanationLabels:(BOOL) visibility;
 
