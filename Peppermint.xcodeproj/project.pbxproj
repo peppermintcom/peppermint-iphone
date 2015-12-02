@@ -406,6 +406,7 @@
 		B1FE184F1BE1676D002772B4 /* FeedBackModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedBackModel.m; sourceTree = "<group>"; };
 		C388433C48F87557ED2F3C2D /* Pods-Peppermint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peppermint.release.xcconfig"; path = "Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint.release.xcconfig"; sourceTree = "<group>"; };
 		CD9ED7696C27E289BEEE24D8 /* Pods-Watch Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Watch Extension.release.xcconfig"; path = "Pods/Target Support Files/Pods-Watch Extension/Pods-Watch Extension.release.xcconfig"; sourceTree = "<group>"; };
+		D02D2D081C0E11BC00092A23 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		D0A7C0D81BFA0C7900ACD33E /* DeviceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceModel.h; sourceTree = "<group>"; };
 		D0A7C0D91BFA0C7900ACD33E /* DeviceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceModel.m; sourceTree = "<group>"; };
 		D0A7C0F61BFC73FE00ACD33E /* Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Watch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -511,6 +512,7 @@
 		6C8541A65356EA01C859C162 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D02D2D081C0E11BC00092A23 /* Contacts.framework */,
 				D0D70D321C032C1C0068AB20 /* WatchConnectivity.framework */,
 				D0D70D2A1C0328AB0068AB20 /* WatchConnectivity.framework */,
 				D0D70C791C005FF40068AB20 /* SystemConfiguration.framework */,

@@ -15,13 +15,13 @@
 
 + (void)allContacts:(void (^)(NSArray <PeppermintContact *> * contacts))block {
   CNContactStore * store = [[CNContactStore alloc] init];
-
+  
   [store requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * error) {
     if (!granted || error) {
-       block(@[]);
+      block(@[]);
     }
     
-    NSArray * fetchKeys = @[CNContactEmailAddressesKey, CNContactFamilyNameKey, CNContactGivenNameKey];
+    NSArray * fetchKeys = @[CNContactEmailAddressesKey, CNContactFamilyNameKey, CNContactGivenNameKey, [CNContactFormatter descriptorForRequiredKeysForStyle:CNContactFormatterStyleFullName]];
     CNContactFetchRequest * fetchRequest = [[CNContactFetchRequest alloc] initWithKeysToFetch:fetchKeys];
     
     __block NSMutableArray * contacts = [NSMutableArray array];
@@ -44,6 +44,7 @@
     ppm_contact.nameSurname = @"Yan Saraev";
     [contacts addObject:ppm_contact];
 #endif
+
     if (err) {
       NSLog(@"error: %@", err);
     }

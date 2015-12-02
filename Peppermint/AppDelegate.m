@@ -15,8 +15,10 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <Google/SignIn.h>
 #import "RecordingViewController.h"
+#import "PeppermintContact.h"
 
 @import WatchConnectivity;
+@import Contacts;
 
 @interface AppDelegate () <WCSessionDelegate>
 
@@ -100,10 +102,11 @@
     [self logServiceCalls];
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
     [self initGoogleApp];
-
   
     return YES;
 }
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     PUBLISH([ApplicationWillResignActive new]);
