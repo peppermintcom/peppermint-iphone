@@ -10,4 +10,7 @@
 
 @interface UploadsResponse : JSONModel
 @property (strong, nonatomic) NSString *signed_url;
+@property (strong, nonatomic) NSString *short_url;
+@property (strong, nonatomic) NSString *canonical_url;
+
 @end

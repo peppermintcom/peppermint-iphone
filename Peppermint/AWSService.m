@@ -23,6 +23,8 @@
     return self;
 }
 
+#pragma mark - Recorder
+
 -(void) submitRecorderWithUdid:(NSString*) clientId {
     NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_RECORDER];
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -82,8 +84,9 @@
         }
         RetrieveSignedUrlSuccessful *retrieveSignedUrlSuccessful = [RetrieveSignedUrlSuccessful new];
         retrieveSignedUrlSuccessful.sender = self;
-        retrieveSignedUrlSuccessful.data = data;
         retrieveSignedUrlSuccessful.signedUrl = response.signed_url;
+        retrieveSignedUrlSuccessful.canonical_url = response.canonical_url;
+        retrieveSignedUrlSuccessful.short_url = response.short_url;
         PUBLISH(retrieveSignedUrlSuccessful);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self failureWithOperation:nil andError:error];
@@ -143,6 +146,8 @@
         [self failureWithOperation:nil andError:error];
     }];
 }
+
+#pragma mark - Account
 
 -(void) registerAccount:(User*) user {
     NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_ACCOUNTS];

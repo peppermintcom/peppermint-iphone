@@ -85,9 +85,8 @@
     }
 }
 
--(BOOL) isServiceAvailable {
-    return [MFMessageComposeViewController canSendText]
-    && [self isConnectionActive];
+-(BOOL) isServiceAvailable {    
+    return [MFMessageComposeViewController canSendText];
 }
 
 -(void) messagePrepareIsStarting {

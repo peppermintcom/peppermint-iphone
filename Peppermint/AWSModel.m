@@ -67,17 +67,18 @@ SUBSCRIBE(RecorderSubmitSuccessful) {
 }
 
 SUBSCRIBE(RetrieveSignedUrlSuccessful) {
-    if([event.data isEqualToData:_data]
-       && event.sender == awsService) {
+    if(event.sender == awsService) {
         _signedUrl = event.signedUrl;
         [awsService sendData:_data ofContentType:_contentType tosignedURL:_signedUrl];
+        [self.delegate fileUploadCompletedWithPublicUrl:event.short_url];
     }
 }
 
 SUBSCRIBE(FileUploadCompleted) {
-    if([event.signedUrl isEqualToString:_signedUrl]
-       && event.sender == awsService) {
-        [awsService finalizeFileUploadForSignedUrl:_signedUrl withJwt:jwt];
+    if([event.signedUrl isEqualToString:_signedUrl] && event.sender == awsService) {
+#warning "finalizeFileUploadForSignedUrl" is deprecated, clean unused code
+        //finalizeFileUploadForSignedUrl is deprecated!
+        //[awsService finalizeFileUploadForSignedUrl:_signedUrl withJwt:jwt];
     }
 }
 

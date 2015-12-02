@@ -136,7 +136,7 @@
 
 -(NSString*) fastReplyUrlForSender {
     /*
-     //Scheme Link
+    //Scheme Link
     NSString *urlPath = [NSString stringWithFormat:@"%@://%@?%@=%@&%@=%@",
                          SCHEME_PEPPERMINT,
                          HOST_FASTREPLY,
@@ -157,10 +157,8 @@
                          self.peppermintMessageSender.email
                          ];
     
-    
     NSString* encodedUrlPath = [urlPath stringByAddingPercentEscapesUsingEncoding:
                             NSUTF8StringEncoding];
-    
     return encodedUrlPath;
 }
 

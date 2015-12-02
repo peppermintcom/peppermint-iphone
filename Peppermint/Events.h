@@ -42,7 +42,9 @@
 //Needs a unique handler
 @interface RetrieveSignedUrlSuccessful : BaseEvent
 @property (strong, nonatomic) NSString *signedUrl;
-@property (strong, nonatomic) NSData* data;
+@property (strong, nonatomic) NSString *canonical_url;
+@property (strong, nonatomic) NSString *short_url;
+//@property (strong, nonatomic) NSData* data;
 @end
 
 //Needs a unique handler
