@@ -22,5 +22,6 @@ typedef enum : NSUInteger {
 
 - (void)addToCoreSpotlightSearch;
 - (BOOL) equals:(PeppermintContact*)peppermintContact;
+-(BOOL) isIdenticalForImage:(PeppermintContact*) contactToCompare;
 
 @end

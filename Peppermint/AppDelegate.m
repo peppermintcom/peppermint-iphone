@@ -202,7 +202,7 @@ SUBSCRIBE(DetachSuccess) {
             }
         }
         if(nameSurname && email) {
-            result = [FastReplyModel setFastReplyContactWithNameSurname:nameSurname email:email];
+            result = [[FastReplyModel sharedInstance] setFastReplyContactWithNameSurname:nameSurname email:email];
         } else {
             NSLog(@"Query Parameters are not valid!");
         }

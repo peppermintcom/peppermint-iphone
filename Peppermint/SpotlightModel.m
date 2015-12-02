@@ -62,7 +62,7 @@ NSString * const CSSearchItemIdentifierJoinString = @".PPM.";
   NSString * email = [components lastObject];
   
   if (nameSurname && email) {
-      return [FastReplyModel setFastReplyContactWithNameSurname:nameSurname email:email];
+      return [[FastReplyModel sharedInstance] setFastReplyContactWithNameSurname:nameSurname email:email];
   }
   
   return NO;

@@ -21,4 +21,11 @@
             && [self.communicationChannelAddress isEqualToString:peppermintContact.communicationChannelAddress]);
 }
 
+-(BOOL) isIdenticalForImage:(PeppermintContact*) contactToCompare {
+    return self
+    && contactToCompare
+    && self.communicationChannel == contactToCompare.communicationChannel
+    && [self.communicationChannelAddress isEqualToString:contactToCompare.communicationChannelAddress];
+}
+
 @end

@@ -243,7 +243,7 @@
 -(void) checkAndCleanFastReplyModel {
     PeppermintContact *fastReplyContact = [FastReplyModel sharedInstance].peppermintContact;
     if([self.selectedPeppermintContact equals:fastReplyContact]) {
-        [FastReplyModel cleanFastReplyContact];
+        [[FastReplyModel sharedInstance] cleanFastReplyContact];
     }
 }
 

@@ -13,7 +13,8 @@
 @property (strong, nonatomic) PeppermintContact* peppermintContact;
 
 + (instancetype) sharedInstance;
-+(BOOL) setFastReplyContactWithNameSurname:(NSString*)nameSurname email:(NSString*)email;
-+(void) cleanFastReplyContact;
+-(BOOL) setFastReplyContactWithNameSurname:(NSString*)nameSurname email:(NSString*)email;
+-(void) cleanFastReplyContact;
+-(BOOL) doesFastReplyContactsContains:(NSString*) filterText;
 
 @end

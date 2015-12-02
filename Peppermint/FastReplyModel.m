@@ -27,7 +27,7 @@
     return self;
 }
 
-+(BOOL) setFastReplyContactWithNameSurname:(NSString*)nameSurname email:(NSString*)email {
+-(BOOL) setFastReplyContactWithNameSurname:(NSString*)nameSurname email:(NSString*)email {
     PeppermintContact *contact = [PeppermintContact new];
     contact.nameSurname = nameSurname;
     contact.communicationChannel = CommunicationChannelEmail;
@@ -42,8 +42,17 @@
     return YES;
 }
 
-+(void) cleanFastReplyContact {
+-(void) cleanFastReplyContact {
     [FastReplyModel sharedInstance].peppermintContact = nil;
+}
+
+-(BOOL) doesFastReplyContactsContains:(NSString*) filterText {
+    filterText = [filterText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    return self.peppermintContact
+    && (filterText.length == 0
+        || [self.peppermintContact.nameSurname localizedCaseInsensitiveContainsString:filterText]
+        || [self.peppermintContact.communicationChannelAddress localizedCaseInsensitiveContainsString:filterText]
+        );
 }
 
 @end

@@ -14,18 +14,20 @@
 #import "FastReplyModel.h"
 #import "AddContactViewController.h"
 
-#define SECTION_COUNT                   3
+#define SECTION_COUNT                   4
 #define SECTION_FAST_REPLY_CONTACT      0
-#define ROW_COUNT_FAST_REPLY            1
+#define SECTION_EMPTY_RESULT            1
+#define SECTION_CONTACTS                2
+#define SECTION_CELL_INFORMATION        3
 
-#define SECTION_CONTACTS                1
+#define ROW_COUNT_FAST_REPLY            1
+#define ROW_COUNT_EMPTY_VIEW            1
+#define ROW_COUNT_SHOW_ALL_CONTACTS     1
+
 #define CELL_TAG_ALL_CONTACTS           1
 #define CELL_TAG_RECENT_CONTACTS        2
 #define CELL_TAG_EMAIL_CONTACTS         3
 #define CELL_TAG_SMS_CONTACTS           4
-
-#define SECTION_CELL_INFORMATION        2
-#define ROW_COUNT_SHOW_ALL_CONTACTS     1
 
 #define MESSAGE_SHOW_DURATION           2
 
@@ -150,24 +152,46 @@ SUBSCRIBE(ReplyContactIsAdded) {
     return activeContactList;
 }
 
+#pragma mark - FastReply View
+
+-(BOOL) isFastReplyRowVisible {
+    return [[FastReplyModel sharedInstance] doesFastReplyContactsContains:self.searchContactsTextField.text];
+}
+
+#pragma mark - EmptyResultTableViewCell
+
+-(BOOL) isEmptyResultTableViewCellVisible {
+    return ![self isFastReplyRowVisible]
+    && [self activeContactList].count == 0;
+}
+
+#pragma mark - CellInformationTableViewCell
+
+-(BOOL) isCellInformationTableViewCellVisible {
+    return [self isEmptyResultTableViewCellVisible]
+    ||
+    
+    
+    (activeCellTag != CELL_TAG_ALL_CONTACTS)
+    ;
+}
+
 #pragma mark - UITableView
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
-    int sectionCount = SECTION_COUNT;
-    if(activeCellTag == CELL_TAG_ALL_CONTACTS && [self activeContactList].count > 0) {
-        sectionCount--;
-    }
-    return sectionCount;
+    return SECTION_COUNT;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
     if(section == SECTION_FAST_REPLY_CONTACT) {
-        numberOfRows = [self activeContactList].count == 0 ? 0 : [FastReplyModel sharedInstance].peppermintContact ? ROW_COUNT_FAST_REPLY : 0;
+        numberOfRows = [self isFastReplyRowVisible] ? ROW_COUNT_FAST_REPLY : 0;
+    } else if (section == SECTION_EMPTY_RESULT) {
+        numberOfRows = [self isEmptyResultTableViewCellVisible] ? ROW_COUNT_EMPTY_VIEW : 0;
     } else if (section == SECTION_CONTACTS) {
-        numberOfRows = [self activeContactList].count == 0 ? 1 : [self activeContactList].count;
+        numberOfRows = [self activeContactList].count;
     } else if (section == SECTION_CELL_INFORMATION) {
-        numberOfRows = ROW_COUNT_SHOW_ALL_CONTACTS;
+        numberOfRows = [self isCellInformationTableViewCellVisible] ? ROW_COUNT_SHOW_ALL_CONTACTS : 0;
     }
     return numberOfRows;
 }
@@ -183,14 +207,13 @@ SUBSCRIBE(ReplyContactIsAdded) {
         cell.contactViaInformationLabel.text = contact.communicationChannelAddress;
         cell.rightIconImageView.image = [UIImage imageNamed:@"icon_reply"];
         preparedCell = cell;
-    } else if (indexPath.section == SECTION_CONTACTS) {
-        if([self activeContactList].count == 0) {
-            EmptyResultTableViewCell *cell = [CellFactory cellEmptyResultTableViewCellFromTable:tableView forIndexPath:indexPath];
-            [cell setVisibiltyOfExplanationLabels:YES];
-            preparedCell = cell;
-        }
-        else if (indexPath.row < [self activeContactList].count) {
-            ContactTableViewCell *cell = [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
+    } else if (indexPath.section == SECTION_EMPTY_RESULT) {
+        EmptyResultTableViewCell *cell = [CellFactory cellEmptyResultTableViewCellFromTable:tableView forIndexPath:indexPath];
+        [cell setVisibiltyOfExplanationLabels:YES];
+        preparedCell = cell;
+    } else  if (indexPath.section == SECTION_CONTACTS) {
+        ContactTableViewCell *cell = [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
+        if (indexPath.row < [self activeContactList].count) {
             PeppermintContact *peppermintContact = [[self activeContactList] objectAtIndex:indexPath.row];
             if(peppermintContact.avatarImage) {
                 cell.avatarImageView.image = peppermintContact.avatarImage;
@@ -210,46 +233,31 @@ SUBSCRIBE(ReplyContactIsAdded) {
             } else if (peppermintContact.communicationChannel == CommunicationChannelSMS) {
                 cell.rightIconImageView.image = [UIImage imageNamed:@"icon_phone"];
             }
-            
-            preparedCell = cell;
         }
-        else {
-            return [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:nil];
-        }
+        preparedCell = cell;
     } else if (indexPath.section == SECTION_CELL_INFORMATION) {
         ContactInformationTableViewCell *cell = [CellFactory cellContactInformationTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
-        
-        if( self.activeContactList.count == 0) {
+        if([self isEmptyResultTableViewCellVisible]) {
             [cell setViewForAddNewContact];
         } else {
             [cell setViewForShowAllContacts];
         }
-        cell.clipsToBounds = YES;
         preparedCell = cell;
     }
     return preparedCell;
 }
 
--(BOOL) isContactSameForImage:(PeppermintContact*) contact1 withContact:(PeppermintContact*) contact2 {
-    return contact1
-    && contact2
-    && contact1.communicationChannel == contact2.communicationChannel
-    && [contact1.communicationChannelAddress isEqualToString:contact2.communicationChannelAddress];
-}
-
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat height = 0;
-    
     if(indexPath.section == SECTION_FAST_REPLY_CONTACT) {
-        height = [self activeContactList].count == 0 ? 0 :
-        [FastReplyModel sharedInstance].peppermintContact ? CELL_HEIGHT_CONTACT_TABLEVIEWCELL : 0;
+        height = CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
+    } else if (indexPath.section == SECTION_EMPTY_RESULT) {
+        height = CELL_HEIGHT_EMPTYRESULT_TABLEVIEWCELL;
     } else if (indexPath.section == SECTION_CONTACTS) {
-        if([self activeContactList].count == 0 && indexPath.row == 0) {
-            height = CELL_HEIGHT_EMPTYRESULT_TABLEVIEWCELL;
-        } else if (indexPath.row < [self activeContactList].count) {
+        if (indexPath.row < [self activeContactList].count) {
             PeppermintContact *fastReplyContact = [FastReplyModel sharedInstance].peppermintContact;
             PeppermintContact *activeContact = [[self activeContactList] objectAtIndex:indexPath.row];
-            if([self isContactSameForImage:activeContact withContact:fastReplyContact]) {
+            if([activeContact isIdenticalForImage:fastReplyContact]) {
                 fastReplyContact.avatarImage = activeContact.avatarImage;
             }
             height = [activeContact equals:fastReplyContact] ? 0 : CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
@@ -258,12 +266,6 @@ SUBSCRIBE(ReplyContactIsAdded) {
         height = CELL_HEIGHT_CONTACT_INFORMATION_TABLEVIEWCELL;
     }
     return height;
-}
-
-#pragma mark - LoginTableViewCellDelegate
-
--(void) selectedLoginTableViewCell:(UITableViewCell*) cell atIndexPath:(NSIndexPath*) indexPath {
-    [self cellSelectedWithTag:CELL_TAG_ALL_CONTACTS];
 }
 
 #pragma mark - ScrollView Delegate
@@ -415,8 +417,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
 #pragma mark - ContactInformationTableViewCellDelegate
 
 -(void) contactInformationButtonPressed {
-    if( self.activeContactList.count == 0) {
-        NSLog(@"Add a contact..");
+    if([self isEmptyResultTableViewCellVisible]) {
         [AddContactViewController presentAddContactControllerWithCompletion:nil];
     } else {
         [self cellSelectedWithTag:CELL_TAG_ALL_CONTACTS];
