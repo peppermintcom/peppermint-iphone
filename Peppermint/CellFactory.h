@@ -43,7 +43,7 @@
 #define CELL_HEIGHT_INFORMATION_TABLEVIEWCELL    28
 +(InformationTextTableViewCell*) cellInformationTextTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath;
 
-#define CELL_HEIGHT_CONTACT_INFORMATION_TABLEVIEWCELL    50
+#define CELL_HEIGHT_CONTACT_INFORMATION_TABLEVIEWCELL    70
 +(ContactInformationTableViewCell*) cellContactInformationTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath withDelegate:(id<ContactInformationTableViewCellDelegate>)delegate;
 
 @end

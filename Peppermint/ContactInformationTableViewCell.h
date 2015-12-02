@@ -14,8 +14,6 @@
 
 @interface ContactInformationTableViewCell : BaseTableViewCell
 @property (weak, nonatomic) id<ContactInformationTableViewCellDelegate> delegate;
-@property (weak, nonatomic) IBOutlet UIView *centerView;
-@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 -(void) setViewForAddNewContact;

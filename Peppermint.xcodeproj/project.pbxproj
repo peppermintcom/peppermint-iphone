@@ -44,6 +44,7 @@
 		B13B50281BF38D57009D3348 /* InformationTextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13B50271BF38D56009D3348 /* InformationTextTableViewCell.xib */; };
 		B13B6C451C08C2BC002CEDB6 /* CachedMessage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B6C421C08C2BC002CEDB6 /* CachedMessage+CoreDataProperties.m */; };
 		B13B6C461C08C2BC002CEDB6 /* CachedMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B6C441C08C2BC002CEDB6 /* CachedMessage.m */; };
+		B149EB351C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B149EB341C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m */; };
 		B15B15AC1BD9D8B800C0C171 /* ExplodingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15AB1BD9D8B800C0C171 /* ExplodingView.m */; };
 		B15B15B01BDA44E200C0C171 /* TPAACAudioConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15AF1BDA44E200C0C171 /* TPAACAudioConverter.m */; };
 		B15B15B21BDBBAB200C0C171 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B15B15B11BDBBAB200C0C171 /* Login.storyboard */; };
@@ -213,6 +214,8 @@
 		B13B6C421C08C2BC002CEDB6 /* CachedMessage+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CachedMessage+CoreDataProperties.m"; sourceTree = "<group>"; };
 		B13B6C431C08C2BC002CEDB6 /* CachedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CachedMessage.h; sourceTree = "<group>"; };
 		B13B6C441C08C2BC002CEDB6 /* CachedMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CachedMessage.m; sourceTree = "<group>"; };
+		B149EB331C0F07AE00A5E41A /* NSMutableAttributedString_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMutableAttributedString_Addition.h; sourceTree = "<group>"; };
+		B149EB341C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMutableAttributedString_Addition.m; sourceTree = "<group>"; };
 		B15228541BE898DF00C400C6 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		B15228561BE898F500C400C6 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		B15B15AA1BD9D8B800C0C171 /* ExplodingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExplodingView.h; sourceTree = "<group>"; };
@@ -805,6 +808,8 @@
 				D0D70D411C0464800068AB20 /* UIView+Addition.m */,
 				B161EAEB1C07525700D2B716 /* UITextField_Addition.h */,
 				B161EAEC1C07525700D2B716 /* UITextField_Addition.m */,
+				B149EB331C0F07AE00A5E41A /* NSMutableAttributedString_Addition.h */,
+				B149EB341C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m */,
 			);
 			name = Addition;
 			sourceTree = "<group>";
@@ -1183,6 +1188,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B149EB351C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m in Sources */,
 				D0D70D451C0495680068AB20 /* LoginWithEmailViewController.m in Sources */,
 				B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */,
 				B1EF40F51BB857C800042E4B /* M13ProgressViewPie.m in Sources */,
@@ -1423,7 +1429,7 @@
 				);
 				GCC_PREFIX_HEADER = Peppermint/PrefixHeader.pch;
 				INFOPLIST_FILE = Peppermint/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint;
@@ -1447,7 +1453,7 @@
 				);
 				GCC_PREFIX_HEADER = Peppermint/PrefixHeader.pch;
 				INFOPLIST_FILE = Peppermint/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint;

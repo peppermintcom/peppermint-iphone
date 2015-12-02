@@ -440,71 +440,45 @@ SUBSCRIBE(ReplyContactIsAdded) {
     
     if(sendingStatus == SendingStatusUploading) {
         isNewRecordAvailable = YES;
-        infoAttrText = [self addText:LOC(@"Uploading", @"Info") ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
+        [infoAttrText addText:LOC(@"Uploading", @"Info") ofSize:13 ofColor:textColor];
         [self messageSendingIndicatorSetMessageIsSending];
     } else if (sendingStatus == SendingStatusStarting) {
         isNewRecordAvailable = NO;
-        infoAttrText = [self addText:LOC(@"Starting", @"Info") ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
+        [infoAttrText addText:LOC(@"Starting", @"Info") ofSize:13 ofColor:textColor];
         [self messageSendingIndicatorSetMessageIsSending];
     } else if (sendingStatus == SendingStatusSending) {
         isNewRecordAvailable = YES;
-        infoAttrText = [self addText:LOC(@"Sending", @"Info") ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
+        [infoAttrText addText:LOC(@"Sending", @"Info") ofSize:13 ofColor:textColor];
         [self messageSendingIndicatorSetMessageIsSending];
     }  else if (sendingStatus == SendingStatusSent) {
         isNewRecordAvailable = YES;
         cancelable = NO;
-        infoAttrText = [self addImageNamed:@"icon_tick" toAttrText:infoAttrText ofSize:21];
-        infoAttrText = [self addText:LOC(@"Sent", @"Info") ofSize:21 ofColor:textColor toAttributedText:infoAttrText];
+        [infoAttrText addImageNamed:@"icon_tick" ofSize:21];
+        [infoAttrText addText:LOC(@"Sent", @"Info") ofSize:21 ofColor:textColor];
         [self performSelector:@selector(messageSendingIsCancelled) withObject:nil afterDelay:MESSAGE_SHOW_DURATION];
     }  else if (sendingStatus == SendingStatusCancelled) {
         isNewRecordAvailable = YES;
-        infoAttrText = [self addText:LOC(@"Cancelled", @"Info") ofSize:19 ofColor:textColor toAttributedText:infoAttrText];
+        [infoAttrText addText:LOC(@"Cancelled", @"Info") ofSize:19 ofColor:textColor];
         [self messageCancelButtonPressed:nil];
     } else if (sendingStatus == SendingStatusCached) {
         isNewRecordAvailable = YES;
-        infoAttrText = [self addImageNamed:@"icon_warning" toAttrText:infoAttrText ofSize:10];
-        infoAttrText = [self addText:@" " ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
-        infoAttrText = [self addText:LOC(@"No Internet connection: Your message will be sent later", @"Cached Info") ofSize:10 ofColor:textColor toAttributedText:infoAttrText];
+        [infoAttrText addImageNamed:@"icon_warning" ofSize:10];
+        [infoAttrText addText:@" " ofSize:13 ofColor:textColor];
+        [infoAttrText addText:LOC(@"No Internet connection: Your message will be sent later", @"Cached Info") ofSize:10 ofColor:textColor];
         [self performSelector:@selector(messageSendingIsCancelled) withObject:nil afterDelay:MESSAGE_SHOW_DURATION*2];
     } else if (sendingStatus == SendingStatusError) {
         isNewRecordAvailable = YES;
-        infoAttrText = [self addImageNamed:@"icon_warning" toAttrText:infoAttrText ofSize:13];
-        infoAttrText = [self addText:@" " ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
-        infoAttrText = [self addText:LOC(@"An error occured", @"Info") ofSize:13 ofColor:textColor toAttributedText:infoAttrText];
+        [infoAttrText addImageNamed:@"icon_warning" ofSize:13];
+        [infoAttrText addText:@" " ofSize:13 ofColor:textColor];
+        [infoAttrText addText:LOC(@"An error occured", @"Info") ofSize:13 ofColor:textColor];
         [self performSelector:@selector(messageSendingIsCancelled) withObject:nil afterDelay:MESSAGE_SHOW_DURATION];
     }
     
     if(cancelable) {
-        infoAttrText = [self addText:LOC(@"Tap to cancel", @"Info") ofSize:13
-                             ofColor:[UIColor peppermintCancelOrange] toAttributedText:infoAttrText];
+        [infoAttrText addText:LOC(@"Tap to cancel", @"Info") ofSize:13
+                             ofColor:[UIColor peppermintCancelOrange]];
     }
-    self.sendingInformationLabel.attributedText = [self centerText:infoAttrText];
-}
-
--(NSMutableAttributedString*) centerText:(NSMutableAttributedString*) attrText {
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init] ;
-    [paragraphStyle setAlignment:NSTextAlignmentCenter];
-    [attrText addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [attrText length])];
-    return attrText;
-}
-
--(NSMutableAttributedString*) addImageNamed:(NSString*) imageName toAttrText:(NSMutableAttributedString*) attrText ofSize:(NSInteger) size {
-    NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
-    attachment.image = [UIImage imageNamed:imageName];
-    attachment.bounds = CGRectMake(0, 0, size, size);
-    NSAttributedString *tickAttachment = [NSAttributedString attributedStringWithAttachment:attachment];
-    [attrText appendAttributedString:tickAttachment];
-    return attrText;
-}
-
--(NSMutableAttributedString*) addText:(NSString*)text ofSize:(NSUInteger)size ofColor:(UIColor*)color toAttributedText:(NSMutableAttributedString*) attrMutableText {
-    JPStringAttribute *infoAttr = [JPStringAttribute new];
-    infoAttr.foregroundColor = color;
-    infoAttr.font = [UIFont openSansBoldFontOfSize:size];
-    NSAttributedString *attrText = [[NSAttributedString alloc] initWithString:text
-                                                                   attributes:infoAttr.attributedDictionary];
-    [attrMutableText appendAttributedString:attrText];
-    return attrMutableText;
+    self.sendingInformationLabel.attributedText = [infoAttrText centerText];
 }
 
 #pragma mark - MessageSending status indicators

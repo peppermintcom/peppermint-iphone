@@ -58,6 +58,9 @@ sharedObject;\
 #pragma mark - UITextField Addition
 #import "UITextField_Addition.h"
 
+#pragma mark - NSMutableAttributedString Addition
+#import "NSMutableAttributedString_Addition.h"
+
 #pragma mark - Base64 Additions
 #import "MF_Base64Additions.h"
 
