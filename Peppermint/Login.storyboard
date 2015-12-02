@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ceq-N7-4vt">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ceq-N7-4vt">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -63,6 +63,15 @@
                                 <rect key="frame" x="180" y="35" width="54" height="54"/>
                                 <animations/>
                             </imageView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gq1-X6-YJB">
+                                <rect key="frame" x="20" y="208" width="374" height="528"/>
+                                <animations/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="wIt-at-jqR" id="m7d-Ui-U37"/>
+                                    <outlet property="delegate" destination="wIt-at-jqR" id="G6r-P0-a7h"/>
+                                </connections>
+                            </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Peppermint.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8qe-fZ-cN1">
                                 <rect key="frame" x="119" y="104" width="177" height="30"/>
                                 <animations/>
@@ -77,22 +86,13 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gq1-X6-YJB">
-                                <rect key="frame" x="40" y="208" width="334" height="528"/>
-                                <animations/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="wIt-at-jqR" id="m7d-Ui-U37"/>
-                                    <outlet property="delegate" destination="wIt-at-jqR" id="G6r-P0-a7h"/>
-                                </connections>
-                            </tableView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="gq1-X6-YJB" secondAttribute="trailing" constant="40" id="6Tr-SA-au2"/>
+                            <constraint firstAttribute="trailing" secondItem="gq1-X6-YJB" secondAttribute="trailing" constant="20" id="6Tr-SA-au2"/>
                             <constraint firstAttribute="trailing" secondItem="wYy-9O-gAW" secondAttribute="trailing" constant="40" id="8sl-sj-DP2"/>
-                            <constraint firstItem="gq1-X6-YJB" firstAttribute="leading" secondItem="QyV-8b-1II" secondAttribute="leading" constant="40" id="9EW-eX-G0A"/>
+                            <constraint firstItem="gq1-X6-YJB" firstAttribute="leading" secondItem="QyV-8b-1II" secondAttribute="leading" constant="20" id="9EW-eX-G0A"/>
                             <constraint firstAttribute="trailing" secondItem="gqt-Vp-HZn" secondAttribute="trailing" id="9Fx-kW-4mq"/>
                             <constraint firstItem="wYy-9O-gAW" firstAttribute="leading" secondItem="QyV-8b-1II" secondAttribute="leading" constant="40" id="B5q-bH-ydT"/>
                             <constraint firstItem="gqt-Vp-HZn" firstAttribute="top" secondItem="QyV-8b-1II" secondAttribute="top" id="FFw-6D-d2u"/>

@@ -14,6 +14,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6LV-j9-Ub1" userLabel="BorderView">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8aN-ZX-udL">
                         <rect key="frame" x="73" y="8" width="174" height="26"/>
                         <subviews>
@@ -64,17 +68,24 @@
                     <constraint firstAttribute="trailing" secondItem="1xJ-Ye-BDH" secondAttribute="trailing" id="6fJ-2X-UWU"/>
                     <constraint firstAttribute="bottom" secondItem="1xJ-Ye-BDH" secondAttribute="bottom" id="8rQ-IB-D0f"/>
                     <constraint firstItem="8aN-ZX-udL" firstAttribute="centerY" secondItem="qUv-Q8-Lkg" secondAttribute="centerY" id="Is3-Vd-f30"/>
+                    <constraint firstItem="6LV-j9-Ub1" firstAttribute="top" secondItem="qUv-Q8-Lkg" secondAttribute="top" id="Kx5-2P-8lj"/>
+                    <constraint firstAttribute="trailing" secondItem="6LV-j9-Ub1" secondAttribute="trailing" id="UEJ-2B-Bex"/>
                     <constraint firstItem="8aN-ZX-udL" firstAttribute="centerX" secondItem="qUv-Q8-Lkg" secondAttribute="centerX" id="Ufa-t7-JVD"/>
                     <constraint firstItem="1xJ-Ye-BDH" firstAttribute="leading" secondItem="qUv-Q8-Lkg" secondAttribute="leading" id="WUs-kW-gG5"/>
+                    <constraint firstAttribute="bottom" secondItem="6LV-j9-Ub1" secondAttribute="bottom" id="hee-3z-9Qm"/>
+                    <constraint firstItem="6LV-j9-Ub1" firstAttribute="leading" secondItem="qUv-Q8-Lkg" secondAttribute="leading" id="mB0-VI-60T"/>
                     <constraint firstItem="1xJ-Ye-BDH" firstAttribute="top" secondItem="qUv-Q8-Lkg" secondAttribute="top" id="pXk-aC-aN6"/>
                 </constraints>
             </tableViewCellContentView>
             <animations/>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
+                <outlet property="borderView" destination="6LV-j9-Ub1" id="EIP-Mm-mRV"/>
+                <outlet property="leftPaddingConstraint" destination="mB0-VI-60T" id="Cmb-SK-PK2"/>
                 <outlet property="loginIconImageView" destination="qvI-MI-mRf" id="cze-U0-J2l"/>
                 <outlet property="loginIconImageViewWidthConstraint" destination="Fg0-6c-oor" id="H4f-z8-TKB"/>
                 <outlet property="loginLabel" destination="PWK-q9-xOg" id="4C2-H8-dwg"/>
+                <outlet property="rightPaddingConstraint" destination="UEJ-2B-Bex" id="jSS-eO-nHM"/>
             </connections>
             <point key="canvasLocation" x="-5" y="29"/>
         </tableViewCell>

@@ -16,6 +16,7 @@
 #define SECTION_LOGIN_WITH_EMAIL            2
 
 #define DISTANCE_BTW_SECTIONS               24
+#define PADDING_CONSTANT                    20
 
 #define SEGUE_LOGIN_WITH_EMAIL      @"LoginWithEmailSegue"
 
@@ -31,8 +32,6 @@
     [super viewDidLoad];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-  
-  self.tableView.clipsToBounds = NO;
     
     self.loginLabel.textColor = [UIColor whiteColor];
     self.loginLabel.font = [UIFont openSansSemiBoldFontOfSize:18];
@@ -58,6 +57,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LoginTableViewCell *loginCell = [CellFactory cellLoginTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
+    loginCell.rightPaddingConstraint.constant = PADDING_CONSTANT;
+    loginCell.leftPaddingConstraint.constant = PADDING_CONSTANT;
     
     NSInteger index = indexPath.section;
     if(index == SECTION_LOGIN_WITH_FACEBOOK) {
@@ -116,8 +117,8 @@
   headerTitle.translatesAutoresizingMaskIntoConstraints = NO;
   if (headerTitle) {
     [view addSubview:headerTitle];
-    [view pinSubview:headerTitle toEdge:NSLayoutAttributeLeft constant:-20];
-    [view pinSubview:headerTitle toEdge:NSLayoutAttributeRight constant:20];
+    [view pinSubview:headerTitle toEdge:NSLayoutAttributeLeft constant:-1*PADDING_CONSTANT];
+    [view pinSubview:headerTitle toEdge:NSLayoutAttributeRight constant:PADDING_CONSTANT];
     [view pinSubview:headerTitle toEdge:NSLayoutAttributeBottom constant:-12];
   }
   return view;
