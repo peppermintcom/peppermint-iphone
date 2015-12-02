@@ -28,6 +28,7 @@
     contactsModel = nil;
     self.items = [NSArray arrayWithObjects:@"tutorial1",@"tutorial2",@"tutorial3",@"_NEXPAGE_", nil];
     [self initContinueButton];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background_gradient"]];    
 }
 
 -(void) viewWillAppear:(BOOL)animated {

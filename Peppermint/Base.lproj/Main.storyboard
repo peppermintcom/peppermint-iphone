@@ -1040,10 +1040,10 @@ email contact or both</string>
         <image name="button_resume" width="320" height="128"/>
         <image name="button_resume_pressed" width="320" height="128"/>
         <image name="cancel" width="14" height="14"/>
-        <image name="dot" width="18" height="18"/>
+        <image name="dot" width="9" height="9"/>
         <image name="email_active" width="18" height="14"/>
         <image name="email_inactive" width="18" height="14"/>
-        <image name="eye" width="18" height="18"/>
+        <image name="eye" width="9" height="9"/>
         <image name="hold_to_record_background" width="492" height="86"/>
         <image name="icon_close" width="343" height="342"/>
         <image name="icon_down" width="6" height="6"/>
