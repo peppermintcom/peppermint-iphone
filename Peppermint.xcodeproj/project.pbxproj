@@ -110,6 +110,8 @@
 		B1F93E981BC8E328005F2128 /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E971BC8E328005F2128 /* Repository.m */; };
 		B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */; };
 		B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FE184F1BE1676D002772B4 /* FeedBackModel.m */; };
+		D02D2D0F1C0F450E00092A23 /* AppConfigurationFile.m in Sources */ = {isa = PBXBuildFile; fileRef = D02D2D0D1C0F44FE00092A23 /* AppConfigurationFile.m */; };
+		D02D2D101C0F474500092A23 /* AppConfigurationFile.m in Sources */ = {isa = PBXBuildFile; fileRef = D02D2D0D1C0F44FE00092A23 /* AppConfigurationFile.m */; };
 		D0A7C0DA1BFA0C7900ACD33E /* DeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A7C0D91BFA0C7900ACD33E /* DeviceModel.m */; };
 		D0A7C0FA1BFC73FE00ACD33E /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0A7C0F81BFC73FE00ACD33E /* Interface.storyboard */; };
 		D0A7C0FC1BFC73FF00ACD33E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0A7C0FB1BFC73FF00ACD33E /* Assets.xcassets */; };
@@ -407,6 +409,9 @@
 		C388433C48F87557ED2F3C2D /* Pods-Peppermint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peppermint.release.xcconfig"; path = "Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint.release.xcconfig"; sourceTree = "<group>"; };
 		CD9ED7696C27E289BEEE24D8 /* Pods-Watch Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Watch Extension.release.xcconfig"; path = "Pods/Target Support Files/Pods-Watch Extension/Pods-Watch Extension.release.xcconfig"; sourceTree = "<group>"; };
 		D02D2D081C0E11BC00092A23 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
+		D02D2D0A1C0F413D00092A23 /* Watch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Watch.entitlements; sourceTree = "<group>"; };
+		D02D2D0C1C0F44FE00092A23 /* AppConfigurationFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConfigurationFile.h; sourceTree = "<group>"; };
+		D02D2D0D1C0F44FE00092A23 /* AppConfigurationFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConfigurationFile.m; sourceTree = "<group>"; };
 		D0A7C0D81BFA0C7900ACD33E /* DeviceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceModel.h; sourceTree = "<group>"; };
 		D0A7C0D91BFA0C7900ACD33E /* DeviceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceModel.m; sourceTree = "<group>"; };
 		D0A7C0F61BFC73FE00ACD33E /* Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Watch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -798,6 +803,7 @@
 		B17B3D2E1BB6898C009B8BC5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D02D2D0B1C0F44D100092A23 /* PeppermintConfigurationFile */,
 				B17B3D2F1BB6898C009B8BC5 /* Info.plist */,
 				B1BB2A521BE6AA2000A4BFB4 /* GoogleService-Info.plist */,
 				B17B3D301BB6898C009B8BC5 /* main.m */,
@@ -1041,9 +1047,19 @@
 			name = NSManagedObjects;
 			sourceTree = "<group>";
 		};
+		D02D2D0B1C0F44D100092A23 /* PeppermintConfigurationFile */ = {
+			isa = PBXGroup;
+			children = (
+				D02D2D0C1C0F44FE00092A23 /* AppConfigurationFile.h */,
+				D02D2D0D1C0F44FE00092A23 /* AppConfigurationFile.m */,
+			);
+			name = PeppermintConfigurationFile;
+			sourceTree = "<group>";
+		};
 		D0A7C0F71BFC73FE00ACD33E /* Watch */ = {
 			isa = PBXGroup;
 			children = (
+				D02D2D0A1C0F413D00092A23 /* Watch.entitlements */,
 				D0A7C0F81BFC73FE00ACD33E /* Interface.storyboard */,
 				D0A7C0FB1BFC73FF00ACD33E /* Assets.xcassets */,
 				D0A7C0FD1BFC73FF00ACD33E /* Info.plist */,
@@ -1315,7 +1331,7 @@
 						DevelopmentTeam = 8V9FEAB5WD;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
-								enabled = 0;
+								enabled = 1;
 							};
 							com.apple.Keychain = {
 								enabled = 0;
@@ -1332,6 +1348,11 @@
 					D0A7C0F51BFC73FD00ACD33E = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = 8V9FEAB5WD;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					D0A7C1011BFC73FF00ACD33E = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -1568,6 +1589,7 @@
 				B13B075A1BD3686500974AC3 /* MandrillInformationResponse.m in Sources */,
 				D0D70D0C1C02F64D0068AB20 /* JSONHTTPClient.m in Sources */,
 				D0D70D251C0306930068AB20 /* A0SimpleKeychain.m in Sources */,
+				D02D2D101C0F474500092A23 /* AppConfigurationFile.m in Sources */,
 				B1F0456B1BCFB4E400A67942 /* Events.m in Sources */,
 				B15B15C41BDBC8CB00C0C171 /* RecorderResponse.m in Sources */,
 				B17B3D641BB6AE8B009B8BC5 /* RecordingViewController.m in Sources */,
@@ -1657,6 +1679,7 @@
 				D0D70D091C02F64D0068AB20 /* NSArray+JSONModel.m in Sources */,
 				D0D70D141C02F6B70068AB20 /* MandrillRequest.m in Sources */,
 				D0D70D161C02F6BD0068AB20 /* MandrillSendRequest.m in Sources */,
+				D02D2D0F1C0F450E00092A23 /* AppConfigurationFile.m in Sources */,
 				D0D70D291C0308E90068AB20 /* PeppermintMessageSender.m in Sources */,
 				D0D70C341BFF31440068AB20 /* ContactsTableRowController.m in Sources */,
 				D0D70D031C02F64D0068AB20 /* JSONModelArray.m in Sources */,
@@ -1824,7 +1847,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7d3bc9cd-82df-4d79-879d-cc944104613f";
+				PROVISIONING_PROFILE = "c764040d-32b8-43f1-a4db-31faf520a7a9";
 			};
 			name = Debug;
 		};
@@ -1852,7 +1875,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7d3bc9cd-82df-4d79-879d-cc944104613f";
+				PROVISIONING_PROFILE = "c764040d-32b8-43f1-a4db-31faf520a7a9";
 			};
 			name = Release;
 		};
@@ -1896,6 +1919,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Watch/Watch.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
@@ -1909,7 +1933,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3450e1b1-0710-48fb-9279-7664fa7d90ad";
+				PROVISIONING_PROFILE = "3fec9ad9-8d6b-4817-9932-553569a68bcf";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1921,7 +1945,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_ENTITLEMENTS = Watch/Watch.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution";
 				GCC_PREPROCESSOR_DEFINITIONS = "";
@@ -1930,7 +1955,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3450e1b1-0710-48fb-9279-7664fa7d90ad";
+				PROVISIONING_PROFILE = "3fec9ad9-8d6b-4817-9932-553569a68bcf";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1952,7 +1977,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "69329f7c-be9d-4404-9a5f-7e2b9f79f1fd";
+				PROVISIONING_PROFILE = "1b958b1d-48ff-4045-a187-ddb246dba140";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1965,15 +1990,15 @@
 			baseConfigurationReference = CD9ED7696C27E289BEEE24D8 /* Pods-Watch Extension.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Watch Extension/Watch Extension.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution: Okan Kurtulus (8V9FEAB5WD)";
 				INFOPLIST_FILE = "Watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "69329f7c-be9d-4404-9a5f-7e2b9f79f1fd";
+				PROVISIONING_PROFILE = "1b958b1d-48ff-4045-a187-ddb246dba140";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;

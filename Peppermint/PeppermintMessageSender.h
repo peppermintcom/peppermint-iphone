@@ -12,7 +12,6 @@
 #define KEYCHAIN_MESSAGE_SENDER     @"keychainMessageSender"
 #define KEYCHAIN_ACCESS_GROUP @"keychain.com.ppl.peppermint"
 
-extern NSString *const AppConfigurationApplicationGroupsPrimary;
 
 typedef enum : NSUInteger {
     LOGINSOURCE_FACEBOOK,

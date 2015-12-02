@@ -14,7 +14,6 @@
 
 @import WatchConnectivity;
 
-NSString * const AppConfigurationApplicationGroupsPrimary = @"group.com.peppermint.watch";
 
 @interface PeppermintMessageSender () <WCSessionDelegate>
 

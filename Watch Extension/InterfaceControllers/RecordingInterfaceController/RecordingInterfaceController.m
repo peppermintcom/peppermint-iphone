@@ -10,6 +10,7 @@
 #import "PeppermintContact.h"
 #import "PeppermintMessageSender.h"
 #import "WKServerManager.h"
+#import "AppConfigurationFile.h"
 
 @import WatchConnectivity;
 
@@ -49,7 +50,7 @@
   NSLog(@"preset: %d", preset);
   
   // Get the directory from the app group.
-  NSURL * directory = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask].firstObject;
+  NSURL *directory = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:AppConfigurationApplicationGroupsPrimary];
 
   NSUInteger timeAtRecording = (NSUInteger)[NSDate timeIntervalSinceReferenceDate];
   __block NSString *recordingName = [NSString stringWithFormat:@"AudioRecording-%d.mp4", timeAtRecording];
