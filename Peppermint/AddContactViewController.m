@@ -25,8 +25,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView * emailImageView;
 @property (weak, nonatomic) IBOutlet UIImageView * avatarImageView;
 
-@property (copy, nonatomic) void(^completion)(void);
-
 @property (strong, nonatomic) PeppermintContact * contact;
 
 @end
@@ -36,13 +34,11 @@
 #pragma mark- Class Methods
 
 + (void)presentAddContactControllerWithCompletion:(void (^)())completion {
-  UIStoryboard * storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-  UINavigationController * navigationController = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([AddContactViewController class])];
-  AddContactViewController * addContactViewController = (AddContactViewController *)navigationController.viewControllers.firstObject;
-  addContactViewController.completion = completion;
-
-  UIViewController *rootVC = [AppDelegate Instance].window.rootViewController;
-  [rootVC presentViewController:navigationController animated:YES completion:nil];
+    UIStoryboard * storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+  
+    UIViewController *vc = [storyboard instantiateViewControllerWithIdentifier:VIEWCONTROLLER_ADDCONTACTNAVIGATION];
+    UIViewController *rootVC = [AppDelegate Instance].window.rootViewController;
+    [rootVC presentViewController:vc animated:YES completion:completion];
 }
 
 #pragma mark- Life Cycle
@@ -64,83 +60,15 @@
   _countryPickerView.dataSource = self;
   self.countryCodeTextField.inputView = _countryPickerView;
   self.countryCodeTextField.delegate = self;
-
   
   self.countryFormatModel = [[CountryFormatModel alloc] init];
   self.countriesArray = [self.countryFormatModel countriesList];
-    
-  [[UITextField appearance] setTintColor:[UIColor textFieldTintGreen]];
   
+  self.explanationLabel.text = LOC(@"You can add a phone contact, an email contact or both", @"Information");
+  self.saveContactBarButtonItem.enabled = NO;
+    
   self.contact = [PeppermintContact new];
 }
-
-- (void) viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-  [super viewWillDisappear:animated];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:; forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
-}
-*/
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 #pragma mark- IBAction
 
@@ -150,6 +78,10 @@
 
 - (IBAction)cancelPressed:(id)sender {
   [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)saveContactBarButtonItemPressed:(id)sender {
+    NSLog(@"to save Contact %@", self.contact.nameSurname);
 }
 
 - (IBAction)photoGalleryPressed:(id)sender {
@@ -204,33 +136,37 @@
   }
 }
 
-#pragma mark- Text Field delegate
+#pragma mark - Update Screen
 
-- (IBAction)textFieldDidChange:(UITextField *)textField {
-  if (textField == self.emailTextField) {
-    self.emailImageView.highlighted = textField.text.length > 0 && [textField.text isValidEmail];
-  } else if (textField == self.phoneNumberTextField) {
-    self.phoneImageView.highlighted = textField.text.length > 0;
-  } else if (textField == self.lastNameTextField) {
+-(void) updateScreen {
+    self.phoneImageView.highlighted = self.phoneNumberTextField.text.length > 1;
+    self.emailImageView.highlighted = self.emailTextField.text.length > 0 && [self.emailTextField.text isValidEmail];
     
-  } else {
+    self.firstNameTextField.text = [self.firstNameTextField.text capitalizedString];
+    self.lastNameTextField.text = [self.lastNameTextField.text capitalizedString];
     
-  }
+    self.saveContactBarButtonItem.enabled =
+    self.firstNameTextField.text.length > 0
+    && self.lastNameTextField.text.length > 0
+    && (self.phoneImageView.highlighted || self.emailImageView.highlighted);
 }
 
+#pragma mark- Text Field delegate
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-  if (textField == self.phoneNumberTextField) {
-    if (string.length == 0 && textField.text.length == 1) {
-      textField.text = @"+";
-      return NO;
-    } else if (textField.text.length == 0 && string.length != 0) {
-      textField.text = [NSString stringWithFormat:@"+%@", string];
-      return NO;
+    if (textField == self.phoneNumberTextField) {
+        if (string.length == 0 && textField.text.length == 1) {
+            textField.text = @"+";
+        } else if (textField.text.length == 0 && string.length != 0) {
+            textField.text = [NSString stringWithFormat:@"+%@", string];
+        } else {
+            [textField setTextContentInRange:range replacementString:string];
+        }
+    } else {
+        [textField setTextContentInRange:range replacementString:string];
     }
-    return YES;
-  } else {
-    return YES;
-  }
+    [self updateScreen];
+    return NO;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {

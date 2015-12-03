@@ -113,6 +113,7 @@ sharedObject;\
 #define VIEWCONTROLLER_TUTORIAL                     @"TutorialViewController"
 #define VIEWCONTROLLER_RECORDINGVIEWCONTROLLER      @"RecordingViewController"
 #define VIEWCONTROLLER_LOGINVALIDATE                @"LoginValidateEmailViewController"
+#define VIEWCONTROLLER_ADDCONTACTNAVIGATION         @"AddContactNavigationViewController"
 
 #define SCHEME_FACEBOOK     @"fb971024122959536"
 #define SCHEME_GOOGLE       @"com.googleusercontent.apps.621894935907-jtqr6lt0uf74rlc5rgobkefv8dl16ka6"

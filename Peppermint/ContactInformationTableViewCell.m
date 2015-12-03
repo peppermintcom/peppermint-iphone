@@ -40,7 +40,7 @@
     self.titleLabel.layer.shadowColor = [UIColor clearColor].CGColor;
     self.titleLabel.layer.shadowOpacity = 0;
     self.titleLabel.layer.shadowRadius = 0;
-    [self setText:LOC(@"Show All Contacts", @"Title") withImageNamed:@"icon_all" ofSize:17 andColor:[UIColor emailLoginColor]];
+    [self setText:LOC(@"View All Contacts", @"Title") withImageNamed:@"icon_all" ofSize:17 andColor:[UIColor emailLoginColor]];
 }
 
 -(void) setText:(NSString*)text withImageNamed:(NSString*)imageName ofSize:(CGFloat)size andColor:(UIColor*) color {

@@ -711,10 +711,10 @@
             </objects>
             <point key="canvasLocation" x="-461" y="154"/>
         </scene>
-        <!--New Contact-->
+        <!--AddContactViewController-->
         <scene sceneID="Nps-uM-75X">
             <objects>
-                <tableViewController id="pyr-NR-460" customClass="AddContactViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AddContactViewController" id="pyr-NR-460" userLabel="AddContactViewController" customClass="AddContactViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="lc9-2P-XTo">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -731,7 +731,7 @@
                                     <constraints>
                                         <constraint firstAttribute="width" constant="320" id="ER4-2I-i11"/>
                                     </constraints>
-                                    <string key="text">You can add a phone contact, an
+                                    <string key="text">_You can add a phone contact, an
 email contact or both</string>
                                     <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="14"/>
                                     <color key="textColor" red="0.38431372549999998" green="0.74509803919999995" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -793,21 +793,27 @@ email contact or both</string>
                                                     </constraints>
                                                 </view>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dv5-8A-bHh">
-                                                    <rect key="frame" x="100" y="15" width="200" height="25"/>
+                                                    <rect key="frame" x="100" y="5" width="212" height="45"/>
                                                     <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="45" id="u72-Zd-S27"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="18"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                                     <connections>
-                                                        <action selector="textFieldDidChange:" destination="pyr-NR-460" eventType="editingChanged" id="oLs-lE-fL3"/>
+                                                        <outlet property="delegate" destination="pyr-NR-460" id="GMi-9H-LcQ"/>
                                                     </connections>
                                                 </textField>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QWV-QQ-i2D">
-                                                    <rect key="frame" x="100" y="60" width="200" height="25"/>
+                                                    <rect key="frame" x="100" y="50" width="212" height="45"/>
                                                     <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="45" id="atG-B4-amw"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="18"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                                     <connections>
-                                                        <action selector="textFieldDidChange:" destination="pyr-NR-460" eventType="editingChanged" id="sT9-Nz-Lsm"/>
+                                                        <outlet property="delegate" destination="pyr-NR-460" id="SHp-5B-BDl"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
@@ -816,19 +822,19 @@ email contact or both</string>
                                                 <constraint firstAttribute="bottom" secondItem="vsy-Eg-gXq" secondAttribute="bottom" id="1Vr-fk-oTQ"/>
                                                 <constraint firstItem="YUZ-qS-jpN" firstAttribute="leading" secondItem="dv5-8A-bHh" secondAttribute="leading" id="22e-43-wNE"/>
                                                 <constraint firstItem="vzA-Cz-cJD" firstAttribute="leading" secondItem="AdK-MG-NJ5" secondAttribute="leading" constant="8" id="7ee-qQ-Ekz"/>
-                                                <constraint firstAttribute="trailing" secondItem="dv5-8A-bHh" secondAttribute="trailing" constant="20" id="8fT-d1-yuU"/>
+                                                <constraint firstAttribute="trailing" secondItem="dv5-8A-bHh" secondAttribute="trailing" constant="8" id="8fT-d1-yuU"/>
                                                 <constraint firstItem="YUZ-qS-jpN" firstAttribute="centerY" secondItem="vzA-Cz-cJD" secondAttribute="centerY" id="9Vo-6I-mgd"/>
                                                 <constraint firstItem="P5y-eU-OxC" firstAttribute="leading" secondItem="vzA-Cz-cJD" secondAttribute="leading" id="9op-Wg-ilB"/>
-                                                <constraint firstItem="dv5-8A-bHh" firstAttribute="top" secondItem="vzA-Cz-cJD" secondAttribute="top" id="Cd5-pA-FOf"/>
+                                                <constraint firstItem="dv5-8A-bHh" firstAttribute="top" secondItem="vzA-Cz-cJD" secondAttribute="top" constant="-10" id="Cd5-pA-FOf"/>
                                                 <constraint firstAttribute="trailing" secondItem="YUZ-qS-jpN" secondAttribute="trailing" id="FHY-rp-Cpz"/>
-                                                <constraint firstItem="QWV-QQ-i2D" firstAttribute="bottom" secondItem="vzA-Cz-cJD" secondAttribute="bottom" id="SmE-I5-6qI"/>
+                                                <constraint firstItem="QWV-QQ-i2D" firstAttribute="bottom" secondItem="vzA-Cz-cJD" secondAttribute="bottom" constant="10" id="SmE-I5-6qI"/>
                                                 <constraint firstItem="P5y-eU-OxC" firstAttribute="bottom" secondItem="vzA-Cz-cJD" secondAttribute="bottom" id="XZ0-Pt-xsR"/>
                                                 <constraint firstItem="P5y-eU-OxC" firstAttribute="trailing" secondItem="vzA-Cz-cJD" secondAttribute="trailing" id="Xea-uI-h2v"/>
                                                 <constraint firstItem="QWV-QQ-i2D" firstAttribute="leading" secondItem="dv5-8A-bHh" secondAttribute="leading" id="XiQ-gS-mnP"/>
                                                 <constraint firstItem="vzA-Cz-cJD" firstAttribute="centerY" secondItem="AdK-MG-NJ5" secondAttribute="centerY" id="ax7-Le-b1D"/>
                                                 <constraint firstItem="vsy-Eg-gXq" firstAttribute="leading" secondItem="AdK-MG-NJ5" secondAttribute="leading" id="fvj-QL-Sic"/>
                                                 <constraint firstItem="P5y-eU-OxC" firstAttribute="top" secondItem="vzA-Cz-cJD" secondAttribute="top" id="h9M-rz-vUk"/>
-                                                <constraint firstAttribute="trailing" secondItem="QWV-QQ-i2D" secondAttribute="trailing" constant="20" id="ja9-rf-fsP"/>
+                                                <constraint firstAttribute="trailing" secondItem="QWV-QQ-i2D" secondAttribute="trailing" constant="8" id="ja9-rf-fsP"/>
                                                 <constraint firstItem="YUZ-qS-jpN" firstAttribute="leading" secondItem="AdK-MG-NJ5" secondAttribute="leading" constant="100" id="kcM-3Z-4MX"/>
                                                 <constraint firstAttribute="trailing" secondItem="vsy-Eg-gXq" secondAttribute="trailing" id="zcj-g4-3Sz"/>
                                             </constraints>
@@ -843,12 +849,14 @@ email contact or both</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uHi-Kg-2Nv">
-                                                    <rect key="frame" x="8" y="14" width="252" height="22"/>
+                                                    <rect key="frame" x="8" y="0.0" width="252" height="50"/>
                                                     <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="50" id="WE9-OK-zvr"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                                                     <connections>
-                                                        <action selector="textFieldDidChange:" destination="pyr-NR-460" eventType="editingChanged" id="Na1-0d-wPI"/>
                                                         <outlet property="delegate" destination="pyr-NR-460" id="dca-SZ-xbJ"/>
                                                     </connections>
                                                 </textField>
@@ -890,12 +898,15 @@ email contact or both</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HCM-xd-FfJ">
-                                                    <rect key="frame" x="8" y="14" width="252" height="22"/>
+                                                    <rect key="frame" x="8" y="0.0" width="252" height="50"/>
                                                     <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="50" id="WGP-T7-raZ"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
                                                     <connections>
-                                                        <action selector="textFieldDidChange:" destination="pyr-NR-460" eventType="editingChanged" id="b6p-fJ-MMm"/>
+                                                        <outlet property="delegate" destination="pyr-NR-460" id="MsO-9a-VqS"/>
                                                     </connections>
                                                 </textField>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="email_inactive" highlightedImage="email_active" translatesAutoresizingMaskIntoConstraints="NO" id="sqM-B5-gnk">
@@ -937,10 +948,16 @@ email contact or both</string>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="New Contact" id="VXO-dv-DKI">
-                        <barButtonItem key="leftBarButtonItem" image="cancel" style="done" id="ypQ-PY-gae">
+                        <barButtonItem key="leftBarButtonItem" image="cancel" id="ypQ-PY-gae">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="cancelPressed:" destination="pyr-NR-460" id="iGs-5y-pca"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Save" style="plain" id="w7i-KX-d7P">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="saveContactBarButtonItemPressed:" destination="pyr-NR-460" id="tiO-Uq-MxI"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -948,10 +965,12 @@ email contact or both</string>
                         <outlet property="avatarImageView" destination="P5y-eU-OxC" id="lSC-WK-BTg"/>
                         <outlet property="emailImageView" destination="sqM-B5-gnk" id="Iqf-bU-dBF"/>
                         <outlet property="emailTextField" destination="HCM-xd-FfJ" id="F19-Cn-9LW"/>
+                        <outlet property="explanationLabel" destination="v18-70-8vr" id="Ddq-t0-t2T"/>
                         <outlet property="firstNameTextField" destination="dv5-8A-bHh" id="1V7-2u-vzP"/>
                         <outlet property="lastNameTextField" destination="QWV-QQ-i2D" id="38H-Ve-MrA"/>
                         <outlet property="phoneImageView" destination="6Ku-Oo-U2k" id="eqH-z2-Mhf"/>
                         <outlet property="phoneNumberTextField" destination="uHi-Kg-2Nv" id="fbp-cP-anD"/>
+                        <outlet property="saveContactBarButtonItem" destination="w7i-KX-d7P" id="Rb9-4S-0W3"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="163-c9-WQw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1023,10 +1042,10 @@ email contact or both</string>
             </objects>
             <point key="canvasLocation" x="-980" y="1138"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--AddContactNavigationViewController-->
         <scene sceneID="X4Y-SX-Ogy">
             <objects>
-                <navigationController storyboardIdentifier="AddContactViewController" automaticallyAdjustsScrollViewInsets="NO" id="Aby-2L-00n" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AddContactNavigationViewController" automaticallyAdjustsScrollViewInsets="NO" id="Aby-2L-00n" userLabel="AddContactNavigationViewController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="8tz-51-MNi">

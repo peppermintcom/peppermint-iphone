@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UITextField * phoneNumberTextField;
 @property (weak, nonatomic) IBOutlet UITextField * emailTextField;
 @property (weak, nonatomic) IBOutlet UIImageView * flagImageView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *saveContactBarButtonItem;
+@property (weak, nonatomic) IBOutlet UILabel *explanationLabel;
 
 + (void)presentAddContactControllerWithCompletion:(void (^)())completion;
 
