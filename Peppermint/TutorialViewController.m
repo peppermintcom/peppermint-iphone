@@ -28,15 +28,19 @@
     contactsModel = nil;
     self.items = [NSArray arrayWithObjects:@"tutorial1",@"tutorial2",@"tutorial3",@"_NEXPAGE_", nil];
     [self initContinueButton];
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background_gradient"]];
 }
 
 -(void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if([self checkIfuserIsLoggedIn]) {
         [self askUserForContactsReadPermission];
-    }
-    [self.swipeView scrollToItemAtIndex:0 duration:DURATION];
+        [self performSelector:@selector(page1ButtonPressed:) withObject:nil afterDelay:DURATION/3];
+    }    
+}
+
+-(void) viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self page1ButtonPressed:nil];
 }
 
 -(void) askUserForContactsReadPermission {

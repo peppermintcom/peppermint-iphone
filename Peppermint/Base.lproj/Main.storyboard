@@ -51,11 +51,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_gradient" translatesAutoresizingMaskIntoConstraints="NO" id="wpt-p0-4jZ">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                            </imageView>
                             <view opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lcd-bo-1RH" customClass="SwipeView">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="683"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T7N-ky-1Pr">
-                                        <rect key="frame" x="170" y="663" width="12" height="12"/>
+                                        <rect key="frame" x="170" y="688" width="12" height="12"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="12" id="LIu-Xa-wSd"/>
@@ -72,7 +75,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="peY-rl-asT">
-                                        <rect key="frame" x="198" y="663" width="12" height="12"/>
+                                        <rect key="frame" x="198" y="688" width="12" height="12"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="12" id="e6l-x7-zza"/>
@@ -87,7 +90,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b25-bB-VfQ">
-                                        <rect key="frame" x="226" y="663" width="12" height="12"/>
+                                        <rect key="frame" x="226" y="688" width="12" height="12"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="18" id="1A2-1K-UxZ"/>
@@ -110,9 +113,9 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="peY-rl-asT" firstAttribute="leading" secondItem="T7N-ky-1Pr" secondAttribute="trailing" constant="16" id="0U9-Bz-Jxe"/>
-                                    <constraint firstAttribute="bottom" secondItem="peY-rl-asT" secondAttribute="bottom" constant="8" id="OPc-o2-FY8"/>
-                                    <constraint firstAttribute="bottom" secondItem="b25-bB-VfQ" secondAttribute="bottom" constant="8" id="PUS-1K-jXs"/>
-                                    <constraint firstAttribute="bottom" secondItem="T7N-ky-1Pr" secondAttribute="bottom" constant="8" id="Rbt-de-7kR"/>
+                                    <constraint firstAttribute="bottom" secondItem="peY-rl-asT" secondAttribute="bottom" constant="36" id="OPc-o2-FY8"/>
+                                    <constraint firstAttribute="bottom" secondItem="b25-bB-VfQ" secondAttribute="bottom" constant="36" id="PUS-1K-jXs"/>
+                                    <constraint firstAttribute="bottom" secondItem="T7N-ky-1Pr" secondAttribute="bottom" constant="36" id="Rbt-de-7kR"/>
                                     <constraint firstAttribute="centerX" secondItem="peY-rl-asT" secondAttribute="centerX" constant="3" id="Rbv-jQ-sFg"/>
                                     <constraint firstItem="b25-bB-VfQ" firstAttribute="leading" secondItem="peY-rl-asT" secondAttribute="trailing" constant="16" id="k6W-s9-C0e"/>
                                 </constraints>
@@ -122,7 +125,7 @@
                                 </connections>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DWJ-9W-nyk">
-                                <rect key="frame" x="147" y="687" width="120" height="30"/>
+                                <rect key="frame" x="147" y="702" width="120" height="30"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -149,13 +152,25 @@
                         <animations/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="DWJ-9W-nyk" firstAttribute="top" secondItem="Lcd-bo-1RH" secondAttribute="bottom" constant="4" id="3F7-hW-5t4"/>
-                            <constraint firstItem="v6u-zx-4Dz" firstAttribute="top" secondItem="DWJ-9W-nyk" secondAttribute="bottom" constant="19" id="QZ3-V0-gMy"/>
+                            <constraint firstAttribute="trailing" secondItem="wpt-p0-4jZ" secondAttribute="trailing" id="Mpy-WC-93T"/>
+                            <constraint firstItem="v6u-zx-4Dz" firstAttribute="top" secondItem="DWJ-9W-nyk" secondAttribute="bottom" constant="4" id="QZ3-V0-gMy"/>
+                            <constraint firstItem="wpt-p0-4jZ" firstAttribute="top" secondItem="7FG-oV-f4Q" secondAttribute="top" id="RF4-Um-aT1"/>
+                            <constraint firstItem="wpt-p0-4jZ" firstAttribute="top" secondItem="xe7-gx-X2K" secondAttribute="bottom" id="S8e-bY-ivW"/>
+                            <constraint firstItem="DWJ-9W-nyk" firstAttribute="top" secondItem="wpt-p0-4jZ" secondAttribute="bottom" id="bPZ-nP-OpC"/>
                             <constraint firstItem="DWJ-9W-nyk" firstAttribute="centerX" secondItem="7FG-oV-f4Q" secondAttribute="centerX" id="dt8-TL-H8a"/>
                             <constraint firstItem="Lcd-bo-1RH" firstAttribute="leading" secondItem="7FG-oV-f4Q" secondAttribute="leading" id="l6I-B9-SAk"/>
                             <constraint firstAttribute="trailing" secondItem="Lcd-bo-1RH" secondAttribute="trailing" id="t5S-ZI-MuX"/>
+                            <constraint firstItem="v6u-zx-4Dz" firstAttribute="top" secondItem="Lcd-bo-1RH" secondAttribute="bottom" id="v8J-Kx-KaX"/>
+                            <constraint firstAttribute="bottom" secondItem="wpt-p0-4jZ" secondAttribute="bottom" id="vTk-ap-MEj"/>
                             <constraint firstItem="Lcd-bo-1RH" firstAttribute="top" secondItem="7FG-oV-f4Q" secondAttribute="top" id="xor-Zg-oil"/>
+                            <constraint firstItem="wpt-p0-4jZ" firstAttribute="leading" secondItem="7FG-oV-f4Q" secondAttribute="leading" id="y15-Wi-90l"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="S8e-bY-ivW"/>
+                                <exclude reference="bPZ-nP-OpC"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="pTF-gM-LkG"/>
                     <connections>
@@ -1033,6 +1048,7 @@ email contact or both</string>
     <resources>
         <image name="avatar" width="70" height="70"/>
         <image name="avatar_empty" width="73" height="72"/>
+        <image name="background_gradient" width="1" height="1136"/>
         <image name="button_pause" width="320" height="128"/>
         <image name="button_pause_pressed" width="320" height="128"/>
         <image name="button_rerecord" width="320" height="128"/>
