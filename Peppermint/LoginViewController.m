@@ -10,10 +10,11 @@
 #import "LoginNavigationViewController.h"
 #import "LoginWithEmailViewController.h"
 
-#define NUMBER_OF_LOGIN_OPTIONS             3
+#define NUMBER_OF_SECTIONS                  4
 #define SECTION_LOGIN_WITH_FACEBOOK         0
 #define SECTION_LOGIN_WITH_GOOGLE           1
-#define SECTION_LOGIN_WITH_EMAIL            2
+#define SECTION_LOGIN_WITH_EMAIL_INFO       2
+#define SECTION_LOGIN_WITH_EMAIL            3
 
 #define DISTANCE_BTW_SECTIONS               24
 #define PADDING_CONSTANT                    20
@@ -48,7 +49,7 @@
 #pragma mark - UITableView
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
-    return NUMBER_OF_LOGIN_OPTIONS;
+    return NUMBER_OF_SECTIONS;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -56,72 +57,68 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LoginTableViewCell *loginCell = [CellFactory cellLoginTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
-    loginCell.rightPaddingConstraint.constant = PADDING_CONSTANT;
-    loginCell.leftPaddingConstraint.constant = PADDING_CONSTANT;
     
-    NSInteger index = indexPath.section;
-    if(index == SECTION_LOGIN_WITH_FACEBOOK) {
-        loginCell.loginIconImageView.image = [UIImage imageNamed:@"icon_fb"];
-        loginCell.loginLabel.text = LOC(@"Log In with Facebook", @"Title");
-        loginCell.loginLabel.textColor = [UIColor facebookLoginColor];
-    } else if (index == SECTION_LOGIN_WITH_GOOGLE) {
-        loginCell.loginIconImageView.image = [UIImage imageNamed:@"icon_google"];
-        loginCell.loginLabel.text = LOC(@"Log In with Google", @"Title");
-        loginCell.loginLabel.textColor = [UIColor googleLoginColor];
-    } else if (index == SECTION_LOGIN_WITH_EMAIL) {
-        loginCell.loginIconImageView.image = [UIImage imageNamed:@"icon_email"];
-        loginCell.loginLabel.text = LOC(@"Log In with Email", @"Title");
-        loginCell.loginLabel.textColor = [UIColor emailLoginColor];
-    }    
-    [loginCell.loginLabel sizeToFit];
-    [loginCell setNeedsDisplay];
-    return loginCell;
+    UITableViewCell *cell;
+    if (indexPath.section == SECTION_LOGIN_WITH_EMAIL_INFO) {
+        InformationTextTableViewCell *informationTextTableViewCell = [CellFactory cellInformationTextTableViewCellFromTable:tableView forIndexPath:indexPath];
+        
+        informationTextTableViewCell.label.text = LOC(@"Login with email", nil);
+        informationTextTableViewCell.label.numberOfLines = 0;
+        informationTextTableViewCell.label.textColor = [UIColor whiteColor];
+        informationTextTableViewCell.label.textAlignment = NSTextAlignmentCenter;
+        informationTextTableViewCell.label.font = [UIFont openSansBoldFontOfSize:16];
+        cell = informationTextTableViewCell;
+    } else {
+        LoginTableViewCell *loginCell = [CellFactory cellLoginTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
+        loginCell.rightPaddingConstraint.constant = PADDING_CONSTANT;
+        loginCell.leftPaddingConstraint.constant = PADDING_CONSTANT;
+        
+        if(indexPath.section == SECTION_LOGIN_WITH_FACEBOOK) {
+            loginCell.loginIconImageView.image = [UIImage imageNamed:@"icon_fb"];
+            loginCell.loginLabel.text = LOC(@"Log In with Facebook", @"Title");
+            loginCell.loginLabel.textColor = [UIColor facebookLoginColor];
+        } else if (indexPath.section == SECTION_LOGIN_WITH_GOOGLE) {
+            loginCell.loginIconImageView.image = [UIImage imageNamed:@"icon_google"];
+            loginCell.loginLabel.text = LOC(@"Log In with Google", @"Title");
+            loginCell.loginLabel.textColor = [UIColor googleLoginColor];
+        } else if (indexPath.section == SECTION_LOGIN_WITH_EMAIL) {
+            loginCell.loginIconImageView.image = [UIImage imageNamed:@"icon_email"];
+            loginCell.loginLabel.text = LOC(@"Log In with Email", @"Title");
+            loginCell.loginLabel.textColor = [UIColor emailLoginColor];
+        }
+        [loginCell.loginLabel sizeToFit];
+        cell = loginCell;
+    }
+    return cell;
 }
 
-- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return CELL_HEIGHT_LOGIN_TABLEVIEWCELL;
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat height = 0;
+    if(indexPath.section == SECTION_LOGIN_WITH_EMAIL_INFO) {
+        height = 2*CELL_HEIGHT_INFORMATION_TABLEVIEWCELL;
+    } else {
+        height = CELL_HEIGHT_LOGIN_TABLEVIEWCELL;
+    }
+    return height;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-  CGFloat headerHeight = DISTANCE_BTW_SECTIONS;
-
-  if (section == SECTION_LOGIN_WITH_FACEBOOK) {
-    return 0;
-  } else if (section == SECTION_LOGIN_WITH_EMAIL) {
-    headerHeight = 4 * DISTANCE_BTW_SECTIONS;
-  }
-  
-  return headerHeight;
+    CGFloat height = 0;
+    if(section == SECTION_LOGIN_WITH_GOOGLE) {
+        height = DISTANCE_BTW_SECTIONS;
+    } else if (section == SECTION_LOGIN_WITH_EMAIL_INFO) {
+        height = DISTANCE_BTW_SECTIONS;
+    }
+    return height;
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-  CGFloat headerHeight = DISTANCE_BTW_SECTIONS;
-
-  UILabel * headerTitle;
-  if (section == SECTION_LOGIN_WITH_FACEBOOK) {
-    return nil;
-  } else if (section == SECTION_LOGIN_WITH_EMAIL) {
-    headerHeight = 4 * DISTANCE_BTW_SECTIONS;
-    headerTitle = [[UILabel alloc] init];
-    headerTitle.text = LOC(@"Login with email", nil);
-    headerTitle.numberOfLines = 0;
-    [headerTitle sizeToFit];
-    headerTitle.textColor = [UIColor whiteColor];
-    headerTitle.textAlignment = NSTextAlignmentCenter;
-    headerTitle.font = [UIFont openSansBoldFontOfSize:16];
-  }
-
-  UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, headerHeight)];
-  headerTitle.translatesAutoresizingMaskIntoConstraints = NO;
-  if (headerTitle) {
-    [view addSubview:headerTitle];
-    [view pinSubview:headerTitle toEdge:NSLayoutAttributeLeft constant:-1*PADDING_CONSTANT];
-    [view pinSubview:headerTitle toEdge:NSLayoutAttributeRight constant:PADDING_CONSTANT];
-    [view pinSubview:headerTitle toEdge:NSLayoutAttributeBottom constant:-12];
-  }
-  return view;
+    UIView *view = nil;
+    CGFloat headerHeight = DISTANCE_BTW_SECTIONS;
+    view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, headerHeight)];
+    return view;
 }
 
 #pragma mark - LoginTableViewCellDelegate
