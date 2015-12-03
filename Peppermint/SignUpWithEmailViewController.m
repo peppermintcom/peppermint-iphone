@@ -124,7 +124,7 @@
             [loginTextFieldCell.textField setSecureTextEntry:NO];
             loginTextFieldCell.textField.placeholder = LOC(@"Your Name",@"Your Name");
             loginTextFieldCell.textField.keyboardType = UIKeyboardTypeAlphabet;
-            loginTextFieldCell.textField.text = self.loginModel.peppermintMessageSender.name;
+            loginTextFieldCell.textField.text = [PeppermintMessageSender sharedInstance].name;
             cell = loginTextFieldCell;
         } else if (indexPath.row == ROW_NAME_EMPTY_VALIDATION) {
             InformationTextTableViewCell *informationTextTableViewCell = [CellFactory cellInformationTextTableViewCellFromTable:tableView forIndexPath:indexPath];
@@ -137,7 +137,7 @@
             [loginTextFieldCell.textField setSecureTextEntry:NO];
             loginTextFieldCell.textField.placeholder = LOC(@"Email", @"Email");
             loginTextFieldCell.textField.keyboardType = UIKeyboardTypeEmailAddress;
-            loginTextFieldCell.textField.text = self.loginModel.peppermintMessageSender.email;
+            loginTextFieldCell.textField.text = [PeppermintMessageSender sharedInstance].email;
             cell = loginTextFieldCell;
         } else if (indexPath.row == ROW_EMAIL_EMPTY_VALIDATION) {
             InformationTextTableViewCell *informationTextTableViewCell = [CellFactory cellInformationTextTableViewCellFromTable:tableView forIndexPath:indexPath];
@@ -154,7 +154,7 @@
             [loginTextFieldCell.textField setSecureTextEntry:YES];
             loginTextFieldCell.textField.placeholder = LOC(@"Password", @"Password");
             loginTextFieldCell.textField.keyboardType = UIKeyboardTypeDefault;
-            loginTextFieldCell.textField.text = self.loginModel.peppermintMessageSender.password;
+            loginTextFieldCell.textField.text = [PeppermintMessageSender sharedInstance].password;
             cell = loginTextFieldCell;
         } else if (indexPath.row == ROW_PASSWORD_EMPTY_VALIDATION) {
             InformationTextTableViewCell *informationTextTableViewCell = [CellFactory cellInformationTextTableViewCellFromTable:tableView forIndexPath:indexPath];
@@ -171,7 +171,7 @@
         [loginTextFieldCell.textField setSecureTextEntry:NO];
         loginTextFieldCell.textField.placeholder = LOC(@"Your Surname",@"Your Surname");
         loginTextFieldCell.textField.keyboardType = UIKeyboardTypeAlphabet;
-        loginTextFieldCell.textField.text = self.loginModel.peppermintMessageSender.surname;
+        loginTextFieldCell.textField.text = [PeppermintMessageSender sharedInstance].surname;
         cell = loginTextFieldCell;
       } else if (indexPath.row == ROW_SURNAME_EMPTY_VALIDATION) {
         InformationTextTableViewCell *informationTextTableViewCell = [CellFactory cellInformationTextTableViewCellFromTable:tableView forIndexPath:indexPath];
@@ -236,32 +236,32 @@
     NSString *text = loginTextCell.textField.text;
     NSInteger index = indexPath.section;
     if(index == INDEX_NAME) {
-        self.loginModel.peppermintMessageSender.name = text;
+        [PeppermintMessageSender sharedInstance].name = text;
         [self validateCellForName:loginTextCell];
     } else if (index == INDEX_EMAIL) {
-        self.loginModel.peppermintMessageSender.email = text;
+        [PeppermintMessageSender sharedInstance].email = text;
         [self validateCellForEmail:loginTextCell];
     } else if (index == INDEX_PASSWORD) {
-        self.loginModel.peppermintMessageSender.password = text;
+        [PeppermintMessageSender sharedInstance].password = text;
         [self validateCellForPassword:loginTextCell];
     } else if (index == INDEX_SURNAME) {
-      self.loginModel.peppermintMessageSender.surname = text;
+      [PeppermintMessageSender sharedInstance].surname = text;
       [self validateCellForSurname:loginTextCell];
     }
+}
+
+-(void) doneButtonPressed {
+    [activeTextField resignFirstResponder];
 }
 
 #pragma mark - Validation
 
 -(void) validateCellForName:(LoginTextFieldTableViewCell*) cell {
-    PeppermintMessageSender *sender = self.loginModel.peppermintMessageSender;
+    PeppermintMessageSender *sender = [PeppermintMessageSender sharedInstance];
     isValidNameEmptyValidation = sender.name.length > 0;
     
     [self validateDoneButton];
     [cell setValid:isValidNameEmptyValidation];
-  
-  if (isValidNameEmptyValidation && sender.surname.length > 0) {
-    sender.surname = [@[sender.name, sender.surname] componentsJoinedByString:@" "];
-  }
   
     NSMutableArray *indexpathsToReload = [NSMutableArray new];
     [indexpathsToReload addObject:[NSIndexPath indexPathForItem:ROW_NAME_EMPTY_VALIDATION inSection:INDEX_NAME]];
@@ -269,7 +269,7 @@
 }
 
 -(void) validateCellForSurname:(LoginTextFieldTableViewCell*) cell {
-  PeppermintMessageSender *sender = self.loginModel.peppermintMessageSender;
+  PeppermintMessageSender *sender = [PeppermintMessageSender sharedInstance];
   isValidSurnameEmptyValidation = sender.surname.length > 0;
   
   [self validateDoneButton];
@@ -281,7 +281,7 @@
 }
 
 -(void) validateCellForEmail:(LoginTextFieldTableViewCell*) cell {
-    PeppermintMessageSender *sender = self.loginModel.peppermintMessageSender;
+    PeppermintMessageSender *sender = [PeppermintMessageSender sharedInstance];
     isValidEmailEmptyValidation = sender.email.length > 0;
     isValidEmailFormatValidation = [sender.email isValidEmail];
     
@@ -295,7 +295,7 @@
 }
 
 -(void) validateCellForPassword:(LoginTextFieldTableViewCell*) cell {
-    PeppermintMessageSender *sender = self.loginModel.peppermintMessageSender;
+    PeppermintMessageSender *sender = [PeppermintMessageSender sharedInstance];
     isValidPasswordEmptyValidation = sender.password.length > 0 ;
     isValidPassowrdLengthValidation = [sender.password isPasswordLengthValid];
     
@@ -310,7 +310,7 @@
 }
 
 -(void) validateDoneButton {
-    self.doneLabel.enabled = self.doneButton.enabled = self.loginModel.peppermintMessageSender.isValid;
+    self.doneLabel.enabled = self.doneButton.enabled = [PeppermintMessageSender sharedInstance].isValid;
 }
 
 #pragma mark - Navigation
@@ -321,8 +321,8 @@
 
 -(IBAction) doneButtonPressed:(id)sender {
     [activeTextField resignFirstResponder];
-    if([self.loginModel.peppermintMessageSender isValid]) {
-        [self.loginModel performEmailLogin];
+    if([[PeppermintMessageSender sharedInstance] isValid]) {
+        [self.loginModel performEmailSignUp];
     } else {
         NSString *title = LOC(@"Information", @"Title Message");
         NSString *message = LOC(@"Register Information Missing", @"Information Message");

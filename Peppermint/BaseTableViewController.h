@@ -10,4 +10,6 @@
 
 @interface BaseTableViewController : UITableViewController
 
+-(void) operationFailure:(NSError*) error;
+
 @end

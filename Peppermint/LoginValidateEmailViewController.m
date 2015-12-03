@@ -55,7 +55,7 @@
     if (indexPath.row == ROW_RESEND) {
         LoginValidateEmailTableViewCell *loginValidateEmailTableViewCell = [CellFactory cellLoginValidateEmailTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
         
-        NSString *informationText = [NSString stringWithFormat:LOC(@"Validate Information Format",@"Validate Information"), self.loginModel.peppermintMessageSender.email];
+        NSString *informationText = [NSString stringWithFormat:LOC(@"Validate Information Format",@"Validate Information"), [PeppermintMessageSender sharedInstance].email];
         loginValidateEmailTableViewCell.informationLabel.text = informationText;
         [loginValidateEmailTableViewCell.informationLabel sizeToFit];
         loginValidateEmailTableViewCell.buttonTitleLabel.text = LOC(@"Resend Verification",@"Resend Verification");
@@ -76,17 +76,17 @@
 
 -(void) resendValidation {
     [self.loginModel.delegate loginLoading];
-    [accountModel resendVerificationEmail:self.loginModel.peppermintMessageSender];
+    [accountModel resendVerificationEmail:[PeppermintMessageSender sharedInstance]];
 }
 
 #pragma mark - Check for Email Verification
 
 -(void) checkIfAccountIsVerified {
-    if(self.loginModel.peppermintMessageSender.isEmailVerified) {
+    if([PeppermintMessageSender sharedInstance].isEmailVerified) {
         [self.loginModel.delegate loginSucceed];
-    } else if (self.loginModel.peppermintMessageSender.accountId)  {
+    } else if ([PeppermintMessageSender sharedInstance].accountId)  {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-        [accountModel refreshAccountInfo:self.loginModel.peppermintMessageSender];
+        [accountModel refreshAccountInfo:[PeppermintMessageSender sharedInstance]];
     } else {
         NSLog(@"User seems do not have account Id!");
     }
@@ -128,7 +128,7 @@
 
 -(IBAction) doneButtonPressed:(id)sender {
     accountModel.delegate = nil;
-    [self.loginModel.peppermintMessageSender clearSender];
+    [[PeppermintMessageSender sharedInstance] clearSender];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 

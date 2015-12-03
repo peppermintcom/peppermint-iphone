@@ -56,7 +56,7 @@
 }
 
 -(BOOL) isValid {
-    BOOL result = self.nameSurname.length > 0
+    BOOL result = [self nameSurname].length > 0
     && self.email.length > 0
     && [self.email isValidEmail];
     
@@ -81,12 +81,11 @@
 
 -(NSString*) nameSurname {
     NSString *nameSurname = [NSString stringWithFormat:@"%@ %@",
-                             self.name ? self.name : @"",
-                             self.surname ? self.surname : @""
+                             self.name.length > 0 ? self.name : @"",
+                             self.surname.length > 0 ? self.surname : @""
                              ];
-    nameSurname = [nameSurname stringByTrimmingCharactersInSet:
-     [NSCharacterSet whitespaceCharacterSet]];
-    nameSurname = [nameSurname capitalizedString];    
+    nameSurname = [nameSurname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    nameSurname = [nameSurname capitalizedString];
     return nameSurname;
 }
 

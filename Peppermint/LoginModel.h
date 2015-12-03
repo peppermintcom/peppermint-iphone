@@ -20,10 +20,9 @@
 
 @interface LoginModel : BaseModel <GIDSignInDelegate, GIDSignInUIDelegate, AccountModelDelegate>
 @property (weak, nonatomic) UIViewController<LoginModelDelegate>* delegate;
-@property (strong, nonatomic) PeppermintMessageSender *peppermintMessageSender;
 
 -(void) performGoogleLogin;
 -(void) performFacebookLogin;
--(void) performEmailLogin;
+-(void) performEmailSignUp;
 
 @end

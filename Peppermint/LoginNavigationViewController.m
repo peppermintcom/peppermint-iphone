@@ -41,7 +41,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self dismissViewControllerAnimated:YES completion:^{
             [self loginFinishedLoading];
-            PeppermintMessageSender *peppermintMessageSender = self.loginModel.peppermintMessageSender;
+            PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
             [self.loginDelegate loginSucceedWithMessageSender:peppermintMessageSender];
         }];
     });

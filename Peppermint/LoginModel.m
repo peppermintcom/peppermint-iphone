@@ -13,12 +13,13 @@
 
 @implementation LoginModel {
     AccountModel *accountModel;
+    PeppermintMessageSender *peppermintMessageSender;
 }
 
 -(id) init {
     self = [super init];
     if(self) {
-        self.peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+        peppermintMessageSender = [PeppermintMessageSender sharedInstance];
     }
     return self;
 }
@@ -63,20 +64,20 @@
             [self.delegate operationFailure:error];
         }
     } else {
-        self.peppermintMessageSender.loginSource = LOGINSOURCE_GOOGLE;
+        peppermintMessageSender.loginSource = LOGINSOURCE_GOOGLE;
         if(user.profile.name) {
-            self.peppermintMessageSender.nameSurname = user.profile.name;
+            peppermintMessageSender.nameSurname = user.profile.name;
         }
         if(user.profile.email) {
-            self.peppermintMessageSender.email = user.profile.email;
+            peppermintMessageSender.email = user.profile.email;
         }
       
-        self.peppermintMessageSender.subject = LOC(@"Mail Subject",@"Default Mail Subject");
+        peppermintMessageSender.subject = LOC(@"Mail Subject",@"Default Mail Subject");
 
         NSURL *imageUrl = [user.profile imageURLWithDimension:100];
-        self.peppermintMessageSender.imageData = [NSData dataWithContentsOfURL:imageUrl];
-        if([self.peppermintMessageSender isValid]) {
-            [self.peppermintMessageSender save];
+        peppermintMessageSender.imageData = [NSData dataWithContentsOfURL:imageUrl];
+        if([peppermintMessageSender isValid]) {
+            [peppermintMessageSender save];
             [self.delegate loginSucceed];
         }
         
@@ -127,23 +128,23 @@
                  [self.delegate operationFailure:error];
              } else {
                  NSDictionary *infoDictionary = (NSDictionary*)result;
-                 self.peppermintMessageSender.loginSource = LOGINSOURCE_FACEBOOK;
+                 peppermintMessageSender.loginSource = LOGINSOURCE_FACEBOOK;
                  if([infoDictionary.allKeys containsObject:@"name"]) {
-                     self.peppermintMessageSender.nameSurname = [result valueForKey:@"name"];
+                     peppermintMessageSender.nameSurname = [result valueForKey:@"name"];
                  }
                  if([infoDictionary.allKeys containsObject:@"email"]) {
-                     self.peppermintMessageSender.email = [result valueForKey:@"email"];
+                     peppermintMessageSender.email = [result valueForKey:@"email"];
                  }
                  if([infoDictionary.allKeys containsObject:@"picture"]) {
                      NSString *urlPath = [result valueForKeyPath:@"picture.data.url"];
                      NSURL *url = [NSURL URLWithString:urlPath];
                      NSData *data = [NSData dataWithContentsOfURL:url];
-                     self.peppermintMessageSender.imageData = data;
+                     peppermintMessageSender.imageData = data;
                  }
-                 self.peppermintMessageSender.subject = LOC(@"Mail Subject",@"Default Mail Subject");
+                 peppermintMessageSender.subject = LOC(@"Mail Subject",@"Default Mail Subject");
                  
-                 if([self.peppermintMessageSender isValid]) {
-                     [self.peppermintMessageSender save];
+                 if([peppermintMessageSender isValid]) {
+                     [peppermintMessageSender save];
                      [self.delegate loginSucceed];
                  } else {
                      [self showErrorForInformationFromFacebook];
@@ -165,15 +166,15 @@
 
 #pragma mark - Email Login
 
--(void) performEmailLogin {    
-    if(self.peppermintMessageSender.isValid) {
-        self.peppermintMessageSender.loginSource = LOGINSOURCE_PEPPERMINT;
-        self.peppermintMessageSender.imageData = [NSData new];
-        self.peppermintMessageSender.subject = LOC(@"Mail Subject",@"Default Mail Subject");
+-(void) performEmailSignUp {
+    if(peppermintMessageSender.isValid) {
+        peppermintMessageSender.loginSource = LOGINSOURCE_PEPPERMINT;
+        peppermintMessageSender.imageData = [NSData new];
+        peppermintMessageSender.subject = LOC(@"Mail Subject",@"Default Mail Subject");
         accountModel = [AccountModel sharedInstance];
         accountModel.delegate = self;
         [self.delegate loginLoading];
-        [accountModel authenticate:self.peppermintMessageSender];
+        [accountModel authenticate:peppermintMessageSender];
     } else {
         [self.delegate operationFailure:[NSError errorWithDomain:@"peppermintMessageSender is not valid!" code:-1 userInfo:nil]];
     }
@@ -188,17 +189,17 @@
 
 -(void) userRegisterSuccessWithEmail:(NSString*) email password:(NSString *)password jwt:(NSString *)jwt {
     [self.delegate loginFinishedLoading];
-    self.peppermintMessageSender.email = email;
-    self.peppermintMessageSender.password = password;
-    self.peppermintMessageSender.jwt = jwt;
-    self.peppermintMessageSender.isEmailVerified = NO;
-    [self.peppermintMessageSender save];
+    peppermintMessageSender.email = email;
+    peppermintMessageSender.password = password;
+    peppermintMessageSender.jwt = jwt;
+    peppermintMessageSender.isEmailVerified = NO;
+    [peppermintMessageSender save];
     [self.delegate loginRequireEmailVerification];
 }
 
 -(void) userLogInSuccessWithEmail:(NSString*) email {
     [self.delegate loginFinishedLoading];
-    [self.peppermintMessageSender save];
+    [peppermintMessageSender save];
     [self.delegate loginSucceed];
 }
 

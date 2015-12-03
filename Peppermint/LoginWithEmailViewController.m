@@ -13,9 +13,10 @@
 #import "SignUpWithEmailViewController.h"
 #import "AWSService.h"
 #import "LoginNavigationViewController.h"
+#import "ConnectionModel.h"
 
-#define WelcomeBackSegue @"WelcomeBackSegue"
-#define SEGUE_SIGNUP_WITH_EMAIL      @"SignUpWithEmailSegue"
+#define SEGUE_WELCOME_BACK              @"WelcomeBackSegue"
+#define SEGUE_SIGNUP_WITH_EMAIL         @"SignUpWithEmailSegue"
 
 @interface LoginWithEmailViewController () <LoginTextFieldTableViewCellDelegate, AccountModelDelegate>
 
@@ -33,15 +34,14 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [[AccountModel sharedInstance] setDelegate:self];
-  
   self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background_gradient"]];
   self.tableView.tableHeaderView.backgroundColor = [UIColor clearColor];
   
-  [self setupEmailCell];
-  [self setupPasswordCell];
-  
-  self.descriptionLabel.text = self.loginModel.peppermintMessageSender.email;
+  self.descriptionLabel.text = [PeppermintMessageSender sharedInstance].email;
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+  [[AccountModel sharedInstance] setDelegate:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -50,77 +50,23 @@
   [self.passwordCell.textField becomeFirstResponder];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-  if ([segue.destinationViewController isKindOfClass:[LoginWithEmailViewController class]]) {
-    LoginWithEmailViewController * login = (LoginWithEmailViewController *)segue.destinationViewController;
-    login.loginModel = self.loginModel;
-  }  else if ([segue.destinationViewController isKindOfClass:[SignUpWithEmailViewController class]]) {
-    SignUpWithEmailViewController * signUp = (SignUpWithEmailViewController *)segue.destinationViewController;
-    signUp.loginModel = self.loginModel;
-  }
-}
+#pragma mark- LoginTextFieldTableViewCellDelegate
 
-- (void)setupEmailCell {
-  if (!self.emailCell) {
-    return;
-  }
-  
-}
-
-- (void)setupPasswordCell {
-  if (!self.passwordCell) {
-    return;
-  }
-  
-  [self.passwordCell.textField becomeFirstResponder];
-}
-
-- (IBAction)backButtonPressed:(id)sender {
-  [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (IBAction)continuePressed:(id)sender {
-  if (isValidEmailEmptyValidation && isValidEmailFormatValidation) {
-    PeppermintMessageSender *sender = self.loginModel.peppermintMessageSender;
-    sender.email = self.emailCell.textField.text;
-    
-    [[AccountModel sharedInstance] checkEmailIsRegistered:sender.email];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-  } else {
-    [[[UIAlertView alloc] initWithTitle:LOC(@"Invalid email", nil) message:nil delegate:nil cancelButtonTitle:LOC(@"OK", nil) otherButtonTitles:nil] show];
-  }
-}
-
--(void) emailChecked:(BOOL)free {
-  [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-
-  if (free) {
-    [self performSegueWithIdentifier:SEGUE_SIGNUP_WITH_EMAIL sender:nil];
-  } else {
-    [self performSegueWithIdentifier:WelcomeBackSegue sender:nil];
-  }
-}
-
-- (void)operationFailure:(NSError *)error {
-  [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+- (void)updatedTextFor:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    LoginTextFieldTableViewCell* loginTextCell = (LoginTextFieldTableViewCell*) cell;
+    if (loginTextCell == self.emailCell) {
+        isValidEmailEmptyValidation = self.emailCell.textField.text.length > 0;
+        isValidEmailFormatValidation = [self.emailCell.textField.text isValidEmail];
+        
+        [self.emailCell setValid:isValidEmailEmptyValidation && isValidEmailFormatValidation];
+    } else if (loginTextCell == self.passwordCell) {
+        isValidPasswordValidation = [self.passwordCell.textField.text isPasswordLengthValid];
+        [self.passwordCell setValid:isValidPasswordValidation];
+    }
 }
 
 -(void) doneButtonPressed {
     [self loginPressed:nil];
-}
-
-- (IBAction)loginPressed:(id)sender {
-  if (isValidPasswordValidation) {
-    PeppermintMessageSender *sender = self.loginModel.peppermintMessageSender;
-    sender.password = self.passwordCell.textField.text;
-    
-    [[AccountModel sharedInstance] logUserIn:sender.email password:sender.password];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-  }
-}
-
-- (IBAction)forgetPasswordPressed:(id)sender {
-    NSLog(@"forgetPasswordPressed...");
 }
 
 #pragma mark - AccountModelDelegate
@@ -143,19 +89,71 @@
     NSLog(@"accountInfoRefreshSuccess");
 }
 
-#pragma mark- LoginTextFieldTableViewCellDelegate
-
-- (void)updatedTextFor:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-  LoginTextFieldTableViewCell* loginTextCell = (LoginTextFieldTableViewCell*) cell;
-  if (loginTextCell == self.emailCell) {
-    isValidEmailEmptyValidation = self.emailCell.textField.text.length > 0;
-    isValidEmailFormatValidation = [self.emailCell.textField.text isValidEmail];
+-(void) emailChecked:(BOOL)free {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     
-    [self.emailCell setValid:isValidEmailEmptyValidation && isValidEmailFormatValidation];
-  } else if (loginTextCell == self.passwordCell) {
-    isValidPasswordValidation = [self.passwordCell.textField.text isPasswordLengthValid];
-    [self.passwordCell setValid:isValidPasswordValidation];
+    if (free) {
+        [self performSegueWithIdentifier:SEGUE_SIGNUP_WITH_EMAIL sender:nil];
+    } else {
+        [self performSegueWithIdentifier:SEGUE_WELCOME_BACK sender:nil];
+    }
+}
+
+- (void)operationFailure:(NSError *)error {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [super operationFailure:error];
+}
+
+#pragma mark - Forget Password
+
+- (IBAction)forgetPasswordPressed:(id)sender {
+    NSLog(@"forgetPasswordPressed...");
+}
+
+#pragma mark - Navigation
+
+- (IBAction)backButtonPressed:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)continuePressed:(id)sender {
+    if (![ConnectionModel sharedInstance].isInternetReachable) {
+        NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorNotConnectedToInternet userInfo:nil];
+        [self operationFailure:error];
+    } else if (isValidEmailEmptyValidation && isValidEmailFormatValidation) {
+        PeppermintMessageSender *sender = [PeppermintMessageSender sharedInstance];
+        sender.email = self.emailCell.textField.text;
+        [[AccountModel sharedInstance] checkEmailIsRegistered:sender.email];
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    } else {
+        [[[UIAlertView alloc] initWithTitle:LOC(@"Invalid email", nil) message:nil delegate:nil cancelButtonTitle:LOC(@"OK", nil) otherButtonTitles:nil] show];
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+  if ([segue.destinationViewController isKindOfClass:[LoginWithEmailViewController class]]) {
+    LoginWithEmailViewController * login = (LoginWithEmailViewController *)segue.destinationViewController;
+    login.loginModel = self.loginModel;
+  }  else if ([segue.destinationViewController isKindOfClass:[SignUpWithEmailViewController class]]) {
+    SignUpWithEmailViewController * signUp = (SignUpWithEmailViewController *)segue.destinationViewController;
+    signUp.loginModel = self.loginModel;
   }
 }
+
+
+- (IBAction)loginPressed:(id)sender {
+  if (isValidPasswordValidation) {
+    PeppermintMessageSender *sender = [PeppermintMessageSender sharedInstance];
+    sender.password = self.passwordCell.textField.text;
+    
+    [[AccountModel sharedInstance] logUserIn:sender.email password:sender.password];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+  }
+}
+
+
+
+
+
 
 @end

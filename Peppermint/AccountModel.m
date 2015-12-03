@@ -36,7 +36,7 @@
     User *user = [User new];
     user.full_name = cachedSender.nameSurname;
     user.email = cachedSender.email;
-    user.password = cachedSender.password;
+    user.password = cachedSender.password;    
     [awsService registerAccount:user];
 }
 
@@ -70,6 +70,7 @@ SUBSCRIBE(NetworkFailure) {
 
 SUBSCRIBE(AccountLoginIsSuccessful) {
     if([event.user.email isEqualToString:cachedSender.email]) {
+        cachedSender.nameSurname = event.user.full_name;
         [self.delegate userLogInSuccessWithEmail:cachedSender.email];
     }
 }
