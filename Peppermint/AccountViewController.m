@@ -10,10 +10,10 @@
 #import "AppDelegate.h"
 #import "LoginNavigationViewController.h"
 
-int NUMBER_OF_OPTIONS           = 2;
+int NUMBER_OF_OPTIONS           = 1;
 int OPTION_DISPLAY_NAME         = 0;
-int OPTION_SIGNATURE            = 0;
-int OPTION_LOG_OUT              = 1;
+int OPTION_SUBJECT              = 0;
+int OPTION_LOG_OUT              = 0;
 
 @interface AccountViewController () <UIAlertViewDelegate, LoginNavigationViewControllerDelegate>
 
@@ -58,16 +58,16 @@ int OPTION_LOG_OUT              = 1;
     switch ([PeppermintMessageSender sharedInstance].loginSource) {
         case LOGINSOURCE_FACEBOOK:
         case LOGINSOURCE_GOOGLE:
+            OPTION_SUBJECT      = -2;
             OPTION_DISPLAY_NAME = -1;
-            OPTION_SIGNATURE = 0;
-            OPTION_LOG_OUT = 1;
-            NUMBER_OF_OPTIONS = 2;
+            OPTION_LOG_OUT      = 0;
+            NUMBER_OF_OPTIONS   = 1;
             break;
         case LOGINSOURCE_PEPPERMINT:
+            OPTION_SUBJECT      = -1;
             OPTION_DISPLAY_NAME = 0;
-            OPTION_SIGNATURE = 1;
-            OPTION_LOG_OUT = 2;
-            NUMBER_OF_OPTIONS = 3;
+            OPTION_LOG_OUT      = 1;
+            NUMBER_OF_OPTIONS   = 2;
             break;
         default:
             break;
@@ -114,7 +114,7 @@ int OPTION_LOG_OUT              = 1;
         logOutCell.loginIconImageView.image = nil;
         logOutCell.loginLabel.text = LOC(@"Log Out", @"Title");
         logOutCell.loginLabel.textColor = [UIColor googleLoginColor];
-    } else if (index == OPTION_SIGNATURE) {
+    } else if (index == OPTION_SUBJECT) {
       logOutCell.loginIconImageViewWidthConstraint.constant = 0;
       logOutCell.loginIconImageView.image = nil;
       logOutCell.loginLabel.text = LOC(@"Subject", nil);
