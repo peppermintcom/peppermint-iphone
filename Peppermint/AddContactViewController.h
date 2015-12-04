@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CustomContactModel.h"
+#import "BaseTableViewController.h"
 
-@interface AddContactViewController : UITableViewController
+@interface AddContactViewController : BaseTableViewController
 
 @property (weak, nonatomic) IBOutlet UITextField * firstNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField * lastNameTextField;
@@ -19,6 +21,5 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveContactBarButtonItem;
 @property (weak, nonatomic) IBOutlet UILabel *explanationLabel;
 
-+ (void)presentAddContactControllerWithCompletion:(void (^)())completion;
-
++ (void)presentAddContactControllerWithText:(NSString*) text;
 @end

@@ -1,14 +1,14 @@
 //
-//  Contact.m
+//  CustomContact.m
 //  Peppermint
 //
 //  Created by Okan Kurtulus on 04/12/15.
 //  Copyright © 2015 Okan Kurtulus. All rights reserved.
 //
 
-#import "Contact.h"
+#import "CustomContact.h"
 
-@implementation Contact
+@implementation CustomContact
 
 // Insert code here to add functionality to your managed object subclass
 

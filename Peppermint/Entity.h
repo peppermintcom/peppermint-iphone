@@ -14,3 +14,4 @@
 #import "RecentContact.h"
 #import "GoogleContact.h"
 #import "CachedMessage.h"
+#import "CustomContact.h"

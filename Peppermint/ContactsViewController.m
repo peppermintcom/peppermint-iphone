@@ -31,6 +31,8 @@
 
 #define MESSAGE_SHOW_DURATION           2
 
+#define SCREEN_HEIGHT_LIMIT             500
+
 @interface ContactsViewController ()
 
 @end
@@ -41,6 +43,7 @@
     BOOL isScrolling;
     MBProgressHUD *_loadingHud;
     BOOL isNewRecordAvailable;
+    BOOL isAddNewContactModalisUp;
 }
 
 - (void)viewDidLoad {
@@ -69,6 +72,7 @@
     isScrolling  = NO;
     [self initHoldToRecordInfoView];
     isNewRecordAvailable = YES;
+    isAddNewContactModalisUp = NO;
     REGISTER();
 }
 
@@ -91,11 +95,16 @@ SUBSCRIBE(ReplyContactIsAdded) {
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if([self checkIfuserIsLoggedIn]) {
-        self.searchContactsTextField.text = self.contactsModel.filterText = @"";
-        activeCellTag = CELL_TAG_RECENT_CONTACTS;
-        [[self loadingHud] show:YES];
-        [self.recentContactsModel refreshRecentContactList];
         [self registerKeyboardActions];
+        if(isAddNewContactModalisUp) {
+            isAddNewContactModalisUp = !isAddNewContactModalisUp;
+            [self cellSelectedWithTag:activeCellTag];
+        } else {
+            self.searchContactsTextField.text = self.contactsModel.filterText = @"";
+            activeCellTag = CELL_TAG_RECENT_CONTACTS;
+            [[self loadingHud] show:YES];
+            [self.recentContactsModel refreshRecentContactList];
+        }
     }
 }
 
@@ -252,7 +261,15 @@ SUBSCRIBE(ReplyContactIsAdded) {
     if(indexPath.section == SECTION_FAST_REPLY_CONTACT) {
         height = CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
     } else if (indexPath.section == SECTION_EMPTY_RESULT) {
-        height = CELL_HEIGHT_EMPTYRESULT_TABLEVIEWCELL;
+        CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+        NSLog(@"Height: %f", screenHeight);
+        
+        height = screenHeight > SCREEN_HEIGHT_LIMIT ? CELL_HEIGHT_EMPTYRESULT_TABLEVIEWCELL : CELL_HEIGHT_EMPTYRESULT_TABLEVIEWCELL / 4;
+        
+        
+        
+        
+        
     } else if (indexPath.section == SECTION_CONTACTS) {
         if (indexPath.row < [self activeContactList].count) {
             PeppermintContact *fastReplyContact = [FastReplyModel sharedInstance].peppermintContact;
@@ -418,7 +435,8 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 -(void) contactInformationButtonPressed {
     if([self isEmptyResultTableViewCellVisible]) {
-        [AddContactViewController presentAddContactControllerWithCompletion:nil];
+        isAddNewContactModalisUp = YES;
+        [AddContactViewController presentAddContactControllerWithText:self.searchContactsTextField.text];
     } else {
         [self cellSelectedWithTag:CELL_TAG_ALL_CONTACTS];
     }
@@ -675,7 +693,10 @@ SUBSCRIBE(ReplyContactIsAdded) {
 -(void)cellSelectedWithTag:(NSUInteger) cellTag {
     [self.searchMenu close];
     [self.searchContactsTextField resignFirstResponder];
-    self.searchContactsTextField.text = self.contactsModel.filterText = @"";
+    
+    if(cellTag != activeCellTag) {
+        self.searchContactsTextField.text = self.contactsModel.filterText = @"";
+    }
     activeCellTag = cellTag;
 
     NSPredicate *itemWithTagPredicate = [NSPredicate predicateWithFormat:@"self.tag == %d", cellTag];

@@ -1,15 +1,15 @@
 //
-//  Contact.m
+//  UIImage_Addition.h
 //  Peppermint
 //
 //  Created by Okan Kurtulus on 04/12/15.
 //  Copyright © 2015 Okan Kurtulus. All rights reserved.
 //
 
-#import "Contact.h"
+#import <UIKit/UIKit.h>
 
-@implementation Contact
+@interface UIImage (UIImage_Addition)
 
-// Insert code here to add functionality to your managed object subclass
+- (UIImage *)fixOrientation;
 
 @end

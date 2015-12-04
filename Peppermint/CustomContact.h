@@ -1,5 +1,5 @@
 //
-//  GoogleContact.h
+//  CustomContact.h
 //  Peppermint
 //
 //  Created by Okan Kurtulus on 04/12/15.
@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface GoogleContact : Contact
+@interface CustomContact : Contact
 
 // Insert code here to declare functionality of your managed object subclass
 
@@ -19,4 +19,4 @@ NS_ASSUME_NONNULL_BEGIN
 
 NS_ASSUME_NONNULL_END
 
-#import "GoogleContact+CoreDataProperties.h"
+#import "CustomContact+CoreDataProperties.h"

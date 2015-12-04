@@ -8,6 +8,7 @@
 
 #import "ContactsModel.h"
 #import "GoogleContactsModel.h"
+#import "CustomContactModel.h"
 
 #define ContactsOperationQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
 
@@ -171,9 +172,15 @@
                      }
                  }
                  
+                 //Google Contacts
                  NSArray *googleContactsArray =
                  [GoogleContactsModel peppermintContactsArrayWithFilterText:self.filterText];
                  [peppermintContactsArray addObjectsFromArray:googleContactsArray];
+                 
+                 //CustomContacts
+                 NSArray *customContactsArray =
+                 [CustomContactModel peppermintContactsArrayWithFilterText:self.filterText];
+                 [peppermintContactsArray addObjectsFromArray:customContactsArray];
                  
                  self.contactList = peppermintContactsArray;
                  NSArray *sortedList = [self.contactList sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
@@ -218,24 +225,41 @@
 
 #pragma mark - Contacts CoreData
 
++(NSPredicate*) contactPredicateWithNameSurname:(NSString*) nameSurname {
+    return [NSPredicate predicateWithFormat:@"self.nameSurname CONTAINS[cd] %@",
+            nameSurname];
+}
+
++(NSPredicate*) contactPredicateWithCommunicationChannel:(CommunicationChannel) communicationChannel {
+    return [NSPredicate predicateWithFormat:@"self.communicationChannel = %@ ", [NSNumber numberWithInt:communicationChannel]];
+}
+
++(NSPredicate*) contactPredicateWithCommunicationChannelAddress:(NSString *)communicationChannelAddress {
+    return [NSPredicate predicateWithFormat:@"self.communicationChannelAddress CONTAINS[cd] %@", communicationChannelAddress];
+}
+
++(NSPredicate*) contactPredicateWithNameSurname:(NSString*) nameSurname communicationChannel:(CommunicationChannel)communicationChannel
+{
+    NSPredicate* namePredicate = [self contactPredicateWithNameSurname:nameSurname];
+    NSPredicate* communicationChannelPredicate = [self contactPredicateWithCommunicationChannel:communicationChannel];
+    return [NSCompoundPredicate andPredicateWithSubpredicates:
+            [NSArray arrayWithObjects:namePredicate, communicationChannelPredicate, nil]];
+}
+
++(NSPredicate*) contactPredicateWithCommunicationChannelAddress:(NSString*)communicationChannelAddress communicationChannel:(CommunicationChannel)communicationChannel
+{
+    NSPredicate* communicationChannelPredicate = [self contactPredicateWithCommunicationChannel:communicationChannel];
+    NSPredicate* communicationChannelAddressPredicate = [self contactPredicateWithCommunicationChannelAddress:communicationChannelAddress];
+    return [NSCompoundPredicate andPredicateWithSubpredicates:
+            [NSArray arrayWithObjects:communicationChannelPredicate, communicationChannelAddressPredicate, nil]];
+}
+
 +(NSPredicate*) contactPredicateWithNameSurname:(NSString*) nameSurname communicationChannelAddress:(NSString*)communicationChannelAddress communicationChannel:(CommunicationChannel)communicationChannel
 {
     NSPredicate* namePredicate = [self contactPredicateWithNameSurname:nameSurname];
     NSPredicate* mailPredicate = [self contactPredicateWithCommunicationChannelAddress:communicationChannelAddress communicationChannel:communicationChannel];
     return [NSCompoundPredicate andPredicateWithSubpredicates:
             [NSArray arrayWithObjects:namePredicate, mailPredicate, nil]];
-}
-
-+(NSPredicate*) contactPredicateWithNameSurname:(NSString*) nameSurname {
-    return [NSPredicate predicateWithFormat:@"self.nameSurname CONTAINS[cd] %@",
-            nameSurname];
-}
-
-+(NSPredicate*) contactPredicateWithCommunicationChannelAddress:(NSString*)communicationChannelAddress communicationChannel:(CommunicationChannel)communicationChannel
-{
-    return [NSPredicate predicateWithFormat:@"self.communicationChannelAddress CONTAINS[cd] %@ AND self.communicationChannel = %@ ",
-            communicationChannelAddress,
-            [NSNumber numberWithInt:communicationChannel]];
 }
 
 @end

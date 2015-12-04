@@ -12,33 +12,41 @@
 #import "PeppermintContact.h"
 #import "AppDelegate.h"
 
+
 @import AssetsLibrary;
 @import MobileCoreServices;
 
-@interface AddContactViewController () <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface AddContactViewController () <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CustomContactModelDelegate>
 
 @property (strong, nonatomic) UIPickerView * countryPickerView;
-@property (strong, nonatomic) NSArray * countriesArray;
 @property (strong, nonatomic) CountryFormatModel * countryFormatModel;
 
 @property (weak, nonatomic) IBOutlet UIImageView * phoneImageView;
 @property (weak, nonatomic) IBOutlet UIImageView * emailImageView;
 @property (weak, nonatomic) IBOutlet UIImageView * avatarImageView;
 
-@property (strong, nonatomic) PeppermintContact * contact;
-
 @end
 
-@implementation AddContactViewController
+@implementation AddContactViewController {
+    NSArray *_countriesArray;
+    CustomContactModel *customContactModel;
+    BOOL hasCustomAvatarImage;
+    int activeServiceCall;
+    NSArray *textFieldsArray;
+}
 
 #pragma mark- Class Methods
 
-+ (void)presentAddContactControllerWithCompletion:(void (^)())completion {
++ (void)presentAddContactControllerWithText:(NSString*) text {
     UIStoryboard * storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
   
-    UIViewController *vc = [storyboard instantiateViewControllerWithIdentifier:VIEWCONTROLLER_ADDCONTACTNAVIGATION];
+    UINavigationController *nvc = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:VIEWCONTROLLER_ADDCONTACTNAVIGATION];
+    
     UIViewController *rootVC = [AppDelegate Instance].window.rootViewController;
-    [rootVC presentViewController:vc animated:YES completion:completion];
+    [rootVC presentViewController:nvc animated:YES completion:^{
+        AddContactViewController *addContactViewController = (AddContactViewController*)nvc.viewControllers.firstObject;
+        addContactViewController.firstNameTextField.text = [text capitalizedString];
+    }];
 }
 
 #pragma mark- Life Cycle
@@ -55,6 +63,7 @@
   self.navigationController.navigationBar.shadowImage = [UIImage new];
   self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
   
+  self.title = LOC(@"New Contact", @"Title");
   _countryPickerView = [[UIPickerView alloc] init];
   _countryPickerView.delegate = self;
   _countryPickerView.dataSource = self;
@@ -62,12 +71,36 @@
   self.countryCodeTextField.delegate = self;
   
   self.countryFormatModel = [[CountryFormatModel alloc] init];
-  self.countriesArray = [self.countryFormatModel countriesList];
   
   self.explanationLabel.text = LOC(@"You can add a phone contact, an email contact or both", @"Information");
   self.saveContactBarButtonItem.enabled = NO;
+    self.saveContactBarButtonItem.title = LOC(@"Save", @"Save operation");
     
-  self.contact = [PeppermintContact new];
+    customContactModel = [CustomContactModel new];
+    customContactModel.delegate = self;
+    hasCustomAvatarImage = NO;
+    
+    [self updateScreen];
+    textFieldsArray = [NSArray arrayWithObjects:
+                       self.firstNameTextField,
+                       self.lastNameTextField,
+                       self.phoneNumberTextField,
+                       self.emailTextField,
+                       nil];
+}
+
+-(void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.firstNameTextField becomeFirstResponder];
+}
+
+#pragma mark - CountriesArray
+
+-(NSArray*) countriesArray {
+    if(!_countriesArray) {
+        _countriesArray = [self.countryFormatModel countriesList];
+    }
+    return _countriesArray;
 }
 
 #pragma mark- IBAction
@@ -77,11 +110,46 @@
 }
 
 - (IBAction)cancelPressed:(id)sender {
-  [self dismissViewControllerAnimated:YES completion:nil];
+    [self.firstNameTextField resignFirstResponder];
+    [self.lastNameTextField resignFirstResponder];
+    [self.phoneNumberTextField resignFirstResponder];
+    [self.emailTextField resignFirstResponder];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)saveContactBarButtonItemPressed:(id)sender {
-    NSLog(@"to save Contact %@", self.contact.nameSurname);
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self saveSuppliedContact];
+}
+
+-(void) saveSuppliedContact {
+    activeServiceCall = 0;
+    if(self.emailImageView.highlighted) {
+        activeServiceCall++;
+    }
+    if(self.phoneImageView.highlighted) {
+        activeServiceCall++;
+    }
+    
+    if(self.emailImageView.highlighted) {
+        PeppermintContact *peppermintContact = [self createdContact];
+        peppermintContact.communicationChannelAddress = self.emailTextField.text;
+        peppermintContact.communicationChannel = CommunicationChannelEmail;
+        [customContactModel save:peppermintContact];
+    }
+    if(self.phoneImageView.highlighted) {
+        PeppermintContact *peppermintContact = [self createdContact];
+        peppermintContact.communicationChannelAddress = self.phoneNumberTextField.text;
+        peppermintContact.communicationChannel = CommunicationChannelSMS;
+        [customContactModel save:peppermintContact];
+    }
+}
+
+-(PeppermintContact*) createdContact {
+    PeppermintContact *peppermintContact = [PeppermintContact new];
+    peppermintContact.avatarImage = hasCustomAvatarImage ? self.avatarImageView.image : [UIImage imageNamed:@"avatar_empty"];
+    peppermintContact.nameSurname = [[NSArray arrayWithObjects:self.firstNameTextField.text, self.lastNameTextField.text, nil] componentsJoinedByString:@" "];
+    return peppermintContact;
 }
 
 - (IBAction)photoGalleryPressed:(id)sender {
@@ -149,23 +217,43 @@
     self.firstNameTextField.text.length > 0
     && self.lastNameTextField.text.length > 0
     && (self.phoneImageView.highlighted || self.emailImageView.highlighted);
+    
+    self.firstNameTextField.returnKeyType =
+    self.lastNameTextField.returnKeyType =
+    self.phoneNumberTextField.returnKeyType =
+    self.emailTextField.returnKeyType =
+    self.saveContactBarButtonItem.enabled ? UIReturnKeyDone : UIReturnKeyNext;
 }
 
 #pragma mark- Text Field delegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    if (textField == self.phoneNumberTextField) {
-        if (string.length == 0 && textField.text.length == 1) {
-            textField.text = @"+";
-        } else if (textField.text.length == 0 && string.length != 0) {
-            textField.text = [NSString stringWithFormat:@"+%@", string];
+    if([string isEqualToString:@"\n"]) {
+        if(self.saveContactBarButtonItem.enabled) {
+            [self saveContactBarButtonItemPressed:nil];
+        } else {
+            NSUInteger index = [textFieldsArray indexOfObject:textField];
+            UIResponder *nextResponder = [textFieldsArray objectAtIndex:(++index%textFieldsArray.count)];
+            if (nextResponder) {
+                [nextResponder becomeFirstResponder];
+            }
+        }
+    } else {
+        if (textField == self.phoneNumberTextField) {
+            if (string.length == 0 && textField.text.length == 1) {
+                textField.text = @"+";
+            } else if (textField.text.length == 0 && string.length != 0) {
+                textField.text = [NSString stringWithFormat:@"+%@", string];
+            } else {
+                [textField setTextContentInRange:range replacementString:string];
+            }
         } else {
             [textField setTextContentInRange:range replacementString:string];
         }
-    } else {
-        [textField setTextContentInRange:range replacementString:string];
+        [self updateScreen];
+        [textField resignFirstResponder];
+        [textField becomeFirstResponder];
     }
-    [self updateScreen];
     return NO;
 }
 
@@ -183,8 +271,8 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
   UIImage * image = info[UIImagePickerControllerOriginalImage];
-  self.contact.avatarImage = image;
-  self.avatarImageView.image = image;
+  self.avatarImageView.image = [image fixOrientation];
+  hasCustomAvatarImage = (image != nil);
   [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -209,5 +297,18 @@
   [self.tableView setContentOffset:CGPointZero animated:NO];
 }
 
+#pragma mark - CustomContactModelDelegate
+
+-(void) customPeppermintContactSavedSucessfully:(PeppermintContact*) peppermintContact {
+    NSLog(@"%@ for %d is saved successFully", peppermintContact.nameSurname, (int)peppermintContact.communicationChannel );
+    if(--activeServiceCall == 0) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [self cancelPressed:nil];
+    }
+}
+
+-(void) customContactAlreadyExists:(PeppermintContact*) peppermintContact {
+    NSLog(@"%@ already exists in db", peppermintContact.nameSurname);
+}
 
 @end

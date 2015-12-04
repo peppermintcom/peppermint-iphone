@@ -792,7 +792,7 @@ email contact or both</string>
                                                         <constraint firstAttribute="height" constant="1" id="gXF-1A-QPF"/>
                                                     </constraints>
                                                 </view>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dv5-8A-bHh">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dv5-8A-bHh">
                                                     <rect key="frame" x="100" y="5" width="212" height="45"/>
                                                     <animations/>
                                                     <constraints>
@@ -804,7 +804,7 @@ email contact or both</string>
                                                         <outlet property="delegate" destination="pyr-NR-460" id="GMi-9H-LcQ"/>
                                                     </connections>
                                                 </textField>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QWV-QQ-i2D">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QWV-QQ-i2D">
                                                     <rect key="frame" x="100" y="50" width="212" height="45"/>
                                                     <animations/>
                                                     <constraints>
@@ -848,7 +848,7 @@ email contact or both</string>
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uHi-Kg-2Nv">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uHi-Kg-2Nv">
                                                     <rect key="frame" x="8" y="0.0" width="252" height="50"/>
                                                     <animations/>
                                                     <constraints>
@@ -897,7 +897,7 @@ email contact or both</string>
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HCM-xd-FfJ">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HCM-xd-FfJ">
                                                     <rect key="frame" x="8" y="0.0" width="252" height="50"/>
                                                     <animations/>
                                                     <constraints>
@@ -947,14 +947,14 @@ email contact or both</string>
                             <outlet property="delegate" destination="pyr-NR-460" id="Agk-cy-hEw"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="New Contact" id="VXO-dv-DKI">
+                    <navigationItem key="navigationItem" title="_New Contact" id="VXO-dv-DKI">
                         <barButtonItem key="leftBarButtonItem" image="cancel" id="ypQ-PY-gae">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="cancelPressed:" destination="pyr-NR-460" id="iGs-5y-pca"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Save" style="plain" id="w7i-KX-d7P">
+                        <barButtonItem key="rightBarButtonItem" title="_Save" style="plain" id="w7i-KX-d7P">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="saveContactBarButtonItemPressed:" destination="pyr-NR-460" id="tiO-Uq-MxI"/>

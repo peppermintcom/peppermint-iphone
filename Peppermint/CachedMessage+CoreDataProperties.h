@@ -2,7 +2,7 @@
 //  CachedMessage+CoreDataProperties.h
 //  Peppermint
 //
-//  Created by Okan Kurtulus on 30/11/15.
+//  Created by Okan Kurtulus on 04/12/15.
 //  Copyright © 2015 Okan Kurtulus. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu

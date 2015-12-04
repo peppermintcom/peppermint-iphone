@@ -103,4 +103,6 @@
 "No Internet connection: Your message will be sent later" = "No Internet connection: Your message will be sent later";
 "Add Contact" = "Add Contact";
 "View All Contacts" = "View All Contacts";
-"You can add a phone contact, an email contact or both" = "You can add a phone contact, an email contact or both";
+"You can add a phone contact, an email contact or both" = "You can add a phone contact, an\nemail contact or both";
+"New Contact" = "New Contact";
+"Save" = "Save";

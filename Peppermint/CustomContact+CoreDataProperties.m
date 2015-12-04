@@ -1,5 +1,5 @@
 //
-//  RecentContact+CoreDataProperties.m
+//  CustomContact+CoreDataProperties.m
 //  Peppermint
 //
 //  Created by Okan Kurtulus on 04/12/15.
@@ -9,10 +9,10 @@
 //  to delete and recreate this implementation file for your updated model.
 //
 
-#import "RecentContact+CoreDataProperties.h"
+#import "CustomContact+CoreDataProperties.h"
 
-@implementation RecentContact (CoreDataProperties)
+@implementation CustomContact (CoreDataProperties)
 
-@dynamic contactDate;
+@dynamic createDate;
 
 @end
