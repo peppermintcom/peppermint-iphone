@@ -38,6 +38,7 @@
 
 - (void)session:(WCSession *)session didReceiveApplicationContext:(NSDictionary<NSString *,id> *)applicationContext {
   NSString * jsonString = applicationContext[@"user"];
+  NSLog(@"%s: %@", __PRETTY_FUNCTION__, jsonString);
   [[A0SimpleKeychain keychain] setString:jsonString forKey:KEYCHAIN_MESSAGE_SENDER];
 }
 

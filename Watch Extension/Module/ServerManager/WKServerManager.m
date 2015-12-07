@@ -39,6 +39,7 @@ NSString * const PPMMandrillEndPointSend = @"messages/send.json";
 
 - (void)sendFileURL:(NSURL *)fileURL recipient:(PeppermintContact *)recipient {
   if (!fileURL) {
+    NSLog(@"file url is nil. In testing purposes sending audio from main bundle...");
     fileURL = [[NSBundle mainBundle] URLForResource:@"begin_record" withExtension:@"mp3"];
   }
   NSData * data = [NSData dataWithContentsOfURL:fileURL];
@@ -56,10 +57,11 @@ NSString * const PPMMandrillEndPointSend = @"messages/send.json";
   mandrillRecipient.type = @"to";
   
   MandrillMessage * message = [MandrillMessage new];
-  message.from_email = sender.email;
-  message.from_name = sender.nameSurname;
+  message.from_email = sender.email ? sender.email : @"noreply@peppermint.com";
+  message.from_name = sender.nameSurname ? sender.nameSurname : @"Peppermint";
   message.to = [@[mandrillRecipient] mutableCopy];
-  message.subject = sender.subject;
+  message.subject = sender.subject ? sender.subject : @"Sending you audio";
+  message.text = @"Here is my audio message";
   message.attachments = [@[attachment] mutableCopy];
   
   MandrillRequest * request = [MandrillRequest new];
@@ -93,9 +95,10 @@ NSString * const PPMMandrillEndPointSend = @"messages/send.json";
   
   NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
-      NSLog(@"error: %@", error);
+      NSLog(@"%s: error: %@",__PRETTY_FUNCTION__, error);
       return;
     }
+    NSLog(@"response: %@", response);
   }];
   
   [postDataTask resume];

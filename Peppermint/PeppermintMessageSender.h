@@ -23,10 +23,13 @@ typedef enum : NSUInteger {
 @property (strong, nonatomic) NSString *nameSurname;
 @property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSString <Optional> * subject;
+@property (strong, nonatomic) NSNumber <Optional> * wcSynchronized;
 
 + (instancetype) sharedInstance;
 
 #if !(TARGET_OS_WATCH)
+@property (strong, nonatomic) NSTimer <Ignore> * watchSynchronizationTimer;
+
 @property (strong, nonatomic) NSData<Ignore> *imageData;
 @property (nonatomic) LoginSource loginSource;
 @property (strong, nonatomic) NSString *password;

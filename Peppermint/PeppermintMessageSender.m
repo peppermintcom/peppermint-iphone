@@ -17,6 +17,7 @@
 
 @interface PeppermintMessageSender () <WCSessionDelegate>
 
+
 @end
 
 @implementation PeppermintMessageSender
@@ -37,14 +38,18 @@
     NSString *jsonString = [[A0SimpleKeychain keychain] stringForKey:KEYCHAIN_MESSAGE_SENDER];
  
     BOOL isJsonStringValid = jsonString.length > 0;
-    if(isJsonStringValid) {
+    if (isJsonStringValid) {
         NSLog(@"\n\n\nCreate from Json: %@\n\n\n", jsonString);
         sender = [[PeppermintMessageSender alloc] initWithString:jsonString error:&error];
         if(error) {
             NSLog(@"JSON init Error : %@", error);
             isJsonStringValid = NO;
         }
-    }    
+#if !(TARGET_OS_WATCH)
+      [sender startTimer];
+#endif
+    }
+
     if(!isJsonStringValid) {
         sender = [PeppermintMessageSender new];
 #if !(TARGET_OS_WATCH)
@@ -68,18 +73,14 @@
 }
 
 -(void) save {
-    NSString *jsonString = [self toJSONString];
-    [[A0SimpleKeychain keychain] setString:jsonString forKey:KEYCHAIN_MESSAGE_SENDER];
-  
-  if (NSClassFromString(@"WCSession")) {
-    if ([WCSession isSupported]) {
-      [[WCSession defaultSession] updateApplicationContext:@{@"user":[self toJSONString]} error:nil];
-    }
-  }
+  NSString *jsonString = [self toJSONString];
+  [[A0SimpleKeychain keychain] setString:jsonString forKey:KEYCHAIN_MESSAGE_SENDER];
 #if !(TARGET_OS_WATCH)
-    [self.imageData writeToURL:[self imageFileUrl] atomically:YES];
+  [self startTimer];
+  [self.imageData writeToURL:[self imageFileUrl] atomically:YES];
 #endif
 }
+
 
 #if !(TARGET_OS_WATCH)
 
@@ -183,6 +184,54 @@
     && !self.isEmailVerified;
 }
 
+- (void)startTimer {
+  if (_watchSynchronizationTimer) {
+    [_watchSynchronizationTimer invalidate];
+    _watchSynchronizationTimer = nil;
+  }
+  
+  if (!self.isValid || _watchSynchronizationTimer.isValid) {
+    return;
+  }
+
+  [self watchSynchronize];
+  _watchSynchronizationTimer = [NSTimer scheduledTimerWithTimeInterval:360 target:self selector:@selector(watchSynchronize) userInfo:nil repeats:YES];
+}
+
+- (void)stopTimer {
+  [_watchSynchronizationTimer invalidate];
+  _watchSynchronizationTimer = nil;
+}
+
+- (void)watchSynchronize {
+  if (NSClassFromString(@"WCSession")) {
+    if ([WCSession isSupported]) {
+      NSError * err;
+      [[WCSession defaultSession] updateApplicationContext:@{@"user":[self toJSONString]} error:&err];
+      if (err) {
+        self.wcSynchronized = @NO;
+      } else {
+        self.wcSynchronized = @YES;
+        [self stopTimer];
+      }
+    } else {
+      self.wcSynchronized = @YES;
+      [self stopTimer];
+    }
+  } else {
+    self.wcSynchronized = @YES;
+    [self stopTimer];
+  }
+}
+
+- (void)dealloc {
+  [_watchSynchronizationTimer invalidate];
+  _watchSynchronizationTimer = nil;
+}
+
 #endif
+
+#pragma mark- Watch Synchronization
+
 
 @end
