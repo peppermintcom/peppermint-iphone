@@ -66,7 +66,8 @@
     [self initSearchMenu];
     activeCellTag = CELL_TAG_ALL_CONTACTS;
     cachedActiveCellTag = CELL_TAG_ALL_CONTACTS;
-    self.sendingIndicatorView.hidden = YES;
+    self.sendingIndicatorView.hidden = NO;
+    self.sendingInformationLabel.text = @"";
     self.seperatorView.backgroundColor = [UIColor cellSeperatorGray];
     [self initRecordingView];
     isScrolling  = NO;
@@ -102,6 +103,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
         } else {
             self.searchContactsTextField.text = self.contactsModel.filterText = @"";
             activeCellTag = CELL_TAG_RECENT_CONTACTS;
+            self.searchSourceIconImageView.image = [UIImage imageNamed:@"icon_recent"];
             [[self loadingHud] show:YES];
             [self.recentContactsModel refreshRecentContactList];
         }
@@ -177,12 +179,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
 #pragma mark - CellInformationTableViewCell
 
 -(BOOL) isCellInformationTableViewCellVisible {
-    return [self isEmptyResultTableViewCellVisible]
-    ||
-    
-    
-    (activeCellTag != CELL_TAG_ALL_CONTACTS)
-    ;
+    return YES;
 }
 
 #pragma mark - UITableView
@@ -246,7 +243,8 @@ SUBSCRIBE(ReplyContactIsAdded) {
         preparedCell = cell;
     } else if (indexPath.section == SECTION_CELL_INFORMATION) {
         ContactInformationTableViewCell *cell = [CellFactory cellContactInformationTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
-        if([self isEmptyResultTableViewCellVisible]) {
+        
+        if([self isEmptyResultTableViewCellVisible] || activeCellTag == CELL_TAG_ALL_CONTACTS) {
             [cell setViewForAddNewContact];
         } else {
             [cell setViewForShowAllContacts];
@@ -261,15 +259,8 @@ SUBSCRIBE(ReplyContactIsAdded) {
     if(indexPath.section == SECTION_FAST_REPLY_CONTACT) {
         height = CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
     } else if (indexPath.section == SECTION_EMPTY_RESULT) {
-        CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
-        NSLog(@"Height: %f", screenHeight);
-        
-        height = screenHeight > SCREEN_HEIGHT_LIMIT ? CELL_HEIGHT_EMPTYRESULT_TABLEVIEWCELL : CELL_HEIGHT_EMPTYRESULT_TABLEVIEWCELL / 4;
-        
-        
-        
-        
-        
+        BOOL isBigScreen = [UIScreen mainScreen].bounds.size.height > SCREEN_HEIGHT_LIMIT;
+        height = isBigScreen ? CELL_HEIGHT_EMPTYRESULT_TABLEVIEWCELL : CELL_HEIGHT_EMPTYRESULT_TABLEVIEWCELL / 4;        
     } else if (indexPath.section == SECTION_CONTACTS) {
         if (indexPath.row < [self activeContactList].count) {
             PeppermintContact *fastReplyContact = [FastReplyModel sharedInstance].peppermintContact;
@@ -434,7 +425,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
 #pragma mark - ContactInformationTableViewCellDelegate
 
 -(void) contactInformationButtonPressed {
-    if([self isEmptyResultTableViewCellVisible]) {
+    if([self isEmptyResultTableViewCellVisible] || activeCellTag == CELL_TAG_ALL_CONTACTS) {
         isAddNewContactModalisUp = YES;
         [AddContactViewController presentAddContactControllerWithText:self.searchContactsTextField.text];
     } else {
@@ -452,8 +443,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
     [self cellSelectedWithTag:CELL_TAG_RECENT_CONTACTS];
 }
 
--(void) messageStatusIsUpdated:(SendingStatus)sendingStatus withCancelOption:(BOOL)cancelable {
-    self.cancelMessageSendingButton.hidden = !cancelable;
+-(void) messageStatusIsUpdated:(SendingStatus)sendingStatus {
     NSMutableAttributedString *infoAttrText = [NSMutableAttributedString new];
     UIColor *textColor = [UIColor textFieldTintGreen];
     
@@ -461,39 +451,51 @@ SUBSCRIBE(ReplyContactIsAdded) {
         isNewRecordAvailable = YES;
         [infoAttrText addText:LOC(@"Uploading", @"Info") ofSize:13 ofColor:textColor];
         [self messageSendingIndicatorSetMessageIsSending];
+        self.cancelMessageSendingButton.hidden = NO;
     } else if (sendingStatus == SendingStatusStarting) {
         isNewRecordAvailable = NO;
         [infoAttrText addText:LOC(@"Starting", @"Info") ofSize:13 ofColor:textColor];
         [self messageSendingIndicatorSetMessageIsSending];
+        self.cancelMessageSendingButton.hidden = NO;
     } else if (sendingStatus == SendingStatusSending) {
         isNewRecordAvailable = YES;
         [infoAttrText addText:LOC(@"Sending", @"Info") ofSize:13 ofColor:textColor];
         [self messageSendingIndicatorSetMessageIsSending];
+        self.cancelMessageSendingButton.hidden = NO;
+    } else if ( sendingStatus == SendingStatusSendingWithNoCancelOption) {
+        isNewRecordAvailable = YES;
+        [infoAttrText addText:LOC(@"Sending", @"Info") ofSize:15 ofColor:textColor];
+        [self messageSendingIndicatorSetMessageIsSending];
+        self.cancelMessageSendingButton.hidden = YES;
     }  else if (sendingStatus == SendingStatusSent) {
         isNewRecordAvailable = YES;
-        cancelable = NO;
-        [infoAttrText addImageNamed:@"icon_tick" ofSize:21];
+        [infoAttrText addImageNamed:@"icon_tick" ofSize:14];
+        [infoAttrText addText:@"  " ofSize:14 ofColor:textColor];
         [infoAttrText addText:LOC(@"Sent", @"Info") ofSize:21 ofColor:textColor];
         [self performSelector:@selector(messageSendingIsCancelled) withObject:nil afterDelay:MESSAGE_SHOW_DURATION];
+        self.cancelMessageSendingButton.hidden = YES;
     }  else if (sendingStatus == SendingStatusCancelled) {
         isNewRecordAvailable = YES;
         [infoAttrText addText:LOC(@"Cancelled", @"Info") ofSize:19 ofColor:textColor];
         [self messageCancelButtonPressed:nil];
+        self.cancelMessageSendingButton.hidden = YES;
     } else if (sendingStatus == SendingStatusCached) {
         isNewRecordAvailable = YES;
         [infoAttrText addImageNamed:@"icon_warning" ofSize:10];
         [infoAttrText addText:@" " ofSize:13 ofColor:textColor];
         [infoAttrText addText:LOC(@"No Internet connection: Your message will be sent later", @"Cached Info") ofSize:10 ofColor:textColor];
         [self performSelector:@selector(messageSendingIsCancelled) withObject:nil afterDelay:MESSAGE_SHOW_DURATION*2];
+        self.cancelMessageSendingButton.hidden = YES;
     } else if (sendingStatus == SendingStatusError) {
         isNewRecordAvailable = YES;
         [infoAttrText addImageNamed:@"icon_warning" ofSize:13];
         [infoAttrText addText:@" " ofSize:13 ofColor:textColor];
         [infoAttrText addText:LOC(@"An error occured", @"Info") ofSize:13 ofColor:textColor];
         [self performSelector:@selector(messageSendingIsCancelled) withObject:nil afterDelay:MESSAGE_SHOW_DURATION];
+        self.cancelMessageSendingButton.hidden = YES;
     }
     
-    if(cancelable) {
+    if(!self.cancelMessageSendingButton.hidden) {
         [infoAttrText addText:LOC(@"Tap to cancel", @"Info") ofSize:13
                              ofColor:[UIColor peppermintCancelOrange]];
     }
@@ -503,6 +505,18 @@ SUBSCRIBE(ReplyContactIsAdded) {
 #pragma mark - MessageSending status indicators
 
 -(void) setVisibilityOfSendingInfo:(BOOL) show {
+    if(!show) {
+        [UIView animateWithDuration:0.15 animations:^{
+            self.sendingInformationLabel.alpha = 0;
+        } completion:^(BOOL finished) {
+            self.sendingInformationLabel.text = @"";
+            self.sendingInformationLabel.alpha = 1;
+        }];
+    }
+    
+#warning "Remove below part and decide about the animations"
+    
+    /*
     if(show && self.sendingIndicatorView.hidden) {
         self.sendingIndicatorView.alpha = 0;
         self.sendingIndicatorView.hidden = NO;
@@ -521,6 +535,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
         }];
         [self.recentContactsModel refreshRecentContactList];
     }
+    */
 }
 
 -(void) messageSendingIndicatorSetMessageIsSending {
@@ -694,9 +709,6 @@ SUBSCRIBE(ReplyContactIsAdded) {
     [self.searchMenu close];
     [self.searchContactsTextField resignFirstResponder];
     
-    if(cellTag != activeCellTag) {
-        self.searchContactsTextField.text = self.contactsModel.filterText = @"";
-    }
     activeCellTag = cellTag;
 
     NSPredicate *itemWithTagPredicate = [NSPredicate predicateWithFormat:@"self.tag == %d", cellTag];
@@ -764,7 +776,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
     }
     
     [self.tableView layoutIfNeeded];
-    self.tableViewBottomConstraint.constant = keyboardHeight;
+    self.tableViewBottomConstraint.constant = keyboardHeight - self.sendingIndicatorView.frame.size.height;
     [UIView animateWithDuration:0.3 animations:^{
         [self.tableView layoutIfNeeded];
     }];

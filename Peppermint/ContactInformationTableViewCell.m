@@ -39,7 +39,7 @@
     self.titleLabel.layer.shadowOffset = CGSizeMake(0, 0);
     self.titleLabel.layer.shadowColor = [UIColor clearColor].CGColor;
     self.titleLabel.layer.shadowOpacity = 0;
-    self.titleLabel.layer.shadowRadius = 0;
+    self.titleLabel.layer.shadowRadius = 0;    
     [self setText:LOC(@"View All Contacts", @"Title") withImageNamed:@"icon_all" ofSize:17 andColor:[UIColor emailLoginColor]];
 }
 

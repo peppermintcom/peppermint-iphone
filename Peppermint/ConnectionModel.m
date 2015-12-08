@@ -11,6 +11,7 @@
 
 @implementation ConnectionModel {
     AFNetworkReachabilityManager *afNetworkReachabilityManager;
+    AFNetworkReachabilityStatus previousReachabilityStatus;
 }
 
 + (instancetype) sharedInstance {
@@ -26,6 +27,7 @@
     self = [super init];
     if(self) {
         afNetworkReachabilityManager = [AFNetworkReachabilityManager managerForDomain:DOMAIN_PEPPERMINT];
+        previousReachabilityStatus = AFNetworkReachabilityStatusUnknown;
         [self trackConnectionChangeBlock];
         [self beginTracking];
     }
@@ -56,20 +58,22 @@
 
 -(void) trackConnectionChangeBlock {
     [afNetworkReachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        NSLog(@"Connection status updated. Current status is \"%@\"", AFStringFromNetworkReachabilityStatus(status));
         switch (status) {
-            case AFNetworkReachabilityStatusUnknown:
             case AFNetworkReachabilityStatusReachableViaWWAN:
             case AFNetworkReachabilityStatusReachableViaWiFi:
-                //available
-                [[CacheModel sharedInstance] triggerCachedMessages];
+                if(previousReachabilityStatus == AFNetworkReachabilityStatusUnknown
+                   || previousReachabilityStatus == AFNetworkReachabilityStatusNotReachable) {
+                    [[CacheModel sharedInstance] triggerCachedMessages]; //Only trigger when passing from unknown or not connected
+                }
                 break;
+            case AFNetworkReachabilityStatusUnknown:
             case AFNetworkReachabilityStatusNotReachable:
-                //not available
                 break;
             default:
                 break;
         }
-        NSLog(@"Reachability: %@", AFStringFromNetworkReachabilityStatus(status));
+        previousReachabilityStatus = status;
     }];
 }
 

@@ -17,24 +17,28 @@
 -(void) save:(PeppermintContact*) peppermintContact {
     dispatch_async(LOW_PRIORITY_QUEUE, ^() {
         Repository *repository = [Repository beginTransaction];
+        [self addNewCustomForPeppermintContact:peppermintContact inRepository:repository];
         
-        NSPredicate *predicate =
-        [ContactsModel contactPredicateWithNameSurname:peppermintContact.nameSurname
-                           communicationChannelAddress:peppermintContact.communicationChannelAddress
-                                  communicationChannel:peppermintContact.communicationChannel];
+#warning "Remove below lines after the behaviour is sure"
         
+        /*
+         NSPredicate *predicate =
+         [ContactsModel contactPredicateWithNameSurname:peppermintContact.nameSurname
+         communicationChannelAddress:peppermintContact.communicationChannelAddress
+         communicationChannel:peppermintContact.communicationChannel];
         NSArray *matchedCustomContacts = [repository getResultsFromEntity:[CustomContact class]
                                                            predicateOrNil:predicate];
         
         if(matchedCustomContacts.count == 0) {
             [self addNewCustomForPeppermintContact:peppermintContact inRepository:repository];
-        } else if (matchedCustomContacts.count == 1) {
-            repository = nil;
-            [self.delegate customContactAlreadyExists:peppermintContact];
         } else {
             repository = nil;
-            [self promtMultipleRecordsWithSameValueErrorForPeppermintContact:peppermintContact];
-        }
+            if (matchedCustomContacts.count == 1) {
+                [self promtDuplicateRecord:peppermintContact];
+            } else {
+                [self promtMultipleRecordsWithSameValueErrorForPeppermintContact:peppermintContact];
+            }
+        }*/
     });
 }
 
@@ -46,6 +50,24 @@
                                   @"communicationChannel", [NSNumber numberWithInt:peppermintContact.communicationChannel],
                                   nil];
         NSString *domain = @"More than one object exists in Db with same predicate";
+        NSError *err = [NSError errorWithDomain:domain code:-1 userInfo:userInfo];
+        [self.delegate operationFailure:err];
+    });
+}
+
+-(void) promtDuplicateRecord:(PeppermintContact*) peppermintContact {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSString *errorMessage =
+        [NSString stringWithFormat:LOC(@"Contact exists format", @"Description"), peppermintContact.communicationChannelAddress];
+        
+        
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  @"nameSurname",peppermintContact.nameSurname,
+                                  @"communicationChannelAddress", peppermintContact.communicationChannelAddress,
+                                  @"communicationChannel", [NSNumber numberWithInt:peppermintContact.communicationChannel],
+                                  errorMessage, NSLocalizedDescriptionKey,
+                                  nil];
+        NSString *domain = @"This record already exists in Db";
         NSError *err = [NSError errorWithDomain:domain code:-1 userInfo:userInfo];
         [self.delegate operationFailure:err];
     });

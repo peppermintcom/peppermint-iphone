@@ -250,9 +250,12 @@
         } else {
             [textField setTextContentInRange:range replacementString:string];
         }
+        UIReturnKeyType returnKeyType = textField.returnKeyType;
         [self updateScreen];
-        [textField resignFirstResponder];
-        [textField becomeFirstResponder];
+        if(returnKeyType != textField.returnKeyType) {
+            [textField resignFirstResponder];
+            [textField becomeFirstResponder];
+        }
     }
     return NO;
 }
@@ -307,8 +310,9 @@
     }
 }
 
--(void) customContactAlreadyExists:(PeppermintContact*) peppermintContact {
-    NSLog(@"%@ already exists in db", peppermintContact.nameSurname);
+-(void) operationFailure:(NSError *)error {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [super operationFailure:error];
 }
 
 @end

@@ -26,6 +26,10 @@
 
 #pragma mark - UITextFieldDelegate
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    [self.delegate updatedTextFor:self atIndexPath:self.indexPath];
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
     if([string isEqualToString:DONE_STRING]) {
@@ -48,12 +52,16 @@
 }
 
 -(void) setValid:(BOOL) isValid {
+    return;
+#warning "If it will not come settings to isValid view. These below code can be deleted"
+/*
     if(isValid) {
         self.coverView.layer.borderWidth = 0;
     } else {
-        self.coverView.layer.borderWidth = 3;
+        self.coverView.layer.borderWidth = 0;
         self.coverView.layer.borderColor = [UIColor warningColor].CGColor;
     }
+*/
 }
 
 @end

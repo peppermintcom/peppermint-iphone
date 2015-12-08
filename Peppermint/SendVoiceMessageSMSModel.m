@@ -25,7 +25,7 @@
         if([self isServiceAvailable]) {
             [super sendVoiceMessageWithData:data withExtension:extension];
             self.sendingStatus = SendingStatusUploading;
-            [self.delegate messageStatusIsUpdated:SendingStatusUploading withCancelOption:YES];
+            [self.delegate messageStatusIsUpdated:self.sendingStatus];
             [awsModel startToUploadData:data ofType:[self typeForExtension:extension]];
         } else {
             NSLog(@"Could not proceeed, cos device does not support!");
@@ -58,8 +58,11 @@
         smsComposerVC.body =  [NSString stringWithFormat:LOC(@"SMS Body Format", @"SMS Body Format"), url];
         [smsComposerVC disableUserAttachments];
         self.sendingStatus = SendingStatusUploading;
-        [self.delegate messageStatusIsUpdated:SendingStatusUploading withCancelOption:NO];
-        [rootViewController presentViewController:smsComposerVC animated:YES completion:nil];
+        [self.delegate messageStatusIsUpdated:self.sendingStatus];
+        weakself_create();
+        [rootViewController presentViewController:smsComposerVC animated:YES completion:^{
+            weakSelf.sendingStatus = SendingStatusSendingWithNoCancelOption;
+        }];
     }
 }
 
@@ -70,11 +73,11 @@
     switch (result) {
         case MessageComposeResultSent:
             self.sendingStatus = SendingStatusSent;
-            [self.delegate messageStatusIsUpdated:SendingStatusSent withCancelOption:NO];
+            [self.delegate messageStatusIsUpdated:self.sendingStatus];
             break;
         case MessageComposeResultCancelled:
             self.sendingStatus = SendingStatusCancelled;
-            [self.delegate messageStatusIsUpdated:SendingStatusCancelled withCancelOption:NO];
+            [self.delegate messageStatusIsUpdated:self.sendingStatus];
             break;
         case MessageComposeResultFailed:
             self.sendingStatus = SendingStatusError;
@@ -91,7 +94,7 @@
 
 -(void) messagePrepareIsStarting {
     self.sendingStatus = SendingStatusStarting;
-    [self.delegate messageStatusIsUpdated:SendingStatusStarting withCancelOption:YES];
+    [self.delegate messageStatusIsUpdated:self.sendingStatus];
 }
 
 @end

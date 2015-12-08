@@ -14,13 +14,13 @@
     self = [super init];
     if(self) {
         REGISTER();
-        NSLog(@"Created:%@", self.description);
+        //NSLog(@"Created:%@", self.description);
     }
     return self;
 }
 
 -(void) dealloc {
-    NSLog(@"Released:%@)", self.description);
+    //NSLog(@"Released:%@)", self.description);
 }
 
 @end

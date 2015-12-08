@@ -29,5 +29,6 @@
 - (NSArray *) getResultsFromEntity:(Class)entityClass;
 - (NSArray *) getResultsFromEntity:(Class)entityClass predicateOrNil:(NSPredicate *)predicateOrNil;
 - (NSArray *) getResultsFromEntity:(Class)entityClass predicateOrNil:(NSPredicate *)predicateOrNil ascSortStringOrNil:(NSArray *)ascSortStringOrNil descSortStringOrNil:(NSArray *)descSortStringOrNil;
+- (NSManagedObject *)objectWithURI:(NSURL *)uri;
 
 @end

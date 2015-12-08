@@ -11,19 +11,19 @@
 #import "LoginValidateEmailViewController.h"
 
 #define NUMBER_OF_GROUPS        4
-#define INDEX_NAME              0
-#define INDEX_SURNAME           1
-#define INDEX_EMAIL             2
+#define INDEX_EMAIL             0
+#define INDEX_NAME              1
+#define INDEX_SURNAME           2
 #define INDEX_PASSWORD          3
 
 #define ROW_COUNT_FOR_NAME                      2
 #define ROW_COUNT_FOR_SURNAME                   2
 
-#define ROW_INPUT_NAME                      0
-#define ROW_NAME_EMPTY_VALIDATION           1
+#define ROW_INPUT_NAME                          0
+#define ROW_NAME_EMPTY_VALIDATION               1
 
-#define ROW_INPUT_SURNAME                      0
-#define ROW_SURNAME_EMPTY_VALIDATION           1
+#define ROW_INPUT_SURNAME                       0
+#define ROW_SURNAME_EMPTY_VALIDATION            1
 
 #define ROW_COUNT_FOR_EMAIL                         3
 #define ROW_INPUT_EMAIL                             0
@@ -89,7 +89,7 @@
 }
 
 -(void) showKeyboardForNameSurname {
-    NSIndexPath* indexPath = [NSIndexPath indexPathForItem:INDEX_NAME inSection:0];
+    NSIndexPath* indexPath = [NSIndexPath indexPathForItem:ROW_INPUT_NAME inSection:INDEX_NAME];
     LoginTextFieldTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     [cell.textField becomeFirstResponder];
 }
@@ -138,6 +138,8 @@
             loginTextFieldCell.textField.placeholder = LOC(@"Email", @"Email");
             loginTextFieldCell.textField.keyboardType = UIKeyboardTypeEmailAddress;
             loginTextFieldCell.textField.text = [PeppermintMessageSender sharedInstance].email;
+            loginTextFieldCell.textField.enabled = NO;
+            loginTextFieldCell.textField.alpha = 0.7;
             cell = loginTextFieldCell;
         } else if (indexPath.row == ROW_EMAIL_EMPTY_VALIDATION) {
             InformationTextTableViewCell *informationTextTableViewCell = [CellFactory cellInformationTextTableViewCellFromTable:tableView forIndexPath:indexPath];
@@ -233,6 +235,7 @@
 -(void) updatedTextFor:(UITableViewCell*) cell atIndexPath:(NSIndexPath*) indexPath {
     LoginTextFieldTableViewCell* loginTextCell = (LoginTextFieldTableViewCell*) cell;
     activeTextField = loginTextCell.textField;
+    
     NSString *text = loginTextCell.textField.text;
     NSInteger index = indexPath.section;
     if(index == INDEX_NAME) {
@@ -248,10 +251,39 @@
       [PeppermintMessageSender sharedInstance].surname = text;
       [self validateCellForSurname:loginTextCell];
     }
+    
+    UIReturnKeyType currentReturnKeyType = loginTextCell.textField.returnKeyType;
+    if(![[PeppermintMessageSender sharedInstance] isValid]) {
+        loginTextCell.textField.returnKeyType = UIReturnKeyNext;
+    } else {
+        loginTextCell.textField.returnKeyType = UIReturnKeyDone;
+    }
+    
+    if(loginTextCell.textField.returnKeyType != currentReturnKeyType) {
+        [activeTextField resignFirstResponder];
+        [activeTextField becomeFirstResponder];
+    }
+    
 }
 
 -(void) doneButtonPressed {
-    [activeTextField resignFirstResponder];
+    if([[PeppermintMessageSender sharedInstance] isValid]) {
+        [self doneButtonPressed:nil];
+    } else {
+        LoginTextFieldTableViewCell *name = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:ROW_INPUT_NAME inSection:INDEX_NAME]];
+        LoginTextFieldTableViewCell *surname = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:ROW_INPUT_SURNAME inSection:INDEX_SURNAME]];
+        LoginTextFieldTableViewCell *password = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:ROW_INPUT_PASSWORD inSection:INDEX_PASSWORD]];
+        
+        if(activeTextField == name.textField) {
+            [surname.textField becomeFirstResponder];
+        } else if (activeTextField == surname.textField) {
+            [password.textField becomeFirstResponder];
+        } else if (activeTextField == password.textField) {
+            [name.textField becomeFirstResponder];
+        } else {
+            [activeTextField resignFirstResponder];
+        }
+    }
 }
 
 #pragma mark - Validation

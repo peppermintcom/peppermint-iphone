@@ -103,6 +103,7 @@
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
     [self initGoogleApp];
     [self initConnectionStatusChangeListening];
+    REGISTER();
     return YES;
 }
 
@@ -112,7 +113,6 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     if(self.mutableArray.count > 0) {
-        REGISTER();
         bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
             [[CacheModel sharedInstance] cacheOngoingMessages];
             [application endBackgroundTask:bgTask];
@@ -123,9 +123,11 @@
 
 SUBSCRIBE(DetachSuccess) {
     if(self.mutableArray.count == 0 ) {
-        NSLog(@"Finished!!!!");
+        NSLog(@"All send message processes are completed!!!!Secure to exit the app...");
         [[UIApplication sharedApplication] endBackgroundTask:bgTask];
         bgTask = UIBackgroundTaskInvalid;
+    } else {
+        NSLog(@"A sendvoicemessageModel is detached but there are still %d items in the queue", (int)self.mutableArray.count);
     }
 }
 
@@ -220,6 +222,10 @@ SUBSCRIBE(DetachSuccess) {
                 [MBProgressHUD hideHUDForView:rootVC.view animated:YES];
             });
         });
+    } else if ([[[url path] lowercaseString] containsString:PATH_RESET]) {
+        NSLog(PATH_RESET);
+    } else if ([[[url path] lowercaseString] containsString:PATH_SIGNIN]) {
+        NSLog(PATH_SIGNIN);
     } else {
         NSLog(@"handleOpenURL failed for URL: %@", url.host);
     }
@@ -330,7 +336,7 @@ reset:
 #pragma mark - Handle Error
 
 +(NSString*) messageForError:(NSError*) error {
-    NSString *message = error.description;
+    NSString *message = error.localizedDescription;
     if([error.domain isEqualToString:NSURLErrorDomain]) {
         switch (error.code) {
             case NSURLErrorNotConnectedToInternet:
@@ -355,15 +361,33 @@ reset:
                 message = LOC(@"Please check your login information", @"message");
                 break;
         }
+    } else if ([error.domain isEqualToString:NSOSStatusErrorDomain]) {
+        switch (error.code) {
+            case AVAudioSessionErrorInsufficientPriority:
+                message = LOC(@"Microphone is in use", @"message");
+                break;
+            default:
+                break;
+        }
     }
     return message;
 }
 
-+(void) handleError:(NSError*) error {
++(void) handleError:(NSError*) error {        
     NSString *title = LOC(@"An error occured", @"Error Title Message");
     NSString *message = [self messageForError:error];
     NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
     [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
+}
+
+#pragma mark - Loggin message procesdure
+
+SUBSCRIBE(RetrieveSignedUrlSuccessful) {
+    NSLog(@"RetrieveSignedUrlSuccessful %@\nSignedUrl:%@", event.short_url, event.signedUrl);
+}
+
+SUBSCRIBE(FileUploadCompleted) {
+    NSLog(@"FileUploadCompleted %@", event.signedUrl);
 }
 
 @end

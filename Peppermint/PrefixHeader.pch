@@ -126,6 +126,8 @@ sharedObject;\
 
 #define HOST_FASTREPLY                  @"reply"
 #define PATH_VERIFIY_EMAIL              @"/verify-email"
+#define PATH_SIGNIN                     @"/signin"
+#define PATH_RESET                      @"/reset"
 
 #define QUERY_COMPONENT_NAMESURNAME     @"name"
 #define QUERY_COMPONENT_EMAIL           @"mail"

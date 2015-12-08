@@ -28,48 +28,54 @@
     self = [super init];
     if(self) {
         numberOfActiveCalls = 0;
+        REGISTER();
     }
     return self;
 }
 
--(void) cache:(BaseModel*) model WithData:(NSData*) data extension:(NSString*) extension {
-    SendVoiceMessageEmailModel *sendVoiceMessageEmailModel = (SendVoiceMessageEmailModel*) model;
-    NSAssert(sendVoiceMessageEmailModel != nil, @"Cache message can work just with an instance of SendVoiceMessageEmailModel");
+-(void) cache:(SendVoiceMessageModel*) sendVoiceMessageModel WithData:(NSData*) data extension:(NSString*) extension {
     
     Repository *repository = [Repository beginTransaction];
     CachedMessage *cachedMessage =
     (CachedMessage*)[repository createEntity:[CachedMessage class]];
     cachedMessage.data = data;
     cachedMessage.extension = extension;
-    cachedMessage.senderEmail = sendVoiceMessageEmailModel.peppermintMessageSender.email;
-    cachedMessage.senderNameSurname = sendVoiceMessageEmailModel.peppermintMessageSender.nameSurname;
+    cachedMessage.senderEmail = sendVoiceMessageModel.peppermintMessageSender.email;
+    cachedMessage.senderNameSurname = sendVoiceMessageModel.peppermintMessageSender.nameSurname;
     
-    cachedMessage.receiverCommunicationChannel = [NSNumber numberWithInt:sendVoiceMessageEmailModel.selectedPeppermintContact.communicationChannel];
-    cachedMessage.receiverCommunicationChannelAddress = sendVoiceMessageEmailModel.selectedPeppermintContact.communicationChannelAddress;
-    cachedMessage.receiverNameSurname = sendVoiceMessageEmailModel.selectedPeppermintContact.nameSurname;
-    cachedMessage.mailSenderClass = [NSString stringWithFormat:@"%@", [sendVoiceMessageEmailModel class]];
+    cachedMessage.receiverCommunicationChannel = [NSNumber numberWithInt:sendVoiceMessageModel.selectedPeppermintContact.communicationChannel];
+    cachedMessage.receiverCommunicationChannelAddress = sendVoiceMessageModel.selectedPeppermintContact.communicationChannelAddress;
+    cachedMessage.receiverNameSurname = sendVoiceMessageModel.selectedPeppermintContact.nameSurname;
+    cachedMessage.mailSenderClass = [NSString stringWithFormat:@"%@", [sendVoiceMessageModel class]];
     
-    NSError *err = [repository endTransaction];
+    __block NSError *err = [repository endTransaction];
     dispatch_async(dispatch_get_main_queue(), ^{
         if(err) {
-            sendVoiceMessageEmailModel.sendingStatus = SendingStatusError;
-            [sendVoiceMessageEmailModel.delegate operationFailure:err];
+            NSLog(@"Error during caching message");
+            sendVoiceMessageModel.sendingStatus = SendingStatusError;
+            [sendVoiceMessageModel.delegate operationFailure:err];
         } else {
-            sendVoiceMessageEmailModel.sendingStatus = SendingStatusCached;
-            [sendVoiceMessageEmailModel.delegate messageStatusIsUpdated:SendingStatusCached withCancelOption:NO];
+            NSLog(@"Message %@ is cached successfully!", sendVoiceMessageModel);
+            sendVoiceMessageModel.sendingStatus = SendingStatusCached;
+            [sendVoiceMessageModel.delegate messageStatusIsUpdated:SendingStatusCached];
         }
     });
 }
 
+
+SUBSCRIBE(ApplicationDidBecomeActive) {
+    [self triggerCachedMessages];
+}
+
 -(void) triggerCachedMessages {
-    @synchronized(self) {
+    NSLog(@"triggerCachedMessages function is called");
         if(++numberOfActiveCalls == 1) {
             dispatch_async(LOW_PRIORITY_QUEUE, ^() {
-                NSLog(@"triggerCachedMessages processing...............");
                 Repository *repository = [Repository beginTransaction];
                 NSArray *cachedMessageArray =
                 [repository getResultsFromEntity:[CachedMessage class]];
-                NSLog(@"found %lu voice messages", (unsigned long)cachedMessageArray.count);
+                
+                NSLog(@"Now, there is %lu nontriggered cached voice messages", (unsigned long)cachedMessageArray.count);
                 
                 for(int i=0; i<cachedMessageArray.count; i++) {
                     CachedMessage *cachedMessage = [cachedMessageArray objectAtIndex:i];
@@ -87,47 +93,45 @@
                     mailSenderModel.selectedPeppermintContact = selectedContact;
                     
                     [mailSenderModel sendVoiceMessageWithData:cachedMessage.data withExtension:cachedMessage.extension];
-                    
-                    while (mailSenderModel.sendingStatus != SendingStatusSent
-                           && mailSenderModel.sendingStatus != SendingStatusCancelled
-                           && mailSenderModel.sendingStatus != SendingStatusError) {
-#warning "Find smarter way than busy waiting" (We may add a status to SendVoiceMessageModel to indicate if it is in background or foreground)
-                        //Busy wait...
-                    }
-                    
-                    if(mailSenderModel.sendingStatus == SendingStatusSent || mailSenderModel.sendingStatus == SendingStatusCancelled) {
-                        [repository deleteEntity:cachedMessage];
-                    } else {
-                        NSLog(@"Does not deleting the cachedMessage cos sendingstatus is %d",
-                              (int)mailSenderModel.sendingStatus);
-                    }
+                    [repository deleteEntity:cachedMessage];
                 }
-                NSError *error = [repository endTransaction];
-                if(error) {
-                    NSLog(@"DB errror %@", error.description);
-                } else {
-                    if(--numberOfActiveCalls > 0) {
-                        NSLog(@"recalled %lu times while sending cached messages!!!", (unsigned long)numberOfActiveCalls);
-                        numberOfActiveCalls = 0;
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [[CacheModel sharedInstance] triggerCachedMessages];
-                        });
-                    }
+                [repository endTransaction];
+                if(--numberOfActiveCalls > 0) {
+                    NSLog(@"recalled %lu times while sending cached messages!!!", (unsigned long)numberOfActiveCalls);
+                    numberOfActiveCalls = 0;
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [[CacheModel sharedInstance] triggerCachedMessages];
+                    });
                 }
             });
         } else {
-            NSLog(@"Did not process triggerCachedMessages. Marked as called again!");
+            NSLog(@"called triggerCachedMessages function is marked to called again on complete!");
         }
-    }
 }
 
 -(void) cacheOngoingMessages {
     NSArray *ongoingMessagesArray = [AppDelegate Instance].mutableArray;
     if(ongoingMessagesArray.count > 0 ) {
-        NSLog(@"Terminating the app& Still it exists %lu items\nCaching the ongoing messages.", ongoingMessagesArray.count);
+        NSLog(@"Terminating the app& Still it exists %lu items\nCaching the ongoing messages.", (unsigned long)ongoingMessagesArray.count);
+        
         for (SendVoiceMessageModel *sendVoiceMessageModel in ongoingMessagesArray) {
-            if(sendVoiceMessageModel.delegate) {
-                [sendVoiceMessageModel cacheMessage];
+            switch (sendVoiceMessageModel.sendingStatus) {
+                case SendingStatusIniting:
+                case SendingStatusInited:
+                case SendingStatusStarting:
+                case SendingStatusUploading:
+                case SendingStatusError:
+                case SendingStatusSending:
+                    [sendVoiceMessageModel cacheMessage];
+                    break;
+                case SendingStatusSendingWithNoCancelOption:
+                case SendingStatusCancelled:
+                case SendingStatusCached:
+                case SendingStatusSent:
+                    NSLog(@"Did not cache message, cos the status is already %d", (int)sendVoiceMessageModel.sendingStatus);
+                    break;
+                default:
+                    break;
             }
         }
     }

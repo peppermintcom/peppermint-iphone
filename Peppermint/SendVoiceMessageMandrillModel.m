@@ -9,6 +9,7 @@
 #import "SendVoiceMessageMandrillModel.h"
 
 @implementation SendVoiceMessageMandrillModel {
+    MandrillService *mandrillService;
     MandrillMessage *mandrillMessage;
 }
 
@@ -19,11 +20,8 @@
         _data = data;
         _extension = extension;
         self.sendingStatus = SendingStatusUploading;
-        [self.delegate messageStatusIsUpdated:SendingStatusUploading withCancelOption:YES];
+        [self.delegate messageStatusIsUpdated:self.sendingStatus];
         [awsModel startToUploadData:data ofType:[self typeForExtension:extension]];
-        if(self.delegate != nil) {
-            [[CacheModel sharedInstance] triggerCachedMessages];
-        }
     } else {
         [self cacheMessage];
     }
@@ -35,7 +33,7 @@
     [super fileUploadCompletedWithPublicUrl:url];
     if(![self isCancelled]) {
         self.sendingStatus = SendingStatusSending;
-        [self.delegate messageStatusIsUpdated:SendingStatusSending withCancelOption:YES];
+        [self.delegate messageStatusIsUpdated:self.sendingStatus];
         [self fireMandrillMessageWithUrl:url];
     } else {
         NSLog(@"Mandrill message sending is not fired, cos message is cancelled");
@@ -93,9 +91,10 @@
     [mandrillMessage.headers setObject:email forKey:@"Reply-To"];
     
     if(![self isCancelled]) {
-        self.sendingStatus = SendingStatusSending;
-        [self.delegate messageStatusIsUpdated:SendingStatusSending withCancelOption:NO];
-        [[MandrillService new] sendMessage:mandrillMessage];
+        self.sendingStatus = SendingStatusSendingWithNoCancelOption;
+        [self.delegate messageStatusIsUpdated:self.sendingStatus];
+        mandrillService = [MandrillService new];
+        [mandrillService sendMessage:mandrillMessage];
     } else {
         self.sendingStatus = SendingStatusCancelled;
     }
@@ -104,7 +103,7 @@
 SUBSCRIBE(MandrillMesssageSent) {
     if([event.mandrillMessage isEqual:mandrillMessage]) {
         self.sendingStatus = SendingStatusSent;
-        [self.delegate messageStatusIsUpdated:SendingStatusSent withCancelOption:NO];
+        [self.delegate messageStatusIsUpdated:self.sendingStatus];
     }
 }
 

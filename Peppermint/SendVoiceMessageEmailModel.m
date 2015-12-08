@@ -20,8 +20,6 @@
     return [NSString stringWithFormat:mailFormat,
             urlPath,
             type,
-            urlPath,
-            type,
             replyLink,
             signature
             ];

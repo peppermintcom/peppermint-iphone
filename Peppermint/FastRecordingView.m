@@ -52,12 +52,15 @@ typedef enum : NSUInteger {
     fastRecordingViewStatus = FastRecordingViewStatusInit;
 }
 
+SUBSCRIBE(AttachSuccess) {
+    [self activeOnScreen];
+}
+
 -(void) activeOnScreen {
     self.sendVoiceMessageModel = [SendVoiceMessageModel activeSendVoiceMessageModel];
     if(self.sendVoiceMessageModel) {
         self.sendVoiceMessageModel.delegate = self;
-        BOOL isCancelable = self.sendVoiceMessageModel.sendingStatus < SendingStatusSending;
-        [self messageStatusIsUpdated:self.sendVoiceMessageModel.sendingStatus withCancelOption:isCancelable];
+        [self messageStatusIsUpdated:self.sendVoiceMessageModel.sendingStatus];
     }
 }
 
@@ -166,7 +169,6 @@ typedef enum : NSUInteger {
             [self.playingModel playBeginRecording];
             [self beginRecording];
         } else {
-            NSLog(@"Önceden kalan kayıt var sanırım!");
             [self showAlertForRecordIsCut];
         }
     } else {
@@ -205,8 +207,8 @@ typedef enum : NSUInteger {
     [self.delegate newRecentContactisSaved];
 }
 
--(void) messageStatusIsUpdated:(SendingStatus) sendingStatus withCancelOption:(BOOL) cancelable {
-    [self.delegate messageStatusIsUpdated:sendingStatus withCancelOption:cancelable];
+-(void) messageStatusIsUpdated:(SendingStatus) sendingStatus {
+    [self.delegate messageStatusIsUpdated:sendingStatus];
 }
 
 #pragma mark - LoginNavigationViewControllerDelegate

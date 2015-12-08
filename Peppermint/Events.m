@@ -63,6 +63,9 @@
 @implementation SyncGoogleContactsSuccess
 @end
 
+@implementation AttachSuccess
+@end
+
 @implementation DetachSuccess
 @end
 

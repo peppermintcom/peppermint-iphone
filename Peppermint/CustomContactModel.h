@@ -11,7 +11,6 @@
 
 @protocol CustomContactModelDelegate <BaseModelDelegate>
 -(void) customPeppermintContactSavedSucessfully:(PeppermintContact*) peppermintContact;
--(void) customContactAlreadyExists:(PeppermintContact*) peppermintContact;
 @end
 
 @interface CustomContactModel : BaseModel

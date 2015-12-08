@@ -19,7 +19,6 @@
 #define SEGUE_SIGNUP_WITH_EMAIL         @"SignUpWithEmailSegue"
 
 @interface LoginWithEmailViewController () <LoginTextFieldTableViewCellDelegate, AccountModelDelegate>
-
 @property (weak, nonatomic) IBOutlet LoginTextFieldTableViewCell * emailCell;
 @property (weak, nonatomic) IBOutlet LoginTextFieldTableViewCell * passwordCell;
 
@@ -38,6 +37,7 @@
   self.tableView.tableHeaderView.backgroundColor = [UIColor clearColor];
   
   self.descriptionLabel.text = [PeppermintMessageSender sharedInstance].email;
+    isValidEmailEmptyValidation = isValidEmailFormatValidation = isValidPasswordValidation = NO;
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -148,12 +148,9 @@
     
     [[AccountModel sharedInstance] logUserIn:sender.email password:sender.password];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+  } else {
+      [[[UIAlertView alloc] initWithTitle:LOC(@"Invalid password", nil) message:nil delegate:nil cancelButtonTitle:LOC(@"OK", nil) otherButtonTitles:nil] show];
   }
 }
-
-
-
-
-
 
 @end

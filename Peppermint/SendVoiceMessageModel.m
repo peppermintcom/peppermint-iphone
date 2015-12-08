@@ -17,6 +17,7 @@
 @implementation SendVoiceMessageModel {
     NSTimer *timer;
     NSLock *arrayLock;
+    SendingStatus _sendingStatus;
 }
 
 -(id) init {
@@ -36,15 +37,12 @@
 }
 
 -(void) dealloc {
-    if(self.sendingStatus != SendingStatusCached
-       && self.sendingStatus != SendingStatusCancelled
-       && self.sendingStatus != SendingStatusError
-       && self.sendingStatus != SendingStatusInited
-       && self.sendingStatus != SendingStatusIniting
-       && self.sendingStatus != SendingStatusSent
-       ) {
-        NSLog(@"Dealloc a sendVoiceMessageModel during %d state", (int)self.sendingStatus);
+    NSString *info = [NSString stringWithFormat:@"Dealloc %@ in status %d\n", self, (int)self.sendingStatus];
+    if(timer) {
+        info = [NSString stringWithFormat:@"%@ and timer %@ is still active with timeInterval:%f", info, timer, timer.timeInterval];
+        [timer invalidate];
     }
+    NSLog(info);
 }
 
 -(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension {
@@ -66,7 +64,6 @@
 
 -(void) operationFailure:(NSError*) error {
     self.sendingStatus = SendingStatusError;
-    [self cacheMessage];
 }
 
 #pragma mark - RecentContactsModelDelegate
@@ -109,21 +106,16 @@
 
 -(void) messagePrepareIsStarting {
     self.sendingStatus = SendingStatusStarting;
-    [self.delegate messageStatusIsUpdated:SendingStatusStarting withCancelOption:YES];
+    [self.delegate messageStatusIsUpdated:self.sendingStatus];
 }
 
 -(void) cacheMessage {
-    if(self.delegate) {
-        [[CacheModel sharedInstance] cache:self WithData:_data extension:_extension];
-        NSLog(@"Message is cached.");
-        [self.delegate messageStatusIsUpdated:self.sendingStatus withCancelOption:NO];
-    } else {
-        NSLog(@"not cached...");
-    }
+    self.sendingStatus = SendingStatusCancelled; //Cancel to stop ongoing processes
+    [[CacheModel sharedInstance] cache:self WithData:_data extension:_extension];
 }
 
 -(void) cancelSending {
-    NSLog(@"Cancelling!");
+    NSLog(@"Cancelling message for %@", self);
     awsModel.delegate = nil;
     awsModel = nil;
     recentContactsModel = nil;
@@ -173,37 +165,48 @@
 -(void) attachProcessToAppDelegate {
     NSMutableArray *array = [AppDelegate Instance].mutableArray;
     if(![array containsObject:self]) {
-        NSLog(@"Attached and timer started!!");
+        NSLog(@"Sending& Attached voice message %@", self);
         [arrayLock lock];
         [array addObject:self];
         [arrayLock unlock];
         if(timer) { [timer invalidate]; NSLog(@"invalidated a timer!!"); }
         timer = [NSTimer scheduledTimerWithTimeInterval:TIMER_PERIOD target:self selector:@selector(detachProcessFromAppDelegate) userInfo:nil repeats:YES];
-        timer.tolerance = TIMER_PERIOD * 0.1;
         
+        AttachSuccess *attachSuccess = [AttachSuccess new];
+        attachSuccess.sender = self;
+        PUBLISH(attachSuccess);
     } else {
         NSLog(@"Attach is called on a pre-attached item");
     }
 }
 
+#warning "Find a better solution that tracking with a timer. All implementations can manually trigger detach!!"
 -(void) detachProcessFromAppDelegate {
-    NSLog(@"Check for detach!");
-    if(self.sendingStatus == SendingStatusError
-       || self.sendingStatus == SendingStatusCancelled
-       || self.sendingStatus == SendingStatusIniting
-       || self.sendingStatus == SendingStatusInited
-       || self.sendingStatus == SendingStatusCached
-       || self.sendingStatus == SendingStatusSent
-       ) {
-        [timer invalidate];
-        timer = nil;
-        NSLog(@"trigger detach");
-        
-        NSString *contentName = [NSString stringWithFormat:@"%lu bytes", (unsigned long)_data.length];
-        [Answers logShareWithMethod:@"SendVoiceMessage" contentName:contentName contentType:_extension contentId:self.description customAttributes:nil];
-        [self performSelector:@selector(performDetach) withObject:nil afterDelay:TIMER_PERIOD*2];
-    }
+    NSAssert(self.sendingStatus != SendingStatusIniting, @"Sendingstatus must not be in Initing");
+    NSAssert(self.sendingStatus != SendingStatusInited, @"Sendingstatus must not be in Inited");
     
+    switch (self.sendingStatus) {
+        case SendingStatusIniting:
+        case SendingStatusInited:
+        case SendingStatusStarting:
+        case SendingStatusUploading:
+        case SendingStatusSending:
+            break;
+        case SendingStatusError:
+            [self cacheMessage];
+        case SendingStatusSendingWithNoCancelOption:
+        case SendingStatusCancelled:
+        case SendingStatusCached:
+        case SendingStatusSent:
+            [timer invalidate];
+            timer = nil;
+            NSLog(@"%@ changed status to %d, soon it will be detached.", self, (int)self.sendingStatus);
+            [self performDetach];
+            return;
+        default:
+            break;
+    }
+    NSLog(@"Timer checked if %@ is completed. But it is still in %d state", self, (int)self.sendingStatus);
 }
 
 -(void) performDetach {
@@ -212,8 +215,7 @@
         [arrayLock lock];
         [array removeObject:self];
         [arrayLock unlock];
-        NSLog(@"Detached!!");
-        
+        NSLog(@"Comleted& Detached voice message %@ with status %d", self, (int)self.sendingStatus);
         DetachSuccess *detachSuccess = [DetachSuccess new];
         detachSuccess.sender = self;
         PUBLISH(detachSuccess);
@@ -243,6 +245,16 @@
     if([self.selectedPeppermintContact equals:fastReplyContact]) {
         [[FastReplyModel sharedInstance] cleanFastReplyContact];
     }
+}
+
+#pragma mark - SendingStatus
+
+-(void)setSendingStatus:(SendingStatus) sendingStatus {
+    _sendingStatus = sendingStatus;
+}
+
+-(SendingStatus) sendingStatus {
+    return _sendingStatus;
 }
 
 @end

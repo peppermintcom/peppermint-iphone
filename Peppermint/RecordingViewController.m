@@ -161,7 +161,7 @@
     //New recent contact is saved
 }
 
--(void) messageStatusIsUpdated:(SendingStatus)sendingStatus withCancelOption:(BOOL)cancelable {
+-(void) messageStatusIsUpdated:(SendingStatus)sendingStatus {
     NSLog(@"Status is updated!");
     if (sendingStatus == SendingStatusSent || sendingStatus == SendingStatusCancelled) {
         [self dismissViewControllerAnimated:YES completion:nil];
