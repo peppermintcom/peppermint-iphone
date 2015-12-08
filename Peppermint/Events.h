@@ -64,6 +64,7 @@
 @end
 
 @interface AccountLoginIsSuccessful : BaseEvent
+@property (strong, nonatomic) NSString *jwt;
 @property (strong, nonatomic) User *user;
 @end
 

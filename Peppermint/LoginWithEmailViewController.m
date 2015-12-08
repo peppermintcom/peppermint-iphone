@@ -84,12 +84,13 @@
 -(void) userLogInSuccessWithEmail:(NSString*) email {
     NSLog(@"userLogInSuccessWithEmail:%@", email);
     LoginNavigationViewController *loginNavigationViewController = (LoginNavigationViewController*)self.navigationController;
-    
-    
-    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
-    
-    
-    [loginNavigationViewController loginSucceed];
+    if([PeppermintMessageSender sharedInstance].isEmailVerified) {
+        [loginNavigationViewController loginSucceed];
+    } else {
+        
+        NSLog(@"Not verified yet!!...");
+        [loginNavigationViewController loginRequireEmailVerification];
+    }
 }
 
 -(void) verificationEmailSendSuccess {
@@ -102,12 +103,11 @@
 
 -(void) checkEmailIsRegisteredIsSuccess:(BOOL) isEmailRegistered isEmailVerified:(BOOL) isEmailVerified {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [PeppermintMessageSender sharedInstance].isEmailVerified = isEmailVerified;
     if(!isEmailRegistered) {
         [self performSegueWithIdentifier:SEGUE_SIGNUP_WITH_EMAIL sender:nil];
-    } else if (isEmailVerified) {
-        [self performSegueWithIdentifier:SEGUE_WELCOME_BACK sender:nil];
     } else {
-        [[[UIAlertView alloc] initWithTitle:@"Seems this email is registered but not verified yet. Now the app should goto verification page. This functionality will be implemented" message:nil delegate:self cancelButtonTitle:LOC(@"OK", nil) otherButtonTitles:nil] show];
+        [self performSegueWithIdentifier:SEGUE_WELCOME_BACK sender:nil];
     }
 }
 

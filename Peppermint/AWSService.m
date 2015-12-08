@@ -257,6 +257,7 @@
         }
         AccountLoginIsSuccessful *accountLoginIsSuccessful = [AccountLoginIsSuccessful new];
         accountLoginIsSuccessful.sender = self;
+        accountLoginIsSuccessful.jwt = loginResponse.at;
         accountLoginIsSuccessful.user = loginResponse.u;
         PUBLISH(accountLoginIsSuccessful);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
