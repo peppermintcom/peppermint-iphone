@@ -125,6 +125,7 @@
             loginTextFieldCell.textField.placeholder = LOC(@"Your Name",@"Your Name");
             loginTextFieldCell.textField.keyboardType = UIKeyboardTypeAlphabet;
             loginTextFieldCell.textField.text = [PeppermintMessageSender sharedInstance].name;
+            loginTextFieldCell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
             cell = loginTextFieldCell;
         } else if (indexPath.row == ROW_NAME_EMPTY_VALIDATION) {
             InformationTextTableViewCell *informationTextTableViewCell = [CellFactory cellInformationTextTableViewCellFromTable:tableView forIndexPath:indexPath];
@@ -140,8 +141,9 @@
             loginTextFieldCell.textField.text = [PeppermintMessageSender sharedInstance].email;
             loginTextFieldCell.textField.enabled = NO;
             loginTextFieldCell.textField.alpha = 0.7;
-            loginTextFieldCell.notAllowedCharacters = @" ";
+            loginTextFieldCell.notAllowedCharactersArray = [NSArray arrayWithObject:@" "];
             cell = loginTextFieldCell;
+            
         } else if (indexPath.row == ROW_EMAIL_EMPTY_VALIDATION) {
             InformationTextTableViewCell *informationTextTableViewCell = [CellFactory cellInformationTextTableViewCellFromTable:tableView forIndexPath:indexPath];
             informationTextTableViewCell.label.text = LOC(@"This field is mandatory",@"This field is mandatory");
@@ -158,7 +160,7 @@
             loginTextFieldCell.textField.placeholder = LOC(@"Password", @"Password");
             loginTextFieldCell.textField.keyboardType = UIKeyboardTypeDefault;
             loginTextFieldCell.textField.text = [PeppermintMessageSender sharedInstance].password;
-            loginTextFieldCell.notAllowedCharacters = @" ";
+            loginTextFieldCell.notAllowedCharactersArray = [NSArray arrayWithObject:@" "];
             cell = loginTextFieldCell;
         } else if (indexPath.row == ROW_PASSWORD_EMPTY_VALIDATION) {
             InformationTextTableViewCell *informationTextTableViewCell = [CellFactory cellInformationTextTableViewCellFromTable:tableView forIndexPath:indexPath];
@@ -176,6 +178,7 @@
         loginTextFieldCell.textField.placeholder = LOC(@"Your Surname",@"Your Surname");
         loginTextFieldCell.textField.keyboardType = UIKeyboardTypeAlphabet;
         loginTextFieldCell.textField.text = [PeppermintMessageSender sharedInstance].surname;
+        loginTextFieldCell.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
         cell = loginTextFieldCell;
       } else if (indexPath.row == ROW_SURNAME_EMPTY_VALIDATION) {
         InformationTextTableViewCell *informationTextTableViewCell = [CellFactory cellInformationTextTableViewCellFromTable:tableView forIndexPath:indexPath];
@@ -241,6 +244,7 @@
     NSString *text = loginTextCell.textField.text;
     NSInteger index = indexPath.section;
     if(index == INDEX_NAME) {
+        loginTextCell.textField.text = [text capitalizedString];
         [PeppermintMessageSender sharedInstance].name = text;
         [self validateCellForName:loginTextCell];
     } else if (index == INDEX_EMAIL) {
@@ -250,6 +254,7 @@
         [PeppermintMessageSender sharedInstance].password = text;
         [self validateCellForPassword:loginTextCell];
     } else if (index == INDEX_SURNAME) {
+      loginTextCell.textField.text = [text capitalizedString];
       [PeppermintMessageSender sharedInstance].surname = text;
       [self validateCellForSurname:loginTextCell];
     }

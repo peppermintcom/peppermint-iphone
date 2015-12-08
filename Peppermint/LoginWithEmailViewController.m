@@ -38,8 +38,8 @@
   
   self.descriptionLabel.text = [PeppermintMessageSender sharedInstance].email;
     isValidEmailEmptyValidation = isValidEmailFormatValidation = isValidPasswordValidation = NO;
-    self.emailCell.notAllowedCharacters = @" ";
-    self.passwordCell.notAllowedCharacters = @" ";
+    self.emailCell.notAllowedCharactersArray = [NSArray arrayWithObject:@" "];
+    self.passwordCell.notAllowedCharactersArray = [NSArray arrayWithObject:@" "];
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -84,6 +84,11 @@
 -(void) userLogInSuccessWithEmail:(NSString*) email {
     NSLog(@"userLogInSuccessWithEmail:%@", email);
     LoginNavigationViewController *loginNavigationViewController = (LoginNavigationViewController*)self.navigationController;
+    
+    
+    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+    
+    
     [loginNavigationViewController loginSucceed];
 }
 

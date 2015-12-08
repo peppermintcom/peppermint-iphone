@@ -279,7 +279,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="BhH-Ju-VVT">
-                                <rect key="frame" x="0.0" y="64" width="414" height="607"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -379,10 +379,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="mZU-e0-vbZ" secondAttribute="trailing" constant="10" id="1yo-L9-ftw"/>
-                            <constraint firstItem="7zR-tD-HrX" firstAttribute="top" secondItem="BhH-Ju-VVT" secondAttribute="bottom" priority="250" id="3u7-rd-6Pv"/>
                             <constraint firstItem="BhH-Ju-VVT" firstAttribute="top" secondItem="Dr5-gj-0ac" secondAttribute="bottom" id="9Tv-Gz-71J"/>
                             <constraint firstAttribute="centerX" secondItem="bqr-Ay-zAT" secondAttribute="centerX" id="Fp0-n4-OrF"/>
                             <constraint firstItem="Dr5-gj-0ac" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="JH5-XW-Yhq"/>
+                            <constraint firstAttribute="bottom" secondItem="BhH-Ju-VVT" secondAttribute="bottom" priority="250" id="Jtd-vd-xPR"/>
                             <constraint firstItem="BhH-Ju-VVT" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="NVe-3o-jcT"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="7zR-tD-HrX" secondAttribute="bottom" id="OHV-gX-pAF"/>
                             <constraint firstAttribute="trailing" secondItem="Dr5-gj-0ac" secondAttribute="trailing" id="adM-Jn-qH0"/>
@@ -409,7 +409,7 @@
                         <outlet property="sendingInformationLabel" destination="Et3-Rh-6f1" id="8hT-Rz-1fj"/>
                         <outlet property="seperatorView" destination="gkl-pL-Y4B" id="jur-Qn-UjK"/>
                         <outlet property="tableView" destination="BhH-Ju-VVT" id="B8Q-tY-IdA"/>
-                        <outlet property="tableViewBottomConstraint" destination="3u7-rd-6Pv" id="XyF-tg-JMV"/>
+                        <outlet property="tableViewBottomConstraint" destination="Jtd-vd-xPR" id="k25-bJ-Fr1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -799,7 +799,7 @@ email contact or both</string>
                                                         <constraint firstAttribute="height" constant="45" id="u72-Zd-S27"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="18"/>
-                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="pyr-NR-460" id="GMi-9H-LcQ"/>
                                                     </connections>
@@ -811,7 +811,7 @@ email contact or both</string>
                                                         <constraint firstAttribute="height" constant="45" id="atG-B4-amw"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="18"/>
-                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="pyr-NR-460" id="SHp-5B-BDl"/>
                                                     </connections>
@@ -855,7 +855,7 @@ email contact or both</string>
                                                         <constraint firstAttribute="height" constant="50" id="WE9-OK-zvr"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="16"/>
-                                                    <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="phonePad"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="pyr-NR-460" id="dca-SZ-xbJ"/>
                                                     </connections>

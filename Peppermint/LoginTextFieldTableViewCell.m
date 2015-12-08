@@ -30,10 +30,19 @@
     [self.delegate updatedTextFor:self atIndexPath:self.indexPath];
 }
 
+-(BOOL) isTextAllowed:(NSString*) string {
+    for(NSString *notAllowedString in self.notAllowedCharactersArray) {
+        if([string containsString:notAllowedString]) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     if([string isEqualToString:DONE_STRING]) {
         [self.delegate doneButtonPressed];
-    } else if(self.notAllowedCharacters.length == 0 || ![self.notAllowedCharacters containsString:string]) {
+    } else if ([self isTextAllowed:string]) {
         [textField setTextContentInRange:range replacementString:string];
         string = [string stringByTrimmingCharactersInSet:[NSCharacterSet controlCharacterSet]];
         string = [string stringByTrimmingCharactersInSet:[NSCharacterSet decomposableCharacterSet]];

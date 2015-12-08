@@ -71,6 +71,7 @@ SUBSCRIBE(NetworkFailure) {
 SUBSCRIBE(AccountLoginIsSuccessful) {
     if([event.user.email isEqualToString:cachedSender.email]) {
         cachedSender.nameSurname = event.user.full_name;
+        [[PeppermintMessageSender sharedInstance] save];
         [self.delegate userLogInSuccessWithEmail:cachedSender.email];
     }
 }

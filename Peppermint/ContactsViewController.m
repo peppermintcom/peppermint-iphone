@@ -66,7 +66,7 @@
     [self initSearchMenu];
     activeCellTag = CELL_TAG_ALL_CONTACTS;
     cachedActiveCellTag = CELL_TAG_ALL_CONTACTS;
-    self.sendingIndicatorView.hidden = NO;
+    self.sendingIndicatorView.hidden = YES;
     self.sendingInformationLabel.text = @"";
     self.seperatorView.backgroundColor = [UIColor cellSeperatorGray];
     [self initRecordingView];
@@ -244,11 +244,14 @@ SUBSCRIBE(ReplyContactIsAdded) {
     } else if (indexPath.section == SECTION_CELL_INFORMATION) {
         ContactInformationTableViewCell *cell = [CellFactory cellContactInformationTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
         
+        [cell setViewForAddNewContact];
+        /*
         if([self isEmptyResultTableViewCellVisible] || activeCellTag == CELL_TAG_ALL_CONTACTS) {
             [cell setViewForAddNewContact];
         } else {
             [cell setViewForShowAllContacts];
         }
+         */
         preparedCell = cell;
     }
     return preparedCell;
@@ -425,12 +428,18 @@ SUBSCRIBE(ReplyContactIsAdded) {
 #pragma mark - ContactInformationTableViewCellDelegate
 
 -(void) contactInformationButtonPressed {
+    
+    isAddNewContactModalisUp = YES;
+    [AddContactViewController presentAddContactControllerWithText:self.searchContactsTextField.text];
+    
+    /*
     if([self isEmptyResultTableViewCellVisible] || activeCellTag == CELL_TAG_ALL_CONTACTS) {
         isAddNewContactModalisUp = YES;
         [AddContactViewController presentAddContactControllerWithText:self.searchContactsTextField.text];
     } else {
         [self cellSelectedWithTag:CELL_TAG_ALL_CONTACTS];
     }
+    */
 }
 
 #pragma mark - FastRecordingViewDelegate
@@ -505,18 +514,6 @@ SUBSCRIBE(ReplyContactIsAdded) {
 #pragma mark - MessageSending status indicators
 
 -(void) setVisibilityOfSendingInfo:(BOOL) show {
-    if(!show) {
-        [UIView animateWithDuration:0.15 animations:^{
-            self.sendingInformationLabel.alpha = 0;
-        } completion:^(BOOL finished) {
-            self.sendingInformationLabel.text = @"";
-            self.sendingInformationLabel.alpha = 1;
-        }];
-    }
-    
-#warning "Remove below part and decide about the animations"
-    
-    /*
     if(show && self.sendingIndicatorView.hidden) {
         self.sendingIndicatorView.alpha = 0;
         self.sendingIndicatorView.hidden = NO;
@@ -535,15 +532,18 @@ SUBSCRIBE(ReplyContactIsAdded) {
         }];
         [self.recentContactsModel refreshRecentContactList];
     }
-    */
 }
 
 -(void) messageSendingIndicatorSetMessageIsSending {
-    [self setVisibilityOfSendingInfo:YES];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self setVisibilityOfSendingInfo:YES];
+    });
 }
 
 -(void) messageSendingIsCancelled {
-    [self setVisibilityOfSendingInfo:NO];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self setVisibilityOfSendingInfo:NO];
+    });
 }
 
 #pragma mark - CancelMessageSendingButton
@@ -776,7 +776,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
     }
     
     [self.tableView layoutIfNeeded];
-    self.tableViewBottomConstraint.constant = keyboardHeight - self.sendingIndicatorView.frame.size.height;
+    self.tableViewBottomConstraint.constant = keyboardHeight;
     [UIView animateWithDuration:0.3 animations:^{
         [self.tableView layoutIfNeeded];
     }];

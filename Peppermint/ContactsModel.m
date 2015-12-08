@@ -149,8 +149,6 @@
                                  peppermintContact.nameSurname = nameSurname;
                                  peppermintContact.avatarImage = contact.thumbnail;
                                  [peppermintContactsArray addObject:peppermintContact];
-                               
-                               [peppermintContact addToCoreSpotlightSearch];
                              }
                          }
 
@@ -189,6 +187,12 @@
                      return [first.lowercaseString compare:second.lowercaseString];
                  }];
                  self.contactList = [NSMutableArray arrayWithArray:sortedList];
+                 
+                 dispatch_async(LOW_PRIORITY_QUEUE, ^{
+                     for(PeppermintContact *peppermintContact in self.contactList) {
+                         [peppermintContact addToCoreSpotlightSearch];
+                     }
+                 });
                  
                  emailContactList = smsContactList = nil;
                  dispatch_sync(dispatch_get_main_queue(), ^{

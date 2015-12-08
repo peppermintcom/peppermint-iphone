@@ -10,6 +10,7 @@
 
 @interface UITextField (UITextField_Addition)
 
+-(NSString*) getTextContentWithRange:(NSRange)range replacementString:(NSString *)string;
 -(void) setTextContentInRange:(NSRange)range replacementString:(NSString *)string;
 
 @end

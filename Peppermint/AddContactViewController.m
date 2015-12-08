@@ -12,7 +12,6 @@
 #import "PeppermintContact.h"
 #import "AppDelegate.h"
 
-
 @import AssetsLibrary;
 @import MobileCoreServices;
 
@@ -213,6 +212,11 @@
     self.firstNameTextField.text = [self.firstNameTextField.text capitalizedString];
     self.lastNameTextField.text = [self.lastNameTextField.text capitalizedString];
     
+    NSMutableCharacterSet *phoneNumberCharSet = [NSMutableCharacterSet decimalDigitCharacterSet];
+    [phoneNumberCharSet addCharactersInString:INTERNATIONAL_PHONE_SIGN];
+    self.phoneNumberTextField.text =
+    [[self.phoneNumberTextField.text componentsSeparatedByCharactersInSet:[phoneNumberCharSet invertedSet]] componentsJoinedByString:@""];
+    
     self.saveContactBarButtonItem.enabled =
     self.firstNameTextField.text.length > 0
     && self.lastNameTextField.text.length > 0
@@ -244,7 +248,7 @@
                 textField.text = @"+";
             } else if (textField.text.length == 0 && string.length != 0) {
                 textField.text = [NSString stringWithFormat:@"+%@", string];
-            } else {
+            } else if (textField.text.length + string.length <= MAX_LENGTH_FOR_PHONE_NUMBER) {
                 [textField setTextContentInRange:range replacementString:string];
             }
         } else {
@@ -268,7 +272,6 @@
     }
   }
 }
-
 
 #pragma mark- UIImagePickerController
 

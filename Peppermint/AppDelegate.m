@@ -208,7 +208,8 @@ SUBSCRIBE(DetachSuccess) {
         } else {
             NSLog(@"Query Parameters are not valid!");
         }
-    } else if ([[[url path] lowercaseString] containsString:PATH_VERIFIY_EMAIL]) {
+    } else if ([[[url path] lowercaseString] containsString:PATH_VERIFIY_EMAIL]
+               || [[[url path] lowercaseString] containsString:PATH_VERIFIED] ) {
         
 #warning "Verify email locally with parsing the url parameters from base64 encoded json data"        
         result = YES;

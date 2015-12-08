@@ -86,6 +86,8 @@ sharedObject;\
 #define CONTINUE_BUTTON_CORNER_RADIUS   10
 
 #define MIN_PASSWORD_LENGTH             6
+#define MAX_LENGTH_FOR_PHONE_NUMBER     15
+#define INTERNATIONAL_PHONE_SIGN        @"+"
 
 #pragma mark - Alert Button Index Definition
 #define ALERT_BUTTON_INDEX_CANCEL   0
@@ -126,6 +128,7 @@ sharedObject;\
 
 #define HOST_FASTREPLY                  @"reply"
 #define PATH_VERIFIY_EMAIL              @"/verify-email"
+#define PATH_VERIFIED                   @"/verified"
 #define PATH_SIGNIN                     @"/signin"
 #define PATH_RESET                      @"/reset"
 
