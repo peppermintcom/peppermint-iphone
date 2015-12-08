@@ -14,7 +14,11 @@
 
 #pragma mark - Access
 +(Repository*) beginTransaction; {
-    NSPersistentStoreCoordinator *persistentStoreCoordinator = [[AppDelegate Instance] persistentStoreCoordinator];
+#if !(TARGET_OS_WATCH)
+  NSPersistentStoreCoordinator *persistentStoreCoordinator = [[AppDelegate Instance] persistentStoreCoordinator];
+#else
+  NSPersistentStoreCoordinator *persistentStoreCoordinator = [[ExtensionDelegate Instance] persistentStoreCoordinator];
+#endif
     Repository *repository = [[Repository alloc] init];
     repository.managedObjectContext =
     [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];

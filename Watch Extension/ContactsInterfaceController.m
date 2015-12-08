@@ -14,8 +14,10 @@
 #import "WKInterfaceTable+IGInterfaceDataTable.h"
 #import "PeppermintMessageSender.h"
 #import "PeppermintContact.h"
+#import "ExtensionDelegate.h"
+#import "RecentContactsModel.h"
 
-@interface ContactsInterfaceController() <IGInterfaceTableDataSource>
+@interface ContactsInterfaceController() <IGInterfaceTableDataSource, RecentContactsModelDelegate>
 
 @property (strong, nonatomic) NSMutableArray * datasource;
 @property (strong, nonatomic) NSMutableArray * allContacts;
@@ -39,21 +41,18 @@
 }
 
 - (void)awakeWithContext:(id)context {
-    [super awakeWithContext:context];
+  [super awakeWithContext:context];
 
-  __weak typeof(self) weakSelf = self;
-    // Configure interface objects here.
-  [WKContact allContacts:^(NSArray * results) {
-    __strong typeof(self) strongSelf = weakSelf;
-    strongSelf.datasource = [results mutableCopy];
-    strongSelf.allContacts = [results mutableCopy];
-    [strongSelf loadTableData];
-  }];
+  // Configure interface objects here.
+  self.datasource = [NSMutableArray array];
+  self.allContacts = [NSMutableArray array];
 }
 
 - (void)willActivate {
     // This method is called when watch view controller is about to be visible to user
     [super willActivate];
+  [ExtensionDelegate Instance].recentContactsModel.delegate = self;
+  [[ExtensionDelegate Instance].recentContactsModel refreshRecentContactList];
 }
 
 - (void)didDeactivate {
@@ -66,7 +65,9 @@
 - (IBAction)searchPressed:(id)sender {
   [self presentTextInputControllerWithSuggestions:nil allowedInputMode:WKTextInputModePlain completion:^(NSArray * results) {
     NSLog(@"WK input result: %@", results);
-    if (!results) {
+    if (!results || results.count == 0) {
+      self.datasource = [self.allContacts mutableCopy];
+      [self.tableView reloadData];
       return;
     }
     
@@ -101,6 +102,29 @@
                        context:ppm_contact];
 }
 
+#pragma mark- RecentContactsModelDelegate
+
+- (void)recentPeppermintContactsRefreshed {
+  NSArray * results = [ExtensionDelegate Instance].recentContactsModel.contactList;
+  self.datasource = [results mutableCopy];
+  self.allContacts = [results mutableCopy];
+  [self loadTableData];
+}
+
+- (void)recentPeppermintContactSavedSucessfully:(PeppermintContact *)peppermintContact {
+  if (![self.datasource containsObject:peppermintContact]) {
+    [self.datasource addObject:peppermintContact];
+  }
+  
+  if (![self.allContacts containsObject:peppermintContact]) {
+    [self.allContacts addObject:peppermintContact];
+  }
+  [self loadTableData];
+}
+
+- (void)operationFailure:(NSError *)error {
+  
+}
 @end
 
 

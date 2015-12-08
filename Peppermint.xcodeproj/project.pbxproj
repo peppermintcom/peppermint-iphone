@@ -110,6 +110,14 @@
 		B1F93E981BC8E328005F2128 /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E971BC8E328005F2128 /* Repository.m */; };
 		B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */; };
 		B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FE184F1BE1676D002772B4 /* FeedBackModel.m */; };
+		D0041CF41C16B56D00AEC272 /* PeppermintDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E8E1BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld */; };
+		D0041CF51C16B57F00AEC272 /* RecentContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B108F8681BECAEF200267DEC /* RecentContact.m */; };
+		D0041CF61C16B58300AEC272 /* RecentContact+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B108F8661BECAEF200267DEC /* RecentContact+CoreDataProperties.m */; };
+		D0041CF71C16B58700AEC272 /* CachedEmailMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B108F8761BECB0BD00267DEC /* CachedEmailMessage.m */; };
+		D0041CF81C16B58C00AEC272 /* CachedEmailMessage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B108F8741BECB0BD00267DEC /* CachedEmailMessage+CoreDataProperties.m */; };
+		D0041CF91C16B61700AEC272 /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E971BC8E328005F2128 /* Repository.m */; };
+		D0041CFA1C16B93700AEC272 /* RecentContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */; };
+		D0041CFB1C16BDB000AEC272 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF111BB71A85008C6F71 /* BaseModel.m */; };
 		D02D2D0F1C0F450E00092A23 /* AppConfigurationFile.m in Sources */ = {isa = PBXBuildFile; fileRef = D02D2D0D1C0F44FE00092A23 /* AppConfigurationFile.m */; };
 		D02D2D101C0F474500092A23 /* AppConfigurationFile.m in Sources */ = {isa = PBXBuildFile; fileRef = D02D2D0D1C0F44FE00092A23 /* AppConfigurationFile.m */; };
 		D0A7C0DA1BFA0C7900ACD33E /* DeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A7C0D91BFA0C7900ACD33E /* DeviceModel.m */; };
@@ -1665,25 +1673,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0D70D171C02F6C00068AB20 /* MandrillToObject.m in Sources */,
+				D0041CFA1C16B93700AEC272 /* RecentContactsModel.m in Sources */,
 				D0D70D191C02F6CA0068AB20 /* MandrillMailAttachment.m in Sources */,
+				D0041CFB1C16BDB000AEC272 /* BaseModel.m in Sources */,
+				D0041CF51C16B57F00AEC272 /* RecentContact.m in Sources */,
 				D0D70D241C0306930068AB20 /* A0SimpleKeychain+KeyPair.m in Sources */,
 				D0D70D071C02F64D0068AB20 /* JSONModelError.m in Sources */,
 				D0D70C521C0056E50068AB20 /* WKServerManager.m in Sources */,
+				D0041CF91C16B61700AEC272 /* Repository.m in Sources */,
 				D0D70D151C02F6BA0068AB20 /* MandrillInformationResponse.m in Sources */,
 				D0D70C3A1BFF35AB0068AB20 /* WKContact.m in Sources */,
 				D0D70D261C0306930068AB20 /* A0SimpleKeychain.m in Sources */,
 				D0A7C10C1BFC73FF00ACD33E /* ExtensionDelegate.m in Sources */,
 				D0D70C431BFFA71B0068AB20 /* PeppermintContact.m in Sources */,
 				D0D70D051C02F64D0068AB20 /* JSONModelClassProperty.m in Sources */,
+				D0041CF81C16B58C00AEC272 /* CachedEmailMessage+CoreDataProperties.m in Sources */,
 				D0D70D301C03297B0068AB20 /* WKInterfaceTable+IGInterfaceDataTable.m in Sources */,
 				D0D70D091C02F64D0068AB20 /* NSArray+JSONModel.m in Sources */,
 				D0D70D141C02F6B70068AB20 /* MandrillRequest.m in Sources */,
 				D0D70D161C02F6BD0068AB20 /* MandrillSendRequest.m in Sources */,
+				D0041CF71C16B58700AEC272 /* CachedEmailMessage.m in Sources */,
 				D02D2D0F1C0F450E00092A23 /* AppConfigurationFile.m in Sources */,
+				D0041CF61C16B58300AEC272 /* RecentContact+CoreDataProperties.m in Sources */,
 				D0D70D291C0308E90068AB20 /* PeppermintMessageSender.m in Sources */,
 				D0D70C341BFF31440068AB20 /* ContactsTableRowController.m in Sources */,
 				D0D70D031C02F64D0068AB20 /* JSONModelArray.m in Sources */,
 				D0D70D131C02F64D0068AB20 /* JSONValueTransformer.m in Sources */,
+				D0041CF41C16B56D00AEC272 /* PeppermintDataModel.xcdatamodeld in Sources */,
 				D0D70D111C02F64D0068AB20 /* JSONKeyMapper.m in Sources */,
 				D0A7C1091BFC73FF00ACD33E /* ContactsInterfaceController.m in Sources */,
 				D0D70D011C02F64D0068AB20 /* JSONModel.m in Sources */,

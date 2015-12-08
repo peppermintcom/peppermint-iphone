@@ -22,13 +22,13 @@
                                         <items>
                                             <group width="91" height="43" alignment="left" layout="vertical" spacing="0.0" id="Vbx-pO-k5Q">
                                                 <items>
-                                                    <label alignment="left" text="Rob Rawson" id="0VD-CM-lol">
+                                                    <label alignment="left" text="Rob Rawsonooijtoij" minimumScaleFactor="0.69999999999999996" id="0VD-CM-lol">
                                                         <color key="textColor" red="0.094117647060000004" green="0.56078431370000004" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     </label>
-                                                    <label width="90" alignment="left" verticalAlignment="center" text="rob@staff.com" minimumScaleFactor="0.29999999999999999" id="FWb-Cx-viW"/>
+                                                    <label width="90" alignment="left" verticalAlignment="center" text="rob@staff.comioiowjoirjqwoirjoqiwjroiwqjroiwqr" minimumScaleFactor="0.62" id="FWb-Cx-viW"/>
                                                 </items>
                                             </group>
-                                            <imageView width="20" alignment="right" verticalAlignment="center" image="icon_mail" contentMode="center" id="t53-EW-yXh"/>
+                                            <imageView width="20" height="1" alignment="right" verticalAlignment="center" image="icon_mail" contentMode="center" id="t53-EW-yXh"/>
                                         </items>
                                     </group>
                                     <connections>

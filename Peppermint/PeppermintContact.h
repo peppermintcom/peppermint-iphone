@@ -21,4 +21,7 @@ typedef enum : NSUInteger {
 @property (strong, nonatomic) NSString* communicationChannelAddress;
 @property (nonatomic) CommunicationChannel communicationChannel;
 
++ (PeppermintContact *)peppermintContactWithData:(NSData *)data;
+- (NSData *)archivedRootData;
+
 @end

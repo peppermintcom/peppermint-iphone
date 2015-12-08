@@ -7,7 +7,11 @@
 //
 
 //Import AppDelegate that will be used to create repository
+#if !(TARGET_OS_WATCH)
 #import "AppDelegate.h"
+#else
+#import "ExtensionDelegate.h"
+#endif
 
 //Import entity headers
 #import "RecentContact.h"

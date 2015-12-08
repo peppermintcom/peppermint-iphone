@@ -20,7 +20,11 @@
 @property (weak, nonatomic) id<RecentContactsModelDelegate> delegate;
 @property (strong, nonatomic) NSMutableArray *contactList;
 
--(void) save:(PeppermintContact*) peppermintContact;
+- (void) save:(PeppermintContact*) peppermintContact;
+- (void)saveInUserDefaults:(NSData *)peppermintContact;
+- (void)migrateContactsFromUserDefaults;
+
 -(NSPredicate*) recentContactPredicate:(PeppermintContact*) peppermintContact;
 -(void) refreshRecentContactList;
+
 @end

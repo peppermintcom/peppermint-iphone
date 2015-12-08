@@ -13,7 +13,9 @@
 -(id) init {
     self = [super init];
     if(self) {
+#if !(TARGET_OS_WATCH)
         REGISTER();
+#endif
         NSLog(@"Created:%@", self.description);
     }
     return self;

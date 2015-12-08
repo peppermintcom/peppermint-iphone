@@ -102,6 +102,7 @@
     [self logServiceCalls];
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
     [self initGoogleApp];
+  [self initWatchKitSession];
   
     return YES;
 }
