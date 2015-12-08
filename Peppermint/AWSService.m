@@ -207,17 +207,27 @@
     [self failureDuringRequestCreationWithError:error];
   } else {
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
-      AccountCheckEmail * checkEmail = [AccountCheckEmail new];
-      NSInteger statusCode = ((NSHTTPURLResponse*)response).statusCode;
-      if (statusCode == RESPONSE_CODE_NOT_AUTH) {
-        checkEmail.isFree = NO;
-        PUBLISH(checkEmail);
-      } else if (statusCode == RESPONSE_CODE_NOT_FOUND) {
-        checkEmail.isFree = YES;
-        PUBLISH(checkEmail);
-      } else if (error) {
-        [self failureDuringRequestCreationWithError:error];
-      }
+        AccountCheckEmail * checkEmail = [AccountCheckEmail new];
+        if(error) {
+            [self failureWithOperation:nil andError:error];
+        } else {
+            NSArray *responseArray = (NSArray*)responseObject;
+            if(responseArray.count == 0) {
+                checkEmail.isEmailRegistered = NO;
+                PUBLISH(checkEmail);
+            } else {
+                NSDictionary *infoDict = [responseArray firstObject];
+                CheckEmailResponse *checkEmailResponse = [[CheckEmailResponse alloc] initWithDictionary:infoDict error:&error];
+                if (error) {
+                    [self failureWithOperation:nil andError:error];
+                } else {
+                    checkEmail.isEmailRegistered = YES;
+                    checkEmail.isEmailVerified = checkEmailResponse.is_verified;
+                    NSLog(@"%@, isVerified:%d", checkEmailResponse.email, checkEmailResponse.is_verified);
+                }
+                PUBLISH(checkEmail);
+            }
+        }
     }];
     [dataTask resume];
   }

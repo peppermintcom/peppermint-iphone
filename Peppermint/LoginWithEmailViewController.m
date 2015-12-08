@@ -18,7 +18,7 @@
 #define SEGUE_WELCOME_BACK              @"WelcomeBackSegue"
 #define SEGUE_SIGNUP_WITH_EMAIL         @"SignUpWithEmailSegue"
 
-@interface LoginWithEmailViewController () <LoginTextFieldTableViewCellDelegate, AccountModelDelegate>
+@interface LoginWithEmailViewController () <LoginTextFieldTableViewCellDelegate, AccountModelDelegate, UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet LoginTextFieldTableViewCell * emailCell;
 @property (weak, nonatomic) IBOutlet LoginTextFieldTableViewCell * passwordCell;
 
@@ -38,6 +38,8 @@
   
   self.descriptionLabel.text = [PeppermintMessageSender sharedInstance].email;
     isValidEmailEmptyValidation = isValidEmailFormatValidation = isValidPasswordValidation = NO;
+    self.emailCell.notAllowedCharacters = @" ";
+    self.passwordCell.notAllowedCharacters = @" ";
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -66,7 +68,11 @@
 }
 
 -(void) doneButtonPressed {
-    [self loginPressed:nil];
+    if(self.passwordCell.textField.text.length > 0) {
+        [self loginPressed:nil];
+    } else {
+        [self continuePressed:nil];
+    }
 }
 
 #pragma mark - AccountModelDelegate
@@ -89,13 +95,14 @@
     NSLog(@"accountInfoRefreshSuccess");
 }
 
--(void) emailChecked:(BOOL)free {
+-(void) checkEmailIsRegisteredIsSuccess:(BOOL) isEmailRegistered isEmailVerified:(BOOL) isEmailVerified {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    
-    if (free) {
+    if(!isEmailRegistered) {
         [self performSegueWithIdentifier:SEGUE_SIGNUP_WITH_EMAIL sender:nil];
-    } else {
+    } else if (isEmailVerified) {
         [self performSegueWithIdentifier:SEGUE_WELCOME_BACK sender:nil];
+    } else {
+        [[[UIAlertView alloc] initWithTitle:@"Seems this email is registered but not verified yet. Now the app should goto verification page. This functionality will be implemented" message:nil delegate:self cancelButtonTitle:LOC(@"OK", nil) otherButtonTitles:nil] show];
     }
 }
 
@@ -117,6 +124,7 @@
 }
 
 - (IBAction)continuePressed:(id)sender {
+    [self.emailCell.textField resignFirstResponder];
     if (![ConnectionModel sharedInstance].isInternetReachable) {
         NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorNotConnectedToInternet userInfo:nil];
         [self operationFailure:error];
@@ -126,7 +134,7 @@
         [[AccountModel sharedInstance] checkEmailIsRegistered:sender.email];
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     } else {
-        [[[UIAlertView alloc] initWithTitle:LOC(@"Invalid email", nil) message:nil delegate:nil cancelButtonTitle:LOC(@"OK", nil) otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:LOC(@"Invalid email", nil) message:nil delegate:self cancelButtonTitle:LOC(@"OK", nil) otherButtonTitles:nil] show];
     }
 }
 
@@ -142,6 +150,7 @@
 
 
 - (IBAction)loginPressed:(id)sender {
+    [self.passwordCell.textField resignFirstResponder];
   if (isValidPasswordValidation) {
     PeppermintMessageSender *sender = [PeppermintMessageSender sharedInstance];
     sender.password = self.passwordCell.textField.text;
@@ -149,8 +158,16 @@
     [[AccountModel sharedInstance] logUserIn:sender.email password:sender.password];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
   } else {
-      [[[UIAlertView alloc] initWithTitle:LOC(@"Invalid password", nil) message:nil delegate:nil cancelButtonTitle:LOC(@"OK", nil) otherButtonTitles:nil] show];
+      [[[UIAlertView alloc] initWithTitle:LOC(@"Invalid password", nil) message:nil delegate:self cancelButtonTitle:LOC(@"OK", nil) otherButtonTitles:nil] show];
   }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if([alertView.message isEqualToString:LOC(@"Invalid password", nil)]) {
+        [self.passwordCell.textField becomeFirstResponder];
+    } else if ([alertView.message isEqualToString:LOC(@"Invalid email", nil)]) {
+        [self.emailCell.textField becomeFirstResponder];
+    }
 }
 
 @end

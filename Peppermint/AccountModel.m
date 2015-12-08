@@ -95,12 +95,12 @@ SUBSCRIBE(VerificationEmailSent) {
 }
 
 SUBSCRIBE(AccountCheckEmail) {
-  if ([self.delegate respondsToSelector:@selector(emailChecked:)]) {
-    [self.delegate emailChecked:event.isFree];
-  }
+    if([self.delegate respondsToSelector:@selector(checkEmailIsRegisteredIsSuccess:isEmailVerified:)]) {
+        [self.delegate checkEmailIsRegisteredIsSuccess:event.isEmailRegistered isEmailVerified:event.isEmailVerified];
+    } else {
+        NSLog(@"Please implement checkEmailIsRegisteredIsSuccess:isEmailVerified: to get response isEmailRegistered %d, isEmailVerified %d", event.isEmailRegistered, event.isEmailVerified);
+    }
 }
-
-
 
 #pragma mark - Refresh Account
 

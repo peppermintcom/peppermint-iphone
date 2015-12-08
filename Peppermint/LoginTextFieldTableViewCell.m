@@ -31,15 +31,13 @@
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    
     if([string isEqualToString:DONE_STRING]) {
         [self.delegate doneButtonPressed];
-    } else {
+    } else if(self.notAllowedCharacters.length == 0 || ![self.notAllowedCharacters containsString:string]) {
+        [textField setTextContentInRange:range replacementString:string];
         string = [string stringByTrimmingCharactersInSet:[NSCharacterSet controlCharacterSet]];
         string = [string stringByTrimmingCharactersInSet:[NSCharacterSet decomposableCharacterSet]];
         string = [string stringByTrimmingCharactersInSet:[NSCharacterSet illegalCharacterSet]];
-        
-        [textField setTextContentInRange:range replacementString:string];
         [self.delegate updatedTextFor:self atIndexPath:self.indexPath];
     }
     return NO;

@@ -17,6 +17,7 @@
 @property (weak, nonatomic) id<LoginTextFieldTableViewCellDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UIView *coverView;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (strong, nonatomic) NSString *notAllowedCharacters;
 
 -(void) setValid:(BOOL) isValid;
 

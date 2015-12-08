@@ -73,8 +73,8 @@
 @end
 
 @interface AccountCheckEmail : BaseEvent
-
-@property (assign, nonatomic) BOOL isFree;
+@property (assign, nonatomic) BOOL isEmailRegistered;
+@property (assign, nonatomic) BOOL isEmailVerified;
 
 @end
 

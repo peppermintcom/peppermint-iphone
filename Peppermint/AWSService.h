@@ -17,6 +17,7 @@
 #import "AccountResponse.h"
 #import "LoginRequest.h"
 #import "LoginResponse.h"
+#import "CheckEmailResponse.h"
 
 #define AWS_API_KEY                     @"abc123"
 
@@ -31,9 +32,6 @@
 #define AWS_ENDPOINT_ACCOUNT_QUERY      @"/accounts/"    // Add account id to the path. For example : /accounts/{account_id}
 
 #define RESPONSE_CODE_CONFLICT      409
-#define RESPONSE_CODE_NOT_FOUND     404
-#define RESPONSE_CODE_NOT_AUTH      401
-
 
 @interface AWSService : BaseService
 @property(strong, nonatomic) NSString *apiKey;

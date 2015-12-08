@@ -14,9 +14,8 @@
 -(void) userLogInSuccessWithEmail:(NSString*) email;
 -(void) verificationEmailSendSuccess;
 -(void) accountInfoRefreshSuccess;
-
 @optional
--(void) emailChecked:(BOOL)free;
+-(void) checkEmailIsRegisteredIsSuccess:(BOOL) isEmailRegistered isEmailVerified:(BOOL) isEmailVerified;
 @end
 
 @interface AccountModel : BaseModel

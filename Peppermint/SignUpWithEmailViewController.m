@@ -140,6 +140,7 @@
             loginTextFieldCell.textField.text = [PeppermintMessageSender sharedInstance].email;
             loginTextFieldCell.textField.enabled = NO;
             loginTextFieldCell.textField.alpha = 0.7;
+            loginTextFieldCell.notAllowedCharacters = @" ";
             cell = loginTextFieldCell;
         } else if (indexPath.row == ROW_EMAIL_EMPTY_VALIDATION) {
             InformationTextTableViewCell *informationTextTableViewCell = [CellFactory cellInformationTextTableViewCellFromTable:tableView forIndexPath:indexPath];
@@ -157,6 +158,7 @@
             loginTextFieldCell.textField.placeholder = LOC(@"Password", @"Password");
             loginTextFieldCell.textField.keyboardType = UIKeyboardTypeDefault;
             loginTextFieldCell.textField.text = [PeppermintMessageSender sharedInstance].password;
+            loginTextFieldCell.notAllowedCharacters = @" ";
             cell = loginTextFieldCell;
         } else if (indexPath.row == ROW_PASSWORD_EMPTY_VALIDATION) {
             InformationTextTableViewCell *informationTextTableViewCell = [CellFactory cellInformationTextTableViewCellFromTable:tableView forIndexPath:indexPath];
