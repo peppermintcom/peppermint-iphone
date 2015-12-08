@@ -335,6 +335,15 @@ reset:
 
 #pragma mark - Handle Error
 
++(void) logErrorToAnswers:(NSError*) error {
+    NSMutableDictionary *logDictionary = [NSMutableDictionary dictionaryWithDictionary:error.userInfo];
+    [logDictionary setValue:[NSNumber numberWithInt:error.code] forKey:@"Code"];
+    [logDictionary setValue:error.domain forKey:@"Domain"];
+    [logDictionary setValue:error.localizedDescription forKey:@"LocalizedDescription"];
+    [logDictionary setValue:error.description forKey:@"Description"];
+    [Answers logCustomEventWithName:@"NSError handled with alert" customAttributes:logDictionary];
+}
+
 +(NSString*) messageForError:(NSError*) error {
     NSString *message = error.localizedDescription;
     if([error.domain isEqualToString:NSURLErrorDomain]) {
@@ -373,7 +382,8 @@ reset:
     return message;
 }
 
-+(void) handleError:(NSError*) error {        
++(void) handleError:(NSError*) error {
+    [self logErrorToAnswers:error];
     NSString *title = LOC(@"An error occured", @"Error Title Message");
     NSString *message = [self messageForError:error];
     NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");

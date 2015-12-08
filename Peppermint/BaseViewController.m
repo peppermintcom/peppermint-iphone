@@ -25,7 +25,7 @@
 
 -(void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [Answers logContentViewWithName:self.title contentType:@"ViewController" contentId:self.description customAttributes:@{}];
+    [Answers logContentViewWithName:self.title contentType:NSStringFromClass(self.class) contentId:self.title customAttributes:@{}];
     [self.navigationController setNavigationBarHidden:YES];
 }
 
