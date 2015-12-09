@@ -36,7 +36,7 @@
 
 #pragma mark- Class Methods
 
-+ (void)presentAddContactControllerWithText:(NSString*) text {
++ (void)presentAddContactControllerWithText:(NSString*) text withDelegate:(id<AddContactViewControllerDelegate>) delegate {
     UIStoryboard * storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
   
     UINavigationController *nvc = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:VIEWCONTROLLER_ADDCONTACTNAVIGATION];
@@ -44,6 +44,7 @@
     UIViewController *rootVC = [AppDelegate Instance].window.rootViewController;
     [rootVC presentViewController:nvc animated:YES completion:^{
         AddContactViewController *addContactViewController = (AddContactViewController*)nvc.viewControllers.firstObject;
+        addContactViewController.delegate = delegate;
         addContactViewController.firstNameTextField.text = [text capitalizedString];
     }];
 }
@@ -258,6 +259,10 @@
         }
         UIReturnKeyType returnKeyType = textField.returnKeyType;
         [self updateScreen];
+        if(textField == self.firstNameTextField) {
+            [self.delegate nameFieldUpdated:self.firstNameTextField.text];
+        }        
+        
         if(returnKeyType != textField.returnKeyType) {
             [textField resignFirstResponder];
             [textField becomeFirstResponder];

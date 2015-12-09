@@ -33,7 +33,7 @@
 
 #define SCREEN_HEIGHT_LIMIT             500
 
-@interface ContactsViewController ()
+@interface ContactsViewController () <AddContactViewControllerDelegate>
 
 @end
 
@@ -430,7 +430,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
 -(void) contactInformationButtonPressed {
     
     isAddNewContactModalisUp = YES;
-    [AddContactViewController presentAddContactControllerWithText:self.searchContactsTextField.text];
+    [AddContactViewController presentAddContactControllerWithText:self.searchContactsTextField.text withDelegate:self];
     
     /*
     if([self isEmptyResultTableViewCellVisible] || activeCellTag == CELL_TAG_ALL_CONTACTS) {
@@ -724,6 +724,13 @@ SUBSCRIBE(ReplyContactIsAdded) {
         [self.contactsModel refreshContactList];
     }
 }
+
+#pragma mark - AddContactViewControllerDelegate
+
+-(void) nameFieldUpdated:(NSString*)name {
+    self.searchContactsTextField.text = self.contactsModel.filterText = name;
+}
+
 
 #pragma mark - UIAlertViewDelegate
 
