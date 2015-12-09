@@ -220,7 +220,9 @@
     self.saveContactBarButtonItem.enabled =
     self.firstNameTextField.text.length > 0
     && self.lastNameTextField.text.length > 0
-    && (self.phoneImageView.highlighted || self.emailImageView.highlighted);
+    && ((self.phoneImageView.highlighted && self.emailTextField.text.length == 0)
+        || self.emailImageView.highlighted
+    );
     
     self.firstNameTextField.returnKeyType =
     self.lastNameTextField.returnKeyType =
