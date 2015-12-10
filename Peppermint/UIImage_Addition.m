@@ -90,4 +90,37 @@
     return img;
 }
 
+- (UIImage *)crop {
+    CGFloat squareSize = self.size.height < self.size.width ? self.size.height : self.size.width;
+    return [self cropToSize:CGSizeMake(squareSize, squareSize)];
+}
+
+- (UIImage *)cropToSize:(CGSize)size
+{
+    // not equivalent to image.size (which depends on the imageOrientation)!
+    double refWidth = CGImageGetWidth(self.CGImage);
+    double refHeight = CGImageGetHeight(self.CGImage);
+    
+    double x = (refWidth - size.width) / 2.0;
+    double y = (refHeight - size.height) / 2.0;
+    
+    CGRect cropRect = CGRectMake(x, y, size.height, size.width);
+    CGImageRef imageRef = CGImageCreateWithImageInRect([self CGImage], cropRect);
+    
+    UIImage *cropped = [UIImage imageWithCGImage:imageRef scale:0.0 orientation:self.imageOrientation];
+    CGImageRelease(imageRef);
+    
+    return cropped;
+}
+
+
+-(UIImage*) resizedImageWithWidth:(int)width height:(int)height {
+    CGSize destinationSize = CGSizeMake(width, height);
+    UIGraphicsBeginImageContext(destinationSize);
+    [self drawInRect:CGRectMake(0,0,destinationSize.width,destinationSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
 @end

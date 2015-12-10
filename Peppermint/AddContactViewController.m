@@ -11,6 +11,7 @@
 #import "CountryRow.h"
 #import "PeppermintContact.h"
 #import "AppDelegate.h"
+#import "CellFactory.h"
 
 @import AssetsLibrary;
 @import MobileCoreServices;
@@ -284,7 +285,11 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
   UIImage * image = info[UIImagePickerControllerOriginalImage];
-  self.avatarImageView.image = [image fixOrientation];
+    
+    
+    self.avatarImageView.image = [[[image fixOrientation] crop]
+                                  resizedImageWithWidth:CELL_HEIGHT_CONTACT_TABLEVIEWCELL*2
+                                  height:CELL_HEIGHT_CONTACT_TABLEVIEWCELL*2];
   hasCustomAvatarImage = (image != nil);
   [picker dismissViewControllerAnimated:YES completion:nil];
 }

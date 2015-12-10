@@ -19,6 +19,7 @@
 #import "FastReplyModel.h"
 #import "ConnectionModel.h"
 #import "CacheModel.h"
+#import "LoginNavigationViewController.h"
 
 @import CoreSpotlight;
 @import MobileCoreServices;
@@ -191,9 +192,12 @@ SUBSCRIBE(DetachSuccess) {
                                       sourceApplication, @"sourceApplication",
                                       nil];
     [Answers logCustomEventWithName:@"HandleUrl" customAttributes:customAttributes];
+    NSString *host = [[url host] lowercaseString];
+    NSString *path = [[url path] lowercaseString];
     
-    if([[[url host] lowercaseString] isEqualToString:HOST_FASTREPLY]
-       || [[[url path] lowercaseString] containsString:HOST_FASTREPLY]) {
+    
+    if([host isEqualToString:HOST_FASTREPLY]
+       || [path containsString:HOST_FASTREPLY]) {
         NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
         NSString *nameSurname, *email = nil;
         for(NSURLQueryItem *queryItem in urlComponents.queryItems) {
@@ -208,8 +212,10 @@ SUBSCRIBE(DetachSuccess) {
         } else {
             NSLog(@"Query Parameters are not valid!");
         }
-    } else if ([[[url path] lowercaseString] containsString:PATH_VERIFIY_EMAIL]
-               || [[[url path] lowercaseString] containsString:PATH_VERIFIED] ) {
+    } else if ([path containsString:PATH_VERIFIY_EMAIL]
+               || [path containsString:PATH_VERIFIED]
+               || [host containsString:PATH_VERIFIY_EMAIL]
+               || [host containsString:PATH_VERIFIED]) {
         
 #warning "Verify email locally with parsing the url parameters from base64 encoded json data"        
         result = YES;
@@ -223,10 +229,16 @@ SUBSCRIBE(DetachSuccess) {
                 [MBProgressHUD hideHUDForView:rootVC.view animated:YES];
             });
         });
-    } else if ([[[url path] lowercaseString] containsString:PATH_RESET]) {
+    } else if ([path containsString:PATH_RESET]
+               || [host containsString:PATH_RESET]) {
         NSLog(PATH_RESET);
-    } else if ([[[url path] lowercaseString] containsString:PATH_SIGNIN]) {
+    } else if ([path containsString:PATH_SIGNIN]
+               || [host containsString:PATH_SIGNIN]) {
         NSLog(PATH_SIGNIN);
+        UINavigationController *nvc = [self visibleViewController].navigationController;
+        if(![nvc isKindOfClass:[LoginNavigationViewController class]]) {
+            [LoginNavigationViewController logUserInWithDelegate:nil completion:nil];
+        }
     } else {
         NSLog(@"handleOpenURL failed for URL: %@", url.host);
     }
@@ -352,8 +364,6 @@ reset:
             case NSURLErrorNotConnectedToInternet:
             case NSURLErrorNetworkConnectionLost:
                 message = LOC(@"Please check your internet connection and try again", @"message");
-#warning "Handle the below message. Maybe in view controller"
-                //message = LOC(@"Please connect to the internet to upload the message", @"message");
                 break;
             default:
                 message = LOC(@"Connection error", @"message");
@@ -379,6 +389,8 @@ reset:
             default:
                 break;
         }
+    } else if ([error.domain isEqualToString:@"Could not start recording"]) {
+        message = LOC(@"Microphone is in use", @"message");
     }
     return message;
 }
@@ -399,6 +411,27 @@ SUBSCRIBE(RetrieveSignedUrlSuccessful) {
 
 SUBSCRIBE(FileUploadCompleted) {
     NSLog(@"FileUploadCompleted %@", event.signedUrl);
+}
+
+#pragma mark - VisibleViewController
+
+- (UIViewController *)visibleViewController {
+    UIViewController *rootViewController = self.window.rootViewController;
+    return [self getVisibleViewControllerFrom:rootViewController];
+}
+
+- (UIViewController *) getVisibleViewControllerFrom:(UIViewController *) vc {
+    if ([vc isKindOfClass:[UINavigationController class]]) {
+        return [self getVisibleViewControllerFrom:[((UINavigationController *) vc) visibleViewController]];
+    } else if ([vc isKindOfClass:[UITabBarController class]]) {
+        return [self getVisibleViewControllerFrom:[((UITabBarController *) vc) selectedViewController]];
+    } else {
+        if (vc.presentedViewController) {
+            return [self getVisibleViewControllerFrom:vc.presentedViewController];
+        } else {
+            return vc;
+        }
+    }
 }
 
 @end

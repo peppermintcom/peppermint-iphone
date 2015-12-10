@@ -309,4 +309,53 @@
     }];
 }
 
+-(void) recoverPasswordForEmail:(NSString*) email {
+#warning "Delete below part"
+    /*
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_ACCOUNT_RECOVER];
+    AFHTTPRequestOperationManager *requestOperationManager = [[AFHTTPRequestOperationManager alloc]
+                                                              initWithBaseURL:[NSURL URLWithString:url]];
+    
+    RecoverPasswordRequest *recoverPasswordRequest = [RecoverPasswordRequest new];
+    recoverPasswordRequest.api_key = self.apiKey;
+    recoverPasswordRequest.email = email;
+    NSDictionary *parameterDictionary = [recoverPasswordRequest toDictionary];
+    
+    [requestOperationManager POST:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        AccountPasswordRecovered *accountPasswordRecovered = [AccountPasswordRecovered new];
+        accountPasswordRecovered.sender = self;
+        PUBLISH(accountPasswordRecovered);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self failureWithOperation:nil andError:error];
+    }];
+    */
+    
+    
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_ACCOUNT_RECOVER];
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    RecoverPasswordRequest *recoverPasswordRequest = [RecoverPasswordRequest new];
+    recoverPasswordRequest.api_key = self.apiKey;
+    recoverPasswordRequest.email = email;
+    NSDictionary *parameterDictionary = [recoverPasswordRequest toDictionary];
+    
+    NSError *error;
+    NSURLRequest *request = [[AFJSONRequestSerializer serializer] requestWithMethod:@"POST" URLString:url parameters:parameterDictionary error:&error];
+    if(error) {
+        [self failureDuringRequestCreationWithError:error];
+    } else {
+        NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+            if (error) {
+                [self failureWithOperation:nil andError:error];
+            } else {
+                AccountPasswordRecovered *accountPasswordRecovered = [AccountPasswordRecovered new];
+                accountPasswordRecovered.sender = self;
+                PUBLISH(accountPasswordRecovered);
+            }
+        }];
+        [dataTask resume];
+    }
+}
+
 @end

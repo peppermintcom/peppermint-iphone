@@ -68,7 +68,7 @@
 }
 
 -(void) doneButtonPressed {
-    if(self.passwordCell.textField.text.length > 0) {
+    if(self.descriptionLabel.text.length > 0) {
         [self loginPressed:nil];
     } else {
         [self continuePressed:nil];
@@ -82,13 +82,10 @@
 }
 
 -(void) userLogInSuccessWithEmail:(NSString*) email {
-    NSLog(@"userLogInSuccessWithEmail:%@", email);
     LoginNavigationViewController *loginNavigationViewController = (LoginNavigationViewController*)self.navigationController;
     if([PeppermintMessageSender sharedInstance].isEmailVerified) {
         [loginNavigationViewController loginSucceed];
     } else {
-        
-        NSLog(@"Not verified yet!!...");
         [loginNavigationViewController loginRequireEmailVerification];
     }
 }
@@ -111,6 +108,16 @@
     }
 }
 
+-(void) recoverPasswordIsSuccess {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    NSString* email = [PeppermintMessageSender sharedInstance].email;
+    NSString *messageFormat = LOC(@"Email recover message format", @"Email recover message format");
+    NSString *title = LOC(@"Information", @"Title Message");
+    NSString *message = [NSString stringWithFormat:messageFormat, email];
+    NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
+    [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
+}
+
 - (void)operationFailure:(NSError *)error {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [super operationFailure:error];
@@ -119,7 +126,9 @@
 #pragma mark - Forget Password
 
 - (IBAction)forgetPasswordPressed:(id)sender {
-    NSLog(@"forgetPasswordPressed...");
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    NSString* email = [PeppermintMessageSender sharedInstance].email;
+    [[AccountModel sharedInstance] recoverPasswordForEmail:email];
 }
 
 #pragma mark - Navigation

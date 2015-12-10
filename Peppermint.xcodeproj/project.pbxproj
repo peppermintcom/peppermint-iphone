@@ -122,6 +122,7 @@
 		B1F93E981BC8E328005F2128 /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E971BC8E328005F2128 /* Repository.m */; };
 		B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */; };
 		B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FE184F1BE1676D002772B4 /* FeedBackModel.m */; };
+		B1FFFF2A1C18241E0049347D /* RecoverPasswordRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FFFF291C18241E0049347D /* RecoverPasswordRequest.m */; };
 		D02D2D061C0C379E00092A23 /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D02D2D051C0C379E00092A23 /* BaseTableViewController.m */; };
 		D02D2D071C0C3A8500092A23 /* Events.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F0456A1BCFB4E400A67942 /* Events.m */; };
 		D074A66D1C07174D0017EAC3 /* CountryFormatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D074A66C1C07174D0017EAC3 /* CountryFormatModel.m */; };
@@ -368,6 +369,8 @@
 		B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentContactsModel.m; sourceTree = "<group>"; };
 		B1FE184E1BE1676D002772B4 /* FeedBackModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedBackModel.h; sourceTree = "<group>"; };
 		B1FE184F1BE1676D002772B4 /* FeedBackModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedBackModel.m; sourceTree = "<group>"; };
+		B1FFFF281C18241D0049347D /* RecoverPasswordRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecoverPasswordRequest.h; sourceTree = "<group>"; };
+		B1FFFF291C18241E0049347D /* RecoverPasswordRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecoverPasswordRequest.m; sourceTree = "<group>"; };
 		C388433C48F87557ED2F3C2D /* Pods-Peppermint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peppermint.release.xcconfig"; path = "Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint.release.xcconfig"; sourceTree = "<group>"; };
 		D02D2D041C0C379E00092A23 /* BaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableViewController.h; sourceTree = "<group>"; };
 		D02D2D051C0C379E00092A23 /* BaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewController.m; sourceTree = "<group>"; };
@@ -553,6 +556,8 @@
 				B1C4A7751BF73E4900272AD7 /* LoginResponse.m */,
 				B19B6B571C16F415001895BF /* CheckEmailResponse.h */,
 				B19B6B581C16F415001895BF /* CheckEmailResponse.m */,
+				B1FFFF281C18241D0049347D /* RecoverPasswordRequest.h */,
+				B1FFFF291C18241E0049347D /* RecoverPasswordRequest.m */,
 			);
 			name = AWS;
 			sourceTree = "<group>";
@@ -1281,6 +1286,7 @@
 				B1BB1E631BD364FB00A1CE45 /* AFNetworkActivityLogger.m in Sources */,
 				B15B15AC1BD9D8B800C0C171 /* ExplodingView.m in Sources */,
 				B10C39311BF6FB150070B49F /* User.m in Sources */,
+				B1FFFF2A1C18241E0049347D /* RecoverPasswordRequest.m in Sources */,
 				D0A7C0F31BFC5BC200ACD33E /* SpotlightModel.m in Sources */,
 				B1EF40EB1BB7E78C00042E4B /* SendVoiceMessageModel.m in Sources */,
 				B17B3D5E1BB6A504009B8BC5 /* ContactsViewController.m in Sources */,

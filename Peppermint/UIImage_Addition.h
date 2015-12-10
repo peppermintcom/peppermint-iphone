@@ -10,6 +10,9 @@
 
 @interface UIImage (UIImage_Addition)
 
-- (UIImage *)fixOrientation;
+- (UIImage*) fixOrientation;
+- (UIImage*) resizedImageWithWidth:(int)width height:(int)height;
+- (UIImage *)crop;
+- (UIImage *)cropToSize:(CGSize)size;
 
 @end

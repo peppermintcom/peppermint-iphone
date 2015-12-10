@@ -53,6 +53,9 @@
 @implementation VerificationEmailSent
 @end
 
+@implementation AccountPasswordRecovered
+@end
+
 @implementation AccountInfoRefreshed
 @end
 

@@ -17,20 +17,20 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aEQ-5s-Sav" userLabel="Seperator View">
-                        <rect key="frame" x="0.0" y="54" width="414" height="1"/>
+                        <rect key="frame" x="0.0" y="55" width="414" height="0.0"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="1" id="HY2-5E-NHW"/>
+                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="1" id="HY2-5E-NHW"/>
                         </constraints>
                     </view>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1G5-fy-gLb" userLabel="Avatar Image View">
-                        <rect key="frame" x="11" y="10" width="35" height="35"/>
+                        <rect key="frame" x="11" y="10" width="36" height="36"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="1G5-fy-gLb" secondAttribute="height" multiplier="1:1" id="BN9-P6-Tn1"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_ContactName" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lwr-bI-hp8">
-                        <rect key="frame" x="54" y="8" width="320" height="21"/>
+                        <rect key="frame" x="55" y="8" width="319" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="N1G-JJ-pfS"/>
                         </constraints>
@@ -39,7 +39,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="via_" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uAi-pa-EQU">
-                        <rect key="frame" x="54" y="24" width="25" height="26"/>
+                        <rect key="frame" x="55" y="24" width="25" height="26"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="26" id="ARw-iF-GXd"/>
                             <constraint firstAttribute="width" constant="25" id="mZK-Fh-7kz"/>
@@ -49,7 +49,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_via_Information" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qhu-no-qln">
-                        <rect key="frame" x="75" y="24" width="299" height="26"/>
+                        <rect key="frame" x="76" y="24" width="298" height="26"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="26" id="ywC-Gm-RzA"/>
                         </constraints>

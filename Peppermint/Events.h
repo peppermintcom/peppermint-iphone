@@ -76,11 +76,13 @@
 @interface AccountCheckEmail : BaseEvent
 @property (assign, nonatomic) BOOL isEmailRegistered;
 @property (assign, nonatomic) BOOL isEmailVerified;
-
 @end
 
 @interface VerificationEmailSent : BaseEvent
 @property (strong, nonatomic) NSString* jwt;
+@end
+
+@interface AccountPasswordRecovered : BaseEvent
 @end
 
 @interface AccountInfoRefreshed : BaseEvent

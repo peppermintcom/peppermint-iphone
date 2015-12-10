@@ -21,6 +21,7 @@
 - (NSURL *)applicationDocumentsDirectory;
 + (AppDelegate*) Instance;
 + (void) handleError:(NSError*) error;
+- (UIViewController *)visibleViewController;
 
 @end
 

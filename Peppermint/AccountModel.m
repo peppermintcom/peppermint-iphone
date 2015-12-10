@@ -41,7 +41,7 @@
 }
 
 SUBSCRIBE(AccountRegisterIsSuccessful) {
-    if([event.user.email isEqualToString:cachedSender.email]) {
+    if([event.user.email caseInsensitiveCompare:cachedSender.email] == NSOrderedSame) {
         cachedSender.jwt = event.jwt;
         cachedSender.accountId = event.user.account_id;
         [self.delegate userRegisterSuccessWithEmail:cachedSender.email password:cachedSender.password jwt:cachedSender.jwt];
@@ -49,7 +49,7 @@ SUBSCRIBE(AccountRegisterIsSuccessful) {
 }
 
 SUBSCRIBE(AccountRegisterConflictTryLogin) {
-    if([event.email isEqualToString:cachedSender.email]) {
+    if([event.email caseInsensitiveCompare:cachedSender.email] == NSOrderedSame) {
         [self logUserIn:cachedSender.email password:cachedSender.password];
     }
 }
@@ -69,7 +69,7 @@ SUBSCRIBE(NetworkFailure) {
 }
 
 SUBSCRIBE(AccountLoginIsSuccessful) {
-    if([event.user.email isEqualToString:cachedSender.email]) {
+    if([event.user.email caseInsensitiveCompare:cachedSender.email] == NSOrderedSame) {
         cachedSender.nameSurname = event.user.full_name;
         cachedSender.accountId = event.user.account_id;
         cachedSender.jwt = event.jwt;
@@ -118,6 +118,22 @@ SUBSCRIBE(AccountInfoRefreshed) {
         cachedSender.isEmailVerified = event.user.is_verified.boolValue;
         [cachedSender save];
         [self.delegate accountInfoRefreshSuccess];
+    }
+}
+
+#pragma mark - Recover Password
+
+-(void) recoverPasswordForEmail:(NSString*) email {
+    [awsService recoverPasswordForEmail:email];
+}
+
+SUBSCRIBE(AccountPasswordRecovered) {
+    if(event.sender == awsService) {
+        if([self.delegate respondsToSelector:@selector(recoverPasswordIsSuccess)]) {
+            [self.delegate recoverPasswordIsSuccess];
+        } else {
+            NSLog(@"Please implement accountPasswordRecoverIsSuccess to get response");
+        }
     }
 }
 

@@ -16,6 +16,7 @@
 -(void) accountInfoRefreshSuccess;
 @optional
 -(void) checkEmailIsRegisteredIsSuccess:(BOOL) isEmailRegistered isEmailVerified:(BOOL) isEmailVerified;
+-(void) recoverPasswordIsSuccess;
 @end
 
 @interface AccountModel : BaseModel
@@ -27,6 +28,6 @@
 -(void) refreshAccountInfo:(PeppermintMessageSender*) peppermintMessageSender;
 -(void) checkEmailIsRegistered:(NSString *)email;
 -(void) logUserIn:(NSString*) email password:(NSString*) password;
-
+-(void) recoverPasswordForEmail:(NSString*) email;
 
 @end
