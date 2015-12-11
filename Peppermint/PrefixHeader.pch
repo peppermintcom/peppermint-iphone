@@ -88,12 +88,15 @@ sharedObject;\
 #define MIN_PASSWORD_LENGTH             6
 #define MAX_LENGTH_FOR_PHONE_NUMBER     15
 #define INTERNATIONAL_PHONE_SIGN        @"+"
+#define DONE_STRING                     @"\n"
 
 #pragma mark - Alert Button Index Definition
 #define ALERT_BUTTON_INDEX_CANCEL   0
 #define ALERT_BUTTON_INDEX_OTHER_1  1
 #define ALERT_BUTTON_INDEX_OTHER_2  2
 #define ALERT_BUTTON_INDEX_OTHER_3  3
+
+#define CACHE_TRIGGER_DELAY_ON_CONNECTION   5
 
 #define EXTENSION_M4A   @"m4a"
 #define EXTENSION_AAC   @"aac"

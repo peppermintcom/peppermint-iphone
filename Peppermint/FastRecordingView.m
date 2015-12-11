@@ -52,16 +52,23 @@ typedef enum : NSUInteger {
     fastRecordingViewStatus = FastRecordingViewStatusInit;
 }
 
-SUBSCRIBE(AttachSuccess) {
-    [self activeOnScreen];
+SUBSCRIBE(MessageSendingStatusIsUpdated) {
+    SendVoiceMessageModel *model = [SendVoiceMessageModel activeSendVoiceMessageModel];
+    BOOL isCacnelAble = model.delegate != nil && model.isCancelAble;
+    if([self shouldInformDelegateAboutStatusUpdateInModel:model]) {
+        [self.delegate message:event.sender isUpdatedWithStatus:model.sendingStatus cancelAble:isCacnelAble];
+    }
 }
 
--(void) activeOnScreen {
-    self.sendVoiceMessageModel = [SendVoiceMessageModel activeSendVoiceMessageModel];
-    if(self.sendVoiceMessageModel) {
-        self.sendVoiceMessageModel.delegate = self;
-        [self messageStatusIsUpdated:self.sendVoiceMessageModel.sendingStatus];
-    }
+-(BOOL) shouldInformDelegateAboutStatusUpdateInModel:(SendVoiceMessageModel*) model {
+    return model.sendingStatus != SendingStatusCancelled
+    && model.sendingStatus != SendingStatusError
+    && ( model.delegate != nil
+    || model.sendingStatus == SendingStatusStarting
+    || model.sendingStatus == SendingStatusUploading
+    || model.sendingStatus == SendingStatusSending
+    || model.sendingStatus == SendingStatusSendingWithNoCancelOption
+    || model.sendingStatus == SendingStatusSent);
 }
 
 -(void) prepareViewToPresent {
@@ -205,10 +212,6 @@ SUBSCRIBE(AttachSuccess) {
 
 -(void) newRecentContactisSaved {
     [self.delegate newRecentContactisSaved];
-}
-
--(void) messageStatusIsUpdated:(SendingStatus) sendingStatus {
-    [self.delegate messageStatusIsUpdated:sendingStatus];
 }
 
 #pragma mark - LoginNavigationViewControllerDelegate

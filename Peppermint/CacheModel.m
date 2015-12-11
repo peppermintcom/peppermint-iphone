@@ -57,7 +57,6 @@
         } else {
             NSLog(@"Message %@ is cached successfully!", sendVoiceMessageModel);
             sendVoiceMessageModel.sendingStatus = SendingStatusCached;
-            [sendVoiceMessageModel.delegate messageStatusIsUpdated:SendingStatusCached];
         }
     });
 }

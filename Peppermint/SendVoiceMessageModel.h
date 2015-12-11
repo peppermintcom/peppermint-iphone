@@ -31,7 +31,6 @@ typedef enum : NSUInteger {
 
 @protocol SendVoiceMessageDelegate <BaseModelDelegate>
 @required
--(void) messageStatusIsUpdated:(SendingStatus) sendingStatus;
 -(void) newRecentContactisSaved;
 @end
 
@@ -54,6 +53,7 @@ typedef enum : NSUInteger {
 -(void) cacheMessage;
 -(void) cancelSending;
 -(BOOL) isCancelled;
+-(BOOL) isCancelAble;
 -(NSString*) fastReplyUrlForSender;
 -(BOOL) isConnectionActive;
 +(SendVoiceMessageModel*) activeSendVoiceMessageModel;

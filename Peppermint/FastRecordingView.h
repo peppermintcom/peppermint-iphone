@@ -17,6 +17,7 @@
 
 @protocol FastRecordingViewDelegate <SendVoiceMessageDelegate>
 -(void) fastRecordingViewDissappeared;
+-(void) message:(NSString*) message isUpdatedWithStatus:(SendingStatus) sendingStatus cancelAble:(BOOL)isCacnelAble;
 @end
 
 @interface FastRecordingView : BaseCustomView <RecordingModelDelegate, SendVoiceMessageDelegate, UIAlertViewDelegate, LoginNavigationViewControllerDelegate>
@@ -35,8 +36,6 @@
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 
 +(FastRecordingView*) createInstanceWithDelegate:(UIViewController<FastRecordingViewDelegate>*) delegate;
-
--(void) activeOnScreen;
 
 -(void) presentWithAnimation;
 -(void) finishRecordingWithGestureIsValid:(BOOL) isGestureValid;

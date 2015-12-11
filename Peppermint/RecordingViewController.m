@@ -33,7 +33,7 @@
     self.progressContainerView.layer.cornerRadius = 45;
     [self.m13ProgressViewPie setPrimaryColor:[UIColor progressCoverViewGreen]];
     [self.m13ProgressViewPie setSecondaryColor:[UIColor clearColor]];
-    
+    REGISTER();
     
 #warning "Interruptions are not handled"
     //[self registerAppNotifications];
@@ -161,10 +161,13 @@
     //New recent contact is saved
 }
 
--(void) messageStatusIsUpdated:(SendingStatus)sendingStatus {
-    NSLog(@"Status is updated!");
-    if (sendingStatus == SendingStatusSent || sendingStatus == SendingStatusCancelled) {
-        [self dismissViewControllerAnimated:YES completion:nil];
+SUBSCRIBE(MessageSendingStatusIsUpdated) {
+    SendVoiceMessageModel *model = [SendVoiceMessageModel activeSendVoiceMessageModel];
+    if(model == self.sendVoiceMessageModel) {
+        NSLog(@"Status is updated!");
+        if (model.sendingStatus == SendingStatusSent || model.sendingStatus == SendingStatusCancelled) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
     }
 }
 

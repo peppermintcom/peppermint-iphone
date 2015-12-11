@@ -71,6 +71,7 @@
 
 -(void) initRecordFile {
     self.fileUrl = [self recordFileUrl];
+    NSLog(@"FileUrl is %@", self.fileUrl);
 }
 
 -(void) initRecorder {
@@ -103,7 +104,7 @@
             [self.delegate operationFailure:error];
         }
     } else {
-        //NSLog(@"input gain is not settable. Using default value : %f", session.inputGain);
+        NSLog(@"input gain is not settable. Using default value : %f", session.inputGain);
     }
 }
 
@@ -172,7 +173,6 @@
 
 -(void)onTick:(NSTimer *)timer {
     CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
-    //NSLog(@"ticTac recorder:%f, previous:%f", recorder.currentTime, previousFileLength);
     [self.delegate timerUpdated:recorder.currentTime + previousFileLength];
 }
 

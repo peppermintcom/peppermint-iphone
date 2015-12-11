@@ -44,6 +44,7 @@
     MBProgressHUD *_loadingHud;
     BOOL isNewRecordAvailable;
     BOOL isAddNewContactModalisUp;
+    NSTimer *timer;
 }
 
 - (void)viewDidLoad {
@@ -74,6 +75,8 @@
     [self initHoldToRecordInfoView];
     isNewRecordAvailable = YES;
     isAddNewContactModalisUp = NO;
+    timer = nil;
+    [self.searchContactsTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     REGISTER();
 }
 
@@ -112,7 +115,6 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.fastRecordingView activeOnScreen];
 }
 
 -(void) initRecordingView {
@@ -222,8 +224,6 @@ SUBSCRIBE(ReplyContactIsAdded) {
         if (indexPath.row < [self activeContactList].count) {
             PeppermintContact *peppermintContact = [[self activeContactList] objectAtIndex:indexPath.row];
             if(peppermintContact.avatarImage) {
-                
-                NSLog(@"Avatar image info : %lu bytes.", UIImagePNGRepresentation(peppermintContact.avatarImage).length);
                 cell.avatarImageView.image = peppermintContact.avatarImage;
             } else {
                 cell.avatarImageView.image = [UIImage imageNamed:@"avatar_empty"];
@@ -245,15 +245,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
         preparedCell = cell;
     } else if (indexPath.section == SECTION_CELL_INFORMATION) {
         ContactInformationTableViewCell *cell = [CellFactory cellContactInformationTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
-        
         [cell setViewForAddNewContact];
-        /*
-        if([self isEmptyResultTableViewCellVisible] || activeCellTag == CELL_TAG_ALL_CONTACTS) {
-            [cell setViewForAddNewContact];
-        } else {
-            [cell setViewForShowAllContacts];
-        }
-         */
         preparedCell = cell;
     }
     return preparedCell;
@@ -430,18 +422,8 @@ SUBSCRIBE(ReplyContactIsAdded) {
 #pragma mark - ContactInformationTableViewCellDelegate
 
 -(void) contactInformationButtonPressed {
-    
     isAddNewContactModalisUp = YES;
     [AddContactViewController presentAddContactControllerWithText:self.searchContactsTextField.text withDelegate:self];
-    
-    /*
-    if([self isEmptyResultTableViewCellVisible] || activeCellTag == CELL_TAG_ALL_CONTACTS) {
-        isAddNewContactModalisUp = YES;
-        [AddContactViewController presentAddContactControllerWithText:self.searchContactsTextField.text];
-    } else {
-        [self cellSelectedWithTag:CELL_TAG_ALL_CONTACTS];
-    }
-    */
 }
 
 #pragma mark - FastRecordingViewDelegate
@@ -454,77 +436,73 @@ SUBSCRIBE(ReplyContactIsAdded) {
     [self cellSelectedWithTag:CELL_TAG_RECENT_CONTACTS];
 }
 
--(void) messageStatusIsUpdated:(SendingStatus)sendingStatus {
+-(void) message:(NSString*) messageId isUpdatedWithStatus:(SendingStatus)sendingStatus cancelAble:(BOOL)isCacnelAble {
+    
     NSMutableAttributedString *infoAttrText = [NSMutableAttributedString new];
     UIColor *textColor = [UIColor textFieldTintGreen];
+    int durationToHideMessage = MESSAGE_SHOW_DURATION * 2;
     
     if(sendingStatus == SendingStatusUploading) {
         isNewRecordAvailable = YES;
         [infoAttrText addText:LOC(@"Uploading", @"Info") ofSize:13 ofColor:textColor];
-        [self messageSendingIndicatorSetMessageIsSending];
-        self.cancelMessageSendingButton.hidden = NO;
     } else if (sendingStatus == SendingStatusStarting) {
         isNewRecordAvailable = NO;
         [infoAttrText addText:LOC(@"Starting", @"Info") ofSize:13 ofColor:textColor];
-        [self messageSendingIndicatorSetMessageIsSending];
-        self.cancelMessageSendingButton.hidden = NO;
     } else if (sendingStatus == SendingStatusSending) {
         isNewRecordAvailable = YES;
         [infoAttrText addText:LOC(@"Sending", @"Info") ofSize:13 ofColor:textColor];
-        [self messageSendingIndicatorSetMessageIsSending];
-        self.cancelMessageSendingButton.hidden = NO;
     } else if ( sendingStatus == SendingStatusSendingWithNoCancelOption) {
         isNewRecordAvailable = YES;
         [infoAttrText addText:LOC(@"Sending", @"Info") ofSize:15 ofColor:textColor];
-        [self messageSendingIndicatorSetMessageIsSending];
-        self.cancelMessageSendingButton.hidden = YES;
     }  else if (sendingStatus == SendingStatusSent) {
         isNewRecordAvailable = YES;
         [infoAttrText addImageNamed:@"icon_tick" ofSize:14];
         [infoAttrText addText:@"  " ofSize:14 ofColor:textColor];
         [infoAttrText addText:LOC(@"Sent", @"Info") ofSize:21 ofColor:textColor];
-        [self performSelector:@selector(messageSendingIsCancelled) withObject:nil afterDelay:MESSAGE_SHOW_DURATION];
-        self.cancelMessageSendingButton.hidden = YES;
+        durationToHideMessage = MESSAGE_SHOW_DURATION;
     }  else if (sendingStatus == SendingStatusCancelled) {
         isNewRecordAvailable = YES;
         [infoAttrText addText:LOC(@"Cancelled", @"Info") ofSize:19 ofColor:textColor];
-        [self messageCancelButtonPressed:nil];
-        self.cancelMessageSendingButton.hidden = YES;
+        durationToHideMessage = MESSAGE_SHOW_DURATION;
     } else if (sendingStatus == SendingStatusCached) {
         isNewRecordAvailable = YES;
         [infoAttrText addImageNamed:@"icon_warning" ofSize:10];
         [infoAttrText addText:@" " ofSize:13 ofColor:textColor];
         [infoAttrText addText:LOC(@"No Internet connection: Your message will be sent later", @"Cached Info") ofSize:10 ofColor:textColor];
-        [self performSelector:@selector(messageSendingIsCancelled) withObject:nil afterDelay:MESSAGE_SHOW_DURATION*2];
-        self.cancelMessageSendingButton.hidden = YES;
+        durationToHideMessage = MESSAGE_SHOW_DURATION * 2;
     } else if (sendingStatus == SendingStatusError) {
         isNewRecordAvailable = YES;
         [infoAttrText addImageNamed:@"icon_warning" ofSize:13];
         [infoAttrText addText:@" " ofSize:13 ofColor:textColor];
         [infoAttrText addText:LOC(@"An error occured", @"Info") ofSize:13 ofColor:textColor];
-        [self performSelector:@selector(messageSendingIsCancelled) withObject:nil afterDelay:MESSAGE_SHOW_DURATION];
-        self.cancelMessageSendingButton.hidden = YES;
+        durationToHideMessage = MESSAGE_SHOW_DURATION;
     }
     
-    if(!self.cancelMessageSendingButton.hidden) {
-        [infoAttrText addText:LOC(@"Tap to cancel", @"Info") ofSize:13
-                             ofColor:[UIColor peppermintCancelOrange]];
+    if(isCacnelAble && infoAttrText.length > 0) {
+        self.cancelMessageSendingButton.hidden = NO;
+        [infoAttrText addText:LOC(@"Tap to cancel", @"Info") ofSize:13 ofColor:[UIColor peppermintCancelOrange]];
+    } else {
+        self.cancelMessageSendingButton.hidden = YES;
     }
     self.sendingInformationLabel.attributedText = [infoAttrText centerText];
+    [self showMessageWithDuration:durationToHideMessage];
 }
 
 #pragma mark - MessageSending status indicators
 
--(void) setVisibilityOfSendingInfo:(BOOL) show {
-    if(show && self.sendingIndicatorView.hidden) {
-        self.sendingIndicatorView.alpha = 0;
-        self.sendingIndicatorView.hidden = NO;
-        [UIView animateWithDuration:0.15 animations:^{
-            self.sendingIndicatorView.alpha = 1;
-        } completion:^(BOOL finished) {
-            
-        }];
-    } else if (!show && !self.sendingIndicatorView.hidden) {
+-(void) showMessageWithDuration:(int) duration {
+    BOOL messageExists = self.sendingInformationLabel.text > 0;
+    if(messageExists) {
+        [self showSendingInfo];
+        [timer invalidate];
+        timer = [NSTimer scheduledTimerWithTimeInterval:duration target:self selector:@selector(hideSendingInfo) userInfo:nil repeats:NO];
+    } else {
+        [self hideSendingInfo];
+    }
+}
+
+-(void) hideSendingInfo {
+    if (!self.sendingIndicatorView.hidden) {
         self.sendingIndicatorView.alpha = 1;
         [UIView animateWithDuration:0.15 animations:^{
             self.sendingIndicatorView.alpha = 0;
@@ -536,37 +514,40 @@ SUBSCRIBE(ReplyContactIsAdded) {
     }
 }
 
--(void) messageSendingIndicatorSetMessageIsSending {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self setVisibilityOfSendingInfo:YES];
-    });
-}
-
--(void) messageSendingIsCancelled {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self setVisibilityOfSendingInfo:NO];
-    });
+-(void) showSendingInfo {
+    if(self.sendingIndicatorView.hidden) {
+        self.sendingIndicatorView.alpha = 0;
+        self.sendingIndicatorView.hidden = NO;
+        [UIView animateWithDuration:0.15 animations:^{
+            self.sendingIndicatorView.alpha = 1;
+        } completion:^(BOOL finished) {
+            
+        }];
+    }
 }
 
 #pragma mark - CancelMessageSendingButton
 
 -(IBAction)messageCancelButtonPressed:(id)sender {
     [self.fastRecordingView cancelMessageSending];
-    [self messageSendingIsCancelled];
 }
 
 #pragma mark - TextField
 
+-(void)textFieldDidChange :(UITextField *)textField {
+    self.contactsModel.filterText = textField.text;
+    [self refreshContacts];
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    if(![string isEqual:@"\n"]) {
+    BOOL result = NO;
+    if(![string isEqual:DONE_STRING]) {
         [self.searchMenu close];
-        self.contactsModel.filterText = [textField.text stringByReplacingCharactersInRange:range withString:string];
-        [textField setTextContentInRange:range replacementString:string];
-        [self refreshContacts];
+        result = YES;
     } else {
         [textField resignFirstResponder];
     }
-    return NO;
+    return result;
 }
 
 - (void) refreshContacts {

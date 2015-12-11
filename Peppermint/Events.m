@@ -74,3 +74,6 @@
 
 @implementation ReplyContactIsAdded
 @end
+
+@implementation MessageSendingStatusIsUpdated
+@end

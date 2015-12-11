@@ -237,6 +237,21 @@
 
 #pragma mark - LoginTextFieldTableViewCellDelegate
 
+-(void) updateKeyboardReturnKeyType {
+    UIReturnKeyType currentReturnKeyType = activeTextField.returnKeyType;
+    BOOL isValid = [PeppermintMessageSender sharedInstance].isValid;
+    activeTextField.returnKeyType = isValid ? UIReturnKeyDone : UIReturnKeyNext;
+    if(activeTextField.returnKeyType != currentReturnKeyType) {
+        [activeTextField resignFirstResponder];
+        [activeTextField becomeFirstResponder];
+    }
+}
+
+-(void) textFieldDidBeginEdiging:(UITextField*)textField {
+    activeTextField = textField;
+    [self updateKeyboardReturnKeyType];
+}
+
 -(void) updatedTextFor:(UITableViewCell*) cell atIndexPath:(NSIndexPath*) indexPath {
     LoginTextFieldTableViewCell* loginTextCell = (LoginTextFieldTableViewCell*) cell;
     activeTextField = loginTextCell.textField;
@@ -259,18 +274,7 @@
       [self validateCellForSurname:loginTextCell];
     }
     
-    UIReturnKeyType currentReturnKeyType = loginTextCell.textField.returnKeyType;
-    if(![[PeppermintMessageSender sharedInstance] isValid]) {
-        loginTextCell.textField.returnKeyType = UIReturnKeyNext;
-    } else {
-        loginTextCell.textField.returnKeyType = UIReturnKeyDone;
-    }
-    
-    if(loginTextCell.textField.returnKeyType != currentReturnKeyType) {
-        [activeTextField resignFirstResponder];
-        [activeTextField becomeFirstResponder];
-    }
-    
+    [self updateKeyboardReturnKeyType];
 }
 
 -(void) doneButtonPressed {

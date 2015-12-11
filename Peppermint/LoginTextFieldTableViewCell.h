@@ -9,6 +9,7 @@
 #import "BaseTableViewCell.h"
 
 @protocol LoginTextFieldTableViewCellDelegate <BaseTableViewCellDelegate>
+-(void) textFieldDidBeginEdiging:(UITextField*)textField;
 -(void) updatedTextFor:(UITableViewCell*) cell atIndexPath:(NSIndexPath*) indexPath;
 -(void) doneButtonPressed;
 @end

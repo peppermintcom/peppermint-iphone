@@ -46,7 +46,6 @@
             } else if (result == MFMailComposeResultSent) {
                 [super sendVoiceMessageWithData:data withExtension:extension];
                 self.sendingStatus = SendingStatusSent;
-                [self.delegate messageStatusIsUpdated:self.sendingStatus];
                 [controller dismissViewControllerAnimated:NO completion:nil];
             } else {
                 [controller dismissViewControllerAnimated:YES completion:nil];
@@ -54,7 +53,6 @@
         }];
         UIViewController *activeViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
         self.sendingStatus = SendingStatusSendingWithNoCancelOption;
-        [self.delegate messageStatusIsUpdated:self.sendingStatus];
         [mailSender showFromViewController:activeViewController];
     } else {
         [self cacheMessage];
@@ -68,6 +66,10 @@
 
 -(BOOL) needsAuth {
     return YES;
+}
+
+-(BOOL) isCancelAble {
+    return NO;
 }
 
 @end

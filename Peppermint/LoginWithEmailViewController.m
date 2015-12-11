@@ -54,6 +54,10 @@
 
 #pragma mark- LoginTextFieldTableViewCellDelegate
 
+-(void) textFieldDidBeginEdiging:(UITextField*)textField {
+    NSLog(@"textFieldDidBeginEditing");
+}
+
 - (void)updatedTextFor:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     LoginTextFieldTableViewCell* loginTextCell = (LoginTextFieldTableViewCell*) cell;
     if (loginTextCell == self.emailCell) {
@@ -126,6 +130,7 @@
 #pragma mark - Forget Password
 
 - (IBAction)forgetPasswordPressed:(id)sender {
+    [self.passwordCell.textField resignFirstResponder];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSString* email = [PeppermintMessageSender sharedInstance].email;
     [[AccountModel sharedInstance] recoverPasswordForEmail:email];
@@ -134,6 +139,8 @@
 #pragma mark - Navigation
 
 - (IBAction)backButtonPressed:(id)sender {
+    [self.emailCell.textField resignFirstResponder];
+    [self.passwordCell.textField resignFirstResponder];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

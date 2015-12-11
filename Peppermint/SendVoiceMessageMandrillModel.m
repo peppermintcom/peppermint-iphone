@@ -20,7 +20,6 @@
         _data = data;
         _extension = extension;
         self.sendingStatus = SendingStatusUploading;
-        [self.delegate messageStatusIsUpdated:self.sendingStatus];
         [awsModel startToUploadData:data ofType:[self typeForExtension:extension]];
     } else {
         [self cacheMessage];
@@ -33,7 +32,6 @@
     [super fileUploadCompletedWithPublicUrl:url];
     if(![self isCancelled]) {
         self.sendingStatus = SendingStatusSending;
-        [self.delegate messageStatusIsUpdated:self.sendingStatus];
         [self fireMandrillMessageWithUrl:url];
     } else {
         NSLog(@"Mandrill message sending is not fired, cos message is cancelled");
@@ -92,18 +90,14 @@
     
     if(![self isCancelled]) {
         self.sendingStatus = SendingStatusSendingWithNoCancelOption;
-        [self.delegate messageStatusIsUpdated:self.sendingStatus];
         mandrillService = [MandrillService new];
         [mandrillService sendMessage:mandrillMessage];
-    } else {
-        self.sendingStatus = SendingStatusCancelled;
     }
 }
 
 SUBSCRIBE(MandrillMesssageSent) {
     if([event.mandrillMessage isEqual:mandrillMessage]) {
         self.sendingStatus = SendingStatusSent;
-        [self.delegate messageStatusIsUpdated:self.sendingStatus];
     }
 }
 
@@ -115,6 +109,29 @@ SUBSCRIBE(MandrillMesssageSent) {
     _data = nil;
     _extension = nil;
     [super cancelSending];
+}
+
+-(BOOL) isCancelAble {
+    BOOL result = NO;
+    switch (self.sendingStatus) {
+        case SendingStatusIniting:
+        case SendingStatusInited:
+        case SendingStatusStarting:
+        case SendingStatusUploading:
+        case SendingStatusSending:
+            result = YES;
+            break;
+        case SendingStatusError:
+        case SendingStatusCancelled:
+        case SendingStatusCached:
+        case SendingStatusSendingWithNoCancelOption:
+        case SendingStatusSent:
+            result = NO;
+            break;
+        default:
+            break;
+    }
+    return result;
 }
 
 @end

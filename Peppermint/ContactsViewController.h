@@ -38,5 +38,6 @@
 
 -(IBAction)searchButtonPressed:(id)sender;
 -(IBAction)messageCancelButtonPressed:(id)sender;
+-(void) refreshContacts;
 
 @end

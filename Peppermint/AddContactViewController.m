@@ -88,6 +88,10 @@
                        self.phoneNumberTextField,
                        self.emailTextField,
                        nil];
+    
+    for(UITextField *tf in textFieldsArray) {
+        [tf addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    }
 }
 
 -(void) viewDidAppear:(BOOL)animated {
@@ -233,43 +237,45 @@
     self.saveContactBarButtonItem.enabled ? UIReturnKeyDone : UIReturnKeyNext;
 }
 
+-(void)textFieldDidChange :(UITextField *)textField {
+    UIReturnKeyType returnKeyType = textField.returnKeyType;
+    [self updateScreen];
+    if(returnKeyType != textField.returnKeyType) {
+        [textField resignFirstResponder];
+        [textField becomeFirstResponder];
+    }
+    
+    if(textField == self.firstNameTextField) {
+        [self.delegate nameFieldUpdated:textField.text];
+    }
+}
+
 #pragma mark- Text Field delegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    if([string isEqualToString:@"\n"]) {
+    BOOL result = NO;
+    if([string isEqualToString:DONE_STRING]) {
         if(self.saveContactBarButtonItem.enabled) {
             [self saveContactBarButtonItemPressed:nil];
         } else {
             NSUInteger index = [textFieldsArray indexOfObject:textField];
             UIResponder *nextResponder = [textFieldsArray objectAtIndex:(++index%textFieldsArray.count)];
-            if (nextResponder) {
-                [nextResponder becomeFirstResponder];
-            }
+            if (nextResponder) { [nextResponder becomeFirstResponder]; }
         }
     } else {
         if (textField == self.phoneNumberTextField) {
             if (string.length == 0 && textField.text.length == 1) {
-                textField.text = @"+";
+                textField.text = INTERNATIONAL_PHONE_SIGN;
             } else if (textField.text.length == 0 && string.length != 0) {
-                textField.text = [NSString stringWithFormat:@"+%@", string];
+                textField.text = [NSString stringWithFormat:@"%@%@", INTERNATIONAL_PHONE_SIGN, string];
             } else if (textField.text.length + string.length <= MAX_LENGTH_FOR_PHONE_NUMBER) {
-                [textField setTextContentInRange:range replacementString:string];
+                result = YES;
             }
         } else {
-            [textField setTextContentInRange:range replacementString:string];
-        }
-        UIReturnKeyType returnKeyType = textField.returnKeyType;
-        [self updateScreen];
-        if(textField == self.firstNameTextField) {
-            [self.delegate nameFieldUpdated:self.firstNameTextField.text];
-        }        
-        
-        if(returnKeyType != textField.returnKeyType) {
-            [textField resignFirstResponder];
-            [textField becomeFirstResponder];
+            result = YES;
         }
     }
-    return NO;
+    return result;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {

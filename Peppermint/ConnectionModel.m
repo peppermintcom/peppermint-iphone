@@ -64,7 +64,10 @@
             case AFNetworkReachabilityStatusReachableViaWiFi:
                 if(previousReachabilityStatus == AFNetworkReachabilityStatusUnknown
                    || previousReachabilityStatus == AFNetworkReachabilityStatusNotReachable) {
-                    [[CacheModel sharedInstance] triggerCachedMessages]; //Only trigger when passing from unknown or not connected
+                    //Only trigger when passing from unknown or not connected
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(CACHE_TRIGGER_DELAY_ON_CONNECTION * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [[CacheModel sharedInstance] triggerCachedMessages];
+                    });
                 }
                 break;
             case AFNetworkReachabilityStatusUnknown:

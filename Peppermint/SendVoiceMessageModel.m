@@ -42,7 +42,7 @@
         info = [NSString stringWithFormat:@"%@ and timer %@ is still active with timeInterval:%f", info, timer, timer.timeInterval];
         [timer invalidate];
     }
-    NSLog(info);
+    NSLog(@"%@", info);
 }
 
 -(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension {
@@ -106,7 +106,6 @@
 
 -(void) messagePrepareIsStarting {
     self.sendingStatus = SendingStatusStarting;
-    [self.delegate messageStatusIsUpdated:self.sendingStatus];
 }
 
 -(void) cacheMessage {
@@ -124,6 +123,10 @@
 
 -(BOOL) isCancelled {
     return self.sendingStatus == SendingStatusCancelled;
+}
+
+-(BOOL) isCancelAble {
+    return YES;
 }
 
 -(NSString*) fastReplyUrlForSender {
@@ -230,8 +233,7 @@
     SendVoiceMessageModel *sendVoiceMessageModel = nil;
     NSMutableArray *array = [AppDelegate Instance].mutableArray;
     for(SendVoiceMessageModel *item in array) {
-        if(!sendVoiceMessageModel
-           || sendVoiceMessageModel.sendingStatus > item.sendingStatus) {
+        if(!sendVoiceMessageModel || sendVoiceMessageModel.sendingStatus > item.sendingStatus || sendVoiceMessageModel.delegate != nil) {
             sendVoiceMessageModel = item;
         }
     }
@@ -251,6 +253,9 @@
 
 -(void)setSendingStatus:(SendingStatus) sendingStatus {
     _sendingStatus = sendingStatus;
+    MessageSendingStatusIsUpdated *messageSendingStatusIsUpdated = [MessageSendingStatusIsUpdated new];
+    messageSendingStatusIsUpdated.sender = self;
+    PUBLISH(messageSendingStatusIsUpdated);
 }
 
 -(SendingStatus) sendingStatus {

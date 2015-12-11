@@ -100,3 +100,6 @@
 
 @interface ReplyContactIsAdded : BaseEvent
 @end
+
+@interface MessageSendingStatusIsUpdated : BaseEvent
+@end

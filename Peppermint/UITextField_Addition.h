@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface UITextField (UITextField_Addition)
-
--(NSString*) getTextContentWithRange:(NSRange)range replacementString:(NSString *)string;
--(void) setTextContentInRange:(NSRange)range replacementString:(NSString *)string;
+#warning "Clean this addition as it will not be used at all!"
+//-(NSString*) getTextContentWithRange:(NSRange)range replacementString:(NSString *)string;
+//-(void) setTextContentInRange:(NSRange)range replacementString:(NSString *)string;
 
 @end

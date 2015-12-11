@@ -109,10 +109,6 @@
     for(CustomContact *matchedCustomContact in matchingCustomContacts) {
         PeppermintContact *peppermintContact = [PeppermintContact new];
         peppermintContact.avatarImage = [UIImage imageWithData:matchedCustomContact.avatarImageData];
-        
-        NSLog(@"image length: %lu bytes", matchedCustomContact.avatarImageData.length);
-        
-        
         peppermintContact.nameSurname = matchedCustomContact.nameSurname;
         peppermintContact.communicationChannel = matchedCustomContact.communicationChannel.intValue;
         peppermintContact.communicationChannelAddress = matchedCustomContact.communicationChannelAddress;

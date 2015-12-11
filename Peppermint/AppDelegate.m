@@ -20,6 +20,7 @@
 #import "ConnectionModel.h"
 #import "CacheModel.h"
 #import "LoginNavigationViewController.h"
+#import "ContactsViewController.h"
 
 @import CoreSpotlight;
 @import MobileCoreServices;
@@ -207,9 +208,23 @@ SUBSCRIBE(DetachSuccess) {
                 email = queryItem.value;
             }
         }
-        if(nameSurname && email) {
+        if(nameSurname.length > 0 && [email isValidEmail]) {
             result = [[FastReplyModel sharedInstance] setFastReplyContactWithNameSurname:nameSurname email:email];
-        } else {
+        } else if (nameSurname.length > 0) {
+            
+            UIViewController *vc = [self visibleViewController];
+            if([vc isKindOfClass:[ReSideMenuContainerViewController class]]) {
+                ReSideMenuContainerViewController *reSideMenuContainerViewController = (ReSideMenuContainerViewController*)vc;
+                UINavigationController *nvc = (UINavigationController*) reSideMenuContainerViewController.contentViewController;
+                ContactsViewController *contactsViewController =(ContactsViewController*)[nvc.viewControllers firstObject];
+                contactsViewController.searchContactsTextField.text = contactsViewController.contactsModel.filterText = nameSurname;
+                [contactsViewController refreshContacts];
+                result = YES;
+            } else {
+                NSLog(@"Can not navigate to ContactsViewController");
+            }
+        }
+        else {
             NSLog(@"Query Parameters are not valid!");
         }
     } else if ([path containsString:PATH_VERIFIY_EMAIL]

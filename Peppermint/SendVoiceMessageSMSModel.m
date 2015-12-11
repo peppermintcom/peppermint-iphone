@@ -25,7 +25,6 @@
         if([self isServiceAvailable]) {
             [super sendVoiceMessageWithData:data withExtension:extension];
             self.sendingStatus = SendingStatusUploading;
-            [self.delegate messageStatusIsUpdated:self.sendingStatus];
             [awsModel startToUploadData:data ofType:[self typeForExtension:extension]];
         } else {
             NSLog(@"Could not proceeed, cos device does not support!");
@@ -58,7 +57,6 @@
         smsComposerVC.body =  [NSString stringWithFormat:LOC(@"SMS Body Format", @"SMS Body Format"), url];
         [smsComposerVC disableUserAttachments];
         self.sendingStatus = SendingStatusUploading;
-        [self.delegate messageStatusIsUpdated:self.sendingStatus];
         weakself_create();
         [rootViewController presentViewController:smsComposerVC animated:YES completion:^{
             weakSelf.sendingStatus = SendingStatusSendingWithNoCancelOption;
@@ -73,11 +71,9 @@
     switch (result) {
         case MessageComposeResultSent:
             self.sendingStatus = SendingStatusSent;
-            [self.delegate messageStatusIsUpdated:self.sendingStatus];
             break;
         case MessageComposeResultCancelled:
             self.sendingStatus = SendingStatusCancelled;
-            [self.delegate messageStatusIsUpdated:self.sendingStatus];
             break;
         case MessageComposeResultFailed:
             self.sendingStatus = SendingStatusError;
@@ -94,7 +90,10 @@
 
 -(void) messagePrepareIsStarting {
     self.sendingStatus = SendingStatusStarting;
-    [self.delegate messageStatusIsUpdated:self.sendingStatus];
+}
+
+-(BOOL) isCancelAble {
+    return NO;
 }
 
 @end

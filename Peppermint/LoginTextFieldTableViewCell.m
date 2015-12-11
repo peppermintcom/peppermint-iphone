@@ -8,8 +8,6 @@
 
 #import "LoginTextFieldTableViewCell.h"
 
-#define DONE_STRING         @"\n"
-
 @implementation LoginTextFieldTableViewCell
 
 - (void)awakeFromNib {
@@ -22,15 +20,24 @@
     self.textField.tintColor = [UIColor whiteColor];
     self.textField.returnKeyType = UIReturnKeyDone;
     self.textField.delegate = self;
+    [self.textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    
 }
 
 #pragma mark - UITextFieldDelegate
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
+-(void)textFieldDidChange :(UITextField *)textField {
     [self.delegate updatedTextFor:self atIndexPath:self.indexPath];
 }
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    [self.delegate textFieldDidBeginEdiging:textField];
+}
+
 -(BOOL) isTextAllowed:(NSString*) string {
+    string = [string stringByTrimmingCharactersInSet:[NSCharacterSet controlCharacterSet]];
+    string = [string stringByTrimmingCharactersInSet:[NSCharacterSet decomposableCharacterSet]];
+    string = [string stringByTrimmingCharactersInSet:[NSCharacterSet illegalCharacterSet]];
     for(NSString *notAllowedString in self.notAllowedCharactersArray) {
         if([string containsString:notAllowedString]) {
             return NO;
@@ -40,16 +47,16 @@
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    BOOL result = NO;
     if([string isEqualToString:DONE_STRING]) {
         [self.delegate doneButtonPressed];
-    } else if ([self isTextAllowed:string]) {
-        [textField setTextContentInRange:range replacementString:string];
-        string = [string stringByTrimmingCharactersInSet:[NSCharacterSet controlCharacterSet]];
-        string = [string stringByTrimmingCharactersInSet:[NSCharacterSet decomposableCharacterSet]];
-        string = [string stringByTrimmingCharactersInSet:[NSCharacterSet illegalCharacterSet]];
+    } else if (textField.isSecureTextEntry) {
+        textField.text = [textField.text stringByReplacingCharactersInRange:range withString:string];
         [self.delegate updatedTextFor:self atIndexPath:self.indexPath];
+    } else if ([self isTextAllowed:string]) {
+        result = YES;
     }
-    return NO;
+    return result;
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
