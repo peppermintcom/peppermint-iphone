@@ -50,10 +50,24 @@ typedef enum : NSUInteger {
     
     self.backgroundView.alpha = 0.95;
     fastRecordingViewStatus = FastRecordingViewStatusInit;
+    
+    self.gestureRecognizers = [NSArray arrayWithObjects:
+    [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)],
+    [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swiped)]
+                               , nil];
+}
+
+-(void) tapped {
+    [self finishRecordingWithGestureIsValid:YES];
+}
+
+-(void) swiped {
+    [self finishRecordingWithGestureIsValid:NO];
 }
 
 SUBSCRIBE(MessageSendingStatusIsUpdated) {
-    SendVoiceMessageModel *model = [SendVoiceMessageModel activeSendVoiceMessageModel];
+    //SendVoiceMessageModel *model = [SendVoiceMessageModel activeSendVoiceMessageModel];
+    SendVoiceMessageModel *model = event.sender;
     BOOL isCacnelAble = model.delegate != nil && model.isCancelAble;
     if([self shouldInformDelegateAboutStatusUpdateInModel:model]) {
         [self.delegate message:event.sender isUpdatedWithStatus:model.sendingStatus cancelAble:isCacnelAble];
@@ -61,14 +75,22 @@ SUBSCRIBE(MessageSendingStatusIsUpdated) {
 }
 
 -(BOOL) shouldInformDelegateAboutStatusUpdateInModel:(SendVoiceMessageModel*) model {
-    return model.sendingStatus != SendingStatusCancelled
-    && model.sendingStatus != SendingStatusError
-    && ( model.delegate != nil
-    || model.sendingStatus == SendingStatusStarting
-    || model.sendingStatus == SendingStatusUploading
-    || model.sendingStatus == SendingStatusSending
-    || model.sendingStatus == SendingStatusSendingWithNoCancelOption
-    || model.sendingStatus == SendingStatusSent);
+    BOOL result = ( model.delegate != nil
+                   || model.sendingStatus == SendingStatusStarting
+                   || model.sendingStatus == SendingStatusUploading
+                   || model.sendingStatus == SendingStatusSending
+                   || model.sendingStatus == SendingStatusSendingWithNoCancelOption
+                   || model.sendingStatus == SendingStatusSent
+                   || model.sendingStatus == SendingStatusCached);
+    
+    NSLog(@"Model:%@ status:%d delegate:%d isAllowed:%d",
+          model,
+          (int)model.sendingStatus,
+          model.delegate != nil,
+          result
+          );
+    
+    return result;
 }
 
 -(void) prepareViewToPresent {
@@ -205,7 +227,7 @@ SUBSCRIBE(MessageSendingStatusIsUpdated) {
 }
 
 - (void) recordDataIsPrepared:(NSData *)data withExtension:(NSString*) extension {
-    [self.sendVoiceMessageModel sendVoiceMessageWithData:data withExtension: extension];
+    [self.sendVoiceMessageModel sendVoiceMessageWithData:data withExtension:extension  andDuration:self.totalSeconds];
 }
 
 #pragma mark - SendVoiceMessage Delegate

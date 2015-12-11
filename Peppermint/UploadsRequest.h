@@ -10,4 +10,6 @@
 
 @interface UploadsRequest : JSONModel
 @property(strong, nonatomic) NSString *content_type;
+@property(strong, nonatomic) NSString<Optional> *sender_name;
+@property(strong, nonatomic) NSString<Optional> *sender_email;
 @end

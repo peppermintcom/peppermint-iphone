@@ -2,6 +2,7 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="14F27" minimumToolsVersion="Xcode 4.3">
     <entity name="CachedMessage" representedClassName="CachedMessage" syncable="YES">
         <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="duration" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="extension" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mailSenderClass" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="receiverCommunicationChannel" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -26,7 +27,7 @@
         <attribute name="contactDate" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CachedMessage" positionX="-135" positionY="-63" width="128" height="165"/>
+        <element name="CachedMessage" positionX="-135" positionY="-63" width="128" height="180"/>
         <element name="Contact" positionX="-353" positionY="3" width="128" height="105"/>
         <element name="CustomContact" positionX="-243" positionY="63" width="128" height="60"/>
         <element name="GoogleContact" positionX="-333" positionY="174" width="128" height="60"/>

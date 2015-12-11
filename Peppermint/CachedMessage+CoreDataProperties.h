@@ -2,7 +2,7 @@
 //  CachedMessage+CoreDataProperties.h
 //  Peppermint
 //
-//  Created by Okan Kurtulus on 04/12/15.
+//  Created by Okan Kurtulus on 11/12/15.
 //  Copyright © 2015 Okan Kurtulus. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *receiverNameSurname;
 @property (nullable, nonatomic, retain) NSString *senderEmail;
 @property (nullable, nonatomic, retain) NSString *senderNameSurname;
+@property (nullable, nonatomic, retain) NSNumber *duration;
 
 @end
 

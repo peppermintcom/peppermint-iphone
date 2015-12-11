@@ -45,6 +45,7 @@
     BOOL isNewRecordAvailable;
     BOOL isAddNewContactModalisUp;
     NSTimer *timer;
+    BOOL isScreenReady;
 }
 
 - (void)viewDidLoad {
@@ -76,6 +77,7 @@
     isNewRecordAvailable = YES;
     isAddNewContactModalisUp = NO;
     timer = nil;
+    isScreenReady = NO;
     [self.searchContactsTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     REGISTER();
 }
@@ -175,13 +177,14 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 -(BOOL) isEmptyResultTableViewCellVisible {
     return ![self isFastReplyRowVisible]
-    && [self activeContactList].count == 0;
+    && [self activeContactList].count == 0
+    && isScreenReady;
 }
 
 #pragma mark - CellInformationTableViewCell
 
 -(BOOL) isCellInformationTableViewCellVisible {
-    return YES;
+    return isScreenReady;
 }
 
 #pragma mark - UITableView
@@ -296,9 +299,9 @@ SUBSCRIBE(ReplyContactIsAdded) {
 #pragma mark - LoadingView
 
 -(MBProgressHUD*) loadingHud {
+    isScreenReady = NO;
     if(!_loadingHud) {
         _loadingHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        
         UIView *customView = [[UIView alloc] initWithFrame:self.view.frame];
         UIView *backGroundView = [[UIView alloc] initWithFrame:self.view.frame];
         backGroundView.backgroundColor = [UIColor peppermintGreen];
@@ -324,6 +327,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
 }
 
 -(void) hideLoading {
+    isScreenReady = YES;
     [_loadingHud hide:YES];
 }
 
@@ -416,7 +420,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 -(void) didFinishItemSelectionOnIndexPath:(NSIndexPath*) indexPath location:(CGPoint) location {
     self.tableView.bounces = YES;
-    [self.fastRecordingView finishRecordingWithGestureIsValid:YES];
+    //[self.fastRecordingView finishRecordingWithGestureIsValid:YES];
 }
 
 #pragma mark - ContactInformationTableViewCellDelegate
@@ -451,6 +455,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
     } else if (sendingStatus == SendingStatusSending) {
         isNewRecordAvailable = YES;
         [infoAttrText addText:LOC(@"Sending", @"Info") ofSize:13 ofColor:textColor];
+        [self.recentContactsModel refreshRecentContactList];
     } else if ( sendingStatus == SendingStatusSendingWithNoCancelOption) {
         isNewRecordAvailable = YES;
         [infoAttrText addText:LOC(@"Sending", @"Info") ofSize:15 ofColor:textColor];
@@ -462,13 +467,13 @@ SUBSCRIBE(ReplyContactIsAdded) {
         durationToHideMessage = MESSAGE_SHOW_DURATION;
     }  else if (sendingStatus == SendingStatusCancelled) {
         isNewRecordAvailable = YES;
-        [infoAttrText addText:LOC(@"Cancelled", @"Info") ofSize:19 ofColor:textColor];
+        [infoAttrText addText:LOC(@"Cancelled", @"Info") ofSize:13 ofColor:textColor];
         durationToHideMessage = MESSAGE_SHOW_DURATION;
     } else if (sendingStatus == SendingStatusCached) {
         isNewRecordAvailable = YES;
         [infoAttrText addImageNamed:@"icon_warning" ofSize:10];
         [infoAttrText addText:@" " ofSize:13 ofColor:textColor];
-        [infoAttrText addText:LOC(@"No Internet connection: Your message will be sent later", @"Cached Info") ofSize:10 ofColor:textColor];
+        [infoAttrText addText:LOC(@"Your message will be sent later", @"Cached Info") ofSize:10 ofColor:textColor];
         durationToHideMessage = MESSAGE_SHOW_DURATION * 2;
     } else if (sendingStatus == SendingStatusError) {
         isNewRecordAvailable = YES;
@@ -491,7 +496,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
 #pragma mark - MessageSending status indicators
 
 -(void) showMessageWithDuration:(int) duration {
-    BOOL messageExists = self.sendingInformationLabel.text > 0;
+    BOOL messageExists = self.sendingInformationLabel.attributedText.length > 0;
     if(messageExists) {
         [self showSendingInfo];
         [timer invalidate];
@@ -504,26 +509,25 @@ SUBSCRIBE(ReplyContactIsAdded) {
 -(void) hideSendingInfo {
     if (!self.sendingIndicatorView.hidden) {
         self.sendingIndicatorView.alpha = 1;
-        [UIView animateWithDuration:0.15 animations:^{
-            self.sendingIndicatorView.alpha = 0;
-        } completion:^(BOOL finished) {
-            self.sendingIndicatorView.hidden = YES;
-            self.sendingIndicatorView.alpha = 1;
-        }];
-        [self.recentContactsModel refreshRecentContactList];
     }
+    [UIView animateWithDuration:0.15 animations:^{
+        self.sendingIndicatorView.alpha = 0;
+    } completion:^(BOOL finished) {
+        self.sendingIndicatorView.hidden = YES;
+        self.sendingIndicatorView.alpha = 1;
+    }];
 }
 
 -(void) showSendingInfo {
     if(self.sendingIndicatorView.hidden) {
         self.sendingIndicatorView.alpha = 0;
         self.sendingIndicatorView.hidden = NO;
-        [UIView animateWithDuration:0.15 animations:^{
-            self.sendingIndicatorView.alpha = 1;
-        } completion:^(BOOL finished) {
-            
-        }];
     }
+    [UIView animateWithDuration:0.15 animations:^{
+        self.sendingIndicatorView.alpha = 1;
+    } completion:^(BOOL finished) {
+        
+    }];
 }
 
 #pragma mark - CancelMessageSendingButton

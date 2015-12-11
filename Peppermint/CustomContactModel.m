@@ -17,11 +17,7 @@
 -(void) save:(PeppermintContact*) peppermintContact {
     dispatch_async(LOW_PRIORITY_QUEUE, ^() {
         Repository *repository = [Repository beginTransaction];
-        [self addNewCustomForPeppermintContact:peppermintContact inRepository:repository];
         
-#warning "Remove below lines after the behaviour is sure"
-        
-        /*
          NSPredicate *predicate =
          [ContactsModel contactPredicateWithNameSurname:peppermintContact.nameSurname
          communicationChannelAddress:peppermintContact.communicationChannelAddress
@@ -33,12 +29,16 @@
             [self addNewCustomForPeppermintContact:peppermintContact inRepository:repository];
         } else {
             repository = nil;
+            NSLog(@"Did not save custom Peppermint Contact as it already exists. %@ - %@", peppermintContact.nameSurname, peppermintContact.communicationChannelAddress);
+            
+            /*
             if (matchedCustomContacts.count == 1) {
                 [self promtDuplicateRecord:peppermintContact];
             } else {
                 [self promtMultipleRecordsWithSameValueErrorForPeppermintContact:peppermintContact];
             }
-        }*/
+            */
+        }
     });
 }
 

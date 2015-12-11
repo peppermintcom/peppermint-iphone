@@ -89,6 +89,7 @@
 		B17B3D701BB6BD2E009B8BC5 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D6F1BB6BD2E009B8BC5 /* ContactTableViewCell.xib */; };
 		B17B3D741BB6C4B0009B8BC5 /* UIColor_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D731BB6C4B0009B8BC5 /* UIColor_Addition.m */; };
 		B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D771BB6C90A009B8BC5 /* BaseTableViewCell.m */; };
+		B184A0A71C1B0CF20087BB9C /* JwtInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = B184A0A61C1B0CF20087BB9C /* JwtInformation.m */; };
 		B18BF95E1BD674CD009B665E /* PeppermintMessageSender.m in Sources */ = {isa = PBXBuildFile; fileRef = B18BF95D1BD674CD009B665E /* PeppermintMessageSender.m */; };
 		B190F5BA1BDD63400094B391 /* SendVoiceMessageSMSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B190F5B91BDD63400094B391 /* SendVoiceMessageSMSModel.m */; };
 		B190F5BC1BDD7F040094B391 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190F5BB1BDD7F040094B391 /* AudioToolbox.framework */; };
@@ -306,6 +307,8 @@
 		B17B3D731BB6C4B0009B8BC5 /* UIColor_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = UIColor_Addition.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B17B3D761BB6C90A009B8BC5 /* BaseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableViewCell.h; sourceTree = "<group>"; };
 		B17B3D771BB6C90A009B8BC5 /* BaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewCell.m; sourceTree = "<group>"; };
+		B184A0A51C1B0CF20087BB9C /* JwtInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JwtInformation.h; sourceTree = "<group>"; };
+		B184A0A61C1B0CF20087BB9C /* JwtInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JwtInformation.m; sourceTree = "<group>"; };
 		B18BF95C1BD674CD009B665E /* PeppermintMessageSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeppermintMessageSender.h; sourceTree = "<group>"; };
 		B18BF95D1BD674CD009B665E /* PeppermintMessageSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeppermintMessageSender.m; sourceTree = "<group>"; };
 		B190F5B81BDD63400094B391 /* SendVoiceMessageSMSModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVoiceMessageSMSModel.h; sourceTree = "<group>"; };
@@ -558,6 +561,8 @@
 				B19B6B581C16F415001895BF /* CheckEmailResponse.m */,
 				B1FFFF281C18241D0049347D /* RecoverPasswordRequest.h */,
 				B1FFFF291C18241E0049347D /* RecoverPasswordRequest.m */,
+				B184A0A51C1B0CF20087BB9C /* JwtInformation.h */,
+				B184A0A61C1B0CF20087BB9C /* JwtInformation.m */,
 			);
 			name = AWS;
 			sourceTree = "<group>";
@@ -1220,6 +1225,7 @@
 			files = (
 				B149EB351C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m in Sources */,
 				D0D70D451C0495680068AB20 /* LoginWithEmailViewController.m in Sources */,
+				B184A0A71C1B0CF20087BB9C /* JwtInformation.m in Sources */,
 				B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */,
 				B1EF40F51BB857C800042E4B /* M13ProgressViewPie.m in Sources */,
 				B19B6B591C16F415001895BF /* CheckEmailResponse.m in Sources */,

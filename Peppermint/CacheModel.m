@@ -8,6 +8,7 @@
 
 #import "CacheModel.h"
 #import "SendVoiceMessageEmailModel.h"
+#import "ConnectionModel.h"
 
 #define DBQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
 
@@ -33,7 +34,7 @@
     return self;
 }
 
--(void) cache:(SendVoiceMessageModel*) sendVoiceMessageModel WithData:(NSData*) data extension:(NSString*) extension {
+-(void) cache:(SendVoiceMessageModel*) sendVoiceMessageModel WithData:(NSData*) data extension:(NSString*) extension duration:(NSTimeInterval)duration {
     
     Repository *repository = [Repository beginTransaction];
     CachedMessage *cachedMessage =
@@ -47,6 +48,7 @@
     cachedMessage.receiverCommunicationChannelAddress = sendVoiceMessageModel.selectedPeppermintContact.communicationChannelAddress;
     cachedMessage.receiverNameSurname = sendVoiceMessageModel.selectedPeppermintContact.nameSurname;
     cachedMessage.mailSenderClass = [NSString stringWithFormat:@"%@", [sendVoiceMessageModel class]];
+    cachedMessage.duration = [NSNumber numberWithDouble:duration];
     
     __block NSError *err = [repository endTransaction];
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -63,7 +65,9 @@
 
 
 SUBSCRIBE(ApplicationDidBecomeActive) {
-    [self triggerCachedMessages];
+    if([[ConnectionModel sharedInstance] isInternetReachable]) {
+        [self triggerCachedMessages];
+    }
 }
 
 -(void) triggerCachedMessages {
@@ -91,7 +95,7 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
                     mailSenderModel.peppermintMessageSender = peppermintMessageSender;
                     mailSenderModel.selectedPeppermintContact = selectedContact;
                     
-                    [mailSenderModel sendVoiceMessageWithData:cachedMessage.data withExtension:cachedMessage.extension];
+                    [mailSenderModel sendVoiceMessageWithData:cachedMessage.data withExtension:cachedMessage.extension  andDuration:cachedMessage.duration.doubleValue];
                     [repository deleteEntity:cachedMessage];
                 }
                 [repository endTransaction];

@@ -13,7 +13,7 @@
 
 @implementation SendVoiceMessageMailComposerModel
 
--(void) sendVoiceMessageWithData:(NSData *)data withExtension:(NSString *)extension  {
+-(void) sendVoiceMessageWithData:(NSData *)data withExtension:(NSString *)extension andDuration:(NSTimeInterval)duration {
     
     if([self isConnectionActive]) {
         EasyMailAlertSender *mailSender = [EasyMailAlertSender easyMail:^(MFMailComposeViewController *controller) {
@@ -28,7 +28,7 @@
             [controller setSubject:[PeppermintMessageSender sharedInstance].subject];
             NSString *textBody = [NSString stringWithFormat:LOC(@"Mail Text Format",@"Default Mail Text Format"), @"", [self fastReplyUrlForSender], signature];
             [controller setMessageBody:textBody isHTML:NO];
-            NSString *body = [self mailBodyHTMLForUrlPath:nil extension:nil signature:signature];
+            NSString *body = [self mailBodyHTMLForUrlPath:nil extension:nil signature:signature duration:duration];
             [controller setMessageBody:body isHTML:YES];
             NSString *fileName = [NSString stringWithFormat:@"Peppermint.%@", extension];
             NSString *mimeType = [self typeForExtension:extension];
@@ -44,7 +44,7 @@
                 self.sendingStatus = SendingStatusError;
                 [self.delegate operationFailure:error];
             } else if (result == MFMailComposeResultSent) {
-                [super sendVoiceMessageWithData:data withExtension:extension];
+                [super sendVoiceMessageWithData:data withExtension:extension andDuration:duration ];
                 self.sendingStatus = SendingStatusSent;
                 [controller dismissViewControllerAnimated:NO completion:nil];
             } else {

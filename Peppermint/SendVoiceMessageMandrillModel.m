@@ -13,12 +13,13 @@
     MandrillMessage *mandrillMessage;
 }
 
--(void) sendVoiceMessageWithData:(NSData *)data withExtension:(NSString *)extension  {
+-(void) sendVoiceMessageWithData:(NSData *)data withExtension:(NSString *)extension andDuration:(NSTimeInterval)duration {
     
-    [super sendVoiceMessageWithData:data withExtension:extension];
+    [super sendVoiceMessageWithData:data withExtension:extension andDuration:duration];
     if([self isConnectionActive]) {
         _data = data;
         _extension = extension;
+        _duration = duration;
         self.sendingStatus = SendingStatusUploading;
         [awsModel startToUploadData:data ofType:[self typeForExtension:extension]];
     } else {
@@ -66,7 +67,7 @@
     
     mandrillMessage.from_name = nameSurname;
     mandrillMessage.subject = subject;
-    NSString *body = [self mailBodyHTMLForUrlPath:url extension:_extension signature:signature];
+    NSString *body = [self mailBodyHTMLForUrlPath:url extension:_extension signature:signature duration:_duration];
     mandrillMessage.html = body;
     
     NSString *textBody = [NSString stringWithFormat:LOC(@"Mail Text Format",@"Default Mail Text Format"), url, [self fastReplyUrlForSender], signature];
@@ -96,7 +97,7 @@
 }
 
 SUBSCRIBE(MandrillMesssageSent) {
-    if([event.mandrillMessage isEqual:mandrillMessage]) {
+    if(event.sender == mandrillService) {
         self.sendingStatus = SendingStatusSent;
     }
 }
@@ -108,6 +109,7 @@ SUBSCRIBE(MandrillMesssageSent) {
 -(void) cancelSending {
     _data = nil;
     _extension = nil;
+    _duration = 0;
     [super cancelSending];
 }
 

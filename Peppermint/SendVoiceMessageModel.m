@@ -31,6 +31,8 @@
         awsModel.delegate = self;
         self.sendingStatus = SendingStatusIniting;
         [awsModel initRecorder];
+        customContactModel = [CustomContactModel new];
+        customContactModel.delegate = self;
         timer = nil;
     }
     return self;
@@ -45,9 +47,10 @@
     NSLog(@"%@", info);
 }
 
--(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension {
+-(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension andDuration:(NSTimeInterval)duration {
     _data = data;
     _extension = extension;
+    _duration = duration;
     [recentContactsModel save:self.selectedPeppermintContact];
     [self attachProcessToAppDelegate];
     [self checkAndCleanFastReplyModel];
@@ -82,6 +85,12 @@
     //NSLog(@"File Upload is finished with url %@", url);
 }
 
+#pragma mark - CustomContactModelDelegate
+
+-(void) customPeppermintContactSavedSucessfully:(PeppermintContact*) peppermintContact {
+    NSLog(@"%@ customPeppermintContactSavedSucessfully", peppermintContact.nameSurname);
+}
+
 #pragma mark - Type For Extension
 
 -(NSString*) typeForExtension:(NSString*) extension {
@@ -109,8 +118,8 @@
 }
 
 -(void) cacheMessage {
-    self.sendingStatus = SendingStatusCancelled; //Cancel to stop ongoing processes
-    [[CacheModel sharedInstance] cache:self WithData:_data extension:_extension];
+    _sendingStatus = SendingStatusCancelled; //Cancel to stop ongoing processes
+    [[CacheModel sharedInstance] cache:self WithData:_data extension:_extension duration:_duration];
 }
 
 -(void) cancelSending {
@@ -173,7 +182,9 @@
         [array addObject:self];
         [arrayLock unlock];
         if(timer) { [timer invalidate]; NSLog(@"invalidated a timer!!"); }
-        timer = [NSTimer scheduledTimerWithTimeInterval:TIMER_PERIOD target:self selector:@selector(detachProcessFromAppDelegate) userInfo:nil repeats:YES];
+        timer = [NSTimer timerWithTimeInterval:TIMER_PERIOD target:self selector:@selector(detachProcessFromAppDelegate) userInfo:nil repeats:YES];
+        [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+        
         
         AttachSuccess *attachSuccess = [AttachSuccess new];
         attachSuccess.sender = self;
@@ -194,10 +205,10 @@
         case SendingStatusStarting:
         case SendingStatusUploading:
         case SendingStatusSending:
+        case SendingStatusSendingWithNoCancelOption:
             break;
         case SendingStatusError:
             [self cacheMessage];
-        case SendingStatusSendingWithNoCancelOption:
         case SendingStatusCancelled:
         case SendingStatusCached:
         case SendingStatusSent:
@@ -229,11 +240,22 @@
 
 #pragma mark - Active SendVoiceMessageModel
 
++(BOOL) isModelActive:(SendVoiceMessageModel *) sendVoiceMessageModel {
+    return sendVoiceMessageModel.delegate != nil
+    && (sendVoiceMessageModel.sendingStatus == SendingStatusStarting
+        || sendVoiceMessageModel.sendingStatus == SendingStatusSending
+        || sendVoiceMessageModel.sendingStatus == SendingStatusUploading
+        || sendVoiceMessageModel.sendingStatus == SendingStatusSendingWithNoCancelOption);
+}
+
 +(SendVoiceMessageModel*) activeSendVoiceMessageModel {
     SendVoiceMessageModel *sendVoiceMessageModel = nil;
     NSMutableArray *array = [AppDelegate Instance].mutableArray;
+    
     for(SendVoiceMessageModel *item in array) {
-        if(!sendVoiceMessageModel || sendVoiceMessageModel.sendingStatus > item.sendingStatus || sendVoiceMessageModel.delegate != nil) {
+        if(!sendVoiceMessageModel
+           || sendVoiceMessageModel.sendingStatus > item.sendingStatus
+           || [self isModelActive:item]) {
             sendVoiceMessageModel = item;
         }
     }
@@ -245,6 +267,7 @@
 -(void) checkAndCleanFastReplyModel {
     PeppermintContact *fastReplyContact = [FastReplyModel sharedInstance].peppermintContact;
     if([self.selectedPeppermintContact equals:fastReplyContact]) {
+        [customContactModel save:fastReplyContact];
         [[FastReplyModel sharedInstance] cleanFastReplyContact];
     }
 }
@@ -252,10 +275,12 @@
 #pragma mark - SendingStatus
 
 -(void)setSendingStatus:(SendingStatus) sendingStatus {
-    _sendingStatus = sendingStatus;
-    MessageSendingStatusIsUpdated *messageSendingStatusIsUpdated = [MessageSendingStatusIsUpdated new];
-    messageSendingStatusIsUpdated.sender = self;
-    PUBLISH(messageSendingStatusIsUpdated);
+    if(_sendingStatus != sendingStatus) {
+        _sendingStatus = sendingStatus;
+        MessageSendingStatusIsUpdated *messageSendingStatusIsUpdated = [MessageSendingStatusIsUpdated new];
+        messageSendingStatusIsUpdated.sender = self;
+        PUBLISH(messageSendingStatusIsUpdated);
+    }
 }
 
 -(SendingStatus) sendingStatus {

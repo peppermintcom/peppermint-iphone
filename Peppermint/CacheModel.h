@@ -12,7 +12,7 @@
 @interface CacheModel : BaseModel
 
 + (instancetype) sharedInstance;
--(void) cache:(SendVoiceMessageModel*) sendVoiceMessageModel WithData:(NSData*) data extension:(NSString*) extension;
+-(void) cache:(SendVoiceMessageModel*) sendVoiceMessageModel WithData:(NSData*) data extension:(NSString*) extension duration:(NSTimeInterval)duration;
 -(void) triggerCachedMessages;
 -(void) cacheOngoingMessages;
 @end

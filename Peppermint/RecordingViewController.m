@@ -15,6 +15,7 @@
 
 @implementation RecordingViewController {
     BOOL viewDidAppear, isAccessRigtsSupplied;
+    int totalSeconds;
 }
 
 - (void)viewDidLoad {
@@ -33,6 +34,7 @@
     self.progressContainerView.layer.cornerRadius = 45;
     [self.m13ProgressViewPie setPrimaryColor:[UIColor progressCoverViewGreen]];
     [self.m13ProgressViewPie setSecondaryColor:[UIColor clearColor]];
+    totalSeconds = 0;
     REGISTER();
     
 #warning "Interruptions are not handled"
@@ -125,7 +127,7 @@
 }
 
 -(void) timerUpdated:(NSTimeInterval) timeInterval {
-    int totalSeconds = (int)timeInterval;
+    totalSeconds = (int)timeInterval;
     if(totalSeconds < MAX_RECORD_TIME) {
         if(totalSeconds/5 % 2 == 0 ) {
             self.progressCenterImageView.image = [UIImage imageNamed:@"recording_logo"];
@@ -151,8 +153,8 @@
     [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
 }
 
-- (void) recordDataIsPrepared:(NSData *)data withExtension:(NSString *)extension{
-    [self.sendVoiceMessageModel sendVoiceMessageWithData:data withExtension:extension];
+- (void) recordDataIsPrepared:(NSData *)data withExtension:(NSString *)extension {
+    [self.sendVoiceMessageModel sendVoiceMessageWithData:data withExtension:extension  andDuration:totalSeconds];
 }
 
 #pragma mark - SendVoiceMessage Delegate

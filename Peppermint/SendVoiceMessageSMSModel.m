@@ -20,10 +20,10 @@
     return self;
 }
 
--(void) sendVoiceMessageWithData:(NSData *)data withExtension:(NSString *)extension  {
+-(void) sendVoiceMessageWithData:(NSData *)data withExtension:(NSString *)extension andDuration:(NSTimeInterval)duration {
     if(![self isCancelled]) {
         if([self isServiceAvailable]) {
-            [super sendVoiceMessageWithData:data withExtension:extension];
+            [super sendVoiceMessageWithData:data withExtension:extension andDuration:duration];
             self.sendingStatus = SendingStatusUploading;
             [awsModel startToUploadData:data ofType:[self typeForExtension:extension]];
         } else {

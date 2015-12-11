@@ -8,6 +8,7 @@
 
 #import "AWSModel.h"
 #import "A0SimpleKeychain.h"
+#import "JwtInformation.h"
 
 @implementation AWSModel {
     NSString *jwt;
@@ -36,11 +37,29 @@
     return udid;
 }
 
+-(BOOL) isJWTValid {
+    BOOL result = NO;
+    jwt = [[A0SimpleKeychain keychain] stringForKey:KEYCHAIN_AWS_JWT];
+    
+    NSArray *jwtComponents = [jwt componentsSeparatedByString:@"."];
+    if(jwtComponents.count == 3 ) {
+        NSString *jwtInfo = [jwtComponents objectAtIndex:1];
+        jwtInfo = [NSString stringFromBase64String:jwtInfo];
+        NSError *error = nil;
+        JwtInformation *jwtInformation = [[JwtInformation alloc] initWithString:jwtInfo error:&error];
+        if(!error) {
+            //Future time is set to 2 days
+            NSDate *bufferedFutureTime = [[NSDate date] dateByAddingTimeInterval:(2*24*60*60)];
+            result = (jwtInformation.exp > bufferedFutureTime.timeIntervalSince1970);
+        }
+    }
+    return result;
+}
+
 #pragma mark - Init
 
--(void) initRecorder {    
-    jwt = [[A0SimpleKeychain keychain] stringForKey:KEYCHAIN_AWS_JWT];
-    if(jwt.length > 0) {
+-(void) initRecorder {
+    if([self isJWTValid]) {
         [self.delegate recorderInitIsSuccessful];
     } else {
         NSString *clientId = [self getUniqueClientNumber];

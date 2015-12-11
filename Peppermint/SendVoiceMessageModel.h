@@ -11,6 +11,7 @@
 #import "RecentContactsModel.h"
 #import "PeppermintMessageSender.h"
 #import "AWSModel.h"
+#import "CustomContactModel.h"
 
 #define TYPE_TEXT   @"text/plain"
 #define TYPE_M4A    @"audio/mp4"
@@ -34,18 +35,20 @@ typedef enum : NSUInteger {
 -(void) newRecentContactisSaved;
 @end
 
-@interface SendVoiceMessageModel : BaseModel <RecentContactsModelDelegate, AWSModelDelegate> {
+@interface SendVoiceMessageModel : BaseModel <RecentContactsModelDelegate, AWSModelDelegate, CustomContactModelDelegate> {
     RecentContactsModel *recentContactsModel;
     AWSModel *awsModel;
+    CustomContactModel *customContactModel;
     NSData *_data;
     NSString *_extension;
+    NSTimeInterval _duration;
 }
 
 @property (strong, nonatomic) PeppermintMessageSender *peppermintMessageSender;
 @property (strong, nonatomic) PeppermintContact *selectedPeppermintContact;
 @property (weak, nonatomic) id<SendVoiceMessageDelegate> delegate;
 
--(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension;
+-(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension andDuration:(NSTimeInterval) duration;
 -(NSString*) typeForExtension:(NSString*) extension;
 -(BOOL) isServiceAvailable;
 -(BOOL) needsAuth;

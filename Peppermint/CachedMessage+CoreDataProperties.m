@@ -2,7 +2,7 @@
 //  CachedMessage+CoreDataProperties.m
 //  Peppermint
 //
-//  Created by Okan Kurtulus on 04/12/15.
+//  Created by Okan Kurtulus on 11/12/15.
 //  Copyright © 2015 Okan Kurtulus. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -21,5 +21,6 @@
 @dynamic receiverNameSurname;
 @dynamic senderEmail;
 @dynamic senderNameSurname;
+@dynamic duration;
 
 @end
