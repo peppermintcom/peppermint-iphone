@@ -111,3 +111,5 @@
 "Contact exists format" = "%@ already exists";
 "Microphone is in use" = "Microphone is used by another application.";
 "Email recover message format" = "We sent an email to %@ to reset your password";
+"Search here for your friend" = "Search here for your friend.";
+"Then tap and hold to send them an audio message." = "Then tap and hold\nto send them an audio message.";

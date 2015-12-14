@@ -9,6 +9,7 @@
 #import "SlideMenuViewController.h"
 #import "LoginModel.h"
 #import "AccountViewController.h"
+#import "ContactsViewController.h"
 
 #define NUMBER_OF_OPTIONS   4
 #define INDEX_CONTACTS      0
@@ -89,8 +90,12 @@
     } else if (indexPath.row == INDEX_SETTINGS) {
         UINavigationController *navigationController = (UINavigationController*)self.reSideMenuContainerViewController.contentViewController;
         [navigationController popToRootViewControllerAnimated:YES];
-    } else if (indexPath.row == INDEX_TUTORIAL) {
-        [self.reSideMenuContainerViewController.navigationController popToRootViewControllerAnimated:YES];
+    } else if (indexPath.row == INDEX_TUTORIAL) {        
+        UINavigationController *nvc = (UINavigationController*)self.reSideMenuContainerViewController.contentViewController;
+        ContactsViewController *cvc = [nvc.viewControllers firstObject];
+        [cvc.tutorialView show];
+        
+        //[self.reSideMenuContainerViewController.navigationController popToRootViewControllerAnimated:YES];
     } else if (indexPath.row == INDEX_ACCOUNT) {        
         UINavigationController *navigationController = (UINavigationController*)self.reSideMenuContainerViewController.contentViewController;
         

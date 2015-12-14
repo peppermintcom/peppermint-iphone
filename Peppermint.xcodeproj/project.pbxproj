@@ -69,6 +69,8 @@
 		B17206D21BE4AAE40021D855 /* ConnectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B17206D11BE4AAE40021D855 /* ConnectionModel.m */; };
 		B17206D91BE4E1450021D855 /* begin_record.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B17206D81BE4E1450021D855 /* begin_record.mp3 */; };
 		B17206DC1BE4E2D40021D855 /* PlayingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B17206DB1BE4E2D40021D855 /* PlayingModel.m */; };
+		B17801761C1EFE9000BA2436 /* TutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = B17801751C1EFE9000BA2436 /* TutorialView.m */; };
+		B17801781C1EFEA700BA2436 /* TutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B17801771C1EFEA700BA2436 /* TutorialView.xib */; };
 		B17933121BE0B7B00016F158 /* LoginNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17933111BE0B7B00016F158 /* LoginNavigationViewController.m */; };
 		B17933151BE0C19C0016F158 /* LoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B17933141BE0C19C0016F158 /* LoginModel.m */; };
 		B179F83A1BC9316F0089D709 /* SearchMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B179F8391BC9316F0089D709 /* SearchMenuTableViewCell.m */; };
@@ -269,6 +271,9 @@
 		B17206D81BE4E1450021D855 /* begin_record.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = begin_record.mp3; sourceTree = "<group>"; };
 		B17206DA1BE4E2D40021D855 /* PlayingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayingModel.h; sourceTree = "<group>"; };
 		B17206DB1BE4E2D40021D855 /* PlayingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayingModel.m; sourceTree = "<group>"; };
+		B17801741C1EFE9000BA2436 /* TutorialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialView.h; sourceTree = "<group>"; };
+		B17801751C1EFE9000BA2436 /* TutorialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialView.m; sourceTree = "<group>"; };
+		B17801771C1EFEA700BA2436 /* TutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialView.xib; sourceTree = "<group>"; };
 		B17933101BE0B7B00016F158 /* LoginNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginNavigationViewController.h; sourceTree = "<group>"; };
 		B17933111BE0B7B00016F158 /* LoginNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginNavigationViewController.m; sourceTree = "<group>"; };
 		B17933131BE0C19C0016F158 /* LoginModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginModel.h; sourceTree = "<group>"; };
@@ -688,6 +693,16 @@
 			name = Sounds;
 			sourceTree = "<group>";
 		};
+		B17801731C1EFE6F00BA2436 /* TutorialView */ = {
+			isa = PBXGroup;
+			children = (
+				B17801741C1EFE9000BA2436 /* TutorialView.h */,
+				B17801751C1EFE9000BA2436 /* TutorialView.m */,
+				B17801771C1EFEA700BA2436 /* TutorialView.xib */,
+			);
+			name = TutorialView;
+			sourceTree = "<group>";
+		};
 		B179F8371BC931340089D709 /* SearchMenuTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -777,6 +792,7 @@
 		B17B3D551BB689F1009B8BC5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B17801731C1EFE6F00BA2436 /* TutorialView */,
 				D074A66F1C07271B0017EAC3 /* RowViewForPicker */,
 				D0D70D461C049DA00068AB20 /* BaseButton */,
 				B102DD5B1BD0800B00D71D62 /* BaseCustomView */,
@@ -1140,6 +1156,7 @@
 				B17B3D3C1BB6898C009B8BC5 /* Images.xcassets in Resources */,
 				B15B15B21BDBBAB200C0C171 /* Login.storyboard in Resources */,
 				B1BB2A531BE6AA2000A4BFB4 /* GoogleService-Info.plist in Resources */,
+				B17801781C1EFEA700BA2436 /* TutorialView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1300,6 +1317,7 @@
 				B15FDE7A1C117CCE007100EC /* CustomContact+CoreDataProperties.m in Sources */,
 				B102BBB81BCD03EC001E1E7A /* UIViewController_AdditionViewController.m in Sources */,
 				B13B076A1BD3752900974AC3 /* MandrillRequest.m in Sources */,
+				B17801761C1EFE9000BA2436 /* TutorialView.m in Sources */,
 				D074A66D1C07174D0017EAC3 /* CountryFormatModel.m in Sources */,
 				B1EF40FC1BB8786500042E4B /* TutorialViewController.m in Sources */,
 				B165EF121BB71A85008C6F71 /* BaseModel.m in Sources */,

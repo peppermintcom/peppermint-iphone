@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="VGM-ZD-Cwv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KGz-9S-dSJ">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
@@ -705,6 +705,7 @@
                         <animations/>
                         <color key="backgroundColor" red="0.085774112779999995" green="0.36037287979999999" blue="0.31380316759999999" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" id="aZo-3D-uzN"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4vg-Bh-UDm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1063,6 +1064,28 @@ email contact or both</string>
             </objects>
             <point key="canvasLocation" x="201" y="86"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="YuD-Vf-8V1">
+            <objects>
+                <navigationController navigationBarHidden="YES" id="KGz-9S-dSJ" sceneMemberID="viewController">
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <navigationBar key="navigationBar" clipsSubviews="YES" contentMode="scaleToFill" id="E5q-QH-YZW">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="WAo-jm-pUN" kind="relationship" relationship="rootViewController" id="80W-2r-LBI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pl9-xB-HuO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1020" y="-758"/>
+        </scene>
     </scenes>
     <resources>
         <image name="avatar" width="70" height="70"/>
@@ -1090,4 +1113,7 @@ email contact or both</string>
         <image name="tap_to_send" width="278" height="50"/>
         <image name="white_ellipse" width="596" height="60"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="80W-2r-LBI"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -59,11 +59,15 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:STORYBOARD_MAIN bundle:nil];
     UINavigationController *nvc = [storyboard instantiateInitialViewController];
     
-    BOOL isTutorialShowed = [defaults_object(DEFAULTS_KEY_ISTUTORIALSHOWED) boolValue];
-    if(isTutorialShowed) {
-        UIViewController *vc = [storyboard instantiateViewControllerWithIdentifier:VIEWCONTROLLER_MAIN];
-        [nvc pushViewController:vc animated:NO];
+    
+    if(![[nvc.viewControllers firstObject] isKindOfClass:[ReSideMenuContainerViewController class]]) {
+        BOOL isTutorialShowed = [defaults_object(DEFAULTS_KEY_ISTUTORIALSHOWED) boolValue];
+        if(isTutorialShowed) {
+            UIViewController *vc = [storyboard instantiateViewControllerWithIdentifier:VIEWCONTROLLER_MAIN];
+            [nvc pushViewController:vc animated:NO];
+        }
     }
+    
     self.window.rootViewController = nvc;
     [self.window makeKeyAndVisible];
     self.window.frame = [[UIScreen mainScreen] bounds];

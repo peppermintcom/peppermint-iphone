@@ -72,6 +72,7 @@
     self.sendingInformationLabel.text = @"";
     self.seperatorView.backgroundColor = [UIColor cellSeperatorGray];
     [self initRecordingView];
+    [self initTutorialView];
     isScrolling  = NO;
     [self initHoldToRecordInfoView];
     isNewRecordAvailable = YES;
@@ -88,6 +89,7 @@
     self.recentContactsModel = nil;
     self.searchMenu = nil;
     self.fastRecordingView = nil;
+    self.tutorialView = nil;
 }
 
 SUBSCRIBE(SyncGoogleContactsSuccess) {
@@ -124,6 +126,13 @@ SUBSCRIBE(ReplyContactIsAdded) {
     self.fastRecordingView.frame = self.view.frame;
     [self.view addSubview:self.fastRecordingView];
     [self.view bringSubviewToFront:self.fastRecordingView];
+}
+
+-(void) initTutorialView {
+    self.tutorialView = [TutorialView createInstance];
+    self.tutorialView.frame = self.view.frame;
+    [self.view addSubview:self.tutorialView];
+    [self.view bringSubviewToFront:self.tutorialView];
 }
 
 -(void) viewWillDisappear:(BOOL)animated {
