@@ -122,11 +122,10 @@
   __block NSString *recordingName = [NSString stringWithFormat:@"AudioRecording-%d.mp4", timeAtRecording];
   __block NSURL * outputURL = [directory URLByAppendingPathComponent:recordingName];
   __weak ContactsInterfaceController *weakSelf = self;
-  __weak PeppermintContact *weakContact = contact;
   
   [self presentAudioRecorderControllerWithOutputURL:outputURL preset:preset options:nil completion:^(BOOL didSave, NSError * _Nullable error) {
     __strong ContactsInterfaceController *strongSelf = weakSelf;
-    __strong PeppermintContact *strongContact = weakContact;
+    __strong PeppermintContact *strongContact = contact;
     
     if (!strongSelf) {
       return;
@@ -164,8 +163,8 @@
         
         [[WCSession defaultSession] transferFile:outputExtensionURL
                                         metadata:nil];
-        [self sendAudioToContact:strongContact];
       }
+      [self sendAudioToContact:strongContact];
     }
     
     if (error) {
