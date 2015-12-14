@@ -25,8 +25,6 @@
 #define AWS_BASE_URL                    @"https://qdkkavugcd.execute-api.us-west-2.amazonaws.com/prod/v1"
 #define AWS_ENDPOINT_RECORDER           @"/recorder"
 #define AWS_ENDPOINT_UPLOADS            @"/uploads"
-#warning "AWS_ENDPOINT_RECORD is deprecated, remove it!"
-#define AWS_ENDPOINT_RECORD             @"/record" //Deprecated!
 #define AWS_ENDPOINT_ACCOUNTS           @"/accounts"
 #define AWS_ENDPOINT_ACCOUNTS_TOKENS    @"/accounts/tokens"
 #define AWS_ENDPOINT_ACCOUNTS_VERIFY    @"/accounts/verify"
@@ -41,7 +39,6 @@
 -(void) submitRecorderWithUdid:(NSString*) clientId;
 -(void) retrieveSignedURLForContentType:(NSString*) contentType jwt:(NSString*) jwt data:(NSData*)data;
 -(void) sendData:(NSData*) data ofContentType:(NSString*) contentType tosignedURL:(NSString*) signedUrl;
--(void) finalizeFileUploadForSignedUrl:(NSString*) signedUrl withJwt:(NSString*) jwt;
 
 -(void) registerAccount:(User*) user;
 -(void) logUserInWithEmail:(NSString*) email password:(NSString*) password;

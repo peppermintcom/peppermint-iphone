@@ -420,7 +420,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 -(void) didFinishItemSelectionOnIndexPath:(NSIndexPath*) indexPath location:(CGPoint) location {
     self.tableView.bounces = YES;
-    //[self.fastRecordingView finishRecordingWithGestureIsValid:YES];
+    [self.fastRecordingView finishRecordingWithGestureIsValid:YES];
 }
 
 #pragma mark - ContactInformationTableViewCellDelegate

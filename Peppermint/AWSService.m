@@ -124,35 +124,6 @@
     }
 }
 
--(void) finalizeFileUploadForSignedUrl:(NSString*) signedUrl withJwt:(NSString*) jwt {
-    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_RECORD];
-    NSString *tokenText = [self toketTextForJwt:jwt];
-    
-    AFHTTPRequestOperationManager *requestOperationManager = [[AFHTTPRequestOperationManager alloc]
-                                                              initWithBaseURL:[NSURL URLWithString:url]];
-    requestOperationManager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [requestOperationManager.requestSerializer setValue:tokenText forHTTPHeaderField:AUTHORIZATION];
-    
-    FinalizeUploadRequest *finalizeUploadRequest = [FinalizeUploadRequest new];
-    finalizeUploadRequest.signed_url = signedUrl;
-    NSDictionary *parameterDictionary = [finalizeUploadRequest toDictionary];
-    
-    [requestOperationManager POST:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSError *error;
-        FinalizeUploadResponse *response = [[FinalizeUploadResponse alloc] initWithDictionary:responseObject error:&error];
-        if (error) {
-            [self failureWithOperation:nil andError:error];
-        }
-        FileUploadFinalized *fileUploadFinalized = [FileUploadFinalized new];
-        fileUploadFinalized.sender = self;
-        fileUploadFinalized.signedUrl = signedUrl;
-        fileUploadFinalized.shortUrl = response.short_url;
-        PUBLISH(fileUploadFinalized);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self failureWithOperation:nil andError:error];
-    }];
-}
-
 #pragma mark - Account
 
 -(void) registerAccount:(User*) user {
@@ -316,27 +287,6 @@
 }
 
 -(void) recoverPasswordForEmail:(NSString*) email {
-#warning "Delete below part"
-    /*
-    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_ACCOUNT_RECOVER];
-    AFHTTPRequestOperationManager *requestOperationManager = [[AFHTTPRequestOperationManager alloc]
-                                                              initWithBaseURL:[NSURL URLWithString:url]];
-    
-    RecoverPasswordRequest *recoverPasswordRequest = [RecoverPasswordRequest new];
-    recoverPasswordRequest.api_key = self.apiKey;
-    recoverPasswordRequest.email = email;
-    NSDictionary *parameterDictionary = [recoverPasswordRequest toDictionary];
-    
-    [requestOperationManager POST:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        AccountPasswordRecovered *accountPasswordRecovered = [AccountPasswordRecovered new];
-        accountPasswordRecovered.sender = self;
-        PUBLISH(accountPasswordRecovered);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self failureWithOperation:nil andError:error];
-    }];
-    */
-    
-    
     NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_ACCOUNT_RECOVER];
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];

@@ -12,12 +12,12 @@
 #import "FastReplyModel.h"
 #import <Crashlytics/Crashlytics.h>
 
-#define TIMER_PERIOD    3
+#define DISPATCH_SEMAPHORE_PERIOD   15000000000 //15seconds in nanoseconds
 
 @implementation SendVoiceMessageModel {
-    NSTimer *timer;
     NSLock *arrayLock;
     SendingStatus _sendingStatus;
+    dispatch_semaphore_t dispatch_semaphore;
 }
 
 -(id) init {
@@ -29,21 +29,17 @@
         self.peppermintMessageSender = [PeppermintMessageSender sharedInstance];
         awsModel = [AWSModel new];
         awsModel.delegate = self;
+        dispatch_semaphore = dispatch_semaphore_create(0);
         self.sendingStatus = SendingStatusIniting;
         [awsModel initRecorder];
         customContactModel = [CustomContactModel new];
         customContactModel.delegate = self;
-        timer = nil;
     }
     return self;
 }
 
 -(void) dealloc {
     NSString *info = [NSString stringWithFormat:@"Dealloc %@ in status %d\n", self, (int)self.sendingStatus];
-    if(timer) {
-        info = [NSString stringWithFormat:@"%@ and timer %@ is still active with timeInterval:%f", info, timer, timer.timeInterval];
-        [timer invalidate];
-    }
     NSLog(@"%@", info);
 }
 
@@ -54,12 +50,9 @@
     [recentContactsModel save:self.selectedPeppermintContact];
     [self attachProcessToAppDelegate];
     [self checkAndCleanFastReplyModel];
-    
-#warning "Busy wait, think to make it with a more smart way"
+
     if(self.sendingStatus == SendingStatusIniting) {
-        while (self.sendingStatus != SendingStatusInited ) {
-            NSLog(@"waiting aws model to be ready!");
-        }
+        dispatch_semaphore_wait(dispatch_semaphore,dispatch_time(DISPATCH_TIME_NOW, DISPATCH_SEMAPHORE_PERIOD));
     }
 }
 
@@ -79,10 +72,11 @@
 
 -(void) recorderInitIsSuccessful {
     self.sendingStatus = SendingStatusInited;
+    dispatch_semaphore_signal(dispatch_semaphore);
 }
 
 -(void) fileUploadCompletedWithPublicUrl:(NSString*) url {
-    //NSLog(@"File Upload is finished with url %@", url);
+    NSLog(@"File Upload is finished with url %@", url);
 }
 
 #pragma mark - CustomContactModelDelegate
@@ -181,11 +175,6 @@
         [arrayLock lock];
         [array addObject:self];
         [arrayLock unlock];
-        if(timer) { [timer invalidate]; NSLog(@"invalidated a timer!!"); }
-        timer = [NSTimer timerWithTimeInterval:TIMER_PERIOD target:self selector:@selector(detachProcessFromAppDelegate) userInfo:nil repeats:YES];
-        [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-        
-        
         AttachSuccess *attachSuccess = [AttachSuccess new];
         attachSuccess.sender = self;
         PUBLISH(attachSuccess);
@@ -194,11 +183,7 @@
     }
 }
 
-#warning "Find a better solution that tracking with a timer. All implementations can manually trigger detach!!"
--(void) detachProcessFromAppDelegate {
-    NSAssert(self.sendingStatus != SendingStatusIniting, @"Sendingstatus must not be in Initing");
-    NSAssert(self.sendingStatus != SendingStatusInited, @"Sendingstatus must not be in Inited");
-    
+-(void) checkToDetach {
     switch (self.sendingStatus) {
         case SendingStatusIniting:
         case SendingStatusInited:
@@ -212,8 +197,6 @@
         case SendingStatusCancelled:
         case SendingStatusCached:
         case SendingStatusSent:
-            [timer invalidate];
-            timer = nil;
             NSLog(@"%@ changed status to %d, soon it will be detached.", self, (int)self.sendingStatus);
             [self performDetach];
             return;
@@ -280,6 +263,7 @@
         MessageSendingStatusIsUpdated *messageSendingStatusIsUpdated = [MessageSendingStatusIsUpdated new];
         messageSendingStatusIsUpdated.sender = self;
         PUBLISH(messageSendingStatusIsUpdated);
+        [self checkToDetach];
     }
 }
 

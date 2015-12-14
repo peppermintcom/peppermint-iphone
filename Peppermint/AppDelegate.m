@@ -21,6 +21,9 @@
 #import "CacheModel.h"
 #import "LoginNavigationViewController.h"
 #import "ContactsViewController.h"
+#import "LoginValidateEmailViewController.h"
+#import "LoginViewController.h"
+#import "JwtInformation.h"
 
 @import CoreSpotlight;
 @import MobileCoreServices;
@@ -231,19 +234,7 @@ SUBSCRIBE(DetachSuccess) {
                || [path containsString:PATH_VERIFIED]
                || [host containsString:PATH_VERIFIY_EMAIL]
                || [host containsString:PATH_VERIFIED]) {
-        
-#warning "Verify email locally with parsing the url parameters from base64 encoded json data"        
-        result = YES;
-        UIViewController *rootVC = [AppDelegate Instance].window.rootViewController;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [MBProgressHUD showHUDAddedTo:rootVC.view animated:YES];
-        });
-        dispatch_async(LOW_PRIORITY_QUEUE, ^{
-            [NSData dataWithContentsOfURL:url]; //Verify email on the server
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [MBProgressHUD hideHUDForView:rootVC.view animated:YES];
-            });
-        });
+        result = [self validateEmailWithUrl:url];
     } else if ([path containsString:PATH_RESET]
                || [host containsString:PATH_RESET]) {
         NSLog(PATH_RESET);
@@ -258,6 +249,43 @@ SUBSCRIBE(DetachSuccess) {
         NSLog(@"handleOpenURL failed for URL: %@", url.host);
     }
     return result;
+}
+
+-(BOOL) validateEmailWithUrl:(NSURL*) url {
+    JwtInformation *jwtInformation = [JwtInformation instancewithJwt:url.query andError:nil];
+    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+    
+    BOOL result = jwtInformation != nil && [peppermintMessageSender.email isEqualToString:jwtInformation.sub];
+    if(result) {
+        UIView *tempView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        tempView.backgroundColor = [UIColor clearColor];
+        [[[UIApplication sharedApplication] keyWindow] addSubview:tempView];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBProgressHUD showHUDAddedTo:tempView animated:YES];
+            dispatch_async(LOW_PRIORITY_QUEUE, ^{
+                [NSData dataWithContentsOfURL:url]; //--> Verify email on the server
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self navigateToVerifyEmail];
+                    [MBProgressHUD hideHUDForView:tempView animated:YES];
+                    [tempView removeFromSuperview];
+                });
+            });
+        });
+    }
+    return result;
+}
+
+-(void) navigateToVerifyEmail {
+    UIViewController *vc = self.visibleViewController;
+    if([vc isKindOfClass:[LoginValidateEmailViewController class]]) {
+        LoginValidateEmailViewController *loginValidateEmailViewController = (LoginValidateEmailViewController*)vc;
+        [loginValidateEmailViewController checkIfAccountIsVerified];
+    } else if ([vc isKindOfClass:[LoginViewController class]]) {
+        LoginNavigationViewController *loginNavigationViewController = (LoginNavigationViewController*)vc.navigationController;
+        [loginNavigationViewController loginSucceed];
+    } else {
+        NSLog(@"Could not navigate to verify email."); //This case is not possible with current ViewController hierarchy, this warning will be useful if view hierarchy is updated and functionality will not work as expected
+    }
 }
 
 #pragma mark - Core Data stack
@@ -365,7 +393,7 @@ reset:
 
 +(void) logErrorToAnswers:(NSError*) error {
     NSMutableDictionary *logDictionary = [NSMutableDictionary dictionaryWithDictionary:error.userInfo];
-    [logDictionary setValue:[NSNumber numberWithInt:error.code] forKey:@"Code"];
+    [logDictionary setValue:[NSNumber numberWithInteger:error.code] forKey:@"Code"];
     [logDictionary setValue:error.domain forKey:@"Domain"];
     [logDictionary setValue:error.localizedDescription forKey:@"LocalizedDescription"];
     [logDictionary setValue:error.description forKey:@"Description"];

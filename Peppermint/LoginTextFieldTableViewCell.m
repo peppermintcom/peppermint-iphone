@@ -66,16 +66,7 @@
 }
 
 -(void) setValid:(BOOL) isValid {
-    return;
-#warning "If it will not come settings to isValid view. These below code can be deleted"
-/*
-    if(isValid) {
-        self.coverView.layer.borderWidth = 0;
-    } else {
-        self.coverView.layer.borderWidth = 0;
-        self.coverView.layer.borderColor = [UIColor warningColor].CGColor;
-    }
-*/
+    NSLog(@"isValid:%d (Please implement needed configuration for valid proerty)", isValid);
 }
 
 @end

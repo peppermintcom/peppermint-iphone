@@ -211,9 +211,7 @@
     CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
     [RecordingModel setPreviousFileLength:recorder.currentTime + previousFileLength];
     [self stop];
-    [self mixAudiosWithTargetUrl:[self backUpFileUrl] Completion:^{
-        [self removeFileIfExistsAtUrl:self.fileUrl];
-    }];
+    [self copyFileFrom:self.fileUrl targetUrl:[self backUpFileUrl] completion:nil];
 }
 
 -(void) resetRecording {
@@ -241,8 +239,7 @@
     
     //If there is a backUp - MixRecordings
     if([self fileExistsAtUrl:[self backUpFileUrl]]) {
-        [self mixAudiosWithTargetUrl:self.fileUrl Completion:^{
-            [self removeFileIfExistsAtUrl:[self backUpFileUrl]];
+        [self copyFileFrom:[self backUpFileUrl] targetUrl:self.fileUrl completion:^{
             preparingProcess();
         }];
     } else {
@@ -250,16 +247,9 @@
     }
 }
 
-/****************************************************************************************************
- * Grabbed & Modified the mixAudios function from : http://stackoverflow.com/a/15241353/5171866
- *****************************************************************************************************/
--(void)mixAudiosWithTargetUrl:(NSURL*)targetUrl Completion:(void(^)(void))completion
-{
-    
-#warning "There is aproblem with mixing, solve it!"
-    
+
+-(void) copyFileFrom:(NSURL*)sourceUrl targetUrl:(NSURL*)targetUrl completion:(void(^)(void))completion {
     NSError *error;
-    NSURL *sourceUrl = (targetUrl == self.fileUrl) ? [self backUpFileUrl] : self.fileUrl;
     
     if([self fileExistsAtUrl:sourceUrl]) {
         [self removeFileIfExistsAtUrl:targetUrl];
@@ -267,13 +257,21 @@
         if(error) {
             [self.delegate operationFailure:error];
         } else {
+            [self removeFileIfExistsAtUrl:sourceUrl];
             completion();
         }
     } else {
         completion();
     }
-    
-    return;
+}
+
+/****************************************************************************************************
+ * Grabbed & Modified the mixAudios function from : http://stackoverflow.com/a/15241353/5171866
+ * Check for possible errors before using
+ *****************************************************************************************************/
+-(void)mixAudiosWithTargetUrl:(NSURL*)targetUrl Completion:(void(^)(void))completion
+{
+    NSLog(@"Please validate that mixing is working before using it!");
     /*
     NSError *error;
     AVMutableComposition* mixComposition = [AVMutableComposition composition];

@@ -55,9 +55,6 @@ sharedObject;\
 #pragma mark - UIView Addition
 #import "UIView+Addition.h"
 
-#pragma mark - UITextField Addition
-#import "UITextField_Addition.h"
-
 #pragma mark - NSMutableAttributedString Addition
 #import "NSMutableAttributedString_Addition.h"
 
@@ -69,6 +66,7 @@ sharedObject;\
 
 #pragma mark - NSUserDefaults Helper
 #import "nsuserdefaults-helper.h"
+
 #define DEFAULTS_KEY_ISTUTORIALSHOWED           @"isTutorialShowed"
 #define DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH  @"previousRecordingLength"
 

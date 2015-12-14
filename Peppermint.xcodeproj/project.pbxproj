@@ -57,7 +57,6 @@
 		B15FDE811C117CCE007100EC /* CachedMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B15FDE771C117CCE007100EC /* CachedMessage.m */; };
 		B15FDE841C117CFE007100EC /* CustomContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B15FDE831C117CFE007100EC /* CustomContactModel.m */; };
 		B15FDE871C119D60007100EC /* UIImage_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B15FDE861C119D60007100EC /* UIImage_Addition.m */; };
-		B161EAED1C07525700D2B716 /* UITextField_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B161EAEC1C07525700D2B716 /* UITextField_Addition.m */; };
 		B165EF121BB71A85008C6F71 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF111BB71A85008C6F71 /* BaseModel.m */; };
 		B165EF151BB71A99008C6F71 /* ContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF141BB71A99008C6F71 /* ContactsModel.m */; };
 		B165EF181BB71EC0008C6F71 /* PeppermintContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF171BB71EC0008C6F71 /* PeppermintContact.m */; };
@@ -248,8 +247,6 @@
 		B15FDE831C117CFE007100EC /* CustomContactModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomContactModel.m; sourceTree = "<group>"; };
 		B15FDE851C119D60007100EC /* UIImage_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImage_Addition.h; sourceTree = "<group>"; };
 		B15FDE861C119D60007100EC /* UIImage_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImage_Addition.m; sourceTree = "<group>"; };
-		B161EAEB1C07525700D2B716 /* UITextField_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextField_Addition.h; sourceTree = "<group>"; };
-		B161EAEC1C07525700D2B716 /* UITextField_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITextField_Addition.m; sourceTree = "<group>"; };
 		B165EF101BB71A85008C6F71 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
 		B165EF111BB71A85008C6F71 /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
 		B165EF131BB71A99008C6F71 /* ContactsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ContactsModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -835,8 +832,6 @@
 				B10125BB1BEB670500B5DD54 /* NSString_Addition.m */,
 				D0D70D401C0464800068AB20 /* UIView+Addition.h */,
 				D0D70D411C0464800068AB20 /* UIView+Addition.m */,
-				B161EAEB1C07525700D2B716 /* UITextField_Addition.h */,
-				B161EAEC1C07525700D2B716 /* UITextField_Addition.m */,
 				B149EB331C0F07AE00A5E41A /* NSMutableAttributedString_Addition.h */,
 				B149EB341C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m */,
 				B15FDE851C119D60007100EC /* UIImage_Addition.h */,
@@ -1318,7 +1313,6 @@
 				B13B07671BD3736400974AC3 /* MandrillMailAttachment.m in Sources */,
 				B1C83A191BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m in Sources */,
 				B17933121BE0B7B00016F158 /* LoginNavigationViewController.m in Sources */,
-				B161EAED1C07525700D2B716 /* UITextField_Addition.m in Sources */,
 				B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */,
 				B1F93E901BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld in Sources */,
 				B17933151BE0C19C0016F158 /* LoginModel.m in Sources */,

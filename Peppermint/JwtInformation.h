@@ -14,4 +14,6 @@
 @property (strong, nonatomic) NSString *iss;
 @property (strong, nonatomic) NSString *sub;
 
++(instancetype) instancewithJwt:(NSString*)jwt andError:(JSONModelError**) error;
+
 @end

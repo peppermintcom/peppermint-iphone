@@ -371,7 +371,6 @@ static inline BOOL _checkResultLite(OSStatus result, const char *operation, cons
              before resuming. In this situation, the buffer you provided to ExtAudioFileWrite was successfully
              consumed and you may proceed to the next buffer
              */
-#warning "Added to stop calling ExtAudioFileWrite"
             _processing = NO;
             return;
         } else if ( status == kExtAudioFileError_CodecUnavailableInputNotConsumed ) {

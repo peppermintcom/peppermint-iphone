@@ -38,9 +38,6 @@
 @implementation FileUploadCompleted
 @end
 
-@implementation FileUploadFinalized
-@end
-
 @implementation AccountRegisterIsSuccessful
 @end
 

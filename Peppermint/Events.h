@@ -52,12 +52,6 @@
 @property (strong, nonatomic) NSString *signedUrl;
 @end
 
-//Needs a unique handler
-@interface FileUploadFinalized : BaseEvent
-@property (strong, nonatomic) NSString *signedUrl;
-@property (strong, nonatomic) NSString *shortUrl;
-@end
-
 @interface AccountRegisterIsSuccessful : BaseEvent
 @property (strong, nonatomic) NSString *jwt;
 @property (strong, nonatomic) User *user;

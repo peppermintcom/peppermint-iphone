@@ -40,18 +40,11 @@
 -(BOOL) isJWTValid {
     BOOL result = NO;
     jwt = [[A0SimpleKeychain keychain] stringForKey:KEYCHAIN_AWS_JWT];
-    
-    NSArray *jwtComponents = [jwt componentsSeparatedByString:@"."];
-    if(jwtComponents.count == 3 ) {
-        NSString *jwtInfo = [jwtComponents objectAtIndex:1];
-        jwtInfo = [NSString stringFromBase64String:jwtInfo];
-        NSError *error = nil;
-        JwtInformation *jwtInformation = [[JwtInformation alloc] initWithString:jwtInfo error:&error];
-        if(!error) {
-            //Future time is set to 2 days
-            NSDate *bufferedFutureTime = [[NSDate date] dateByAddingTimeInterval:(2*24*60*60)];
-            result = (jwtInformation.exp > bufferedFutureTime.timeIntervalSince1970);
-        }
+    JwtInformation *jwtInformation = [JwtInformation instancewithJwt:jwt andError:nil];
+    if(jwtInformation != nil) {
+        //Future time is set to 2 days
+        NSDate *bufferedFutureTime = [[NSDate date] dateByAddingTimeInterval:(2*24*60*60)];
+        result = (jwtInformation.exp > bufferedFutureTime.timeIntervalSince1970);
     }
     return result;
 }
@@ -95,17 +88,7 @@ SUBSCRIBE(RetrieveSignedUrlSuccessful) {
 
 SUBSCRIBE(FileUploadCompleted) {
     if([event.signedUrl isEqualToString:_signedUrl] && event.sender == awsService) {
-#warning "finalizeFileUploadForSignedUrl" is deprecated, clean unused code
-        //finalizeFileUploadForSignedUrl is deprecated!
-        //[awsService finalizeFileUploadForSignedUrl:_signedUrl withJwt:jwt];
-    }
-}
-
-SUBSCRIBE(FileUploadFinalized) {
-    if([event.signedUrl isEqualToString:_signedUrl]
-        && event.sender == awsService) {
-        NSString *shortUrl = event.shortUrl;
-        [self.delegate fileUploadCompletedWithPublicUrl:shortUrl];
+        NSLog(@"File upload is completed with signedURL:%@", _signedUrl);
     }
 }
 

@@ -36,13 +36,6 @@
     [self.m13ProgressViewPie setSecondaryColor:[UIColor clearColor]];
     totalSeconds = 0;
     REGISTER();
-    
-#warning "Interruptions are not handled"
-    //[self registerAppNotifications];
-}
-
--(void)dealloc {
-    //[self deRegisterAppNotifications];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -199,44 +192,6 @@ SUBSCRIBE(MessageSendingStatusIsUpdated) {
         [self.recordingModel record];
     }
 }
-
-#pragma mark - App Interruption Actions
-/*
--(void) registerAppNotifications {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationWillResignActive)
-                                                 name:UIApplicationWillResignActiveNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationDidBecomeActive)
-                                                 name:UIApplicationDidBecomeActiveNotification
-                                               object:nil];
-}
-
--(void) deRegisterAppNotifications {
-    [[NSNotificationCenter defaultCenter] removeObserver: self name: UIApplicationWillResignActiveNotification object: nil];
-    [[NSNotificationCenter defaultCenter] removeObserver: self name: UIApplicationDidBecomeActiveNotification object: nil];
-}
-
--(void) applicationWillResignActive {
-    [self.recordingModel backUpRecording];
-}
-
--(void) applicationDidBecomeActive {
-    self.recordingModel = [RecordingModel new];
-    CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
-    [self timerUpdated:previousFileLength];
-    self.recordingModel.delegate = self;
-    
-    NSString *title = LOC(@"Information", @"Information");
-    NSString *message = LOC(@"Recording is cut", @"Recording is cut, how to continue question?");
-    NSString *newRecordButtonTitle = LOC(@"Restart record", @"Restart record button title");
- #warning "Continue from previous text is deleted. DO not forget to check in Text.strings"
-    NSString *continueFromPreviousButtonTitle = LOC(@"Continue from previous", @"Continue from previous button title");
-    [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:newRecordButtonTitle otherButtonTitles:continueFromPreviousButtonTitle, nil] show];
-}
-*/
 
 #pragma mark - Navigation
 

@@ -10,4 +10,16 @@
 
 @implementation JwtInformation
 
+
++(instancetype) instancewithJwt:(NSString*)jwt andError:(JSONModelError**) error {
+    JwtInformation *jwtInformation = nil;
+    NSArray *jwtComponents = [jwt componentsSeparatedByString:@"."];
+    if(jwtComponents.count == 3 ) {
+        NSString *jwtInfo = [jwtComponents objectAtIndex:1];
+        jwtInfo = [NSString stringFromBase64String:jwtInfo];
+        jwtInformation = [[JwtInformation alloc] initWithString:jwtInfo error:(&*error)];
+    }
+    return jwtInformation;
+}
+
 @end
