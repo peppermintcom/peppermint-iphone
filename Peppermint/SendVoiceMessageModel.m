@@ -112,6 +112,8 @@
 }
 
 -(void) cacheMessage {
+    BOOL isValidToCache = _data && _extension && _duration > 0;
+    NSAssert(isValidToCache, @"Can not cache message before send function is called!!!");
     _sendingStatus = SendingStatusCancelled; //Cancel to stop ongoing processes
     [[CacheModel sharedInstance] cache:self WithData:_data extension:_extension duration:_duration];
 }

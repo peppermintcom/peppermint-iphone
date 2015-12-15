@@ -139,6 +139,7 @@
 -(void) record {
     if(!recorder.recording) {
         if([recorder record]) {
+            recorder.meteringEnabled = [self.delegate respondsToSelector:@selector(meteringUpdatedWithAverage:andPeak:)];
             timer = [NSTimer scheduledTimerWithTimeInterval:PING_INTERVAL target:self selector:@selector(onTick:) userInfo:nil repeats:YES];
         } else {
             [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Could not start record", @"Error message") code:0 userInfo:nil]];
@@ -171,7 +172,17 @@
     [recorder stop];
 }
 
+-(void)updateMetering {    
+    if([self.delegate respondsToSelector:@selector(meteringUpdatedWithAverage:andPeak:)]) {
+        [recorder updateMeters];
+        CGFloat average = [recorder averagePowerForChannel:0];
+        CGFloat peak    = [recorder peakPowerForChannel:0];
+        [self.delegate meteringUpdatedWithAverage:average andPeak:peak];
+    }
+}
+
 -(void)onTick:(NSTimer *)timer {
+    [self updateMetering];
     CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
     [self.delegate timerUpdated:recorder.currentTime + previousFileLength];
 }

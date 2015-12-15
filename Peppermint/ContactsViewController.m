@@ -88,7 +88,7 @@
     self.contactsModel = nil;
     self.recentContactsModel = nil;
     self.searchMenu = nil;
-    self.fastRecordingView = nil;
+    self.recordingView = nil;
     self.tutorialView = nil;
 }
 
@@ -122,10 +122,10 @@ SUBSCRIBE(ReplyContactIsAdded) {
 }
 
 -(void) initRecordingView {
-    self.fastRecordingView = [FastRecordingView createInstanceWithDelegate:self];
-    self.fastRecordingView.frame = self.view.frame;
-    [self.view addSubview:self.fastRecordingView];
-    [self.view bringSubviewToFront:self.fastRecordingView];
+    self.recordingView = [FastRecordingView createInstanceWithDelegate:self];
+    self.recordingView.frame = self.view.frame;
+    [self.view addSubview:self.recordingView];
+    [self.view bringSubviewToFront:self.recordingView];
 }
 
 -(void) initTutorialView {
@@ -416,20 +416,20 @@ SUBSCRIBE(ReplyContactIsAdded) {
         [hud hide:YES afterDelay:WARN_TIME/2];
     } else {
         sendVoiceMessageModel.selectedPeppermintContact = selectedContact;
-        self.fastRecordingView.sendVoiceMessageModel = sendVoiceMessageModel;
+        self.recordingView.sendVoiceMessageModel = sendVoiceMessageModel;
         self.reSideMenuContainerViewController.panGestureEnabled = NO;
-        [self.fastRecordingView presentWithAnimation];
+        [self.recordingView presentWithAnimation];
     }
 }
 
 -(void) didCancelItemSelectionOnIndexpath:(NSIndexPath*) indexPath location:(CGPoint) location {
     self.tableView.bounces = YES;
-    [self.fastRecordingView finishRecordingWithGestureIsValid:NO];
+    [self.recordingView finishRecordingWithGestureIsValid:NO];
 }
 
 -(void) didFinishItemSelectionOnIndexPath:(NSIndexPath*) indexPath location:(CGPoint) location {
     self.tableView.bounces = YES;
-    [self.fastRecordingView finishRecordingWithGestureIsValid:YES];
+    [self.recordingView finishRecordingWithGestureIsValid:YES];
 }
 
 #pragma mark - ContactInformationTableViewCellDelegate
@@ -439,9 +439,9 @@ SUBSCRIBE(ReplyContactIsAdded) {
     [AddContactViewController presentAddContactControllerWithText:self.searchContactsTextField.text withDelegate:self];
 }
 
-#pragma mark - FastRecordingViewDelegate
+#pragma mark - RecordingViewDelegate
 
--(void) fastRecordingViewDissappeared {
+-(void) recordingViewDissappeared {
     self.reSideMenuContainerViewController.panGestureEnabled = YES;
 }
 
@@ -542,7 +542,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
 #pragma mark - CancelMessageSendingButton
 
 -(IBAction)messageCancelButtonPressed:(id)sender {
-    [self.fastRecordingView cancelMessageSending];
+    [self.recordingView cancelMessageSending];
 }
 
 #pragma mark - TextField

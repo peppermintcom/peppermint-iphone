@@ -14,7 +14,7 @@
 #import "ReSideMenuContainerViewController.h"
 #import "TutorialView.h"
 
-@interface ContactsViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ContactsModelDelegate, RecentContactsModelDelegate, SearchMenuTableViewCellDelegate, UIAlertViewDelegate, ContactTableViewCellDelegate, FastRecordingViewDelegate, ContactInformationTableViewCellDelegate>
+@interface ContactsViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ContactsModelDelegate, RecentContactsModelDelegate, SearchMenuTableViewCellDelegate, UIAlertViewDelegate, ContactTableViewCellDelegate, RecordingViewDelegate, ContactInformationTableViewCellDelegate>
 @property (strong, nonatomic) ContactsModel *contactsModel;
 @property (strong, nonatomic) RecentContactsModel *recentContactsModel;
 @property (strong, nonatomic) REMenu *searchMenu;
@@ -33,7 +33,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *searchSourceIconImageView;
 @property (weak, nonatomic) IBOutlet UIButton *cancelMessageSendingButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *cancelMessageButtonWidthConstraint;
-@property (strong, nonatomic) FastRecordingView *fastRecordingView;
+@property (strong, nonatomic) RecordingView *recordingView;
 @property (weak, nonatomic) ReSideMenuContainerViewController *reSideMenuContainerViewController;
 @property (strong, nonatomic) TutorialView *tutorialView;
 

@@ -10,7 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "TPAACAudioConverter.h"
 
-#define PING_INTERVAL   0.2
+#define PING_INTERVAL   0.02
 
 @protocol RecordingModelDelegate <BaseModelDelegate>
 @required
@@ -18,6 +18,8 @@
 -(void) accessRightsAreSupplied;
 -(void) timerUpdated:(NSTimeInterval) timeInterval;
 -(void) recordDataIsPrepared:(NSData*) data withExtension:(NSString*) extension;
+@optional
+-(void) meteringUpdatedWithAverage:(CGFloat)average andPeak:(CGFloat)peak;
 @end
 
 @interface RecordingModel : BaseModel <AVAudioRecorderDelegate, TPAACAudioConverterDelegate>

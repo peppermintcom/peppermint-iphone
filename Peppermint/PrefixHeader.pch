@@ -40,6 +40,9 @@ sharedObject;\
 #pragma mark - Low Priority Queue
 #define LOW_PRIORITY_QUEUE dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
 
+#pragma mark - Override Error
+#define override_error [NSException exceptionWithName:NSInternalInconsistencyException reason:[NSString stringWithFormat:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)] userInfo:nil];
+
 #pragma mark - Colors Addition
 #import "UIColor_Addition.h"
 
@@ -75,7 +78,7 @@ sharedObject;\
 #import <OpenSans/UIFont+OpenSans.h>
 
 #pragma mark - Record Constraint Definition
-#define MAX_RECORD_TIME             300           //Seconds
+#define MAX_RECORD_TIME             10//300           //Seconds
 #define MIN_VOICE_MESSAGE_LENGTH    2            //Seconds
 #define ANIM_TIME                   0.3
 #define WARN_TIME                   1.5

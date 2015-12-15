@@ -10,19 +10,9 @@
 #import "ExplodingView.h"
 #import "SendVoiceMessageMandrillModel.h"
 
-typedef enum : NSUInteger {
-    FastRecordingViewStatusResignActive,
-    FastRecordingViewStatusRecoverFromBackUp,
-    FastRecordingViewStatusPresented,
-    FastRecordingViewStatusInit,
-    FastRecordingViewStatusFinishing,
-} FastRecordingViewStatus;
+@implementation FastRecordingView
 
-@implementation FastRecordingView {
-    FastRecordingViewStatus fastRecordingViewStatus;
-}
-
-+(FastRecordingView*) createInstanceWithDelegate:(UIViewController<FastRecordingViewDelegate>*) delegate {
++(FastRecordingView*) createInstanceWithDelegate:(UIViewController<RecordingViewDelegate>*) delegate {
     NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"FastRecordingView"
                                                              owner:self
                                                            options:nil];
@@ -34,6 +24,10 @@ typedef enum : NSUInteger {
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
+    [self setGestureRecognisers];
+    self.backgroundView.alpha = 0.95;
+    
     self.navigationTitleLabel.font = [UIFont openSansSemiBoldFontOfSize:24];
     self.navigationTitleLabel.textColor = [UIColor whiteColor];
     self.counterLabel.font = [UIFont openSansSemiBoldFontOfSize:40];
@@ -43,17 +37,16 @@ typedef enum : NSUInteger {
     self.progressContainerView.layer.cornerRadius = 35;
     [self.m13ProgressViewPie setPrimaryColor:[UIColor progressCoverViewGreen]];
     [self.m13ProgressViewPie setSecondaryColor:[UIColor clearColor]];
-    self.hidden = YES;
-    defaults_set_object(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH, 0);
+    
     self.swipeInAnyDirectionLabel.text = LOC(@"Swipe in any direction to cancel", @"Swipe in any direction label");
-    REGISTER();
-    
-    self.backgroundView.alpha = 0.95;
-    fastRecordingViewStatus = FastRecordingViewStatusInit;
-    
+}
+
+#pragma mark - FastRecordingView User Interaction
+
+-(void) setGestureRecognisers {
     self.gestureRecognizers = [NSArray arrayWithObjects:
-    [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)],
-    [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swiped)]
+                               [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)],
+                               [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swiped)]
                                , nil];
 }
 
@@ -65,95 +58,32 @@ typedef enum : NSUInteger {
     [self finishRecordingWithGestureIsValid:NO];
 }
 
-SUBSCRIBE(MessageSendingStatusIsUpdated) {
-    //SendVoiceMessageModel *model = [SendVoiceMessageModel activeSendVoiceMessageModel];
-    SendVoiceMessageModel *model = event.sender;
-    BOOL isCacnelAble = model.delegate != nil && model.isCancelAble;
-    if([self shouldInformDelegateAboutStatusUpdateInModel:model]) {
-        [self.delegate message:event.sender isUpdatedWithStatus:model.sendingStatus cancelAble:isCacnelAble];
-    }
-}
+#pragma mark - Record Methods
 
--(BOOL) shouldInformDelegateAboutStatusUpdateInModel:(SendVoiceMessageModel*) model {
-    BOOL result = ( model.delegate != nil
-                   || model.sendingStatus == SendingStatusStarting
-                   || model.sendingStatus == SendingStatusUploading
-                   || model.sendingStatus == SendingStatusSending
-                   || model.sendingStatus == SendingStatusSendingWithNoCancelOption
-                   || model.sendingStatus == SendingStatusSent
-                   || model.sendingStatus == SendingStatusCached);
-    
-    NSLog(@"Model:%@ status:%d delegate:%d isAllowed:%d",
-          model,
-          (int)model.sendingStatus,
-          model.delegate != nil,
-          result
-          );
-    
+-(BOOL) presentWithAnimation {
+    BOOL result = [super presentWithAnimation];
+    if(result) {
+        self.counterLabel.text = @"";
+        [self show];
+        self.navigationTitleLabel.text = [NSString stringWithFormat:
+                                          LOC(@"Recording for contact format", @"Title Text Format"),
+                                          self.sendVoiceMessageModel.selectedPeppermintContact.nameSurname,
+                                          self.sendVoiceMessageModel.selectedPeppermintContact.communicationChannelAddress
+                                          ];
+        
+        self.progressContainerView.hidden = NO;
+    }
     return result;
 }
 
--(void) prepareViewToPresent {
-    self.navigationTitleLabel.text = [NSString stringWithFormat:
-                                      LOC(@"Recording for contact format", @"Title Text Format"),
-                                      self.sendVoiceMessageModel.selectedPeppermintContact.nameSurname,
-                                      self.sendVoiceMessageModel.selectedPeppermintContact.communicationChannelAddress
-                                      ];
-    self.sendVoiceMessageModel.delegate = self;
-    self.recordingModel = [RecordingModel new];
-    self.recordingModel.delegate = self;
-    self.progressContainerView.hidden = NO;
-}
+#pragma mark - Show
 
-#pragma mark - Record Methods
--(void) presentWithAnimation {
-    if(fastRecordingViewStatus == FastRecordingViewStatusInit) {
-        fastRecordingViewStatus = FastRecordingViewStatusPresented;
-        self.counterLabel.text = @"";
-        self.alpha = 0;
-        self.hidden = NO;
-        [UIView animateWithDuration:0.2 animations:^{
-            self.alpha = 1;
-        }];
-        assert(self.sendVoiceMessageModel != nil);
-        [self prepareViewToPresent];
-    }
-}
-
--(void) finishRecordingWithGestureIsValid:(BOOL) isGestureValid {
-    if(fastRecordingViewStatus == FastRecordingViewStatusPresented) {
-        fastRecordingViewStatus = FastRecordingViewStatusFinishing;
-        
-        [self.recordingModel stop];
-        
-        BOOL isRecordingLong = self.totalSeconds >= MAX_RECORD_TIME;
-        BOOL isRecordingShort = self.totalSeconds <= MIN_VOICE_MESSAGE_LENGTH;
-        BOOL isLoginInfoValid = self.sendVoiceMessageModel.peppermintMessageSender.isValid;
-        
-        if (isRecordingLong) {
-            NSLog(@"Max time reached..."); //This action is handled in "timerUpdated:" delegate method
-        } else if(!isGestureValid) {
-            [self dissmissWithExplode];
-        } else if (isRecordingShort) {
-            [self showAlertToRecordMoreThanMinimumMessageLength];
-        } else if ([self.sendVoiceMessageModel needsAuth] && !isLoginInfoValid ) {
-            [LoginNavigationViewController logUserInWithDelegate:self completion:nil];
-        } else {
-            [self dissmissWithFadeOut];
-            [self performOperationsToSend];
-        }
-    } else {
-        NSLog(@"FastRecordingView is not presented!");
-    }
-}
-
--(void) performOperationsToSend {
-    [self.sendVoiceMessageModel messagePrepareIsStarting];
-    [self.recordingModel prepareRecordData];
-}
-
--(void) cancelMessageSending {
-    [self.sendVoiceMessageModel cancelSending];
+-(void) show {
+    self.alpha = 0;
+    self.hidden = NO;
+    [UIView animateWithDuration:0.2 animations:^{
+        self.alpha = 1;
+    }];
 }
 
 #pragma mark - Dissmiss
@@ -165,8 +95,7 @@ SUBSCRIBE(MessageSendingStatusIsUpdated) {
         self.hidden = YES;
         self.alpha = 1;
         [self timerUpdated:0];
-        fastRecordingViewStatus = FastRecordingViewStatusInit;
-        [self.delegate fastRecordingViewDissappeared];
+        [self recordingViewIsHidden];
     }];
 }
 
@@ -183,243 +112,26 @@ SUBSCRIBE(MessageSendingStatusIsUpdated) {
 
 #pragma mark - RecordingModel Delegate
 
--(void) microphoneAccessRightsAreNotSupplied {
-    NSString *title = LOC(@"Information", @"Title Message");
-    NSString *message = LOC(@"Mic Access rights explanation", @"Directives to give access rights") ;
-    NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
-    NSString *settingsButtonTitle = LOC(@"Settings", @"Settings Message");
-    [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:settingsButtonTitle, nil] show];
-}
-
--(void) accessRightsAreSupplied {
-    if(fastRecordingViewStatus == FastRecordingViewStatusPresented) {
-        [self.recordingModel resetRecording];
-        if([RecordingModel checkPreviousFileLength] < MIN_VOICE_MESSAGE_LENGTH) {
-            [self.playingModel playBeginRecording];
-            [self beginRecording];
-        } else {
-            [self showAlertForRecordIsCut];
-        }
-    } else {
-        NSLog(@"Fastrecording view is not in presented state! Will not show!");
-    }
-}
-
 -(void) timerUpdated:(NSTimeInterval) timeInterval {
-    self.totalSeconds = timeInterval;
+    [super timerUpdated:timeInterval];
     if(self.totalSeconds <= MAX_RECORD_TIME) {
-        int minutes = self.totalSeconds / 60;
-        int seconds = ((int)self.totalSeconds) % 60;
-        self.counterLabel.text = [NSString stringWithFormat:@"%.1d:%.2d", minutes, seconds];
+        self.counterLabel.text = [NSString stringWithFormat:@"%.1d:%.2d", self.currentMinutes, self.currentSeconds];
         [self.m13ProgressViewPie setProgress:timeInterval/(MAX_RECORD_TIME + -2 * PING_INTERVAL) animated:YES];
-    } else {
-        [self.recordingModel stop];
-        [self showTimeFinishedInformation];
     }
 }
 
-- (void) showTimeFinishedInformation {
-    NSString *title = LOC(@"Information", @"Information");
-    NSString *message = LOC(@"Time is up", @"Max time reached information message");
-    NSString *cancelButtonTitle = LOC(@"Cancel", @"Cancel");
-    NSString *sendButtonTitle = LOC(@"Send", @"Send Message");
-    [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:sendButtonTitle, nil] show];
+#warning "Find a better way to handle subscribe, cos this method is possible to be forgotten in subclass implementations!"
+
+SUBSCRIBE(MessageSendingStatusIsUpdated) {
+    [super onMessageSendingStatusIsUpdated:event];
 }
-
-- (void) recordDataIsPrepared:(NSData *)data withExtension:(NSString*) extension {
-    [self.sendVoiceMessageModel sendVoiceMessageWithData:data withExtension:extension  andDuration:self.totalSeconds];
-}
-
-#pragma mark - SendVoiceMessage Delegate
-
--(void) newRecentContactisSaved {
-    [self.delegate newRecentContactisSaved];
-}
-
-#pragma mark - LoginNavigationViewControllerDelegate
-
--(void) loginSucceedWithMessageSender:(PeppermintMessageSender*) peppermintMessageSender {
-    NSLog(@"login %@ - %@", peppermintMessageSender.nameSurname, peppermintMessageSender.email);
-    [self dissmissWithFadeOut];
-    [self performOperationsToSend];
-}
-
-
-#pragma mark - AlertView Delegate
-
--(void) showAlertToRecordMoreThanMinimumMessageLength {
-    MBProgressHUD * hud =  [MBProgressHUD showHUDAddedTo:self animated:YES];
-    hud.mode = MBProgressHUDModeText;
-    
-    hud.detailsLabelFont = [UIFont openSansSemiBoldFontOfSize:22];
-    hud.detailsLabelText = [NSString stringWithFormat:LOC(@"Record More Than Limit Format", @"Format of minimum recording warning text"),
-                            MIN_VOICE_MESSAGE_LENGTH];
-    hud.removeFromSuperViewOnHide = YES;
-    hud.yOffset -= (self.frame.size.height * 0.075);
-    
-    [hud hide:YES afterDelay:WARN_TIME * 2];
-    dispatch_time_t hideTime = dispatch_time(DISPATCH_TIME_NOW, WARN_TIME * 2 * 1.1 * NSEC_PER_SEC);
-    dispatch_after(hideTime, dispatch_get_main_queue(), ^(void){
-        [self dissmissWithFadeOut];
-    });
-}
-
-/*
--(void) showAlertToCompleteLoginInformation {
-    NSString *title = LOC(@"Information", @"Title Message");
-    NSString *message = LOC(@"Account details message", @"Account details message") ;
-    NSString *cancelButtonTitle = LOC(@"Cancel", @"Cancel Message");
-    NSString *okButtonTitle = LOC(@"Ok", @"Ok Message");
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:okButtonTitle, nil];
-    alertView.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
-    UITextField *nameSurnameTextField = [alertView textFieldAtIndex:0];
-    nameSurnameTextField.secureTextEntry = NO;
-    nameSurnameTextField.placeholder = LOC(@"Name surname", @"Name surname");
-    nameSurnameTextField.keyboardType = UIKeyboardTypeAlphabet;
-    nameSurnameTextField.text = self.sendVoiceMessageModel.peppermintMessageSender.nameSurname;
-    UITextField *emailTextField = [alertView textFieldAtIndex:1];
-    emailTextField.secureTextEntry = NO;
-    emailTextField.placeholder = LOC(@"Email", @"Email");
-    emailTextField.keyboardType = UIKeyboardTypeEmailAddress;
-    emailTextField.text = self.sendVoiceMessageModel.peppermintMessageSender.email;
-    [alertView show];
-}*/
-
--(void) showAlertForRecordIsCut {
-    NSString *title = LOC(@"Information", @"Information");
-    NSString *message = LOC(@"Recording is cut", @"Recording is cut, how to continue question?");
-    NSString *cancel = LOC(@"Cancel", @"Cancel");
-    NSString *send = LOC(@"Send", @"Send");
-    [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancel otherButtonTitles:send, nil] show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
-    if([alertView.message isEqualToString: LOC(@"Mic Access rights explanation", @"Directives to give access rights")]) {
-        switch (buttonIndex) {
-            case ALERT_BUTTON_INDEX_CANCEL:
-                [self dissmissWithExplode];
-                break;
-            case ALERT_BUTTON_INDEX_OTHER_1:
-                [self redirectToSettingsPageForPermission];
-                break;
-            default:
-                break;
-        }
-    }
-    else if ([alertView.message isEqualToString:LOC(@"Recording is cut", @"Recording is cut, how to continue question?")]) {
-        [RecordingModel setPreviousFileLength:0];
-        switch (buttonIndex) {
-            case ALERT_BUTTON_INDEX_CANCEL:
-                [self dissmissWithFadeOut];
-                //__clear backup files
-                break;
-            case ALERT_BUTTON_INDEX_OTHER_1:
-                [self.recordingModel record];
-                fastRecordingViewStatus = FastRecordingViewStatusPresented;
-                [self finishRecordingWithGestureIsValid:YES];
-                break;
-            default:
-                break;
-        }
-    }
-    else if ([alertView.message isEqualToString:LOC(@"Time is up", @"Max time reached information message")]) {
-        switch (buttonIndex) {
-            case ALERT_BUTTON_INDEX_CANCEL:
-                [self dissmissWithExplode];
-                break;
-            case ALERT_BUTTON_INDEX_OTHER_1:
-                [self dissmissWithFadeOut];
-                [self performOperationsToSend];
-                break;
-            default:
-                break;
-        }
-    }
-    /* //This option is removed
-    else if ([alertView.message isEqualToString:LOC(@"Account details message", @"Account details message")]) {
-        UITextField *nameSurnameTextField = [alertView textFieldAtIndex:0];
-        UITextField *emailTextField = [alertView textFieldAtIndex:1];
-        PeppermintMessageSender *peppermintMessageSender = self.sendVoiceMessageModel.peppermintMessageSender;
-        switch (buttonIndex) {
-            case ALERT_BUTTON_INDEX_OTHER_1:
-                peppermintMessageSender.nameSurname = nameSurnameTextField.text;
-                peppermintMessageSender.email = emailTextField.text;
-                
-                if(!peppermintMessageSender.isValid) {
-                    [self showAlertToCompleteLoginInformation];
-                } else {
-                    [peppermintMessageSender save];
-                    [self dissmissWithFadeOut];
-                    [self performOperationsToSend];
-                }
-                break;
-            default:
-                [self dissmissWithFadeOut];
-                break;
-        }
-    }
-    */
-    else {
-        NSLog(@"Unhandled alertview Message: %@", alertView.message);
-    }
-}
-
-#pragma mark - Record Actions
-
--(void) beginRecording {
-    [self.recordingModel stop];
-    [self.recordingModel record];
-}
-
-#pragma mark - Settings Page
-
--(void) redirectToSettingsPageForPermission {
-    if(UIApplicationOpenSettingsURLString != nil) {
-        NSURL *appSettingsUrl = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-        [[UIApplication sharedApplication] openURL:appSettingsUrl];
-    } else {
-        NSString *title = LOC(@"Information", @"Title Message");
-        NSString *message = LOC(@"Settings URL is not supported", @"Information Message");
-        NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
-        [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
-    }
-}
-
-#pragma mark - App Interruption Actions
 
 SUBSCRIBE(ApplicationWillResignActive) {
-    fastRecordingViewStatus = FastRecordingViewStatusResignActive;
-    [self.recordingModel backUpRecording];
+    [super onApplicationWillResignActive:event];
 }
 
 SUBSCRIBE(ApplicationDidBecomeActive) {
-    [self handleAppIsActiveAgain];
-}
-
--(void) handleAppIsActiveAgain {
-    if(fastRecordingViewStatus == FastRecordingViewStatusResignActive) {
-        fastRecordingViewStatus = FastRecordingViewStatusRecoverFromBackUp;
-        CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
-        if( previousFileLength > MIN_VOICE_MESSAGE_LENGTH) {
-            if(!self.sendVoiceMessageModel) {
-                NSError *error = [NSError errorWithDomain:@"sendVoiceMessageModel was released. This message can not be sent! :(" code:-1 userInfo:nil];
-                [self.delegate operationFailure:error];
-            } else {
-                self.sendVoiceMessageModel.delegate = self;
-                if(!self.recordingModel) {
-                    self.recordingModel = [RecordingModel new];
-                    self.recordingModel.delegate = self;
-                } else {
-                    self.recordingModel.delegate = self;
-                    [self showAlertForRecordIsCut];
-                }
-            }
-        } else {
-            [RecordingModel setPreviousFileLength:0];
-            [self dissmissWithFadeOut];
-        }
-    }
+    [super onApplicationDidBecomeActive:event];
 }
 
 @end
