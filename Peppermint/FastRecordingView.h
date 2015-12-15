@@ -24,8 +24,4 @@
 @property (weak, nonatomic) IBOutlet UILabel *swipeInAnyDirectionLabel;
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 
-SUBSCRIBE(MessageSendingStatusIsUpdated);
-SUBSCRIBE(ApplicationWillResignActive);
-SUBSCRIBE(ApplicationDidBecomeActive);
-
 @end

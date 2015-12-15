@@ -47,7 +47,7 @@ typedef enum : NSUInteger {
 
 #pragma mark - Record Methods
 
--(BOOL) presentWithAnimation {    
+-(BOOL) presentWithAnimationInRect:(CGRect)rect onPoint:(CGPoint) point {
     if(recordingViewStatus == RecordingViewStatusInit) {
         recordingViewStatus = RecordingViewStatusPresented;
         assert(self.sendVoiceMessageModel != nil);

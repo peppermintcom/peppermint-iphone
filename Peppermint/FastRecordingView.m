@@ -8,7 +8,6 @@
 
 #import "FastRecordingView.h"
 #import "ExplodingView.h"
-#import "SendVoiceMessageMandrillModel.h"
 
 @implementation FastRecordingView
 
@@ -60,8 +59,8 @@
 
 #pragma mark - Record Methods
 
--(BOOL) presentWithAnimation {
-    BOOL result = [super presentWithAnimation];
+-(BOOL) presentWithAnimationInRect:(CGRect)rect onPoint:(CGPoint) point {
+    BOOL result = [super presentWithAnimationInRect:(CGRect)rect onPoint:(CGPoint) point];
     if(result) {
         self.counterLabel.text = @"";
         [self show];
@@ -99,8 +98,7 @@
     }];
 }
 
--(void) dissmissWithExplode {
-    
+-(void) dissmissWithExplode {    
     ExplodingView *explodingView = [ExplodingView createInstanceFromView:self.progressContainerView];
     [self.superview addSubview:explodingView];
     [self.superview bringSubviewToFront:explodingView];

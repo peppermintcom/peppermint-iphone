@@ -112,6 +112,8 @@
 		B1C83A1B1BDEB0FC00EB14C2 /* LoginTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1C83A1A1BDEB0FC00EB14C2 /* LoginTextFieldTableViewCell.xib */; };
 		B1C978771C02EB6A00F402C2 /* GoogleContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C978761C02EB6A00F402C2 /* GoogleContactsModel.m */; };
 		B1D2A6D71C200706002BD6DF /* RecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D2A6D61C200706002BD6DF /* RecordingView.m */; };
+		B1D2A6DB1C2037FB002BD6DF /* FoggyRecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D2A6DA1C2037FB002BD6DF /* FoggyRecordingView.m */; };
+		B1D2A6DD1C20380D002BD6DF /* FoggyRecordingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1D2A6DC1C20380D002BD6DF /* FoggyRecordingView.xib */; };
 		B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40E41BB7D58C00042E4B /* RecordingModel.m */; };
 		B1EF40EB1BB7E78C00042E4B /* SendVoiceMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40EA1BB7E78C00042E4B /* SendVoiceMessageModel.m */; };
 		B1EF40EE1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40ED1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.m */; };
@@ -350,6 +352,9 @@
 		B1C978761C02EB6A00F402C2 /* GoogleContactsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleContactsModel.m; sourceTree = "<group>"; };
 		B1D2A6D51C200706002BD6DF /* RecordingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RecordingView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B1D2A6D61C200706002BD6DF /* RecordingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RecordingView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B1D2A6D91C2037FB002BD6DF /* FoggyRecordingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoggyRecordingView.h; sourceTree = "<group>"; };
+		B1D2A6DA1C2037FB002BD6DF /* FoggyRecordingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoggyRecordingView.m; sourceTree = "<group>"; };
+		B1D2A6DC1C20380D002BD6DF /* FoggyRecordingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FoggyRecordingView.xib; sourceTree = "<group>"; };
 		B1EF40E31BB7D58C00042E4B /* RecordingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RecordingModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B1EF40E41BB7D58C00042E4B /* RecordingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RecordingModel.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B1EF40E91BB7E78C00042E4B /* SendVoiceMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SendVoiceMessageModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -912,8 +917,19 @@
 				B1D2A6D51C200706002BD6DF /* RecordingView.h */,
 				B1D2A6D61C200706002BD6DF /* RecordingView.m */,
 				B12C03B81BCFFBDC0085A55A /* FastRecordingView */,
+				B1D2A6D81C203751002BD6DF /* FoggyRecordingView */,
 			);
 			name = RecordingView;
+			sourceTree = "<group>";
+		};
+		B1D2A6D81C203751002BD6DF /* FoggyRecordingView */ = {
+			isa = PBXGroup;
+			children = (
+				B1D2A6D91C2037FB002BD6DF /* FoggyRecordingView.h */,
+				B1D2A6DA1C2037FB002BD6DF /* FoggyRecordingView.m */,
+				B1D2A6DC1C20380D002BD6DF /* FoggyRecordingView.xib */,
+			);
+			name = FoggyRecordingView;
 			sourceTree = "<group>";
 		};
 		B1EF40E11BB7CE5600042E4B /* Controller */ = {
@@ -1170,6 +1186,7 @@
 				B15B15B21BDBBAB200C0C171 /* Login.storyboard in Resources */,
 				B1BB2A531BE6AA2000A4BFB4 /* GoogleService-Info.plist in Resources */,
 				B17801781C1EFEA700BA2436 /* TutorialView.xib in Resources */,
+				B1D2A6DD1C20380D002BD6DF /* FoggyRecordingView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1291,6 +1308,7 @@
 				B13B075A1BD3686500974AC3 /* MandrillInformationResponse.m in Sources */,
 				B15B15C41BDBC8CB00C0C171 /* RecorderResponse.m in Sources */,
 				B15FDE7F1C117CCE007100EC /* GoogleContact.m in Sources */,
+				B1D2A6DB1C2037FB002BD6DF /* FoggyRecordingView.m in Sources */,
 				B17B3D641BB6AE8B009B8BC5 /* RecordingViewController.m in Sources */,
 				B15B15B81BDBC17300C0C171 /* Recorder.m in Sources */,
 				B10C392E1BF6F9520070B49F /* AccountRequest.m in Sources */,

@@ -11,6 +11,7 @@
 #import "RecentContactsModel.h"
 #import <REMenu/REMenu.h>
 #import "FastRecordingView.h"
+#import "FoggyRecordingView.h"
 #import "ReSideMenuContainerViewController.h"
 #import "TutorialView.h"
 

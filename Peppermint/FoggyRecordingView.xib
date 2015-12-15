@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="hDY-Cm-jTy" customClass="FoggyRecordingView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view opaque="NO" clipsSubviews="YES" alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MSV-Ig-ZZJ" userLabel="BackgroundView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V7s-JW-net" userLabel="ContentView">
+                    <rect key="frame" x="0.0" y="174" width="320" height="166"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="spy-Jr-n8B" userLabel="RowView">
+                            <rect key="frame" x="0.0" y="30" width="320" height="56"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Recording for Bob Adams" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6C8-Qh-nOw">
+                                    <rect key="frame" x="11" y="10" width="244" height="18"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="18" id="IZU-n9-JD1"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="oPZ-DC-iQj">
+                                    <rect key="frame" x="11" y="30" width="244" height="20"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="oPZ-DC-iQj" secondAttribute="trailing" constant="65" id="00N-mD-XEa"/>
+                                <constraint firstItem="6C8-Qh-nOw" firstAttribute="top" secondItem="spy-Jr-n8B" secondAttribute="top" constant="10" id="AgQ-Of-B8t"/>
+                                <constraint firstAttribute="trailing" secondItem="6C8-Qh-nOw" secondAttribute="trailing" constant="65" id="Vj9-YU-owR"/>
+                                <constraint firstItem="oPZ-DC-iQj" firstAttribute="leading" secondItem="spy-Jr-n8B" secondAttribute="leading" constant="11" id="Wpk-Pt-0GZ"/>
+                                <constraint firstItem="6C8-Qh-nOw" firstAttribute="leading" secondItem="spy-Jr-n8B" secondAttribute="leading" constant="11" id="ayx-mi-dfj"/>
+                                <constraint firstItem="oPZ-DC-iQj" firstAttribute="top" secondItem="6C8-Qh-nOw" secondAttribute="bottom" constant="2" id="azC-SQ-OEO"/>
+                                <constraint firstAttribute="height" constant="56" id="hNs-R7-arH"/>
+                                <constraint firstAttribute="bottom" secondItem="oPZ-DC-iQj" secondAttribute="bottom" constant="6" id="wmP-x3-Sde"/>
+                            </constraints>
+                        </view>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_mic" translatesAutoresizingMaskIntoConstraints="NO" id="OV0-La-sKD">
+                            <rect key="frame" x="217" y="21" width="73" height="73"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="73" id="IrR-8C-78m"/>
+                                <constraint firstAttribute="height" constant="73" id="MnF-TC-wF1"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X9f-Kf-C2h">
+                            <rect key="frame" x="187" y="110" width="133" height="36"/>
+                            <string key="text">_Swipe anywhere
+to cancel</string>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.90823108460000002" green="0.081871332150000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="spy-Jr-n8B" secondAttribute="trailing" id="1px-Rx-FVQ"/>
+                        <constraint firstItem="OV0-La-sKD" firstAttribute="top" secondItem="V7s-JW-net" secondAttribute="top" constant="21" id="43e-fM-sSB"/>
+                        <constraint firstAttribute="height" constant="166" id="9Vn-Uw-JaL"/>
+                        <constraint firstItem="X9f-Kf-C2h" firstAttribute="centerX" secondItem="OV0-La-sKD" secondAttribute="centerX" id="H8m-4D-cca"/>
+                        <constraint firstItem="X9f-Kf-C2h" firstAttribute="top" secondItem="OV0-La-sKD" secondAttribute="bottom" constant="16" id="J7E-Qx-p0h"/>
+                        <constraint firstAttribute="trailing" secondItem="OV0-La-sKD" secondAttribute="trailing" constant="30" id="YgZ-bC-UBw"/>
+                        <constraint firstItem="X9f-Kf-C2h" firstAttribute="trailing" secondItem="spy-Jr-n8B" secondAttribute="trailing" id="a41-Gl-7yN"/>
+                        <constraint firstItem="spy-Jr-n8B" firstAttribute="top" secondItem="V7s-JW-net" secondAttribute="top" constant="30" id="cEq-4S-2Da"/>
+                        <constraint firstItem="spy-Jr-n8B" firstAttribute="leading" secondItem="V7s-JW-net" secondAttribute="leading" id="d02-Yh-Xrg"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="MSV-Ig-ZZJ" secondAttribute="bottom" id="NVP-Tw-t2C"/>
+                <constraint firstItem="V7s-JW-net" firstAttribute="top" secondItem="hDY-Cm-jTy" secondAttribute="top" constant="174" id="cYx-20-uKP"/>
+                <constraint firstItem="MSV-Ig-ZZJ" firstAttribute="leading" secondItem="hDY-Cm-jTy" secondAttribute="leading" id="eSE-bJ-fdQ"/>
+                <constraint firstItem="V7s-JW-net" firstAttribute="leading" secondItem="hDY-Cm-jTy" secondAttribute="leading" id="etP-Kg-Hir"/>
+                <constraint firstItem="MSV-Ig-ZZJ" firstAttribute="top" secondItem="hDY-Cm-jTy" secondAttribute="top" id="pgC-Hv-drJ"/>
+                <constraint firstAttribute="trailing" secondItem="V7s-JW-net" secondAttribute="trailing" id="ptr-eM-EEc"/>
+                <constraint firstAttribute="trailing" secondItem="MSV-Ig-ZZJ" secondAttribute="trailing" id="sXQ-Qi-nMu"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <connections>
+                <outlet property="RowViewYOffset" destination="cEq-4S-2Da" id="8FX-Tr-uY3"/>
+                <outlet property="backgroundView" destination="MSV-Ig-ZZJ" id="Nzt-fV-DoU"/>
+                <outlet property="contentView" destination="V7s-JW-net" id="ibn-eU-4iG"/>
+                <outlet property="contentViewYOffset" destination="cYx-20-uKP" id="9H7-jR-gLz"/>
+                <outlet property="counterLabel" destination="oPZ-DC-iQj" id="xNa-nw-AyB"/>
+                <outlet property="informationLabel" destination="6C8-Qh-nOw" id="8f6-sd-fLe"/>
+                <outlet property="microphoneImageView" destination="OV0-La-sKD" id="htU-NR-YXZ"/>
+                <outlet property="rowView" destination="spy-Jr-n8B" id="mBk-mn-Vxw"/>
+                <outlet property="swipeInAnyDirectionLabel" destination="X9f-Kf-C2h" id="65Q-cZ-HaL"/>
+            </connections>
+            <point key="canvasLocation" x="279" y="230"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="icon_mic" width="200" height="200"/>
+    </resources>
+</document>

@@ -10,7 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "TPAACAudioConverter.h"
 
-#define PING_INTERVAL   0.02
+#define PING_INTERVAL   0.05
 
 @protocol RecordingModelDelegate <BaseModelDelegate>
 @required

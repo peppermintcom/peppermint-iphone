@@ -29,6 +29,9 @@
 #define CELL_TAG_EMAIL_CONTACTS         3
 #define CELL_TAG_SMS_CONTACTS           4
 
+#define CELL_TAG_FAST_RECORDING_VIEW    5
+#define CELL_TAG_FOGGY_RECORDING_VIEW   6
+
 #define MESSAGE_SHOW_DURATION           2
 
 #define SCREEN_HEIGHT_LIMIT             500
@@ -46,6 +49,7 @@
     BOOL isAddNewContactModalisUp;
     NSTimer *timer;
     BOOL isScreenReady;
+    NSUInteger activeRecordingView;
 }
 
 - (void)viewDidLoad {
@@ -71,6 +75,7 @@
     self.sendingIndicatorView.hidden = YES;
     self.sendingInformationLabel.text = @"";
     self.seperatorView.backgroundColor = [UIColor cellSeperatorGray];
+    activeRecordingView = CELL_TAG_FOGGY_RECORDING_VIEW;
     [self initRecordingView];
     [self initTutorialView];
     isScrolling  = NO;
@@ -122,7 +127,11 @@ SUBSCRIBE(ReplyContactIsAdded) {
 }
 
 -(void) initRecordingView {
-    self.recordingView = [FastRecordingView createInstanceWithDelegate:self];
+    if(activeRecordingView == CELL_TAG_FAST_RECORDING_VIEW) {
+        self.recordingView = [FastRecordingView createInstanceWithDelegate:self];
+    } else if(activeRecordingView == CELL_TAG_FOGGY_RECORDING_VIEW) {
+        self.recordingView = [FoggyRecordingView createInstanceWithDelegate:self];
+    }
     self.recordingView.frame = self.view.frame;
     [self.view addSubview:self.recordingView];
     [self.view bringSubviewToFront:self.recordingView];
@@ -253,6 +262,8 @@ SUBSCRIBE(ReplyContactIsAdded) {
             } else if (peppermintContact.communicationChannel == CommunicationChannelSMS) {
                 cell.rightIconImageView.image = [UIImage imageNamed:@"icon_phone"];
             }
+            
+            cell.rightIconImageView.hidden = activeRecordingView == CELL_TAG_FOGGY_RECORDING_VIEW;
         }
         preparedCell = cell;
     } else if (indexPath.section == SECTION_CELL_INFORMATION) {
@@ -418,7 +429,10 @@ SUBSCRIBE(ReplyContactIsAdded) {
         sendVoiceMessageModel.selectedPeppermintContact = selectedContact;
         self.recordingView.sendVoiceMessageModel = sendVoiceMessageModel;
         self.reSideMenuContainerViewController.panGestureEnabled = NO;
-        [self.recordingView presentWithAnimation];
+        
+        CGRect cellRect = [self.tableView rectForRowAtIndexPath:indexPath];
+        cellRect = CGRectOffset(cellRect, -self.tableView.contentOffset.x, -self.tableView.contentOffset.y);
+        [self.recordingView presentWithAnimationInRect:cellRect onPoint:location];
     }
 }
 
@@ -674,12 +688,23 @@ SUBSCRIBE(ReplyContactIsAdded) {
                                                       iconHighlighted:@"icon_phone_touch"
                                                                   cellTag:CELL_TAG_SMS_CONTACTS];
     
+    REMenuItem *fastRecordingViewMenuItem = [self createMenuItemWithTitle:@"Old Recording View"
+                                                               icon:@"icon_settings"
+                                                    iconHighlighted:@"icon_settings"
+                                                            cellTag:CELL_TAG_FAST_RECORDING_VIEW];
+    
+    REMenuItem *foggyRecordingViewMenuItem = [self createMenuItemWithTitle:@"New Recording View"
+                                                                     icon:@"icon_mic"
+                                                          iconHighlighted:@"icon_mic"
+                                                                  cellTag:CELL_TAG_FOGGY_RECORDING_VIEW];
+    
+    
     allContactsMenuItem.font    = [UIFont openSansSemiBoldFontOfSize:allContactsMenuItem.font.pointSize];
     recentContactsMenuItem.font = [UIFont openSansSemiBoldFontOfSize:recentContactsMenuItem.font.pointSize];
     emailContactsMenuItem.font    = [UIFont openSansSemiBoldFontOfSize:emailContactsMenuItem.font.pointSize];
     smsContactsMenuItem.font    = [UIFont openSansSemiBoldFontOfSize:smsContactsMenuItem.font.pointSize];
     
-    self.searchMenu = [[REMenu alloc] initWithItems:@[allContactsMenuItem, recentContactsMenuItem, emailContactsMenuItem, smsContactsMenuItem]];
+    self.searchMenu = [[REMenu alloc] initWithItems:@[allContactsMenuItem, recentContactsMenuItem, emailContactsMenuItem, smsContactsMenuItem,fastRecordingViewMenuItem, foggyRecordingViewMenuItem]];
     
     self.searchMenu.bounce = NO;
     self.searchMenu.cornerRadius = 5;
@@ -704,6 +729,14 @@ SUBSCRIBE(ReplyContactIsAdded) {
 -(void)cellSelectedWithTag:(NSUInteger) cellTag {
     [self.searchMenu close];
     [self.searchContactsTextField resignFirstResponder];
+    
+    
+    if(cellTag == CELL_TAG_FAST_RECORDING_VIEW || cellTag == CELL_TAG_FOGGY_RECORDING_VIEW) {
+        activeRecordingView = cellTag;
+        [self.tableView reloadData];
+        [self initRecordingView];
+        return;
+    }
     
     activeCellTag = cellTag;
 

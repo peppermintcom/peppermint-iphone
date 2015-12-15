@@ -49,6 +49,7 @@
 "Send" = "Send";
 "Re record" = "Re-record";
 "Swipe in any direction to cancel" = "Swipe in any direction\nto cancel";
+"Swipe anywhere to cancel" = "Swipe anywhere\nto cancel";
 "Tap to cancel" = "Tap to cancel";
 "Service is not available" = "Your device does not support this message service";
 "SMS Body Format" = "I sent you a voice message %@ ";
