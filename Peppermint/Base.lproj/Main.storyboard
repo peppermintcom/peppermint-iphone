@@ -19,7 +19,7 @@
         <!--Navigation Controller-->
         <scene sceneID="6ot-aa-euI">
             <objects>
-                <navigationController navigationBarHidden="YES" id="VGM-ZD-Cwv" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="UINavigationController" navigationBarHidden="YES" id="VGM-ZD-Cwv" sceneMemberID="viewController">
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
@@ -1067,7 +1067,7 @@ email contact or both</string>
         <!--Navigation Controller-->
         <scene sceneID="YuD-Vf-8V1">
             <objects>
-                <navigationController navigationBarHidden="YES" id="KGz-9S-dSJ" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="RootNavigationController" navigationBarHidden="YES" id="KGz-9S-dSJ" sceneMemberID="viewController">
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>

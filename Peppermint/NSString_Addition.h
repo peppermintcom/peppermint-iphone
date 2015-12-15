@@ -11,5 +11,5 @@
 @interface NSString (NSString_Addition)
 - (BOOL)isValidEmail;
 -(BOOL)isPasswordLengthValid;
--(NSString *) randomStringWithLength: (int) len;
+-(NSString *) randomStringWithLength: (NSUInteger) length;
 @end

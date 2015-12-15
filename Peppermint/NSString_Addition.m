@@ -33,13 +33,12 @@
     return filteredString.length >= MIN_PASSWORD_LENGTH;
 }
 
-
-
--(NSString *) randomStringWithLength: (int) len {
+-(NSString *) randomStringWithLength: (NSUInteger) length {
     NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    NSMutableString *randomString = [NSMutableString stringWithCapacity: len];
-    for (NSUInteger i=0; i<len; i++) {
-        [randomString appendFormat: @"%C", [letters characterAtIndex:arc4random_uniform((NSUInteger)[letters length])]];
+    NSMutableString *randomString = [NSMutableString stringWithCapacity: length];
+    for (NSUInteger i=0; i<length; i++) {
+        NSUInteger index = (NSUInteger)arc4random_uniform((int32_t)[letters length]);
+        [randomString appendFormat: @"%C", [letters characterAtIndex:index]];
     }
     return randomString;
 }

@@ -100,7 +100,7 @@
 "Please connect to the internet to upload the message" = "Please connect to the internet to upload the message";
 "Please check your login information" = "Please check your login information";
 "Login with email" = "Don't have Google or Facebook?\nLog in with email and password";
-"Your message will be sent later" = "Your message will be sent later";
+"Your message will be sent later" = "No Internet connection. Your message will be sent later";
 "Invalid email" = "Invalid email";
 "Invalid password" = "Invalid password";
 "Add Contact" = "Add Contact";

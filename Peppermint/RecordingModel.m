@@ -258,9 +258,11 @@
             [self.delegate operationFailure:error];
         } else {
             [self removeFileIfExistsAtUrl:sourceUrl];
-            completion();
+            if(completion) {
+                completion();
+            }
         }
-    } else {
+    } else if(completion) {
         completion();
     }
 }

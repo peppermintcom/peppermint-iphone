@@ -104,16 +104,10 @@
     if(error) {
         [self failureDuringRequestCreationWithError:error];
     } else {
-        
-        NSDate *sendingDate = [NSDate new];
-        
         NSURLSessionDataTask *dataTask = [manager uploadTaskWithRequest:request fromData:data progress:nil completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
             if (error) {
                 [self failureWithOperation:nil andError:error];
             } else {
-                
-                NSLog(@"File upload took %f for message...", [[NSDate new] timeIntervalSinceDate:sendingDate]);
-                
                 FileUploadCompleted *fileUploadCompleted = [FileUploadCompleted new];
                 fileUploadCompleted.sender = self;
                 fileUploadCompleted.signedUrl = signedUrl;
