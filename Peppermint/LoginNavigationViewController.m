@@ -84,6 +84,7 @@
         if([peppermintMessageSender isInMailVerificationProcess]) {
             [loginNavigationViewController loginRequireEmailVerification];
         }
+        if(completion) { completion(); }        
     }];
 }
 

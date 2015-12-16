@@ -47,8 +47,9 @@
                                 <constraint firstAttribute="bottom" secondItem="oPZ-DC-iQj" secondAttribute="bottom" constant="6" id="wmP-x3-Sde"/>
                             </constraints>
                         </view>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_mic" translatesAutoresizingMaskIntoConstraints="NO" id="OV0-La-sKD">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_mic" translatesAutoresizingMaskIntoConstraints="NO" id="OV0-La-sKD">
                             <rect key="frame" x="217" y="21" width="73" height="73"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="73" id="IrR-8C-78m"/>
                                 <constraint firstAttribute="height" constant="73" id="MnF-TC-wF1"/>

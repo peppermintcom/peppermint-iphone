@@ -48,8 +48,6 @@
     self.counterLabel.textColor = [UIColor blackColor];
     self.counterLabel.font = [UIFont openSansBoldFontOfSize:21];
     
-    self.microphoneImageView.layer.cornerRadius = 36;
-    
     self.swipeInAnyDirectionLabel.textColor = [UIColor emptyResultTableViewCellHeaderLabelTextcolorGray];
     self.swipeInAnyDirectionLabel.font = [UIFont openSansSemiBoldFontOfSize:15];
     self.swipeInAnyDirectionLabel.text = LOC(@"Swipe anywhere to cancel", @"Swipe anywhere to cancel label");
@@ -108,6 +106,7 @@
     microphoneFrame.origin.y += microphoneFrame.size.height / 2;
     microphoneFrame.size.width = microphoneFrame.size.height = 0;
     self.microphoneImageView.frame = microphoneFrame;
+    self.rowView.alpha = 0;
     
     self.alpha = 0;
     self.hidden = NO;
@@ -115,6 +114,7 @@
         self.alpha = 1;
         self.rowView.frame = originalRowViewFrame;
         self.microphoneImageView.frame = originalMicrophoneFrame;
+        self.rowView.alpha = 1;
     }];
 }
 
@@ -179,7 +179,6 @@
         frame.origin.x -= impact/2;
         frame.origin.y -= impact/2;
         self.microphoneImageView.frame = frame;
-        self.microphoneImageView.layer.cornerRadius = frame.size.height / 2;
     }
 }
 
