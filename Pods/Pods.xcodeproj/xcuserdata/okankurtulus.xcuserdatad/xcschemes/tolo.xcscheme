@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '2A8040E2581E8EC42BE16E0F'
+               BlueprintIdentifier = '3F9DE6AFBC1ECFEBCB0F5B0E'
                BlueprintName = 'tolo'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libtolo.a'>

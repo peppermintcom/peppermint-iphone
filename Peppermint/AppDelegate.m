@@ -24,6 +24,9 @@
 #import "LoginValidateEmailViewController.h"
 #import "LoginViewController.h"
 #import "JwtInformation.h"
+#import "Flurry.h"
+#import "GAI.h"
+#import "AnalyticsModel.h"
 
 @import CoreSpotlight;
 @import MobileCoreServices;
@@ -75,9 +78,26 @@
 
 -(void) initFabric {
 #ifdef DEBUG
+    [Fabric with:@[[Crashlytics class]]];
 #else
     [Fabric with:@[[Crashlytics class]]];
 #endif
+}
+
+-(void) initFlurry {
+    [Flurry startSession:FLURRY_API_KEY];
+}
+
+-(void) initGoogleAnalytics {
+    [GAI sharedInstance].trackUncaughtExceptions = YES;
+#ifdef DEBUG
+    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
+#else
+    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelNone];
+    [GAI sharedInstance].trackUncaughtExceptions = YES;
+#endif
+    [GAI sharedInstance].dispatchInterval = 20;
+    [[GAI sharedInstance] trackerWithTrackingId:GOOGLE_ANALYTICS_KEY];
 }
 
 -(void) logServiceCalls {
@@ -116,6 +136,8 @@
     [self initMutableArray];
     [self initNavigationViewController];
     [self initFabric];
+    [self initFlurry];
+    [self initGoogleAnalytics];
     [self initInitialViewController];
     [self logServiceCalls];
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
@@ -407,15 +429,6 @@ SUBSCRIBE(DetachSuccess) {
 
 #pragma mark - Handle Error
 
-+(void) logErrorToAnswers:(NSError*) error {
-    NSMutableDictionary *logDictionary = [NSMutableDictionary dictionaryWithDictionary:error.userInfo];
-    [logDictionary setValue:[NSNumber numberWithInteger:error.code] forKey:@"Code"];
-    [logDictionary setValue:error.domain forKey:@"Domain"];
-    [logDictionary setValue:error.localizedDescription forKey:@"LocalizedDescription"];
-    [logDictionary setValue:error.description forKey:@"Description"];
-    [Answers logCustomEventWithName:@"NSError handled with alert" customAttributes:logDictionary];
-}
-
 +(NSString*) messageForError:(NSError*) error {
     NSString *message = error.localizedDescription;
     if([error.domain isEqualToString:NSURLErrorDomain]) {
@@ -455,7 +468,7 @@ SUBSCRIBE(DetachSuccess) {
 }
 
 +(void) handleError:(NSError*) error {
-    [self logErrorToAnswers:error];
+    [AnalyticsModel logError:error];
     NSString *title = LOC(@"An error occured", @"Error Title Message");
     NSString *message = [self messageForError:error];
     NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");

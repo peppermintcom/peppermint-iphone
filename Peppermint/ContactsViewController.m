@@ -77,7 +77,7 @@
     self.seperatorView.backgroundColor = [UIColor cellSeperatorGray];
     activeRecordingView = CELL_TAG_FOGGY_RECORDING_VIEW;
     [self initRecordingView];
-    [self initTutorialView];
+    self.tutorialView = nil;
     isScrolling  = NO;
     [self initHoldToRecordInfoView];
     isNewRecordAvailable = YES;
@@ -108,6 +108,9 @@ SUBSCRIBE(ReplyContactIsAdded) {
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if([self checkIfuserIsLoggedIn]) {
+        if(!self.tutorialView) {
+            [self initTutorialView];
+        }
         [self registerKeyboardActions];
         if(isAddNewContactModalisUp) {
             isAddNewContactModalisUp = !isAddNewContactModalisUp;
@@ -729,7 +732,6 @@ SUBSCRIBE(ReplyContactIsAdded) {
 -(void)cellSelectedWithTag:(NSUInteger) cellTag {
     [self.searchMenu close];
     [self.searchContactsTextField resignFirstResponder];
-    
     
     if(cellTag == CELL_TAG_FAST_RECORDING_VIEW || cellTag == CELL_TAG_FOGGY_RECORDING_VIEW) {
         activeRecordingView = cellTag;

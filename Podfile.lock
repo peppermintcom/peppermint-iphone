@@ -46,6 +46,7 @@ PODS:
     - FBSDKCoreKit/arc
   - FBSDKLoginKit (4.7.1):
     - FBSDKCoreKit
+  - Flurry-iOS-SDK/FlurrySDK (7.3.0)
   - GData (1.12.0):
     - GData/Core (= 1.12.0)
     - GData/XMLNode (= 1.12.0)
@@ -62,6 +63,7 @@ PODS:
   - Google/SignIn (1.1.1):
     - Google/Core
     - GoogleSignIn (~> 2.0)
+  - GoogleAnalytics (3.14.0)
   - GoogleAppUtilities (1.0.0):
     - GoogleSymbolUtilities (~> 1.0)
   - GoogleAuthUtilities (1.0.1):
@@ -100,8 +102,10 @@ DEPENDENCIES:
   - Fabric (~> 1.5.1)
   - FBSDKCoreKit
   - FBSDKLoginKit
+  - Flurry-iOS-SDK/FlurrySDK
   - GData (from `GData.podspec.json`)
   - Google/SignIn
+  - GoogleAnalytics
   - JPAttributedString
   - JSONModel
   - MBProgressHUD (~> 0.9.1)
@@ -130,8 +134,10 @@ SPEC CHECKSUMS:
   Fabric: 190bf1a6eb65f7500de1347d027d2e59a7e53db1
   FBSDKCoreKit: 9141b70960a37930850370495fe565f4a27ac141
   FBSDKLoginKit: c11ed3c2833472db3bb4a4aecf27af4a6f69b173
+  Flurry-iOS-SDK: 054befae0fa0244fb000985bfe757d70f87a9f60
   GData: 1bc4ad973458d611ff0c9c56815c172f2c97d495
   Google: 529a5d8719dff90ea2e7cba5f45302cd359b5456
+  GoogleAnalytics: 9be1afdb8deeac4bb5f13ca7f7d3b9db2a1f43dc
   GoogleAppUtilities: c01c6a5671e9da8b9d690fdaec5959d6c2aac699
   GoogleAuthUtilities: 049ffd3a297cdffd271451b82fd4e75304f15ef3
   GoogleInterchangeUtilities: fe088bea8c936218e52324a004d279c4491b9d65

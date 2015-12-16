@@ -11,12 +11,12 @@
 #import "AccountViewController.h"
 #import "ContactsViewController.h"
 
-#define NUMBER_OF_OPTIONS   4
+#define INDEX_TUTORIAL      -1
+
+#define NUMBER_OF_OPTIONS   3
 #define INDEX_CONTACTS      0
 #define INDEX_FEEDBACK      1
-#define INDEX_TUTORIAL      2
-#define INDEX_ACCOUNT       3
-#define INDEX_SETTINGS      4
+#define INDEX_ACCOUNT       2
 
 @interface SlideMenuViewController ()
 
@@ -54,10 +54,6 @@
             cell.titleLabel.text = LOC(@"Contacts",@"Contacts Label");
             cell.iconImageView.image = [UIImage imageNamed:@"icon_all"];
             break;
-        case INDEX_SETTINGS:
-            cell.titleLabel.text = LOC(@"Settings",@"Settings Label");
-            cell.iconImageView.image = [UIImage imageNamed:@"icon_settings"];
-            break;
         case INDEX_TUTORIAL:
             cell.titleLabel.text = LOC(@"Tutorial",@"Tutorial Label");
             cell.iconImageView.image = [UIImage imageNamed:@"icon_tutorial"];
@@ -87,15 +83,10 @@
         [navigationController popToRootViewControllerAnimated:YES];
     } else if (indexPath.row == INDEX_FEEDBACK) {
         [self.reSideMenuContainerViewController sendFeedback];
-    } else if (indexPath.row == INDEX_SETTINGS) {
-        UINavigationController *navigationController = (UINavigationController*)self.reSideMenuContainerViewController.contentViewController;
-        [navigationController popToRootViewControllerAnimated:YES];
-    } else if (indexPath.row == INDEX_TUTORIAL) {        
+    } else if (indexPath.row == INDEX_TUTORIAL) {
         UINavigationController *nvc = (UINavigationController*)self.reSideMenuContainerViewController.contentViewController;
         ContactsViewController *cvc = [nvc.viewControllers firstObject];
         [cvc.tutorialView show];
-        
-        //[self.reSideMenuContainerViewController.navigationController popToRootViewControllerAnimated:YES];
     } else if (indexPath.row == INDEX_ACCOUNT) {        
         UINavigationController *navigationController = (UINavigationController*)self.reSideMenuContainerViewController.contentViewController;
         

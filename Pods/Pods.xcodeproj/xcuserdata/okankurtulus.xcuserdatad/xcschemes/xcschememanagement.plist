@@ -44,6 +44,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Flurry-iOS-SDK.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>GData.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -117,22 +122,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>098E91B9A5CCA1042329C5366DB530C3</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>09FA060F1A0492FB25232F489AC4E573</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>0FFCE39476A472F3FDAC3FA6ED591A43</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>196D84C3D54E1475757AE5B7F1451FB5</key>
+		<key>1EFD6595870F4D4C3B7C69AD95AE6ABC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -162,17 +157,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>686546CBBBD95BB9320AD4EDE5AB5A6B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>69BF9C954B82732CC113C2769C9CC76E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6D15F59418BF48DB25B1107540FCDA8B</key>
+		<key>6B7B0FC531C22C8D4E1F695015426BFB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>802635B7C6A836D278D41025C6FCC337</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -182,17 +177,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>89AD00BD1A8EED89C1068531C9ED4B05</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>8F458B41382B039582AA989692741702</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>8F96CBAE82C9E121730BC882C7408843</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -212,17 +197,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B1FE56C8E7484FDF6B5C8103BFD4BA8C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>CCBAA90C7355DCFA64AF34594666598F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E18D8536DCDE7740617A4A6BF18BB3B6</key>
+		<key>D079C0B8D193CBDF60F39822F384E43F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D38CF47BC63574A9A499E56F24CDF6F5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -232,12 +217,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FE2F1D7B9D9FCEA148517E4657B243F4</key>
+		<key>EDED09DAFDE582AB27179D5C7A2A46AA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FE8B1E1CEE73DF04F1DB3D9B81C170A2</key>
+		<key>FE2F1D7B9D9FCEA148517E4657B243F4</key>
 		<dict>
 			<key>primary</key>
 			<true/>

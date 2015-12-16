@@ -21,6 +21,8 @@ pod 'FBSDKLoginKit'
 pod 'Google/SignIn'
 pod 'GData', :podspec => 'GData.podspec.json'
 pod 'Base64'
+pod 'Flurry-iOS-SDK/FlurrySDK'
+pod 'GoogleAnalytics'
 end
 
 target 'PeppermintTests' do

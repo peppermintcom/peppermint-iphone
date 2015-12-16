@@ -32,7 +32,7 @@
         if(error) {
             [self failureDuringJSONCastWithError:error];
         }
-        NSLog(@"Got Information: %@", informationResponse.description);
+        informationResponse = nil;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self failureWithOperation:operation andError:error];
     }];

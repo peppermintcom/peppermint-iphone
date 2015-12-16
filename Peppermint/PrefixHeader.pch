@@ -130,6 +130,9 @@ sharedObject;\
 #define SCHEME_GOOGLE       @"com.googleusercontent.apps.621894935907-jtqr6lt0uf74rlc5rgobkefv8dl16ka6"
 #define SCHEME_PEPPERMINT   @"peppermint"
 
+#define FLURRY_API_KEY          @"VCRR3YXVKNZJ4KC2QFXT"
+#define GOOGLE_ANALYTICS_KEY    @"UA-71478225-1"
+
 #define DOMAIN_PEPPERMINT               @"peppermint.com"
 
 #define HOST_FASTREPLY                  @"reply"

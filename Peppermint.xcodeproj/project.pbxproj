@@ -114,6 +114,7 @@
 		B1D2A6D71C200706002BD6DF /* RecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D2A6D61C200706002BD6DF /* RecordingView.m */; };
 		B1D2A6DB1C2037FB002BD6DF /* FoggyRecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D2A6DA1C2037FB002BD6DF /* FoggyRecordingView.m */; };
 		B1D2A6DD1C20380D002BD6DF /* FoggyRecordingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1D2A6DC1C20380D002BD6DF /* FoggyRecordingView.xib */; };
+		B1EF03751C2184F80054FA02 /* AnalyticsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF03741C2184F80054FA02 /* AnalyticsModel.m */; };
 		B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40E41BB7D58C00042E4B /* RecordingModel.m */; };
 		B1EF40EB1BB7E78C00042E4B /* SendVoiceMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40EA1BB7E78C00042E4B /* SendVoiceMessageModel.m */; };
 		B1EF40EE1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40ED1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.m */; };
@@ -355,6 +356,8 @@
 		B1D2A6D91C2037FB002BD6DF /* FoggyRecordingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoggyRecordingView.h; sourceTree = "<group>"; };
 		B1D2A6DA1C2037FB002BD6DF /* FoggyRecordingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoggyRecordingView.m; sourceTree = "<group>"; };
 		B1D2A6DC1C20380D002BD6DF /* FoggyRecordingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FoggyRecordingView.xib; sourceTree = "<group>"; };
+		B1EF03731C2184F80054FA02 /* AnalyticsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsModel.h; sourceTree = "<group>"; };
+		B1EF03741C2184F80054FA02 /* AnalyticsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsModel.m; sourceTree = "<group>"; };
 		B1EF40E31BB7D58C00042E4B /* RecordingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RecordingModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B1EF40E41BB7D58C00042E4B /* RecordingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RecordingModel.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B1EF40E91BB7E78C00042E4B /* SendVoiceMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SendVoiceMessageModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -628,6 +631,8 @@
 				D074A66C1C07174D0017EAC3 /* CountryFormatModel.m */,
 				B15FDE821C117CFE007100EC /* CustomContactModel.h */,
 				B15FDE831C117CFE007100EC /* CustomContactModel.m */,
+				B1EF03731C2184F80054FA02 /* AnalyticsModel.h */,
+				B1EF03741C2184F80054FA02 /* AnalyticsModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1370,6 +1375,7 @@
 				B10C39371BF718960070B49F /* AccountModel.m in Sources */,
 				B1C4A7731BF73E3B00272AD7 /* LoginRequest.m in Sources */,
 				B1C978771C02EB6A00F402C2 /* GoogleContactsModel.m in Sources */,
+				B1EF03751C2184F80054FA02 /* AnalyticsModel.m in Sources */,
 				D0BA6E8A1C070A1C00B8D85B /* AddContactViewController.m in Sources */,
 				B1EF40F21BB8579D00042E4B /* M13ProgressView.m in Sources */,
 				B1BB601D1BDE16D400C1140B /* UIStoryboard_Addition.m in Sources */,
