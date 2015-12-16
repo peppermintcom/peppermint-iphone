@@ -102,6 +102,15 @@
     [ConnectionModel sharedInstance];
 }
 
+-(void) checkForFirstRun {
+    BOOL isFirstRun = ![[NSUserDefaults standardUserDefaults] objectForKey:DEFAULTS_KEY_IS_FIRST_RUN];
+    if(isFirstRun) {
+        [[PeppermintMessageSender sharedInstance] clearSender];
+        [[NSUserDefaults standardUserDefaults] setValue:DEFAULTS_KEY_IS_FIRST_RUN forKey:DEFAULTS_KEY_IS_FIRST_RUN];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self initMutableArray];
@@ -112,6 +121,7 @@
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
     [self initGoogleApp];
     [self initConnectionStatusChangeListening];
+    [self checkForFirstRun];
     REGISTER();
     return YES;
 }

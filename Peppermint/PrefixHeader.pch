@@ -73,6 +73,7 @@ sharedObject;\
 #define DEFAULTS_KEY_ISTUTORIALSHOWED           @"isTutorialShowed"
 #define DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH  @"previousRecordingLength"
 #define DEFAULTS_KEY_TUTORIAL_TOOLTIP_IS_SHOWED @"isTutorialTooltipShowed"
+#define DEFAULTS_KEY_IS_FIRST_RUN               @"isFirstRun"
 
 #pragma mark - OpenSans Fonts
 #import <OpenSans/UIFont+OpenSans.h>
