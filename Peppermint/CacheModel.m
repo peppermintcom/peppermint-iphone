@@ -113,7 +113,7 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
 }
 
 -(void) cacheOngoingMessages {
-    NSArray *ongoingMessagesArray = [AppDelegate Instance].mutableArray;
+    NSArray *ongoingMessagesArray = [NSArray arrayWithArray:[AppDelegate Instance].mutableArray];
     if(ongoingMessagesArray.count > 0 ) {
         NSLog(@"Terminating the app& Still it exists %lu items\nCaching the ongoing messages.", (unsigned long)ongoingMessagesArray.count);
         

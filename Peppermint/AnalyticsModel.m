@@ -31,15 +31,18 @@
 
 +(void) logErrorToGoogleAnalytics:(NSError*) error {
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    NSString *action = [NSString stringWithFormat:@"%ld.%@ - %@ (%@)", (long)error.code, error.domain, error.localizedDescription, error.description];
-    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"NSError Occured"
+    NSString *action = [NSString stringWithFormat:@"%ld| %@ (%@)",
+                        (long)error.code,
+                        error.localizedDescription,
+                        error.description];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:error.domain
                                                           action:action
                                                            label:error.userInfo.description
                                                            value:@1] build]];
 }
 
 +(void) logErrorToFlurry:(NSError*) error {
-    [Flurry logError:@"NSError Occured" message:error.localizedDescription error:error];
+    [Flurry logError:error.localizedDescription message:@"NSError Occured" error:error];
     
 }
 

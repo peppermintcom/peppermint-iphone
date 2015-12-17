@@ -649,6 +649,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
     if(!self.searchMenu.isOpen) {
         [self hideHoldToRecordInfoView];
         self.searchMenuView.hidden = NO;
+        [self.searchContactsTextField resignFirstResponder];
         [self.searchMenu showInView:self.searchMenuView];
     } else {        
         [self.searchMenu close];
