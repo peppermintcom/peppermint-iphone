@@ -63,7 +63,7 @@
     return [NSString stringWithFormat:@"%@ %@",BEARER, jwt];
 }
 
--(void) retrieveSignedURLForContentType:(NSString*) contentType jwt:(NSString*) jwt data:(NSData*)data {
+-(void) retrieveSignedURLForContentType:(NSString*) contentType jwt:(NSString*) jwt data:(NSData*)data senderName:(NSString*)senderName senderEmail:(NSString*)senderEmail {
     NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_UPLOADS];
     NSString *tokenText = [self toketTextForJwt:jwt];
     
@@ -74,6 +74,8 @@
     
     UploadsRequest *uploadsRequest = [UploadsRequest new];
     uploadsRequest.content_type = contentType;
+    uploadsRequest.sender_name = senderName;
+    uploadsRequest.sender_email = senderEmail;
     NSDictionary *parameterDictionary = [uploadsRequest toDictionary];
     
     [requestOperationManager POST:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {

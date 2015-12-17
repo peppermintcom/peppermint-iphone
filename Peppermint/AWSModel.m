@@ -9,6 +9,7 @@
 #import "AWSModel.h"
 #import "A0SimpleKeychain.h"
 #import "JwtInformation.h"
+#import "PeppermintMessageSender.h"
 
 @implementation AWSModel {
     NSString *jwt;
@@ -74,7 +75,8 @@ SUBSCRIBE(RecorderSubmitSuccessful) {
     } else {
         _data = data;
         _contentType = contentType;
-        [awsService retrieveSignedURLForContentType:_contentType jwt:jwt data:data];
+        PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+        [awsService retrieveSignedURLForContentType:_contentType jwt:jwt data:data senderName:peppermintMessageSender.nameSurname senderEmail:peppermintMessageSender.email];
     }
 }
 
