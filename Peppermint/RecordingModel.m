@@ -178,6 +178,7 @@
         CGFloat average = [recorder averagePowerForChannel:0];
         CGFloat peak    = [recorder peakPowerForChannel:0];
         [self.delegate meteringUpdatedWithAverage:average andPeak:peak];
+        recorder.meteringEnabled = YES;
     }
 }
 

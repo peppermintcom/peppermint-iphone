@@ -9,11 +9,12 @@
 #import "FoggyRecordingView.h"
 #import "ExplodingView.h"
 
-#define IMPACT_LIMIT        16
+#define IMPACT_MAX_LIMIT        16
+#define IMPACT_MIN_LIMIT        0
 
 @implementation FoggyRecordingView {
-    CGRect baseMicrophoneFrame;
-    int baseVoiceLevel;
+    CGRect originalMicrophoneFrame;
+    CGFloat previousImpact;
 }
 
 +(FoggyRecordingView*) createInstanceWithDelegate:(UIViewController<RecordingViewDelegate>*) delegate {
@@ -51,11 +52,9 @@
     self.swipeInAnyDirectionLabel.textColor = [UIColor emptyResultTableViewCellHeaderLabelTextcolorGray];
     self.swipeInAnyDirectionLabel.font = [UIFont openSansSemiBoldFontOfSize:15];
     self.swipeInAnyDirectionLabel.text = LOC(@"Swipe anywhere to cancel", @"Swipe anywhere to cancel label");
-    
-    baseVoiceLevel = 0;
 }
 
-#pragma mark - FastRecordingView User Interaction
+#pragma mark - FoggyRecordingView User Interaction
 
 -(void) setGestureRecognisers {
     self.gestureRecognizers = [NSArray arrayWithObjects:
@@ -78,7 +77,6 @@
     BOOL result = [super presentWithAnimationInRect:rect onPoint:point];
     if(result) {
         self.contentViewYOffset.constant = rect.origin.y + self.RowViewYOffset.constant + 2;
-        baseVoiceLevel = 0;
         self.counterLabel.text = @"";
         self.informationLabel.text = [NSString stringWithFormat:
                                           LOC(@"Recording for contact format", @"Title Text Format"),
@@ -90,12 +88,21 @@
     return result;
 }
 
+
+-(BOOL) finishRecordingWithGestureIsValid:(BOOL) isGestureValid {
+    BOOL isRecordingShort = self.totalSeconds <= MIN_VOICE_MESSAGE_LENGTH;
+    if(isRecordingShort) {
+        self.microphoneImageView.frame = originalMicrophoneFrame;
+    }
+    return [super finishRecordingWithGestureIsValid:isGestureValid];
+}
+
 #pragma mark - Show
 
 -(void) show {
     self.microphoneImageView.hidden = NO;
     CGRect originalRowViewFrame = self.rowView.frame;
-    CGRect originalMicrophoneFrame = self.microphoneImageView.frame;
+    originalMicrophoneFrame = self.microphoneImageView.frame;
     
     CGRect rowViewFrame = self.rowView.frame;
     rowViewFrame.origin.x = rowViewFrame.size.width * -1;
@@ -131,6 +138,7 @@
     } completion:^(BOOL completed) {
         self.hidden = YES;
         self.rowView.frame = originalRowViewFrame;
+        self.microphoneImageView.frame = originalMicrophoneFrame;
         self.alpha = 1;
         [self timerUpdated:0];
         [self recordingViewIsHidden];
@@ -147,6 +155,7 @@
             self.alpha = 0;
         } completion:^(BOOL completed) {
             self.hidden = YES;
+            self.microphoneImageView.frame = originalMicrophoneFrame;
             self.alpha = 1;
             [self timerUpdated:0];
             [self recordingViewIsHidden];
@@ -164,21 +173,32 @@
 }
 
 -(void) meteringUpdatedWithAverage:(CGFloat)average andPeak:(CGFloat)peak {
-    if(baseVoiceLevel == 0 && average > -100) {
-        baseVoiceLevel = -average;
-        baseMicrophoneFrame = self.microphoneImageView.frame;
-    } else if (baseVoiceLevel > 1) {        
-        CGFloat impact = (int)(baseVoiceLevel + average);
-        impact = (impact > IMPACT_LIMIT) ? IMPACT_LIMIT : impact;
-        CGRect frame =  CGRectMake(baseMicrophoneFrame.origin.x,
-                                   baseMicrophoneFrame.origin.y,
-                                   baseMicrophoneFrame.size.width,
-                                   baseMicrophoneFrame.size.height);
+    if(self.totalSeconds < 0.1) {
+        originalMicrophoneFrame = self.microphoneImageView.frame;
+        previousImpact = 0;
+    } else {
+        int referenceLevel = 5;
+        int range = 160;
+        int offset = 30;
+        CGFloat impact = 20 * log10(referenceLevel * powf(10, (average/20)) * range) + offset;
+        impact = impact * 16/80;
+        
+        impact = (impact > IMPACT_MAX_LIMIT) ? IMPACT_MAX_LIMIT : impact;
+        impact = (impact < IMPACT_MIN_LIMIT) ? IMPACT_MIN_LIMIT : impact;
+        CGRect frame =  CGRectMake(originalMicrophoneFrame.origin.x,
+                                   originalMicrophoneFrame.origin.y,
+                                   originalMicrophoneFrame.size.width,
+                                   originalMicrophoneFrame.size.height);
         frame.size.height += impact;
         frame.size.width  += impact;
         frame.origin.x -= impact/2;
         frame.origin.y -= impact/2;
-        self.microphoneImageView.frame = frame;
+        
+        previousImpact = (previousImpact == 0) ? impact : previousImpact;
+        if(previousImpact ==0 || (impact-previousImpact)*(impact-previousImpact) > 1) {
+            self.microphoneImageView.frame = frame;
+            previousImpact = impact;
+        }
     }
 }
 
