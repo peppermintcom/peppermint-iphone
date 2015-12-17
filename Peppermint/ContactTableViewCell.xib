@@ -83,15 +83,15 @@
                 <gestureRecognizers/>
                 <constraints>
                     <constraint firstItem="9h8-TZ-qu8" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" id="2Fu-b4-URx"/>
-                    <constraint firstItem="uAi-pa-EQU" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" constant="24" id="5Rn-4f-bCw"/>
                     <constraint firstItem="uAi-pa-EQU" firstAttribute="leading" secondItem="1G5-fy-gLb" secondAttribute="trailing" constant="8" id="5ej-SP-vXh"/>
                     <constraint firstAttribute="trailingMargin" secondItem="c6S-OH-FxE" secondAttribute="trailing" constant="21" id="8vG-SK-hk7"/>
+                    <constraint firstItem="uAi-pa-EQU" firstAttribute="top" secondItem="Lwr-bI-hp8" secondAttribute="bottom" constant="-5" id="Agu-DN-hbb"/>
                     <constraint firstAttribute="trailing" secondItem="c6S-OH-FxE" secondAttribute="trailing" constant="21" id="B63-1D-etj"/>
                     <constraint firstAttribute="trailing" secondItem="aEQ-5s-Sav" secondAttribute="trailing" id="C2v-Bc-bQy"/>
                     <constraint firstItem="Lwr-bI-hp8" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" constant="8" id="DHl-Ge-UpB"/>
                     <constraint firstAttribute="trailing" secondItem="9h8-TZ-qu8" secondAttribute="trailing" id="G3Q-78-E0j"/>
-                    <constraint firstItem="Qhu-no-qln" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" constant="24" id="ImA-A3-kgR"/>
                     <constraint firstItem="Lwr-bI-hp8" firstAttribute="leading" secondItem="1G5-fy-gLb" secondAttribute="trailing" constant="8" id="LZW-xD-sh4"/>
+                    <constraint firstItem="Qhu-no-qln" firstAttribute="top" secondItem="Lwr-bI-hp8" secondAttribute="bottom" constant="-5" id="Sv4-1d-pmc"/>
                     <constraint firstItem="aEQ-5s-Sav" firstAttribute="leading" secondItem="ejf-Un-hy5" secondAttribute="leading" id="T1O-ci-IwN"/>
                     <constraint firstAttribute="trailing" secondItem="Qhu-no-qln" secondAttribute="trailing" constant="40" id="U9j-3Q-2HP"/>
                     <constraint firstAttribute="trailing" secondItem="Lwr-bI-hp8" secondAttribute="trailing" constant="40" id="Zts-SD-QRz"/>

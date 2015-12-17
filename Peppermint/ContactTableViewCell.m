@@ -36,17 +36,6 @@
     isActionProcessCompleted = YES;
 }
 
-/*
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    if(selected) {
-        [self applySelectedStyle];
-    } else {
-        [self applyNonSelectedStyle];
-    }
-}
-*/
-
 -(void) applySelectedStyle {
     self.backgroundColor = [UIColor peppermintGreen];
     self.avatarImageView.layer.borderWidth = 2;
