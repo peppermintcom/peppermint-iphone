@@ -35,6 +35,8 @@
         CFUUIDRef uuidObj = CFUUIDCreate(nil);
         udid = (NSString*)CFBridgingRelease(CFUUIDCreateString(nil, uuidObj));
     }
+    //Last 5 chrarters are added to be sure about the uniqueness!
+    udid = [NSString stringWithFormat:@"%@_%@", udid, [[NSString alloc] randomStringWithLength:5]];
     return udid;
 }
 

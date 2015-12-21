@@ -9,7 +9,7 @@
 #import "FoggyRecordingView.h"
 #import "ExplodingView.h"
 
-#define IMPACT_MAX_LIMIT        16
+#define IMPACT_MAX_LIMIT        64
 #define IMPACT_MIN_LIMIT        0
 
 @implementation FoggyRecordingView {
@@ -88,11 +88,20 @@
     return result;
 }
 
-
 -(BOOL) finishRecordingWithGestureIsValid:(BOOL) isGestureValid {
     BOOL isRecordingShort = self.totalSeconds <= MIN_VOICE_MESSAGE_LENGTH;
-    if(isRecordingShort) {
-        self.microphoneImageView.frame = originalMicrophoneFrame;
+    if(isGestureValid && isRecordingShort) {
+        CGRect frame = CGRectMake(
+                                  originalMicrophoneFrame.origin.x + originalMicrophoneFrame.size.width / 2,
+                                  originalMicrophoneFrame.origin.y + originalMicrophoneFrame.size.height / 2,
+                                  0,
+                                  0);
+        [UIView animateWithDuration:0.2 animations:^{
+            self.microphoneImageView.frame = frame;
+        } completion:^(BOOL finished) {
+            self.microphoneImageView.hidden = YES;
+            self.microphoneImageView.frame = originalMicrophoneFrame;
+        }];
     }
     return [super finishRecordingWithGestureIsValid:isGestureValid];
 }
@@ -147,6 +156,7 @@
 
 -(void) dissmissWithExplode {
     ExplodingView *explodingView = [ExplodingView createInstanceFromView:self.microphoneImageView];
+    explodingView.piecesMultiplier = 0.4;
     [self.contentView addSubview:explodingView];
     [self.contentView bringSubviewToFront:explodingView];
     self.microphoneImageView.hidden = YES;
@@ -181,7 +191,7 @@
         int range = 160;
         int offset = 30;
         CGFloat impact = 20 * log10(referenceLevel * powf(10, (average/20)) * range) + offset;
-        impact = impact * 16/80;
+        impact = impact *  IMPACT_MAX_LIMIT/80;
         
         impact = (impact > IMPACT_MAX_LIMIT) ? IMPACT_MAX_LIMIT : impact;
         impact = (impact < IMPACT_MIN_LIMIT) ? IMPACT_MIN_LIMIT : impact;
@@ -195,7 +205,7 @@
         frame.origin.y -= impact/2;
         
         previousImpact = (previousImpact == 0) ? impact : previousImpact;
-        if(previousImpact ==0 || (impact-previousImpact)*(impact-previousImpact) > 1) {
+        if(previousImpact ==0 || (impact-previousImpact)*(impact-previousImpact) > (IMPACT_MAX_LIMIT / 16)) {
             self.microphoneImageView.frame = frame;
             previousImpact = impact;
         }

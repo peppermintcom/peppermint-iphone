@@ -170,12 +170,17 @@ typedef enum : NSUInteger {
                             MIN_VOICE_MESSAGE_LENGTH];
     hud.removeFromSuperViewOnHide = YES;
     hud.yOffset -= (self.frame.size.height * 0.075);
+    hud.userInteractionEnabled = YES;
+    hud.gestureRecognizers = [NSArray arrayWithObject:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideAlertToRecordMoreThanMinimumMessageLength)]];
     
-    [hud hide:YES afterDelay:WARN_TIME * 2];
-    dispatch_time_t hideTime = dispatch_time(DISPATCH_TIME_NOW, WARN_TIME * 2 * 1.1 * NSEC_PER_SEC);
-    dispatch_after(hideTime, dispatch_get_main_queue(), ^(void){
+    hud.completionBlock = ^{
         [self dissmissWithFadeOut];
-    });
+    };
+    [hud hide:YES afterDelay:WARN_TIME * 2];
+}
+
+-(void) hideAlertToRecordMoreThanMinimumMessageLength {
+    [MBProgressHUD hideAllHUDsForView:self animated:YES];
 }
 
 #pragma mark - AlertView Delegate

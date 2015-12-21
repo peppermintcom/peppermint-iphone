@@ -9,7 +9,7 @@
 #import "ExplodingView.h"
 
 #define SPEED_DIVIDER       0.2  //Increase to speed down 4:slow 1:actual 0.2:Fast
-#define PIECES_MULTIPLIER   1   //Increase to draw less pieces 2:less piece 1:actual 0.2:Lots of pieces
+#define PIECES_MULTIPLIER   0.2   //Increase to draw less pieces 2:less piece 1:actual 0.2:Lots of pieces
 #define ANIMATION_Y_MULTIPLER   1
 #define ANIMATION_X_MULTIPLIER  1
 
@@ -20,6 +20,7 @@
 
 +(ExplodingView*) createInstanceFromView:(UIView*) view {
     ExplodingView *explodingView = [[ExplodingView alloc] initWithFrame:view.frame];
+    explodingView.piecesMultiplier = PIECES_MULTIPLIER;
     explodingView.image = [self makeSnapShotofView:view];
     return explodingView;
 }
@@ -71,7 +72,7 @@ float randomFloat()
         self.completionCallback = callback;
     }
     
-    float size = self.frame.size.width/5 * PIECES_MULTIPLIER;
+    float size = self.frame.size.width/5 * self.piecesMultiplier;
     CGSize imageSize = CGSizeMake(size, size);
     
     CGFloat cols = self.frame.size.width / imageSize.width ;

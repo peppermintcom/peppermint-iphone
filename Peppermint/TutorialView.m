@@ -32,7 +32,7 @@
                                [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hide)]
                                ];
     
-    BOOL isTutorialShowed = defaults_object(DEFAULTS_KEY_TUTORIAL_TOOLTIP_IS_SHOWED);
+    BOOL isTutorialShowed = defaults_object(DEFAULTS_KEY_TUTORIAL_TOOLTIP_IS_SHOWED) != nil;
     if(!isTutorialShowed) {
         [NSTimer scheduledTimerWithTimeInterval:TUTORIAL_SHOW_LATENCY target:self selector:@selector(show) userInfo:nil repeats:NO];
     }

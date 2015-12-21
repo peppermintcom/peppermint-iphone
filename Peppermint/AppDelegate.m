@@ -126,8 +126,7 @@
     BOOL isFirstRun = ![[NSUserDefaults standardUserDefaults] objectForKey:DEFAULTS_KEY_IS_FIRST_RUN];
     if(isFirstRun) {
         [[PeppermintMessageSender sharedInstance] clearSender];
-        [[NSUserDefaults standardUserDefaults] setValue:DEFAULTS_KEY_IS_FIRST_RUN forKey:DEFAULTS_KEY_IS_FIRST_RUN];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        defaults_set_object(DEFAULTS_KEY_IS_FIRST_RUN, DEFAULTS_KEY_IS_FIRST_RUN);
     }
 }
 

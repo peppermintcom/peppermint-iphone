@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -48,15 +48,15 @@
                             </constraints>
                         </view>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_mic" translatesAutoresizingMaskIntoConstraints="NO" id="OV0-La-sKD">
-                            <rect key="frame" x="217" y="21" width="73" height="73"/>
+                            <rect key="frame" x="172" y="-13" width="140" height="140"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="73" id="IrR-8C-78m"/>
-                                <constraint firstAttribute="height" constant="73" id="MnF-TC-wF1"/>
+                                <constraint firstAttribute="width" constant="140" id="IrR-8C-78m"/>
+                                <constraint firstAttribute="height" constant="140" id="MnF-TC-wF1"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X9f-Kf-C2h">
-                            <rect key="frame" x="187" y="110" width="133" height="36"/>
+                            <rect key="frame" x="120" y="177" width="200" height="36"/>
                             <string key="text">_Swipe anywhere
 to cancel</string>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -67,11 +67,11 @@ to cancel</string>
                     <color key="backgroundColor" red="0.90823108460000002" green="0.081871332150000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="spy-Jr-n8B" secondAttribute="trailing" id="1px-Rx-FVQ"/>
-                        <constraint firstItem="OV0-La-sKD" firstAttribute="top" secondItem="V7s-JW-net" secondAttribute="top" constant="21" id="43e-fM-sSB"/>
+                        <constraint firstItem="OV0-La-sKD" firstAttribute="top" secondItem="V7s-JW-net" secondAttribute="top" constant="-13" id="43e-fM-sSB"/>
                         <constraint firstAttribute="height" constant="166" id="9Vn-Uw-JaL"/>
-                        <constraint firstItem="X9f-Kf-C2h" firstAttribute="centerX" secondItem="OV0-La-sKD" secondAttribute="centerX" id="H8m-4D-cca"/>
-                        <constraint firstItem="X9f-Kf-C2h" firstAttribute="top" secondItem="OV0-La-sKD" secondAttribute="bottom" constant="16" id="J7E-Qx-p0h"/>
-                        <constraint firstAttribute="trailing" secondItem="OV0-La-sKD" secondAttribute="trailing" constant="30" id="YgZ-bC-UBw"/>
+                        <constraint firstItem="X9f-Kf-C2h" firstAttribute="centerX" secondItem="OV0-La-sKD" secondAttribute="centerX" constant="-22" id="H8m-4D-cca"/>
+                        <constraint firstItem="X9f-Kf-C2h" firstAttribute="top" secondItem="OV0-La-sKD" secondAttribute="bottom" constant="50" id="J7E-Qx-p0h"/>
+                        <constraint firstAttribute="trailing" secondItem="OV0-La-sKD" secondAttribute="trailing" constant="8" id="YgZ-bC-UBw"/>
                         <constraint firstItem="X9f-Kf-C2h" firstAttribute="trailing" secondItem="spy-Jr-n8B" secondAttribute="trailing" id="a41-Gl-7yN"/>
                         <constraint firstItem="spy-Jr-n8B" firstAttribute="top" secondItem="V7s-JW-net" secondAttribute="top" constant="30" id="cEq-4S-2Da"/>
                         <constraint firstItem="spy-Jr-n8B" firstAttribute="leading" secondItem="V7s-JW-net" secondAttribute="leading" id="d02-Yh-Xrg"/>

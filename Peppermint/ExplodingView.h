@@ -19,6 +19,7 @@ typedef void(^ExplodeCompletion)(void);
 
 @interface ExplodingView : UIImageView
 @property (nonatomic, copy) ExplodeCompletion completionCallback;
+@property (assign, nonatomic) CGFloat piecesMultiplier;
 
 +(ExplodingView*) createInstanceFromView:(UIView*) view;
 - (void)lp_explode;

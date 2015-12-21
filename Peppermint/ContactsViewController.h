@@ -20,6 +20,7 @@
 @property (strong, nonatomic) RecentContactsModel *recentContactsModel;
 @property (strong, nonatomic) REMenu *searchMenu;
 
+@property (weak, nonatomic) IBOutlet UIView *searchMenuViewContainer;
 @property (weak, nonatomic) IBOutlet UIView *searchMenuView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *searchContactsTextField;

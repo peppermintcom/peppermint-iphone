@@ -29,9 +29,6 @@
 #define CELL_TAG_EMAIL_CONTACTS         3
 #define CELL_TAG_SMS_CONTACTS           4
 
-#define CELL_TAG_FAST_RECORDING_VIEW    5
-#define CELL_TAG_FOGGY_RECORDING_VIEW   6
-
 #define MESSAGE_SHOW_DURATION           2
 
 #define SCREEN_HEIGHT_LIMIT             500
@@ -75,7 +72,6 @@
     self.sendingIndicatorView.hidden = YES;
     self.sendingInformationLabel.text = @"";
     self.seperatorView.backgroundColor = [UIColor cellSeperatorGray];
-    activeRecordingView = CELL_TAG_FOGGY_RECORDING_VIEW;
     [self initRecordingView];
     self.tutorialView = nil;
     isScrolling  = NO;
@@ -112,6 +108,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
             [self initTutorialView];
         }
         [self registerKeyboardActions];
+        [self hideHoldToRecordInfoView];
         if(isAddNewContactModalisUp) {
             isAddNewContactModalisUp = !isAddNewContactModalisUp;
             [self cellSelectedWithTag:activeCellTag];
@@ -130,11 +127,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
 }
 
 -(void) initRecordingView {
-    if(activeRecordingView == CELL_TAG_FAST_RECORDING_VIEW) {
-        self.recordingView = [FastRecordingView createInstanceWithDelegate:self];
-    } else if(activeRecordingView == CELL_TAG_FOGGY_RECORDING_VIEW) {
-        self.recordingView = [FoggyRecordingView createInstanceWithDelegate:self];
-    }
+    self.recordingView = [FoggyRecordingView createInstanceWithDelegate:self];
     self.recordingView.frame = self.view.frame;
     [self.view addSubview:self.recordingView];
     [self.view bringSubviewToFront:self.recordingView];
@@ -166,7 +159,11 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 -(IBAction)slideMenuValidAction:(id)sender {
     [self slideMenuTouchUp:sender];
-    [self.reSideMenuContainerViewController presentLeftMenuViewController];
+    if(self.searchMenu.isOpen) {
+        [self.searchMenu close];
+    } else {
+        [self.reSideMenuContainerViewController presentLeftMenuViewController];
+    }
 }
 
 #pragma mark - ContactList Logic
@@ -255,6 +252,8 @@ SUBSCRIBE(ReplyContactIsAdded) {
             cell.contactNameLabel.text = peppermintContact.nameSurname;
             cell.contactViaInformationLabel.text = peppermintContact.communicationChannelAddress;
             
+            cell.rightIconImageView.hidden = YES;
+            /*
             NSPredicate *predicate = [self.recentContactsModel recentContactPredicate:peppermintContact];
             NSArray *filteredArray = [self.recentContactsModel.contactList filteredArrayUsingPredicate:predicate];
             
@@ -265,8 +264,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
             } else if (peppermintContact.communicationChannel == CommunicationChannelSMS) {
                 cell.rightIconImageView.image = [UIImage imageNamed:@"icon_phone"];
             }
-            
-            cell.rightIconImageView.hidden = activeRecordingView == CELL_TAG_FOGGY_RECORDING_VIEW;
+            */
         }
         preparedCell = cell;
     } else if (indexPath.section == SECTION_CELL_INFORMATION) {
@@ -360,8 +358,13 @@ SUBSCRIBE(ReplyContactIsAdded) {
     self.holdToRecordInfoView.hidden = YES;
     self.holdToRecordInfoViewLabel.font = [UIFont openSansSemiBoldFontOfSize:14];
     self.holdToRecordInfoViewLabel.text = LOC(@"Hold to record message",@"Hold to record message");
-    UITapGestureRecognizer *tapRecogniser = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)];
-    [self.holdToRecordInfoView addGestureRecognizer:tapRecogniser];
+    
+    [self.holdToRecordInfoView addGestureRecognizer:
+     [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
+    [self.holdToRecordInfoView addGestureRecognizer:
+     [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
+    [self.holdToRecordInfoView addGestureRecognizer:
+     [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
 }
 
 -(void) hideHoldToRecordInfoView {
@@ -388,10 +391,6 @@ SUBSCRIBE(ReplyContactIsAdded) {
             [UIView animateWithDuration:ANIM_TIME animations:^{
                 self.holdToRecordInfoView.alpha = 1;
             } completion:^(BOOL finished) {
-                dispatch_time_t hideTime = dispatch_time(DISPATCH_TIME_NOW, WARN_TIME * NSEC_PER_SEC);
-                dispatch_after(hideTime, dispatch_get_main_queue(), ^(void){
-                    [self hideHoldToRecordInfoView];
-                });
                 [RecordingModel new];   //Init recording model to get permission for microphone!
             }];
         } else {
@@ -401,41 +400,48 @@ SUBSCRIBE(ReplyContactIsAdded) {
 }
 
 -(void) didBeginItemSelectionOnIndexpath:(NSIndexPath*) indexPath location:(CGPoint) location {
-    self.tableView.bounces = NO;
-    
-    PeppermintContact *selectedContact = [FastReplyModel sharedInstance].peppermintContact;
-    if(indexPath.section == SECTION_CONTACTS) {
-        selectedContact = [[self activeContactList] objectAtIndex:indexPath.row];
-    }
-    [self.searchContactsTextField resignFirstResponder];
-    
-    SendVoiceMessageModel *sendVoiceMessageModel = nil;
-    if(selectedContact.communicationChannel == CommunicationChannelEmail) {
-        sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
-    } else if (selectedContact.communicationChannel == CommunicationChannelSMS) {
-        sendVoiceMessageModel = [SendVoiceMessageSMSModel new];
-    }
-    
-    if(!isNewRecordAvailable) {
-        NSLog(@"Please wait for a new record..");
-    } else if(![sendVoiceMessageModel isServiceAvailable]) {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.detailsLabelFont = [UIFont openSansSemiBoldFontOfSize:13];
-        hud.detailsLabelText = LOC(@"Service is not available", @"Service is not available message");
-        CGFloat messageShiftValue = 50;
-        CGFloat center = self.view.frame.size.height / 2 - messageShiftValue;
-        hud.yOffset = location.y - center;
-        hud.removeFromSuperViewOnHide = YES;
-        [hud hide:YES afterDelay:WARN_TIME/2];
-    } else {
-        sendVoiceMessageModel.selectedPeppermintContact = selectedContact;
-        self.recordingView.sendVoiceMessageModel = sendVoiceMessageModel;
-        self.reSideMenuContainerViewController.panGestureEnabled = NO;
+    BOOL isTouchedCellCompletelyVisible =
+    (location.y <= (self.view.frame.size.height - CELL_HEIGHT_CONTACT_TABLEVIEWCELL));
+    if(isTouchedCellCompletelyVisible) {
+        self.tableView.bounces = NO;
+        [self hideHoldToRecordInfoView];
         
-        CGRect cellRect = [self.tableView rectForRowAtIndexPath:indexPath];
-        cellRect = CGRectOffset(cellRect, -self.tableView.contentOffset.x, -self.tableView.contentOffset.y);
-        [self.recordingView presentWithAnimationInRect:cellRect onPoint:location];
+        PeppermintContact *selectedContact = [FastReplyModel sharedInstance].peppermintContact;
+        if(indexPath.section == SECTION_CONTACTS) {
+            selectedContact = [[self activeContactList] objectAtIndex:indexPath.row];
+        }
+        [self.searchContactsTextField resignFirstResponder];
+        
+        SendVoiceMessageModel *sendVoiceMessageModel = nil;
+        if(selectedContact.communicationChannel == CommunicationChannelEmail) {
+            sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
+        } else if (selectedContact.communicationChannel == CommunicationChannelSMS) {
+            sendVoiceMessageModel = [SendVoiceMessageSMSModel new];
+        }
+        
+        if(!isNewRecordAvailable) {
+            NSLog(@"Please wait for a new record..");
+        } else if(![sendVoiceMessageModel isServiceAvailable]) {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.detailsLabelFont = [UIFont openSansSemiBoldFontOfSize:13];
+            hud.detailsLabelText = LOC(@"Service is not available", @"Service is not available message");
+            CGFloat messageShiftValue = 50;
+            CGFloat center = self.view.frame.size.height / 2 - messageShiftValue;
+            hud.yOffset = location.y - center;
+            hud.removeFromSuperViewOnHide = YES;
+            [hud hide:YES afterDelay:WARN_TIME/2];
+        } else {
+            sendVoiceMessageModel.selectedPeppermintContact = selectedContact;
+            self.recordingView.sendVoiceMessageModel = sendVoiceMessageModel;
+            self.reSideMenuContainerViewController.panGestureEnabled = NO;
+            
+            CGRect cellRect = [self.tableView rectForRowAtIndexPath:indexPath];
+            cellRect = CGRectOffset(cellRect, -self.tableView.contentOffset.x, -self.tableView.contentOffset.y);
+            [self.recordingView presentWithAnimationInRect:cellRect onPoint:location];
+        }
+    } else {
+        NSLog(@"Does not starting cos the cell is not completely in screen!");
     }
 }
 
@@ -648,7 +654,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
 -(IBAction)searchButtonPressed:(id)sender {
     if(!self.searchMenu.isOpen) {
         [self hideHoldToRecordInfoView];
-        self.searchMenuView.hidden = NO;
+        self.searchMenuViewContainer.hidden = NO;
         [self.searchContactsTextField resignFirstResponder];
         [self.searchMenu showInView:self.searchMenuView];
     } else {        
@@ -692,23 +698,12 @@ SUBSCRIBE(ReplyContactIsAdded) {
                                                       iconHighlighted:@"icon_phone_touch"
                                                                   cellTag:CELL_TAG_SMS_CONTACTS];
     
-    REMenuItem *fastRecordingViewMenuItem = [self createMenuItemWithTitle:@"Old Recording View"
-                                                               icon:@"icon_settings"
-                                                    iconHighlighted:@"icon_settings"
-                                                            cellTag:CELL_TAG_FAST_RECORDING_VIEW];
-    
-    REMenuItem *foggyRecordingViewMenuItem = [self createMenuItemWithTitle:@"New Recording View"
-                                                                     icon:@"icon_mic"
-                                                          iconHighlighted:@"icon_mic"
-                                                                  cellTag:CELL_TAG_FOGGY_RECORDING_VIEW];
-    
-    
     allContactsMenuItem.font    = [UIFont openSansSemiBoldFontOfSize:allContactsMenuItem.font.pointSize];
     recentContactsMenuItem.font = [UIFont openSansSemiBoldFontOfSize:recentContactsMenuItem.font.pointSize];
     emailContactsMenuItem.font    = [UIFont openSansSemiBoldFontOfSize:emailContactsMenuItem.font.pointSize];
     smsContactsMenuItem.font    = [UIFont openSansSemiBoldFontOfSize:smsContactsMenuItem.font.pointSize];
     
-    self.searchMenu = [[REMenu alloc] initWithItems:@[allContactsMenuItem, recentContactsMenuItem, emailContactsMenuItem, smsContactsMenuItem,fastRecordingViewMenuItem, foggyRecordingViewMenuItem]];
+    self.searchMenu = [[REMenu alloc] initWithItems:@[allContactsMenuItem, recentContactsMenuItem, emailContactsMenuItem, smsContactsMenuItem]];
     
     self.searchMenu.bounce = NO;
     self.searchMenu.cornerRadius = 5;
@@ -722,9 +717,12 @@ SUBSCRIBE(ReplyContactIsAdded) {
     self.searchMenu.shadowOpacity = 1;
     self.searchMenu.shadowRadius = 1;
     
+    [self.searchMenuViewContainer addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(searchButtonPressed:)]];
+    
+    
     weakself_create();
     self.searchMenu.closeCompletionHandler = ^{
-        weakSelf.searchMenuView.hidden = YES;
+        weakSelf.searchMenuViewContainer.hidden = YES;
     };
 }
 
@@ -733,13 +731,6 @@ SUBSCRIBE(ReplyContactIsAdded) {
 -(void)cellSelectedWithTag:(NSUInteger) cellTag {
     [self.searchMenu close];
     [self.searchContactsTextField resignFirstResponder];
-    
-    if(cellTag == CELL_TAG_FAST_RECORDING_VIEW || cellTag == CELL_TAG_FOGGY_RECORDING_VIEW) {
-        activeRecordingView = cellTag;
-        [self.tableView reloadData];
-        [self initRecordingView];
-        return;
-    }
     
     activeCellTag = cellTag;
 

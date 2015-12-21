@@ -94,6 +94,7 @@
 		B18BF95E1BD674CD009B665E /* PeppermintMessageSender.m in Sources */ = {isa = PBXBuildFile; fileRef = B18BF95D1BD674CD009B665E /* PeppermintMessageSender.m */; };
 		B190F5BA1BDD63400094B391 /* SendVoiceMessageSMSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B190F5B91BDD63400094B391 /* SendVoiceMessageSMSModel.m */; };
 		B190F5BC1BDD7F040094B391 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190F5BB1BDD7F040094B391 /* AudioToolbox.framework */; };
+		B196F3DD1C27F87C00254B7E /* LoginSupplyEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B196F3DC1C27F87C00254B7E /* LoginSupplyEmailViewController.m */; };
 		B19B6B591C16F415001895BF /* CheckEmailResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B19B6B581C16F415001895BF /* CheckEmailResponse.m */; };
 		B1A366921BDC92DB00852B52 /* UploadsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A366911BDC92DB00852B52 /* UploadsRequest.m */; };
 		B1A366951BDC92FF00852B52 /* UploadsResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A366941BDC92FF00852B52 /* UploadsResponse.m */; };
@@ -320,6 +321,8 @@
 		B190F5B81BDD63400094B391 /* SendVoiceMessageSMSModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVoiceMessageSMSModel.h; sourceTree = "<group>"; };
 		B190F5B91BDD63400094B391 /* SendVoiceMessageSMSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SendVoiceMessageSMSModel.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B190F5BB1BDD7F040094B391 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		B196F3DB1C27F87C00254B7E /* LoginSupplyEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginSupplyEmailViewController.h; sourceTree = "<group>"; };
+		B196F3DC1C27F87C00254B7E /* LoginSupplyEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginSupplyEmailViewController.m; sourceTree = "<group>"; };
 		B19B6B571C16F415001895BF /* CheckEmailResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckEmailResponse.h; sourceTree = "<group>"; };
 		B19B6B581C16F415001895BF /* CheckEmailResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckEmailResponse.m; sourceTree = "<group>"; };
 		B1A366901BDC92DB00852B52 /* UploadsRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadsRequest.h; sourceTree = "<group>"; };
@@ -667,6 +670,8 @@
 				B17933111BE0B7B00016F158 /* LoginNavigationViewController.m */,
 				B1BB60181BDE127500C1140B /* LoginViewController.h */,
 				B1BB60191BDE127500C1140B /* LoginViewController.m */,
+				B196F3DB1C27F87C00254B7E /* LoginSupplyEmailViewController.h */,
+				B196F3DC1C27F87C00254B7E /* LoginSupplyEmailViewController.m */,
 				D0D70D431C0495680068AB20 /* LoginWithEmailViewController.h */,
 				D0D70D441C0495680068AB20 /* LoginWithEmailViewController.m */,
 				B1BB605D1BDE36AF00C1140B /* SignUpWithEmailViewController.h */,
@@ -1324,6 +1329,7 @@
 				B165EF181BB71EC0008C6F71 /* PeppermintContact.m in Sources */,
 				B15FDE7B1C117CCE007100EC /* CustomContact.m in Sources */,
 				B1BB1E5F1BD35CD300A1CE45 /* MandrillService.m in Sources */,
+				B196F3DD1C27F87C00254B7E /* LoginSupplyEmailViewController.m in Sources */,
 				B1F93E981BC8E328005F2128 /* Repository.m in Sources */,
 				B17B3D6E1BB6BD13009B8BC5 /* ContactTableViewCell.m in Sources */,
 				B17B3D691BB6BCE5009B8BC5 /* CellFactory.m in Sources */,
