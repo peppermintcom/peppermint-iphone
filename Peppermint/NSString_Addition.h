@@ -12,4 +12,5 @@
 - (BOOL)isValidEmail;
 -(BOOL)isPasswordLengthValid;
 -(NSString *) randomStringWithLength: (NSUInteger) length;
+-(NSString*) trimmedText;
 @end

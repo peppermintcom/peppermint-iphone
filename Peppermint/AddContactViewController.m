@@ -46,7 +46,22 @@
     [rootVC presentViewController:nvc animated:YES completion:^{
         AddContactViewController *addContactViewController = (AddContactViewController*)nvc.viewControllers.firstObject;
         addContactViewController.delegate = delegate;
-        addContactViewController.firstNameTextField.text = [text capitalizedString];
+        
+        NSArray *nameComponents = [text.trimmedText.capitalizedString componentsSeparatedByString:@" "];
+        if(nameComponents.count == 0 || [nameComponents.firstObject isEqualToString:@""]) {
+            NSLog(@"Could not set name cos supplied information is just empty");
+            [addContactViewController.firstNameTextField becomeFirstResponder];
+        } else if (nameComponents.count == 1) {
+            addContactViewController.firstNameTextField.text = [nameComponents firstObject];
+            [addContactViewController.lastNameTextField becomeFirstResponder];
+        } else if (nameComponents.count > 1) {
+            NSString *firstName = [nameComponents firstObject];
+            NSString *lastName = [nameComponents componentsJoinedByString:@" "];
+            lastName = [lastName stringByReplacingOccurrencesOfString:firstName withString:@""];
+            addContactViewController.firstNameTextField.text = firstName.trimmedText;
+            addContactViewController.lastNameTextField.text = lastName.trimmedText;
+            [addContactViewController.phoneNumberTextField becomeFirstResponder];
+        }
     }];
 }
 
@@ -96,7 +111,6 @@
 
 -(void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.firstNameTextField becomeFirstResponder];
 }
 
 #pragma mark - CountriesArray

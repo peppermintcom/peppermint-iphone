@@ -94,7 +94,7 @@
             [searchString appendFormat:@";%@", email];
         }
         
-        BOOL containsText = [searchString rangeOfString:self.filterText options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch].length > 0;
+        BOOL containsText = [searchString rangeOfString:self.filterText.trimmedText options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch].length > 0;
         
         return
         (contact.phones.count > 0 ||
@@ -172,12 +172,12 @@
                  
                  //Google Contacts
                  NSArray *googleContactsArray =
-                 [GoogleContactsModel peppermintContactsArrayWithFilterText:self.filterText];
+                 [GoogleContactsModel peppermintContactsArrayWithFilterText:self.filterText.trimmedText];
                  [peppermintContactsArray addObjectsFromArray:googleContactsArray];
                  
                  //CustomContacts
                  NSArray *customContactsArray =
-                 [CustomContactModel peppermintContactsArrayWithFilterText:self.filterText];
+                 [CustomContactModel peppermintContactsArrayWithFilterText:self.filterText.trimmedText];
                  [peppermintContactsArray addObjectsFromArray:customContactsArray];
                  
                  self.contactList = peppermintContactsArray;

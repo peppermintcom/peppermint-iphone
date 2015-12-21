@@ -43,4 +43,8 @@
     return randomString;
 }
 
+-(NSString*) trimmedText {
+    return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+}
+
 @end

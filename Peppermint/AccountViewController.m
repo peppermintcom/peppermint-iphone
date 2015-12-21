@@ -191,9 +191,10 @@ int OPTION_LOG_OUT              = 0;
   }
   
   NSString * text = [[alertView textFieldAtIndex:0] text];
-
   if ([alertView.title isEqualToString:LOC(@"Display Name", nil)]) {
-      if (text.length > 0) {
+      NSString *filteredText = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+      
+      if (filteredText.length > 0) {
           self.peppermintMessageSender.nameSurname = [text capitalizedString];
           [self.peppermintMessageSender save];
       } else {

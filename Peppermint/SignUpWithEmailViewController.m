@@ -71,6 +71,7 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self validateDoneButton];
     NSAssert(self.loginModel != nil, @"LoginModel must be initiated before LoginWithEmailViewController is shown");
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyboardNotification:) name:UIKeyboardWillShowNotification object:nil];
@@ -301,7 +302,7 @@
 
 -(void) validateCellForName:(LoginTextFieldTableViewCell*) cell {
     PeppermintMessageSender *sender = [PeppermintMessageSender sharedInstance];
-    isValidNameEmptyValidation = sender.name.length > 0;
+    isValidNameEmptyValidation = sender.name.trimmedText.length > 0;
     
     [self validateDoneButton];
     [cell setValid:isValidNameEmptyValidation];
@@ -313,7 +314,7 @@
 
 -(void) validateCellForSurname:(LoginTextFieldTableViewCell*) cell {
   PeppermintMessageSender *sender = [PeppermintMessageSender sharedInstance];
-  isValidSurnameEmptyValidation = sender.surname.length > 0;
+  isValidSurnameEmptyValidation = sender.surname.trimmedText.length > 0;
   
   [self validateDoneButton];
   [cell setValid:isValidSurnameEmptyValidation];
@@ -325,7 +326,7 @@
 
 -(void) validateCellForEmail:(LoginTextFieldTableViewCell*) cell {
     PeppermintMessageSender *sender = [PeppermintMessageSender sharedInstance];
-    isValidEmailEmptyValidation = sender.email.length > 0;
+    isValidEmailEmptyValidation = sender.email.trimmedText.length > 0;
     isValidEmailFormatValidation = [sender.email isValidEmail];
     
     [self validateDoneButton];
@@ -339,7 +340,7 @@
 
 -(void) validateCellForPassword:(LoginTextFieldTableViewCell*) cell {
     PeppermintMessageSender *sender = [PeppermintMessageSender sharedInstance];
-    isValidPasswordEmptyValidation = sender.password.length > 0 ;
+    isValidPasswordEmptyValidation = sender.password.trimmedText.length > 0 ;
     isValidPassowrdLengthValidation = [sender.password isPasswordLengthValid];
     
     BOOL isValid = isValidPasswordEmptyValidation && isValidPassowrdLengthValidation;

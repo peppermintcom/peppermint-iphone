@@ -13,15 +13,20 @@
 
 @implementation CustomContactModel
 
+-(NSPredicate*) peppermintContactPredicateWithNameSurname:(NSString*) nameSurname communicationChanneldAddress:(NSString*)communicationChannelAddress communicationChannel:(CommunicationChannel) communicationChannel {
+    
+    NSPredicate *nameSurnamePredicate = [NSPredicate predicateWithFormat:@"self.nameSurname LIKE[cd] %@", nameSurname];
+    NSPredicate *communicationChannelPredicate = [NSPredicate predicateWithFormat:@"self.communicationChannel = %@ ", [NSNumber numberWithInt:communicationChannel]];
+    NSPredicate *communicationChannelAddressPredicate = [NSPredicate predicateWithFormat:@"self.communicationChannelAddress CONTAINS[cd] %@", communicationChannelAddress];
+    
+    return [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:nameSurnamePredicate, communicationChannelPredicate, communicationChannelAddressPredicate, nil]];
+}
 
 -(void) save:(PeppermintContact*) peppermintContact {
     dispatch_async(LOW_PRIORITY_QUEUE, ^() {
         Repository *repository = [Repository beginTransaction];
         
-         NSPredicate *predicate =
-         [ContactsModel contactPredicateWithNameSurname:peppermintContact.nameSurname
-         communicationChannelAddress:peppermintContact.communicationChannelAddress
-         communicationChannel:peppermintContact.communicationChannel];
+        NSPredicate *predicate = [self peppermintContactPredicateWithNameSurname:peppermintContact.nameSurname communicationChanneldAddress:peppermintContact.communicationChannelAddress communicationChannel:peppermintContact.communicationChannel];
         NSArray *matchedCustomContacts = [repository getResultsFromEntity:[CustomContact class]
                                                            predicateOrNil:predicate];
         
@@ -30,6 +35,9 @@
         } else {
             repository = nil;
             NSLog(@"Did not save custom Peppermint Contact as it already exists. %@ - %@", peppermintContact.nameSurname, peppermintContact.communicationChannelAddress);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate customPeppermintContactSavedSucessfully:peppermintContact];
+            });
             
             /*
             if (matchedCustomContacts.count == 1) {

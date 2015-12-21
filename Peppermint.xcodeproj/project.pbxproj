@@ -1556,7 +1556,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c21aba76-2bc0-4107-b0be-bfde36fb6458";
+				PROVISIONING_PROFILE = "389ca1bd-0eba-464e-9e10-308ac3826df5";
 			};
 			name = Release;
 		};

@@ -141,9 +141,10 @@
     CGRect rowViewFrame = self.rowView.frame;
     rowViewFrame.origin.x += rowViewFrame.size.width;
     
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         self.alpha = 0;
         self.rowView.frame = rowViewFrame;
+        self.microphoneImageView.frame = originalMicrophoneFrame;
     } completion:^(BOOL completed) {
         self.hidden = YES;
         self.rowView.frame = originalRowViewFrame;

@@ -38,6 +38,7 @@
 #pragma mark - NSPredicate
 
 +(NSPredicate*) contactPredicateWithNameSurname:(NSString*) nameSurname;
++(NSPredicate*) contactPredicateWithNameSurnameEquals:(NSString*) nameSurname;
 +(NSPredicate*) contactPredicateWithCommunicationChannel:(CommunicationChannel) communicationChannel;
 +(NSPredicate*) contactPredicateWithCommunicationChannelAddress:(NSString *)communicationChannelAddress;
 
