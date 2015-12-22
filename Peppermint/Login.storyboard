@@ -112,12 +112,12 @@
                     <connections>
                         <outlet property="loginLabel" destination="wYy-9O-gAW" id="YMu-fp-ETn"/>
                         <outlet property="tableView" destination="gq1-X6-YJB" id="E1j-xQ-y0G"/>
-                        <segue destination="APx-dK-0Mz" kind="show" identifier="LoginWithEmailSegue" id="BTM-mg-aLW"/>
+                        <segue destination="APx-dK-0Mz" kind="show" identifier="LoginWithEmailSegue" id="Qbo-wT-HB7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZFI-6m-Swu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1098" y="154"/>
+            <point key="canvasLocation" x="-1064" y="154"/>
         </scene>
         <!--Sign Up With Email View Controller-->
         <scene sceneID="avR-io-JGn">
@@ -380,6 +380,7 @@
                         </connections>
                     </tableView>
                     <nil key="simulatedTopBarMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="emailCell" destination="Zpn-nz-VW0" id="vcW-h6-YVQ"/>
                         <segue destination="gYd-Oo-fUs" kind="show" identifier="SignUpWithEmailSegue" id="gfe-oG-gBX"/>
@@ -388,7 +389,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UFk-zb-tRN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-588" y="1066"/>
+            <point key="canvasLocation" x="-574" y="1066"/>
         </scene>
         <!--Delegate-->
         <scene sceneID="HJm-2e-SeT">
@@ -566,7 +567,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zlW-2F-vt6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-46" y="1978"/>
+            <point key="canvasLocation" x="-37" y="1974"/>
         </scene>
         <!--Login Validate Email View Controller-->
         <scene sceneID="OYd-Np-Bbv">
@@ -657,7 +658,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jlo-CU-pIZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="40" y="154"/>
+            <point key="canvasLocation" x="-37" y="154"/>
         </scene>
         <!--Account View Controller-->
         <scene sceneID="25k-M6-j2i">

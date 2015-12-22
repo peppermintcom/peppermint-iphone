@@ -50,10 +50,14 @@
     self.counterLabel.font = [UIFont openSansBoldFontOfSize:21];
     
     self.swipeInAnyDirectionLabel.textColor = [UIColor emptyResultTableViewCellHeaderLabelTextcolorGray];
-    self.swipeInAnyDirectionLabel.backgroundColor = [UIColor whiteColor];
+#warning "Make visibility nicer!"
+    self.swipeInAnyDirectionLabel.backgroundColor = [UIColor grayColor];
+    self.swipeInAnyDirectionLabel.textColor = [UIColor blackColor];
     
     self.swipeInAnyDirectionLabel.font = [UIFont openSansSemiBoldFontOfSize:15];
     self.swipeInAnyDirectionLabel.text = LOC(@"Swipe anywhere to cancel", @"Swipe anywhere to cancel label");
+    self.swipeInAnyDirectionLabel.layer.cornerRadius = 15;
+    self.swipeInAnyDirectionLabel.clipsToBounds = YES;
 }
 
 #pragma mark - FoggyRecordingView User Interaction

@@ -43,6 +43,7 @@
 }
 
 -(void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
   [[AccountModel sharedInstance] setDelegate:self];
 }
 
@@ -169,7 +170,6 @@
   }
 }
 
-
 - (IBAction)loginPressed:(id)sender {
     [self.passwordCell.textField resignFirstResponder];
   if (isValidPasswordValidation) {
@@ -184,10 +184,14 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if([alertView.message isEqualToString:LOC(@"Invalid password", nil)]) {
-        [self.passwordCell.textField becomeFirstResponder];
-    } else if ([alertView.message isEqualToString:LOC(@"Invalid email", nil)]) {
-        [self.emailCell.textField becomeFirstResponder];
+    if([alertView.title isEqualToString:LOC(@"Invalid password", nil)]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.passwordCell.textField becomeFirstResponder];
+        });
+    } else if ([alertView.title isEqualToString:LOC(@"Invalid email", nil)]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.emailCell.textField becomeFirstResponder];
+        });
     }
 }
 
