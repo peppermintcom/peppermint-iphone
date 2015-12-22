@@ -31,9 +31,12 @@
     NSString *udid = nil;
     if ([[UIDevice currentDevice] respondsToSelector:@selector(identifierForVendor)]) {
         udid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    } else {
-        CFUUIDRef uuidObj = CFUUIDCreate(nil);
-        udid = (NSString*)CFBridgingRelease(CFUUIDCreateString(nil, uuidObj));
+    } else {        
+        CFUUIDRef theUUID = CFUUIDCreate(NULL);
+        CFStringRef string = CFUUIDCreateString(NULL, theUUID);
+        CFRelease(theUUID);
+        udid = [NSString stringWithFormat:@"%@", (__bridge NSString *)string];
+        CFRelease(string);
     }
     //Last 5 chrarters are added to be sure about the uniqueness!
     udid = [NSString stringWithFormat:@"%@_%@", udid, [[NSString alloc] randomStringWithLength:5]];

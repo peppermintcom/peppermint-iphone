@@ -330,8 +330,9 @@
     //NSURL *directoryURL = [NSURL URLWithString:@"/System/Library/Audio/UISounds/end_record.caf"];
     NSURL *directoryURL = [NSURL URLWithString:@"/System/Library/Audio/UISounds/jbl_begin.caf"];
     SystemSoundID soundID;
-    AudioServicesCreateSystemSoundID((__bridge_retained CFURLRef)directoryURL,&soundID);
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)directoryURL,&soundID);
     AudioServicesPlaySystemSound(soundID);
+    AudioServicesDisposeSystemSoundID(soundID);
 }
 
 #pragma mark - Voice Record Conversion

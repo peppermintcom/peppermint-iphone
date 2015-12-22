@@ -28,11 +28,13 @@
     NSDictionary *parameters = request.toDictionary;
     [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSError *error;
+        /*
         MandrillInformationResponse *informationResponse = [[MandrillInformationResponse alloc] initWithDictionary:responseObject error:&error];
         if(error) {
             [self failureDuringJSONCastWithError:error];
         }
         informationResponse = nil;
+         */
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self failureWithOperation:operation andError:error];
     }];
