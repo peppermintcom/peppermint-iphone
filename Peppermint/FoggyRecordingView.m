@@ -9,7 +9,7 @@
 #import "FoggyRecordingView.h"
 #import "ExplodingView.h"
 
-#define IMPACT_MAX_LIMIT        64
+#define IMPACT_MAX_LIMIT        32
 #define IMPACT_MIN_LIMIT        0
 
 @implementation FoggyRecordingView {
@@ -50,6 +50,8 @@
     self.counterLabel.font = [UIFont openSansBoldFontOfSize:21];
     
     self.swipeInAnyDirectionLabel.textColor = [UIColor emptyResultTableViewCellHeaderLabelTextcolorGray];
+    self.swipeInAnyDirectionLabel.backgroundColor = [UIColor whiteColor];
+    
     self.swipeInAnyDirectionLabel.font = [UIFont openSansSemiBoldFontOfSize:15];
     self.swipeInAnyDirectionLabel.text = LOC(@"Swipe anywhere to cancel", @"Swipe anywhere to cancel label");
 }
@@ -123,14 +125,14 @@
     microphoneFrame.size.width = microphoneFrame.size.height = 0;
     self.microphoneImageView.frame = microphoneFrame;
     self.rowView.alpha = 0;
-    
-    self.alpha = 0;
+    self.swipeInAnyDirectionLabel.alpha = 0;
     self.hidden = NO;
     [UIView animateWithDuration:0.2 animations:^{
-        self.alpha = 1;
         self.rowView.frame = originalRowViewFrame;
-        self.microphoneImageView.frame = originalMicrophoneFrame;
         self.rowView.alpha = 1;
+        self.microphoneImageView.frame = originalMicrophoneFrame;
+        self.swipeInAnyDirectionLabel.alpha = 1;
+    } completion:^(BOOL finished) {
     }];
 }
 
