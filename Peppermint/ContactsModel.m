@@ -139,7 +139,9 @@
                          nameSurname = [nameSurname capitalizedString];
                          for(NSString *email in contact.emails) {
                              NSString *key = [NSString stringWithFormat:@"%@,%@", nameSurname, email];
-                             if([uniqueSet containsObject:key]) {
+                             if(![key.lowercaseString containsString:self.filterText.lowercaseString]) {
+                                 continue;
+                             } else if([uniqueSet containsObject:key]) {
                                  continue;
                              } else {
                                  [uniqueSet addObject:key];
@@ -155,7 +157,9 @@
                          for(NSString *rawPhone in contact.phones) {
                              NSString *phone = [self filterUnwantedChars:rawPhone];
                              NSString *key = [NSString stringWithFormat:@"%@,%@", nameSurname, phone];
-                             if([uniqueSet containsObject:key]) {
+                             if(![key.lowercaseString containsString:self.filterText.lowercaseString]) {
+                                 continue;
+                             } else if([uniqueSet containsObject:key]) {
                                  continue;
                              } else {
                                  [uniqueSet addObject:key];
