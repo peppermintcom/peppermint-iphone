@@ -8,7 +8,7 @@ pod 'EasyMailSender'
 pod 'REMenu', '~> 1.10'
 pod 'OpenSans'
 pod "AFNetworking", "~> 2.0"
-pod "tolo", "~> 1.0"
+pod "tolo"
 pod 'MBProgressHUD', '~> 0.9.1'
 pod "JSONModel"
 pod "SimpleKeychain"

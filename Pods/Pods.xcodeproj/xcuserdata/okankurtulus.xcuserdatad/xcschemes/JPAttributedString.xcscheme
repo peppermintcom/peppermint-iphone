@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'CF6516C31456101FBA83124C'
+               BlueprintIdentifier = '3B5A8C4A6CC49CC56705D7D5'
                BlueprintName = 'JPAttributedString'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libJPAttributedString.a'>

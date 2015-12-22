@@ -113,7 +113,7 @@ DEPENDENCIES:
   - REMenu (~> 1.10)
   - RESideMenu (~> 4.0.7)
   - SimpleKeychain
-  - tolo (~> 1.0)
+  - tolo
 
 EXTERNAL SOURCES:
   GData:
