@@ -2,6 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "sms_inactive.png",
       "scale" : "1x"
     },
     {

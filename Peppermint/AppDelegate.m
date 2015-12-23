@@ -164,7 +164,7 @@
     [self initGoogleApp];
     [self initConnectionStatusChangeListening];
     [self checkForFirstRun];
-    //[self initLocalNotification];
+    //[self initLocalNotification];    
     REGISTER();
     return YES;
 }
