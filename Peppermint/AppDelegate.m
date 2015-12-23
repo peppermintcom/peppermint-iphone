@@ -130,6 +130,27 @@
     }
 }
 
+-(void) initLocalNotification {
+    UIApplication *application = [UIApplication sharedApplication];
+    
+    
+    [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
+    
+    application.applicationIconBadgeNumber = 0;
+    [application cancelAllLocalNotifications];
+    
+    UILocalNotification *notif = [[UILocalNotification alloc] init];
+    notif.fireDate = [NSDate dateWithTimeIntervalSinceNow:7];
+    notif.timeZone = [NSTimeZone defaultTimeZone];
+    
+    notif.alertBody = @"Body";
+    notif.alertAction = @"AlertButtonCaption";
+    notif.soundName = @"alert.caf";
+    notif.applicationIconBadgeNumber = 1;
+    
+    [[UIApplication sharedApplication] scheduleLocalNotification:notif];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self initMutableArray];
@@ -143,6 +164,7 @@
     [self initGoogleApp];
     [self initConnectionStatusChangeListening];
     [self checkForFirstRun];
+    //[self initLocalNotification];
     REGISTER();
     return YES;
 }
