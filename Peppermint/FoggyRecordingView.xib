@@ -20,7 +20,7 @@
                     <rect key="frame" x="0.0" y="174" width="320" height="166"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="spy-Jr-n8B" userLabel="RowView">
-                            <rect key="frame" x="0.0" y="30" width="320" height="56"/>
+                            <rect key="frame" x="0.0" y="30" width="320" height="58"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Recording for Bob Adams" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6C8-Qh-nOw">
                                     <rect key="frame" x="11" y="10" width="244" height="18"/>
@@ -31,7 +31,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="oPZ-DC-iQj">
-                                    <rect key="frame" x="11" y="30" width="244" height="20"/>
+                                    <rect key="frame" x="11" y="30" width="244" height="22"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -44,7 +44,7 @@
                                 <constraint firstItem="oPZ-DC-iQj" firstAttribute="leading" secondItem="spy-Jr-n8B" secondAttribute="leading" constant="11" id="Wpk-Pt-0GZ"/>
                                 <constraint firstItem="6C8-Qh-nOw" firstAttribute="leading" secondItem="spy-Jr-n8B" secondAttribute="leading" constant="11" id="ayx-mi-dfj"/>
                                 <constraint firstItem="oPZ-DC-iQj" firstAttribute="top" secondItem="6C8-Qh-nOw" secondAttribute="bottom" constant="2" id="azC-SQ-OEO"/>
-                                <constraint firstAttribute="height" constant="56" id="hNs-R7-arH"/>
+                                <constraint firstAttribute="height" constant="58" id="hNs-R7-arH"/>
                                 <constraint firstAttribute="bottom" secondItem="oPZ-DC-iQj" secondAttribute="bottom" constant="6" id="wmP-x3-Sde"/>
                             </constraints>
                         </view>

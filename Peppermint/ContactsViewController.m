@@ -31,8 +31,6 @@
 
 #define MESSAGE_SHOW_DURATION           2
 
-#define SCREEN_HEIGHT_LIMIT             500
-
 @interface ContactsViewController () <AddContactViewControllerDelegate>
 
 @end
@@ -418,6 +416,8 @@ SUBSCRIBE(ReplyContactIsAdded) {
         [self.tableView setContentOffset:scrollPoint animated:YES];
     }
     
+    [self.searchContactsTextField resignFirstResponder];
+    
     self.tableView.bounces = NO;
     [self hideHoldToRecordInfoView];
     
@@ -582,6 +582,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 -(void)textFieldDidChange :(UITextField *)textField {
     self.contactsModel.filterText = textField.text;
+    [self hideHoldToRecordInfoView];
     [self refreshContacts];
 }
 

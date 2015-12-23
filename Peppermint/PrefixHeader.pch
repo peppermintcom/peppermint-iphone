@@ -144,4 +144,6 @@ sharedObject;\
 #define QUERY_COMPONENT_NAMESURNAME     @"name"
 #define QUERY_COMPONENT_EMAIL           @"mail"
 
+#define SCREEN_HEIGHT_LIMIT             600
+
 #endif

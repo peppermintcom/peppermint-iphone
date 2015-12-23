@@ -27,8 +27,8 @@
     request.key = self.apiKey;
     NSDictionary *parameters = request.toDictionary;
     [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSError *error;
         /*
+        NSError *error;
         MandrillInformationResponse *informationResponse = [[MandrillInformationResponse alloc] initWithDictionary:responseObject error:&error];
         if(error) {
             [self failureDuringJSONCastWithError:error];

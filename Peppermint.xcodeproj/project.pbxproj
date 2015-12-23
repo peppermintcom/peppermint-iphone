@@ -123,6 +123,7 @@
 		B1EF40F91BB8782F00042E4B /* SwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40F81BB8782F00042E4B /* SwipeView.m */; };
 		B1EF40FC1BB8786500042E4B /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40FB1BB8786500042E4B /* TutorialViewController.m */; };
 		B1F045671BCFB36900A67942 /* BaseService.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F045661BCFB36900A67942 /* BaseService.m */; };
+		B1F5158D1C2ABCBE0033A779 /* ContactSupportModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F5158C1C2ABCBE0033A779 /* ContactSupportModel.m */; };
 		B1F93E8C1BC8E0D9005F2128 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1F93E8B1BC8E0D9005F2128 /* CoreData.framework */; };
 		B1F93E901BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E8E1BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld */; };
 		B1F93E981BC8E328005F2128 /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E971BC8E328005F2128 /* Repository.m */; };
@@ -376,6 +377,8 @@
 		B1F045661BCFB36900A67942 /* BaseService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseService.m; sourceTree = "<group>"; };
 		B1F045691BCFB4E400A67942 /* Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
 		B1F0456A1BCFB4E400A67942 /* Events.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Events.m; sourceTree = "<group>"; };
+		B1F5158B1C2ABCBE0033A779 /* ContactSupportModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactSupportModel.h; sourceTree = "<group>"; };
+		B1F5158C1C2ABCBE0033A779 /* ContactSupportModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactSupportModel.m; sourceTree = "<group>"; };
 		B1F93E8B1BC8E0D9005F2128 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		B1F93E8F1BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PeppermintDataModel.xcdatamodel; sourceTree = "<group>"; };
 		B1F93E951BC8E328005F2128 /* Entity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
@@ -609,6 +612,8 @@
 				B15B15C01BDBC55A00C0C171 /* AWSModel.m */,
 				B17933131BE0C19C0016F158 /* LoginModel.h */,
 				B17933141BE0C19C0016F158 /* LoginModel.m */,
+				B1F5158B1C2ABCBE0033A779 /* ContactSupportModel.h */,
+				B1F5158C1C2ABCBE0033A779 /* ContactSupportModel.m */,
 				B1FE184E1BE1676D002772B4 /* FeedBackModel.h */,
 				B1FE184F1BE1676D002772B4 /* FeedBackModel.m */,
 				B17206D01BE4AAE40021D855 /* ConnectionModel.h */,
@@ -1334,6 +1339,7 @@
 				D0A7C0DA1BFA0C7900ACD33E /* DeviceModel.m in Sources */,
 				B16DA2171BE0F2C100EBF043 /* SlideMenuViewController.m in Sources */,
 				B1BB601A1BDE127500C1140B /* LoginViewController.m in Sources */,
+				B1F5158D1C2ABCBE0033A779 /* ContactSupportModel.m in Sources */,
 				B18BF95E1BD674CD009B665E /* PeppermintMessageSender.m in Sources */,
 				B15FDE7C1C117CCE007100EC /* RecentContact+CoreDataProperties.m in Sources */,
 				B1A366951BDC92FF00852B52 /* UploadsResponse.m in Sources */,
@@ -1550,7 +1556,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "389ca1bd-0eba-464e-9e10-308ac3826df5";
+				PROVISIONING_PROFILE = "78eb8cb3-e420-4b17-9af3-72dc6a2b505b";
 			};
 			name = Release;
 		};

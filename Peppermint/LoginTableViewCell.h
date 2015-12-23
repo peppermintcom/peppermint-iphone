@@ -22,5 +22,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *loginIconImageViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *loginLabel;
 
+-(void) setJustText:(NSString*) text withColor:(UIColor*) color;
+-(void) setJustText:(NSString*) text withColor:(UIColor*)color withFont:(UIFont*)font;
 
 @end

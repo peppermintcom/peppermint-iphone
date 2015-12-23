@@ -110,21 +110,11 @@ int OPTION_LOG_OUT              = 0;
     
     NSInteger index = indexPath.section;
     if (index == OPTION_LOG_OUT) {
-        logOutCell.loginIconImageViewWidthConstraint.constant = 0;
-        logOutCell.loginIconImageView.image = nil;
-        logOutCell.loginLabel.text = LOC(@"Log Out", @"Title");
-        logOutCell.loginLabel.textColor = [UIColor googleLoginColor];
+        [logOutCell setJustText:LOC(@"Log Out", @"Title") withColor:[UIColor googleLoginColor]];
     } else if (index == OPTION_SUBJECT) {
-      logOutCell.loginIconImageViewWidthConstraint.constant = 0;
-      logOutCell.loginIconImageView.image = nil;
-      logOutCell.loginLabel.text = LOC(@"Subject", nil);
-      logOutCell.loginLabel.textColor = [UIColor facebookLoginColor];
-    }
-    else if (index == OPTION_DISPLAY_NAME){
-      logOutCell.loginIconImageViewWidthConstraint.constant = 0;
-      logOutCell.loginIconImageView.image = nil;
-      logOutCell.loginLabel.text = LOC(@"Display Name", nil);
-      logOutCell.loginLabel.textColor = [UIColor emailLoginColor];
+        [logOutCell setJustText:LOC(@"Subject", nil) withColor:[UIColor facebookLoginColor]];
+    } else if (index == OPTION_DISPLAY_NAME){
+        [logOutCell setJustText:LOC(@"Display Name", nil) withColor:[UIColor emailLoginColor]];
     }
     [logOutCell.loginLabel sizeToFit];
     return logOutCell;

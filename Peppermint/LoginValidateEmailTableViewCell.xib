@@ -3,99 +3,45 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="OpenSans-Regular.ttf">
-            <string>OpenSans</string>
             <string>OpenSans</string>
         </mutableArray>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LoginValidateEmailTableViewCell" rowHeight="289" id="5Wt-GL-mp5" customClass="LoginValidateEmailTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="426" height="289"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LoginValidateEmailTableViewCell" rowHeight="226" id="5Wt-GL-mp5" customClass="LoginValidateEmailTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="426" height="200"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5Wt-GL-mp5" id="Fb5-pR-lzc">
-                <rect key="frame" x="0.0" y="0.0" width="426" height="288"/>
+                <rect key="frame" x="0.0" y="0.0" width="426" height="199"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gac-eR-sap">
-                        <rect key="frame" x="8" y="8" width="410" height="222"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ooy-st-Q2L">
-                                <rect key="frame" x="0.0" y="0.0" width="410" height="137"/>
-                                <string key="text">_Please verify your email to start using Peppermint.
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" minimumFontSize="14" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ooy-st-Q2L">
+                        <rect key="frame" x="8" y="8" width="410" height="183"/>
+                        <string key="text">_Verification link sent to
+abcdefg@abcdef.com
 
-_Verification link has been sent to abcdefg@abcdef.com</string>
-                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="20"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="Ooy-st-Q2L" firstAttribute="leading" secondItem="gac-eR-sap" secondAttribute="leading" id="DrA-LW-eSO"/>
-                            <constraint firstAttribute="bottom" secondItem="Ooy-st-Q2L" secondAttribute="bottom" priority="250" constant="25" id="Gjy-CT-HBu"/>
-                            <constraint firstAttribute="trailing" secondItem="Ooy-st-Q2L" secondAttribute="trailing" id="Lyn-vd-6BW"/>
-                            <constraint firstItem="Ooy-st-Q2L" firstAttribute="top" secondItem="gac-eR-sap" secondAttribute="top" id="YeB-rV-ylh"/>
-                        </constraints>
-                    </view>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0tQ-6y-qwx">
-                        <rect key="frame" x="8" y="238" width="410" height="42"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Resend Verification" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XwP-kA-MID">
-                                <rect key="frame" x="8" y="8" width="394" height="26"/>
-                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="24"/>
-                                <color key="textColor" red="0.24313725490196078" green="0.74901960784313726" blue="0.61568627450980395" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="XwP-kA-MID" firstAttribute="bottom" secondItem="0tQ-6y-qwx" secondAttribute="bottomMargin" id="JYL-D8-yIs"/>
-                            <constraint firstItem="XwP-kA-MID" firstAttribute="leading" secondItem="0tQ-6y-qwx" secondAttribute="leadingMargin" id="Tb2-Wr-woa"/>
-                            <constraint firstItem="XwP-kA-MID" firstAttribute="top" secondItem="0tQ-6y-qwx" secondAttribute="topMargin" id="UzE-cf-gXt"/>
-                            <constraint firstAttribute="height" constant="42" id="bWp-zc-dzj"/>
-                            <constraint firstItem="XwP-kA-MID" firstAttribute="trailing" secondItem="0tQ-6y-qwx" secondAttribute="trailingMargin" id="rt8-7Q-XX8"/>
-                        </constraints>
-                    </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HxR-aB-AgG">
-                        <rect key="frame" x="0.0" y="230" width="426" height="58"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="58" id="72F-tl-760"/>
-                        </constraints>
-                        <connections>
-                            <action selector="buttonReleasedInside:" destination="5Wt-GL-mp5" eventType="touchUpInside" id="1he-VW-cm4"/>
-                            <action selector="buttonReleasedOutside:" destination="5Wt-GL-mp5" eventType="touchCancel" id="Mxp-4g-fvP"/>
-                            <action selector="buttonReleasedOutside:" destination="5Wt-GL-mp5" eventType="touchUpOutside" id="bKW-dm-Qhc"/>
-                            <action selector="buttonTouched:" destination="5Wt-GL-mp5" eventType="touchDownRepeat" id="QLc-cu-p8l"/>
-                            <action selector="buttonTouched:" destination="5Wt-GL-mp5" eventType="touchDown" id="SQX-gR-BMe"/>
-                        </connections>
-                    </button>
+Please click on the link to finish your Peppermint registration</string>
+                        <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="20"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" red="0.18039215689999999" green="0.74901960779999999" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="0tQ-6y-qwx" secondAttribute="trailing" constant="8" id="5Xr-Bp-0Ev"/>
-                    <constraint firstAttribute="bottom" secondItem="0tQ-6y-qwx" secondAttribute="bottom" constant="8" id="78A-Sq-2Jn"/>
-                    <constraint firstItem="0tQ-6y-qwx" firstAttribute="leading" secondItem="Fb5-pR-lzc" secondAttribute="leading" constant="8" id="A82-11-2se"/>
-                    <constraint firstItem="HxR-aB-AgG" firstAttribute="leading" secondItem="Fb5-pR-lzc" secondAttribute="leading" id="SHj-rJ-84a"/>
-                    <constraint firstItem="gac-eR-sap" firstAttribute="top" secondItem="Fb5-pR-lzc" secondAttribute="top" constant="8" id="Vg6-Bf-CBD"/>
-                    <constraint firstAttribute="trailing" secondItem="gac-eR-sap" secondAttribute="trailing" constant="8" id="X7Y-bP-iyU"/>
-                    <constraint firstItem="0tQ-6y-qwx" firstAttribute="top" secondItem="gac-eR-sap" secondAttribute="bottom" constant="8" id="YGa-nN-RMw"/>
-                    <constraint firstItem="gac-eR-sap" firstAttribute="leading" secondItem="Fb5-pR-lzc" secondAttribute="leading" constant="8" id="YOr-ED-NWT"/>
-                    <constraint firstAttribute="trailing" secondItem="HxR-aB-AgG" secondAttribute="trailing" id="kh3-Zc-lJD"/>
-                    <constraint firstAttribute="bottom" secondItem="HxR-aB-AgG" secondAttribute="bottom" id="the-fm-mYN"/>
+                    <constraint firstItem="Ooy-st-Q2L" firstAttribute="top" secondItem="Fb5-pR-lzc" secondAttribute="top" constant="8" id="3qI-GF-PeR"/>
+                    <constraint firstAttribute="trailing" secondItem="Ooy-st-Q2L" secondAttribute="trailing" constant="8" id="blj-Nb-KVJ"/>
+                    <constraint firstAttribute="bottom" secondItem="Ooy-st-Q2L" secondAttribute="bottom" constant="8" id="c9V-YL-T9n"/>
+                    <constraint firstItem="Ooy-st-Q2L" firstAttribute="leading" secondItem="Fb5-pR-lzc" secondAttribute="leading" constant="8" id="gX5-8c-OAE"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="button" destination="HxR-aB-AgG" id="ecN-qV-ykO"/>
-                <outlet property="buttonBorderView" destination="0tQ-6y-qwx" id="Fas-k8-HOS"/>
-                <outlet property="buttonTitleLabel" destination="XwP-kA-MID" id="r4m-7L-8RS"/>
                 <outlet property="informationLabel" destination="Ooy-st-Q2L" id="bIy-fA-XJw"/>
             </connections>
-            <point key="canvasLocation" x="157" y="153.5"/>
+            <point key="canvasLocation" x="157" y="122"/>
         </tableViewCell>
     </objects>
 </document>

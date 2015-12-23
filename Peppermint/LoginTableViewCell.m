@@ -35,4 +35,17 @@
     [self.delegate selectedLoginTableViewCell:self atIndexPath:self.indexPath];
 }
 
+-(void) setJustText:(NSString*) text withColor:(UIColor*) color {
+    self.loginIconImageViewWidthConstraint.constant = 0;
+    self.loginIconImageView.image = nil;
+    self.loginLabel.text = text;
+    self.loginLabel.textColor = color;
+    [self.loginLabel sizeToFit];
+}
+
+-(void) setJustText:(NSString*) text withColor:(UIColor*)color withFont:(UIFont*)font {
+    self.loginLabel.font = font;
+    [self setJustText:text withColor:color];
+}
+
 @end

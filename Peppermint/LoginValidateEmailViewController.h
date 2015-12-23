@@ -8,12 +8,11 @@
 
 #import "BaseViewController.h"
 #import "LoginModel.h"
+#import "ContactSupportModel.h"
 
-@interface LoginValidateEmailViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, LoginValidateEmailTableViewCellDelegate, AccountModelDelegate>
-
+@interface LoginValidateEmailViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, AccountModelDelegate, LoginTableViewCellDelegate, ContactSupportModelDelegate>
 @property (weak, nonatomic) LoginModel *loginModel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UILabel *doneLabel;
 
 -(void) checkIfAccountIsVerified;
 
