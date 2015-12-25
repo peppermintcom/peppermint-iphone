@@ -274,10 +274,17 @@
                                 </connections>
                             </tableView>
                             <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qPx-Zh-C4k">
-                                <rect key="frame" x="0.0" y="53" width="414" height="683"/>
+                                <rect key="frame" x="0.0" y="50" width="414" height="686"/>
                                 <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qUf-8T-MI8">
+                                        <rect key="frame" x="48" y="0.0" width="356" height="20"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="5p9-2i-Bdx"/>
+                                        </constraints>
+                                    </view>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mZU-e0-vbZ" userLabel="SearchMenuView">
-                                        <rect key="frame" x="48" y="0.0" width="356" height="368"/>
+                                        <rect key="frame" x="48" y="5" width="356" height="368"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="368" id="sWH-rp-jnL"/>
@@ -286,9 +293,12 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="mZU-e0-vbZ" firstAttribute="top" secondItem="qPx-Zh-C4k" secondAttribute="top" id="2gJ-ul-NR1"/>
+                                    <constraint firstItem="mZU-e0-vbZ" firstAttribute="top" secondItem="qPx-Zh-C4k" secondAttribute="top" constant="5" id="2gJ-ul-NR1"/>
+                                    <constraint firstAttribute="trailing" secondItem="qUf-8T-MI8" secondAttribute="trailing" constant="10" id="8Ma-ob-E5b"/>
                                     <constraint firstItem="mZU-e0-vbZ" firstAttribute="leading" secondItem="qPx-Zh-C4k" secondAttribute="leading" constant="48" id="8vm-44-h1N"/>
                                     <constraint firstAttribute="trailing" secondItem="mZU-e0-vbZ" secondAttribute="trailing" constant="10" id="fkE-xB-iEi"/>
+                                    <constraint firstItem="qUf-8T-MI8" firstAttribute="leading" secondItem="qPx-Zh-C4k" secondAttribute="leading" constant="48" id="lpn-Cp-srs"/>
+                                    <constraint firstItem="qUf-8T-MI8" firstAttribute="top" secondItem="qPx-Zh-C4k" secondAttribute="top" id="ta9-Bx-gje"/>
                                 </constraints>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7zR-tD-HrX" userLabel="SendingIndicatorView">
@@ -375,7 +385,7 @@
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="7zR-tD-HrX" secondAttribute="bottom" id="OHV-gX-pAF"/>
                             <constraint firstAttribute="trailing" secondItem="Dr5-gj-0ac" secondAttribute="trailing" id="adM-Jn-qH0"/>
                             <constraint firstItem="7zR-tD-HrX" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="ayj-Ym-CQk"/>
-                            <constraint firstItem="qPx-Zh-C4k" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="53" id="fDg-Cn-uYP"/>
+                            <constraint firstItem="qPx-Zh-C4k" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="50" id="fDg-Cn-uYP"/>
                             <constraint firstItem="bqr-Ay-zAT" firstAttribute="top" secondItem="Dr5-gj-0ac" secondAttribute="top" constant="120" id="fXC-Ki-css"/>
                             <constraint firstItem="Dr5-gj-0ac" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="gXR-ra-tyE"/>
                             <constraint firstAttribute="trailing" secondItem="qPx-Zh-C4k" secondAttribute="trailing" id="jDT-je-E1P"/>
@@ -672,7 +682,7 @@
                     <view key="view" contentMode="scaleToFill" id="Cuh-Wb-VFD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.085774112779999995" green="0.36037287979999999" blue="0.31380316759999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="aZo-3D-uzN"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
@@ -1054,7 +1064,7 @@ email contact or both</string>
         <image name="phone_inactive" width="20" height="20"/>
         <image name="recording_logo" width="402" height="399"/>
         <image name="tap_to_send" width="278" height="50"/>
-        <image name="white_ellipse" width="596" height="60"/>
+        <image name="white_ellipse" width="356" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="80W-2r-LBI"/>

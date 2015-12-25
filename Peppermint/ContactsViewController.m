@@ -45,6 +45,7 @@
     NSTimer *timer;
     BOOL isScreenReady;
     NSUInteger activeRecordingView;
+    NSTimer *holdToRecordViewTimer;
 }
 
 - (void)viewDidLoad {
@@ -160,6 +161,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
     if(self.searchMenu.isOpen) {
         [self.searchMenu close];
     } else {
+        [self hideHoldToRecordInfoView];
         [self.reSideMenuContainerViewController presentLeftMenuViewController];
     }
 }
@@ -353,6 +355,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
 #pragma mark - HoldToRecordInfoView
 
 -(void) initHoldToRecordInfoView {
+    holdToRecordViewTimer = nil;
     self.holdToRecordInfoView.hidden = YES;
     self.holdToRecordInfoViewLabel.font = [UIFont openSansSemiBoldFontOfSize:14];
     self.holdToRecordInfoViewLabel.text = LOC(@"Hold to record message",@"Hold to record message");
@@ -366,6 +369,8 @@ SUBSCRIBE(ReplyContactIsAdded) {
 }
 
 -(void) hideHoldToRecordInfoView {
+    [holdToRecordViewTimer invalidate];
+    holdToRecordViewTimer = nil;
     [UIView animateWithDuration:ANIM_TIME animations:^{
         self.holdToRecordInfoView.alpha = 0;
     } completion:^(BOOL finished) {
@@ -377,6 +382,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 -(void) didShortTouchOnIndexPath:(NSIndexPath*) indexPath location:(CGPoint) location {
     if(!isScrolling) {
+        [holdToRecordViewTimer invalidate];
         self.holdToRecordInfoView.hidden = YES;
         CGFloat cellHeight = CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
         location.y +=  cellHeight * (3/4);
@@ -390,6 +396,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
                 self.holdToRecordInfoView.alpha = 1;
             } completion:^(BOOL finished) {
                 [RecordingModel new];   //Init recording model to get permission for microphone!
+                holdToRecordViewTimer = [NSTimer scheduledTimerWithTimeInterval:MESSAGE_SHOW_DURATION/2 target:self selector:@selector(hideHoldToRecordInfoView) userInfo:nil repeats:NO];
             }];
         } else {
             NSLog(@"Can not show holdToRecordView out of the view");
@@ -398,6 +405,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
 }
 
 -(void) didBeginItemSelectionOnIndexpath:(NSIndexPath*) indexPath location:(CGPoint) location {
+    [self.searchContactsTextField resignFirstResponder];
     CGRect cellRect = [self.tableView rectForRowAtIndexPath:indexPath];
     cellRect = CGRectOffset(cellRect, -self.tableView.contentOffset.x, -self.tableView.contentOffset.y);
     CGPoint scrollPoint = self.tableView.contentOffset;
@@ -415,8 +423,6 @@ SUBSCRIBE(ReplyContactIsAdded) {
         cellRect.origin.y = maxPossibleYOffset;
         [self.tableView setContentOffset:scrollPoint animated:YES];
     }
-    
-    [self.searchContactsTextField resignFirstResponder];
     
     self.tableView.bounces = NO;
     [self hideHoldToRecordInfoView];
@@ -451,6 +457,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
         self.recordingView.sendVoiceMessageModel = sendVoiceMessageModel;
         self.reSideMenuContainerViewController.panGestureEnabled = NO;
         
+        cellRect.origin.y += self.tableView.frame.origin.y;
         [self.recordingView presentWithAnimationInRect:cellRect onPoint:location];
     }
 }
@@ -689,6 +696,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
 }
 
 -(void) initSearchMenu {
+    
     REMenuItem *allContactsMenuItem = [self createMenuItemWithTitle:LOC(@"All Contacts", @"Title")
                                                                icon:@"icon_all"
                                                     iconHighlighted:@"icon_all_touch"

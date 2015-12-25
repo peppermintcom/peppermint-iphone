@@ -79,7 +79,6 @@
 		B17B3D341BB6898C009B8BC5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D331BB6898C009B8BC5 /* AppDelegate.m */; };
 		B17B3D3A1BB6898C009B8BC5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D381BB6898C009B8BC5 /* Main.storyboard */; };
 		B17B3D3C1BB6898C009B8BC5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D3B1BB6898C009B8BC5 /* Images.xcassets */; };
-		B17B3D3F1BB6898C009B8BC5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D3D1BB6898C009B8BC5 /* LaunchScreen.xib */; };
 		B17B3D4B1BB6898C009B8BC5 /* PeppermintTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D4A1BB6898C009B8BC5 /* PeppermintTests.m */; };
 		B17B3D571BB68A39009B8BC5 /* Text.strings in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D561BB68A39009B8BC5 /* Text.strings */; };
 		B17B3D5B1BB6A49E009B8BC5 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D5A1BB6A49E009B8BC5 /* BaseViewController.m */; };
@@ -293,7 +292,6 @@
 		B17B3D331BB6898C009B8BC5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		B17B3D391BB6898C009B8BC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B17B3D3B1BB6898C009B8BC5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		B17B3D3E1BB6898C009B8BC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		B17B3D441BB6898C009B8BC5 /* PeppermintTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PeppermintTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B17B3D491BB6898C009B8BC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B17B3D4A1BB6898C009B8BC5 /* PeppermintTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeppermintTests.m; sourceTree = "<group>"; };
@@ -800,7 +798,6 @@
 			children = (
 				B17206D31BE4DE5C0021D855 /* Sounds */,
 				B17B3D3B1BB6898C009B8BC5 /* Images.xcassets */,
-				B17B3D3D1BB6898C009B8BC5 /* LaunchScreen.xib */,
 				B17B3D321BB6898C009B8BC5 /* AppDelegate.h */,
 				B17B3D331BB6898C009B8BC5 /* AppDelegate.m */,
 			);
@@ -1186,7 +1183,6 @@
 				B102F9881BF0CF1500EDF7E6 /* LoginValidateEmailTableViewCell.xib in Resources */,
 				B165EF1F1BB72254008C6F71 /* EmptyResultTableViewCell.xib in Resources */,
 				B12C03BD1BCFFC280085A55A /* FastRecordingView.xib in Resources */,
-				B17B3D3F1BB6898C009B8BC5 /* LaunchScreen.xib in Resources */,
 				B17B3D701BB6BD2E009B8BC5 /* ContactTableViewCell.xib in Resources */,
 				B16DA2221BE10A8B00EBF043 /* SlideMenuTableViewCell.xib in Resources */,
 				D074A6741C0727700017EAC3 /* CountryRow.xib in Resources */,
@@ -1415,14 +1411,6 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		B17B3D3D1BB6898C009B8BC5 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B17B3D3E1BB6898C009B8BC5 /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -1517,6 +1505,7 @@
 			baseConfigurationReference = A3AC8DCFCC2ADAD1159483F0 /* Pods-Peppermint.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Peppermint/Peppermint.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1541,6 +1530,7 @@
 			baseConfigurationReference = C388433C48F87557ED2F3C2D /* Pods-Peppermint.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Peppermint/Peppermint.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

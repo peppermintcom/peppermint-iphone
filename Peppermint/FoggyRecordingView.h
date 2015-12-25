@@ -19,6 +19,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *informationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *counterLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *microphoneImageView;
+
+@property (weak, nonatomic) IBOutlet UIView *swipeInAnyDirectionView;
+@property (weak, nonatomic) IBOutlet UIImageView *swipeBackGroundImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *swipeBackGroundImageViewTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *swipeInAnyDirectionViewBottomConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *swipeInAnyDirectionLabel;
 
 @end

@@ -92,6 +92,7 @@
     [GAI sharedInstance].trackUncaughtExceptions = YES;
 #ifdef DEBUG
     [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
+    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelNone];
 #else
     [[GAI sharedInstance].logger setLogLevel:kGAILogLevelNone];
     [GAI sharedInstance].trackUncaughtExceptions = YES;

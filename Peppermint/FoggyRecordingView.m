@@ -9,8 +9,10 @@
 #import "FoggyRecordingView.h"
 #import "ExplodingView.h"
 
-#define IMPACT_MAX_LIMIT        32
-#define IMPACT_MIN_LIMIT        0
+#define IMPACT_MAX_LIMIT            32
+#define IMPACT_MIN_LIMIT            0
+
+#define SWIPE_VIEW_BOTTOM_CONSTANT  5
 
 @implementation FoggyRecordingView {
     CGRect originalMicrophoneFrame;
@@ -50,14 +52,9 @@
     self.counterLabel.font = [UIFont openSansBoldFontOfSize:21];
     
     self.swipeInAnyDirectionLabel.textColor = [UIColor emptyResultTableViewCellHeaderLabelTextcolorGray];
-#warning "Make visibility nicer!"
-    self.swipeInAnyDirectionLabel.backgroundColor = [UIColor grayColor];
-    self.swipeInAnyDirectionLabel.textColor = [UIColor blackColor];
-    
     self.swipeInAnyDirectionLabel.font = [UIFont openSansSemiBoldFontOfSize:15];
-    self.swipeInAnyDirectionLabel.text = LOC(@"Swipe anywhere to cancel", @"Swipe anywhere to cancel label");
-    self.swipeInAnyDirectionLabel.layer.cornerRadius = 15;
-    self.swipeInAnyDirectionLabel.clipsToBounds = YES;
+    self.swipeInAnyDirectionLabel.text = LOC(@"Swipe anywhere to cancel", @"Information");
+    
 }
 
 #pragma mark - FoggyRecordingView User Interaction
@@ -82,7 +79,26 @@
 -(BOOL) presentWithAnimationInRect:(CGRect)rect onPoint:(CGPoint) point {
     BOOL result = [super presentWithAnimationInRect:rect onPoint:point];
     if(result) {
-        self.contentViewYOffset.constant = rect.origin.y + self.RowViewYOffset.constant + 2;
+        self.contentViewYOffset.constant = rect.origin.y - self.RowViewYOffset.constant;
+        self.swipeInAnyDirectionViewBottomConstraint.constant = SWIPE_VIEW_BOTTOM_CONSTANT;
+        self.swipeBackGroundImageView.image = [UIImage imageNamed:@"base_down"];
+        self.swipeBackGroundImageViewTopConstraint.constant = 0;
+        if(self.contentViewYOffset.constant <= self.swipeInAnyDirectionView.frame.size.height / 2) {
+            self.swipeInAnyDirectionViewBottomConstraint.constant =
+            -self.rowView.frame.size.height
+            -2 * self.swipeInAnyDirectionViewBottomConstraint.constant
+            -self.swipeInAnyDirectionView.frame.size.height;
+            
+            
+            UIImage *sourceImage = self.swipeBackGroundImageView.image;
+            UIImage* flippedImage = [UIImage imageWithCGImage:sourceImage.CGImage
+                                                        scale:sourceImage.scale
+                                                  orientation:UIImageOrientationDownMirrored];
+            self.swipeBackGroundImageView.image = flippedImage;
+            self.swipeBackGroundImageViewTopConstraint.constant = -2*SWIPE_VIEW_BOTTOM_CONSTANT;
+        }
+        
+        
         self.counterLabel.text = @"";
         self.informationLabel.text = [NSString stringWithFormat:
                                           LOC(@"Recording for contact format", @"Title Text Format"),
