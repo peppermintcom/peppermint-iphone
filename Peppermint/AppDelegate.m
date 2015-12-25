@@ -128,26 +128,28 @@
     if(isFirstRun) {
         [[PeppermintMessageSender sharedInstance] clearSender];
         defaults_set_object(DEFAULTS_KEY_IS_FIRST_RUN, DEFAULTS_KEY_IS_FIRST_RUN);
+        [self initLocalNotification];
     }
 }
 
 -(void) initLocalNotification {
     UIApplication *application = [UIApplication sharedApplication];
     
-    
-    [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
+    [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil]];
     
     application.applicationIconBadgeNumber = 0;
     [application cancelAllLocalNotifications];
     
+    int second = 1;
+    int minute = second * 60;
+    
     UILocalNotification *notif = [[UILocalNotification alloc] init];
-    notif.fireDate = [NSDate dateWithTimeIntervalSinceNow:7];
+    notif.fireDate = [NSDate dateWithTimeIntervalSinceNow:3 * minute];
     notif.timeZone = [NSTimeZone defaultTimeZone];
     
-    notif.alertBody = @"Body";
-    notif.alertAction = @"AlertButtonCaption";
+    notif.alertBody = @"You have installed peppermint now send your first message";
+    notif.alertAction = @"Send now!";
     notif.soundName = @"alert.caf";
-    notif.applicationIconBadgeNumber = 1;
     
     [[UIApplication sharedApplication] scheduleLocalNotification:notif];
 }
@@ -165,7 +167,6 @@
     [self initGoogleApp];
     [self initConnectionStatusChangeListening];
     [self checkForFirstRun];
-    //[self initLocalNotification];    
     REGISTER();
     return YES;
 }

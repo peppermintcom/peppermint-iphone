@@ -49,6 +49,7 @@
     [recentContactsModel save:self.selectedPeppermintContact];
     [self attachProcessToAppDelegate];
     [self checkAndCleanFastReplyModel];
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
 
     if(self.sendingStatus == SendingStatusIniting) {
         dispatch_semaphore_wait(dispatch_semaphore,dispatch_time(DISPATCH_TIME_NOW, DISPATCH_SEMAPHORE_PERIOD));
