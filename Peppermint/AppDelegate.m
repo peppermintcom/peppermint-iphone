@@ -297,6 +297,7 @@ SUBSCRIBE(DetachSuccess) {
     } else if ([path containsString:PATH_RESET]
                || [host containsString:PATH_RESET]) {
         NSLog(PATH_RESET);
+        result = YES;
     } else if ([path containsString:PATH_SIGNIN]
                || [host containsString:PATH_SIGNIN]) {
         NSLog(PATH_SIGNIN);
@@ -304,6 +305,7 @@ SUBSCRIBE(DetachSuccess) {
         if(![nvc isKindOfClass:[LoginNavigationViewController class]]) {
             [LoginNavigationViewController logUserInWithDelegate:nil completion:nil];
         }
+        result = YES;
     } else {
         NSLog(@"handleOpenURL failed for URL: %@", url.host);
     }
