@@ -67,6 +67,9 @@
     isValidPasswordEmptyValidation = YES;
     isValidPassowrdLengthValidation = YES;
     self.doneLabel.enabled = self.doneButton.enabled = NO;
+    
+    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+    peppermintMessageSender.name = peppermintMessageSender.surname = peppermintMessageSender.password = @"";
 }
 
 - (void) viewWillAppear:(BOOL)animated {
