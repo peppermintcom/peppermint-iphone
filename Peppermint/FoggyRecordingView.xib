@@ -49,7 +49,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vH6-fW-WGx">
-                            <rect key="frame" x="82" y="-8" width="155" height="115"/>
+                            <rect key="frame" x="62" y="-8" width="155" height="115"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="base_down" translatesAutoresizingMaskIntoConstraints="NO" id="50Q-Ac-aKf">
                                     <rect key="frame" x="0.0" y="0.0" width="155" height="115"/>
@@ -96,17 +96,17 @@ to cancel</string>
                             </variation>
                         </view>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_mic" translatesAutoresizingMaskIntoConstraints="NO" id="OV0-La-sKD">
-                            <rect key="frame" x="210" y="98" width="88" height="88"/>
+                            <rect key="frame" x="188" y="87" width="110" height="110"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="88" id="IrR-8C-78m"/>
-                                <constraint firstAttribute="height" constant="88" id="MnF-TC-wF1"/>
+                                <constraint firstAttribute="width" constant="110" id="IrR-8C-78m"/>
+                                <constraint firstAttribute="height" constant="110" id="MnF-TC-wF1"/>
                             </constraints>
                         </imageView>
                     </subviews>
                     <color key="backgroundColor" red="0.90823108460000002" green="0.081871332150000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstItem="vH6-fW-WGx" firstAttribute="leading" secondItem="V7s-JW-net" secondAttribute="leading" constant="82" id="0H0-N6-OxM"/>
+                        <constraint firstItem="vH6-fW-WGx" firstAttribute="leading" secondItem="V7s-JW-net" secondAttribute="leading" constant="62" id="0H0-N6-OxM"/>
                         <constraint firstAttribute="trailing" secondItem="spy-Jr-n8B" secondAttribute="trailing" id="1px-Rx-FVQ"/>
                         <constraint firstItem="spy-Jr-n8B" firstAttribute="top" secondItem="vH6-fW-WGx" secondAttribute="bottom" constant="5" id="1zj-L6-hlq"/>
                         <constraint firstItem="spy-Jr-n8B" firstAttribute="centerX" secondItem="vH6-fW-WGx" secondAttribute="centerX" id="7DX-bE-m4J"/>
@@ -115,7 +115,7 @@ to cancel</string>
                         <constraint firstItem="spy-Jr-n8B" firstAttribute="top" secondItem="V7s-JW-net" secondAttribute="top" constant="112" id="cEq-4S-2Da"/>
                         <constraint firstItem="spy-Jr-n8B" firstAttribute="leading" secondItem="V7s-JW-net" secondAttribute="leading" id="d02-Yh-Xrg"/>
                         <constraint firstItem="OV0-La-sKD" firstAttribute="centerY" secondItem="spy-Jr-n8B" secondAttribute="centerY" id="lOx-CP-CPc"/>
-                        <constraint firstAttribute="trailing" secondItem="vH6-fW-WGx" secondAttribute="trailing" constant="83" id="rMy-Ku-OXd"/>
+                        <constraint firstAttribute="trailing" secondItem="vH6-fW-WGx" secondAttribute="trailing" constant="103" id="rMy-Ku-OXd"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">

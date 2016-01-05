@@ -417,9 +417,10 @@ SUBSCRIBE(ReplyContactIsAdded) {
     }
     
     CGRect tableViewFrame = self.tableView.frame;
-    CGFloat maxPossibleYOffset = tableViewFrame.size.height - CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
+    CGFloat margin = 1.5 * CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
+    CGFloat maxPossibleYOffset = tableViewFrame.size.height - margin;
     if (cellRect.origin.y > maxPossibleYOffset) {
-        scrollPoint.y += (cellRect.origin.y - maxPossibleYOffset);
+        scrollPoint.y += cellRect.origin.y - maxPossibleYOffset;
         cellRect.origin.y = maxPossibleYOffset;
         [self.tableView setContentOffset:scrollPoint animated:YES];
     }

@@ -12,7 +12,7 @@
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ContactTableViewCell" rowHeight="56" id="8e4-VB-87A" customClass="ContactTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
             <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8e4-VB-87A" id="ejf-Un-hy5">
+            <tableViewCellContentView key="contentView" autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8e4-VB-87A" id="ejf-Un-hy5">
                 <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>

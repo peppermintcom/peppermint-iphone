@@ -9,7 +9,7 @@
 #import "FoggyRecordingView.h"
 #import "ExplodingView.h"
 
-#define IMPACT_MAX_LIMIT            32
+#define IMPACT_MAX_LIMIT            48
 #define IMPACT_MIN_LIMIT            0
 
 #define SWIPE_VIEW_BOTTOM_CONSTANT  5
@@ -212,7 +212,7 @@
     } else {
         int referenceLevel = 5;
         int range = 160;
-        int offset = 30;
+        int offset = 0;
         CGFloat impact = 20 * log10(referenceLevel * powf(10, (average/20)) * range) + offset;
         impact = impact *  IMPACT_MAX_LIMIT/80;
         
@@ -228,7 +228,8 @@
         frame.origin.y -= impact/2;
         
         previousImpact = (previousImpact == 0) ? impact : previousImpact;
-        if(previousImpact ==0 || (impact-previousImpact)*(impact-previousImpact) > (IMPACT_MAX_LIMIT / 16)) {
+        CGFloat diff = fabs(impact - previousImpact);
+        if(previousImpact ==0 || diff > (IMPACT_MAX_LIMIT / 16)) {
             self.microphoneImageView.frame = frame;
             previousImpact = impact;
         }
