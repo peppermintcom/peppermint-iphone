@@ -65,7 +65,9 @@
     mandrillMessage = [MandrillMessage new];
     mandrillMessage.from_email = @"support@peppermint.com"; //self.peppermintMessageSender.email;
     
-    mandrillMessage.from_name = nameSurname;
+    mandrillMessage.from_name =
+    [NSString stringWithFormat:@"%@ <%@>", nameSurname, self.peppermintMessageSender.email];
+    
     mandrillMessage.subject = subject;
     NSString *body = [self mailBodyHTMLForUrlPath:url extension:_extension signature:signature duration:_duration];
     mandrillMessage.html = body;
