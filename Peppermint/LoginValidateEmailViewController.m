@@ -28,6 +28,7 @@
 @implementation LoginValidateEmailViewController {
     AccountModel *accountModel;
     ContactSupportModel *contactSupportModel;
+    BOOL isPageActiveToCheckVerificationOnServer;
 }
 
 - (void)viewDidLoad {
@@ -37,6 +38,8 @@
     
     accountModel = [AccountModel sharedInstance];
     accountModel.delegate = self;
+    
+    isPageActiveToCheckVerificationOnServer = NO;
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -46,6 +49,7 @@
 
 -(void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    isPageActiveToCheckVerificationOnServer = YES;
     [self checkIfAccountIsVerified];
 }
 
@@ -160,7 +164,9 @@
 
 -(void) accountInfoRefreshSuccess {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    [self performSelector:@selector(checkIfAccountIsVerified) withObject:nil afterDelay:REFRESH_PERIOD];
+    if(isPageActiveToCheckVerificationOnServer) {
+        [self performSelector:@selector(checkIfAccountIsVerified) withObject:nil afterDelay:REFRESH_PERIOD];
+    }
 }
 
 - (void)userLogInSuccessWithEmail:(NSString *)email {
@@ -182,6 +188,7 @@
             contactSupportModel = [ContactSupportModel new];
             contactSupportModel.delegate = self;
         }
+        isPageActiveToCheckVerificationOnServer = NO;
         [contactSupportModel sendContactSupportMail];
     } else if(indexPath.section == SECTION_CANCEL_REGISTRATION) {
         accountModel.delegate = nil;
