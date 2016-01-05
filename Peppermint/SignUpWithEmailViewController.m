@@ -213,7 +213,8 @@
         if(indexPath.row == ROW_INPUT_PASSWORD) {
             height = CELL_HEIGHT_LOGIN_TABLEVIEWCELL;
         } else if (indexPath.row == ROW_PASSWORD_EMPTY_VALIDATION) {
-            height = (isValidPasswordEmptyValidation) ? 0 : CELL_HEIGHT_INFORMATION_TABLEVIEWCELL;
+            height = 0; //(isValidPasswordEmptyValidation) ? 0 : CELL_HEIGHT_INFORMATION_TABLEVIEWCELL;
+            //Password length validation covers empty validation
         } else if (indexPath.row == ROW_PASSWORD_LENGTH_VALIDATION) {
             height = (isValidPassowrdLengthValidation) ? 0: CELL_HEIGHT_INFORMATION_TABLEVIEWCELL;
         }
