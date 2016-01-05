@@ -42,7 +42,8 @@
         NSString *supportEmail = LOC(@"support@peppermint.com", @"Support Email");
         [controller setToRecipients:[NSArray arrayWithObject:supportEmail]];
         [controller setSubject:LOC(@"Contact Support Subject",@"Contact Support Subject")];
-        [controller setMessageBody:@"" isHTML:YES];
+        body = [DeviceModel summary];
+        [controller setMessageBody:body isHTML:YES];
     } complete:^(MFMailComposeViewController *controller, MFMailComposeResult result, NSError *error) {
         if(error) {
             [controller dismissViewControllerAnimated:YES completion:nil];
