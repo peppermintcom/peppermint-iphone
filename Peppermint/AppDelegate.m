@@ -147,7 +147,7 @@
     notif.fireDate = [NSDate dateWithTimeIntervalSinceNow:3 * minute];
     notif.timeZone = [NSTimeZone defaultTimeZone];
     
-    notif.alertBody = @"You have installed peppermint now send your first message";
+    notif.alertBody = LOC(@"You have installed Peppermint. Click to send your first message!", @"Notification Message");
     notif.alertAction = @"Send now!";
     notif.soundName = @"alert.caf";
     
