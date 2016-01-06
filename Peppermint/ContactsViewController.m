@@ -494,6 +494,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
 }
 
 -(void) newRecentContactisSaved {
+    self.searchContactsTextField.text = self.contactsModel.filterText = @"";
     [self cellSelectedWithTag:CELL_TAG_RECENT_CONTACTS];
 }
 

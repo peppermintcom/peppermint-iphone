@@ -1125,7 +1125,7 @@
 				TargetAttributes = {
 					B17B3D2A1BB6898C009B8BC5 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = 8V9FEAB5WD;
+						DevelopmentTeam = FG36H6PY86;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -1519,9 +1519,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint;
+				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "84b77f55-800f-4915-9897-05fba7f4a7c4";
+				PROVISIONING_PROFILE = "2ce472e9-895a-4996-b887-af983f2c32a3";
 			};
 			name = Debug;
 		};
@@ -1544,9 +1544,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint;
+				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2ddf3c5f-14f8-4c80-8377-9e5b468df822";
+				PROVISIONING_PROFILE = "e1591a09-654a-4e6d-9d1c-d550859f1148";
 			};
 			name = Release;
 		};
