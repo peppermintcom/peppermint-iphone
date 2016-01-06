@@ -410,61 +410,63 @@ SUBSCRIBE(ReplyContactIsAdded) {
 }
 
 -(void) didBeginItemSelectionOnIndexpath:(NSIndexPath*) indexPath location:(CGPoint) location {
-    [self.searchContactsTextField resignFirstResponder];
-    CGRect cellRect = [self.tableView rectForRowAtIndexPath:indexPath];
-    cellRect = CGRectOffset(cellRect, -self.tableView.contentOffset.x, -self.tableView.contentOffset.y);
-    CGPoint scrollPoint = self.tableView.contentOffset;
-    
-    if (cellRect.origin.y < 0) {
-        scrollPoint.y += cellRect.origin.y;
-        cellRect.origin.y = 0;
-        [self.tableView setContentOffset:scrollPoint animated:YES];
-    }
-    
-    CGRect tableViewFrame = self.tableView.frame;
-    CGFloat margin = 1.5 * CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
-    CGFloat maxPossibleYOffset = tableViewFrame.size.height - margin;
-    if (cellRect.origin.y > maxPossibleYOffset) {
-        scrollPoint.y += cellRect.origin.y - maxPossibleYOffset;
-        cellRect.origin.y = maxPossibleYOffset;
-        [self.tableView setContentOffset:scrollPoint animated:YES];
-    }
-    
-    self.tableView.bounces = NO;
-    [self hideHoldToRecordInfoView];
-    
-    PeppermintContact *selectedContact = [FastReplyModel sharedInstance].peppermintContact;
-    if(indexPath.section == SECTION_CONTACTS) {
-        selectedContact = [[self activeContactList] objectAtIndex:indexPath.row];
-    }
-    [self.searchContactsTextField resignFirstResponder];
-    
-    SendVoiceMessageModel *sendVoiceMessageModel = nil;
-    if(selectedContact.communicationChannel == CommunicationChannelEmail) {
-        sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
-    } else if (selectedContact.communicationChannel == CommunicationChannelSMS) {
-        sendVoiceMessageModel = [SendVoiceMessageSMSModel new];
-    }
-    
-    if(!isNewRecordAvailable) {
-        NSLog(@"Please wait for a new record..");
-    } else if(![sendVoiceMessageModel isServiceAvailable]) {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.detailsLabelFont = [UIFont openSansSemiBoldFontOfSize:13];
-        hud.detailsLabelText = LOC(@"Service is not available", @"Service is not available message");
-        CGFloat messageShiftValue = 50;
-        CGFloat center = self.view.frame.size.height / 2 - messageShiftValue;
-        hud.yOffset = location.y - center;
-        hud.removeFromSuperViewOnHide = YES;
-        [hud hide:YES afterDelay:WARN_TIME/2];
-    } else {
-        sendVoiceMessageModel.selectedPeppermintContact = selectedContact;
-        self.recordingView.sendVoiceMessageModel = sendVoiceMessageModel;
-        self.reSideMenuContainerViewController.panGestureEnabled = NO;
+    if(!isScrolling) {
+        [self.searchContactsTextField resignFirstResponder];
+        CGRect cellRect = [self.tableView rectForRowAtIndexPath:indexPath];
+        cellRect = CGRectOffset(cellRect, -self.tableView.contentOffset.x, -self.tableView.contentOffset.y);
+        CGPoint scrollPoint = self.tableView.contentOffset;
         
-        cellRect.origin.y += self.tableView.frame.origin.y;
-        [self.recordingView presentWithAnimationInRect:cellRect onPoint:location];
+        if (cellRect.origin.y < 0) {
+            scrollPoint.y += cellRect.origin.y;
+            cellRect.origin.y = 0;
+            [self.tableView setContentOffset:scrollPoint animated:YES];
+        }
+        
+        CGRect tableViewFrame = self.tableView.frame;
+        CGFloat margin = 1.5 * CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
+        CGFloat maxPossibleYOffset = tableViewFrame.size.height - margin;
+        if (cellRect.origin.y > maxPossibleYOffset) {
+            scrollPoint.y += cellRect.origin.y - maxPossibleYOffset;
+            cellRect.origin.y = maxPossibleYOffset;
+            [self.tableView setContentOffset:scrollPoint animated:YES];
+        }
+        
+        self.tableView.bounces = NO;
+        [self hideHoldToRecordInfoView];
+        
+        PeppermintContact *selectedContact = [FastReplyModel sharedInstance].peppermintContact;
+        if(indexPath.section == SECTION_CONTACTS) {
+            selectedContact = [[self activeContactList] objectAtIndex:indexPath.row];
+        }
+        [self.searchContactsTextField resignFirstResponder];
+        
+        SendVoiceMessageModel *sendVoiceMessageModel = nil;
+        if(selectedContact.communicationChannel == CommunicationChannelEmail) {
+            sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
+        } else if (selectedContact.communicationChannel == CommunicationChannelSMS) {
+            sendVoiceMessageModel = [SendVoiceMessageSMSModel new];
+        }
+        
+        if(!isNewRecordAvailable) {
+            NSLog(@"Please wait for a new record..");
+        } else if(![sendVoiceMessageModel isServiceAvailable]) {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.detailsLabelFont = [UIFont openSansSemiBoldFontOfSize:13];
+            hud.detailsLabelText = LOC(@"Service is not available", @"Service is not available message");
+            CGFloat messageShiftValue = 50;
+            CGFloat center = self.view.frame.size.height / 2 - messageShiftValue;
+            hud.yOffset = location.y - center;
+            hud.removeFromSuperViewOnHide = YES;
+            [hud hide:YES afterDelay:WARN_TIME/2];
+        } else {
+            sendVoiceMessageModel.selectedPeppermintContact = selectedContact;
+            self.recordingView.sendVoiceMessageModel = sendVoiceMessageModel;
+            self.reSideMenuContainerViewController.panGestureEnabled = NO;
+            
+            cellRect.origin.y += self.tableView.frame.origin.y;
+            [self.recordingView presentWithAnimationInRect:cellRect onPoint:location];
+        }
     }
 }
 
