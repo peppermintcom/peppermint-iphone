@@ -294,8 +294,10 @@ SUBSCRIBE(DetachSuccess) {
                || [host containsString:PATH_VERIFIY_EMAIL]
                || [host containsString:PATH_VERIFIED]) {
         result = [self validateEmailWithUrl:url];
-    } else if ([path containsString:PATH_RESET]
-               || [host containsString:PATH_RESET]) {
+    } else if ([path containsString:PATH_BACK_TO_APP] || [host containsString:PATH_BACK_TO_APP]) {
+        NSLog(PATH_BACK_TO_APP);
+        result = YES;
+    } else if ([path containsString:PATH_RESET] || [host containsString:PATH_RESET]) {
         NSLog(PATH_RESET);
         result = YES;
     } else if ([path containsString:PATH_SIGNIN]
