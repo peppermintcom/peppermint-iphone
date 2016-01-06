@@ -257,13 +257,7 @@ SUBSCRIBE(MessageSendingStatusIsUpdated) {
                    || model.sendingStatus == SendingStatusSent
                    || model.sendingStatus == SendingStatusCached);
     
-    NSLog(@"Model:%@ status:%d delegate:%d isAllowed:%d",
-          model,
-          (int)model.sendingStatus,
-          model.delegate != nil,
-          result
-          );
-    
+    //NSLog(@"Model:%@ status:%d delegate:%d isAllowed:%d", model, (int)model.sendingStatus, model.delegate != nil, result);
     return result;
 }
 

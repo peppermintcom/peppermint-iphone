@@ -208,7 +208,7 @@
         default:
             break;
     }
-    NSLog(@"Timer checked if %@ is completed. But it is still in %d state", self, (int)self.sendingStatus);
+    //NSLog(@"Timer checked if %@ is completed. But it is still in %d state", self, (int)self.sendingStatus);
 }
 
 -(void) performDetach {

@@ -91,11 +91,9 @@
 -(void) initGoogleAnalytics {
     [GAI sharedInstance].trackUncaughtExceptions = YES;
 #ifdef DEBUG
-    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
     [[GAI sharedInstance].logger setLogLevel:kGAILogLevelNone];
 #else
     [[GAI sharedInstance].logger setLogLevel:kGAILogLevelNone];
-    [GAI sharedInstance].trackUncaughtExceptions = YES;
 #endif
     [GAI sharedInstance].dispatchInterval = 20;
     [[GAI sharedInstance] trackerWithTrackingId:GOOGLE_ANALYTICS_KEY];

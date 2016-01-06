@@ -71,7 +71,7 @@
 
 -(void) initRecordFile {
     self.fileUrl = [self recordFileUrl];
-    NSLog(@"FileUrl is %@", self.fileUrl);
+    //NSLog(@"FileUrl is %@", self.fileUrl);
 }
 
 -(void) initRecorder {
