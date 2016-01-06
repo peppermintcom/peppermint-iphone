@@ -247,8 +247,8 @@ SUBSCRIBE(ReplyContactIsAdded) {
             if(peppermintContact.avatarImage) {
                 
                 CGRect frame = cell.avatarImageView.frame;
-                NSUInteger width = frame.size.width;
-                NSUInteger height = frame.size.height;
+                int width = frame.size.width;
+                int height = frame.size.height;
                 cell.avatarImageView.image = [peppermintContact.avatarImage resizedImageWithWidth:width height:height];
                 
             } else {
