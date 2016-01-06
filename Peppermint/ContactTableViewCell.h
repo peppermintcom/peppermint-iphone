@@ -25,7 +25,6 @@
 @property(weak, nonatomic) IBOutlet UIImageView *rightIconImageView;
 @property (weak, nonatomic) IBOutlet UIButton* cellActionButton;
 @property(weak, nonatomic) id<ContactTableViewCellDelegate> delegate;
-
-
+@property(weak, nonatomic) UITableView *tableView;
 
 @end

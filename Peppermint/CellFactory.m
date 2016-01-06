@@ -30,6 +30,7 @@
     
     cell.indexPath = indexPath;
     cell.delegate = delegate;
+    cell.tableView = tableView;
     return cell;
 }
 

@@ -245,7 +245,12 @@ SUBSCRIBE(ReplyContactIsAdded) {
         if (indexPath.row < [self activeContactList].count) {
             PeppermintContact *peppermintContact = [[self activeContactList] objectAtIndex:indexPath.row];
             if(peppermintContact.avatarImage) {
-                cell.avatarImageView.image = peppermintContact.avatarImage;
+                
+                CGRect frame = cell.avatarImageView.frame;
+                NSUInteger width = frame.size.width;
+                NSUInteger height = frame.size.height;
+                cell.avatarImageView.image = [peppermintContact.avatarImage resizedImageWithWidth:width height:height];
+                
             } else {
                 cell.avatarImageView.image = [UIImage imageNamed:@"avatar_empty"];
             }

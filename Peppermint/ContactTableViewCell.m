@@ -54,8 +54,15 @@
 
 #pragma mark - Action Buttons
 
+-(BOOL) isAllowedToHandleTouch {
+    CGPoint scrollPoint = self.tableView.contentOffset;
+    CGFloat tableMaxScrollValue = self.tableView.contentSize.height - self.tableView.bounds.size.height;
+    BOOL isTableInScrollingState = (scrollPoint.y < 0) || (scrollPoint.y > 0 && scrollPoint.y > tableMaxScrollValue);
+    return !isTableInScrollingState;
+}
+
 -(IBAction) touchDownOnIndexPath:(id) sender event:(UIEvent *)event {
-    if(isActionProcessCompleted) {
+    if([self isAllowedToHandleTouch] && isActionProcessCompleted) {
         isActionProcessCompleted = NO;
         [self applySelectedStyle];
         NSDictionary *userInfo = [NSDictionary dictionaryWithObject:event forKey:EVENT];
