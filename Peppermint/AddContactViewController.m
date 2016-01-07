@@ -56,8 +56,9 @@
             [addContactViewController.lastNameTextField becomeFirstResponder];
         } else if (nameComponents.count > 1) {
             NSString *firstName = [nameComponents firstObject];
-            NSString *lastName = [nameComponents componentsJoinedByString:@" "];
-            lastName = [lastName stringByReplacingOccurrencesOfString:firstName withString:@""];
+            NSMutableArray *mutableNameComponents = [NSMutableArray arrayWithArray:nameComponents];
+            [mutableNameComponents removeObjectAtIndex:0];
+            NSString *lastName = [mutableNameComponents componentsJoinedByString:@" "];
             addContactViewController.firstNameTextField.text = firstName.trimmedText;
             addContactViewController.lastNameTextField.text = lastName.trimmedText;
             [addContactViewController.phoneNumberTextField becomeFirstResponder];
