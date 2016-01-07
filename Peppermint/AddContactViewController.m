@@ -230,8 +230,8 @@
     self.phoneImageView.highlighted = self.phoneNumberTextField.text.length > 1;
     self.emailImageView.highlighted = self.emailTextField.text.length > 0 && [self.emailTextField.text isValidEmail];
     
-    self.firstNameTextField.text = [self.firstNameTextField.text capitalizedString];
-    self.lastNameTextField.text = [self.lastNameTextField.text capitalizedString];
+    self.firstNameTextField.text = [self.firstNameTextField.text capitalizedString].trimmedText;
+    self.lastNameTextField.text = [self.lastNameTextField.text capitalizedString].trimmedText;
     
     NSMutableCharacterSet *phoneNumberCharSet = [NSMutableCharacterSet decimalDigitCharacterSet];
     [phoneNumberCharSet addCharactersInString:INTERNATIONAL_PHONE_SIGN];
@@ -260,8 +260,8 @@
         [textField becomeFirstResponder];
     }
     
-    if(textField == self.firstNameTextField) {
-        [self.delegate nameFieldUpdated:textField.text];
+    if(textField == self.firstNameTextField || textField == self.lastNameTextField) {
+        [self.delegate nameFieldUpdated:[NSString stringWithFormat:@"%@ %@", self.firstNameTextField.text, self.lastNameTextField.text]];
     }
 }
 
