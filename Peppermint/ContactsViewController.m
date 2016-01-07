@@ -116,6 +116,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
             activeCellTag = CELL_TAG_RECENT_CONTACTS;
             self.searchSourceIconImageView.image = [UIImage imageNamed:@"icon_recent"];
             [[self loadingHud] show:YES];
+            [self.tableView reloadData];
             [self.recentContactsModel refreshRecentContactList];
         }
     }
@@ -289,12 +290,17 @@ SUBSCRIBE(ReplyContactIsAdded) {
         height = isBigScreen ? CELL_HEIGHT_EMPTYRESULT_TABLEVIEWCELL : CELL_HEIGHT_EMPTYRESULT_TABLEVIEWCELL / 4;        
     } else if (indexPath.section == SECTION_CONTACTS) {
         if (indexPath.row < [self activeContactList].count) {
+            height = CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
             PeppermintContact *fastReplyContact = [FastReplyModel sharedInstance].peppermintContact;
-            PeppermintContact *activeContact = [[self activeContactList] objectAtIndex:indexPath.row];
-            if([activeContact isIdenticalForImage:fastReplyContact]) {
-                fastReplyContact.avatarImage = activeContact.avatarImage;
+            if(fastReplyContact) {
+                PeppermintContact *activeContact = [[self activeContactList] objectAtIndex:indexPath.row];
+                if([activeContact isIdenticalForImage:fastReplyContact]) {
+                    fastReplyContact.avatarImage = activeContact.avatarImage;
+                }
+                if([activeContact equals:fastReplyContact]) {
+                    height = 0;
+                }
             }
-            height = [activeContact equals:fastReplyContact] ? 0 : CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
         }
     } else if (indexPath.section == SECTION_CELL_INFORMATION) {
         height = CELL_HEIGHT_CONTACT_INFORMATION_TABLEVIEWCELL;
@@ -449,6 +455,8 @@ SUBSCRIBE(ReplyContactIsAdded) {
         
         if(!isNewRecordAvailable) {
             NSLog(@"Please wait for a new record..");
+        } else if (sendVoiceMessageModel == nil) {
+            NSLog(@"SendVoiceMessageModel could not be defined for this contact..");            
         } else if(![sendVoiceMessageModel isServiceAvailable]) {
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.mode = MBProgressHUDModeText;
