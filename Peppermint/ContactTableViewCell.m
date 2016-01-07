@@ -18,7 +18,7 @@
     CGPoint touchBeginPoint;
     NSTimer *timer;
     UIView *rootView;
-    BOOL isActionProcessCompleted;
+    BOOL isCellAvailableToHaveUserInteraction;
 }
 
 - (void)awakeFromNib {
@@ -33,7 +33,7 @@
     [self applyNonSelectedStyle];
     timer = nil;
     rootView = [UIApplication sharedApplication].keyWindow.rootViewController.view;
-    isActionProcessCompleted = YES;
+    isCellAvailableToHaveUserInteraction = YES;
 }
 
 -(void) applySelectedStyle {
@@ -54,16 +54,28 @@
 
 #pragma mark - Action Buttons
 
+-(BOOL) isAllCellsNonSelectedInTable {
+    BOOL isContactSelectionAvailable = YES;
+    for(UITableViewCell *cell in self.tableView.visibleCells) {
+        if([cell isKindOfClass:[ContactTableViewCell class]] && cell.backgroundColor != self.backgroundColor) {
+            isContactSelectionAvailable = NO;
+            break;
+        }
+    }
+    return isContactSelectionAvailable;
+}
+
 -(BOOL) isAllowedToHandleTouch {
     CGPoint scrollPoint = self.tableView.contentOffset;
     CGFloat tableMaxScrollValue = self.tableView.contentSize.height - self.tableView.bounds.size.height;
     BOOL isTableInScrollingState = (scrollPoint.y < 0) || (scrollPoint.y > 0 && scrollPoint.y > tableMaxScrollValue);
-    return !isTableInScrollingState;
+    BOOL result = !isTableInScrollingState && [self isAllCellsNonSelectedInTable];
+    return result;
 }
 
 -(IBAction) touchDownOnIndexPath:(id) sender event:(UIEvent *)event {
-    if([self isAllowedToHandleTouch] && isActionProcessCompleted) {
-        isActionProcessCompleted = NO;
+    if([self isAllowedToHandleTouch] && isCellAvailableToHaveUserInteraction) {
+        isCellAvailableToHaveUserInteraction = NO;
         [self applySelectedStyle];
         NSDictionary *userInfo = [NSDictionary dictionaryWithObject:event forKey:EVENT];
         touchBeginPoint = CGPointMake(0, 0);
@@ -72,7 +84,7 @@
 }
 
 -(void) touchingHold {
-    if(!isActionProcessCompleted) {
+    if(!isCellAvailableToHaveUserInteraction) {
         UIEvent *event = [timer.userInfo valueForKey:EVENT];
         [timer invalidate];
         UITouch *touch = [[event allTouches] anyObject];
@@ -99,16 +111,20 @@
         BOOL isOutOfBounds = bounds.origin.x >= location.x || bounds.origin.y >= location.y
         || bounds.size.width <= location.x || bounds.size.height <= location.y;
         
-        if(!isActionProcessCompleted && (!speedIsInLimit || isOutOfBounds)) {
-            isActionProcessCompleted = YES;
-            [self touchDownCancelledOnIndexPath:sender event:event];
+        if(!isCellAvailableToHaveUserInteraction && (!speedIsInLimit || isOutOfBounds)) {
+            if(timer.isValid)
+                [timer invalidate];
+            timer = nil;
+            [self applyNonSelectedStyle];
+            isCellAvailableToHaveUserInteraction = YES;
+            [self.delegate didCancelItemSelectionOnIndexpath:self.indexPath location:touchBeginPoint];
         }
     }
 }
 
 -(IBAction) touchDownFinishedOnIndexPath:(id) sender event:(UIEvent *)event {
-    if(!isActionProcessCompleted) {
-        isActionProcessCompleted = YES;
+    if(!isCellAvailableToHaveUserInteraction) {
+        isCellAvailableToHaveUserInteraction = YES;
         if(timer != nil) {
             [self applyNonSelectedStyle];
             if(timer.isValid)  {
@@ -126,11 +142,12 @@
 }
 
 -(IBAction) touchDownCancelledOnIndexPath:(id) sender event:(UIEvent *)event {
+    NSLog(@"touchDownCancelledOnIndexPath:(id) sender event:(UIEvent *)event");
     if(timer.isValid)
         [timer invalidate];
     timer = nil;
     [self applyNonSelectedStyle];
-    isActionProcessCompleted = YES;
+    isCellAvailableToHaveUserInteraction = YES;
     [self.delegate didCancelItemSelectionOnIndexpath:self.indexPath location:touchBeginPoint];
 }
 
