@@ -80,8 +80,14 @@
     recipient.name = self.selectedPeppermintContact.nameSurname;
     recipient.type = TYPE_TO;
     [mandrillMessage.to addObject:recipient];
-    [mandrillMessage.tags addObject:@"Peppermint iOS"];
     
+    MandrillToObject *selfBcc = [MandrillToObject new];
+    selfBcc.email = self.peppermintMessageSender.email;
+    selfBcc.name = self.peppermintMessageSender.nameSurname;
+    selfBcc.type = TYPE_TO;
+    [mandrillMessage.to addObject:selfBcc];
+    
+    [mandrillMessage.tags addObject:@"Peppermint iOS"];
     
     MandrillMailAttachment *mailAttachment = [MandrillMailAttachment new];
     mailAttachment.type = [self typeForExtension:_extension];
