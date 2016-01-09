@@ -27,6 +27,7 @@
 #import "Flurry.h"
 #import "GAI.h"
 #import "AnalyticsModel.h"
+#import "GAIFields.h"
 
 @import CoreSpotlight;
 @import MobileCoreServices;
@@ -96,7 +97,11 @@
     [[GAI sharedInstance].logger setLogLevel:kGAILogLevelNone];
 #endif
     [GAI sharedInstance].dispatchInterval = 20;
-    [[GAI sharedInstance] trackerWithTrackingId:GOOGLE_ANALYTICS_KEY];
+    id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:GOOGLE_ANALYTICS_KEY];
+
+    NSString *userId = [PeppermintMessageSender sharedInstance].email;
+    userId = userId == nil ? @"unauthorizedUser" : userId;
+    [tracker set:kGAIUserId value:userId];
 }
 
 -(void) logServiceCalls {
