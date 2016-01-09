@@ -10,13 +10,15 @@
 #import "LoginModel.h"
 #import "AccountViewController.h"
 #import "ContactsViewController.h"
+#import "AboutViewController.h"
 
 #define INDEX_TUTORIAL      -1
 
-#define NUMBER_OF_OPTIONS   3
+#define NUMBER_OF_OPTIONS   4
 #define INDEX_CONTACTS      0
 #define INDEX_FEEDBACK      1
 #define INDEX_ACCOUNT       2
+#define INDEX_ABOUT         3
 
 @interface SlideMenuViewController ()
 
@@ -66,6 +68,9 @@
             cell.titleLabel.text = LOC(@"Account", @"Account Label");
             cell.iconImageView.image = [UIImage imageNamed:@"icon_settings"];
             break;
+        case INDEX_ABOUT:
+            cell.titleLabel.text = LOC(@"About", @"About");
+            cell.iconImageView.image = [UIImage imageNamed:@"icon_about"];
         default:
             break;
     }
@@ -92,6 +97,10 @@
         
         AccountViewController *accountViewController = [AccountViewController createInstance];
         [navigationController pushViewController:accountViewController animated:YES];
+    } else if (indexPath.row == INDEX_ABOUT) {
+        UINavigationController *navigationController = (UINavigationController*)self.reSideMenuContainerViewController.contentViewController;
+        AboutViewController *aboutViewController = [AboutViewController createInstance];
+        [navigationController pushViewController:aboutViewController animated:YES];
     }
 }
 

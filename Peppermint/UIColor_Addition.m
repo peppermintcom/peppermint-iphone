@@ -164,4 +164,22 @@
     return color;
 }
 
++ (UIColor *) privacyPolicyGreen {
+    static dispatch_once_t onceToken;
+    static UIColor *color;
+    dispatch_once(&onceToken, ^{
+        color = [UIColor colorWithRed:0.000 green:0.718 blue:0.525 alpha:1.00];
+    });
+    return color;
+}
+
++ (UIColor *) peppermintComGreen {
+    static dispatch_once_t onceToken;
+    static UIColor *color;
+    dispatch_once(&onceToken, ^{
+        color = [UIColor colorWithRed:0.275 green:0.737 blue:0.573 alpha:1.00];
+    });
+    return color;
+}
+
 @end

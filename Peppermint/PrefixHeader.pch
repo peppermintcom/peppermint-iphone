@@ -118,6 +118,7 @@ sharedObject;\
 
 #define VIEWCONTROLLER_MAIN     @"ReSideMenuContainerViewController"
 #define VIEWCONTROLLER_ACCOUNT  @"AccountViewController"
+#define VIEWCONTROLLER_ABOUT    @"AboutViewController"
 
 #define VIEWCONTROLLER_CONTACTS                     @"ContactsViewController"
 #define VIEWCONTROLLER_SLIDEMENU                    @"SlideMenuViewController"
@@ -141,6 +142,8 @@ sharedObject;\
 #define PATH_SIGNIN                     @"signin"
 #define PATH_RESET                      @"reset"
 #define PATH_BACK_TO_APP                @"backToApp"
+
+#define PEPPERMINT_PRIVACY_ADDRESS      @"https://peppermint.com/privacy"
 
 #define QUERY_COMPONENT_NAMESURNAME     @"name"
 #define QUERY_COMPONENT_EMAIL           @"mail"

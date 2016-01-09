@@ -27,5 +27,7 @@
 + (UIColor *) warningColor;
 + (UIColor *) continueButtonTitle;
 + (UIColor *) shadowGreen;
++ (UIColor *) privacyPolicyGreen;
++ (UIColor *) peppermintComGreen;
 
 @end

@@ -55,10 +55,13 @@
 }
 
 + (NSString *)applicationVersion {
-    return [NSString stringWithFormat:@"%@ (%@)"
-     ,[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
-     ,[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]
-     ];
+    NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+#ifdef DEBUG
+    version = [NSString stringWithFormat:@"%@ (%@)" ,version
+            ,[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]
+            ];
+#endif
+    return version;
 }
 
 + (NSString *)platform {
