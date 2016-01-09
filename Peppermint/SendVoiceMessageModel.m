@@ -39,7 +39,7 @@
 }
 
 -(void) dealloc {
-    NSLog(@"Dealloc %@ in status %d\n", self, (int)self.sendingStatus);
+    //NSLog(@"Dealloc %@ in status %d\n", self, (int)self.sendingStatus);
 }
 
 -(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension andDuration:(NSTimeInterval)duration {

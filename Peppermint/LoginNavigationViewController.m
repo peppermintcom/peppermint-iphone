@@ -30,11 +30,15 @@
 #pragma mark - LoginModelDelegate
 
 -(void) loginLoading {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    });
 }
 
 -(void) loginFinishedLoading {
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    });
 }
 
 -(void) loginSucceed {

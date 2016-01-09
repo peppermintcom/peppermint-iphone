@@ -104,7 +104,7 @@
             [self.delegate operationFailure:error];
         }
     } else {
-        NSLog(@"input gain is not settable. Using default value : %f", session.inputGain);
+        //NSLog(@"input gain is not settable. Using default value : %f", session.inputGain);
     }
 }
 

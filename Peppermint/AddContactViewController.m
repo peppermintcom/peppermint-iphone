@@ -168,7 +168,7 @@
 -(PeppermintContact*) createdContact {
     PeppermintContact *peppermintContact = [PeppermintContact new];
     peppermintContact.avatarImage = hasCustomAvatarImage ? self.avatarImageView.image : [UIImage imageNamed:@"avatar_empty"];
-    peppermintContact.nameSurname = [[NSArray arrayWithObjects:self.firstNameTextField.text, self.lastNameTextField.text, nil] componentsJoinedByString:@" "];
+    peppermintContact.nameSurname = [[NSArray arrayWithObjects:self.firstNameTextField.text.trimmedText, self.lastNameTextField.text.trimmedText, nil] componentsJoinedByString:@" "];
     return peppermintContact;
 }
 
@@ -230,8 +230,11 @@
     self.phoneImageView.highlighted = self.phoneNumberTextField.text.length > 1;
     self.emailImageView.highlighted = self.emailTextField.text.length > 0 && [self.emailTextField.text isValidEmail];
     
-    self.firstNameTextField.text = [self.firstNameTextField.text capitalizedString].trimmedText;
-    self.lastNameTextField.text = [self.lastNameTextField.text capitalizedString].trimmedText;
+    self.firstNameTextField.text = [self.firstNameTextField.text capitalizedString];
+    self.lastNameTextField.text = [self.lastNameTextField.text capitalizedString];
+    
+    if([self.firstNameTextField.text    isEqualToString:@" "]) { self.firstNameTextField.text = @""; }
+    if([self.lastNameTextField.text     isEqualToString:@" "]) { self.lastNameTextField.text = @""; }
     
     NSMutableCharacterSet *phoneNumberCharSet = [NSMutableCharacterSet decimalDigitCharacterSet];
     [phoneNumberCharSet addCharactersInString:INTERNATIONAL_PHONE_SIGN];
@@ -239,8 +242,8 @@
     [[self.phoneNumberTextField.text componentsSeparatedByCharactersInSet:[phoneNumberCharSet invertedSet]] componentsJoinedByString:@""];
     
     self.saveContactBarButtonItem.enabled =
-    self.firstNameTextField.text.length > 0
-    && self.lastNameTextField.text.length > 0
+    self.firstNameTextField.text.trimmedText.length > 0
+    && self.lastNameTextField.text.trimmedText.length > 0
     && ((self.phoneImageView.highlighted && self.emailTextField.text.length == 0)
         || self.emailImageView.highlighted
     );

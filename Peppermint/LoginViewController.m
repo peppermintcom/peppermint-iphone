@@ -46,6 +46,12 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    LoginNavigationViewController *loginNavigationViewController = (LoginNavigationViewController*)self.navigationController;
+    [loginNavigationViewController loginFinishedLoading];
+}
+
 #pragma mark - UITableView
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
