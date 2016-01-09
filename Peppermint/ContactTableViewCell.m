@@ -44,6 +44,8 @@
     sizeSmall = SIZE_SMALL_MAX;
 }
 
+#pragma mark - Arrange Font size and Place Text
+
 -(CGFloat) widthOfText:(NSString*)text withSize:(NSUInteger)size {
     NSMutableAttributedString *attrText = [NSMutableAttributedString new];
     [attrText addText:text ofSize:size ofColor:[UIColor clearColor] andFont:[UIFont openSansSemiBoldFontOfSize:size]];
@@ -82,6 +84,15 @@
     communicationChannelAddress = contactCommunicationChannelAddress;
     [self calculateCorrectSizeForFonts];
     [self applyNonSelectedStyle];
+}
+
+#pragma mark - Set Avatar Image
+
+-(void) setAvatarImage:(UIImage*) image {
+    CGRect frame = self.avatarImageView.frame;
+    int width = frame.size.width;
+    int height = frame.size.height;
+    self.avatarImageView.image = [image resizedImageWithWidth:width height:height];
 }
 
 -(void) applySelectedStyle {

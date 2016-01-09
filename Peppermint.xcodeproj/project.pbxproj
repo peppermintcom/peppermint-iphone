@@ -97,6 +97,7 @@
 		B1A366921BDC92DB00852B52 /* UploadsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A366911BDC92DB00852B52 /* UploadsRequest.m */; };
 		B1A366951BDC92FF00852B52 /* UploadsResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A366941BDC92FF00852B52 /* UploadsResponse.m */; };
 		B1A4AA511BF4DA9D005D55CB /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A4AA501BF4DA9D005D55CB /* AccountViewController.m */; };
+		B1B801911C3FF69B00958885 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B801901C3FF69B00958885 /* AboutViewController.m */; };
 		B1BB1E5F1BD35CD300A1CE45 /* MandrillService.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB1E5E1BD35CD300A1CE45 /* MandrillService.m */; };
 		B1BB1E631BD364FB00A1CE45 /* AFNetworkActivityLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB1E621BD364FB00A1CE45 /* AFNetworkActivityLogger.m */; };
 		B1BB2A531BE6AA2000A4BFB4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1BB2A521BE6AA2000A4BFB4 /* GoogleService-Info.plist */; };
@@ -327,6 +328,8 @@
 		B1A366941BDC92FF00852B52 /* UploadsResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadsResponse.m; sourceTree = "<group>"; };
 		B1A4AA4F1BF4DA9D005D55CB /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
 		B1A4AA501BF4DA9D005D55CB /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
+		B1B8018F1C3FF69B00958885 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		B1B801901C3FF69B00958885 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		B1BB1E5D1BD35CD300A1CE45 /* MandrillService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrillService.h; sourceTree = "<group>"; };
 		B1BB1E5E1BD35CD300A1CE45 /* MandrillService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MandrillService.m; sourceTree = "<group>"; };
 		B1BB1E611BD364FB00A1CE45 /* AFNetworkActivityLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityLogger.h; sourceTree = "<group>"; };
@@ -956,6 +959,8 @@
 				B1714CC71BE11EE6004F13A4 /* ReSideMenuContainerViewController.m */,
 				D0BA6E881C070A1C00B8D85B /* AddContactViewController.h */,
 				D0BA6E891C070A1C00B8D85B /* AddContactViewController.m */,
+				B1B8018F1C3FF69B00958885 /* AboutViewController.h */,
+				B1B801901C3FF69B00958885 /* AboutViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1280,6 +1285,7 @@
 				B16DA2201BE10A7A00EBF043 /* SlideMenuTableViewCell.m in Sources */,
 				D0D70D421C0464800068AB20 /* UIView+Addition.m in Sources */,
 				B15FDE781C117CCE007100EC /* Contact+CoreDataProperties.m in Sources */,
+				B1B801911C3FF69B00958885 /* AboutViewController.m in Sources */,
 				B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */,
 				B15B15BB1BDBC29A00C0C171 /* RecorderRequest.m in Sources */,
 				B1F045671BCFB36900A67942 /* BaseService.m in Sources */,
@@ -1522,6 +1528,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "2ce472e9-895a-4996-b887-af983f2c32a3";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1532,7 +1539,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Peppermint/Peppermint.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1547,6 +1554,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "685b91e2-aa79-4022-bd76-ab52f591493c";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

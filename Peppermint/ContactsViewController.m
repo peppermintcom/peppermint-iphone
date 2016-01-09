@@ -232,9 +232,10 @@ SUBSCRIBE(ReplyContactIsAdded) {
     if(indexPath.section == SECTION_FAST_REPLY_CONTACT) {
         ContactTableViewCell *cell = [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
         PeppermintContact *contact = [FastReplyModel sharedInstance].peppermintContact;
-        cell.avatarImageView.image = contact.avatarImage;
+        [cell setAvatarImage:contact.avatarImage];
         [cell setInformationWithNameSurname:contact.nameSurname communicationChannelAddress:contact.communicationChannelAddress];
         cell.rightIconImageView.image = [UIImage imageNamed:@"icon_reply"];
+        cell.rightIconImageView.hidden = NO;
         preparedCell = cell;
     } else if (indexPath.section == SECTION_EMPTY_RESULT) {
         EmptyResultTableViewCell *cell = [CellFactory cellEmptyResultTableViewCellFromTable:tableView forIndexPath:indexPath];
@@ -245,12 +246,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
         if (indexPath.row < [self activeContactList].count) {
             PeppermintContact *peppermintContact = [[self activeContactList] objectAtIndex:indexPath.row];
             if(peppermintContact.avatarImage) {
-                
-                CGRect frame = cell.avatarImageView.frame;
-                int width = frame.size.width;
-                int height = frame.size.height;
-                cell.avatarImageView.image = [peppermintContact.avatarImage resizedImageWithWidth:width height:height];
-                
+                [cell setAvatarImage:peppermintContact.avatarImage];
             } else {
                 cell.avatarImageView.image = [UIImage imageNamed:@"avatar_empty"];
             }
