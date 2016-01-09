@@ -13,4 +13,5 @@
 -(BOOL)isPasswordLengthValid;
 -(NSString *) randomStringWithLength: (NSUInteger) length;
 -(NSString*) trimmedText;
+-(NSString*) limitTo:(NSUInteger)length;
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "NSString_Addition.h"
+#import <CoreText/CTFramesetter.h>
 
 @implementation NSString (NSString_Addition)
 
@@ -45,6 +46,16 @@
 
 -(NSString*) trimmedText {
     return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+}
+
+-(NSString*) limitTo:(NSUInteger)length {
+    NSString *updatedText = self;
+    if(length < self.length && length > 0) {
+        NSRange range = [self rangeOfComposedCharacterSequencesForRange:(NSRange){0, length}];
+        updatedText = [self substringWithRange:range];
+        updatedText = [updatedText stringByAppendingString:@" …"];
+    }
+    return updatedText;
 }
 
 @end

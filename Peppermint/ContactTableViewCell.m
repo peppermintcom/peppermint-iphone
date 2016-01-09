@@ -14,11 +14,22 @@
 #define HOLD_LIMIT              0.05
 #define SWIPE_SPEED_LIMIT       20
 
+#define SIZE_LARGE_MAX      16
+#define SIZE_LARGE_MIN      11
+#define SIZE_SMALL_MAX      11
+#define SIZE_SMALL_MIN      9
+
 @implementation ContactTableViewCell {
     CGPoint touchBeginPoint;
     NSTimer *timer;
     UIView *rootView;
     BOOL isCellAvailableToHaveUserInteraction;
+
+    NSString *nameSurname;
+    NSString *communicationChannelAddress;
+    
+    NSUInteger sizeLarge;
+    NSUInteger sizeSmall;
 }
 
 - (void)awakeFromNib {
@@ -26,30 +37,78 @@
     self.avatarImageView.layer.cornerRadius = 5;
     self.avatarImageView.layer.borderColor  = [UIColor whiteColor].CGColor;
     self.cellSeperatorView.backgroundColor = [UIColor cellSeperatorGray];
-    self.contactNameLabel.font = [UIFont openSansSemiBoldFontOfSize:17];
-    self.contactViaCaptionLabel.font = [UIFont openSansSemiBoldFontOfSize:13];
-    self.contactViaInformationLabel.font = [UIFont openSansSemiBoldFontOfSize:13];
-    self.contactViaCaptionLabel.text = LOC(@"via", @"Localized value for the word via");
-    [self applyNonSelectedStyle];
     timer = nil;
     rootView = [UIApplication sharedApplication].keyWindow.rootViewController.view;
     isCellAvailableToHaveUserInteraction = YES;
+    sizeLarge = SIZE_LARGE_MAX;
+    sizeSmall = SIZE_SMALL_MAX;
+}
+
+-(CGFloat) widthOfText:(NSString*)text withSize:(NSUInteger)size {
+    NSMutableAttributedString *attrText = [NSMutableAttributedString new];
+    [attrText addText:text ofSize:size ofColor:[UIColor clearColor] andFont:[UIFont openSansSemiBoldFontOfSize:size]];
+    CGRect paragraphRect = [attrText boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, self.informationLabel.frame.size.height / 2)
+                                 options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
+                                 context:nil];
+    return paragraphRect.size.width;
+}
+
+-(void) calculateCorrectSizeForFonts {
+    sizeLarge = SIZE_LARGE_MAX;
+    CGFloat width = self.informationLabel.frame.size.width;
+    while (sizeLarge > SIZE_LARGE_MIN && [self widthOfText:nameSurname withSize:sizeLarge] > width) {
+        sizeLarge--;
+    }
+    if(sizeLarge == SIZE_LARGE_MIN) {
+        do {
+            nameSurname = [nameSurname limitTo:nameSurname.length - 3];
+        } while ([self widthOfText:nameSurname withSize:sizeLarge] > width);
+    }
+    
+    sizeSmall = SIZE_SMALL_MAX;
+    width = self.informationLabel.frame.size.width * 3/4;
+    while (sizeSmall > SIZE_SMALL_MIN && [self widthOfText:communicationChannelAddress withSize:sizeSmall] > width) {
+        sizeSmall--;
+    }
+    if(sizeSmall == SIZE_SMALL_MIN) {
+        do {
+            communicationChannelAddress = [communicationChannelAddress limitTo:communicationChannelAddress.length - 3];
+        } while ([self widthOfText:communicationChannelAddress withSize:sizeSmall] > width);
+    }
+}
+
+-(void) setInformationWithNameSurname:(NSString*)contactNameSurname communicationChannelAddress:(NSString*)contactCommunicationChannelAddress {
+    nameSurname = contactNameSurname;
+    communicationChannelAddress = contactCommunicationChannelAddress;
+    [self calculateCorrectSizeForFonts];
+    [self applyNonSelectedStyle];
 }
 
 -(void) applySelectedStyle {
     self.backgroundColor = [UIColor peppermintGreen];
     self.avatarImageView.layer.borderWidth = 2;
-    self.contactNameLabel.textColor = [UIColor whiteColor];
-    self.contactViaCaptionLabel.textColor = [UIColor whiteColor];
-    self.contactViaInformationLabel.textColor = [UIColor whiteColor];
+    
+    NSMutableAttributedString *information = [NSMutableAttributedString new];
+    [information addText:nameSurname ofSize:sizeLarge ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:sizeLarge]];
+    [information addText:@"\n" ofSize:sizeLarge ofColor:[UIColor clearColor]];
+    [information addText:LOC(@"via", @"Localized value for the word via") ofSize:sizeSmall ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
+    [information addText:@" " ofSize:sizeSmall ofColor:[UIColor clearColor]];
+    [information addText:communicationChannelAddress ofSize:sizeSmall ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
+    [self.informationLabel setAttributedText:information];
 }
 
 -(void) applyNonSelectedStyle {
     self.backgroundColor = [UIColor whiteColor];
     self.avatarImageView.layer.borderWidth = 0;
-    self.contactNameLabel.textColor = [UIColor blackColor];
-    self.contactViaCaptionLabel.textColor = [UIColor textFieldTintGreen];
-    self.contactViaInformationLabel.textColor = [UIColor viaInformationLabelTextGreen];
+    
+    NSMutableAttributedString *information = [NSMutableAttributedString new];
+    [information addText:nameSurname ofSize:sizeLarge ofColor:[UIColor blackColor] andFont:[UIFont openSansSemiBoldFontOfSize:sizeLarge]];
+    [information addText:@"\n" ofSize:sizeSmall ofColor:[UIColor clearColor]];
+    [information addText:LOC(@"via", @"Localized value for the word via") ofSize:sizeSmall ofColor:[UIColor textFieldTintGreen] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
+    [information addText:@" " ofSize:sizeSmall ofColor:[UIColor clearColor]];
+    [information addText:communicationChannelAddress ofSize:sizeSmall ofColor:[UIColor viaInformationLabelTextGreen] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
+    [self.informationLabel setAttributedText:information];
+    
 }
 
 #pragma mark - Action Buttons
