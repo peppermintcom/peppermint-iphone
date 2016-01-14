@@ -299,9 +299,6 @@
                                     <state key="normal" title="Continue" backgroundImage="login_button">
                                         <color key="titleColor" red="0.38431372549999998" green="0.74509803919999995" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="image" keyPath="ppm_highlightImage" value="icon_login_highlight"/>
-                                    </userDefinedRuntimeAttributes>
                                     <connections>
                                         <action selector="continuePressed:" destination="APx-dK-0Mz" eventType="touchUpInside" id="xEK-XO-hkP"/>
                                     </connections>
@@ -466,9 +463,6 @@
                                     <state key="normal" title="Log in" backgroundImage="login_button">
                                         <color key="titleColor" red="0.38431372549999998" green="0.74509803919999995" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="image" keyPath="ppm_highlightImage" value="icon_login_highlight"/>
-                                    </userDefinedRuntimeAttributes>
                                     <connections>
                                         <action selector="loginPressed:" destination="ubE-6j-oGD" eventType="touchUpInside" id="le3-Au-zre"/>
                                     </connections>
@@ -715,7 +709,6 @@
         <image name="bordered_logo" width="54" height="54"/>
         <image name="icon_back" width="8" height="14"/>
         <image name="icon_close" width="14" height="14"/>
-        <image name="icon_login_highlight" width="250" height="45"/>
         <image name="login_button" width="250" height="45"/>
     </resources>
 </document>

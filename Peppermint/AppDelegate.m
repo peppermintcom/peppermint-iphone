@@ -97,11 +97,13 @@
     [[GAI sharedInstance].logger setLogLevel:kGAILogLevelNone];
 #endif
     [GAI sharedInstance].dispatchInterval = 20;
-    id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:GOOGLE_ANALYTICS_KEY];
-
+    [[GAI sharedInstance] trackerWithTrackingId:GOOGLE_ANALYTICS_KEY];
+/*
+    id<GAITracker> tracker =
     NSString *userId = [PeppermintMessageSender sharedInstance].email;
     userId = userId == nil ? @"unauthorizedUser" : userId;
     [tracker set:kGAIUserId value:userId];
+*/
 }
 
 -(void) logServiceCalls {
@@ -312,7 +314,9 @@ SUBSCRIBE(DetachSuccess) {
         }
         result = YES;
     } else {
-        NSLog(@"handleOpenURL failed for URL: %@", url.host);
+        NSString *errorText = [NSString stringWithFormat:@"handleOpenURL failed for URL: %@", url.host];
+        [AnalyticsModel logError:[NSError errorWithDomain:errorText code:-1 userInfo:[NSDictionary new]]];
+        NSLog(@"%@",errorText);
     }
     return result;
 }

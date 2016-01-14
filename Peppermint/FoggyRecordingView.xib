@@ -9,21 +9,21 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clipsSubviews="YES" contentMode="scaleToFill" id="hDY-Cm-jTy" customClass="FoggyRecordingView">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <rect key="frame" x="0.0" y="0.0" width="639" height="1366"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view opaque="NO" clipsSubviews="YES" alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MSV-Ig-ZZJ" userLabel="BackgroundView">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <rect key="frame" x="0.0" y="0.0" width="639" height="1366"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V7s-JW-net" userLabel="ContentView">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="248"/>
+                    <rect key="frame" x="0.0" y="0.0" width="639" height="248"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="spy-Jr-n8B" userLabel="RowView">
-                            <rect key="frame" x="0.0" y="112" width="320" height="60"/>
+                            <rect key="frame" x="0.0" y="112" width="639" height="60"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Recording for Bob Adams" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6C8-Qh-nOw">
-                                    <rect key="frame" x="11" y="10" width="244" height="18"/>
+                                    <rect key="frame" x="11" y="10" width="563" height="18"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="18" id="IZU-n9-JD1"/>
                                     </constraints>
@@ -31,7 +31,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="oPZ-DC-iQj">
-                                    <rect key="frame" x="11" y="30" width="244" height="24"/>
+                                    <rect key="frame" x="11" y="30" width="563" height="24"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -49,7 +49,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vH6-fW-WGx">
-                            <rect key="frame" x="62" y="-8" width="155" height="115"/>
+                            <rect key="frame" x="381" y="-8" width="155" height="115"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="base_down" translatesAutoresizingMaskIntoConstraints="NO" id="50Q-Ac-aKf">
                                     <rect key="frame" x="0.0" y="0.0" width="155" height="115"/>
@@ -82,6 +82,7 @@ to cancel</string>
                                 <constraint firstItem="VMa-LE-Uoa" firstAttribute="centerX" secondItem="vH6-fW-WGx" secondAttribute="centerX" id="6fd-YW-MbE"/>
                                 <constraint firstItem="VMa-LE-Uoa" firstAttribute="top" secondItem="vH6-fW-WGx" secondAttribute="top" constant="18" id="73F-Yf-GJM"/>
                                 <constraint firstItem="X9f-Kf-C2h" firstAttribute="top" secondItem="VMa-LE-Uoa" secondAttribute="bottom" constant="1" id="TlL-hj-RnD"/>
+                                <constraint firstAttribute="height" constant="115" id="YGz-Md-JMe"/>
                                 <constraint firstItem="50Q-Ac-aKf" firstAttribute="top" secondItem="vH6-fW-WGx" secondAttribute="top" id="Z9O-MX-L7E"/>
                                 <constraint firstAttribute="width" secondItem="vH6-fW-WGx" secondAttribute="height" multiplier="31:23" id="cs0-nE-vHz"/>
                                 <constraint firstAttribute="trailing" secondItem="50Q-Ac-aKf" secondAttribute="trailing" id="ho4-wm-2f9"/>
@@ -96,7 +97,7 @@ to cancel</string>
                             </variation>
                         </view>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_mic" translatesAutoresizingMaskIntoConstraints="NO" id="OV0-La-sKD">
-                            <rect key="frame" x="188" y="87" width="110" height="110"/>
+                            <rect key="frame" x="507" y="87" width="110" height="110"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="110" id="IrR-8C-78m"/>
@@ -106,11 +107,11 @@ to cancel</string>
                     </subviews>
                     <color key="backgroundColor" red="0.90823108460000002" green="0.081871332150000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstItem="vH6-fW-WGx" firstAttribute="leading" secondItem="V7s-JW-net" secondAttribute="leading" constant="62" id="0H0-N6-OxM"/>
                         <constraint firstAttribute="trailing" secondItem="spy-Jr-n8B" secondAttribute="trailing" id="1px-Rx-FVQ"/>
                         <constraint firstItem="spy-Jr-n8B" firstAttribute="top" secondItem="vH6-fW-WGx" secondAttribute="bottom" constant="5" id="1zj-L6-hlq"/>
                         <constraint firstItem="spy-Jr-n8B" firstAttribute="centerX" secondItem="vH6-fW-WGx" secondAttribute="centerX" id="7DX-bE-m4J"/>
                         <constraint firstAttribute="height" constant="248" id="9Vn-Uw-JaL"/>
+                        <constraint firstItem="vH6-fW-WGx" firstAttribute="top" secondItem="V7s-JW-net" secondAttribute="top" constant="-8" id="DUO-IM-KaW"/>
                         <constraint firstAttribute="trailing" secondItem="OV0-La-sKD" secondAttribute="trailing" constant="22" id="YgZ-bC-UBw"/>
                         <constraint firstItem="spy-Jr-n8B" firstAttribute="top" secondItem="V7s-JW-net" secondAttribute="top" constant="112" id="cEq-4S-2Da"/>
                         <constraint firstItem="spy-Jr-n8B" firstAttribute="leading" secondItem="V7s-JW-net" secondAttribute="leading" id="d02-Yh-Xrg"/>
@@ -120,6 +121,7 @@ to cancel</string>
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="7DX-bE-m4J"/>
+                            <exclude reference="DUO-IM-KaW"/>
                         </mask>
                     </variation>
                 </view>
@@ -134,7 +136,7 @@ to cancel</string>
                 <constraint firstAttribute="trailing" secondItem="V7s-JW-net" secondAttribute="trailing" id="ptr-eM-EEc"/>
                 <constraint firstAttribute="trailing" secondItem="MSV-Ig-ZZJ" secondAttribute="trailing" id="sXQ-Qi-nMu"/>
             </constraints>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPadPro-2/3"/>
             <connections>
                 <outlet property="RowViewYOffset" destination="cEq-4S-2Da" id="8FX-Tr-uY3"/>
                 <outlet property="backgroundView" destination="MSV-Ig-ZZJ" id="Nzt-fV-DoU"/>
@@ -150,7 +152,7 @@ to cancel</string>
                 <outlet property="swipeInAnyDirectionView" destination="vH6-fW-WGx" id="VPl-lP-Qib"/>
                 <outlet property="swipeInAnyDirectionViewBottomConstraint" destination="1zj-L6-hlq" id="1cs-es-FAD"/>
             </connections>
-            <point key="canvasLocation" x="279" y="230"/>
+            <point key="canvasLocation" x="214" y="47"/>
         </view>
     </objects>
     <resources>

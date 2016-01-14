@@ -136,12 +136,13 @@ sharedObject;\
 
 #define DOMAIN_PEPPERMINT               @"peppermint.com"
 
+//Define Host&Path information as lowercase Text
 #define HOST_FASTREPLY                  @"reply"
 #define PATH_VERIFIY_EMAIL              @"verify-email"
 #define PATH_VERIFIED                   @"verified"
 #define PATH_SIGNIN                     @"signin"
 #define PATH_RESET                      @"reset"
-#define PATH_BACK_TO_APP                @"backToApp"
+#define PATH_BACK_TO_APP                @"backtoapp"
 
 #define PEPPERMINT_PRIVACY_ADDRESS      @"https://peppermint.com/privacy"
 
