@@ -35,9 +35,11 @@
 @property (weak, nonatomic) IBOutlet UIImageView *searchSourceIconImageView;
 @property (weak, nonatomic) IBOutlet UIButton *cancelMessageSendingButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *cancelMessageButtonWidthConstraint;
+@property (weak, nonatomic) IBOutlet UIView *whiteEllipseView;
 @property (strong, nonatomic) RecordingView *recordingView;
 @property (weak, nonatomic) ReSideMenuContainerViewController *reSideMenuContainerViewController;
 @property (strong, nonatomic) TutorialView *tutorialView;
+
 
 -(IBAction)searchButtonPressed:(id)sender;
 -(IBAction)messageCancelButtonPressed:(id)sender;

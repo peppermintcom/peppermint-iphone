@@ -124,6 +124,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    self.whiteEllipseView.layer.cornerRadius = self.whiteEllipseView.frame.size.height / 3.4;
 }
 
 -(void) initRecordingView {

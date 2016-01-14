@@ -14,8 +14,8 @@
 #define HOLD_LIMIT              0.050
 #define SWIPE_SPEED_LIMIT       20
 
-#define SIZE_LARGE          17
-#define SIZE_SMALL          13
+#define SIZE_LARGE              17
+#define SIZE_SMALL              13
 
 #define INFORMATION_LABEL_RIGHT_CONSTANT        40
 #define INFORMATION_LABEL_RIGHT_CONSTANT_MIN    8
@@ -69,13 +69,14 @@
         nameSurname = [nameSurname limitTo:nameSurname.length - 3];
     }
     
-    width = self.informationLabel.frame.size.width * 3/4;
+    width = self.informationLabel.frame.size.width * 0.90;
     while ([self widthOfText:communicationChannelAddress withSize:sizeSmall] > width) {
         communicationChannelAddress = [communicationChannelAddress limitTo:communicationChannelAddress.length - 3];
     }
 }
 
--(void) setInformationWithNameSurname:(NSString*)contactNameSurname communicationChannelAddress:(NSString*)contactCommunicationChannelAddress {
+-(void) setInformationWithNameSurname:(NSString*)contactNameSurname communicationChannelAddress:(NSString*)contactCommunicationChannelAddress
+{
     [self setInformationWithNameSurname:contactNameSurname communicationChannelAddress:contactCommunicationChannelAddress andIconImage:nil];
 }
 
@@ -219,12 +220,15 @@
 
 -(IBAction) touchDownCancelledOnIndexPath:(id) sender event:(UIEvent *)event {
     NSLog(@"touchDownCancelledOnIndexPath:(id) sender event:(UIEvent *)event");
+    return;
+    /*
     if(timer.isValid)
         [timer invalidate];
     timer = nil;
     [self applyNonSelectedStyle];
     isCellAvailableToHaveUserInteraction = YES;
     [self.delegate didCancelItemSelectionOnIndexpath:self.indexPath location:touchBeginPoint];
+    */
 }
 
 @end
