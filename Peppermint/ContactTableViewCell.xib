@@ -28,11 +28,11 @@
                             <constraint firstAttribute="width" secondItem="1G5-fy-gLb" secondAttribute="height" multiplier="1:1" priority="750" id="BN9-P6-Tn1"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="JcO-0x-7sn" userLabel="Information">
-                        <rect key="frame" x="54" y="8" width="317" height="37"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="JcO-0x-7sn" userLabel="Information">
+                        <rect key="frame" x="54" y="4" width="325" height="47"/>
                         <string key="text">Okan Kurtulus
 via okankurtulus@gmail.com</string>
-                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -62,17 +62,18 @@ via okankurtulus@gmail.com</string>
                 <gestureRecognizers/>
                 <constraints>
                     <constraint firstItem="9h8-TZ-qu8" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" priority="750" id="2Fu-b4-URx"/>
-                    <constraint firstAttribute="bottom" secondItem="JcO-0x-7sn" secondAttribute="bottom" priority="750" constant="10" id="4JV-3t-VEv"/>
+                    <constraint firstAttribute="bottom" secondItem="JcO-0x-7sn" secondAttribute="bottom" priority="750" constant="4" id="4JV-3t-VEv"/>
                     <constraint firstItem="aEQ-5s-Sav" firstAttribute="top" secondItem="JcO-0x-7sn" secondAttribute="bottom" priority="750" constant="9" id="4rl-qE-y12"/>
                     <constraint firstAttribute="trailing" secondItem="c6S-OH-FxE" secondAttribute="trailing" priority="750" constant="21" id="B63-1D-etj"/>
                     <constraint firstAttribute="trailing" secondItem="aEQ-5s-Sav" secondAttribute="trailing" priority="750" id="C2v-Bc-bQy"/>
                     <constraint firstAttribute="trailing" secondItem="9h8-TZ-qu8" secondAttribute="trailing" priority="750" id="G3Q-78-E0j"/>
+                    <constraint firstAttribute="trailing" secondItem="JcO-0x-7sn" secondAttribute="trailing" priority="750" constant="35" id="KEL-EX-raH"/>
                     <constraint firstItem="aEQ-5s-Sav" firstAttribute="leading" secondItem="ejf-Un-hy5" secondAttribute="leading" priority="750" id="T1O-ci-IwN"/>
-                    <constraint firstItem="c6S-OH-FxE" firstAttribute="leading" secondItem="JcO-0x-7sn" secondAttribute="trailing" priority="750" constant="8" id="TXC-C5-RF4"/>
+                    <constraint firstItem="c6S-OH-FxE" firstAttribute="leading" secondItem="JcO-0x-7sn" secondAttribute="trailing" priority="750" id="TXC-C5-RF4"/>
                     <constraint firstItem="1G5-fy-gLb" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" priority="750" constant="10" id="bDo-0S-BDQ"/>
                     <constraint firstItem="9h8-TZ-qu8" firstAttribute="leading" secondItem="ejf-Un-hy5" secondAttribute="leading" priority="750" id="lbc-pb-MIJ"/>
                     <constraint firstAttribute="bottom" secondItem="9h8-TZ-qu8" secondAttribute="bottom" priority="750" id="qGD-ZP-1sN"/>
-                    <constraint firstItem="JcO-0x-7sn" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" priority="750" constant="8" id="qwp-sH-02o"/>
+                    <constraint firstItem="JcO-0x-7sn" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" priority="750" constant="4" id="qwp-sH-02o"/>
                     <constraint firstAttribute="centerY" secondItem="c6S-OH-FxE" secondAttribute="centerY" priority="750" id="u8w-pq-dqK"/>
                     <constraint firstAttribute="bottom" secondItem="aEQ-5s-Sav" secondAttribute="bottom" priority="750" id="wxc-Nh-MF3"/>
                     <constraint firstItem="aEQ-5s-Sav" firstAttribute="top" secondItem="1G5-fy-gLb" secondAttribute="bottom" priority="750" constant="9" id="xS1-aO-lqk"/>
@@ -84,6 +85,7 @@ via okankurtulus@gmail.com</string>
                     <mask key="constraints">
                         <exclude reference="4rl-qE-y12"/>
                         <exclude reference="xS1-aO-lqk"/>
+                        <exclude reference="TXC-C5-RF4"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>
@@ -92,6 +94,7 @@ via okankurtulus@gmail.com</string>
                 <outlet property="cellActionButton" destination="9h8-TZ-qu8" id="m2C-CG-ckU"/>
                 <outlet property="cellSeperatorView" destination="aEQ-5s-Sav" id="oBZ-9K-8s7"/>
                 <outlet property="informationLabel" destination="JcO-0x-7sn" id="p1X-Nt-9WT"/>
+                <outlet property="informationLabelRightConstraint" destination="KEL-EX-raH" id="VgI-h4-dcq"/>
                 <outlet property="rightIconImageView" destination="c6S-OH-FxE" id="20x-4t-0SI"/>
             </connections>
             <point key="canvasLocation" x="304" y="275"/>

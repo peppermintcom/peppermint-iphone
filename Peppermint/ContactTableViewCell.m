@@ -11,13 +11,21 @@
 #import "Events.h"
 
 #define EVENT                   @"Event"
-#define HOLD_LIMIT              0.05
+#define HOLD_LIMIT              0.050
 #define SWIPE_SPEED_LIMIT       20
 
-#define SIZE_LARGE_MAX      16
-#define SIZE_LARGE_MIN      11
-#define SIZE_SMALL_MAX      11
-#define SIZE_SMALL_MIN      9
+#define SIZE_LARGE          17
+#define SIZE_SMALL          13
+
+#define INFORMATION_LABEL_RIGHT_CONSTANT        40
+#define INFORMATION_LABEL_RIGHT_CONSTANT_MIN    8
+
+@interface ContactTableViewCell ()
+@property (weak, nonatomic) IBOutlet UILabel *informationLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *rightIconImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *informationLabelRightConstraint;
+
+@end
 
 @implementation ContactTableViewCell {
     CGPoint touchBeginPoint;
@@ -40,8 +48,8 @@
     timer = nil;
     rootView = [UIApplication sharedApplication].keyWindow.rootViewController.view;
     isCellAvailableToHaveUserInteraction = YES;
-    sizeLarge = SIZE_LARGE_MAX;
-    sizeSmall = SIZE_SMALL_MAX;
+    sizeLarge = SIZE_LARGE;
+    sizeSmall = SIZE_SMALL;
 }
 
 #pragma mark - Arrange Font size and Place Text
@@ -56,32 +64,30 @@
 }
 
 -(void) calculateCorrectSizeForFonts {
-    sizeLarge = SIZE_LARGE_MAX;
     CGFloat width = self.informationLabel.frame.size.width;
-    while (sizeLarge > SIZE_LARGE_MIN && [self widthOfText:nameSurname withSize:sizeLarge] > width) {
-        sizeLarge--;
-    }
-    if(sizeLarge == SIZE_LARGE_MIN) {
-        do {
-            nameSurname = [nameSurname limitTo:nameSurname.length - 3];
-        } while ([self widthOfText:nameSurname withSize:sizeLarge] > width);
+    while ([self widthOfText:nameSurname withSize:sizeLarge] > width) {
+        nameSurname = [nameSurname limitTo:nameSurname.length - 3];
     }
     
-    sizeSmall = SIZE_SMALL_MAX;
     width = self.informationLabel.frame.size.width * 3/4;
-    while (sizeSmall > SIZE_SMALL_MIN && [self widthOfText:communicationChannelAddress withSize:sizeSmall] > width) {
-        sizeSmall--;
-    }
-    if(sizeSmall == SIZE_SMALL_MIN) {
-        do {
-            communicationChannelAddress = [communicationChannelAddress limitTo:communicationChannelAddress.length - 3];
-        } while ([self widthOfText:communicationChannelAddress withSize:sizeSmall] > width);
+    while ([self widthOfText:communicationChannelAddress withSize:sizeSmall] > width) {
+        communicationChannelAddress = [communicationChannelAddress limitTo:communicationChannelAddress.length - 3];
     }
 }
 
 -(void) setInformationWithNameSurname:(NSString*)contactNameSurname communicationChannelAddress:(NSString*)contactCommunicationChannelAddress {
+    [self setInformationWithNameSurname:contactNameSurname communicationChannelAddress:contactCommunicationChannelAddress andIconImage:nil];
+}
+
+-(void) setInformationWithNameSurname:(NSString*)contactNameSurname communicationChannelAddress:(NSString*)contactCommunicationChannelAddress andIconImage:(UIImage*) image {
     nameSurname = contactNameSurname;
-    communicationChannelAddress = contactCommunicationChannelAddress;
+    communicationChannelAddress = contactCommunicationChannelAddress;    
+    NSAssert(nameSurname.length > 0 && communicationChannelAddress.length > 0, @"NameSurname&communicationchannel address must be supplied");
+    
+    self.rightIconImageView.hidden = image == nil;
+    self.rightIconImageView.image = image;
+    self.informationLabelRightConstraint.constant = image == nil ? INFORMATION_LABEL_RIGHT_CONSTANT_MIN : INFORMATION_LABEL_RIGHT_CONSTANT;
+    
     [self calculateCorrectSizeForFonts];
     [self applyNonSelectedStyle];
 }
