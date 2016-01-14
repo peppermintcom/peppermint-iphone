@@ -7,9 +7,9 @@
 //
 
 #import "RecentContactsModel.h"
-
-
 #import "ContactsModel.h"
+
+@import WatchConnectivity;
 
 #define DBQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
 
