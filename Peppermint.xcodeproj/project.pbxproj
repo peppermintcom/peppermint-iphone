@@ -76,7 +76,6 @@
 		B179F83A1BC9316F0089D709 /* SearchMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B179F8391BC9316F0089D709 /* SearchMenuTableViewCell.m */; };
 		B179F83C1BC931820089D709 /* SearchMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B179F83B1BC931820089D709 /* SearchMenuTableViewCell.xib */; };
 		B17B3D311BB6898C009B8BC5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D301BB6898C009B8BC5 /* main.m */; };
-		B17B3D341BB6898C009B8BC5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D331BB6898C009B8BC5 /* AppDelegate.m */; };
 		B17B3D3A1BB6898C009B8BC5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D381BB6898C009B8BC5 /* Main.storyboard */; };
 		B17B3D3C1BB6898C009B8BC5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D3B1BB6898C009B8BC5 /* Images.xcassets */; };
 		B17B3D4B1BB6898C009B8BC5 /* PeppermintTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D4A1BB6898C009B8BC5 /* PeppermintTests.m */; };
@@ -139,6 +138,61 @@
 		D0A7C0EE1BFC589B00ACD33E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A7C0ED1BFC589B00ACD33E /* MobileCoreServices.framework */; };
 		D0A7C0F01BFC58A300ACD33E /* CoreSpotlight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A7C0EF1BFC58A300ACD33E /* CoreSpotlight.framework */; };
 		D0A7C0F31BFC5BC200ACD33E /* SpotlightModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A7C0F21BFC5BC200ACD33E /* SpotlightModel.m */; };
+		D0AC06ED1C4805FD00F9CF6F /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0AC06EB1C4805FD00F9CF6F /* Interface.storyboard */; };
+		D0AC06EF1C4805FD00F9CF6F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0AC06EE1C4805FD00F9CF6F /* Assets.xcassets */; };
+		D0AC06F61C4805FF00F9CF6F /* watch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D0AC06F51C4805FF00F9CF6F /* watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D0AC070A1C48060000F9CF6F /* watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = D0AC06E91C4805FD00F9CF6F /* watch.app */; };
+		D0AC07611C48091800F9CF6F /* PeppermintContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF171BB71EC0008C6F71 /* PeppermintContact.m */; };
+		D0AC07631C4809D600F9CF6F /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0AC07621C4809D600F9CF6F /* WatchConnectivity.framework */; };
+		D0AC07651C4809E000F9CF6F /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0AC07641C4809E000F9CF6F /* Contacts.framework */; };
+		D0AC07671C4809F300F9CF6F /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0AC07661C4809F300F9CF6F /* WatchConnectivity.framework */; };
+		D0AC07681C480B2400F9CF6F /* PeppermintMessageSender.m in Sources */ = {isa = PBXBuildFile; fileRef = B18BF95D1BD674CD009B665E /* PeppermintMessageSender.m */; };
+		D0AC076C1C480DC200F9CF6F /* MandrillRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07691BD3752900974AC3 /* MandrillRequest.m */; };
+		D0AC076E1C480DD000F9CF6F /* MandrillSendRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B075C1BD3716100974AC3 /* MandrillSendRequest.m */; };
+		D0AC076F1C480DD500F9CF6F /* MandrillToObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B075F1BD3719500974AC3 /* MandrillToObject.m */; };
+		D0AC07701C480DDA00F9CF6F /* MandrillMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07621BD3720100974AC3 /* MandrillMessage.m */; };
+		D0AC07711C4815AE00F9CF6F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D331BB6898C009B8BC5 /* AppDelegate.m */; };
+		D0AC07741C48177F00F9CF6F /* RecentContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */; };
+		D0AC07AD1C481AFC00F9CF6F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0AC07771C481AFC00F9CF6F /* Assets.xcassets */; };
+		D0AC07AE1C481AFC00F9CF6F /* WKInterfaceTable+IGInterfaceDataTable.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC077B1C481AFC00F9CF6F /* WKInterfaceTable+IGInterfaceDataTable.m */; };
+		D0AC07AF1C481AFC00F9CF6F /* ContactsInterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC077D1C481AFC00F9CF6F /* ContactsInterfaceController.m */; };
+		D0AC07B01C481AFC00F9CF6F /* ExtensionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC077F1C481AFC00F9CF6F /* ExtensionDelegate.m */; };
+		D0AC07B11C481AFC00F9CF6F /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0AC07801C481AFC00F9CF6F /* Info.plist */; };
+		D0AC07B21C481AFC00F9CF6F /* ContactsTableRowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC07841C481AFC00F9CF6F /* ContactsTableRowController.m */; };
+		D0AC07B31C481AFC00F9CF6F /* RecordingInterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC07871C481AFC00F9CF6F /* RecordingInterfaceController.m */; };
+		D0AC07B41C481AFC00F9CF6F /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC078C1C481AFC00F9CF6F /* JSONModel.m */; };
+		D0AC07B51C481AFC00F9CF6F /* JSONModelArray.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC078E1C481AFC00F9CF6F /* JSONModelArray.m */; };
+		D0AC07B61C481AFC00F9CF6F /* JSONModelClassProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC07901C481AFC00F9CF6F /* JSONModelClassProperty.m */; };
+		D0AC07B71C481AFC00F9CF6F /* JSONModelError.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC07921C481AFC00F9CF6F /* JSONModelError.m */; };
+		D0AC07B81C481AFC00F9CF6F /* NSArray+JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC07951C481AFC00F9CF6F /* NSArray+JSONModel.m */; };
+		D0AC07B91C481AFC00F9CF6F /* JSONKeyMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC079A1C481AFC00F9CF6F /* JSONKeyMapper.m */; };
+		D0AC07BA1C481AFC00F9CF6F /* JSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC079C1C481AFC00F9CF6F /* JSONValueTransformer.m */; };
+		D0AC07BB1C481AFC00F9CF6F /* WKServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC07A01C481AFC00F9CF6F /* WKServerManager.m */; };
+		D0AC07BC1C481AFC00F9CF6F /* A0SimpleKeychain+KeyPair.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC07A31C481AFC00F9CF6F /* A0SimpleKeychain+KeyPair.m */; };
+		D0AC07BD1C481AFC00F9CF6F /* A0SimpleKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC07A51C481AFC00F9CF6F /* A0SimpleKeychain.m */; };
+		D0AC07BE1C481AFC00F9CF6F /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0AC07A61C481AFC00F9CF6F /* Info.plist */; };
+		D0AC07BF1C481AFC00F9CF6F /* WKContact.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC07AA1C481AFC00F9CF6F /* WKContact.m */; };
+		D0AC07C01C481AFC00F9CF6F /* PushNotificationPayload.apns in Resources */ = {isa = PBXBuildFile; fileRef = D0AC07AB1C481AFC00F9CF6F /* PushNotificationPayload.apns */; };
+		D0AC07C11C481AFC00F9CF6F /* watch Extension.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = D0AC07AC1C481AFC00F9CF6F /* watch Extension.entitlements */; };
+		D0AC07C21C481DDA00F9CF6F /* RecentContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B15FDE6F1C117CCE007100EC /* RecentContact.m */; };
+		D0AC07C31C481FF000F9CF6F /* MandrillMailAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07661BD3736400974AC3 /* MandrillMailAttachment.m */; };
+		D0AC07C41C48200400F9CF6F /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF111BB71A85008C6F71 /* BaseModel.m */; };
+		D0AC07C51C48203600F9CF6F /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = B15FDE671C117CCE007100EC /* Contact.m */; };
+		D0AC07C61C48206C00F9CF6F /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E971BC8E328005F2128 /* Repository.m */; };
+		D0AC07C71C4820A300F9CF6F /* ContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF141BB71A99008C6F71 /* ContactsModel.m */; };
+		D0AC07C81C48214200F9CF6F /* PeppermintDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E8E1BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld */; };
+		D0AC07C91C48221900F9CF6F /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC078C1C481AFC00F9CF6F /* JSONModel.m */; };
+		D0AC07CA1C48221D00F9CF6F /* JSONModelArray.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC078E1C481AFC00F9CF6F /* JSONModelArray.m */; };
+		D0AC07CB1C48221F00F9CF6F /* JSONModelClassProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC07901C481AFC00F9CF6F /* JSONModelClassProperty.m */; };
+		D0AC07CC1C48222200F9CF6F /* JSONModelError.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC07921C481AFC00F9CF6F /* JSONModelError.m */; };
+		D0AC07CD1C48223100F9CF6F /* NSArray+JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC07951C481AFC00F9CF6F /* NSArray+JSONModel.m */; };
+		D0AC07CE1C48223500F9CF6F /* JSONKeyMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC079A1C481AFC00F9CF6F /* JSONKeyMapper.m */; };
+		D0AC07CF1C48223800F9CF6F /* JSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC079C1C481AFC00F9CF6F /* JSONValueTransformer.m */; };
+		D0AC07D71C48225100F9CF6F /* JSONAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC07D21C48225100F9CF6F /* JSONAPI.m */; };
+		D0AC07D81C48225100F9CF6F /* JSONHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC07D41C48225100F9CF6F /* JSONHTTPClient.m */; };
+		D0AC07D91C48225100F9CF6F /* JSONModel+networking.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC07D61C48225100F9CF6F /* JSONModel+networking.m */; };
+		D0AC07DA1C48227600F9CF6F /* A0SimpleKeychain+KeyPair.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC07A31C481AFC00F9CF6F /* A0SimpleKeychain+KeyPair.m */; };
+		D0AC07DB1C48227900F9CF6F /* A0SimpleKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC07A51C481AFC00F9CF6F /* A0SimpleKeychain.m */; };
 		D0BA6E8A1C070A1C00B8D85B /* AddContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BA6E891C070A1C00B8D85B /* AddContactViewController.m */; };
 		D0D70D421C0464800068AB20 /* UIView+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70D411C0464800068AB20 /* UIView+Addition.m */; };
 		D0D70D451C0495680068AB20 /* LoginWithEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D70D441C0495680068AB20 /* LoginWithEmailViewController.m */; };
@@ -153,7 +207,46 @@
 			remoteGlobalIDString = B17B3D2A1BB6898C009B8BC5;
 			remoteInfo = Peppermint;
 		};
+		D0AC06F71C4805FF00F9CF6F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B17B3D231BB6898C009B8BC5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0AC06F41C4805FF00F9CF6F;
+			remoteInfo = "watch Extension";
+		};
+		D0AC07081C48060000F9CF6F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B17B3D231BB6898C009B8BC5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0AC06E81C4805FD00F9CF6F;
+			remoteInfo = watch;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D0AC07101C48060100F9CF6F /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				D0AC06F61C4805FF00F9CF6F /* watch Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0AC07121C48060100F9CF6F /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				D0AC070A1C48060000F9CF6F /* watch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4568D87C1B184E71C2B112BE /* libPods-Peppermint.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Peppermint.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -405,6 +498,61 @@
 		D0A7C0EF1BFC58A300ACD33E /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
 		D0A7C0F11BFC5BC200ACD33E /* SpotlightModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotlightModel.h; sourceTree = "<group>"; };
 		D0A7C0F21BFC5BC200ACD33E /* SpotlightModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotlightModel.m; sourceTree = "<group>"; };
+		D0AC06E91C4805FD00F9CF6F /* watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = watch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0AC06EC1C4805FD00F9CF6F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		D0AC06EE1C4805FD00F9CF6F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D0AC06F01C4805FE00F9CF6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0AC06F51C4805FF00F9CF6F /* watch Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "watch Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0AC07621C4809D600F9CF6F /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = System/Library/Frameworks/WatchConnectivity.framework; sourceTree = SDKROOT; };
+		D0AC07641C4809E000F9CF6F /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
+		D0AC07661C4809F300F9CF6F /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS2.0.sdk/System/Library/Frameworks/WatchConnectivity.framework; sourceTree = DEVELOPER_DIR; };
+		D0AC076A1C480D2700F9CF6F /* AppConfigurationFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConfigurationFile.h; sourceTree = "<group>"; };
+		D0AC07751C4819EB00F9CF6F /* watch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = watch.entitlements; sourceTree = "<group>"; };
+		D0AC07771C481AFC00F9CF6F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D0AC077A1C481AFC00F9CF6F /* WKInterfaceTable+IGInterfaceDataTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKInterfaceTable+IGInterfaceDataTable.h"; sourceTree = "<group>"; };
+		D0AC077B1C481AFC00F9CF6F /* WKInterfaceTable+IGInterfaceDataTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKInterfaceTable+IGInterfaceDataTable.m"; sourceTree = "<group>"; };
+		D0AC077C1C481AFC00F9CF6F /* ContactsInterfaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsInterfaceController.h; sourceTree = "<group>"; };
+		D0AC077D1C481AFC00F9CF6F /* ContactsInterfaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsInterfaceController.m; sourceTree = "<group>"; };
+		D0AC077E1C481AFC00F9CF6F /* ExtensionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionDelegate.h; sourceTree = "<group>"; };
+		D0AC077F1C481AFC00F9CF6F /* ExtensionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtensionDelegate.m; sourceTree = "<group>"; };
+		D0AC07801C481AFC00F9CF6F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0AC07831C481AFC00F9CF6F /* ContactsTableRowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsTableRowController.h; sourceTree = "<group>"; };
+		D0AC07841C481AFC00F9CF6F /* ContactsTableRowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsTableRowController.m; sourceTree = "<group>"; };
+		D0AC07861C481AFC00F9CF6F /* RecordingInterfaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingInterfaceController.h; sourceTree = "<group>"; };
+		D0AC07871C481AFC00F9CF6F /* RecordingInterfaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordingInterfaceController.m; sourceTree = "<group>"; };
+		D0AC078B1C481AFC00F9CF6F /* JSONModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModel.h; sourceTree = "<group>"; };
+		D0AC078C1C481AFC00F9CF6F /* JSONModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONModel.m; sourceTree = "<group>"; };
+		D0AC078D1C481AFC00F9CF6F /* JSONModelArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModelArray.h; sourceTree = "<group>"; };
+		D0AC078E1C481AFC00F9CF6F /* JSONModelArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONModelArray.m; sourceTree = "<group>"; };
+		D0AC078F1C481AFC00F9CF6F /* JSONModelClassProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModelClassProperty.h; sourceTree = "<group>"; };
+		D0AC07901C481AFC00F9CF6F /* JSONModelClassProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONModelClassProperty.m; sourceTree = "<group>"; };
+		D0AC07911C481AFC00F9CF6F /* JSONModelError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModelError.h; sourceTree = "<group>"; };
+		D0AC07921C481AFC00F9CF6F /* JSONModelError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONModelError.m; sourceTree = "<group>"; };
+		D0AC07941C481AFC00F9CF6F /* NSArray+JSONModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+JSONModel.h"; sourceTree = "<group>"; };
+		D0AC07951C481AFC00F9CF6F /* NSArray+JSONModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+JSONModel.m"; sourceTree = "<group>"; };
+		D0AC07961C481AFC00F9CF6F /* JSONModelLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModelLib.h; sourceTree = "<group>"; };
+		D0AC07991C481AFC00F9CF6F /* JSONKeyMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKeyMapper.h; sourceTree = "<group>"; };
+		D0AC079A1C481AFC00F9CF6F /* JSONKeyMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKeyMapper.m; sourceTree = "<group>"; };
+		D0AC079B1C481AFC00F9CF6F /* JSONValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONValueTransformer.h; sourceTree = "<group>"; };
+		D0AC079C1C481AFC00F9CF6F /* JSONValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONValueTransformer.m; sourceTree = "<group>"; };
+		D0AC079F1C481AFC00F9CF6F /* WKServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKServerManager.h; sourceTree = "<group>"; };
+		D0AC07A01C481AFC00F9CF6F /* WKServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKServerManager.m; sourceTree = "<group>"; };
+		D0AC07A21C481AFC00F9CF6F /* A0SimpleKeychain+KeyPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "A0SimpleKeychain+KeyPair.h"; sourceTree = "<group>"; };
+		D0AC07A31C481AFC00F9CF6F /* A0SimpleKeychain+KeyPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "A0SimpleKeychain+KeyPair.m"; sourceTree = "<group>"; };
+		D0AC07A41C481AFC00F9CF6F /* A0SimpleKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A0SimpleKeychain.h; sourceTree = "<group>"; };
+		D0AC07A51C481AFC00F9CF6F /* A0SimpleKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A0SimpleKeychain.m; sourceTree = "<group>"; };
+		D0AC07A61C481AFC00F9CF6F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0AC07A71C481AFC00F9CF6F /* SimpleKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleKeychain.h; sourceTree = "<group>"; };
+		D0AC07A91C481AFC00F9CF6F /* WKContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKContact.h; sourceTree = "<group>"; };
+		D0AC07AA1C481AFC00F9CF6F /* WKContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKContact.m; sourceTree = "<group>"; };
+		D0AC07AB1C481AFC00F9CF6F /* PushNotificationPayload.apns */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		D0AC07AC1C481AFC00F9CF6F /* watch Extension.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "watch Extension.entitlements"; sourceTree = "<group>"; };
+		D0AC07D11C48225100F9CF6F /* JSONAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONAPI.h; sourceTree = "<group>"; };
+		D0AC07D21C48225100F9CF6F /* JSONAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONAPI.m; sourceTree = "<group>"; };
+		D0AC07D31C48225100F9CF6F /* JSONHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONHTTPClient.h; sourceTree = "<group>"; };
+		D0AC07D41C48225100F9CF6F /* JSONHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONHTTPClient.m; sourceTree = "<group>"; };
+		D0AC07D51C48225100F9CF6F /* JSONModel+networking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JSONModel+networking.h"; sourceTree = "<group>"; };
+		D0AC07D61C48225100F9CF6F /* JSONModel+networking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JSONModel+networking.m"; sourceTree = "<group>"; };
 		D0BA6E881C070A1C00B8D85B /* AddContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddContactViewController.h; sourceTree = "<group>"; };
 		D0BA6E891C070A1C00B8D85B /* AddContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddContactViewController.m; sourceTree = "<group>"; };
 		D0D70D401C0464800068AB20 /* UIView+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Addition.h"; sourceTree = "<group>"; };
@@ -420,6 +568,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0AC07651C4809E000F9CF6F /* Contacts.framework in Frameworks */,
+				D0AC07631C4809D600F9CF6F /* WatchConnectivity.framework in Frameworks */,
 				D0A7C0F01BFC58A300ACD33E /* CoreSpotlight.framework in Frameworks */,
 				D0A7C0EE1BFC589B00ACD33E /* MobileCoreServices.framework in Frameworks */,
 				B190F5BC1BDD7F040094B391 /* AudioToolbox.framework in Frameworks */,
@@ -432,6 +582,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0AC06F21C4805FF00F9CF6F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0AC07671C4809F300F9CF6F /* WatchConnectivity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,6 +608,9 @@
 		6C8541A65356EA01C859C162 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D0AC07661C4809F300F9CF6F /* WatchConnectivity.framework */,
+				D0AC07641C4809E000F9CF6F /* Contacts.framework */,
+				D0AC07621C4809D600F9CF6F /* WatchConnectivity.framework */,
 				D0A7C0EF1BFC58A300ACD33E /* CoreSpotlight.framework */,
 				D0A7C0ED1BFC589B00ACD33E /* MobileCoreServices.framework */,
 				B15228561BE898F500C400C6 /* libz.tbd */,
@@ -737,6 +898,8 @@
 			children = (
 				B17B3D2D1BB6898C009B8BC5 /* Peppermint */,
 				B17B3D471BB6898C009B8BC5 /* PeppermintTests */,
+				D0AC06EA1C4805FD00F9CF6F /* watch */,
+				D0AC06F91C4805FF00F9CF6F /* watch Extension */,
 				B17B3D2C1BB6898C009B8BC5 /* Products */,
 				0EC1EC4EC6188F1BAA69C949 /* Pods */,
 				6C8541A65356EA01C859C162 /* Frameworks */,
@@ -748,6 +911,8 @@
 			children = (
 				B17B3D2B1BB6898C009B8BC5 /* Peppermint.app */,
 				B17B3D441BB6898C009B8BC5 /* PeppermintTests.xctest */,
+				D0AC06E91C4805FD00F9CF6F /* watch.app */,
+				D0AC06F51C4805FF00F9CF6F /* watch Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -803,6 +968,7 @@
 				B17B3D3B1BB6898C009B8BC5 /* Images.xcassets */,
 				B17B3D321BB6898C009B8BC5 /* AppDelegate.h */,
 				B17B3D331BB6898C009B8BC5 /* AppDelegate.m */,
+				D0AC076A1C480D2700F9CF6F /* AppConfigurationFile.h */,
 			);
 			name = App;
 			sourceTree = "<group>";
@@ -1068,6 +1234,189 @@
 			name = RowViewForPicker;
 			sourceTree = "<group>";
 		};
+		D0AC06EA1C4805FD00F9CF6F /* watch */ = {
+			isa = PBXGroup;
+			children = (
+				D0AC07751C4819EB00F9CF6F /* watch.entitlements */,
+				D0AC06EB1C4805FD00F9CF6F /* Interface.storyboard */,
+				D0AC06EE1C4805FD00F9CF6F /* Assets.xcassets */,
+				D0AC06F01C4805FE00F9CF6F /* Info.plist */,
+			);
+			path = watch;
+			sourceTree = "<group>";
+		};
+		D0AC06F91C4805FF00F9CF6F /* watch Extension */ = {
+			isa = PBXGroup;
+			children = (
+				D0AC07771C481AFC00F9CF6F /* Assets.xcassets */,
+				D0AC07781C481AFC00F9CF6F /* Categories */,
+				D0AC077C1C481AFC00F9CF6F /* ContactsInterfaceController.h */,
+				D0AC077D1C481AFC00F9CF6F /* ContactsInterfaceController.m */,
+				D0AC077E1C481AFC00F9CF6F /* ExtensionDelegate.h */,
+				D0AC077F1C481AFC00F9CF6F /* ExtensionDelegate.m */,
+				D0AC07801C481AFC00F9CF6F /* Info.plist */,
+				D0AC07811C481AFC00F9CF6F /* InterfaceControllers */,
+				D0AC07881C481AFC00F9CF6F /* Model */,
+				D0AC079D1C481AFC00F9CF6F /* Module */,
+				D0AC07AB1C481AFC00F9CF6F /* PushNotificationPayload.apns */,
+				D0AC07AC1C481AFC00F9CF6F /* watch Extension.entitlements */,
+			);
+			path = "watch Extension";
+			sourceTree = "<group>";
+		};
+		D0AC07781C481AFC00F9CF6F /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				D0AC07791C481AFC00F9CF6F /* IGInterfaceDataTable */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		D0AC07791C481AFC00F9CF6F /* IGInterfaceDataTable */ = {
+			isa = PBXGroup;
+			children = (
+				D0AC077A1C481AFC00F9CF6F /* WKInterfaceTable+IGInterfaceDataTable.h */,
+				D0AC077B1C481AFC00F9CF6F /* WKInterfaceTable+IGInterfaceDataTable.m */,
+			);
+			path = IGInterfaceDataTable;
+			sourceTree = "<group>";
+		};
+		D0AC07811C481AFC00F9CF6F /* InterfaceControllers */ = {
+			isa = PBXGroup;
+			children = (
+				D0AC07821C481AFC00F9CF6F /* ContactsTableRowController */,
+				D0AC07851C481AFC00F9CF6F /* RecordingInterfaceController */,
+			);
+			path = InterfaceControllers;
+			sourceTree = "<group>";
+		};
+		D0AC07821C481AFC00F9CF6F /* ContactsTableRowController */ = {
+			isa = PBXGroup;
+			children = (
+				D0AC07831C481AFC00F9CF6F /* ContactsTableRowController.h */,
+				D0AC07841C481AFC00F9CF6F /* ContactsTableRowController.m */,
+			);
+			path = ContactsTableRowController;
+			sourceTree = "<group>";
+		};
+		D0AC07851C481AFC00F9CF6F /* RecordingInterfaceController */ = {
+			isa = PBXGroup;
+			children = (
+				D0AC07861C481AFC00F9CF6F /* RecordingInterfaceController.h */,
+				D0AC07871C481AFC00F9CF6F /* RecordingInterfaceController.m */,
+			);
+			path = RecordingInterfaceController;
+			sourceTree = "<group>";
+		};
+		D0AC07881C481AFC00F9CF6F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D0AC07891C481AFC00F9CF6F /* JSONModel */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D0AC07891C481AFC00F9CF6F /* JSONModel */ = {
+			isa = PBXGroup;
+			children = (
+				D0AC07D01C48225100F9CF6F /* JSONModelNetworking */,
+				D0AC078A1C481AFC00F9CF6F /* JSONModel */,
+				D0AC07931C481AFC00F9CF6F /* JSONModelCategories */,
+				D0AC07961C481AFC00F9CF6F /* JSONModelLib.h */,
+				D0AC07981C481AFC00F9CF6F /* JSONModelTransformations */,
+			);
+			path = JSONModel;
+			sourceTree = "<group>";
+		};
+		D0AC078A1C481AFC00F9CF6F /* JSONModel */ = {
+			isa = PBXGroup;
+			children = (
+				D0AC078B1C481AFC00F9CF6F /* JSONModel.h */,
+				D0AC078C1C481AFC00F9CF6F /* JSONModel.m */,
+				D0AC078D1C481AFC00F9CF6F /* JSONModelArray.h */,
+				D0AC078E1C481AFC00F9CF6F /* JSONModelArray.m */,
+				D0AC078F1C481AFC00F9CF6F /* JSONModelClassProperty.h */,
+				D0AC07901C481AFC00F9CF6F /* JSONModelClassProperty.m */,
+				D0AC07911C481AFC00F9CF6F /* JSONModelError.h */,
+				D0AC07921C481AFC00F9CF6F /* JSONModelError.m */,
+			);
+			path = JSONModel;
+			sourceTree = "<group>";
+		};
+		D0AC07931C481AFC00F9CF6F /* JSONModelCategories */ = {
+			isa = PBXGroup;
+			children = (
+				D0AC07941C481AFC00F9CF6F /* NSArray+JSONModel.h */,
+				D0AC07951C481AFC00F9CF6F /* NSArray+JSONModel.m */,
+			);
+			path = JSONModelCategories;
+			sourceTree = "<group>";
+		};
+		D0AC07981C481AFC00F9CF6F /* JSONModelTransformations */ = {
+			isa = PBXGroup;
+			children = (
+				D0AC07991C481AFC00F9CF6F /* JSONKeyMapper.h */,
+				D0AC079A1C481AFC00F9CF6F /* JSONKeyMapper.m */,
+				D0AC079B1C481AFC00F9CF6F /* JSONValueTransformer.h */,
+				D0AC079C1C481AFC00F9CF6F /* JSONValueTransformer.m */,
+			);
+			path = JSONModelTransformations;
+			sourceTree = "<group>";
+		};
+		D0AC079D1C481AFC00F9CF6F /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				D0AC079E1C481AFC00F9CF6F /* ServerManager */,
+				D0AC07A11C481AFC00F9CF6F /* SimpleKeychain */,
+				D0AC07A81C481AFC00F9CF6F /* WKContact */,
+			);
+			path = Module;
+			sourceTree = "<group>";
+		};
+		D0AC079E1C481AFC00F9CF6F /* ServerManager */ = {
+			isa = PBXGroup;
+			children = (
+				D0AC079F1C481AFC00F9CF6F /* WKServerManager.h */,
+				D0AC07A01C481AFC00F9CF6F /* WKServerManager.m */,
+			);
+			path = ServerManager;
+			sourceTree = "<group>";
+		};
+		D0AC07A11C481AFC00F9CF6F /* SimpleKeychain */ = {
+			isa = PBXGroup;
+			children = (
+				D0AC07A21C481AFC00F9CF6F /* A0SimpleKeychain+KeyPair.h */,
+				D0AC07A31C481AFC00F9CF6F /* A0SimpleKeychain+KeyPair.m */,
+				D0AC07A41C481AFC00F9CF6F /* A0SimpleKeychain.h */,
+				D0AC07A51C481AFC00F9CF6F /* A0SimpleKeychain.m */,
+				D0AC07A61C481AFC00F9CF6F /* Info.plist */,
+				D0AC07A71C481AFC00F9CF6F /* SimpleKeychain.h */,
+			);
+			path = SimpleKeychain;
+			sourceTree = "<group>";
+		};
+		D0AC07A81C481AFC00F9CF6F /* WKContact */ = {
+			isa = PBXGroup;
+			children = (
+				D0AC07A91C481AFC00F9CF6F /* WKContact.h */,
+				D0AC07AA1C481AFC00F9CF6F /* WKContact.m */,
+			);
+			path = WKContact;
+			sourceTree = "<group>";
+		};
+		D0AC07D01C48225100F9CF6F /* JSONModelNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				D0AC07D11C48225100F9CF6F /* JSONAPI.h */,
+				D0AC07D21C48225100F9CF6F /* JSONAPI.m */,
+				D0AC07D31C48225100F9CF6F /* JSONHTTPClient.h */,
+				D0AC07D41C48225100F9CF6F /* JSONHTTPClient.m */,
+				D0AC07D51C48225100F9CF6F /* JSONModel+networking.h */,
+				D0AC07D61C48225100F9CF6F /* JSONModel+networking.m */,
+			);
+			path = JSONModelNetworking;
+			sourceTree = "<group>";
+		};
 		D0D70D461C049DA00068AB20 /* BaseButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -1091,10 +1440,12 @@
 				99E5888A4AEAE0B8E8705C03 /* Copy Pods Resources */,
 				B1B6528C1BDDF8C0006987EA /* ShellScript */,
 				5C384387C21CFA56C1AB394F /* Embed Pods Frameworks */,
+				D0AC07121C48060100F9CF6F /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D0AC07091C48060000F9CF6F /* PBXTargetDependency */,
 			);
 			name = Peppermint;
 			productName = Peppermint;
@@ -1118,6 +1469,40 @@
 			productName = PeppermintTests;
 			productReference = B17B3D441BB6898C009B8BC5 /* PeppermintTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D0AC06E81C4805FD00F9CF6F /* watch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D0AC07111C48060100F9CF6F /* Build configuration list for PBXNativeTarget "watch" */;
+			buildPhases = (
+				D0AC06E71C4805FD00F9CF6F /* Resources */,
+				D0AC07101C48060100F9CF6F /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D0AC06F81C4805FF00F9CF6F /* PBXTargetDependency */,
+			);
+			name = watch;
+			productName = watch;
+			productReference = D0AC06E91C4805FD00F9CF6F /* watch.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		D0AC06F41C4805FF00F9CF6F /* watch Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D0AC070F1C48060100F9CF6F /* Build configuration list for PBXNativeTarget "watch Extension" */;
+			buildPhases = (
+				D0AC06F11C4805FF00F9CF6F /* Sources */,
+				D0AC06F21C4805FF00F9CF6F /* Frameworks */,
+				D0AC06F31C4805FF00F9CF6F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "watch Extension";
+			productName = "watch Extension";
+			productReference = D0AC06F51C4805FF00F9CF6F /* watch Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -1153,6 +1538,24 @@
 						CreatedOnToolsVersion = 6.4;
 						TestTargetID = B17B3D2A1BB6898C009B8BC5;
 					};
+					D0AC06E81C4805FD00F9CF6F = {
+						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = FG36H6PY86;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					D0AC06F41C4805FF00F9CF6F = {
+						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = FG36H6PY86;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
 				};
 			};
 			buildConfigurationList = B17B3D261BB6898C009B8BC5 /* Build configuration list for PBXProject "Peppermint" */;
@@ -1170,6 +1573,8 @@
 			targets = (
 				B17B3D2A1BB6898C009B8BC5 /* Peppermint */,
 				B17B3D431BB6898C009B8BC5 /* PeppermintTests */,
+				D0AC06E81C4805FD00F9CF6F /* watch */,
+				D0AC06F41C4805FF00F9CF6F /* watch Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -1205,6 +1610,27 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0AC06E71C4805FD00F9CF6F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0AC06EF1C4805FD00F9CF6F /* Assets.xcassets in Resources */,
+				D0AC06ED1C4805FD00F9CF6F /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0AC06F31C4805FF00F9CF6F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0AC07B11C481AFC00F9CF6F /* Info.plist in Resources */,
+				D0AC07C11C481AFC00F9CF6F /* watch Extension.entitlements in Resources */,
+				D0AC07C01C481AFC00F9CF6F /* PushNotificationPayload.apns in Resources */,
+				D0AC07AD1C481AFC00F9CF6F /* Assets.xcassets in Resources */,
+				D0AC07BE1C481AFC00F9CF6F /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1277,6 +1703,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B149EB351C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m in Sources */,
+				D0AC07CF1C48223800F9CF6F /* JSONValueTransformer.m in Sources */,
 				D0D70D451C0495680068AB20 /* LoginWithEmailViewController.m in Sources */,
 				B184A0A71C1B0CF20087BB9C /* JwtInformation.m in Sources */,
 				B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */,
@@ -1314,6 +1741,8 @@
 				B1714CC81BE11EE6004F13A4 /* ReSideMenuContainerViewController.m in Sources */,
 				B190F5BA1BDD63400094B391 /* SendVoiceMessageSMSModel.m in Sources */,
 				B11F8A5C1BDCC45F000E79AA /* FinalizeUploadRequest.m in Sources */,
+				D0AC07D91C48225100F9CF6F /* JSONModel+networking.m in Sources */,
+				D0AC07CC1C48222200F9CF6F /* JSONModelError.m in Sources */,
 				B1C4A7761BF73E4900272AD7 /* LoginResponse.m in Sources */,
 				B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */,
 				B1A366921BDC92DB00852B52 /* UploadsRequest.m in Sources */,
@@ -1322,22 +1751,28 @@
 				B15FDE7F1C117CCE007100EC /* GoogleContact.m in Sources */,
 				B1D2A6DB1C2037FB002BD6DF /* FoggyRecordingView.m in Sources */,
 				B17B3D641BB6AE8B009B8BC5 /* RecordingViewController.m in Sources */,
+				D0AC07DB1C48227900F9CF6F /* A0SimpleKeychain.m in Sources */,
 				B15B15B81BDBC17300C0C171 /* Recorder.m in Sources */,
 				B10C392E1BF6F9520070B49F /* AccountRequest.m in Sources */,
 				D0D70D491C049DC80068AB20 /* BaseButton.m in Sources */,
+				D0AC07C91C48221900F9CF6F /* JSONModel.m in Sources */,
 				B1EF40EE1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.m in Sources */,
 				B15B15BE1BDBC31F00C0C171 /* AWSService.m in Sources */,
 				B15FDE811C117CCE007100EC /* CachedMessage.m in Sources */,
 				B165EF181BB71EC0008C6F71 /* PeppermintContact.m in Sources */,
 				B15FDE7B1C117CCE007100EC /* CustomContact.m in Sources */,
 				B1BB1E5F1BD35CD300A1CE45 /* MandrillService.m in Sources */,
+				D0AC07CE1C48223500F9CF6F /* JSONKeyMapper.m in Sources */,
 				B1F93E981BC8E328005F2128 /* Repository.m in Sources */,
+				D0AC07D81C48225100F9CF6F /* JSONHTTPClient.m in Sources */,
 				B17B3D6E1BB6BD13009B8BC5 /* ContactTableViewCell.m in Sources */,
 				B17B3D691BB6BCE5009B8BC5 /* CellFactory.m in Sources */,
+				D0AC07CB1C48221F00F9CF6F /* JSONModelClassProperty.m in Sources */,
 				B15B15C11BDBC55A00C0C171 /* AWSModel.m in Sources */,
 				B15FDE7E1C117CCE007100EC /* GoogleContact+CoreDataProperties.m in Sources */,
 				D074A6721C07275B0017EAC3 /* CountryRow.m in Sources */,
 				B13B076D1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m in Sources */,
+				D0AC07711C4815AE00F9CF6F /* AppDelegate.m in Sources */,
 				D0A7C0DA1BFA0C7900ACD33E /* DeviceModel.m in Sources */,
 				B16DA2171BE0F2C100EBF043 /* SlideMenuViewController.m in Sources */,
 				B1BB601A1BDE127500C1140B /* LoginViewController.m in Sources */,
@@ -1348,23 +1783,26 @@
 				B1BB1E631BD364FB00A1CE45 /* AFNetworkActivityLogger.m in Sources */,
 				B15B15AC1BD9D8B800C0C171 /* ExplodingView.m in Sources */,
 				B10C39311BF6FB150070B49F /* User.m in Sources */,
+				D0AC07CD1C48223100F9CF6F /* NSArray+JSONModel.m in Sources */,
 				B1FFFF2A1C18241E0049347D /* RecoverPasswordRequest.m in Sources */,
+				D0AC07DA1C48227600F9CF6F /* A0SimpleKeychain+KeyPair.m in Sources */,
 				D0A7C0F31BFC5BC200ACD33E /* SpotlightModel.m in Sources */,
 				B1EF40EB1BB7E78C00042E4B /* SendVoiceMessageModel.m in Sources */,
 				B17B3D5E1BB6A504009B8BC5 /* ContactsViewController.m in Sources */,
 				B13B07601BD3719500974AC3 /* MandrillToObject.m in Sources */,
 				B17206D21BE4AAE40021D855 /* ConnectionModel.m in Sources */,
 				B17B3D741BB6C4B0009B8BC5 /* UIColor_Addition.m in Sources */,
-				B17B3D341BB6898C009B8BC5 /* AppDelegate.m in Sources */,
 				B10125BC1BEB670500B5DD54 /* NSString_Addition.m in Sources */,
 				B116F3B11C008E570091994C /* FastReplyModel.m in Sources */,
 				B15FDE7A1C117CCE007100EC /* CustomContact+CoreDataProperties.m in Sources */,
 				B102BBB81BCD03EC001E1E7A /* UIViewController_AdditionViewController.m in Sources */,
 				B13B076A1BD3752900974AC3 /* MandrillRequest.m in Sources */,
+				D0AC07D71C48225100F9CF6F /* JSONAPI.m in Sources */,
 				B17801761C1EFE9000BA2436 /* TutorialView.m in Sources */,
 				D074A66D1C07174D0017EAC3 /* CountryFormatModel.m in Sources */,
 				B1EF40FC1BB8786500042E4B /* TutorialViewController.m in Sources */,
 				B165EF121BB71A85008C6F71 /* BaseModel.m in Sources */,
+				D0AC07CA1C48221D00F9CF6F /* JSONModelArray.m in Sources */,
 				B15FDE7D1C117CCE007100EC /* RecentContact.m in Sources */,
 				B17B3D311BB6898C009B8BC5 /* main.m in Sources */,
 				B108F8601BECAA5300267DEC /* SendVoiceMessageEmailModel.m in Sources */,
@@ -1398,6 +1836,43 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D0AC06F11C4805FF00F9CF6F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0AC07B81C481AFC00F9CF6F /* NSArray+JSONModel.m in Sources */,
+				D0AC07B71C481AFC00F9CF6F /* JSONModelError.m in Sources */,
+				D0AC07BD1C481AFC00F9CF6F /* A0SimpleKeychain.m in Sources */,
+				D0AC07741C48177F00F9CF6F /* RecentContactsModel.m in Sources */,
+				D0AC076F1C480DD500F9CF6F /* MandrillToObject.m in Sources */,
+				D0AC07C31C481FF000F9CF6F /* MandrillMailAttachment.m in Sources */,
+				D0AC07B61C481AFC00F9CF6F /* JSONModelClassProperty.m in Sources */,
+				D0AC07C61C48206C00F9CF6F /* Repository.m in Sources */,
+				D0AC076C1C480DC200F9CF6F /* MandrillRequest.m in Sources */,
+				D0AC07AE1C481AFC00F9CF6F /* WKInterfaceTable+IGInterfaceDataTable.m in Sources */,
+				D0AC07C71C4820A300F9CF6F /* ContactsModel.m in Sources */,
+				D0AC076E1C480DD000F9CF6F /* MandrillSendRequest.m in Sources */,
+				D0AC07BA1C481AFC00F9CF6F /* JSONValueTransformer.m in Sources */,
+				D0AC07AF1C481AFC00F9CF6F /* ContactsInterfaceController.m in Sources */,
+				D0AC07B01C481AFC00F9CF6F /* ExtensionDelegate.m in Sources */,
+				D0AC07B31C481AFC00F9CF6F /* RecordingInterfaceController.m in Sources */,
+				D0AC07C81C48214200F9CF6F /* PeppermintDataModel.xcdatamodeld in Sources */,
+				D0AC07BB1C481AFC00F9CF6F /* WKServerManager.m in Sources */,
+				D0AC07BC1C481AFC00F9CF6F /* A0SimpleKeychain+KeyPair.m in Sources */,
+				D0AC07C51C48203600F9CF6F /* Contact.m in Sources */,
+				D0AC07611C48091800F9CF6F /* PeppermintContact.m in Sources */,
+				D0AC07B91C481AFC00F9CF6F /* JSONKeyMapper.m in Sources */,
+				D0AC07B41C481AFC00F9CF6F /* JSONModel.m in Sources */,
+				D0AC07B21C481AFC00F9CF6F /* ContactsTableRowController.m in Sources */,
+				D0AC07C41C48200400F9CF6F /* BaseModel.m in Sources */,
+				D0AC07701C480DDA00F9CF6F /* MandrillMessage.m in Sources */,
+				D0AC07681C480B2400F9CF6F /* PeppermintMessageSender.m in Sources */,
+				D0AC07BF1C481AFC00F9CF6F /* WKContact.m in Sources */,
+				D0AC07B51C481AFC00F9CF6F /* JSONModelArray.m in Sources */,
+				D0AC07C21C481DDA00F9CF6F /* RecentContact.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1405,6 +1880,16 @@
 			isa = PBXTargetDependency;
 			target = B17B3D2A1BB6898C009B8BC5 /* Peppermint */;
 			targetProxy = B17B3D451BB6898C009B8BC5 /* PBXContainerItemProxy */;
+		};
+		D0AC06F81C4805FF00F9CF6F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0AC06F41C4805FF00F9CF6F /* watch Extension */;
+			targetProxy = D0AC06F71C4805FF00F9CF6F /* PBXContainerItemProxy */;
+		};
+		D0AC07091C48060000F9CF6F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0AC06E81C4805FD00F9CF6F /* watch */;
+			targetProxy = D0AC07081C48060000F9CF6F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1415,6 +1900,14 @@
 				B17B3D391BB6898C009B8BC5 /* Base */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D0AC06EB1C4805FD00F9CF6F /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D0AC06EC1C4805FD00F9CF6F /* Base */,
+			);
+			name = Interface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1527,7 +2020,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2ce472e9-895a-4996-b887-af983f2c32a3";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1540,7 +2033,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Peppermint/Peppermint.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1553,7 +2046,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "685b91e2-aa79-4022-bd76-ab52f591493c";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1598,6 +2091,84 @@
 			};
 			name = Release;
 		};
+		D0AC070B1C48060000F9CF6F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = watch/watch.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				IBSC_MODULE = watch_Extension;
+				INFOPLIST_FILE = watch/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		D0AC070C1C48060000F9CF6F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = watch/watch.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
+				IBSC_MODULE = watch_Extension;
+				INFOPLIST_FILE = watch/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		D0AC070D1C48060000F9CF6F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "watch Extension/watch Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = "watch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		D0AC070E1C48060000F9CF6F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "watch Extension/watch Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "watch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1624,6 +2195,24 @@
 			buildConfigurations = (
 				B17B3D521BB6898C009B8BC5 /* Debug */,
 				B17B3D531BB6898C009B8BC5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D0AC070F1C48060100F9CF6F /* Build configuration list for PBXNativeTarget "watch Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0AC070D1C48060000F9CF6F /* Debug */,
+				D0AC070E1C48060000F9CF6F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D0AC07111C48060100F9CF6F /* Build configuration list for PBXNativeTarget "watch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0AC070B1C48060000F9CF6F /* Debug */,
+				D0AC070C1C48060000F9CF6F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

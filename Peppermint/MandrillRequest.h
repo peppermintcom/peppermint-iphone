@@ -9,6 +9,14 @@
 #import "JSONModel.h"
 #import "MandrillMessage.h"
 
+#ifdef DEBUG
+//#define MANDRILL_API_KEY    @"B5YC37ztRDo4ZmBsmppelQ"   //okankurtulus@yahoo.com
+#define MANDRILL_API_KEY    @"Z8ZJYcld1Ppop-OUHgK06g"   //Rob@peppermint.com
+#else
+#define MANDRILL_API_KEY    @"Z8ZJYcld1Ppop-OUHgK06g"   //Rob@peppermint.com
+#endif
+
+
 @interface MandrillRequest : JSONModel
 @property (strong, nonatomic) NSString *key;
 @property (strong, nonatomic) MandrillMessage *message;

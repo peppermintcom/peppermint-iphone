@@ -7,11 +7,16 @@
 //
 
 //Import AppDelegate that will be used to create repository
+
+#if !(TARGET_OS_WATCH)
+
 #import "AppDelegate.h"
 
 //Import entity headers
 #import "Contact.h"
-#import "RecentContact.h"
 #import "GoogleContact.h"
 #import "CachedMessage.h"
 #import "CustomContact.h"
+#endif
+
+#import "RecentContact.h"

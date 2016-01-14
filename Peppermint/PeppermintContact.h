@@ -14,6 +14,8 @@ typedef enum : NSUInteger {
     CommunicationChannelSMS,
 } CommunicationChannel;
 
+@import UIKit;
+
 @interface PeppermintContact : NSObject
 @property (strong, nonatomic) UIImage *avatarImage;
 @property (strong, nonatomic) NSString* nameSurname;
@@ -22,6 +24,9 @@ typedef enum : NSUInteger {
 
 - (void)addToCoreSpotlightSearch;
 - (BOOL) equals:(PeppermintContact*)peppermintContact;
--(BOOL) isIdenticalForImage:(PeppermintContact*) contactToCompare;
+- (BOOL) isIdenticalForImage:(PeppermintContact*) contactToCompare;
+
++ (PeppermintContact *)peppermintContactWithData:(NSData *)data;
+- (NSData *)archivedRootData;
 
 @end

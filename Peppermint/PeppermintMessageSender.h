@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "JSONModel.h"
 
+#define KEYCHAIN_MESSAGE_SENDER     @"keychainMessageSender"
+
 typedef enum : NSUInteger {
     LOGINSOURCE_FACEBOOK,
     LOGINSOURCE_GOOGLE,

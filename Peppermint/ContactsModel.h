@@ -8,9 +8,13 @@
 
 #import "BaseModel.h"
 #import "PeppermintContact.h"
-@import AddressBook;
+
+#if !(TARGET_OS_WATCH)
 #import "APContact.h"
 #import "APAddressBook.h"
+@import AddressBook;
+#endif
+
 
 @protocol ContactsModelDelegate <BaseModelDelegate>
 
@@ -19,7 +23,9 @@
 
 @end
 
-@interface ContactsModel : BaseModel {
+@interface ContactsModel : BaseModel
+#if !(TARGET_OS_WATCH)
+{
     APAddressBook *addressBook;
 }
 
@@ -35,6 +41,7 @@
 -(NSArray*) emailContactList;
 -(NSArray*) smsContactList;
 
+#endif
 #pragma mark - NSPredicate
 
 +(NSPredicate*) contactPredicateWithNameSurname:(NSString*) nameSurname;

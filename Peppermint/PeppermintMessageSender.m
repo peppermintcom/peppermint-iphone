@@ -8,15 +8,26 @@
 
 #import "PeppermintMessageSender.h"
 #import "A0SimpleKeychain.h"
+
+#if !(TARGET_OS_WATCH)
 #import "GoogleContactsModel.h"
+#endif
 
 #define KEY                     @"PeppermintMessageSenderJson"
 #define SURNAME_EMPTY           @"   "  //We use spaces, cos surname length must be bigger than 0
 
+@import WatchConnectivity;
+
 @implementation PeppermintMessageSender
 
 + (instancetype) sharedInstance {
-    return SHARED_INSTANCE([self savedSender]);
+    static dispatch_once_t pred;
+    static PeppermintMessageSender *_sharedManager = nil;
+    
+    dispatch_once(&pred, ^{
+        _sharedManager = [self savedSender];
+    });
+    return _sharedManager;
 }
 
 +(instancetype) savedSender {
@@ -35,7 +46,9 @@
     if(!isJsonStringValid) {
         sender = [PeppermintMessageSender new];
         [sender clearSender];
+#if !(TARGET_OS_WATCH)
         [sender guessNameFromDeviceName];
+#endif
     }
     NSAssert(sender != nil, @"sender must not be nil. Please be sure that it is inited!");
     return sender;
@@ -44,7 +57,9 @@
 -(id) init {
     self = [super init];
     if(self) {
+#if !(TARGET_OS_WATCH)
         self.imageData = [NSData dataWithContentsOfURL:[self imageFileUrl]];
+#endif
     }
     return self;
 }
@@ -52,8 +67,24 @@
 -(void) save {
     NSString *jsonString = [self toJSONString];
     [[A0SimpleKeychain keychain] setString:jsonString forKey:KEYCHAIN_MESSAGE_SENDER];
+  
+#if !(TARGET_OS_WATCH)
+    [self watchSynchronize];
     [self.imageData writeToURL:[self imageFileUrl] atomically:YES];
+#endif
+
 }
+
+- (void)watchSynchronize {
+  if (NSClassFromString(@"WCSession")) {
+    if ([WCSession isSupported]) {
+      NSError * err;
+      [[WCSession defaultSession] updateApplicationContext:@{@"user":[self toJSONString]} error:&err];
+    }
+  }
+}
+
+#if !(TARGET_OS_WATCH)
 
 -(BOOL) isValid {
     BOOL result = [self nameSurname].length > 0
@@ -180,5 +211,5 @@
     [self save];
     
 }
-
+#endif
 @end

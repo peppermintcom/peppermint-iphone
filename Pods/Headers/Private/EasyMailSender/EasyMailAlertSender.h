@@ -1,1 +1,0 @@
-../../../EasyMailSender/Classes/EasyMailAlertSender.h

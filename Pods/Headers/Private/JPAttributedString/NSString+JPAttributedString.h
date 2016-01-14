@@ -1,1 +1,0 @@
-../../../JPAttributedString/JPAttributedString/Classes/NSString+JPAttributedString.h

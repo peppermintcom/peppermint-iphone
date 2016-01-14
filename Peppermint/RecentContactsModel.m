@@ -7,6 +7,8 @@
 //
 
 #import "RecentContactsModel.h"
+
+
 #import "ContactsModel.h"
 
 #define DBQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
@@ -92,9 +94,24 @@
         NSArray *recentContactsArray = [repository getResultsFromEntity:[RecentContact class] predicateOrNil:nil ascSortStringOrNil:nil descSortStringOrNil:[NSArray arrayWithObjects:@"contactDate", nil]];
         
         NSMutableArray *recentPeppermintContacts = [NSMutableArray new];
+        NSMutableArray * recentPeppermintContactsData = [NSMutableArray new];
+
         for(RecentContact *recentContact in recentContactsArray) {
             [recentPeppermintContacts addObject:[self peppermintContactWithRecentContact:recentContact]];
+#if !(TARGET_OS_WATCH)
+            [recentPeppermintContactsData addObject:[ppm_contact archivedRootData]];
+#endif
         }
+      
+      if (NSClassFromString(@"WCSession") && recentPeppermintContactsData.count > 0) {
+        if ([WCSession isSupported]) {
+          NSError * err;
+          [[WCSession defaultSession] updateApplicationContext:@{@"contact":recentPeppermintContactsData} error:&err];
+          if (err) {
+            NSLog(@"%s: %@", __PRETTY_FUNCTION__, err);
+          }
+        }
+      }
         self.contactList = recentPeppermintContacts;
         
         dispatch_async(dispatch_get_main_queue(), ^{

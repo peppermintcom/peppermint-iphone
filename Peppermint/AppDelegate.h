@@ -6,8 +6,9 @@
 //  Copyright (c) 2015 Okan Kurtulus. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <CoreData/CoreData.h>
+@import CoreData;
+@import Foundation;
+@import UIKit;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 @property (strong, nonatomic) UIWindow *window;

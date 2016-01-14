@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#if !(TARGET_OS_WATCH)
 #import "Tolo.h"
 #import "Events.h"
+#endif
 
 @protocol BaseModelDelegate <NSObject>
 @required

@@ -29,10 +29,12 @@
 #import "AnalyticsModel.h"
 #import "GAIFields.h"
 
+@import WatchConnectivity;
+@import Contacts;
 @import CoreSpotlight;
 @import MobileCoreServices;
 
-@interface AppDelegate ()
+@interface AppDelegate () <WCSessionDelegate>
 
 @end
 
@@ -106,6 +108,16 @@
 */
 }
 
+-(void) initWatchKitSession {
+  if (NSClassFromString(@"WCSession")) {
+    if ([WCSession isSupported]) {
+      [WCSession defaultSession].delegate = self;
+      [[WCSession defaultSession] activateSession];
+    }
+  }
+}
+
+
 -(void) logServiceCalls {
 #ifdef DEBUG
     [[AFNetworkActivityLogger sharedLogger] startLogging];
@@ -171,6 +183,7 @@
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
     [self initGoogleApp];
     [self initConnectionStatusChangeListening];
+    [self initWatchKitSession];
     [self checkForFirstRun];
     REGISTER();
     return YES;

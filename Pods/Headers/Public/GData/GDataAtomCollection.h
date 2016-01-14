@@ -1,1 +1,0 @@
-../../../GData/Source/Introspection/GDataAtomCollection.h
