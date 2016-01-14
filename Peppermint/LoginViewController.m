@@ -27,6 +27,7 @@
 
 @implementation LoginViewController {
     PeppermintMessageSender *peppermintMessageSender;
+    BOOL didTakeAction;
 }
 
 - (void)viewDidLoad {
@@ -44,6 +45,11 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    didTakeAction = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -130,20 +136,27 @@
 #pragma mark - LoginTableViewCellDelegate
 
 -(void) selectedLoginTableViewCell:(UITableViewCell*) cell atIndexPath:(NSIndexPath*) indexPath {
-    NSInteger index = indexPath.section;
-    LoginNavigationViewController *loginNavigationViewController = (LoginNavigationViewController*)self.navigationController;
-    if(index == SECTION_LOGIN_WITH_GOOGLE) {
-        peppermintMessageSender.loginSource = LOGINSOURCE_GOOGLE;
-        [loginNavigationViewController.loginModel performGoogleLogin];
-    } else if (index == SECTION_LOGIN_WITH_FACEBOOK) {
-        peppermintMessageSender.loginSource = LOGINSOURCE_FACEBOOK;
-        [loginNavigationViewController.loginModel performFacebookLogin];
-    } else if (index == SECTION_LOGIN_WITH_EMAIL) {
-        peppermintMessageSender.loginSource = LOGINSOURCE_PEPPERMINT;        
-        if([peppermintMessageSender isInMailVerificationProcess]) {
-            [loginNavigationViewController loginRequireEmailVerification];
-        } else {
-            [self performSegueWithIdentifier:SEGUE_LOGIN_WITH_EMAIL sender:self];
+    
+    NSLog(@"selectedLoginTableViewCell:atIndexPath:");
+    
+    if(!didTakeAction) {
+        didTakeAction = YES;
+        
+        NSInteger index = indexPath.section;
+        LoginNavigationViewController *loginNavigationViewController = (LoginNavigationViewController*)self.navigationController;
+        if(index == SECTION_LOGIN_WITH_GOOGLE) {
+            peppermintMessageSender.loginSource = LOGINSOURCE_GOOGLE;
+            [loginNavigationViewController.loginModel performGoogleLogin];
+        } else if (index == SECTION_LOGIN_WITH_FACEBOOK) {
+            peppermintMessageSender.loginSource = LOGINSOURCE_FACEBOOK;
+            [loginNavigationViewController.loginModel performFacebookLogin];
+        } else if (index == SECTION_LOGIN_WITH_EMAIL) {
+            peppermintMessageSender.loginSource = LOGINSOURCE_PEPPERMINT;
+            if([peppermintMessageSender isInMailVerificationProcess]) {
+                [loginNavigationViewController loginRequireEmailVerification];
+            } else {
+                [self performSegueWithIdentifier:SEGUE_LOGIN_WITH_EMAIL sender:self];
+            }
         }
     }
 }
