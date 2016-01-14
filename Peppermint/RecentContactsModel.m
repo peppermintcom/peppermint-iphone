@@ -97,7 +97,8 @@
         NSMutableArray * recentPeppermintContactsData = [NSMutableArray new];
 
         for(RecentContact *recentContact in recentContactsArray) {
-            [recentPeppermintContacts addObject:[self peppermintContactWithRecentContact:recentContact]];
+          PeppermintContact * ppm_contact = [self peppermintContactWithRecentContact:recentContact];
+            [recentPeppermintContacts addObject:ppm_contact];
 #if !(TARGET_OS_WATCH)
             [recentPeppermintContactsData addObject:[ppm_contact archivedRootData]];
 #endif
