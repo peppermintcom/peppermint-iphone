@@ -1,0 +1,1 @@
+../../../GData/Source/Clients/Docs/GDataEntryFolderDoc.h

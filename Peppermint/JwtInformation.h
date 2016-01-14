@@ -6,7 +6,7 @@
 //  Copyright © 2015 Okan Kurtulus. All rights reserved.
 //
 
-#import <JSONModel/JSONModel.h>
+#import "JSONModel.h"
 
 @interface JwtInformation : JSONModel
 @property (assign, nonatomic) NSTimeInterval exp;
