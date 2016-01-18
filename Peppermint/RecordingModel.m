@@ -28,6 +28,23 @@
     defaults_set_object(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH, [NSString stringWithFormat:@"%f",previousFileLength]);
 }
 
++(BOOL) checkRecordPermissions {
+    BOOL __block result = NO;
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    if([session respondsToSelector:@selector(requestRecordPermission:)]) {
+        [session requestRecordPermission:^(BOOL granted) {
+            if(granted) {
+                result = YES;
+            } else {
+                result = NO;
+            }
+        }];
+    } else {
+        result = YES;
+    }
+    return result;
+}
+
 -(id) init {
     self = [super init];
     if(self) {

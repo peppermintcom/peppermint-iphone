@@ -28,6 +28,7 @@
 
 +(CGFloat) checkPreviousFileLength;
 +(void) setPreviousFileLength:(CGFloat) previousFileLength;
++(BOOL) checkRecordPermissions;
 
 -(void) record;
 -(void) pause;

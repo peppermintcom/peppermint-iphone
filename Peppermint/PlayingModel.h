@@ -8,6 +8,8 @@
 
 #import "BaseModel.h"
 
+typedef void(^PlayerCompletitionBlock)(void);
+
 @interface PlayingModel : BaseModel
--(void) playBeginRecording;
+-(BOOL) playBeginRecording:(PlayerCompletitionBlock) playerCompletitionBlock;
 @end

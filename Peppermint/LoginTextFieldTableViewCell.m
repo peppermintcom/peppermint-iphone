@@ -66,7 +66,7 @@
 }
 
 -(void) setValid:(BOOL) isValid {
-    NSLog(@"isValid:%d (Please implement needed configuration for valid proerty)", isValid);
+    //NSLog(@"isValid:%d (Please implement needed configuration for valid proerty)", isValid);
 }
 
 @end
