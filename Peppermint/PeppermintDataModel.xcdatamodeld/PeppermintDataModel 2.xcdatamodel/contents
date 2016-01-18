@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="14F1509" minimumToolsVersion="Xcode 4.3">
+    <entity name="CachedMessage" representedClassName="CachedMessage" syncable="YES">
+        <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="duration" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="extension" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mailSenderClass" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="receiverCommunicationChannel" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="receiverCommunicationChannelAddress" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="receiverNameSurname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="senderEmail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="senderNameSurname" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Chat" representedClassName="Chat" syncable="YES">
+        <attribute name="lastMessageDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="chatContact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ChatContact" syncable="YES"/>
+    </entity>
+    <entity name="ChatContact" parentEntity="Contact" syncable="YES"/>
+    <entity name="ChatEntry" representedClassName="ChatEntry" syncable="YES">
+        <attribute name="audio" attributeType="Binary" syncable="YES"/>
+        <attribute name="date" attributeType="Date" syncable="YES"/>
+        <attribute name="dateListened" attributeType="Date" defaultDateTimeInterval="-1577930400" storedInTruthFile="YES" syncable="YES"/>
+        <attribute name="dateViewed" attributeType="Date" syncable="YES"/>
+        <attribute name="transcription" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="chat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Chat" syncable="YES"/>
+        <relationship name="chatContact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ChatContact" syncable="YES"/>
+    </entity>
+    <entity name="Contact" representedClassName="Contact" isAbstract="YES" syncable="YES">
+        <attribute name="avatarImageData" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="communicationChannel" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="communicationChannelAddress" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nameSurname" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="CustomContact" representedClassName="CustomContact" parentEntity="Contact" syncable="YES">
+        <attribute name="createDate" optional="YES" attributeType="Date" syncable="YES"/>
+    </entity>
+    <entity name="GoogleContact" representedClassName="GoogleContact" parentEntity="Contact" syncable="YES">
+        <attribute name="accountEmail" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="RecentContact" representedClassName="RecentContact" parentEntity="Contact" syncable="YES">
+        <attribute name="contactDate" optional="YES" attributeType="Date" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="CachedMessage" positionX="-135" positionY="-63" width="128" height="180"/>
+        <element name="Contact" positionX="-353" positionY="3" width="128" height="105"/>
+        <element name="CustomContact" positionX="-243" positionY="63" width="128" height="60"/>
+        <element name="GoogleContact" positionX="-333" positionY="174" width="128" height="60"/>
+        <element name="RecentContact" positionX="-189" positionY="171" width="128" height="60"/>
+        <element name="Chat" positionX="-243" positionY="63" width="128" height="75"/>
+        <element name="ChatEntry" positionX="-234" positionY="72" width="128" height="150"/>
+        <element name="ChatContact" positionX="-225" positionY="81" width="128" height="45"/>
+    </elements>
+</model>

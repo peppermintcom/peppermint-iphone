@@ -23,6 +23,11 @@
 		B116F3B11C008E570091994C /* FastReplyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B116F3B01C008E570091994C /* FastReplyModel.m */; };
 		B11B13541C0C5EAD00782FC4 /* ContactInformationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B11B13531C0C5EAD00782FC4 /* ContactInformationTableViewCell.m */; };
 		B11B13561C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B11B13551C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib */; };
+		B11E02DE1C490F4700579122 /* ChatEntry+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E02D71C490F4700579122 /* ChatEntry+CoreDataProperties.m */; };
+		B11E02DF1C490F4700579122 /* ChatEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E02D91C490F4700579122 /* ChatEntry.m */; };
+		B11E02E01C490F4700579122 /* Chat+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E02DB1C490F4700579122 /* Chat+CoreDataProperties.m */; };
+		B11E02E11C490F4700579122 /* Chat.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E02DD1C490F4700579122 /* Chat.m */; };
+		B11E02E41C49198400579122 /* ChatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E02E31C49198400579122 /* ChatsViewController.m */; };
 		B11F8A5C1BDCC45F000E79AA /* FinalizeUploadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5B1BDCC45F000E79AA /* FinalizeUploadRequest.m */; };
 		B11F8A5F1BDCC474000E79AA /* FinalizeUploadResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5E1BDCC474000E79AA /* FinalizeUploadResponse.m */; };
 		B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B12C03BA1BCFFC060085A55A /* FastRecordingView.m */; };
@@ -187,6 +192,17 @@
 		B11B13521C0C5EAD00782FC4 /* ContactInformationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactInformationTableViewCell.h; sourceTree = "<group>"; };
 		B11B13531C0C5EAD00782FC4 /* ContactInformationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactInformationTableViewCell.m; sourceTree = "<group>"; };
 		B11B13551C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactInformationTableViewCell.xib; sourceTree = "<group>"; };
+		B11E02D51C490DA900579122 /* PeppermintDataModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PeppermintDataModel 2.xcdatamodel"; sourceTree = "<group>"; };
+		B11E02D61C490F4700579122 /* ChatEntry+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ChatEntry+CoreDataProperties.h"; sourceTree = "<group>"; };
+		B11E02D71C490F4700579122 /* ChatEntry+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ChatEntry+CoreDataProperties.m"; sourceTree = "<group>"; };
+		B11E02D81C490F4700579122 /* ChatEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatEntry.h; sourceTree = "<group>"; };
+		B11E02D91C490F4700579122 /* ChatEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatEntry.m; sourceTree = "<group>"; };
+		B11E02DA1C490F4700579122 /* Chat+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Chat+CoreDataProperties.h"; sourceTree = "<group>"; };
+		B11E02DB1C490F4700579122 /* Chat+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Chat+CoreDataProperties.m"; sourceTree = "<group>"; };
+		B11E02DC1C490F4700579122 /* Chat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chat.h; sourceTree = "<group>"; };
+		B11E02DD1C490F4700579122 /* Chat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chat.m; sourceTree = "<group>"; };
+		B11E02E21C49198400579122 /* ChatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatsViewController.h; sourceTree = "<group>"; };
+		B11E02E31C49198400579122 /* ChatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatsViewController.m; sourceTree = "<group>"; };
 		B11F8A5A1BDCC45F000E79AA /* FinalizeUploadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinalizeUploadRequest.h; sourceTree = "<group>"; };
 		B11F8A5B1BDCC45F000E79AA /* FinalizeUploadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinalizeUploadRequest.m; sourceTree = "<group>"; };
 		B11F8A5D1BDCC474000E79AA /* FinalizeUploadResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinalizeUploadResponse.h; sourceTree = "<group>"; };
@@ -961,6 +977,8 @@
 				D0BA6E891C070A1C00B8D85B /* AddContactViewController.m */,
 				B1B8018F1C3FF69B00958885 /* AboutViewController.h */,
 				B1B801901C3FF69B00958885 /* AboutViewController.m */,
+				B11E02E21C49198400579122 /* ChatsViewController.h */,
+				B11E02E31C49198400579122 /* ChatsViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1034,6 +1052,14 @@
 		B1F93E911BC8E2A0005F2128 /* NSManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
+				B11E02D61C490F4700579122 /* ChatEntry+CoreDataProperties.h */,
+				B11E02D71C490F4700579122 /* ChatEntry+CoreDataProperties.m */,
+				B11E02D81C490F4700579122 /* ChatEntry.h */,
+				B11E02D91C490F4700579122 /* ChatEntry.m */,
+				B11E02DA1C490F4700579122 /* Chat+CoreDataProperties.h */,
+				B11E02DB1C490F4700579122 /* Chat+CoreDataProperties.m */,
+				B11E02DC1C490F4700579122 /* Chat.h */,
+				B11E02DD1C490F4700579122 /* Chat.m */,
 				B15FDE641C117CCE007100EC /* Contact+CoreDataProperties.h */,
 				B15FDE651C117CCE007100EC /* Contact+CoreDataProperties.m */,
 				B15FDE661C117CCE007100EC /* Contact.h */,
@@ -1285,6 +1311,7 @@
 				B16DA2201BE10A7A00EBF043 /* SlideMenuTableViewCell.m in Sources */,
 				D0D70D421C0464800068AB20 /* UIView+Addition.m in Sources */,
 				B15FDE781C117CCE007100EC /* Contact+CoreDataProperties.m in Sources */,
+				B11E02E01C490F4700579122 /* Chat+CoreDataProperties.m in Sources */,
 				B1B801911C3FF69B00958885 /* AboutViewController.m in Sources */,
 				B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */,
 				B15B15BB1BDBC29A00C0C171 /* RecorderRequest.m in Sources */,
@@ -1341,6 +1368,7 @@
 				D0A7C0DA1BFA0C7900ACD33E /* DeviceModel.m in Sources */,
 				B16DA2171BE0F2C100EBF043 /* SlideMenuViewController.m in Sources */,
 				B1BB601A1BDE127500C1140B /* LoginViewController.m in Sources */,
+				B11E02DF1C490F4700579122 /* ChatEntry.m in Sources */,
 				B1F5158D1C2ABCBE0033A779 /* ContactSupportModel.m in Sources */,
 				B18BF95E1BD674CD009B665E /* PeppermintMessageSender.m in Sources */,
 				B15FDE7C1C117CCE007100EC /* RecentContact+CoreDataProperties.m in Sources */,
@@ -1378,14 +1406,17 @@
 				B17933121BE0B7B00016F158 /* LoginNavigationViewController.m in Sources */,
 				B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */,
 				B1F93E901BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld in Sources */,
+				B11E02DE1C490F4700579122 /* ChatEntry+CoreDataProperties.m in Sources */,
 				B17933151BE0C19C0016F158 /* LoginModel.m in Sources */,
 				B100A54A1BEDD6F800EEB573 /* CacheModel.m in Sources */,
 				B10C39371BF718960070B49F /* AccountModel.m in Sources */,
 				B1C4A7731BF73E3B00272AD7 /* LoginRequest.m in Sources */,
 				B1C978771C02EB6A00F402C2 /* GoogleContactsModel.m in Sources */,
+				B11E02E11C490F4700579122 /* Chat.m in Sources */,
 				B1EF03751C2184F80054FA02 /* AnalyticsModel.m in Sources */,
 				D0BA6E8A1C070A1C00B8D85B /* AddContactViewController.m in Sources */,
 				B1EF40F21BB8579D00042E4B /* M13ProgressView.m in Sources */,
+				B11E02E41C49198400579122 /* ChatsViewController.m in Sources */,
 				B1BB601D1BDE16D400C1140B /* UIStoryboard_Addition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1634,9 +1665,10 @@
 		B1F93E8E1BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				B11E02D51C490DA900579122 /* PeppermintDataModel 2.xcdatamodel */,
 				B1F93E8F1BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodel */,
 			);
-			currentVersion = B1F93E8F1BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodel */;
+			currentVersion = B11E02D51C490DA900579122 /* PeppermintDataModel 2.xcdatamodel */;
 			path = PeppermintDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -11,14 +11,16 @@
 #import "AccountViewController.h"
 #import "ContactsViewController.h"
 #import "AboutViewController.h"
+#import "ChatsViewController.h"
 
 #define INDEX_TUTORIAL      -1
 
-#define NUMBER_OF_OPTIONS   4
+#define NUMBER_OF_OPTIONS   5
 #define INDEX_CONTACTS      0
 #define INDEX_FEEDBACK      1
 #define INDEX_ACCOUNT       2
 #define INDEX_ABOUT         3
+#define INDEX_CHATS         4
 
 @interface SlideMenuViewController ()
 
@@ -71,6 +73,11 @@
         case INDEX_ABOUT:
             cell.titleLabel.text = LOC(@"About", @"About");
             cell.iconImageView.image = [UIImage imageNamed:@"icon_about"];
+            break;
+        case INDEX_CHATS:
+            cell.titleLabel.text = LOC(@"Chats", @"Chats");
+            cell.iconImageView.image = [UIImage imageNamed:@"icon_about"];
+            break;
         default:
             break;
     }
@@ -101,6 +108,10 @@
         UINavigationController *navigationController = (UINavigationController*)self.reSideMenuContainerViewController.contentViewController;
         AboutViewController *aboutViewController = [AboutViewController createInstance];
         [navigationController pushViewController:aboutViewController animated:YES];
+    } else if (indexPath.row == INDEX_CHATS) {
+        UINavigationController *navigationController = (UINavigationController*)self.reSideMenuContainerViewController.contentViewController;
+        ChatsViewController *chatsViewController = [ChatsViewController createInstance];
+        [navigationController pushViewController:chatsViewController animated:YES];
     }
 }
 
