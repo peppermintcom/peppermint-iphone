@@ -11,19 +11,18 @@
         <attribute name="senderEmail" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="senderNameSurname" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Chat" representedClassName="Chat" syncable="YES">
+    <entity name="Chat" representedClassName="Chat" parentEntity="Contact" syncable="YES">
         <attribute name="lastMessageDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <relationship name="chatContact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ChatContact" syncable="YES"/>
+        <attribute name="unreadMessageCount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
-    <entity name="ChatContact" parentEntity="Contact" syncable="YES"/>
     <entity name="ChatEntry" representedClassName="ChatEntry" syncable="YES">
         <attribute name="audio" attributeType="Binary" syncable="YES"/>
-        <attribute name="date" attributeType="Date" syncable="YES"/>
+        <attribute name="dateCreated" attributeType="Date" syncable="YES"/>
         <attribute name="dateListened" attributeType="Date" defaultDateTimeInterval="-1577930400" storedInTruthFile="YES" syncable="YES"/>
         <attribute name="dateViewed" attributeType="Date" syncable="YES"/>
+        <attribute name="isSentByMe" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="transcription" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="chat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Chat" syncable="YES"/>
-        <relationship name="chatContact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ChatContact" syncable="YES"/>
     </entity>
     <entity name="Contact" representedClassName="Contact" isAbstract="YES" syncable="YES">
         <attribute name="avatarImageData" optional="YES" attributeType="Binary" syncable="YES"/>
@@ -42,12 +41,11 @@
     </entity>
     <elements>
         <element name="CachedMessage" positionX="-135" positionY="-63" width="128" height="180"/>
+        <element name="Chat" positionX="-243" positionY="63" width="128" height="75"/>
+        <element name="ChatEntry" positionX="-234" positionY="72" width="128" height="150"/>
         <element name="Contact" positionX="-353" positionY="3" width="128" height="105"/>
         <element name="CustomContact" positionX="-243" positionY="63" width="128" height="60"/>
         <element name="GoogleContact" positionX="-333" positionY="174" width="128" height="60"/>
         <element name="RecentContact" positionX="-189" positionY="171" width="128" height="60"/>
-        <element name="Chat" positionX="-243" positionY="63" width="128" height="75"/>
-        <element name="ChatEntry" positionX="-234" positionY="72" width="128" height="150"/>
-        <element name="ChatContact" positionX="-225" positionY="81" width="128" height="45"/>
     </elements>
 </model>

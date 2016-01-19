@@ -19,6 +19,8 @@
     self.titleLabel.font = [UIFont openSansSemiBoldFontOfSize:17];
     self.titleLabel.textColor = [UIColor whiteColor];
     self.titleLabel.text = LOC(@"Chats", @"Title");
+    
+    self.tableView.rowHeight = CELL_HEIGHT_CHAT_CONTACT_TABLEVIEWCELL;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,13 +36,20 @@
 #pragma mark - UITableView
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger numberOfRows = 0;
+    NSInteger numberOfRows = 5;
     return numberOfRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ContactTableViewCell *cell = [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:nil];
+    ChatContactTableViewCell *cell = [CellFactory cellChatContactTableViewCellFromTable:tableView forIndexPath:indexPath];
+    cell.avatarImageView.image = [UIImage imageNamed:@"avatar_empty"];
+    [cell setInformationWithNameSurname:@"Okan Kurtulus" communicationChannelAddress:@"okankurtulus@gmail.com"];
+    cell.rightMessageCounterLabel.text = [NSString stringWithFormat:@"%d", indexPath.row + 6];
     return cell;
+}
+
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"Selected %d-%d", indexPath.section, indexPath.row);
 }
 
 #pragma mark - Slide Menu

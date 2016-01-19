@@ -32,10 +32,8 @@
     NSTimer *timer;
     UIView *rootView;
     BOOL isCellAvailableToHaveUserInteraction;
-
     NSString *nameSurname;
     NSString *communicationChannelAddress;
-    
     NSUInteger sizeLarge;
     NSUInteger sizeSmall;
 }
@@ -48,6 +46,8 @@
     timer = nil;
     rootView = [UIApplication sharedApplication].keyWindow.rootViewController.view;
     isCellAvailableToHaveUserInteraction = YES;
+    nameSurname = @"";
+    communicationChannelAddress = @"";
     sizeLarge = SIZE_LARGE;
     sizeSmall = SIZE_SMALL;
 }
