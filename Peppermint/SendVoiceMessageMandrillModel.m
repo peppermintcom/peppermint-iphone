@@ -70,7 +70,6 @@
     
     mandrillMessage.subject = subject;
     
-    //NSString *body = [self mailBodyHTMLForUrlPath:url extension:_extension signature:signature duration:_duration];
     mandrillMessage.html = nil;
     mandrillMessage.global_merge_vars = [self mandrillNameContentPairForUrlPath:url extension:_extension signature:signature duration:_duration];
     
