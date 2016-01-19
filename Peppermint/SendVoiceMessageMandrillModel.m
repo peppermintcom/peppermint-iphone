@@ -69,8 +69,10 @@
     [NSString stringWithFormat:@"%@ <%@>", nameSurname, self.peppermintMessageSender.email];
     
     mandrillMessage.subject = subject;
-    NSString *body = [self mailBodyHTMLForUrlPath:url extension:_extension signature:signature duration:_duration];
-    mandrillMessage.html = body;
+    
+    //NSString *body = [self mailBodyHTMLForUrlPath:url extension:_extension signature:signature duration:_duration];
+    mandrillMessage.html = nil;
+    mandrillMessage.global_merge_vars = [self mandrillNameContentPairForUrlPath:url extension:_extension signature:signature duration:_duration];
     
     NSString *textBody = [NSString stringWithFormat:LOC(@"Mail Text Format",@"Default Mail Text Format"), url, [self fastReplyUrlForSender], signature];
     mandrillMessage.text = textBody;
@@ -94,7 +96,8 @@
     if(![self isCancelled]) {
         self.sendingStatus = SendingStatusSendingWithNoCancelOption;
         mandrillService = [MandrillService new];
-        [mandrillService sendMessage:mandrillMessage];
+        NSString* templateName = @"ios-voice-message";
+        [mandrillService sendMessage:mandrillMessage templateName:templateName];
     }
 }
 
@@ -136,6 +139,29 @@ SUBSCRIBE(MandrillMesssageSent) {
             break;
     }
     return result;
+}
+
+-(NSMutableArray<MandrillNameContentPair>*) mandrillNameContentPairForUrlPath:(NSString*)urlPath extension:(NSString*)extension signature:(NSString*) signature duration:(NSTimeInterval) duration {
+    
+    int minutes = duration / 60;
+    int seconds = (int)duration % 60;
+    
+    int minutesDigit1 = minutes / 10;
+    int minutesDigit2 = minutes % 10;
+    int secondsDigit1 = seconds / 10;
+    int secondsDigit2 = seconds % 10;
+    NSString *replyLink = [self fastReplyUrlForSender];
+    
+    NSMutableArray<MandrillNameContentPair> *contentMutableArray = [NSMutableArray<MandrillNameContentPair> new];
+    [contentMutableArray addObject:[MandrillNameContentPair createWithName:@"url" content:urlPath]];
+    [contentMutableArray addObject:[MandrillNameContentPair createWithName:@"replyLink" content:replyLink]];
+    
+    [contentMutableArray addObject:[MandrillNameContentPair createWithName:@"minutesDigit1" content:[NSString stringWithFormat:@"%d", minutesDigit1]]];
+    [contentMutableArray addObject:[MandrillNameContentPair createWithName:@"minutesDigit2" content:[NSString stringWithFormat:@"%d", minutesDigit2]]];
+    [contentMutableArray addObject:[MandrillNameContentPair createWithName:@"secondsDigit1" content:[NSString stringWithFormat:@"%d", secondsDigit1]]];
+    [contentMutableArray addObject:[MandrillNameContentPair createWithName:@"secondsDigit2" content:[NSString stringWithFormat:@"%d", secondsDigit2]]];
+    
+    return contentMutableArray;
 }
 
 @end

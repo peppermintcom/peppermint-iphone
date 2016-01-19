@@ -17,6 +17,7 @@
         self.headers = [NSMutableDictionary new];
         self.tags = [NSMutableArray new];
         self.attachments = (NSMutableArray<MandrillMailAttachment>*)[NSMutableArray new];
+        self.global_merge_vars = (NSMutableArray<MandrillNameContentPair>*)[NSMutableArray new];
     }
     return self;
 }

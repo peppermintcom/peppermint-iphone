@@ -12,6 +12,7 @@
 
 #pragma mark - MailBody
 
+
 -(NSString*) mailBodyHTMLForUrlPath:(NSString*)urlPath extension:(NSString*)extension signature:(NSString*) signature duration:(NSTimeInterval) duration {
     
     int minutes = duration / 60;
@@ -22,9 +23,10 @@
     int secondsDigit1 = seconds / 10;
     int secondsDigit2 = seconds % 10;
     
+    NSString *replyLink = [self fastReplyUrlForSender];
     NSString *mailFormat = LOC(@"Mail Body Format",@"Default Mail Body Format");
     //NSString *type = [self typeForExtension:extension];
-    NSString *replyLink = [self fastReplyUrlForSender];
+    
     return [NSString stringWithFormat:mailFormat
             ,urlPath
             ,minutesDigit1

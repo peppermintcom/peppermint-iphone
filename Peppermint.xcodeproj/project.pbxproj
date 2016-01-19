@@ -37,6 +37,7 @@
 		B13B50261BF38D48009D3348 /* InformationTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B50251BF38D48009D3348 /* InformationTextTableViewCell.m */; };
 		B13B50281BF38D57009D3348 /* InformationTextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13B50271BF38D56009D3348 /* InformationTextTableViewCell.xib */; };
 		B149EB351C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B149EB341C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m */; };
+		B14EF8321C4D16570041FD24 /* MandrillNameContentPair.m in Sources */ = {isa = PBXBuildFile; fileRef = B14EF8311C4D16570041FD24 /* MandrillNameContentPair.m */; };
 		B15B15AC1BD9D8B800C0C171 /* ExplodingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15AB1BD9D8B800C0C171 /* ExplodingView.m */; };
 		B15B15B01BDA44E200C0C171 /* TPAACAudioConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15AF1BDA44E200C0C171 /* TPAACAudioConverter.m */; };
 		B15B15B21BDBBAB200C0C171 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B15B15B11BDBBAB200C0C171 /* Login.storyboard */; };
@@ -306,6 +307,8 @@
 		B13B50271BF38D56009D3348 /* InformationTextTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InformationTextTableViewCell.xib; sourceTree = "<group>"; };
 		B149EB331C0F07AE00A5E41A /* NSMutableAttributedString_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMutableAttributedString_Addition.h; sourceTree = "<group>"; };
 		B149EB341C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMutableAttributedString_Addition.m; sourceTree = "<group>"; };
+		B14EF8301C4D16570041FD24 /* MandrillNameContentPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrillNameContentPair.h; sourceTree = "<group>"; };
+		B14EF8311C4D16570041FD24 /* MandrillNameContentPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MandrillNameContentPair.m; sourceTree = "<group>"; };
 		B15228541BE898DF00C400C6 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		B15228561BE898F500C400C6 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		B15B15AA1BD9D8B800C0C171 /* ExplodingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExplodingView.h; sourceTree = "<group>"; };
@@ -704,6 +707,8 @@
 				B13B07621BD3720100974AC3 /* MandrillMessage.m */,
 				B13B07651BD3736400974AC3 /* MandrillMailAttachment.h */,
 				B13B07661BD3736400974AC3 /* MandrillMailAttachment.m */,
+				B14EF8301C4D16570041FD24 /* MandrillNameContentPair.h */,
+				B14EF8311C4D16570041FD24 /* MandrillNameContentPair.m */,
 			);
 			name = Mandrill;
 			sourceTree = "<group>";
@@ -1776,6 +1781,7 @@
 				D0A7C0DA1BFA0C7900ACD33E /* DeviceModel.m in Sources */,
 				B16DA2171BE0F2C100EBF043 /* SlideMenuViewController.m in Sources */,
 				B1BB601A1BDE127500C1140B /* LoginViewController.m in Sources */,
+				B14EF8321C4D16570041FD24 /* MandrillNameContentPair.m in Sources */,
 				B1F5158D1C2ABCBE0033A779 /* ContactSupportModel.m in Sources */,
 				B18BF95E1BD674CD009B665E /* PeppermintMessageSender.m in Sources */,
 				B15FDE7C1C117CCE007100EC /* RecentContact+CoreDataProperties.m in Sources */,
@@ -2032,7 +2038,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Peppermint/Peppermint.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
