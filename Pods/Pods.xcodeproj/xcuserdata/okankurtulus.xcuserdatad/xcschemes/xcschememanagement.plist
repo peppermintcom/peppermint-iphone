@@ -59,11 +59,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>JSONModel.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -94,11 +89,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SimpleKeychain.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>gtm-http-fetcher.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -118,16 +108,6 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>080B3D418D632B0380CF4EBF7BDE656D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>09FA060F1A0492FB25232F489AC4E573</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>1EFD6595870F4D4C3B7C69AD95AE6ABC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -167,17 +147,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6B7B0FC531C22C8D4E1F695015426BFB</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>76196FDB3B386F778EE902059A85171A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>802635B7C6A836D278D41025C6FCC337</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -222,17 +192,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D38CF47BC63574A9A499E56F24CDF6F5</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>E61AE35867FAA81F8135B36D3D307935</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>EDED09DAFDE582AB27179D5C7A2A46AA</key>
 		<dict>
 			<key>primary</key>
 			<true/>

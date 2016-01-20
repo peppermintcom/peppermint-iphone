@@ -21,6 +21,7 @@ pod 'GData', :podspec => 'GData.podspec.json'
 pod 'Base64'
 pod 'Flurry-iOS-SDK/FlurrySDK'
 pod 'GoogleAnalytics'
+pod 'Google/CloudMessaging'
 end
 
 target 'PeppermintTests' do

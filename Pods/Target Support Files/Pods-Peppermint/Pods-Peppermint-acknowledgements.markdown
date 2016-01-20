@@ -168,6 +168,10 @@ limitations under the License.
 _____________________________________________________________________
 
 
+## GGLInstanceID
+
+Copyright 2015 Google Inc.
+
 ## Google
 
 Copyright 2015 Google Inc.
@@ -181,6 +185,14 @@ Copyright 2015 Google Inc.
 Copyright 2015 Google Inc.
 
 ## GoogleAuthUtilities
+
+Copyright 2015 Google Inc.
+
+## GoogleCloudMessaging
+
+Copyright 2015 Google Inc.
+
+## GoogleIPhoneUtilities
 
 Copyright 2015 Google Inc.
 
