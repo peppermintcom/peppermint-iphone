@@ -1227,17 +1227,103 @@ Version 1.0.0</string>
                     <connections>
                         <outlet property="tableView" destination="Nre-9Y-nXj" id="w6R-2I-3WT"/>
                         <outlet property="titleLabel" destination="69h-gD-tgF" id="Rs9-xS-Gtg"/>
+                        <segue destination="NAA-3N-hVr" kind="show" identifier="ChatEntriesViewControllerSegue" id="qlw-rs-M79"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I6W-4L-781" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="633" y="1138"/>
         </scene>
+        <!--Chat Entries View Controller-->
+        <scene sceneID="JVh-jH-lY8">
+            <objects>
+                <viewController storyboardIdentifier="ChatEntriesViewController" id="NAA-3N-hVr" customClass="ChatEntriesViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9Xk-3P-aLq"/>
+                        <viewControllerLayoutGuide type="bottom" id="9uv-HA-C7W"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="4qC-EC-dhR">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vfi-st-4Ne" userLabel="NavigationView">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7tN-X6-rqR">
+                                        <rect key="frame" x="0.0" y="18" width="414" height="46"/>
+                                        <string key="text">_Betty Donaldson
+905362281414</string>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0zV-MH-Pcm">
+                                        <rect key="frame" x="0.0" y="24" width="40" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="34" id="5fo-j2-JYB"/>
+                                            <constraint firstAttribute="width" constant="40" id="OtS-zB-Tb4"/>
+                                        </constraints>
+                                        <state key="normal" image="icon_back"/>
+                                        <connections>
+                                            <action selector="slideMenuTouchDown:" destination="NAA-3N-hVr" eventType="touchDown" id="bq2-LU-ysO"/>
+                                            <action selector="slideMenuTouchUp:" destination="NAA-3N-hVr" eventType="touchUpOutside" id="8ht-dv-qHl"/>
+                                            <action selector="slideMenuValidAction:" destination="NAA-3N-hVr" eventType="touchUpInside" id="rv3-Ev-G1h"/>
+                                        </connections>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bordered_logo" translatesAutoresizingMaskIntoConstraints="NO" id="c98-TQ-lrM">
+                                        <rect key="frame" x="42" y="24" width="34" height="34"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.3411764706" green="0.72941176470000002" blue="0.57254901960000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="7tN-X6-rqR" secondAttribute="trailing" id="0ez-ti-4ID"/>
+                                    <constraint firstItem="7tN-X6-rqR" firstAttribute="top" secondItem="Vfi-st-4Ne" secondAttribute="top" constant="18" id="9yt-Q5-oXF"/>
+                                    <constraint firstItem="0zV-MH-Pcm" firstAttribute="top" secondItem="Vfi-st-4Ne" secondAttribute="top" constant="24" id="Bvq-N3-HHT"/>
+                                    <constraint firstAttribute="height" constant="64" id="NLk-Rt-sDU"/>
+                                    <constraint firstItem="7tN-X6-rqR" firstAttribute="leading" secondItem="Vfi-st-4Ne" secondAttribute="leading" id="eDJ-Jd-KwZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="7tN-X6-rqR" secondAttribute="bottom" id="j3d-ls-eW7"/>
+                                    <constraint firstItem="0zV-MH-Pcm" firstAttribute="leading" secondItem="Vfi-st-4Ne" secondAttribute="leading" id="svx-g7-9g9"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Ptb-mZ-wF6">
+                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="NAA-3N-hVr" id="lVS-EG-JFE"/>
+                                    <outlet property="delegate" destination="NAA-3N-hVr" id="44a-Po-kDB"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Ptb-mZ-wF6" firstAttribute="top" secondItem="Vfi-st-4Ne" secondAttribute="bottom" id="8Ve-l2-PiD"/>
+                            <constraint firstItem="Ptb-mZ-wF6" firstAttribute="leading" secondItem="4qC-EC-dhR" secondAttribute="leading" id="BQa-IK-WFf"/>
+                            <constraint firstAttribute="trailing" secondItem="Vfi-st-4Ne" secondAttribute="trailing" id="DnU-Ya-ptS"/>
+                            <constraint firstItem="Vfi-st-4Ne" firstAttribute="leading" secondItem="4qC-EC-dhR" secondAttribute="leading" id="W4g-dW-gCa"/>
+                            <constraint firstAttribute="bottom" secondItem="Ptb-mZ-wF6" secondAttribute="bottom" id="hZd-kj-AcF"/>
+                            <constraint firstItem="Vfi-st-4Ne" firstAttribute="top" secondItem="4qC-EC-dhR" secondAttribute="top" id="m48-Xs-wJs"/>
+                            <constraint firstAttribute="trailing" secondItem="Ptb-mZ-wF6" secondAttribute="trailing" id="noB-yF-d8A"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="viB-Jw-A83"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <connections>
+                        <outlet property="avatarImageView" destination="c98-TQ-lrM" id="1L9-lS-roZ"/>
+                        <outlet property="tableView" destination="Ptb-mZ-wF6" id="LQB-ZB-E7x"/>
+                        <outlet property="titleLabel" destination="7tN-X6-rqR" id="4K1-Fg-EYu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="s1w-nW-UGf" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1198" y="1138"/>
+        </scene>
     </scenes>
     <resources>
         <image name="avatar" width="70" height="70"/>
         <image name="avatar_empty" width="35" height="35"/>
         <image name="background_gradient" width="1" height="1136"/>
+        <image name="bordered_logo" width="54" height="54"/>
         <image name="button_pause" width="108" height="43"/>
         <image name="button_pause_pressed" width="108" height="43"/>
         <image name="button_rerecord" width="108" height="43"/>

@@ -12,6 +12,15 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    
+    int fontSize = 12;
+    self.rightDateLabel.font = [UIFont openSansSemiBoldFontOfSize:fontSize];
+    self.rightDateLabel.textColor = [UIColor textFieldTintGreen];
+    
+    self.rightMessageCounterLabel.font = [UIFont openSansSemiBoldFontOfSize:fontSize];
+    self.rightMessageCounterLabel.backgroundColor = [UIColor viaInformationLabelTextGreen];
+    self.rightMessageCounterLabel.textColor = [UIColor whiteColor];
+    self.rightMessageCounterLabel.layer.cornerRadius = 4;
 }
 
 @end

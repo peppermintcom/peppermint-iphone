@@ -7,6 +7,9 @@
 //
 
 #import "ChatsViewController.h"
+#import "ChatEntriesViewController.h"
+
+#define SEGUE_CHAT_ENTRIES_VIEWCONTROLLER   @"ChatEntriesViewControllerSegue"
 
 @interface ChatsViewController ()
 
@@ -44,12 +47,18 @@
     ChatContactTableViewCell *cell = [CellFactory cellChatContactTableViewCellFromTable:tableView forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"avatar_empty"];
     [cell setInformationWithNameSurname:@"Okan Kurtulus" communicationChannelAddress:@"okankurtulus@gmail.com"];
-    cell.rightMessageCounterLabel.text = [NSString stringWithFormat:@"%d", indexPath.row + 6];
+    
+    cell.rightDateLabel.text = @"Oct 18";
+    
+    
+    cell.rightMessageCounterLabel.hidden = indexPath.row % 3 == 0;
+    cell.rightMessageCounterLabel.text = [NSString stringWithFormat:@"%ld", (indexPath.row + 6)];
     return cell;
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"Selected %d-%d", indexPath.section, indexPath.row);
+    NSLog(@"Selected %ld-%ld", indexPath.section, indexPath.row);
+    [self performSegueWithIdentifier:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER sender:self];
 }
 
 #pragma mark - Slide Menu
@@ -70,14 +79,19 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-/*
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {    
+    if([segue.identifier isEqualToString:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER]) {
+        ChatEntriesViewController *chatEntriesViewController = (ChatEntriesViewController*)segue.destinationViewController;
+        
+        
+        Chat *chat = [Chat new];
+        chat.nameSurname = @"Milica Jelena Pakic";
+        chat.communicationChannelAddress = @"okankurtulus@gmail.com";
+        
+    }
 }
-*/
 
 @end

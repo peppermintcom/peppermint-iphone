@@ -33,24 +33,24 @@
                         <string key="text">Okan Kurtulus
 via okankurtulus@gmail.com</string>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Oct 18" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0X-KS-2EZ">
-                        <rect key="frame" x="330" y="10" width="70" height="17"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Oct 18" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0X-KS-2EZ">
+                        <rect key="frame" x="333" y="10" width="70" height="17"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="28J-w6-d8H"/>
                             <constraint firstAttribute="height" constant="17" id="5no-cB-RlU"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dvW-3K-qXw">
-                        <rect key="frame" x="380" y="28" width="23" height="17"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dvW-3K-qXw">
+                        <rect key="frame" x="375" y="28" width="30" height="16"/>
                         <color key="backgroundColor" red="0.0" green="0.52760416666666665" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="23" id="XKN-K8-MaY"/>
+                            <constraint firstAttribute="width" constant="30" id="XKN-K8-MaY"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -66,12 +66,12 @@ via okankurtulus@gmail.com</string>
                     <constraint firstItem="1Se-j1-Pmz" firstAttribute="top" secondItem="MV1-n0-S1v" secondAttribute="bottom" priority="750" constant="9" id="A0Z-ts-UBb"/>
                     <constraint firstAttribute="trailing" secondItem="1Se-j1-Pmz" secondAttribute="trailing" priority="750" id="AgD-ij-lQu"/>
                     <constraint firstItem="1Se-j1-Pmz" firstAttribute="top" secondItem="1qV-wo-QtI" secondAttribute="bottom" priority="750" constant="9" id="BMt-Bx-0kN"/>
-                    <constraint firstAttribute="trailing" secondItem="t0X-KS-2EZ" secondAttribute="trailing" constant="14" id="Lkg-n2-VnN"/>
+                    <constraint firstAttribute="trailing" secondItem="t0X-KS-2EZ" secondAttribute="trailing" constant="11" id="Lkg-n2-VnN"/>
                     <constraint firstItem="1qV-wo-QtI" firstAttribute="leading" secondItem="xNg-Q9-VZo" secondAttribute="leading" priority="750" constant="11" id="Ooz-o4-LwB"/>
                     <constraint firstAttribute="bottom" secondItem="MV1-n0-S1v" secondAttribute="bottom" priority="750" constant="4" id="Vno-Ua-fOv"/>
                     <constraint firstItem="1Se-j1-Pmz" firstAttribute="leading" secondItem="xNg-Q9-VZo" secondAttribute="leading" priority="750" id="aAh-dK-tSY"/>
-                    <constraint firstAttribute="trailing" secondItem="dvW-3K-qXw" secondAttribute="trailing" constant="11" id="gD0-rf-09r"/>
-                    <constraint firstItem="1Se-j1-Pmz" firstAttribute="top" secondItem="dvW-3K-qXw" secondAttribute="bottom" constant="9" id="l6F-bc-lYK"/>
+                    <constraint firstAttribute="trailing" secondItem="dvW-3K-qXw" secondAttribute="trailing" constant="9" id="gD0-rf-09r"/>
+                    <constraint firstItem="1Se-j1-Pmz" firstAttribute="top" secondItem="dvW-3K-qXw" secondAttribute="bottom" constant="10" id="l6F-bc-lYK"/>
                     <constraint firstItem="MV1-n0-S1v" firstAttribute="leading" secondItem="1qV-wo-QtI" secondAttribute="trailing" priority="750" constant="8" id="pJN-IX-P0S"/>
                     <constraint firstItem="1qV-wo-QtI" firstAttribute="top" secondItem="xNg-Q9-VZo" secondAttribute="top" priority="750" constant="10" id="rFD-DQ-XCU"/>
                     <constraint firstItem="t0X-KS-2EZ" firstAttribute="top" secondItem="xNg-Q9-VZo" secondAttribute="top" constant="10" id="uvE-y0-C0l"/>
