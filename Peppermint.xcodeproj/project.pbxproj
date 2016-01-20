@@ -27,6 +27,7 @@
 		B11F8A5F1BDCC474000E79AA /* FinalizeUploadResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5E1BDCC474000E79AA /* FinalizeUploadResponse.m */; };
 		B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B12C03BA1BCFFC060085A55A /* FastRecordingView.m */; };
 		B12C03BD1BCFFC280085A55A /* FastRecordingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B12C03BC1BCFFC280085A55A /* FastRecordingView.xib */; };
+		B12EA4051C4FB1F40006F51F /* GoogleCloudMessagingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B12EA4041C4FB1F40006F51F /* GoogleCloudMessagingModel.m */; };
 		B13B075A1BD3686500974AC3 /* MandrillInformationResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07591BD3686500974AC3 /* MandrillInformationResponse.m */; };
 		B13B075D1BD3716100974AC3 /* MandrillSendRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B075C1BD3716100974AC3 /* MandrillSendRequest.m */; };
 		B13B07601BD3719500974AC3 /* MandrillToObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B075F1BD3719500974AC3 /* MandrillToObject.m */; };
@@ -288,6 +289,8 @@
 		B12C03B91BCFFC060085A55A /* FastRecordingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastRecordingView.h; sourceTree = "<group>"; };
 		B12C03BA1BCFFC060085A55A /* FastRecordingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = FastRecordingView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B12C03BC1BCFFC280085A55A /* FastRecordingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FastRecordingView.xib; sourceTree = "<group>"; };
+		B12EA4031C4FB1F40006F51F /* GoogleCloudMessagingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleCloudMessagingModel.h; sourceTree = "<group>"; };
+		B12EA4041C4FB1F40006F51F /* GoogleCloudMessagingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleCloudMessagingModel.m; sourceTree = "<group>"; };
 		B13B07581BD3686500974AC3 /* MandrillInformationResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrillInformationResponse.h; sourceTree = "<group>"; };
 		B13B07591BD3686500974AC3 /* MandrillInformationResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MandrillInformationResponse.m; sourceTree = "<group>"; };
 		B13B075B1BD3716100974AC3 /* MandrillSendRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrillSendRequest.h; sourceTree = "<group>"; };
@@ -805,6 +808,8 @@
 				B15FDE831C117CFE007100EC /* CustomContactModel.m */,
 				B1EF03731C2184F80054FA02 /* AnalyticsModel.h */,
 				B1EF03741C2184F80054FA02 /* AnalyticsModel.m */,
+				B12EA4031C4FB1F40006F51F /* GoogleCloudMessagingModel.h */,
+				B12EA4041C4FB1F40006F51F /* GoogleCloudMessagingModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1520,7 +1525,7 @@
 				TargetAttributes = {
 					B17B3D2A1BB6898C009B8BC5 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = 8V9FEAB5WD;
+						DevelopmentTeam = FG36H6PY86;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -1534,6 +1539,9 @@
 							com.apple.InAppPurchase = {
 								enabled = 0;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
 							com.apple.SafariKeychain = {
 								enabled = 1;
 							};
@@ -1545,7 +1553,7 @@
 					};
 					D0AC06E81C4805FD00F9CF6F = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = 8V9FEAB5WD;
+						DevelopmentTeam = FG36H6PY86;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -1554,7 +1562,7 @@
 					};
 					D0AC06F41C4805FF00F9CF6F = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = 8V9FEAB5WD;
+						DevelopmentTeam = FG36H6PY86;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -1729,6 +1737,7 @@
 				B15B15B01BDA44E200C0C171 /* TPAACAudioConverter.m in Sources */,
 				B11B13541C0C5EAD00782FC4 /* ContactInformationTableViewCell.m in Sources */,
 				B102DD5E1BD0802100D71D62 /* BaseCustomView.m in Sources */,
+				B12EA4051C4FB1F40006F51F /* GoogleCloudMessagingModel.m in Sources */,
 				B13B07631BD3720100974AC3 /* MandrillMessage.m in Sources */,
 				B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */,
 				B1BB605F1BDE36AF00C1140B /* SignUpWithEmailViewController.m in Sources */,
@@ -2024,9 +2033,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint;
+				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "84b77f55-800f-4915-9897-05fba7f4a7c4";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2038,8 +2047,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Peppermint/Peppermint.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2050,9 +2059,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint;
+				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "dc28bcfb-8d02-4304-b21e-caf2055d5367";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -2074,7 +2083,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ppl.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d7f9f6cc-a05f-4cf2-b447-8acbfec84169";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Peppermint.app/Peppermint";
 			};
 			name = Debug;
@@ -2092,7 +2101,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ppl.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5794d5cd-26f6-46f7-8d15-53e66fdad732";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Peppermint.app/Peppermint";
 			};
 			name = Release;
@@ -2108,7 +2117,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				IBSC_MODULE = watch_Extension;
 				INFOPLIST_FILE = watch/Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
@@ -2123,14 +2132,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = watch/watch.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				IBSC_MODULE = watch_Extension;
 				INFOPLIST_FILE = watch/Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c6295aeb-5280-418a-a5c7-64e96aeeb61e";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -2147,7 +2156,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				INFOPLIST_FILE = "watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
@@ -2161,13 +2170,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "watch Extension/watch Extension.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ppl.peppermint.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "0a206bf4-947f-497c-89d9-9cdddcda9718";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;

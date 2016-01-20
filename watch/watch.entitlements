@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.peppermint.watch</string>
+		<string>group.com.peppermint.app.watch</string>
 	</array>
 </dict>
 </plist>

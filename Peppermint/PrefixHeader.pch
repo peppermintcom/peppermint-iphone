@@ -131,7 +131,8 @@ sharedObject;\
 #define SCHEME_PEPPERMINT   @"peppermint"
 
 #define FLURRY_API_KEY          @"VCRR3YXVKNZJ4KC2QFXT"
-#define GOOGLE_ANALYTICS_KEY    @"UA-71499085-1"
+//#define GOOGLE_ANALYTICS_KEY            @"UA-71499085-1"  --> Deprecated in GoogleService-Info.plist
+//#define PEPPERMINT_GCM_SENDER_ID        @"896089644819"   --> Deprecated in GoogleService-Info.plist
 
 #define DOMAIN_PEPPERMINT               @"peppermint.com"
 
