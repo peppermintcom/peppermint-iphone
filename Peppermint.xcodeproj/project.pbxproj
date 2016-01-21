@@ -146,7 +146,7 @@
 		D0AC070A1C48060000F9CF6F /* watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = D0AC06E91C4805FD00F9CF6F /* watch.app */; };
 		D0AC07611C48091800F9CF6F /* PeppermintContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF171BB71EC0008C6F71 /* PeppermintContact.m */; };
 		D0AC07631C4809D600F9CF6F /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0AC07621C4809D600F9CF6F /* WatchConnectivity.framework */; };
-		D0AC07651C4809E000F9CF6F /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0AC07641C4809E000F9CF6F /* Contacts.framework */; };
+		D0AC07651C4809E000F9CF6F /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0AC07641C4809E000F9CF6F /* Contacts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D0AC07671C4809F300F9CF6F /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0AC07661C4809F300F9CF6F /* WatchConnectivity.framework */; };
 		D0AC07681C480B2400F9CF6F /* PeppermintMessageSender.m in Sources */ = {isa = PBXBuildFile; fileRef = B18BF95D1BD674CD009B665E /* PeppermintMessageSender.m */; };
 		D0AC076C1C480DC200F9CF6F /* MandrillRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07691BD3752900974AC3 /* MandrillRequest.m */; };

@@ -271,7 +271,7 @@ SUBSCRIBE(DetachSuccess) {
     // Handle the received message
     // ...
 }
-
+/*
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))handler {
     NSLog(@"Notification received withFetchCompletionHandler: %@", userInfo);
     // This works only if the app started the GCM service
@@ -280,6 +280,7 @@ SUBSCRIBE(DetachSuccess) {
     // Invoke the completion handler passing the appropriate UIBackgroundFetchResult value
     // ...
 }
+*/
 
 #pragma mark - Open URL
 
