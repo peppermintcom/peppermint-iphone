@@ -120,9 +120,13 @@ typedef enum : NSUInteger {
 -(void) accessRightsAreSupplied {
     if(recordingViewStatus == RecordingViewStatusPresented) {
         [self.recordingModel resetRecording];
+        weakself_create();
         if([RecordingModel checkPreviousFileLength] < MIN_VOICE_MESSAGE_LENGTH) {
             BOOL play =  [self.playingModel playBeginRecording:^{
-                [self beginRecording];
+                if(!weakSelf.hidden
+                   && recordingViewStatus == RecordingViewStatusPresented) {
+                    [self beginRecording];
+                }
             }];
             if(!play) {
                 NSError *error = [NSError errorWithDomain:@"Could not play audio" code:-1 userInfo:[NSDictionary new]];
