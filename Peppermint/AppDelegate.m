@@ -537,10 +537,8 @@ SUBSCRIBE(DetachSuccess) {
         switch (error.code) {
             case NSURLErrorNotConnectedToInternet:
             case NSURLErrorNetworkConnectionLost:
-                message = LOC(@"Please check your internet connection and try again", @"message");
-                break;
             default:
-                message = LOC(@"Connection error", @"message");
+                message = LOC(@"Please check your internet connection and try again", @"message");
                 break;
         }
     } else if ([error.domain isEqualToString:@"com.google.GIDSignIn"]) {
