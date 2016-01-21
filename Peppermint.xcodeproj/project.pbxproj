@@ -2133,13 +2133,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = watch/watch.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Peppermint.com Inc (FG36H6PY86)";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution: Peppermint.com Inc (FG36H6PY86)";
 				IBSC_MODULE = watch_Extension;
 				INFOPLIST_FILE = watch/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "9c4d8a97-f076-4981-b6d2-4d9b3b711748";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -2170,13 +2170,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "watch Extension/watch Extension.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Peppermint.com Inc (FG36H6PY86)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Peppermint.com Inc (FG36H6PY86)";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution: Peppermint.com Inc (FG36H6PY86)";
 				INFOPLIST_FILE = "watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "b007cad0-644d-4507-884b-35bd4db52003";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
