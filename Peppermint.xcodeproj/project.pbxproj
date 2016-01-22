@@ -138,6 +138,8 @@
 		B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */; };
 		B1FC53841C520DDE00C0A472 /* ChatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FC53831C520DDE00C0A472 /* ChatModel.m */; };
 		B1FC53871C522ACA00C0A472 /* ChatEntriesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FC53861C522ACA00C0A472 /* ChatEntriesModel.m */; };
+		B1FC538B1C52656800C0A472 /* ChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FC538A1C52656800C0A472 /* ChatTableViewCell.m */; };
+		B1FC538D1C52658400C0A472 /* ChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1FC538C1C52658400C0A472 /* ChatTableViewCell.xib */; };
 		B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FE184F1BE1676D002772B4 /* FeedBackModel.m */; };
 		B1FFFF2A1C18241E0049347D /* RecoverPasswordRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FFFF291C18241E0049347D /* RecoverPasswordRequest.m */; };
 		D02D2D061C0C379E00092A23 /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D02D2D051C0C379E00092A23 /* BaseTableViewController.m */; };
@@ -417,6 +419,9 @@
 		B1FC53831C520DDE00C0A472 /* ChatModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatModel.m; sourceTree = "<group>"; };
 		B1FC53851C522ACA00C0A472 /* ChatEntriesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatEntriesModel.h; sourceTree = "<group>"; };
 		B1FC53861C522ACA00C0A472 /* ChatEntriesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatEntriesModel.m; sourceTree = "<group>"; };
+		B1FC53891C52656800C0A472 /* ChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableViewCell.h; sourceTree = "<group>"; };
+		B1FC538A1C52656800C0A472 /* ChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableViewCell.m; sourceTree = "<group>"; };
+		B1FC538C1C52658400C0A472 /* ChatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatTableViewCell.xib; sourceTree = "<group>"; };
 		B1FE184E1BE1676D002772B4 /* FeedBackModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedBackModel.h; sourceTree = "<group>"; };
 		B1FE184F1BE1676D002772B4 /* FeedBackModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedBackModel.m; sourceTree = "<group>"; };
 		B1FFFF281C18241D0049347D /* RecoverPasswordRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecoverPasswordRequest.h; sourceTree = "<group>"; };
@@ -871,6 +876,7 @@
 		B17B3D6A1BB6BCEC009B8BC5 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				B1FC53881C52655000C0A472 /* ChatTableViewCell */,
 				B11B30F81C4E4FA900966A48 /* ChatContactTableViewCell */,
 				B17B3D751BB6C8F4009B8BC5 /* BaseTableViewCell */,
 				B11B13511C0C5E8800782FC4 /* ContactInformationTableViewCell */,
@@ -1115,6 +1121,16 @@
 			name = NSManagedObjects;
 			sourceTree = "<group>";
 		};
+		B1FC53881C52655000C0A472 /* ChatTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				B1FC53891C52656800C0A472 /* ChatTableViewCell.h */,
+				B1FC538A1C52656800C0A472 /* ChatTableViewCell.m */,
+				B1FC538C1C52658400C0A472 /* ChatTableViewCell.xib */,
+			);
+			name = ChatTableViewCell;
+			sourceTree = "<group>";
+		};
 		D074A66F1C07271B0017EAC3 /* RowViewForPicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -1255,6 +1271,7 @@
 				B11B30FD1C4E507200966A48 /* ChatContactTableViewCell.xib in Resources */,
 				B1BB2A531BE6AA2000A4BFB4 /* GoogleService-Info.plist in Resources */,
 				B17801781C1EFEA700BA2436 /* TutorialView.xib in Resources */,
+				B1FC538D1C52658400C0A472 /* ChatTableViewCell.xib in Resources */,
 				B1D2A6DD1C20380D002BD6DF /* FoggyRecordingView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1356,6 +1373,7 @@
 				B102F9861BF0CF0800EDF7E6 /* LoginValidateEmailTableViewCell.m in Sources */,
 				B179F83A1BC9316F0089D709 /* SearchMenuTableViewCell.m in Sources */,
 				B15B15B01BDA44E200C0C171 /* TPAACAudioConverter.m in Sources */,
+				B1FC538B1C52656800C0A472 /* ChatTableViewCell.m in Sources */,
 				B11B13541C0C5EAD00782FC4 /* ContactInformationTableViewCell.m in Sources */,
 				B102DD5E1BD0802100D71D62 /* BaseCustomView.m in Sources */,
 				B13B07631BD3720100974AC3 /* MandrillMessage.m in Sources */,

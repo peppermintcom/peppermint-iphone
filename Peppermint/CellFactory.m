@@ -122,4 +122,15 @@
     return cell;
 }
 
++(ChatTableViewCell*) cellChatTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath {
+    NSString *cellKey = @"ChatTableViewCell";
+    ChatTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellKey];
+    if(!cell) {
+        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:cellKey owner:self options:nil];
+        cell = [topLevelObjects objectAtIndex:0];
+    }
+    cell.indexPath = indexPath;
+    return cell;
+}
+
 @end

@@ -64,7 +64,7 @@
                 chatEntry.dateCreated = [NSDate dateWithTimeIntervalSinceNow: - rand() % (60*60*24*30*12)];
                 chatEntry.dateListened = [NSDate dateWithTimeIntervalSinceNow:0];
                 chatEntry.dateViewed = [NSDate dateWithTimeIntervalSinceNow:0];
-                chatEntry.isSentByMe = [NSNumber numberWithBool:((rand()%2)== 0)];
+                chatEntry.isSentByMe = [NSNumber numberWithBool:(j%2 == 0)];
                 chatEntry.transcription = [[NSString alloc] randomStringWithLength:rand() % 15];
                 chatEntry.chat = chat;
             }

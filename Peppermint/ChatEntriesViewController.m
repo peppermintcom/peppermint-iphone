@@ -16,7 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView.rowHeight = CELL_HEIGHT_CHAT_CONTACT_TABLEVIEWCELL;
+    self.tableView.rowHeight = CELL_HEIGHT_CHAT_TABLEVIEWCELL;
     
     self.tableView.backgroundColor = [UIColor slideMenuTableViewColor];
     self.bottomInformationLabel.font = [UIFont openSansSemiBoldFontOfSize:18];
@@ -76,22 +76,10 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ChatContactTableViewCell *cell = [CellFactory cellChatContactTableViewCellFromTable:tableView forIndexPath:indexPath];
     
+    ChatTableViewCell *cell = [CellFactory cellChatTableViewCellFromTable:tableView forIndexPath:indexPath];    
     ChatEntry *chatEntry = (ChatEntry*)[self.chatEntriesModel.chatEntriesArray objectAtIndex:indexPath.row];
-    
-    NSString *nameSurname = chatEntry.transcription;
-    NSString *address = chatEntry.dateCreated.description;
-    
-    if(nameSurname.length == 0) {
-        nameSurname = @"*|*";
-    }
-    
-    if(address.length == 0) {
-        address = @"-|-";
-    }
-    
-    [cell setInformationWithNameSurname:nameSurname communicationChannelAddress:address];
+    [cell fillInformation:chatEntry];
     return cell;
 }
 
