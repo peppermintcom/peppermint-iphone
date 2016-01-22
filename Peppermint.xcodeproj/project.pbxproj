@@ -136,6 +136,8 @@
 		B1F93E901BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E8E1BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld */; };
 		B1F93E981BC8E328005F2128 /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E971BC8E328005F2128 /* Repository.m */; };
 		B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */; };
+		B1FC53841C520DDE00C0A472 /* ChatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FC53831C520DDE00C0A472 /* ChatModel.m */; };
+		B1FC53871C522ACA00C0A472 /* ChatEntriesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FC53861C522ACA00C0A472 /* ChatEntriesModel.m */; };
 		B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FE184F1BE1676D002772B4 /* FeedBackModel.m */; };
 		B1FFFF2A1C18241E0049347D /* RecoverPasswordRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FFFF291C18241E0049347D /* RecoverPasswordRequest.m */; };
 		D02D2D061C0C379E00092A23 /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D02D2D051C0C379E00092A23 /* BaseTableViewController.m */; };
@@ -411,6 +413,10 @@
 		B1F93E971BC8E328005F2128 /* Repository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Repository.m; sourceTree = "<group>"; };
 		B1F93E991BC8E5E7005F2128 /* RecentContactsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentContactsModel.h; sourceTree = "<group>"; };
 		B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentContactsModel.m; sourceTree = "<group>"; };
+		B1FC53821C520DDE00C0A472 /* ChatModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatModel.h; sourceTree = "<group>"; };
+		B1FC53831C520DDE00C0A472 /* ChatModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatModel.m; sourceTree = "<group>"; };
+		B1FC53851C522ACA00C0A472 /* ChatEntriesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatEntriesModel.h; sourceTree = "<group>"; };
+		B1FC53861C522ACA00C0A472 /* ChatEntriesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatEntriesModel.m; sourceTree = "<group>"; };
 		B1FE184E1BE1676D002772B4 /* FeedBackModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedBackModel.h; sourceTree = "<group>"; };
 		B1FE184F1BE1676D002772B4 /* FeedBackModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedBackModel.m; sourceTree = "<group>"; };
 		B1FFFF281C18241D0049347D /* RecoverPasswordRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecoverPasswordRequest.h; sourceTree = "<group>"; };
@@ -673,6 +679,10 @@
 				B15FDE831C117CFE007100EC /* CustomContactModel.m */,
 				B1EF03731C2184F80054FA02 /* AnalyticsModel.h */,
 				B1EF03741C2184F80054FA02 /* AnalyticsModel.m */,
+				B1FC53821C520DDE00C0A472 /* ChatModel.h */,
+				B1FC53831C520DDE00C0A472 /* ChatModel.m */,
+				B1FC53851C522ACA00C0A472 /* ChatEntriesModel.h */,
+				B1FC53861C522ACA00C0A472 /* ChatEntriesModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1336,6 +1346,7 @@
 				B1B801911C3FF69B00958885 /* AboutViewController.m in Sources */,
 				B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */,
 				B15B15BB1BDBC29A00C0C171 /* RecorderRequest.m in Sources */,
+				B1FC53841C520DDE00C0A472 /* ChatModel.m in Sources */,
 				B16F01291C4E48350030BE65 /* ChatEntry.m in Sources */,
 				B1F045671BCFB36900A67942 /* BaseService.m in Sources */,
 				B11F8A5F1BDCC474000E79AA /* FinalizeUploadResponse.m in Sources */,
@@ -1427,6 +1438,7 @@
 				B1BB60151BDE0E0200C1140B /* LoginTableViewCell.m in Sources */,
 				B15FDE801C117CCE007100EC /* CachedMessage+CoreDataProperties.m in Sources */,
 				B13B07671BD3736400974AC3 /* MandrillMailAttachment.m in Sources */,
+				B1FC53871C522ACA00C0A472 /* ChatEntriesModel.m in Sources */,
 				B1D2A6D71C200706002BD6DF /* RecordingView.m in Sources */,
 				B1C83A191BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m in Sources */,
 				B17933121BE0B7B00016F158 /* LoginNavigationViewController.m in Sources */,
@@ -1582,7 +1594,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2ce472e9-895a-4996-b887-af983f2c32a3";
+				PROVISIONING_PROFILE = "44bb2083-c6a1-409c-9300-e3a5140c20c4";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1608,7 +1620,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "685b91e2-aa79-4022-bd76-ab52f591493c";
+				PROVISIONING_PROFILE = "91b5edd1-8dd5-4cc0-adec-b83fbeaa8945";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

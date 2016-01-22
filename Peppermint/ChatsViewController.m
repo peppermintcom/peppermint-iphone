@@ -11,11 +11,10 @@
 
 #define SEGUE_CHAT_ENTRIES_VIEWCONTROLLER   @"ChatEntriesViewControllerSegue"
 
-@interface ChatsViewController ()
-
-@end
-
-@implementation ChatsViewController
+@implementation ChatsViewController {
+    NSDateFormatter *dateFormatter;
+    ChatModel *chatModel;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -24,10 +23,21 @@
     self.titleLabel.text = LOC(@"Chats", @"Title");
     
     self.tableView.rowHeight = CELL_HEIGHT_CHAT_CONTACT_TABLEVIEWCELL;
+    dateFormatter = [NSDateFormatter new];
+    [dateFormatter setDateFormat:@"MMM dd"];
+    
+    chatModel = [ChatModel new];
+    chatModel.delegate = self;
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [chatModel refreshChatArray];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    chatModel = nil;
 }
 
 +(instancetype) createInstance {
@@ -36,28 +46,34 @@
     return chatsViewController;
 }
 
+#pragma mark - ChatModelDelegate
+
+-(void) chatsArrayIsUpdated {
+    [self.tableView reloadData];
+}
+
 #pragma mark - UITableView
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger numberOfRows = 5;
+    NSInteger numberOfRows = chatModel.chatArray.count;
     return numberOfRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ChatContactTableViewCell *cell = [CellFactory cellChatContactTableViewCellFromTable:tableView forIndexPath:indexPath];
+        
+    Chat *chat = [chatModel.chatArray objectAtIndex:indexPath.row];
     cell.avatarImageView.image = [UIImage imageNamed:@"avatar_empty"];
-    [cell setInformationWithNameSurname:@"Okan Kurtulus" communicationChannelAddress:@"okankurtulus@gmail.com"];
+    [cell setInformationWithNameSurname:chat.nameSurname communicationChannelAddress:chat.communicationChannelAddress];
+    cell.rightDateLabel.text = [dateFormatter stringFromDate:chat.lastMessageDate];
     
-    cell.rightDateLabel.text = @"Oct 18";
-    
-    
-    cell.rightMessageCounterLabel.hidden = indexPath.row % 3 == 0;
-    cell.rightMessageCounterLabel.text = [NSString stringWithFormat:@"%ld", (indexPath.row + 6)];
+    cell.rightMessageCounterLabel.hidden = chat.unreadMessageCount.intValue <= 0;
+    cell.rightMessageCounterLabel.text = chat.unreadMessageCount.stringValue;
     return cell;
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"Selected %ld-%ld", indexPath.section, indexPath.row);
+    chatModel.selectedChat = [chatModel.chatArray objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER sender:self];
 }
 
@@ -75,7 +91,6 @@
 
 -(IBAction)slideMenuValidAction:(id)sender {
     [self slideMenuTouchUp:sender];
-    NSLog(@"Back button pressed");
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -84,13 +99,9 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {    
     if([segue.identifier isEqualToString:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER]) {
+        NSParameterAssert(chatModel.selectedChat);
         ChatEntriesViewController *chatEntriesViewController = (ChatEntriesViewController*)segue.destinationViewController;
-        
-        
-        Chat *chat = [Chat new];
-        chat.nameSurname = @"Milica Jelena Pakic";
-        chat.communicationChannelAddress = @"okankurtulus@gmail.com";
-        
+        chatEntriesViewController.chatEntriesModel = [[ChatEntriesModel alloc] initWithChat:chatModel.selectedChat];
     }
 }
 

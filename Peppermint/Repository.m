@@ -98,6 +98,7 @@
 		}
     }
     [request setSortDescriptors:sortDescriptors];
+    
 	NSError *error;
     NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&error];
     if(error) {

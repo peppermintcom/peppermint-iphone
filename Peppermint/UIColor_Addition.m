@@ -182,4 +182,13 @@
     return color;
 }
 
++ (UIColor *) peppermintGray248 {
+    static dispatch_once_t onceToken;
+    static UIColor *color;
+    dispatch_once(&onceToken, ^{
+        color = [UIColor colorWithRed:0.973 green:0.973 blue:0.973 alpha:1.00];
+    });
+    return color;
+}
+
 @end

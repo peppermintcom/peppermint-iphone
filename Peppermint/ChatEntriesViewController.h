@@ -7,14 +7,14 @@
 //
 
 #import "BaseViewController.h"
-#import "Repository.h"
+#import "ChatEntriesModel.h"
 
-@interface ChatEntriesViewController : BaseViewController
+@interface ChatEntriesViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, ChatEntriesModelDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *bottomInformationLabel;
 
-@property (strong, nonatomic) Chat *chat;
-
+@property (strong, nonatomic) ChatEntriesModel *chatEntriesModel;
 
 @end

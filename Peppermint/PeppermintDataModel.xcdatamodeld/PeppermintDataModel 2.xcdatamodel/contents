@@ -14,6 +14,7 @@
     <entity name="Chat" representedClassName="Chat" parentEntity="Contact" syncable="YES">
         <attribute name="lastMessageDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="unreadMessageCount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="chatEntries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ChatEntry" inverseName="chat" inverseEntity="ChatEntry" syncable="YES"/>
     </entity>
     <entity name="ChatEntry" representedClassName="ChatEntry" syncable="YES">
         <attribute name="audio" attributeType="Binary" syncable="YES"/>
@@ -22,7 +23,7 @@
         <attribute name="dateViewed" attributeType="Date" syncable="YES"/>
         <attribute name="isSentByMe" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="transcription" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="chat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Chat" syncable="YES"/>
+        <relationship name="chat" maxCount="1" deletionRule="Nullify" destinationEntity="Chat" inverseName="chatEntries" inverseEntity="Chat" syncable="YES"/>
     </entity>
     <entity name="Contact" representedClassName="Contact" isAbstract="YES" syncable="YES">
         <attribute name="avatarImageData" optional="YES" attributeType="Binary" syncable="YES"/>
@@ -41,7 +42,7 @@
     </entity>
     <elements>
         <element name="CachedMessage" positionX="-135" positionY="-63" width="128" height="180"/>
-        <element name="Chat" positionX="-243" positionY="63" width="128" height="75"/>
+        <element name="Chat" positionX="-243" positionY="63" width="128" height="90"/>
         <element name="ChatEntry" positionX="-234" positionY="72" width="128" height="150"/>
         <element name="Contact" positionX="-353" positionY="3" width="128" height="105"/>
         <element name="CustomContact" positionX="-243" positionY="63" width="128" height="60"/>

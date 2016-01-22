@@ -83,7 +83,7 @@
 -(void) setInformationWithNameSurname:(NSString*)contactNameSurname communicationChannelAddress:(NSString*)contactCommunicationChannelAddress andIconImage:(UIImage*) image {
     nameSurname = contactNameSurname;
     communicationChannelAddress = contactCommunicationChannelAddress;    
-    NSAssert(nameSurname.length > 0 && communicationChannelAddress.length > 0, @"NameSurname&communicationchannel address must be supplied");
+    NSAssert(nameSurname.length > 0 && communicationChannelAddress.length > 0, @"NameSurname&communicationchannel address lengths must be longer than 0");
     
     self.rightIconImageView.hidden = image == nil;
     self.rightIconImageView.image = image;

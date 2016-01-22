@@ -7,8 +7,9 @@
 //
 
 #import "BaseViewController.h"
+#import "ChatModel.h"
 
-@interface ChatsViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate>
+@interface ChatsViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, ChatModelDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
