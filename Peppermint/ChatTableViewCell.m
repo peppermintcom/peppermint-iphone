@@ -56,14 +56,56 @@
     }
     
     self.durationView.hidden = NO;
-    
-    self.durationViewWidthConstraint.constant = 13;
-    
+    self.durationViewWidthConstraint.constant = 0;
     isPlaying = NO;
     self.playPauseImageView.image = imagePlay;
-    self.leftLabel.text = @"02:14";
-    self.rightLabel.text = @"2 days";
+    
+    NSInteger minutes = chatEntry.duration.integerValue / 60;
+    NSInteger seconds = chatEntry.duration.integerValue % 60;
+    self.leftLabel.text = [NSString stringWithFormat:@"%.2ld:%.2ld", minutes, seconds];
+    [self setRightLabelWithDate:chatEntry.dateCreated];
 }
+
+-(void) setRightLabelWithDate:(NSDate*) date {
+    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *components = [gregorianCalendar components: (NSCalendarUnitHour
+                                                                   | NSCalendarUnitMinute
+                                                                   | NSCalendarUnitSecond
+                                                                   | NSCalendarUnitDay
+                                                                   | NSCalendarUnitMonth
+                                                                   | NSCalendarUnitYear )
+                                                        fromDate:date
+                                                          toDate:[NSDate date]
+                                                         options:0];
+    NSInteger timeVariable;
+    NSString *timeText = nil;
+    if(components.year > 0) {
+        timeVariable = components.year;
+        timeText = LOC(@"Year", @"Year");
+    } else if (components.month > 0) {
+        timeVariable = components.month;
+        timeText = LOC(@"Month", @"Month");
+    } else if (components.day > 0) {
+        timeVariable = components.day;
+        timeText = LOC(@"Day", @"Day");
+    } else if (components.minute > 0) {
+        timeVariable = components.minute;
+        timeText = LOC(@"Minute", @"Minute");
+    } else if (components.second > 0) {
+        timeVariable = components.second;
+        timeText = LOC(@"Second", @"Second");
+    } else {
+        timeVariable = 0;
+        self.rightLabel.text = LOC(@"Just Now", @"Just Now");
+        return;
+    }
+    
+    if(timeVariable > 1) {
+        timeText = [NSString stringWithFormat:@"%@%@", timeText, LOC(@"Plural Suffix", @"Plural Suffix")];
+    }
+    self.rightLabel.text = [NSString stringWithFormat:@"%ld %@", timeVariable, timeText].lowercaseString;
+}
+
 
 - (IBAction)playPauseButtonPressed:(id)sender {
     isPlaying = !isPlaying;

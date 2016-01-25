@@ -2,7 +2,7 @@
 //  ChatEntry+CoreDataProperties.m
 //  Peppermint
 //
-//  Created by Okan Kurtulus on 22/01/16.
+//  Created by Okan Kurtulus on 25/01/16.
 //  Copyright © 2016 Okan Kurtulus. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -19,6 +19,8 @@
 @dynamic dateViewed;
 @dynamic isSentByMe;
 @dynamic transcription;
+@dynamic duration;
+@dynamic audioLink;
 @dynamic chat;
 
 @end

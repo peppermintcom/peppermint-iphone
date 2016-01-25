@@ -18,9 +18,11 @@
     </entity>
     <entity name="ChatEntry" representedClassName="ChatEntry" syncable="YES">
         <attribute name="audio" attributeType="Binary" syncable="YES"/>
+        <attribute name="audioLink" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dateCreated" attributeType="Date" syncable="YES"/>
         <attribute name="dateListened" attributeType="Date" defaultDateTimeInterval="-1577930400" storedInTruthFile="YES" syncable="YES"/>
         <attribute name="dateViewed" attributeType="Date" syncable="YES"/>
+        <attribute name="duration" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="isSentByMe" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="transcription" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="chat" maxCount="1" deletionRule="Nullify" destinationEntity="Chat" inverseName="chatEntries" inverseEntity="Chat" syncable="YES"/>
@@ -43,7 +45,7 @@
     <elements>
         <element name="CachedMessage" positionX="-135" positionY="-63" width="128" height="180"/>
         <element name="Chat" positionX="-243" positionY="63" width="128" height="90"/>
-        <element name="ChatEntry" positionX="-234" positionY="72" width="128" height="150"/>
+        <element name="ChatEntry" positionX="-234" positionY="72" width="128" height="180"/>
         <element name="Contact" positionX="-353" positionY="3" width="128" height="105"/>
         <element name="CustomContact" positionX="-243" positionY="63" width="128" height="60"/>
         <element name="GoogleContact" positionX="-333" positionY="174" width="128" height="60"/>

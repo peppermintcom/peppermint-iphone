@@ -145,6 +145,8 @@ to cancel</string>
                 <outlet property="counterLabel" destination="oPZ-DC-iQj" id="xNa-nw-AyB"/>
                 <outlet property="informationLabel" destination="6C8-Qh-nOw" id="8f6-sd-fLe"/>
                 <outlet property="microphoneImageView" destination="OV0-La-sKD" id="htU-NR-YXZ"/>
+                <outlet property="microphoneViewCenterYConstraint" destination="lOx-CP-CPc" id="zjR-vZ-Rqn"/>
+                <outlet property="microphoneViewRightOffsetConstraint" destination="YgZ-bC-UBw" id="mSn-mX-fZI"/>
                 <outlet property="rowView" destination="spy-Jr-n8B" id="mBk-mn-Vxw"/>
                 <outlet property="swipeBackGroundImageView" destination="50Q-Ac-aKf" id="8YD-cG-1f3"/>
                 <outlet property="swipeBackGroundImageViewTopConstraint" destination="Z9O-MX-L7E" id="ihO-Gz-GMc"/>

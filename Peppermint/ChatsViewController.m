@@ -8,6 +8,7 @@
 
 #import "ChatsViewController.h"
 #import "ChatEntriesViewController.h"
+#import "ContactsViewController.h"
 
 #define SEGUE_CHAT_ENTRIES_VIEWCONTROLLER   @"ChatEntriesViewControllerSegue"
 
@@ -96,9 +97,13 @@
 
 -(IBAction)slideMenuValidAction:(id)sender {
     [self slideMenuTouchUp:sender];
-    [self.navigationController popViewControllerAnimated:YES];
+    ContactsViewController *contactsViewController = (ContactsViewController*)[self.navigationController.viewControllers firstObject];
+    if(contactsViewController) {
+        [contactsViewController.reSideMenuContainerViewController presentLeftMenuViewController];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
-
 
 #pragma mark - Navigation
 
@@ -106,7 +111,7 @@
     if([segue.identifier isEqualToString:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER]) {
         NSParameterAssert(chatModel.selectedChat);
         ChatEntriesViewController *chatEntriesViewController = (ChatEntriesViewController*)segue.destinationViewController;
-        chatEntriesViewController.chatEntriesModel = [[ChatEntriesModel alloc] initWithChat:chatModel.selectedChat];
+        chatEntriesViewController.chatModel = chatModel;
     }
 }
 

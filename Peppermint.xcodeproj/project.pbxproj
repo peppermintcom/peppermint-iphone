@@ -138,7 +138,6 @@
 		B1F93E981BC8E328005F2128 /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E971BC8E328005F2128 /* Repository.m */; };
 		B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */; };
 		B1FC53841C520DDE00C0A472 /* ChatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FC53831C520DDE00C0A472 /* ChatModel.m */; };
-		B1FC53871C522ACA00C0A472 /* ChatEntriesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FC53861C522ACA00C0A472 /* ChatEntriesModel.m */; };
 		B1FC538B1C52656800C0A472 /* ChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FC538A1C52656800C0A472 /* ChatTableViewCell.m */; };
 		B1FC538D1C52658400C0A472 /* ChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1FC538C1C52658400C0A472 /* ChatTableViewCell.xib */; };
 		B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FE184F1BE1676D002772B4 /* FeedBackModel.m */; };
@@ -420,8 +419,6 @@
 		B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentContactsModel.m; sourceTree = "<group>"; };
 		B1FC53821C520DDE00C0A472 /* ChatModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatModel.h; sourceTree = "<group>"; };
 		B1FC53831C520DDE00C0A472 /* ChatModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatModel.m; sourceTree = "<group>"; };
-		B1FC53851C522ACA00C0A472 /* ChatEntriesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatEntriesModel.h; sourceTree = "<group>"; };
-		B1FC53861C522ACA00C0A472 /* ChatEntriesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatEntriesModel.m; sourceTree = "<group>"; };
 		B1FC53891C52656800C0A472 /* ChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableViewCell.h; sourceTree = "<group>"; };
 		B1FC538A1C52656800C0A472 /* ChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableViewCell.m; sourceTree = "<group>"; };
 		B1FC538C1C52658400C0A472 /* ChatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatTableViewCell.xib; sourceTree = "<group>"; };
@@ -689,8 +686,6 @@
 				B1EF03741C2184F80054FA02 /* AnalyticsModel.m */,
 				B1FC53821C520DDE00C0A472 /* ChatModel.h */,
 				B1FC53831C520DDE00C0A472 /* ChatModel.m */,
-				B1FC53851C522ACA00C0A472 /* ChatEntriesModel.h */,
-				B1FC53861C522ACA00C0A472 /* ChatEntriesModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1470,7 +1465,6 @@
 				B1BB60151BDE0E0200C1140B /* LoginTableViewCell.m in Sources */,
 				B15FDE801C117CCE007100EC /* CachedMessage+CoreDataProperties.m in Sources */,
 				B13B07671BD3736400974AC3 /* MandrillMailAttachment.m in Sources */,
-				B1FC53871C522ACA00C0A472 /* ChatEntriesModel.m in Sources */,
 				B1D2A6D71C200706002BD6DF /* RecordingView.m in Sources */,
 				B1C83A191BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m in Sources */,
 				B17933121BE0B7B00016F158 /* LoginNavigationViewController.m in Sources */,

@@ -498,6 +498,10 @@ SUBSCRIBE(ReplyContactIsAdded) {
     [self cellSelectedWithTag:CELL_TAG_RECENT_CONTACTS];
 }
 
+-(void) chatHistoryCreatedWithSuccess {
+    NSLog(@"chatHistoryCreatedWithSuccess");
+}
+
 -(void) message:(NSString*) messageId isUpdatedWithStatus:(SendingStatus)sendingStatus cancelAble:(BOOL)isCacnelAble {
     
     NSMutableAttributedString *infoAttrText = [NSMutableAttributedString new];

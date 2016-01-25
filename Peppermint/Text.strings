@@ -126,3 +126,11 @@
 "Version" = "Version";
 "Chats" = "Chats";
 "Record a Message" = "Record a Message";
+"Year" = "Year";
+"Month" = "Month";
+"Day" = "Day";
+"Hour" = "Hour";
+"Minute" = "Minute";
+"Secont" = "Second";
+"Plural Suffix" = "s";
+"Just Now" = "Just Now";

@@ -9,7 +9,6 @@
 #import "ChatModel.h"
 #import "ContactsModel.h"
 
-
 @implementation ChatModel {
     NSDateFormatter *dateFormatter;
 }
@@ -19,21 +18,21 @@
     if(self) {
         _chatArray = [NSArray new];
         self.selectedChat = nil;
+        _chatEntriesArray = [NSArray new];
     }
     return self;
 }
 
-- (void) dealloc {
-}
+#pragma mark - Refresh
 
-- (void) refreshChatArray {
+-(void) refreshChatArray {
     self.selectedChat = nil;
     dispatch_async(LOW_PRIORITY_QUEUE, ^{
         Repository *repository = [Repository beginTransaction];
         _chatArray = [repository getResultsFromEntity:[Chat class]];
 #ifdef DEBUG
         #warning "Dont forget to delete here!"
-        [self checkAndCreateRandomChats:repository];
+        //[self checkAndCreateRandomChats:repository];
 #endif
         dispatch_async(dispatch_get_main_queue(), ^{
             if([self.delegate respondsToSelector:@selector(chatsArrayIsUpdated)]) {
@@ -42,7 +41,6 @@
         });
     });
 }
-
 
 -(void) checkAndCreateRandomChats:(Repository*) repository {
     if(_chatArray.count < 3) {
@@ -77,36 +75,70 @@
     }
 }
 
-
-+(NSURL*) getChatUdidForPeppermintContact:(PeppermintContact*) peppermintContact error:(NSError**) error {
-    
-    Chat *matchedChat = nil;
-    NSPredicate *addressPredicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:peppermintContact.communicationChannelAddress];
-    NSPredicate *nameSurnamePredicate = [ContactsModel contactPredicateWithNameSurname:peppermintContact.nameSurname];
-    NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:
-                                      [NSArray arrayWithObjects: addressPredicate, nameSurnamePredicate, nil]
-                                      ];
-    
-    
-    Repository *repository = [Repository beginTransaction];
-    
-    NSArray *matchedChatsArray = [repository getResultsFromEntity:[Chat class] predicateOrNil:predicate];
-    if(matchedChatsArray.firstObject) {
-        matchedChat = (Chat*) matchedChatsArray.firstObject;
-    } else {
-        matchedChat = (Chat*)[repository createEntity:[Chat class]];
-        matchedChat.avatarImageData = UIImagePNGRepresentation(peppermintContact.avatarImage);
-        matchedChat.communicationChannel = [NSNumber numberWithInt:peppermintContact.communicationChannel];
-        matchedChat.communicationChannelAddress = peppermintContact.communicationChannelAddress;
-        matchedChat.nameSurname = peppermintContact.nameSurname;
-        matchedChat.lastMessageDate = [NSDate new];
-        matchedChat.unreadMessageCount = @0;
-        matchedChat.chatEntries = nil;
-    }
-    
-    *error = [repository endTransaction];
-    return matchedChat.objectID.URIRepresentation;
+-(void) refreshChatEntries {
+    dispatch_async(LOW_PRIORITY_QUEUE, ^{
+        Repository *repository = [Repository beginTransaction];
+        NSPredicate *chatPredicate = [NSPredicate predicateWithFormat:@"self.chat.nameSurname = %@ AND self.chat.communicationChannelAddress = %@",
+                                      self.selectedChat.nameSurname,
+                                      self.selectedChat.communicationChannelAddress];
+        _chatEntriesArray = [repository getResultsFromEntity:[ChatEntry class] predicateOrNil:chatPredicate ascSortStringOrNil:[NSArray arrayWithObjects:@"dateCreated", nil] descSortStringOrNil:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if([self.delegate respondsToSelector:@selector(chatEntriesArrayIsUpdated)]) {
+                [self.delegate chatEntriesArrayIsUpdated];
+            }
+        });
+    });
 }
 
+#pragma mark - AddChatHistory
+
+- (void) createChatHistoryFor:(PeppermintContact*) peppermintContact withAudioData:(NSData*) audioData transcription:(NSString*) transcription duration:(NSTimeInterval)duration isSentByMe:(BOOL)isSentByMe {
+
+    dispatch_async(LOW_PRIORITY_QUEUE, ^{
+        Chat *matchedChat = nil;
+        NSPredicate *addressPredicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:peppermintContact.communicationChannelAddress];
+        NSPredicate *nameSurnamePredicate = [ContactsModel contactPredicateWithNameSurname:peppermintContact.nameSurname];
+        NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:
+                                          [NSArray arrayWithObjects: addressPredicate, nameSurnamePredicate, nil]
+                                          ];
+        
+        Repository *repository = [Repository beginTransaction];
+        NSArray *matchedChatsArray = [repository getResultsFromEntity:[Chat class] predicateOrNil:predicate];
+        if(matchedChatsArray.firstObject) {
+            matchedChat = (Chat*) matchedChatsArray.firstObject;
+        } else {
+            matchedChat = (Chat*)[repository createEntity:[Chat class]];
+            matchedChat.avatarImageData = UIImagePNGRepresentation(peppermintContact.avatarImage);
+            matchedChat.communicationChannel = [NSNumber numberWithInt:peppermintContact.communicationChannel];
+            matchedChat.communicationChannelAddress = peppermintContact.communicationChannelAddress;
+            matchedChat.nameSurname = peppermintContact.nameSurname;
+            matchedChat.lastMessageDate = [NSDate new];
+            matchedChat.unreadMessageCount = @0;
+            matchedChat.chatEntries = nil;
+        }
+        
+        if(matchedChat) {
+            ChatEntry *chatEntry = (ChatEntry*)[repository createEntity:[ChatEntry class]];
+            NSDate *dateNow = [NSDate new];
+            chatEntry.audio = audioData;
+            chatEntry.transcription = transcription;
+            chatEntry.chat = matchedChat;
+            chatEntry.isSentByMe = [NSNumber numberWithBool:isSentByMe];
+            chatEntry.dateCreated = dateNow;
+            chatEntry.dateListened = dateNow;
+            chatEntry.dateViewed = dateNow;
+            chatEntry.duration = [NSNumber numberWithDouble:duration];
+        }
+        
+        NSError *error = [repository endTransaction];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(error) {
+                [self.delegate operationFailure:error];
+            } else {
+                [self.delegate chatHistoryCreatedWithSuccess];
+            }
+        });
+    });
+}
 
 @end

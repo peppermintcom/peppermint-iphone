@@ -8,8 +8,12 @@
 
 #import "ChatEntriesViewController.h"
 #import "SendVoiceMessageMandrillModel.h"
+#import "RecordingGestureButton.h"
+#import "ChatModel.h"
+#import "FoggyRecordingView.h"
 
-@interface ChatEntriesViewController () <RecordingGestureButtonDelegate>
+@interface ChatEntriesViewController () <RecordingGestureButtonDelegate, ChatModelDelegate, RecordingViewDelegate>
+
 
 @end
 
@@ -32,18 +36,24 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    NSParameterAssert(self.chatEntriesModel);
-    self.chatEntriesModel.delegate = self;
+    NSParameterAssert(self.chatModel);
+    self.chatModel.delegate = self;
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [self.chatEntriesModel refreshChatEntries];
+    [self.chatModel refreshChatEntries];
     
-    if(self.chatEntriesModel.chat.avatarImageData) {
-        self.avatarImageView.image = [UIImage imageWithData:self.chatEntriesModel.chat.avatarImageData];
+    Chat *chat = self.chatModel.selectedChat;
+    
+    if(chat.avatarImageData) {
+        CGRect frame = self.avatarImageView.frame;
+        int width = frame.size.width;
+        int height = frame.size.height;
+        self.avatarImageView.image = [[UIImage imageWithData:chat.avatarImageData] resizedImageWithWidth:width height:height];
     }
+    
     NSMutableAttributedString *attrText = [NSMutableAttributedString new];
-    [attrText addText:self.chatEntriesModel.chat.nameSurname ofSize:17 ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:17]];
+    [attrText addText:chat.nameSurname ofSize:17 ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:17]];
     [attrText addText:@"\n" ofSize:12 ofColor:[UIColor clearColor]];
-    [attrText addText:self.chatEntriesModel.chat.communicationChannelAddress ofSize:13 ofColor:[UIColor recordingNavigationsubTitleGreen]];
+    [attrText addText:chat.communicationChannelAddress ofSize:13 ofColor:[UIColor recordingNavigationsubTitleGreen]];
     [attrText centerText];
     self.titleLabel.attributedText = attrText;
 }
@@ -55,11 +65,11 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    self.chatEntriesModel = nil;
+    self.chatModel = nil;
     self.recordingView = nil;
 }
 
-#pragma mark - ChatEntriesModelDelegate
+#pragma mark - ChatModelDelegate
 
 -(void) chatEntriesArrayIsUpdated {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -68,26 +78,24 @@
 
 -(void) navigateToLastRow {
     [self.tableView reloadData];
-#warning "navigate to the last row!"
-    /*
     NSUInteger lastSection = 0;
     NSUInteger lastRowNumber = [self.tableView numberOfRowsInSection:lastSection] - 1;
     NSIndexPath* indexPath = [NSIndexPath indexPathForRow:lastRowNumber inSection:lastSection];
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
-     */
+    
 }
 
 #pragma mark - UITableView
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger numberOfRows = [self.chatEntriesModel.chatEntriesArray count];
+    NSInteger numberOfRows = [self.chatModel.chatEntriesArray count];
     return numberOfRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     ChatTableViewCell *cell = [CellFactory cellChatTableViewCellFromTable:tableView forIndexPath:indexPath];    
-    ChatEntry *chatEntry = (ChatEntry*)[self.chatEntriesModel.chatEntriesArray objectAtIndex:indexPath.row];
+    ChatEntry *chatEntry = (ChatEntry*)[self.chatModel.chatEntriesArray objectAtIndex:indexPath.row];
     [cell fillInformation:chatEntry];
     return cell;
 }
@@ -115,7 +123,6 @@
     self.recordingButton.delegate = self;
     self.recordingView = [FoggyRecordingView createInstanceWithDelegate:self];
     CGRect rect = self.view.frame;
-    rect.size.width *= 1.20;
     self.recordingView.frame = rect;
     [self.view addSubview:self.recordingView];
     [self.view bringSubviewToFront:self.recordingView];
@@ -123,6 +130,9 @@
     FoggyRecordingView *foggyRecordingView = (FoggyRecordingView*)self.recordingView;
     if(foggyRecordingView) {
         foggyRecordingView.swipeInAnyDirectionView.hidden = YES;
+        CGRect frame = foggyRecordingView.microphoneImageView.frame;
+        foggyRecordingView.microphoneViewRightOffsetConstraint.constant =  -1 * (frame.size.width * 0.2);
+        foggyRecordingView.microphoneViewCenterYConstraint.constant = -1 * (frame.size.height * 0.1);
     }
 };
 
@@ -137,9 +147,9 @@
     SendVoiceMessageModel *sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
     
     PeppermintContact *peppermintContact = [PeppermintContact new];
-    peppermintContact.nameSurname = @"T Okan Kurtulus";
-    peppermintContact.communicationChannel = CommunicationChannelEmail;
-    peppermintContact.communicationChannelAddress = @"okankurtulus@gmail.com";
+    peppermintContact.nameSurname = self.chatModel.selectedChat.nameSurname;
+    peppermintContact.communicationChannel = self.chatModel.selectedChat.communicationChannel.intValue;
+    peppermintContact.communicationChannelAddress = self.chatModel.selectedChat.communicationChannelAddress;
     sendVoiceMessageModel.selectedPeppermintContact = peppermintContact;
     self.recordingView.sendVoiceMessageModel = sendVoiceMessageModel;
     
@@ -167,7 +177,7 @@
 
 -(void) recordingViewDissappeared {
     NSLog(@"recordingViewDissappeared");
-    [self.chatEntriesModel refreshChatEntries];
+    [self.chatModel refreshChatEntries];
 }
 
 -(void) message:(NSString*) message isUpdatedWithStatus:(SendingStatus) sendingStatus cancelAble:(BOOL)isCacnelAble {
@@ -176,6 +186,10 @@
 
 -(void) newRecentContactisSaved {
     NSLog(@"newRecentContactisSaved");
+}
+
+-(void) chatHistoryCreatedWithSuccess {
+    NSLog(@"chatHistoryCreatedWithSuccess");
 }
 
 @end

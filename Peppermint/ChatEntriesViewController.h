@@ -7,10 +7,11 @@
 //
 
 #import "BaseViewController.h"
-#import "ChatEntriesModel.h"
-#import "FoggyRecordingView.h"
+@class RecordingGestureButton;
+@class ChatModel;
+@class RecordingView;
 
-@interface ChatEntriesViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, ChatEntriesModelDelegate, RecordingViewDelegate>
+@interface ChatEntriesViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -18,7 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIView *microphoneView;
 @property (weak, nonatomic) IBOutlet RecordingGestureButton *recordingButton;
 
-@property (strong, nonatomic) ChatEntriesModel *chatEntriesModel;
+@property (weak, nonatomic) ChatModel *chatModel;
 @property (strong, nonatomic) RecordingView *recordingView;
 
 @end
