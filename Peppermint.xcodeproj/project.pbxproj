@@ -122,6 +122,7 @@
 		B1D2A6D71C200706002BD6DF /* RecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D2A6D61C200706002BD6DF /* RecordingView.m */; };
 		B1D2A6DB1C2037FB002BD6DF /* FoggyRecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D2A6DA1C2037FB002BD6DF /* FoggyRecordingView.m */; };
 		B1D2A6DD1C20380D002BD6DF /* FoggyRecordingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1D2A6DC1C20380D002BD6DF /* FoggyRecordingView.xib */; };
+		B1DBEF431C537345007AAF4A /* RecordingGestureButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B1DBEF421C537345007AAF4A /* RecordingGestureButton.m */; };
 		B1EF03751C2184F80054FA02 /* AnalyticsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF03741C2184F80054FA02 /* AnalyticsModel.m */; };
 		B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40E41BB7D58C00042E4B /* RecordingModel.m */; };
 		B1EF40EB1BB7E78C00042E4B /* SendVoiceMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40EA1BB7E78C00042E4B /* SendVoiceMessageModel.m */; };
@@ -386,6 +387,8 @@
 		B1D2A6D91C2037FB002BD6DF /* FoggyRecordingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoggyRecordingView.h; sourceTree = "<group>"; };
 		B1D2A6DA1C2037FB002BD6DF /* FoggyRecordingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoggyRecordingView.m; sourceTree = "<group>"; };
 		B1D2A6DC1C20380D002BD6DF /* FoggyRecordingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FoggyRecordingView.xib; sourceTree = "<group>"; };
+		B1DBEF411C537345007AAF4A /* RecordingGestureButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingGestureButton.h; sourceTree = "<group>"; };
+		B1DBEF421C537345007AAF4A /* RecordingGestureButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordingGestureButton.m; sourceTree = "<group>"; };
 		B1EF03731C2184F80054FA02 /* AnalyticsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsModel.h; sourceTree = "<group>"; };
 		B1EF03741C2184F80054FA02 /* AnalyticsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsModel.m; sourceTree = "<group>"; };
 		B1EF40E31BB7D58C00042E4B /* RecordingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RecordingModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -859,6 +862,7 @@
 		B17B3D551BB689F1009B8BC5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B1DBEF441C537A1D007AAF4A /* RecordingGestureButton */,
 				B1D2A6D41C2006E9002BD6DF /* RecordingView */,
 				B17801731C1EFE6F00BA2436 /* TutorialView */,
 				D074A66F1C07271B0017EAC3 /* RowViewForPicker */,
@@ -991,6 +995,15 @@
 				B1D2A6DC1C20380D002BD6DF /* FoggyRecordingView.xib */,
 			);
 			name = FoggyRecordingView;
+			sourceTree = "<group>";
+		};
+		B1DBEF441C537A1D007AAF4A /* RecordingGestureButton */ = {
+			isa = PBXGroup;
+			children = (
+				B1DBEF411C537345007AAF4A /* RecordingGestureButton.h */,
+				B1DBEF421C537345007AAF4A /* RecordingGestureButton.m */,
+			);
+			name = RecordingGestureButton;
 			sourceTree = "<group>";
 		};
 		B1EF40E11BB7CE5600042E4B /* Controller */ = {
@@ -1404,6 +1417,7 @@
 				B1D2A6DB1C2037FB002BD6DF /* FoggyRecordingView.m in Sources */,
 				B17B3D641BB6AE8B009B8BC5 /* RecordingViewController.m in Sources */,
 				B15B15B81BDBC17300C0C171 /* Recorder.m in Sources */,
+				B1DBEF431C537345007AAF4A /* RecordingGestureButton.m in Sources */,
 				B10C392E1BF6F9520070B49F /* AccountRequest.m in Sources */,
 				D0D70D491C049DC80068AB20 /* BaseButton.m in Sources */,
 				B1EF40EE1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.m in Sources */,

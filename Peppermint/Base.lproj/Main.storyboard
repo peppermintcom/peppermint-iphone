@@ -1292,7 +1292,7 @@ Version 1.0.0</string>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Ptb-mZ-wF6">
-                                <rect key="frame" x="0.0" y="64" width="414" height="615"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="617"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -1306,38 +1306,65 @@ Version 1.0.0</string>
                                     <constraint firstAttribute="height" constant="56" id="KPP-Nz-v4X"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_mic_2" translatesAutoresizingMaskIntoConstraints="NO" id="9rV-hA-tP2">
-                                <rect key="frame" x="359" y="679" width="56" height="56"/>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_mic_2" translatesAutoresizingMaskIntoConstraints="NO" id="9rV-hA-tP2">
+                                <rect key="frame" x="366" y="694" width="28" height="28"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="56" id="dVT-Hm-WGc"/>
-                                    <constraint firstAttribute="height" constant="56" id="dbX-9l-aGR"/>
+                                    <constraint firstAttribute="width" constant="28" id="4kn-Ue-GSG"/>
+                                    <constraint firstAttribute="height" constant="28" id="ini-bH-Mbq"/>
+                                    <constraint firstAttribute="height" constant="28" id="vUq-MD-72W"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="vUq-MD-72W"/>
+                                    </mask>
+                                </variation>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fzK-41-yXK" customClass="RecordingGestureButton">
+                                <rect key="frame" x="0.0" y="681" width="414" height="55"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="f2t-5y-PRb"/>
+                                </constraints>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="9rV-hA-tP2" secondAttribute="trailing" constant="-1" id="0km-Ut-P6h"/>
                             <constraint firstItem="Ptb-mZ-wF6" firstAttribute="top" secondItem="Vfi-st-4Ne" secondAttribute="bottom" id="8Ve-l2-PiD"/>
                             <constraint firstItem="Ptb-mZ-wF6" firstAttribute="leading" secondItem="4qC-EC-dhR" secondAttribute="leading" id="BQa-IK-WFf"/>
                             <constraint firstAttribute="trailing" secondItem="Vfi-st-4Ne" secondAttribute="trailing" id="DnU-Ya-ptS"/>
+                            <constraint firstItem="9uv-HA-C7W" firstAttribute="top" secondItem="9rV-hA-tP2" secondAttribute="bottom" constant="14" id="Gck-c0-IVt"/>
+                            <constraint firstItem="Tec-iN-Ad0" firstAttribute="top" secondItem="fzK-41-yXK" secondAttribute="bottom" id="Gio-WY-P6O"/>
                             <constraint firstAttribute="bottom" secondItem="Tec-iN-Ad0" secondAttribute="bottom" constant="-1" id="Hma-ff-kzB"/>
-                            <constraint firstItem="9rV-hA-tP2" firstAttribute="top" secondItem="Ptb-mZ-wF6" secondAttribute="bottom" id="KsE-sx-5ss"/>
+                            <constraint firstItem="9uv-HA-C7W" firstAttribute="top" secondItem="fzK-41-yXK" secondAttribute="bottom" id="HzF-mH-MaL"/>
                             <constraint firstItem="Tec-iN-Ad0" firstAttribute="leading" secondItem="4qC-EC-dhR" secondAttribute="leading" constant="-1" id="T0f-5i-ceF"/>
                             <constraint firstAttribute="trailing" secondItem="Tec-iN-Ad0" secondAttribute="trailing" constant="-1" id="VaW-hU-cnu"/>
                             <constraint firstItem="Vfi-st-4Ne" firstAttribute="leading" secondItem="4qC-EC-dhR" secondAttribute="leading" id="W4g-dW-gCa"/>
+                            <constraint firstItem="fzK-41-yXK" firstAttribute="leading" secondItem="4qC-EC-dhR" secondAttribute="leading" id="cyl-pS-67u"/>
+                            <constraint firstItem="fzK-41-yXK" firstAttribute="top" secondItem="Ptb-mZ-wF6" secondAttribute="bottom" id="fWh-bf-Muf"/>
+                            <constraint firstAttribute="trailing" secondItem="9rV-hA-tP2" secondAttribute="trailing" constant="20" id="hd8-Ue-OY9"/>
+                            <constraint firstAttribute="trailing" secondItem="fzK-41-yXK" secondAttribute="trailing" id="i40-Ew-LPN"/>
+                            <constraint firstItem="9rV-hA-tP2" firstAttribute="top" secondItem="Ptb-mZ-wF6" secondAttribute="bottom" constant="15" id="j3K-La-I28"/>
                             <constraint firstItem="Vfi-st-4Ne" firstAttribute="top" secondItem="4qC-EC-dhR" secondAttribute="top" id="m48-Xs-wJs"/>
-                            <constraint firstAttribute="bottom" secondItem="9rV-hA-tP2" secondAttribute="bottom" constant="1" id="nJI-DQ-qad"/>
                             <constraint firstAttribute="trailing" secondItem="Ptb-mZ-wF6" secondAttribute="trailing" id="noB-yF-d8A"/>
+                            <constraint firstItem="9rV-hA-tP2" firstAttribute="centerY" secondItem="4qC-EC-dhR" secondAttribute="centerY" id="xIn-hc-eNG"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Gio-WY-P6O"/>
+                                <exclude reference="j3K-La-I28"/>
+                                <exclude reference="xIn-hc-eNG"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="viB-Jw-A83"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="avatarImageView" destination="c98-TQ-lrM" id="1L9-lS-roZ"/>
                         <outlet property="bottomInformationLabel" destination="Tec-iN-Ad0" id="iAT-0V-Vuh"/>
+                        <outlet property="microphoneView" destination="9rV-hA-tP2" id="20Y-0A-Y7O"/>
+                        <outlet property="recordingButton" destination="fzK-41-yXK" id="69P-EJ-0bx"/>
                         <outlet property="tableView" destination="Ptb-mZ-wF6" id="LQB-ZB-E7x"/>
                         <outlet property="titleLabel" destination="7tN-X6-rqR" id="4K1-Fg-EYu"/>
                     </connections>
@@ -1368,7 +1395,7 @@ Version 1.0.0</string>
         <image name="icon_close" width="14" height="14"/>
         <image name="icon_down" width="6" height="6"/>
         <image name="icon_menu" width="16" height="14"/>
-        <image name="icon_mic_2" width="30" height="30"/>
+        <image name="icon_mic_2" width="26" height="26"/>
         <image name="icon_peppermint" width="188" height="188"/>
         <image name="icon_recent" width="14" height="14"/>
         <image name="phone_active" width="20" height="20"/>

@@ -16,10 +16,10 @@
 @interface ChatEntriesModel : BaseModel
 @property (weak, nonatomic) id<ChatEntriesModelDelegate> delegate;
 @property (strong, nonatomic) Chat *chat;
-@property (strong, nonatomic, readonly) NSArray<Chat*> *chatEntriesArray;
+@property (strong, nonatomic, readonly) NSArray<ChatEntry*> *chatEntriesArray;
 
 -(id) initWithChat:(Chat*) chat;
+-(void) refreshChatEntries;
+-(void) saveSentAudio:(NSData*) audioData transcription:(NSString*)transcription chatUrl:(NSURL*)chatUrl;
 
-#warning "uncomment line or delete it ;)"
-//- (void) refresh;
 @end

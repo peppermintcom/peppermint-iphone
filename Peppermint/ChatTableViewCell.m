@@ -14,6 +14,9 @@
 @implementation ChatTableViewCell {
     UIImage *imageConnected;
     UIImage *imageFlat;
+    UIImage *imagePlay;
+    UIImage *imagePause;
+    BOOL isPlaying;
 }
 
 - (void)awakeFromNib {
@@ -23,6 +26,8 @@
     self.durationView.layer.cornerRadius = 1;
     imageConnected = [UIImage imageNamed:@"icon_chat_left_connected"];
     imageFlat = [UIImage imageNamed:@"icon_chat_left_flat"];
+    imagePlay = [UIImage imageNamed:@"icon_play"];
+    imagePause = [UIImage imageNamed:@"icon_pause"];
 }
 
 - (void) layoutSubviews {
@@ -51,14 +56,18 @@
     }
     
     self.durationView.hidden = NO;
-    int percent = (rand() % 100);
-    self.durationViewWidthConstraint.constant = percent * self.durationView.frame.size.width / 100.0;
     
+    self.durationViewWidthConstraint.constant = 13;
     
-    NSLog(@"width : %f", self.durationViewWidthConstraint.constant);
-    
+    isPlaying = NO;
+    self.playPauseImageView.image = imagePlay;
     self.leftLabel.text = @"02:14";
     self.rightLabel.text = @"2 days";
+}
+
+- (IBAction)playPauseButtonPressed:(id)sender {
+    isPlaying = !isPlaying;
+    self.playPauseImageView.image = isPlaying ? imagePause : imagePlay;
 }
 
 @end

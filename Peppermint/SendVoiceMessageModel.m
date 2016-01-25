@@ -11,6 +11,8 @@
 #import "CacheModel.h"
 #import "FastReplyModel.h"
 #import <Crashlytics/Crashlytics.h>
+#import "ChatModel.h"
+#import "ChatEntriesModel.h"
 
 #define DISPATCH_SEMAPHORE_PERIOD   15000000000 //15seconds in nanoseconds
 
@@ -42,11 +44,26 @@
     //NSLog(@"Dealloc %@ in status %d\n", self, (int)self.sendingStatus);
 }
 
+-(void) setChatConversation {
+    NSError *error;
+    NSURL *url = [ChatModel getChatUdidForPeppermintContact:self.selectedPeppermintContact error:&error];
+    if(error) {
+        [self.delegate operationFailure:error];
+    } else {
+        ChatEntriesModel *chatEntriesModel = [ChatEntriesModel new];
+        chatEntriesModel.delegate = self;
+#warning "Set transcription variable!"
+        [chatEntriesModel saveSentAudio:_data transcription:@"Transcription Text" chatUrl:url];
+    }
+}
+
 -(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension andDuration:(NSTimeInterval)duration {
     _data = data;
     _extension = extension;
     _duration = duration;
     [recentContactsModel save:self.selectedPeppermintContact];
+    [self setChatConversation];
+    
     [self attachProcessToAppDelegate];
     [self checkAndCleanFastReplyModel];
     [[UIApplication sharedApplication] cancelAllLocalNotifications];

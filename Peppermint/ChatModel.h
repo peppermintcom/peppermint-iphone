@@ -8,6 +8,9 @@
 
 #import "BaseModel.h"
 #import "Repository.h"
+#import "PeppermintContact.h"
+
+@class PeppermintContact;
 
 @protocol ChatModelDelegate <BaseModelDelegate>
 @optional
@@ -20,5 +23,6 @@
 @property (weak, nonatomic) Chat *selectedChat;
 
 - (void) refreshChatArray ;
++(NSURL*) getChatUdidForPeppermintContact:(PeppermintContact*) peppermintContact error:(NSError**) error;
 
 @end

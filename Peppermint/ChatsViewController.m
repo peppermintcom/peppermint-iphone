@@ -63,7 +63,12 @@
     ChatContactTableViewCell *cell = [CellFactory cellChatContactTableViewCellFromTable:tableView forIndexPath:indexPath];
         
     Chat *chat = [chatModel.chatArray objectAtIndex:indexPath.row];
-    cell.avatarImageView.image = [UIImage imageNamed:@"avatar_empty"];
+    if(chat.avatarImageData) {
+        [cell setAvatarImage:[UIImage imageWithData:chat.avatarImageData]];
+    } else {
+        cell.avatarImageView.image = [UIImage imageNamed:@"avatar_empty"];
+    }
+    
     [cell setInformationWithNameSurname:chat.nameSurname communicationChannelAddress:chat.communicationChannelAddress];
     cell.rightDateLabel.text = [dateFormatter stringFromDate:chat.lastMessageDate];
     

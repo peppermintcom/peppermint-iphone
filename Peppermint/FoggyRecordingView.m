@@ -207,7 +207,8 @@
 
 -(void) meteringUpdatedWithAverage:(CGFloat)average andPeak:(CGFloat)peak {
     if(self.totalSeconds < 0.1) {
-        originalMicrophoneFrame = self.microphoneImageView.frame;
+#warning "Do we need to set originalMicrophoneFrame again? We already set it in show function?"
+        //originalMicrophoneFrame = self.microphoneImageView.frame;
         previousImpact = 0;
     } else {
         int referenceLevel = 5;

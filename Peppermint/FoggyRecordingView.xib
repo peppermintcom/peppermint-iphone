@@ -48,7 +48,7 @@
                                 <constraint firstAttribute="bottom" secondItem="oPZ-DC-iQj" secondAttribute="bottom" constant="6" id="wmP-x3-Sde"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vH6-fW-WGx">
+                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vH6-fW-WGx">
                             <rect key="frame" x="381" y="-8" width="155" height="115"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="base_down" translatesAutoresizingMaskIntoConstraints="NO" id="50Q-Ac-aKf">

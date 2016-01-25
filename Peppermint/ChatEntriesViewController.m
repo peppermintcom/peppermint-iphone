@@ -7,8 +7,9 @@
 //
 
 #import "ChatEntriesViewController.h"
+#import "SendVoiceMessageMandrillModel.h"
 
-@interface ChatEntriesViewController ()
+@interface ChatEntriesViewController () <RecordingGestureButtonDelegate>
 
 @end
 
@@ -25,12 +26,16 @@
     self.bottomInformationLabel.layer.borderWidth = 1;
     self.bottomInformationLabel.layer.borderColor = [UIColor cellSeperatorGray].CGColor;
     self.bottomInformationLabel.text = LOC(@"Record a Message", @"Record a Message");
+    
+    self.avatarImageView.layer.cornerRadius = 5;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     NSParameterAssert(self.chatEntriesModel);
     self.chatEntriesModel.delegate = self;
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self.chatEntriesModel refreshChatEntries];
     
     if(self.chatEntriesModel.chat.avatarImageData) {
         self.avatarImageView.image = [UIImage imageWithData:self.chatEntriesModel.chat.avatarImageData];
@@ -41,31 +46,35 @@
     [attrText addText:self.chatEntriesModel.chat.communicationChannelAddress ofSize:13 ofColor:[UIColor recordingNavigationsubTitleGreen]];
     [attrText centerText];
     self.titleLabel.attributedText = attrText;
-    
-    [self navigateToLastRow];
-}
-
--(void) navigateToLastRow {
-    [self.tableView reloadData];
-    NSUInteger lastSection = 0;
-    NSUInteger lastRowNumber = [self.tableView numberOfRowsInSection:lastSection] - 1;
-    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:lastRowNumber inSection:0];
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
 }
 
 -(void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [self initRecordingViewWithView:self.recordingButton];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     self.chatEntriesModel = nil;
+    self.recordingView = nil;
 }
 
 #pragma mark - ChatEntriesModelDelegate
 
 -(void) chatEntriesArrayIsUpdated {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [self navigateToLastRow];
+}
+
+-(void) navigateToLastRow {
     [self.tableView reloadData];
+#warning "navigate to the last row!"
+    /*
+    NSUInteger lastSection = 0;
+    NSUInteger lastRowNumber = [self.tableView numberOfRowsInSection:lastSection] - 1;
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:lastRowNumber inSection:lastSection];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
+     */
 }
 
 #pragma mark - UITableView
@@ -98,6 +107,75 @@
 -(IBAction) backButtonValidAction:(id)sender {
     [self backButtonTouchUp:sender];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - RecordingView Settings
+
+-(void) initRecordingViewWithView:(UIControl*) control {
+    self.recordingButton.delegate = self;
+    self.recordingView = [FoggyRecordingView createInstanceWithDelegate:self];
+    CGRect rect = self.view.frame;
+    rect.size.width *= 1.20;
+    self.recordingView.frame = rect;
+    [self.view addSubview:self.recordingView];
+    [self.view bringSubviewToFront:self.recordingView];
+    
+    FoggyRecordingView *foggyRecordingView = (FoggyRecordingView*)self.recordingView;
+    if(foggyRecordingView) {
+        foggyRecordingView.swipeInAnyDirectionView.hidden = YES;
+    }
+};
+
+
+#pragma mark - RecordingGestureButtonDelegate
+
+-(void) touchDownBeginOnIndexPath:(id) sender event:(UIEvent *)event {
+    NSLog(@"touchDownBeginOnIndexPath");
+}
+
+-(void) touchHoldSuccessOnLocation:(CGPoint) touchBeginPoint {
+    SendVoiceMessageModel *sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
+    
+    PeppermintContact *peppermintContact = [PeppermintContact new];
+    peppermintContact.nameSurname = @"T Okan Kurtulus";
+    peppermintContact.communicationChannel = CommunicationChannelEmail;
+    peppermintContact.communicationChannelAddress = @"okankurtulus@gmail.com";
+    sendVoiceMessageModel.selectedPeppermintContact = peppermintContact;
+    self.recordingView.sendVoiceMessageModel = sendVoiceMessageModel;
+    
+    CGRect rect = self.recordingButton.frame;
+    [self.recordingView presentWithAnimationInRect:rect onPoint:CGPointMake(0, 0)];
+}
+
+-(void) touchSwipeActionOccuredOnLocation:(CGPoint) location {
+    [self.recordingView finishRecordingWithGestureIsValid:NO];
+}
+
+-(void) touchShortTapActionOccuredOnLocation:(CGPoint) location {
+    NSLog(@"touchShortTapActionOccuredOnLocation");
+}
+
+-(void) touchCompletedAsExpectedWithSuccessOnLocation:(CGPoint) location {
+    [self.recordingView finishRecordingWithGestureIsValid:YES];
+}
+
+-(void) touchDownCancelledWithEvent:(UIEvent *)event {
+    [self.recordingView finishRecordingWithGestureIsValid:NO];
+}
+
+#pragma mark - RecordingViewDelegate
+
+-(void) recordingViewDissappeared {
+    NSLog(@"recordingViewDissappeared");
+    [self.chatEntriesModel refreshChatEntries];
+}
+
+-(void) message:(NSString*) message isUpdatedWithStatus:(SendingStatus) sendingStatus cancelAble:(BOOL)isCacnelAble {
+    NSLog(@"message:isUpdatedWithStatus:cancelable:");
+}
+
+-(void) newRecentContactisSaved {
+    NSLog(@"newRecentContactisSaved");
 }
 
 @end
