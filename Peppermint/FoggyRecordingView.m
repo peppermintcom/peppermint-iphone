@@ -120,6 +120,7 @@
                                   0);
         [UIView animateWithDuration:0.2 animations:^{
             self.microphoneImageView.frame = frame;
+            self.swipeInAnyDirectionView.alpha = 0;
         } completion:^(BOOL finished) {
             self.microphoneImageView.hidden = YES;
             self.microphoneImageView.frame = originalMicrophoneFrame;
@@ -145,6 +146,7 @@
     microphoneFrame.size.width = microphoneFrame.size.height = 0;
     self.microphoneImageView.frame = microphoneFrame;
     self.rowView.alpha = 0;
+    self.swipeInAnyDirectionView.alpha = 1;
     self.swipeInAnyDirectionLabel.alpha = 0;
     self.hidden = NO;
     [UIView animateWithDuration:0.2 animations:^{
@@ -207,8 +209,7 @@
 
 -(void) meteringUpdatedWithAverage:(CGFloat)average andPeak:(CGFloat)peak {
     if(self.totalSeconds < 0.1) {
-#warning "Do we need to set originalMicrophoneFrame again? We already set it in show function?"
-        //originalMicrophoneFrame = self.microphoneImageView.frame;
+        originalMicrophoneFrame = self.microphoneImageView.frame;
         previousImpact = 0;
     } else {
         int referenceLevel = 5;

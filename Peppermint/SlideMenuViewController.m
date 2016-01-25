@@ -16,8 +16,8 @@
 #define INDEX_TUTORIAL      -1
 
 #define NUMBER_OF_OPTIONS   5
-#define INDEX_CHATS         0
-#define INDEX_CONTACTS      1
+#define INDEX_CONTACTS      0
+#define INDEX_CHATS         1
 #define INDEX_FEEDBACK      2
 #define INDEX_ACCOUNT       3
 #define INDEX_ABOUT         4

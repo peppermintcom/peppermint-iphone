@@ -8,6 +8,7 @@
 
 #import "RecordingViewController.h"
 #import "SendVoiceMessageMandrillModel.h"
+#import "AppDelegate.h"
 
 @interface RecordingViewController ()
 

@@ -41,13 +41,25 @@
 }
 
 -(void) sendMessage:(MandrillMessage*) message {
-    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, MND_ENDPOINT_SEND_MAIL];
+    [self sendMessage:message templateName:nil];
+}
+
+-(void) sendMessage:(MandrillMessage*) message templateName:(NSString*)templateName {
+    
+    NSString *endPoint = templateName == nil ? MND_ENDPOINT_SEND_MAIL : MND_ENDPOINT_SEND_TEMPLATE_MAIL;
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, endPoint];
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
     MandrillRequest *mandrillRequest = [MandrillRequest new];
     mandrillRequest.key = self.apiKey;
     mandrillRequest.message = message;
+    if(!mandrillRequest.template_content) {
+        mandrillRequest.template_content = [NSMutableArray<MandrillNameContentPair> new];
+    }
+    if(templateName) {
+        mandrillRequest.template_name = templateName;
+    }
     NSDictionary *parameterDictionary = [mandrillRequest toDictionary];
 
     NSError *error;

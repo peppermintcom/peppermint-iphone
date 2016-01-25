@@ -105,7 +105,6 @@ sharedObject;\
 #define EXTENSION_AAC   @"aac"
 
 #define KEYCHAIN_AWS_JWT            @"keychain-aws-jwt"
-#define KEYCHAIN_MESSAGE_SENDER     @"keychainMessageSender"
 
 #define CHARS_FOR_USERNAME  @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 "
 #define CHARS_FOR_EMAIL     @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@._-"
@@ -133,7 +132,8 @@ sharedObject;\
 #define SCHEME_PEPPERMINT   @"peppermint"
 
 #define FLURRY_API_KEY          @"VCRR3YXVKNZJ4KC2QFXT"
-#define GOOGLE_ANALYTICS_KEY    @"UA-71499085-1"
+//#define GOOGLE_ANALYTICS_KEY            @"UA-71499085-1"  --> Deprecated in GoogleService-Info.plist
+//#define PEPPERMINT_GCM_SENDER_ID        @"896089644819"   --> Deprecated in GoogleService-Info.plist
 
 #define DOMAIN_PEPPERMINT               @"peppermint.com"
 

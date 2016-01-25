@@ -7,12 +7,18 @@
 //
 
 #import "ContactsModel.h"
+
+#if !(TARGET_OS_WATCH)
 #import "GoogleContactsModel.h"
 #import "CustomContactModel.h"
+#endif
+
 
 #define ContactsOperationQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
 
-@implementation ContactsModel {
+@implementation ContactsModel
+#if !(TARGET_OS_WATCH)
+{
     volatile NSUInteger loadContactsTriggerCount;
     NSCharacterSet *unwantedCharsSet;
     NSArray *emailContactList;
@@ -230,6 +236,8 @@
     }
     return smsContactList;
 }
+
+#endif
 
 #pragma mark - Contacts CoreData
 

@@ -28,12 +28,14 @@
 #import "GAI.h"
 #import "AnalyticsModel.h"
 #import "GAIFields.h"
+#import "GoogleCloudMessagingModel.h"
 
+@import WatchConnectivity;
+@import Contacts;
 @import CoreSpotlight;
 @import MobileCoreServices;
 
-@interface AppDelegate ()
-
+@interface AppDelegate () <WCSessionDelegate, GGLInstanceIDDelegate>
 @end
 
 @implementation AppDelegate {
@@ -96,8 +98,10 @@
 #else
     [[GAI sharedInstance].logger setLogLevel:kGAILogLevelNone];
 #endif
-    [GAI sharedInstance].dispatchInterval = 20;
-    [[GAI sharedInstance] trackerWithTrackingId:GOOGLE_ANALYTICS_KEY];
+    [GAI sharedInstance].dispatchInterval = 20;    
+    NSString *trackingId = [[[GGLContext sharedInstance] configuration] trackingID];
+    [[GAI sharedInstance] trackerWithTrackingId:trackingId];
+    
 /*
     id<GAITracker> tracker =
     NSString *userId = [PeppermintMessageSender sharedInstance].email;
@@ -105,6 +109,16 @@
     [tracker set:kGAIUserId value:userId];
 */
 }
+
+-(void) initWatchKitSession {
+  if (NSClassFromString(@"WCSession")) {
+    if ([WCSession isSupported]) {
+      [WCSession defaultSession].delegate = self;
+      [[WCSession defaultSession] activateSession];
+    }
+  }
+}
+
 
 -(void) logServiceCalls {
 #ifdef DEBUG
@@ -159,6 +173,11 @@
     [[UIApplication sharedApplication] scheduleLocalNotification:notif];
 }
 
+-(void) initGCM {
+    GoogleCloudMessagingModel *googleCloudMessagingModel = [GoogleCloudMessagingModel sharedInstance];
+    [googleCloudMessagingModel initGCM];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self initMutableArray];
@@ -171,9 +190,22 @@
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
     [self initGoogleApp];
     [self initConnectionStatusChangeListening];
+    [self initWatchKitSession];
+    [self initGCM];
     [self checkForFirstRun];
     REGISTER();
     return YES;
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    //PUBLISH([ApplicationWillEnterForeground new]);
+    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    [FBSDKAppEvents activateApp];
+    [[GoogleCloudMessagingModel sharedInstance] connectGCM];
+    PUBLISH([ApplicationDidBecomeActive new]);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -181,6 +213,7 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    [[GoogleCloudMessagingModel sharedInstance] disconnectGCM];
     if(self.mutableArray.count > 0) {
         bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
             [[CacheModel sharedInstance] cacheOngoingMessages];
@@ -200,21 +233,54 @@ SUBSCRIBE(DetachSuccess) {
     }
 }
 
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-    //PUBLISH([ApplicationWillEnterForeground new]);
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    [FBSDKAppEvents activateApp];
-    PUBLISH([ApplicationDidBecomeActive new]);
-}
-
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [[CacheModel sharedInstance] cacheOngoingMessages];
     [self saveContext];
 }
+
+#pragma mark - Notification
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    GoogleCloudMessagingModel *googleCloudMessagingModel = [GoogleCloudMessagingModel sharedInstance];
+    googleCloudMessagingModel.registrationOptions = @{kGGLInstanceIDRegisterAPNSOption:deviceToken,
+                                                 kGGLInstanceIDAPNSServerTypeSandboxOption:@NO};
+    GGLInstanceIDConfig *instanceIDConfig = [GGLInstanceIDConfig defaultConfig];
+    instanceIDConfig.delegate = self;
+    [[GGLInstanceID sharedInstance] startWithConfig:instanceIDConfig];
+    [[GGLInstanceID sharedInstance] tokenWithAuthorizedEntity:googleCloudMessagingModel.gcmSenderID
+                                                        scope:kGGLInstanceIDScopeGCM
+                                                      options:googleCloudMessagingModel.registrationOptions
+                                                      handler:googleCloudMessagingModel.registrationHandler];
+}
+
+- (void)onTokenRefresh {
+    // A rotation of the registration tokens is happening, so the app needs to request a new token.
+    NSLog(@"The GCM registration token needs to be changed.");
+    GoogleCloudMessagingModel *googleCloudMessagingModel = [GoogleCloudMessagingModel sharedInstance];
+    [[GGLInstanceID sharedInstance] tokenWithAuthorizedEntity:googleCloudMessagingModel.gcmSenderID
+                                                        scope:kGGLInstanceIDScopeGCM
+                                                      options:googleCloudMessagingModel.registrationOptions
+                                                      handler:googleCloudMessagingModel.registrationHandler];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    NSLog(@"Notification received: %@", userInfo);
+    // This works only if the app started the GCM service
+    [[GCMService sharedInstance] appDidReceiveMessage:userInfo];
+    // Handle the received message
+    // ...
+}
+/*
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))handler {
+    NSLog(@"Notification received withFetchCompletionHandler: %@", userInfo);
+    // This works only if the app started the GCM service
+    [[GCMService sharedInstance] appDidReceiveMessage:userInfo];
+    // Handle the received message
+    // Invoke the completion handler passing the appropriate UIBackgroundFetchResult value
+    // ...
+}
+*/
 
 #pragma mark - Open URL
 
@@ -471,10 +537,8 @@ SUBSCRIBE(DetachSuccess) {
         switch (error.code) {
             case NSURLErrorNotConnectedToInternet:
             case NSURLErrorNetworkConnectionLost:
-                message = LOC(@"Please check your internet connection and try again", @"message");
-                break;
             default:
-                message = LOC(@"Connection error", @"message");
+                message = LOC(@"Please check your internet connection and try again", @"message");
                 break;
         }
     } else if ([error.domain isEqualToString:@"com.google.GIDSignIn"]) {

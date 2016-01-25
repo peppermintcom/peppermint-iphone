@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <dict>
-        <key>CLIENT_ID</key>
-        <string>621894935907-jtqr6lt0uf74rlc5rgobkefv8dl16ka6.apps.googleusercontent.com</string>
-        <key>REVERSED_CLIENT_ID</key>
-        <string>com.googleusercontent.apps.621894935907-jtqr6lt0uf74rlc5rgobkefv8dl16ka6</string>
-        <key>PLIST_VERSION</key>
-        <string>1</string>
-        <key>BUNDLE_ID</key>
-        <string>com.ppl.peppermint</string>
-        <key>IS_ADS_ENABLED</key>
-        <false/>
-        <key>IS_ANALYTICS_ENABLED</key>
-        <false/>
-        <key>IS_APPINVITE_ENABLED</key>
-        <false/>
-        <key>IS_GCM_ENABLED</key>
-        <false/>
-        <key>IS_SIGNIN_ENABLED</key>
-        <true/>
-        <key>GOOGLE_APP_ID</key>
-        <string>1:621894935907:ios:3604aa6791863102</string>
-    </dict>
+<dict>
+	<key>TRACKING_ID</key>
+	<string>UA-71499085-1</string>
+	<key>CLIENT_ID</key>
+	<string>621894935907-jtqr6lt0uf74rlc5rgobkefv8dl16ka6.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.621894935907-jtqr6lt0uf74rlc5rgobkefv8dl16ka6</string>
+	<key>GCM_SENDER_ID</key>
+	<string>896089644819</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.peppermint.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:621894935907:ios:d6f053b719e67e12</string>
+</dict>
 </plist>

@@ -19,6 +19,9 @@
 @property (weak, nonatomic) IBOutlet UIView *microphoneView;
 @property (weak, nonatomic) IBOutlet RecordingGestureButton *recordingButton;
 
+@property (weak, nonatomic) IBOutlet UIView *holdToRecordView;
+@property (weak, nonatomic) IBOutlet UILabel *holdToRecordLabel;
+
 @property (weak, nonatomic) ChatModel *chatModel;
 @property (strong, nonatomic) RecordingView *recordingView;
 

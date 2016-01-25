@@ -14,10 +14,11 @@
 
 @interface ChatEntriesViewController () <RecordingGestureButtonDelegate, ChatModelDelegate, RecordingViewDelegate>
 
-
 @end
 
-@implementation ChatEntriesViewController
+@implementation ChatEntriesViewController {
+    NSTimer *holdToRecordViewTimer;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -32,6 +33,17 @@
     self.bottomInformationLabel.text = LOC(@"Record a Message", @"Record a Message");
     
     self.avatarImageView.layer.cornerRadius = 5;
+    self.holdToRecordView.hidden = YES;
+    self.holdToRecordLabel.font = [UIFont openSansSemiBoldFontOfSize:15];
+    self.holdToRecordLabel.textColor = [UIColor whiteColor];
+    self.holdToRecordLabel.text = LOC(@"Hold to record message", @"Hold to record message");
+    
+    [self.holdToRecordView addGestureRecognizer:
+     [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
+    [self.holdToRecordView addGestureRecognizer:
+     [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
+    [self.holdToRecordView addGestureRecognizer:
+     [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -162,7 +174,17 @@
 }
 
 -(void) touchShortTapActionOccuredOnLocation:(CGPoint) location {
-    NSLog(@"touchShortTapActionOccuredOnLocation");
+    [holdToRecordViewTimer invalidate];
+    holdToRecordViewTimer = nil;
+    if(self.holdToRecordView.hidden) {
+        self.holdToRecordView.alpha = 0;
+        self.holdToRecordView.hidden = NO;
+    }
+    [UIView animateWithDuration:0.3 animations:^{
+        self.holdToRecordView.alpha = 1;
+    } completion:^(BOOL finished) {
+        holdToRecordViewTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(hideHoldToRecordInfoView) userInfo:nil repeats:NO];
+    }];
 }
 
 -(void) touchCompletedAsExpectedWithSuccessOnLocation:(CGPoint) location {
@@ -190,6 +212,18 @@
 
 -(void) chatHistoryCreatedWithSuccess {
     NSLog(@"chatHistoryCreatedWithSuccess");
+}
+
+#pragma mark - HoldToRecordView
+
+-(void) hideHoldToRecordInfoView {
+    [holdToRecordViewTimer invalidate];
+    holdToRecordViewTimer = nil;
+    [UIView animateWithDuration:ANIM_TIME animations:^{
+        self.holdToRecordView.alpha = 0;
+    } completion:^(BOOL finished) {
+        self.holdToRecordView.hidden = YES;
+    }];
 }
 
 @end

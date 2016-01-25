@@ -55,6 +55,14 @@ PODS:
     - gtm-oauth2
   - GData/XMLNode (1.12.0):
     - gtm-oauth2
+  - GGLInstanceID (1.1.4):
+    - GoogleNetworkingUtilities (~> 1.0)
+    - GoogleSymbolUtilities (~> 1.0)
+    - GoogleUtilities (~> 1.0)
+  - Google/CloudMessaging (1.1.1):
+    - GGLInstanceID (~> 1.0)
+    - Google/Core
+    - GoogleCloudMessaging (~> 1.0)
   - Google/Core (1.1.1):
     - GoogleInterchangeUtilities (~> 1.0)
     - GoogleNetworkingUtilities (~> 1.0)
@@ -69,8 +77,17 @@ PODS:
   - GoogleAuthUtilities (1.0.1):
     - GoogleNetworkingUtilities (~> 1.0)
     - GoogleSymbolUtilities (~> 1.0)
+  - GoogleCloudMessaging (1.1.2):
+    - GoogleInterchangeUtilities (~> 1.0)
+    - GoogleIPhoneUtilities (~> 1.0)
+    - GoogleNetworkingUtilities (~> 1.0)
+    - GoogleSymbolUtilities (~> 1.0)
+    - GoogleUtilities (~> 1.0)
   - GoogleInterchangeUtilities (1.0.0):
     - GoogleSymbolUtilities (~> 1.0)
+  - GoogleIPhoneUtilities (1.1.0):
+    - GoogleSymbolUtilities (~> 1.0)
+    - GoogleUtilities (~> 1.0)
   - GoogleNetworkingUtilities (1.0.0):
     - GoogleSymbolUtilities (~> 1.0)
   - GoogleSignIn (2.4.0):
@@ -85,12 +102,10 @@ PODS:
   - gtm-oauth2 (1.0.126):
     - gtm-http-fetcher (~> 1.0.141)
   - JPAttributedString (0.1.7)
-  - JSONModel (1.1.0)
   - MBProgressHUD (0.9.1)
   - OpenSans (1.0.3)
   - REMenu (1.10)
   - RESideMenu (4.0.7)
-  - SimpleKeychain (0.5.0)
   - tolo (1.0.0)
 
 DEPENDENCIES:
@@ -104,15 +119,14 @@ DEPENDENCIES:
   - FBSDKLoginKit
   - Flurry-iOS-SDK/FlurrySDK
   - GData (from `GData.podspec.json`)
+  - Google/CloudMessaging
   - Google/SignIn
   - GoogleAnalytics
   - JPAttributedString
-  - JSONModel
   - MBProgressHUD (~> 0.9.1)
   - OpenSans
   - REMenu (~> 1.10)
   - RESideMenu (~> 4.0.7)
-  - SimpleKeychain
   - tolo
 
 EXTERNAL SOURCES:
@@ -136,11 +150,14 @@ SPEC CHECKSUMS:
   FBSDKLoginKit: c11ed3c2833472db3bb4a4aecf27af4a6f69b173
   Flurry-iOS-SDK: 054befae0fa0244fb000985bfe757d70f87a9f60
   GData: 1bc4ad973458d611ff0c9c56815c172f2c97d495
+  GGLInstanceID: 7a038b743bc8d14eac5819801ee103e8dc77161c
   Google: 529a5d8719dff90ea2e7cba5f45302cd359b5456
   GoogleAnalytics: 9be1afdb8deeac4bb5f13ca7f7d3b9db2a1f43dc
   GoogleAppUtilities: c01c6a5671e9da8b9d690fdaec5959d6c2aac699
   GoogleAuthUtilities: 049ffd3a297cdffd271451b82fd4e75304f15ef3
+  GoogleCloudMessaging: faa057e30845e7300da31de3777060420b2f6579
   GoogleInterchangeUtilities: fe088bea8c936218e52324a004d279c4491b9d65
+  GoogleIPhoneUtilities: 4bded60bf1f7eaf9f92b7c055b9eb5d44d6df350
   GoogleNetworkingUtilities: 292992ab31b7b4ba32809a0e8b40e324cdfb2c0c
   GoogleSignIn: 79929b51e6299c69f1197bbd9c7a1367d523ecd8
   GoogleSymbolUtilities: a7b0feed1fe667c8d5e647177938d0ecd62d6948
@@ -148,12 +165,10 @@ SPEC CHECKSUMS:
   gtm-http-fetcher: 6d4617e7d343b6e4c082b777541c334eb6f5d81e
   gtm-oauth2: 2a18b824e4f8a02df6cfe987beb59ae9d9697f9d
   JPAttributedString: a0868a1e07e76751cef78985f4e3dfa51f1c1334
-  JSONModel: ec77e9865236a7a09d9cf7668df6b4b328d9ec1d
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   OpenSans: 33078846463eae780aa5f82986b51cce085f970d
   REMenu: 30dad195930adf6c5eeb8041e3257aa60bf9fa49
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
-  SimpleKeychain: ae04c7ca6a960a146081010b412cf0ba2ecb10fe
   tolo: 906f6fe2943451e7354c694ce968d76ea344c01d
 
 COCOAPODS: 0.39.0

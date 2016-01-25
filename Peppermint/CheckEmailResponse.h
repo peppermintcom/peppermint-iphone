@@ -6,7 +6,7 @@
 //  Copyright © 2015 Okan Kurtulus. All rights reserved.
 //
 
-#import <JSONModel/JSONModel.h>
+#import "JSONModel.h"
 
 @interface CheckEmailResponse : JSONModel
 @property (strong, nonatomic) NSString *email;

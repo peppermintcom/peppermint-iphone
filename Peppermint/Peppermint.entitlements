@@ -6,5 +6,9 @@
 	<array>
 		<string>applinks:peppermint.com</string>
 	</array>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.com.peppermint.app.watch</string>
+	</array>
 </dict>
 </plist>

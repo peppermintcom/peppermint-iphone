@@ -47,7 +47,16 @@
         AddContactViewController *addContactViewController = (AddContactViewController*)nvc.viewControllers.firstObject;
         addContactViewController.delegate = delegate;
         
-        NSArray *nameComponents = [text.trimmedText.capitalizedString componentsSeparatedByString:@" "];
+        NSArray *suppliedWordsArray = [text.trimmedText componentsSeparatedByString:@" "];
+        NSMutableArray *nameComponents = [NSMutableArray new];
+        for(NSString* suppliedWord in suppliedWordsArray) {
+            if([suppliedWord isValidEmail]) {
+                addContactViewController.emailTextField.text = suppliedWord;
+            } else {
+                [nameComponents addObject:suppliedWord.capitalizedString];
+            }
+        }
+        
         if(nameComponents.count == 0 || [nameComponents.firstObject isEqualToString:@""]) {
             NSLog(@"Could not set name cos supplied information is just empty");
             [addContactViewController.firstNameTextField becomeFirstResponder];
@@ -56,12 +65,16 @@
             [addContactViewController.lastNameTextField becomeFirstResponder];
         } else if (nameComponents.count > 1) {
             NSString *firstName = [nameComponents firstObject];
-            NSMutableArray *mutableNameComponents = [NSMutableArray arrayWithArray:nameComponents];
-            [mutableNameComponents removeObjectAtIndex:0];
-            NSString *lastName = [mutableNameComponents componentsJoinedByString:@" "];
+            [nameComponents removeObjectAtIndex:0];
+            NSString *lastName = [nameComponents componentsJoinedByString:@" "];
             addContactViewController.firstNameTextField.text = firstName.trimmedText;
             addContactViewController.lastNameTextField.text = lastName.trimmedText;
-            [addContactViewController.phoneNumberTextField becomeFirstResponder];
+            if(addContactViewController.emailTextField.text.length > 0) {
+                [addContactViewController.phoneNumberTextField becomeFirstResponder];
+            } else {
+                [addContactViewController.emailTextField becomeFirstResponder];
+            }
+            
         }
     }];
 }
@@ -101,8 +114,8 @@
     textFieldsArray = [NSArray arrayWithObjects:
                        self.firstNameTextField,
                        self.lastNameTextField,
-                       self.phoneNumberTextField,
                        self.emailTextField,
+                       self.phoneNumberTextField,
                        nil];
     
     for(UITextField *tf in textFieldsArray) {

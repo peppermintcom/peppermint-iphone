@@ -219,16 +219,12 @@
 }
 
 -(IBAction) touchDownCancelledOnIndexPath:(id) sender event:(UIEvent *)event {
-    NSLog(@"touchDownCancelledOnIndexPath:(id) sender event:(UIEvent *)event");
-    return;
-    /*
     if(timer.isValid)
         [timer invalidate];
     timer = nil;
     [self applyNonSelectedStyle];
-    isCellAvailableToHaveUserInteraction = YES;
+    //isCellAvailableToHaveUserInteraction = YES;
     [self.delegate didCancelItemSelectionOnIndexpath:self.indexPath location:touchBeginPoint];
-    */
 }
 
 @end
