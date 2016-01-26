@@ -12,6 +12,7 @@
 #import "PeppermintMessageSender.h"
 #import "AWSModel.h"
 #import "CustomContactModel.h"
+#import "ChatModel.h"
 
 #define TYPE_TEXT   @"text/plain"
 #define TYPE_M4A    @"audio/mp4"
@@ -33,15 +34,17 @@ typedef enum : NSUInteger {
 @protocol SendVoiceMessageDelegate <BaseModelDelegate>
 @required
 -(void) newRecentContactisSaved;
+-(void) chatHistoryCreatedWithSuccess;
 @end
 
-@interface SendVoiceMessageModel : BaseModel <RecentContactsModelDelegate, AWSModelDelegate, CustomContactModelDelegate> {
+@interface SendVoiceMessageModel : BaseModel <RecentContactsModelDelegate, AWSModelDelegate, CustomContactModelDelegate, ChatModelDelegate> {
     RecentContactsModel *recentContactsModel;
     AWSModel *awsModel;
     CustomContactModel *customContactModel;
     NSData *_data;
     NSString *_extension;
     NSTimeInterval _duration;
+    ChatModel *chatModel;
 }
 
 @property (strong, nonatomic) PeppermintMessageSender *peppermintMessageSender;

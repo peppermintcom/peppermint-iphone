@@ -34,6 +34,8 @@
         [awsModel initRecorder];
         customContactModel = [CustomContactModel new];
         customContactModel.delegate = self;
+        chatModel = [ChatModel new];
+        chatModel.delegate = self;
     }
     return self;
 }
@@ -42,11 +44,19 @@
     //NSLog(@"Dealloc %@ in status %d\n", self, (int)self.sendingStatus);
 }
 
+-(void) setChatConversation {    
+#warning "Set transcription text!!"
+    
+    [chatModel createChatHistoryFor:self.selectedPeppermintContact withAudioData:_data transcription:@"Transcription" duration:_duration isSentByMe:YES];
+}
+
 -(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension andDuration:(NSTimeInterval)duration {
     _data = data;
     _extension = extension;
     _duration = duration;
     [recentContactsModel save:self.selectedPeppermintContact];
+    [self setChatConversation];
+    
     [self attachProcessToAppDelegate];
     [self checkAndCleanFastReplyModel];
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
@@ -274,6 +284,12 @@
 
 -(SendingStatus) sendingStatus {
     return _sendingStatus;
+}
+
+#pragma mark - ChatModelDelegate
+
+-(void) chatHistoryCreatedWithSuccess {
+    NSLog(@"chatHistoryCreatedWithSuccess");
 }
 
 @end

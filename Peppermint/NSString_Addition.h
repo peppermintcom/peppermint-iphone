@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface NSString (NSString_Addition)
+
 - (BOOL)isValidEmail;
 -(BOOL)isPasswordLengthValid;
 -(NSString *) randomStringWithLength: (NSUInteger) length;

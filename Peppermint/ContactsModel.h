@@ -30,7 +30,7 @@
 }
 
 @property (weak, nonatomic) id<ContactsModelDelegate> delegate;
-@property (strong, nonatomic) NSMutableArray *contactList;
+@property (strong, atomic) NSMutableArray *contactList;
 @property (strong, nonatomic) NSString *filterText;
 
 + (instancetype) sharedInstance;

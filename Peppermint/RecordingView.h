@@ -10,6 +10,7 @@
 #import "SendVoiceMessageModel.h"
 #import "RecordingModel.h"
 #import "PlayingModel.h"
+#import "RecordingGestureButton.h"
 
 @protocol RecordingViewDelegate <SendVoiceMessageDelegate >
 -(void) recordingViewDissappeared;

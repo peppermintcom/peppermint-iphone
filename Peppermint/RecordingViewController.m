@@ -8,6 +8,7 @@
 
 #import "RecordingViewController.h"
 #import "SendVoiceMessageMandrillModel.h"
+#import "AppDelegate.h"
 
 @interface RecordingViewController ()
 
@@ -153,7 +154,11 @@
 #pragma mark - SendVoiceMessage Delegate
 
 -(void) newRecentContactisSaved {
-    //New recent contact is saved
+    NSLog(@"New recent contact is saved");
+}
+
+-(void) chatHistoryCreatedWithSuccess {
+    NSLog(@"chatHistoryCreatedWithSuccess");
 }
 
 SUBSCRIBE(MessageSendingStatusIsUpdated) {

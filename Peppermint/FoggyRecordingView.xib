@@ -48,7 +48,7 @@
                                 <constraint firstAttribute="bottom" secondItem="oPZ-DC-iQj" secondAttribute="bottom" constant="6" id="wmP-x3-Sde"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vH6-fW-WGx">
+                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vH6-fW-WGx">
                             <rect key="frame" x="381" y="-8" width="155" height="115"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="base_down" translatesAutoresizingMaskIntoConstraints="NO" id="50Q-Ac-aKf">
@@ -145,6 +145,8 @@ to cancel</string>
                 <outlet property="counterLabel" destination="oPZ-DC-iQj" id="xNa-nw-AyB"/>
                 <outlet property="informationLabel" destination="6C8-Qh-nOw" id="8f6-sd-fLe"/>
                 <outlet property="microphoneImageView" destination="OV0-La-sKD" id="htU-NR-YXZ"/>
+                <outlet property="microphoneViewCenterYConstraint" destination="lOx-CP-CPc" id="zjR-vZ-Rqn"/>
+                <outlet property="microphoneViewRightOffsetConstraint" destination="YgZ-bC-UBw" id="mSn-mX-fZI"/>
                 <outlet property="rowView" destination="spy-Jr-n8B" id="mBk-mn-Vxw"/>
                 <outlet property="swipeBackGroundImageView" destination="50Q-Ac-aKf" id="8YD-cG-1f3"/>
                 <outlet property="swipeBackGroundImageViewTopConstraint" destination="Z9O-MX-L7E" id="ihO-Gz-GMc"/>

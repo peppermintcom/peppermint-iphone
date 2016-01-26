@@ -168,6 +168,10 @@ typedef enum : NSUInteger {
     [self.delegate newRecentContactisSaved];
 }
 
+-(void) chatHistoryCreatedWithSuccess {
+    [self.delegate chatHistoryCreatedWithSuccess];
+}
+
 #pragma mark - Minimum Message Length Warning
 
 -(void) showAlertToRecordMoreThanMinimumMessageLength {

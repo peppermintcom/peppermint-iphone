@@ -29,5 +29,6 @@
 + (UIColor *) shadowGreen;
 + (UIColor *) privacyPolicyGreen;
 + (UIColor *) peppermintComGreen;
++ (UIColor *) peppermintGray248;
 
 @end

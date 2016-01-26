@@ -109,11 +109,15 @@
 		}
     }
     [request setSortDescriptors:sortDescriptors];
+    
+#warning "Investigate affects of this setting. Then decide to remove or stay. If you remove, you will have to handle ChatModel logic."
+    request.fetchBatchSize = NSUIntegerMax;
+    
 	NSError *error;
     NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&error];
     if(error) {
         NSLog(@"An error occured during DB operation. Err: %@", error);
-    }
+    }    
 	return results;    
 }
 

@@ -7,14 +7,12 @@
 //
 
 #import "PlayingModel.h"
-#import <AVFoundation/AVFoundation.h>
 
 @interface PlayingModel() <AVAudioPlayerDelegate>
 
 @end
 
 @implementation PlayingModel {
-    AVAudioPlayer *audioPlayer;
     NSURL *beginRecordingUrl;
     PlayerCompletitionBlock cachedBlock;
 }
@@ -23,16 +21,16 @@
     self = [super init];
     if(self) {
         cachedBlock = nil;
-        audioPlayer = nil;
+        _audioPlayer = nil;
         NSString *beginRecordingPath = [[NSBundle mainBundle]pathForResource:@"begin_record" ofType:@"mp3"];
         if (beginRecordingPath) {
             beginRecordingUrl = [NSURL fileURLWithPath:beginRecordingPath];
-            audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:beginRecordingUrl error:nil];
-            [audioPlayer setNumberOfLoops:1];
-            [audioPlayer prepareToPlay];
-            audioPlayer.delegate = self;
-            [audioPlayer play];
-            [audioPlayer stop];
+            _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:beginRecordingUrl error:nil];
+            [_audioPlayer setNumberOfLoops:1];
+            [_audioPlayer prepareToPlay];
+            _audioPlayer.delegate = self;
+            [_audioPlayer play];
+            [_audioPlayer stop];
         } else {
             NSLog(@"Resource not found");
         }
@@ -42,14 +40,39 @@
 
 -(BOOL) playBeginRecording:(PlayerCompletitionBlock) playerCompletitionBlock {
     cachedBlock = playerCompletitionBlock;
-    [audioPlayer stop];
-    return [audioPlayer play];
+    [_audioPlayer stop];
+    return [_audioPlayer play];
+}
+
+-(BOOL) playData:(NSData*) audioData playerCompletitionBlock:(PlayerCompletitionBlock) playerCompletitionBlock {
+    NSError *error;
+    
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    [session setCategory :AVAudioSessionCategoryPlayback error:&error];
+    
+    if(!error) {
+        _audioPlayer = [[AVAudioPlayer alloc] initWithData:audioData error:&error];
+        if(!error) {
+            cachedBlock = playerCompletitionBlock;
+            [_audioPlayer prepareToPlay];
+        }
+    }
+    
+    return [_audioPlayer play];
+}
+
+-(void) pause {
+    [_audioPlayer pause];
+}
+
+-(void) play {
+    [_audioPlayer play];
 }
 
 #pragma mark - AVAudioPlayerDelegate
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
-    if(player == audioPlayer && flag ) {
+    if(player == _audioPlayer && flag ) {
         if(cachedBlock) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 cachedBlock();

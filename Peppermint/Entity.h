@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 Okan Kurtulus. All rights reserved.
 //
 
-//Import AppDelegate that will be used to create repository
 
 #if !(TARGET_OS_WATCH)
 
+//Import AppDelegate that will be used to create repository
 #import "AppDelegate.h"
 
 //Import entity headers
@@ -17,6 +17,8 @@
 #import "GoogleContact.h"
 #import "CachedMessage.h"
 #import "CustomContact.h"
+#import "Chat.h"
+#import "ChatEntry.h"
 #endif
 
 #import "RecentContact.h"
