@@ -25,6 +25,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView * emailImageView;
 @property (weak, nonatomic) IBOutlet UIImageView * avatarImageView;
 
+@property (weak, nonatomic) IBOutlet UITableViewCell *myTableViewCell;
+
 @end
 
 @implementation AddContactViewController {
@@ -266,6 +268,12 @@
     self.phoneNumberTextField.returnKeyType =
     self.emailTextField.returnKeyType =
     self.saveContactBarButtonItem.enabled ? UIReturnKeyDone : UIReturnKeyNext;
+        
+    //Update warnign cells!
+    self.animateSectionHeaders = YES;
+    [self cell:self.myTableViewCell setHidden:(self.emailTextField.text.length > 0)];
+    [self reloadDataAnimated:YES];
+    
 }
 
 -(void)textFieldDidChange :(UITextField *)textField {

@@ -929,6 +929,7 @@ email contact or both</string>
                         <outlet property="explanationLabel" destination="v18-70-8vr" id="Ddq-t0-t2T"/>
                         <outlet property="firstNameTextField" destination="dv5-8A-bHh" id="1V7-2u-vzP"/>
                         <outlet property="lastNameTextField" destination="QWV-QQ-i2D" id="38H-Ve-MrA"/>
+                        <outlet property="myTableViewCell" destination="xcK-LX-zIX" id="J7z-dM-Vhc"/>
                         <outlet property="phoneImageView" destination="6Ku-Oo-U2k" id="eqH-z2-Mhf"/>
                         <outlet property="phoneNumberTextField" destination="uHi-Kg-2Nv" id="fbp-cP-anD"/>
                         <outlet property="saveContactBarButtonItem" destination="w7i-KX-d7P" id="Rb9-4S-0W3"/>

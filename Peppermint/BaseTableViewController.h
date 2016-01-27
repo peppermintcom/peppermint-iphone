@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "StaticDataTableViewController.h"
 
-@interface BaseTableViewController : UITableViewController
+@interface BaseTableViewController : StaticDataTableViewController
 
 -(void) operationFailure:(NSError*) error;
 
