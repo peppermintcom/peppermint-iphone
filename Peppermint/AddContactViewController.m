@@ -268,11 +268,13 @@
     self.phoneNumberTextField.returnKeyType =
     self.emailTextField.returnKeyType =
     self.saveContactBarButtonItem.enabled ? UIReturnKeyDone : UIReturnKeyNext;
-        
-    //Update warnign cells!
+    
+#warning "Update warnign cells!"
+#ifdef DEBUG
     self.animateSectionHeaders = YES;
     [self cell:self.myTableViewCell setHidden:(self.emailTextField.text.length > 0)];
     [self reloadDataAnimated:YES];
+#endif 
     
 }
 
