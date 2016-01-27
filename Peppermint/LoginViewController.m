@@ -27,7 +27,7 @@
 
 @implementation LoginViewController {
     PeppermintMessageSender *peppermintMessageSender;
-    BOOL didTakeAction;
+    NSDate *referanceDate;
 }
 
 - (void)viewDidLoad {
@@ -41,6 +41,7 @@
     [self.loginLabel sizeToFit];
     
     peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+    referanceDate = nil;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -49,7 +50,6 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    didTakeAction = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -139,8 +139,9 @@
     
     NSLog(@"selectedLoginTableViewCell:atIndexPath:");
     
-    if(!didTakeAction) {
-        didTakeAction = YES;
+    NSDate *nowDate = [NSDate new];
+    if(!referanceDate || [nowDate timeIntervalSinceDate:referanceDate] > 1) {
+        referanceDate = nowDate;
         
         NSInteger index = indexPath.section;
         LoginNavigationViewController *loginNavigationViewController = (LoginNavigationViewController*)self.navigationController;
