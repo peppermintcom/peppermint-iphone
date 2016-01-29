@@ -1113,6 +1113,17 @@
 			name = BaseTableViewCell;
 			sourceTree = "<group>";
 		};
+		B17DCBFE1C5BB56E00F61AA1 /* Chats */ = {
+			isa = PBXGroup;
+			children = (
+				B11E02E21C49198400579122 /* ChatsViewController.h */,
+				B11E02E31C49198400579122 /* ChatsViewController.m */,
+				B1889FDF1C4EBA3E003552CE /* ChatEntriesViewController.h */,
+				B1889FE01C4EBA3E003552CE /* ChatEntriesViewController.m */,
+			);
+			name = Chats;
+			sourceTree = "<group>";
+		};
 		B1879A151C5810D50036A660 /* StaticTableView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1209,10 +1220,7 @@
 				D0BA6E891C070A1C00B8D85B /* AddContactViewController.m */,
 				B1B8018F1C3FF69B00958885 /* AboutViewController.h */,
 				B1B801901C3FF69B00958885 /* AboutViewController.m */,
-				B11E02E21C49198400579122 /* ChatsViewController.h */,
-				B11E02E31C49198400579122 /* ChatsViewController.m */,
-				B1889FDF1C4EBA3E003552CE /* ChatEntriesViewController.h */,
-				B1889FE01C4EBA3E003552CE /* ChatEntriesViewController.m */,
+				B17DCBFE1C5BB56E00F61AA1 /* Chats */,
 			);
 			name = Controller;
 			sourceTree = "<group>";

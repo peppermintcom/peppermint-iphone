@@ -29,7 +29,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="MV1-n0-S1v" userLabel="Information">
-                        <rect key="frame" x="54" y="4" width="325" height="47"/>
+                        <rect key="frame" x="54" y="4" width="299" height="47"/>
                         <string key="text">Okan Kurtulus
 via okankurtulus@gmail.com</string>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -37,12 +37,12 @@ via okankurtulus@gmail.com</string>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Oct 18" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0X-KS-2EZ">
-                        <rect key="frame" x="333" y="10" width="70" height="17"/>
+                        <rect key="frame" x="353" y="10" width="50" height="17"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="70" id="28J-w6-d8H"/>
+                            <constraint firstAttribute="width" constant="50" id="28J-w6-d8H"/>
                             <constraint firstAttribute="height" constant="17" id="5no-cB-RlU"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -75,7 +75,7 @@ via okankurtulus@gmail.com</string>
                     <constraint firstItem="MV1-n0-S1v" firstAttribute="leading" secondItem="1qV-wo-QtI" secondAttribute="trailing" priority="750" constant="8" id="pJN-IX-P0S"/>
                     <constraint firstItem="1qV-wo-QtI" firstAttribute="top" secondItem="xNg-Q9-VZo" secondAttribute="top" priority="750" constant="10" id="rFD-DQ-XCU"/>
                     <constraint firstItem="t0X-KS-2EZ" firstAttribute="top" secondItem="xNg-Q9-VZo" secondAttribute="top" constant="10" id="uvE-y0-C0l"/>
-                    <constraint firstAttribute="trailing" secondItem="MV1-n0-S1v" secondAttribute="trailing" priority="750" constant="35" id="vQ1-lT-rDJ"/>
+                    <constraint firstItem="t0X-KS-2EZ" firstAttribute="leading" secondItem="MV1-n0-S1v" secondAttribute="trailing" id="xpo-nE-02W"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
@@ -88,7 +88,6 @@ via okankurtulus@gmail.com</string>
                 <outlet property="avatarImageView" destination="1qV-wo-QtI" id="6q5-xt-yGE"/>
                 <outlet property="cellSeperatorView" destination="1Se-j1-Pmz" id="M7D-yI-TDY"/>
                 <outlet property="informationLabel" destination="MV1-n0-S1v" id="5mE-CH-du5"/>
-                <outlet property="informationLabelRightConstraint" destination="vQ1-lT-rDJ" id="dMf-DC-HYz"/>
                 <outlet property="rightDateLabel" destination="t0X-KS-2EZ" id="2Ay-gM-LTe"/>
                 <outlet property="rightMessageCounterLabel" destination="dvW-3K-qXw" id="KlH-ng-Ffl"/>
             </connections>

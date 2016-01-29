@@ -1359,7 +1359,7 @@ Version 1.0.0</string>
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7tN-X6-rqR">
-                                        <rect key="frame" x="0.0" y="18" width="414" height="46"/>
+                                        <rect key="frame" x="71" y="18" width="343" height="46"/>
                                         <string key="text">_Betty Donaldson
 905362281414</string>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
@@ -1389,13 +1389,13 @@ Version 1.0.0</string>
                                 <color key="backgroundColor" red="0.3411764706" green="0.72941176470000002" blue="0.57254901960000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="7tN-X6-rqR" secondAttribute="trailing" id="0ez-ti-4ID"/>
+                                    <constraint firstItem="7tN-X6-rqR" firstAttribute="leading" secondItem="c98-TQ-lrM" secondAttribute="trailing" id="9y0-dM-nw8"/>
                                     <constraint firstItem="7tN-X6-rqR" firstAttribute="top" secondItem="Vfi-st-4Ne" secondAttribute="top" constant="18" id="9yt-Q5-oXF"/>
                                     <constraint firstItem="c98-TQ-lrM" firstAttribute="leading" secondItem="0zV-MH-Pcm" secondAttribute="trailing" constant="-4" id="BHP-xb-7wQ"/>
                                     <constraint firstItem="0zV-MH-Pcm" firstAttribute="top" secondItem="Vfi-st-4Ne" secondAttribute="top" constant="24" id="Bvq-N3-HHT"/>
                                     <constraint firstAttribute="height" constant="64" id="NLk-Rt-sDU"/>
                                     <constraint firstAttribute="bottom" secondItem="c98-TQ-lrM" secondAttribute="bottom" constant="6" id="Zd0-mz-UbV"/>
                                     <constraint firstItem="c98-TQ-lrM" firstAttribute="top" secondItem="Vfi-st-4Ne" secondAttribute="top" constant="23" id="bLr-aW-kkX"/>
-                                    <constraint firstItem="7tN-X6-rqR" firstAttribute="leading" secondItem="Vfi-st-4Ne" secondAttribute="leading" id="eDJ-Jd-KwZ"/>
                                     <constraint firstAttribute="bottom" secondItem="7tN-X6-rqR" secondAttribute="bottom" id="j3d-ls-eW7"/>
                                     <constraint firstItem="0zV-MH-Pcm" firstAttribute="leading" secondItem="Vfi-st-4Ne" secondAttribute="leading" id="svx-g7-9g9"/>
                                 </constraints>

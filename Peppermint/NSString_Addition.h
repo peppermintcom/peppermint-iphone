@@ -15,4 +15,6 @@
 -(NSString *) randomStringWithLength: (NSUInteger) length;
 -(NSString*) trimmedText;
 -(NSString*) limitTo:(NSUInteger)length;
++(CGFloat) widthOfText:(NSString*)text withSize:(NSUInteger)size andHeight:(CGFloat) height;
+-(NSString*) limitToFitInWidth:(CGFloat)width height:(CGFloat)height andFonttSize:(NSUInteger)size;
 @end

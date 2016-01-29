@@ -54,23 +54,15 @@
 
 #pragma mark - Arrange Font size and Place Text
 
--(CGFloat) widthOfText:(NSString*)text withSize:(NSUInteger)size {
-    NSMutableAttributedString *attrText = [NSMutableAttributedString new];
-    [attrText addText:text ofSize:size ofColor:[UIColor clearColor] andFont:[UIFont openSansSemiBoldFontOfSize:size]];
-    CGRect paragraphRect = [attrText boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, self.informationLabel.frame.size.height / 2)
-                                 options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
-                                 context:nil];
-    return paragraphRect.size.width;
-}
-
 -(void) calculateCorrectSizeForFonts {
     CGFloat width = self.informationLabel.frame.size.width;
-    while ([self widthOfText:nameSurname withSize:sizeLarge] > width) {
+    CGFloat height = self.informationLabel.frame.size.height / 2;
+    while ([NSString widthOfText:nameSurname withSize:sizeLarge andHeight:height] > width) {
         nameSurname = [nameSurname limitTo:nameSurname.length - 3];
     }
     
     width = self.informationLabel.frame.size.width * 0.90;
-    while ([self widthOfText:communicationChannelAddress withSize:sizeSmall] > width) {
+    while ([NSString widthOfText:communicationChannelAddress withSize:sizeSmall andHeight:height] > width) {
         communicationChannelAddress = [communicationChannelAddress limitTo:communicationChannelAddress.length - 3];
     }
 }

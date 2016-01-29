@@ -58,4 +58,22 @@
     return updatedText;
 }
 
+
++(CGFloat) widthOfText:(NSString*)text withSize:(NSUInteger)size andHeight:(CGFloat) height {
+    NSMutableAttributedString *attrText = [NSMutableAttributedString new];
+    [attrText addText:text ofSize:size ofColor:[UIColor clearColor] andFont:[UIFont openSansSemiBoldFontOfSize:size]];
+    CGRect paragraphRect = [attrText boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, height)
+                                                  options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
+                                                  context:nil];
+    return paragraphRect.size.width;
+}
+
+-(NSString*) limitToFitInWidth:(CGFloat)width height:(CGFloat)height andFonttSize:(NSUInteger)size {
+    NSString *trimmedText = [NSString stringWithString:self];
+    while ([NSString widthOfText:trimmedText withSize:size andHeight:height] > width) {
+        trimmedText = [self limitTo:trimmedText.length - 3];
+    }
+    return trimmedText;
+}
+
 @end

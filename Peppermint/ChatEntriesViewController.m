@@ -61,11 +61,21 @@
         int height = frame.size.height;
         self.avatarImageView.image = [[UIImage imageWithData:chat.avatarImageData] resizedImageWithWidth:width height:height];
     }
+    [self setTitleText];
+}
+
+-(void) setTitleText {
+    Chat *chat = self.chatModel.selectedChat;
+    CGFloat width = SCREEN_WIDTH - 90; //self.titleLabel.frame.size.width - 20;
+    CGFloat height = 23; // self.titleLabel.frame.size.height;
+    
+    NSString *nameSurname = [chat.nameSurname limitToFitInWidth:width height:height andFonttSize:17];
+    NSString *communicationChannelAddress = [chat.communicationChannelAddress limitToFitInWidth:width height:height andFonttSize:13];
     
     NSMutableAttributedString *attrText = [NSMutableAttributedString new];
-    [attrText addText:chat.nameSurname ofSize:17 ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:17]];
+    [attrText addText:nameSurname ofSize:17 ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:17]];
     [attrText addText:@"\n" ofSize:12 ofColor:[UIColor clearColor]];
-    [attrText addText:chat.communicationChannelAddress ofSize:13 ofColor:[UIColor recordingNavigationsubTitleGreen]];
+    [attrText addText:communicationChannelAddress ofSize:13 ofColor:[UIColor recordingNavigationsubTitleGreen]];
     [attrText centerText];
     self.titleLabel.attributedText = attrText;
 }
@@ -93,7 +103,10 @@
     NSUInteger lastSection = 0;
     NSUInteger lastRowNumber = [self.tableView numberOfRowsInSection:lastSection] - 1;
     NSIndexPath* indexPath = [NSIndexPath indexPathForRow:lastRowNumber inSection:lastSection];
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
+    
+    if(indexPath.row >= 0 && indexPath.section >= 0) {
+        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
+    }
     
 }
 
