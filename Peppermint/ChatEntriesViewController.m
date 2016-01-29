@@ -11,6 +11,7 @@
 #import "RecordingGestureButton.h"
 #import "ChatModel.h"
 #import "FoggyRecordingView.h"
+#import "SendVoiceMessageSMSModel.h"
 
 @interface ChatEntriesViewController () <RecordingGestureButtonDelegate, ChatModelDelegate, RecordingViewDelegate>
 
@@ -169,12 +170,18 @@
 }
 
 -(void) touchHoldSuccessOnLocation:(CGPoint) touchBeginPoint {
-    SendVoiceMessageModel *sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
-    
     PeppermintContact *peppermintContact = [PeppermintContact new];
     peppermintContact.nameSurname = self.chatModel.selectedChat.nameSurname;
     peppermintContact.communicationChannel = self.chatModel.selectedChat.communicationChannel.intValue;
     peppermintContact.communicationChannelAddress = self.chatModel.selectedChat.communicationChannelAddress;
+    
+    SendVoiceMessageModel *sendVoiceMessageModel = nil;
+    if(peppermintContact.communicationChannel == CommunicationChannelEmail) {
+        sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
+    } else if (peppermintContact.communicationChannel == CommunicationChannelSMS) {
+        sendVoiceMessageModel = [SendVoiceMessageSMSModel new];
+    }
+    
     sendVoiceMessageModel.selectedPeppermintContact = peppermintContact;
     self.recordingView.sendVoiceMessageModel = sendVoiceMessageModel;
     
