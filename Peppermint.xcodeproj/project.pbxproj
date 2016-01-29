@@ -1036,7 +1036,6 @@
 		B17B3D551BB689F1009B8BC5 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				B1879A151C5810D50036A660 /* StaticTableView */,
 				B1DBEF441C537A1D007AAF4A /* RecordingGestureButton */,
 				B1D2A6D41C2006E9002BD6DF /* RecordingView */,
 				B17801731C1EFE6F00BA2436 /* TutorialView */,
@@ -1048,6 +1047,7 @@
 				B17B3D6A1BB6BCEC009B8BC5 /* Cell */,
 				B1EF40EF1BB8578200042E4B /* M13ProgressView */,
 				B1EF40F61BB8781D00042E4B /* SwipeView */,
+				B1879A151C5810D50036A660 /* StaticTableView */,
 			);
 			name = View;
 			sourceTree = "<group>";

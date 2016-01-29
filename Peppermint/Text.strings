@@ -134,3 +134,6 @@
 "Plural Suffix" = "s";
 "Just Now" = "Just Now";
 "Don't want to create an account yet? click here" = "Don't want to create\nan account yet? click here";
+"Please enter a valid name." = "Please enter a valid name.";
+"Please enter a valid email." = "Please enter a valid email.";
+"Please enter a valid phone number." = "Please enter a valid phone number.";

@@ -13,6 +13,8 @@
 #import "AppDelegate.h"
 #import "CellFactory.h"
 
+#define HEIGHT_FOR_wARNING_CELLS    20
+
 @import AssetsLibrary;
 @import MobileCoreServices;
 
@@ -25,7 +27,13 @@
 @property (weak, nonatomic) IBOutlet UIImageView * emailImageView;
 @property (weak, nonatomic) IBOutlet UIImageView * avatarImageView;
 
-@property (weak, nonatomic) IBOutlet UITableViewCell *myTableViewCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *nameSurnameWarningCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *emailWarningCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *phoneNumberWarningCell;
+
+@property (weak, nonatomic) IBOutlet UILabel *nameSurnameWarningLabel;
+@property (weak, nonatomic) IBOutlet UILabel *emailWarningLabel;
+@property (weak, nonatomic) IBOutlet UILabel *phoneNumberWarningLabel;
 
 @end
 
@@ -35,6 +43,8 @@
     BOOL hasCustomAvatarImage;
     int activeServiceCall;
     NSArray *textFieldsArray;
+
+    BOOL validateFirstNameLastName;
 }
 
 #pragma mark- Class Methods
@@ -85,12 +95,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    validateFirstNameLastName = NO;
+    self.tableView.bounces = NO;
   
   self.navigationController.navigationBar.shadowImage = [UIImage new];
   self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
@@ -123,6 +129,27 @@
     for(UITextField *tf in textFieldsArray) {
         [tf addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     }
+    
+    self.nameSurnameWarningLabel.textColor = self.emailWarningLabel.textColor = self.phoneNumberWarningLabel.textColor = [UIColor whiteColor];
+    self.nameSurnameWarningLabel.font = self.emailWarningLabel.font = self.phoneNumberWarningLabel.font = [UIFont openSansSemiBoldFontOfSize:15];
+    self.nameSurnameWarningLabel.text = LOC(@"Please enter a valid name.", @"Warning Message");
+    self.emailWarningLabel.text = LOC(@"Please enter a valid email.", @"Warning Message");
+    self.phoneNumberWarningLabel.text = LOC(@"Please enter a valid phone number.", @"Warning Message");
+    
+    self.animateSectionHeaders = YES;
+    [self cell:self.nameSurnameWarningCell setHeight:0];
+    [self cell:self.emailWarningCell setHeight:0];
+    [self cell:self.phoneNumberWarningCell setHeight:0];
+    [self reloadDataAnimated:NO];
+    
+    self.tableView.backgroundColor =
+    self.nameSurnameWarningCell.contentView.backgroundColor =
+    [UIColor peppermintCancelOrange];
+    
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
 }
 
 -(void) viewDidAppear:(BOOL)animated {
@@ -242,7 +269,7 @@
 #pragma mark - Update Screen
 
 -(void) updateScreen {
-    self.phoneImageView.highlighted = self.phoneNumberTextField.text.length > 1;
+    self.phoneImageView.highlighted = self.phoneNumberTextField.text.length > 4;
     self.emailImageView.highlighted = self.emailTextField.text.length > 0 && [self.emailTextField.text isValidEmail];
     
     self.firstNameTextField.text = [self.firstNameTextField.text capitalizedString];
@@ -268,19 +295,26 @@
     self.phoneNumberTextField.returnKeyType =
     self.emailTextField.returnKeyType =
     self.saveContactBarButtonItem.enabled ? UIReturnKeyDone : UIReturnKeyNext;
+}
+
+-(void) updateValidationRows {
+    BOOL isNameSurnameSupplied = !validateFirstNameLastName
+    || (self.firstNameTextField.text.trimmedText.length > 0 && self.lastNameTextField.text.trimmedText.length > 0);
+    [self cell:self.nameSurnameWarningCell setHeight:isNameSurnameSupplied ? 0 : HEIGHT_FOR_wARNING_CELLS];
     
-#warning "Update warnign cells!"
-#ifdef DEBUG
-    self.animateSectionHeaders = YES;
-    [self cell:self.myTableViewCell setHidden:(self.emailTextField.text.length > 0)];
+    BOOL isEmailSupplied = self.emailTextField.text.length == 0 || self.emailImageView.highlighted;
+    [self cell:self.emailWarningCell setHeight:isEmailSupplied ? 0 : HEIGHT_FOR_wARNING_CELLS];
+    
+    BOOL isPhoneNumberSupplied = self.phoneNumberTextField.text.length < 2 || self.phoneImageView.highlighted;
+    [self cell:self.phoneNumberWarningCell setHeight:isPhoneNumberSupplied ? 0 : HEIGHT_FOR_wARNING_CELLS];
+    
     [self reloadDataAnimated:YES];
-#endif 
-    
 }
 
 -(void)textFieldDidChange :(UITextField *)textField {
     UIReturnKeyType returnKeyType = textField.returnKeyType;
     [self updateScreen];
+    [self updateValidationRows];
     if(returnKeyType != textField.returnKeyType) {
         [textField resignFirstResponder];
         [textField becomeFirstResponder];
@@ -292,6 +326,14 @@
 }
 
 #pragma mark- Text Field delegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if(textField != self.firstNameTextField && textField != self.lastNameTextField) {
+        validateFirstNameLastName = YES;
+    }
+    [self updateValidationRows];
+    return YES;
+}
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     BOOL result = NO;

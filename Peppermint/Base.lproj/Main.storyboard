@@ -702,8 +702,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.92941176469999998" green="0.95294117649999999" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="PnR-52-XkD">
-                            <rect key="frame" x="0.0" y="200" width="320" height="59"/>
+                            <rect key="frame" x="0.0" y="260" width="320" height="1000"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v18-70-8vr">
@@ -718,7 +719,7 @@ email contact or both</string>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.92941176470588238" green="0.95294117647058818" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstItem="v18-70-8vr" firstAttribute="top" secondItem="PnR-52-XkD" secondAttribute="top" constant="15" id="4i3-kH-Rng"/>
                                 <constraint firstItem="v18-70-8vr" firstAttribute="centerX" secondItem="PnR-52-XkD" secondAttribute="centerX" id="lpB-7x-g7T"/>
@@ -727,7 +728,7 @@ email contact or both</string>
                         <sections>
                             <tableViewSection id="ohk-08-CJB">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="100" id="pST-ja-GLF">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="100" id="pST-ja-GLF" userLabel="Name Surname Cell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pST-ja-GLF" id="AdK-MG-NJ5">
@@ -812,8 +813,42 @@ email contact or both</string>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="50" id="a2X-wW-HA4">
-                                        <rect key="frame" x="0.0" y="100" width="320" height="50"/>
+                                    <tableViewCell opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="20" id="Q3Z-lh-9XR">
+                                        <rect key="frame" x="0.0" y="100" width="320" height="20"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Q3Z-lh-9XR" id="AYC-uF-hFL">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="on4-1x-BQa">
+                                                    <rect key="frame" x="0.0" y="19" width="320" height="1"/>
+                                                    <color key="backgroundColor" red="0.73725490199999999" green="0.73333333329999995" blue="0.75686274509999996" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="V8Z-MT-lAg"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Please enter a valid name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="soB-Wv-3Sc">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="19"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="soB-Wv-3Sc" firstAttribute="leading" secondItem="AYC-uF-hFL" secondAttribute="leading" id="2fp-vi-5fA"/>
+                                                <constraint firstAttribute="trailing" secondItem="soB-Wv-3Sc" secondAttribute="trailing" id="35f-Ik-u2l"/>
+                                                <constraint firstAttribute="bottom" secondItem="on4-1x-BQa" secondAttribute="bottom" id="Rlk-e1-lh7"/>
+                                                <constraint firstItem="on4-1x-BQa" firstAttribute="leading" secondItem="AYC-uF-hFL" secondAttribute="leading" id="Tef-3H-HXH"/>
+                                                <constraint firstItem="on4-1x-BQa" firstAttribute="top" secondItem="soB-Wv-3Sc" secondAttribute="bottom" id="ixV-X7-Sgh"/>
+                                                <constraint firstAttribute="trailing" secondItem="on4-1x-BQa" secondAttribute="trailing" id="kCw-Rn-LUf"/>
+                                                <constraint firstItem="soB-Wv-3Sc" firstAttribute="top" secondItem="AYC-uF-hFL" secondAttribute="top" id="rSf-ow-k3r"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="50" id="a2X-wW-HA4" userLabel="Email Cell">
+                                        <rect key="frame" x="0.0" y="120" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="a2X-wW-HA4" id="pKJ-cb-CPl">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
@@ -856,8 +891,42 @@ email contact or both</string>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="50" id="xcK-LX-zIX">
-                                        <rect key="frame" x="0.0" y="150" width="320" height="50"/>
+                                    <tableViewCell opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="20" id="dgt-Ym-aar" userLabel="Email Warning Cell">
+                                        <rect key="frame" x="0.0" y="170" width="320" height="20"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dgt-Ym-aar" id="RBq-ex-MBz">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zvo-EY-lCU">
+                                                    <rect key="frame" x="0.0" y="19" width="320" height="1"/>
+                                                    <color key="backgroundColor" red="0.73725490199999999" green="0.73333333329999995" blue="0.75686274509999996" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="0PG-gr-QkI"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Please enter a valid name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gDm-fc-dNI">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="19"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="gDm-fc-dNI" firstAttribute="top" secondItem="RBq-ex-MBz" secondAttribute="top" id="2PA-ux-Gd6"/>
+                                                <constraint firstItem="gDm-fc-dNI" firstAttribute="leading" secondItem="RBq-ex-MBz" secondAttribute="leading" id="Lob-bX-Fce"/>
+                                                <constraint firstAttribute="bottom" secondItem="Zvo-EY-lCU" secondAttribute="bottom" id="WjY-4t-CIa"/>
+                                                <constraint firstItem="Zvo-EY-lCU" firstAttribute="leading" secondItem="RBq-ex-MBz" secondAttribute="leading" id="YhG-7M-WSz"/>
+                                                <constraint firstAttribute="trailing" secondItem="gDm-fc-dNI" secondAttribute="trailing" id="c4p-5e-HI2"/>
+                                                <constraint firstItem="Zvo-EY-lCU" firstAttribute="top" secondItem="gDm-fc-dNI" secondAttribute="bottom" id="cga-yP-kdK"/>
+                                                <constraint firstAttribute="trailing" secondItem="Zvo-EY-lCU" secondAttribute="trailing" id="eTt-Ob-OJH"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="50" id="xcK-LX-zIX" userLabel="Phone Number Cell">
+                                        <rect key="frame" x="0.0" y="190" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xcK-LX-zIX" id="yVa-ny-Ewv">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
@@ -900,6 +969,40 @@ email contact or both</string>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="20" id="ZFq-aK-nHX" userLabel="Phone Number Warning Cell">
+                                        <rect key="frame" x="0.0" y="240" width="320" height="20"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZFq-aK-nHX" id="3zM-G1-76M">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qhK-tN-MkS">
+                                                    <rect key="frame" x="0.0" y="19" width="320" height="1"/>
+                                                    <color key="backgroundColor" red="0.73725490199999999" green="0.73333333329999995" blue="0.75686274509999996" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="4MG-CJ-Ia0"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Please enter a valid name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eUC-Vz-299">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="19"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="qhK-tN-MkS" secondAttribute="bottom" id="AGZ-yo-WJE"/>
+                                                <constraint firstAttribute="trailing" secondItem="qhK-tN-MkS" secondAttribute="trailing" id="GUG-Dt-1Dv"/>
+                                                <constraint firstItem="qhK-tN-MkS" firstAttribute="top" secondItem="eUC-Vz-299" secondAttribute="bottom" id="ReO-AM-ESz"/>
+                                                <constraint firstItem="qhK-tN-MkS" firstAttribute="leading" secondItem="3zM-G1-76M" secondAttribute="leading" id="WEO-0c-Ajd"/>
+                                                <constraint firstAttribute="trailing" secondItem="eUC-Vz-299" secondAttribute="trailing" id="XQZ-V5-DX2"/>
+                                                <constraint firstItem="eUC-Vz-299" firstAttribute="leading" secondItem="3zM-G1-76M" secondAttribute="leading" id="fCq-Ee-SMB"/>
+                                                <constraint firstItem="eUC-Vz-299" firstAttribute="top" secondItem="3zM-G1-76M" secondAttribute="top" id="poc-rL-HW7"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -926,12 +1029,17 @@ email contact or both</string>
                         <outlet property="avatarImageView" destination="P5y-eU-OxC" id="lSC-WK-BTg"/>
                         <outlet property="emailImageView" destination="sqM-B5-gnk" id="Iqf-bU-dBF"/>
                         <outlet property="emailTextField" destination="HCM-xd-FfJ" id="F19-Cn-9LW"/>
+                        <outlet property="emailWarningCell" destination="dgt-Ym-aar" id="XBP-cv-Phg"/>
+                        <outlet property="emailWarningLabel" destination="gDm-fc-dNI" id="jsd-Xm-XAd"/>
                         <outlet property="explanationLabel" destination="v18-70-8vr" id="Ddq-t0-t2T"/>
                         <outlet property="firstNameTextField" destination="dv5-8A-bHh" id="1V7-2u-vzP"/>
                         <outlet property="lastNameTextField" destination="QWV-QQ-i2D" id="38H-Ve-MrA"/>
-                        <outlet property="myTableViewCell" destination="xcK-LX-zIX" id="J7z-dM-Vhc"/>
+                        <outlet property="nameSurnameWarningCell" destination="Q3Z-lh-9XR" id="dWe-jB-5bX"/>
+                        <outlet property="nameSurnameWarningLabel" destination="soB-Wv-3Sc" id="leT-iM-i8b"/>
                         <outlet property="phoneImageView" destination="6Ku-Oo-U2k" id="eqH-z2-Mhf"/>
                         <outlet property="phoneNumberTextField" destination="uHi-Kg-2Nv" id="fbp-cP-anD"/>
+                        <outlet property="phoneNumberWarningCell" destination="ZFq-aK-nHX" id="MrI-UZ-hyN"/>
+                        <outlet property="phoneNumberWarningLabel" destination="eUC-Vz-299" id="mXi-V1-gVX"/>
                         <outlet property="saveContactBarButtonItem" destination="w7i-KX-d7P" id="Rb9-4S-0W3"/>
                     </connections>
                 </tableViewController>

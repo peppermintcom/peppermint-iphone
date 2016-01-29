@@ -348,9 +348,9 @@
 {
     [super viewDidLoad];
 
-    self.insertTableViewRowAnimation = UITableViewRowAnimationRight;
-    self.deleteTableViewRowAnimation = UITableViewRowAnimationLeft;
-    self.reloadTableViewRowAnimation = UITableViewRowAnimationMiddle;
+    self.insertTableViewRowAnimation = UITableViewRowAnimationAutomatic;
+    self.deleteTableViewRowAnimation = UITableViewRowAnimationAutomatic;
+    self.reloadTableViewRowAnimation = UITableViewRowAnimationAutomatic;
     
     self.originalTable = [[OriginalTable alloc] initWithTableView:self.tableView];
     
