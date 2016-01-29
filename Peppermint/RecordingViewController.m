@@ -9,14 +9,17 @@
 #import "RecordingViewController.h"
 #import "SendVoiceMessageMandrillModel.h"
 #import "AppDelegate.h"
+#import "LoginNavigationViewController.h"
 
-@interface RecordingViewController ()
+@interface RecordingViewController () <LoginNavigationViewControllerDelegate>
 
 @end
 
 @implementation RecordingViewController {
     BOOL viewDidAppear, isAccessRigtsSupplied;
     int totalSeconds;
+    NSData *audioData;
+    NSString *audioDataExtension;
 }
 
 - (void)viewDidLoad {
@@ -147,8 +150,27 @@
     [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
 }
 
-- (void) recordDataIsPrepared:(NSData *)data withExtension:(NSString *)extension {
-    [self.sendVoiceMessageModel sendVoiceMessageWithData:data withExtension:extension  andDuration:totalSeconds];
+- (void) recordDataIsPrepared:(NSData *)data withExtension:(NSString*) extension {
+    if(!self.sendVoiceMessageModel.needsAuth
+       || self.sendVoiceMessageModel.peppermintMessageSender.isValidToSendMessage) {
+        [self.sendVoiceMessageModel sendVoiceMessageWithData:data withExtension:extension  andDuration:totalSeconds];
+    } else {
+        audioData = data;
+        audioDataExtension = extension;
+        self.sendVoiceMessageModel.sendingStatus = SendingStatusCancelled;
+        [LoginNavigationViewController logUserInWithDelegate:self completion:nil];
+    }
+}
+
+#pragma mark - LoginNavigationViewControllerDelegate
+
+-(void) loginSucceedWithMessageSender:(PeppermintMessageSender*) peppermintMessageSender {
+    if(peppermintMessageSender.isValidToSendMessage) {
+        NSAssert(totalSeconds >= MIN_VOICE_MESSAGE_LENGTH
+                 && audioData && audioDataExtension , @"Audio data is not ready to send!");
+        self.sendVoiceMessageModel.sendingStatus = SendingStatusInited;
+        [self.sendVoiceMessageModel sendVoiceMessageWithData:audioData withExtension:audioDataExtension  andDuration:totalSeconds];
+    }
 }
 
 #pragma mark - SendVoiceMessage Delegate

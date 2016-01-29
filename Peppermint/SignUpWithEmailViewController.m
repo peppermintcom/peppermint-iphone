@@ -244,7 +244,7 @@
 
 -(void) updateKeyboardReturnKeyType {
     UIReturnKeyType currentReturnKeyType = activeTextField.returnKeyType;
-    BOOL isValid = [PeppermintMessageSender sharedInstance].isValid;
+    BOOL isValid = [PeppermintMessageSender sharedInstance].isValidToSendMessage;
     activeTextField.returnKeyType = isValid ? UIReturnKeyDone : UIReturnKeyNext;
     if(activeTextField.returnKeyType != currentReturnKeyType) {
         [activeTextField resignFirstResponder];
@@ -283,7 +283,7 @@
 }
 
 -(void) doneButtonPressed {
-    if([[PeppermintMessageSender sharedInstance] isValid]) {
+    if([[PeppermintMessageSender sharedInstance] isValidToSendMessage]) {
         [self doneButtonPressed:nil];
     } else {
         LoginTextFieldTableViewCell *name = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:ROW_INPUT_NAME inSection:INDEX_NAME]];
@@ -358,7 +358,7 @@
 }
 
 -(void) validateDoneButton {
-    self.doneLabel.enabled = self.doneButton.enabled = [PeppermintMessageSender sharedInstance].isValid;
+    self.doneLabel.enabled = self.doneButton.enabled = [PeppermintMessageSender sharedInstance].isValidToSendMessage;
 }
 
 #pragma mark - Navigation
@@ -369,7 +369,7 @@
 
 -(IBAction) doneButtonPressed:(id)sender {
     [activeTextField resignFirstResponder];
-    if([[PeppermintMessageSender sharedInstance] isValid]) {
+    if([[PeppermintMessageSender sharedInstance] isValidToSendMessage]) {
         [self.loginModel performEmailSignUp];
     } else {
         NSString *title = LOC(@"Information", @"Title Message");

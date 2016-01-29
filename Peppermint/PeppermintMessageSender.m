@@ -86,12 +86,20 @@
 
 #if !(TARGET_OS_WATCH)
 
--(BOOL) isValid {
+-(BOOL) isValidToUseApp {    
+    BOOL isWithoutLogin = self.loginSource == LOGINSOURCE_WITHOUTLOGIN;
+    return (isWithoutLogin || [self isValidToSendMessage]);
+}
+
+-(BOOL) isValidToSendMessage {
     BOOL result = [self nameSurname].length > 0
     && self.email.length > 0
     && [self.email isValidEmail];
     
-    if(self.loginSource == LOGINSOURCE_GOOGLE) {
+    if(self.loginSource == LOGINSOURCE_WITHOUTLOGIN) {
+        //Without login extra checks..
+        return NO;
+    } else if(self.loginSource == LOGINSOURCE_GOOGLE) {
         //Google extra checks..
     } else if (self.loginSource == LOGINSOURCE_FACEBOOK) {
         //Facebook extra checks...

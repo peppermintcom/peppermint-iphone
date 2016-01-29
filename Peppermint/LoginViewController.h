@@ -12,5 +12,6 @@
 @interface LoginViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, LoginTableViewCellDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *loginLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UILabel *withoutLoginLabel;
 
 @end

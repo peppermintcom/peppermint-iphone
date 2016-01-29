@@ -82,7 +82,9 @@
     
     PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
     
-    rootVC.view.alpha = 0.2;
+    [UIView animateWithDuration:0.2 animations:^{
+        rootVC.view.alpha = 0.2;
+    }];
     [rootVC presentViewController:loginNavigationViewController animated:YES completion:^{
         rootVC.view.alpha = 1;
         if([peppermintMessageSender isInMailVerificationProcess]) {

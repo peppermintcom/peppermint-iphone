@@ -55,7 +55,7 @@
 
 -(BOOL) checkIfuserIsLoggedIn {
     PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
-    if(!peppermintMessageSender.isValid) {
+    if(!peppermintMessageSender.isValidToUseApp) {
         [LoginNavigationViewController logUserInWithDelegate:nil completion:nil];
         return NO;
     }

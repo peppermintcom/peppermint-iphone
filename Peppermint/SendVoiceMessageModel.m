@@ -51,6 +51,9 @@
 }
 
 -(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension andDuration:(NSTimeInterval)duration {
+    
+    NSAssert(!self.needsAuth || self.peppermintMessageSender.isValidToSendMessage , @"This model can not be triggered, because it need auth and there is no valid peppermintMessageSender");
+    
     _data = data;
     _extension = extension;
     _duration = duration;

@@ -24,5 +24,6 @@
 -(void) performGoogleLogin;
 -(void) performFacebookLogin;
 -(void) performEmailSignUp;
+-(void) performWithoutLoginAuthentication;
 
 @end

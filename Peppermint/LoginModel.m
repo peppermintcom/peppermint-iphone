@@ -76,7 +76,7 @@
 
         NSURL *imageUrl = [user.profile imageURLWithDimension:100];
         peppermintMessageSender.imageData = [NSData dataWithContentsOfURL:imageUrl];
-        if([peppermintMessageSender isValid]) {
+        if([peppermintMessageSender isValidToUseApp]) {
             [peppermintMessageSender save];
             [self.delegate loginSucceed];
         }
@@ -143,7 +143,7 @@
                  }
                  peppermintMessageSender.subject = LOC(@"Mail Subject",@"Default Mail Subject");
                  
-                 if([peppermintMessageSender isValid]) {
+                 if([peppermintMessageSender isValidToUseApp]) {
                      [peppermintMessageSender save];
                      [self.delegate loginSucceed];
                  } else {
@@ -167,7 +167,7 @@
 #pragma mark - Email Login
 
 -(void) performEmailSignUp {
-    if(peppermintMessageSender.isValid) {
+    if(peppermintMessageSender.isValidToUseApp) {
         peppermintMessageSender.loginSource = LOGINSOURCE_PEPPERMINT;
         peppermintMessageSender.imageData = [NSData new];
         peppermintMessageSender.subject = LOC(@"Mail Subject",@"Default Mail Subject");
@@ -209,6 +209,19 @@
 
 -(void) accountInfoRefreshSuccess {
     NSLog(@"accountInfoRefreshSuccess");
+}
+
+#pragma mark - WITHOUT LOGIN
+
+-(void) performWithoutLoginAuthentication {
+    peppermintMessageSender.name = LOC(@"Peppermint", @"Name");
+    peppermintMessageSender.loginSource = LOGINSOURCE_WITHOUTLOGIN;
+    
+    peppermintMessageSender.imageData = [NSData new];
+    peppermintMessageSender.subject = LOC(@"Mail Subject",@"Default Mail Subject");
+    accountModel = [AccountModel sharedInstance];
+    accountModel.delegate = self;
+    [self.delegate loginSucceed];
 }
 
 @end

@@ -16,8 +16,10 @@
 #define SECTION_LOGIN_WITH_EMAIL_INFO       2
 #define SECTION_LOGIN_WITH_EMAIL            3
 
-#define DISTANCE_BTW_SECTIONS               24
+
+#define DISTANCE_BTW_SECTIONS               14
 #define PADDING_CONSTANT                    20
+#define FONT_SIZE                           17
 
 #define SEGUE_LOGIN_WITH_EMAIL      @"LoginWithEmailSegue"
 
@@ -34,14 +36,38 @@
     [super viewDidLoad];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.tableView.bounces = NO;
     
     self.loginLabel.textColor = [UIColor whiteColor];
-    self.loginLabel.font = [UIFont openSansSemiBoldFontOfSize:18];
-    self.loginLabel.text = LOC(@"Please Login", @"Login Message");
-    [self.loginLabel sizeToFit];
+    self.loginLabel.font = [UIFont openSansSemiBoldFontOfSize:FONT_SIZE];
+    
+    NSMutableAttributedString *titleText = [NSMutableAttributedString new];
+    [titleText addText:LOC(@"To send a message with Peppermint", @"title") ofSize:FONT_SIZE ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:FONT_SIZE]];
+    NSUInteger size = FONT_SIZE * 0.5;
+    [titleText addText:@"\n\n" ofSize:size ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:size]];
+    [titleText addText:LOC(@"Please Login", @"Login Message") ofSize:FONT_SIZE ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:FONT_SIZE]];
+    
+    [titleText centerText];
+    self.loginLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.loginLabel.attributedText = titleText;
     
     peppermintMessageSender = [PeppermintMessageSender sharedInstance];
     referanceDate = nil;
+    
+    NSMutableAttributedString *informationString = [NSMutableAttributedString new];
+    [informationString addText:LOC(@"Don't want to create an account yet? click here", @"Message First part") ofSize:FONT_SIZE ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:FONT_SIZE]];
+    
+    NSDictionary *underlineAttribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle), NSBackgroundColorAttributeName: [UIColor clearColor]};
+    NSRange range = [informationString.string rangeOfString:@"? "];
+    range.location += 2;
+    range.length = informationString.string.length - range.location;
+    if(range.location > 0 && range.length > 0) {
+        [informationString addAttributes:underlineAttribute range:range];
+    }
+    
+    [informationString centerText];
+    self.withoutLoginLabel.attributedText = informationString;
+    [self.withoutLoginLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(withoutLoginLabelPressed:)]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -121,6 +147,13 @@
         height = DISTANCE_BTW_SECTIONS;
     } else if (section == SECTION_LOGIN_WITH_EMAIL_INFO) {
         height = DISTANCE_BTW_SECTIONS;
+        if (IS_IPHONE_5) {
+            height = DISTANCE_BTW_SECTIONS * 2.3;
+        } else if (IS_IPHONE_6) {
+            height = DISTANCE_BTW_SECTIONS * 3;
+        } else if (IS_IPHONE_6P) {
+            height = DISTANCE_BTW_SECTIONS * 4;
+        }
     }
     return height;
 }
@@ -160,6 +193,15 @@
             }
         }
     }
+}
+
+#pragma mark - WithoutLoginLabelPressed
+
+-(void) withoutLoginLabelPressed:(id) sender {
+    NSLog(@"withoutLoginLabelPressed");
+    LoginNavigationViewController *loginNavigationViewController = (LoginNavigationViewController*)self.navigationController;
+    peppermintMessageSender.loginSource = LOGINSOURCE_WITHOUTLOGIN;
+    [loginNavigationViewController.loginModel performWithoutLoginAuthentication];    
 }
 
 #pragma mark - Navigation

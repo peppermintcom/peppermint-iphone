@@ -7,6 +7,7 @@
 //
 
 #import "RecordingView.h"
+#import "LoginNavigationViewController.h"
 
 typedef enum : NSUInteger {
     RecordingViewStatusResignActive,
@@ -16,8 +17,15 @@ typedef enum : NSUInteger {
     RecordingViewStatusFinishing,
 } RecordingViewStatus;
 
+@interface RecordingView() <LoginNavigationViewControllerDelegate>
+
+@end
+
 @implementation RecordingView {
     RecordingViewStatus recordingViewStatus;
+    NSData *audioData;
+    NSString *audioDataExtension;
+    NSInteger totalSeconds;
 }
 
 #pragma mark - Must to override Functions
@@ -158,8 +166,28 @@ typedef enum : NSUInteger {
     [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:sendButtonTitle, nil] show];
 }
 
-- (void) recordDataIsPrepared:(NSData *)data withExtension:(NSString*) extension {
-    [self.sendVoiceMessageModel sendVoiceMessageWithData:data withExtension:extension  andDuration:self.totalSeconds];
+- (void) recordDataIsPrepared:(NSData *)data withExtension:(NSString*) extension {    
+    if(!self.sendVoiceMessageModel.needsAuth
+       || self.sendVoiceMessageModel.peppermintMessageSender.isValidToSendMessage) {
+        [self.sendVoiceMessageModel sendVoiceMessageWithData:data withExtension:extension  andDuration:self.totalSeconds];
+    } else {
+        audioData = data;
+        audioDataExtension = extension;
+        totalSeconds = self.totalSeconds;
+        self.sendVoiceMessageModel.sendingStatus = SendingStatusCancelled;
+        [LoginNavigationViewController logUserInWithDelegate:self completion:nil];
+    }
+}
+
+#pragma mark - LoginNavigationViewControllerDelegate
+
+-(void) loginSucceedWithMessageSender:(PeppermintMessageSender*) peppermintMessageSender {    
+    if(peppermintMessageSender.isValidToSendMessage) {
+        NSAssert(totalSeconds >= MIN_VOICE_MESSAGE_LENGTH
+                 && audioData && audioDataExtension , @"Audio data is not ready to send!");
+        self.sendVoiceMessageModel.sendingStatus = SendingStatusInited;
+        [self.sendVoiceMessageModel sendVoiceMessageWithData:audioData withExtension:audioDataExtension  andDuration:totalSeconds];
+    }
 }
 
 #pragma mark - SendVoiceMessage Delegate

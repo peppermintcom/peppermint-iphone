@@ -33,7 +33,7 @@ int OPTION_LOG_OUT              = 0;
     UIViewController *rootVC = [AppDelegate Instance].window.rootViewController;
     PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
     
-    if([peppermintMessageSender isValid]) {
+    if([peppermintMessageSender isValidToSendMessage]) {
         AccountViewController *accountViewController = [AccountViewController createInstance];
         accountViewController.iconCloseImageView.image = [UIImage imageNamed:@"icon_close"];
         [rootVC presentViewController:accountViewController animated:YES completion:completion];
@@ -81,18 +81,29 @@ int OPTION_LOG_OUT              = 0;
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.peppermintMessageSender = [PeppermintMessageSender sharedInstance];
-    self.titleLabel.text = [NSString stringWithFormat:
-                            LOC(@"Logged in message format", @"Logged in message format"),
-                            [self.peppermintMessageSender loginMethod]
-                            ];
-    [self.titleLabel sizeToFit];    
-    
-    self.tableViewWidthConstraint.constant = self.view.frame.size.width / 2;
-    [self.view setNeedsDisplay];
+ 
+    if(![self.peppermintMessageSender isValidToSendMessage]) {        
+        self.titleLabel.hidden = YES;
+        self.tableView.hidden = YES;
+    } else {
+        self.titleLabel.text = [NSString stringWithFormat:
+                                LOC(@"Logged in message format", @"Logged in message format"),
+                                [self.peppermintMessageSender loginMethod]
+                                ];
+        [self.titleLabel sizeToFit];
+        self.tableViewWidthConstraint.constant = self.view.frame.size.width / 2;
+        [self.view setNeedsDisplay];
+    }
 }
 
 -(void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    if(![self.peppermintMessageSender isValidToSendMessage]) {
+        weakself_create();
+        [LoginNavigationViewController logUserInWithDelegate:nil completion:^{
+            [weakSelf.navigationController popViewControllerAnimated:NO];
+        }];
+    }
 }
 
 #pragma mark - UITableView

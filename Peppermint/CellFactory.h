@@ -30,7 +30,7 @@
 #define CELL_HEIGHT_SEARCH_MENU_TABLEVIEWCELL 44
 +(SearchMenuTableViewCell*) cellSearchMenuTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath;
 
-#define CELL_HEIGHT_LOGIN_TABLEVIEWCELL 42
+#define CELL_HEIGHT_LOGIN_TABLEVIEWCELL 36
 +(LoginTableViewCell*) cellLoginTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath withDelegate:(id<LoginTableViewCellDelegate>) delegate;
 
 #define CELL_HEIGHT_LOGIN_TEXTFIELD_TABLEVIEWCELL 42

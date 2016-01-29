@@ -15,6 +15,7 @@ typedef enum : NSUInteger {
     LOGINSOURCE_FACEBOOK,
     LOGINSOURCE_GOOGLE,
     LOGINSOURCE_PEPPERMINT,
+    LOGINSOURCE_WITHOUTLOGIN,
 } LoginSource;
 
 @interface PeppermintMessageSender : JSONModel
@@ -32,7 +33,8 @@ typedef enum : NSUInteger {
 
 + (instancetype) sharedInstance;
 -(void) save;
--(BOOL) isValid;
+-(BOOL) isValidToUseApp;
+-(BOOL) isValidToSendMessage;
 -(NSString*) loginMethod;
 -(void) clearSender;
 -(BOOL) isInMailVerificationProcess;
