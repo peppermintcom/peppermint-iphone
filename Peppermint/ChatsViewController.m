@@ -33,6 +33,7 @@
 
 -(void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    chatModel.delegate = self;
     [chatModel refreshChatArray];
 }
 
