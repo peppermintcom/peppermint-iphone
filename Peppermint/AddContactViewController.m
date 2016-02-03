@@ -68,7 +68,7 @@
                 [nameComponents addObject:suppliedWord.capitalizedString];
             }
         }
-        
+        [addContactViewController.delegate nameFieldUpdated:[nameComponents componentsJoinedByString:@" "]];
         if(nameComponents.count == 0 || [nameComponents.firstObject isEqualToString:@""]) {
             NSLog(@"Could not set name cos supplied information is just empty");
             [addContactViewController.firstNameTextField becomeFirstResponder];
@@ -86,8 +86,9 @@
             } else {
                 [addContactViewController.emailTextField becomeFirstResponder];
             }
-            
         }
+        [addContactViewController updateScreen];
+        [addContactViewController updateValidationRows];
     }];
 }
 
