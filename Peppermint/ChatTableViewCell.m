@@ -18,7 +18,6 @@
     UIImage *imageFlat;
     UIImage *imagePlay;
     UIImage *imagePause;
-    PlayingModel *playingModel;
     NSTimer *timer;
 }
 
@@ -70,10 +69,10 @@
     [self setRightLabelWithDate:chatEntry.dateCreated];
     
     self.playPauseImageView.image = imagePlay;
-    playingModel = [PlayingModel alloc];
-    if([playingModel playData:chatEntry.audio playerCompletitionBlock:^{ [self playPauseButtonPressed:nil]; }]) {        
-        playingModel.audioPlayer.volume = 1.0;
-        [playingModel pause];
+    _playingModel = [PlayingModel alloc];
+    if([_playingModel playData:chatEntry.audio playerCompletitionBlock:^{ [self playPauseButtonPressed:nil]; }]) {
+        _playingModel.audioPlayer.volume = 1.0;
+        [_playingModel pause];
     }
     
 }
@@ -120,20 +119,39 @@
 
 
 - (IBAction)playPauseButtonPressed:(id)sender {
-    if(playingModel.audioPlayer.isPlaying) {
-        [playingModel pause];
-        self.playPauseImageView.image = imagePause;
-    } else {
-        [playingModel play];
-        self.durationCircleView.hidden = NO;
+    [self stopPlayingCell];
+    if(_playingModel.audioPlayer.isPlaying) {
+        [_playingModel pause];
         self.playPauseImageView.image = imagePlay;
+    } else {
+        [_playingModel play];
+        self.durationCircleView.hidden = NO;
+        self.playPauseImageView.image = imagePause;
     }
 }
 
 -(void) updateDuration {
-    if(playingModel && playingModel.audioPlayer.isPlaying) {
-        CGFloat totalWidth = self.timelineView.frame.size.width - self.durationCircleView.frame.size.width;
-        self.durationViewWidthConstraint.constant = totalWidth * playingModel.audioPlayer.currentTime / playingModel.audioPlayer.duration;
+    if(_playingModel) {
+        CGFloat percent = _playingModel.audioPlayer.currentTime / _playingModel.audioPlayer.duration;
+        if( _playingModel.audioPlayer.isPlaying) {
+            CGFloat totalWidth = self.timelineView.frame.size.width - self.durationCircleView.frame.size.width;
+            self.durationViewWidthConstraint.constant = totalWidth * percent;
+        } else {
+            self.playPauseImageView.image = imagePlay;
+            if(percent < 0.00001) {
+                self.durationViewWidthConstraint.constant = 0;
+                self.durationCircleView.hidden = YES;
+            }
+        }
+    }
+}
+
+-(void) stopPlayingCell {
+    for(ChatTableViewCell *cell in [self.tableView visibleCells]) {
+        if(cell != self && cell.playingModel.audioPlayer.isPlaying) {
+            [cell.playingModel.audioPlayer stop];
+            cell.playPauseImageView.image = imagePlay;
+        }
     }
 }
 

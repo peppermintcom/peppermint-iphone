@@ -8,6 +8,7 @@
 
 #import "BaseTableViewCell.h"
 @class ChatEntry;
+@class PlayingModel;
 
 @interface ChatTableViewCell : BaseTableViewCell
 
@@ -23,6 +24,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *rightLabel;
 @property (weak, nonatomic) IBOutlet UILabel *leftLabel;
 @property (weak, nonatomic) IBOutlet UIView *durationCircleView;
+@property(weak, nonatomic) UITableView *tableView;
+
+@property (strong, nonatomic, readonly) PlayingModel *playingModel;
 
 - (void) fillInformation:(ChatEntry*) chatEntry;
 
