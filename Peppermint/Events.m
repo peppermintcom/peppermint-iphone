@@ -74,3 +74,12 @@
 
 @implementation MessageSendingStatusIsUpdated
 @end
+
+@implementation RecordersUpdateCompleted
+@end
+
+@implementation JwtsExchanged
+@end
+
+@implementation SetUpAccountWithRecorderCompleted
+@end

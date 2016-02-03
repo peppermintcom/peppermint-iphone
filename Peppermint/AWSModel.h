@@ -21,4 +21,7 @@
 -(void) initRecorder;
 -(void) startToUploadData:(NSData*) data ofType:(NSString*) contentType;
 
+- (void) tryToUpdateGCMRegistrationToken;
+- (void) tryToSetUpAccountWithRecorder;
+
 @end

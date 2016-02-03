@@ -19,6 +19,10 @@
 #import "LoginResponse.h"
 #import "CheckEmailResponse.h"
 #import "RecoverPasswordRequest.h"
+#import "RecordersUpdateRequest.h"
+#import "JwtsResponse.h"
+#import "SetUpRecorderRequest.h"
+#import "MessageRequest.h"
 
 #define AWS_API_KEY                     @"abc123"
 
@@ -30,6 +34,10 @@
 #define AWS_ENDPOINT_ACCOUNTS_VERIFY    @"/accounts/verify"
 #define AWS_ENDPOINT_ACCOUNT_QUERY      @"/accounts/"    // Add account id to the path. For example : /accounts/{account_id}
 #define AWS_ENDPOINT_ACCOUNT_RECOVER    @"/accounts/recover"
+#define AWS_ENDPOINT_RECORDER_QUERY     @"/recorders/"   //Add recorder id to the path. For example : /recorders/{recorder_id}
+#define AWS_ENDPOINT_JWTS               @"/jwts"
+#define AWS_ENDPOINT_SETUP_RECORDER_FORMAT  @"/accounts/%@/relationships/receivers" // SetUp recorder format
+#define AWS_ENDPOINT_MESSAGES           @"/messages"
 
 #define RESPONSE_CODE_CONFLICT      409
 
@@ -47,4 +55,8 @@
 -(void) checkEmailIsRegistered:(NSString *)email;
 -(void) recoverPasswordForEmail:(NSString*) email;
 
+-(void) updateGCMRegistrationTokenForRecorderId:(NSString*) recorderId jwt:(NSString*) jwt gcmToken:(NSString*)gcmToken;
+-(void) exchangeCredentialsForEmail:(NSString*)email password:(NSString*)password recorderClientId:(NSString*)recorderClientId recorderKey:(NSString*)recorderKey;
+-(void) setUpRecorderWithAccountId:(NSString*)accountId recorderId:(NSString*)recorderId jwt:(NSString*)jwt;
+-(void) sendMessageToRecepientEmail:(NSString*)recepientEmail senderEmail:(NSString*)senderEmail transcriptionUrl:(NSString*) transcriptionUrl audioUrl:(NSString*)audioUrl jwt:(NSString*) jwt;
 @end

@@ -11,6 +11,7 @@
 
 #if !(TARGET_OS_WATCH)
 #import "GoogleContactsModel.h"
+#import "AppDelegate.h"
 #endif
 
 #define KEY                     @"PeppermintMessageSenderJson"
@@ -67,10 +68,14 @@
 -(void) save {
     NSString *jsonString = [self toJSONString];
     [[A0SimpleKeychain keychain] setString:jsonString forKey:KEYCHAIN_MESSAGE_SENDER];
-  
+    
 #if !(TARGET_OS_WATCH)
     [self watchSynchronize];
     [self.imageData writeToURL:[self imageFileUrl] atomically:YES];
+    
+    if(!self.isAccountSetUpWithRecorder) {
+        [[AppDelegate Instance] tryToSetUpAccountWithRecorder];
+    }
 #endif
 
 }
@@ -205,6 +210,15 @@
     self.loginSource = -1;
     self.jwt = @"";
     self.isEmailVerified = NO;
+    
+    self.recorderJwt = nil;
+    self.recorderId = nil;
+    self.recorderClientId = nil;
+    self.recorderKey = nil;
+    self.exchangedJwt = nil;
+    
+    self.isAccountSetUpWithRecorder = NO;
+    
     [self save];
 }
 
@@ -219,5 +233,7 @@
     [self save];
     
 }
+
 #endif
+
 @end

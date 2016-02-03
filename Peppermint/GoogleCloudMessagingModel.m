@@ -8,6 +8,7 @@
 
 #import "GoogleCloudMessagingModel.h"
 #import <UIKit/UIApplication.h>
+#import "AppDelegate.h"
 
 @implementation GoogleCloudMessagingModel {
     NSString *gcmSenderId;
@@ -63,7 +64,14 @@ NSString *const SubscriptionTopic = @"/topics/global";
         if (registrationToken != nil) {
             weakSelf.registrationToken = registrationToken;
             NSLog(@"Registration Token: %@", registrationToken);
-            [weakSelf subscribeToTopic];
+            [weakSelf subscribedToTopic];
+            
+            NSString *existingToken = defaults_object(DEFAULTS_GCM_REGSTRATION_TOKEN);
+            if(!existingToken || ![existingToken isEqualToString:registrationToken]) {
+                defaults_set_object(DEFAULTS_GCM_REGSTRATION_TOKEN, registrationToken);
+                [[AppDelegate Instance] tryToUpdateGCMRegistrationToken];
+            }
+            
             NSDictionary *userInfo = @{@"registrationToken":registrationToken};
             [[NSNotificationCenter defaultCenter] postNotificationName:weakSelf.registrationKey
                                                                 object:nil

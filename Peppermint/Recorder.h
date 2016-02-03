@@ -9,9 +9,9 @@
 #import "JSONModel.h"
 
 @interface Recorder : JSONModel
-//@property (strong, nonatomic) NSString *recorder_id;
+@property (strong, nonatomic) NSString<Optional> *recorder_id;
 @property (strong, nonatomic) NSString *recorder_client_id;
-//@property (strong, nonatomic) NSString *recorder_key;
+@property (strong, nonatomic) NSString<Optional> *recorder_key;
 //@property (strong, nonatomic) NSString *recorder_ts;
 
 @end

@@ -29,6 +29,7 @@
 #import "AnalyticsModel.h"
 #import "GAIFields.h"
 #import "GoogleCloudMessagingModel.h"
+#import "AWSModel.h"
 
 @import WatchConnectivity;
 @import Contacts;
@@ -40,6 +41,7 @@
 
 @implementation AppDelegate {
     __block UIBackgroundTaskIdentifier bgTask;
+    AWSModel *awsModel;
 }
 
 -(void) initMutableArray {
@@ -148,6 +150,7 @@
         [[PeppermintMessageSender sharedInstance] clearSender];
         defaults_set_object(DEFAULTS_KEY_IS_FIRST_RUN, DEFAULTS_KEY_IS_FIRST_RUN);
         [self initLocalNotification];
+        [self initRecorder];
     }
 }
 
@@ -171,6 +174,11 @@
     notif.soundName = @"alert.caf";
     
     [[UIApplication sharedApplication] scheduleLocalNotification:notif];
+}
+
+-(void) initRecorder {
+    awsModel = [AWSModel new];
+    [awsModel initRecorder];
 }
 
 -(void) initGCM {
@@ -271,7 +279,7 @@ SUBSCRIBE(DetachSuccess) {
     // Handle the received message
     // ...
 }
-/*
+
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))handler {
     NSLog(@"Notification received withFetchCompletionHandler: %@", userInfo);
     // This works only if the app started the GCM service
@@ -280,7 +288,6 @@ SUBSCRIBE(DetachSuccess) {
     // Invoke the completion handler passing the appropriate UIBackgroundFetchResult value
     // ...
 }
-*/
 
 #pragma mark - Open URL
 
@@ -604,6 +611,16 @@ SUBSCRIBE(FileUploadCompleted) {
             return vc;
         }
     }
+}
+
+#pragma mark - Inter App Messaging
+
+-(void) tryToSetUpAccountWithRecorder {
+    [awsModel tryToSetUpAccountWithRecorder];
+}
+
+-(void) tryToUpdateGCMRegistrationToken  {
+    [awsModel tryToUpdateGCMRegistrationToken];
 }
 
 @end

@@ -50,6 +50,8 @@
 		B15B15BE1BDBC31F00C0C171 /* AWSService.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15BD1BDBC31F00C0C171 /* AWSService.m */; };
 		B15B15C11BDBC55A00C0C171 /* AWSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15C01BDBC55A00C0C171 /* AWSModel.m */; };
 		B15B15C41BDBC8CB00C0C171 /* RecorderResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15C31BDBC8CB00C0C171 /* RecorderResponse.m */; };
+		B15EEB971C607F350083658A /* Data.m in Sources */ = {isa = PBXBuildFile; fileRef = B15EEB961C607F350083658A /* Data.m */; };
+		B15EEB9A1C6081F40083658A /* RecordersUpdateRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B15EEB991C6081F40083658A /* RecordersUpdateRequest.m */; };
 		B15FDE781C117CCE007100EC /* Contact+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B15FDE651C117CCE007100EC /* Contact+CoreDataProperties.m */; };
 		B15FDE791C117CCE007100EC /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = B15FDE671C117CCE007100EC /* Contact.m */; };
 		B15FDE7A1C117CCE007100EC /* CustomContact+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B15FDE691C117CCE007100EC /* CustomContact+CoreDataProperties.m */; };
@@ -62,6 +64,7 @@
 		B15FDE811C117CCE007100EC /* CachedMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B15FDE771C117CCE007100EC /* CachedMessage.m */; };
 		B15FDE841C117CFE007100EC /* CustomContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B15FDE831C117CFE007100EC /* CustomContactModel.m */; };
 		B15FDE871C119D60007100EC /* UIImage_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B15FDE861C119D60007100EC /* UIImage_Addition.m */; };
+		B163557A1C5FB02200E0C07A /* Attribute.m in Sources */ = {isa = PBXBuildFile; fileRef = B16355791C5FB02200E0C07A /* Attribute.m */; };
 		B165EF121BB71A85008C6F71 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF111BB71A85008C6F71 /* BaseModel.m */; };
 		B165EF151BB71A99008C6F71 /* ContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF141BB71A99008C6F71 /* ContactsModel.m */; };
 		B165EF181BB71EC0008C6F71 /* PeppermintContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF171BB71EC0008C6F71 /* PeppermintContact.m */; };
@@ -97,6 +100,9 @@
 		B17B3D701BB6BD2E009B8BC5 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D6F1BB6BD2E009B8BC5 /* ContactTableViewCell.xib */; };
 		B17B3D741BB6C4B0009B8BC5 /* UIColor_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D731BB6C4B0009B8BC5 /* UIColor_Addition.m */; };
 		B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D771BB6C90A009B8BC5 /* BaseTableViewCell.m */; };
+		B17B9A271C60C6AC00B081F7 /* JwtsResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B9A261C60C6AC00B081F7 /* JwtsResponse.m */; };
+		B17B9A2A1C60CCDD00B081F7 /* SetUpRecorderRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B9A291C60CCDD00B081F7 /* SetUpRecorderRequest.m */; };
+		B17B9A2D1C60F34000B081F7 /* MessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B9A2C1C60F34000B081F7 /* MessageRequest.m */; };
 		B184A0A71C1B0CF20087BB9C /* JwtInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = B184A0A61C1B0CF20087BB9C /* JwtInformation.m */; };
 		B1879A181C5810EE0036A660 /* StaticDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1879A171C5810EE0036A660 /* StaticDataTableViewController.m */; };
 		B1889FE11C4EBA3E003552CE /* ChatEntriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1889FE01C4EBA3E003552CE /* ChatEntriesViewController.m */; };
@@ -172,7 +178,6 @@
 		D0AC07AE1C481AFC00F9CF6F /* WKInterfaceTable+IGInterfaceDataTable.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC077B1C481AFC00F9CF6F /* WKInterfaceTable+IGInterfaceDataTable.m */; };
 		D0AC07AF1C481AFC00F9CF6F /* ContactsInterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC077D1C481AFC00F9CF6F /* ContactsInterfaceController.m */; };
 		D0AC07B01C481AFC00F9CF6F /* ExtensionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC077F1C481AFC00F9CF6F /* ExtensionDelegate.m */; };
-		D0AC07B11C481AFC00F9CF6F /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0AC07801C481AFC00F9CF6F /* Info.plist */; };
 		D0AC07B21C481AFC00F9CF6F /* ContactsTableRowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC07841C481AFC00F9CF6F /* ContactsTableRowController.m */; };
 		D0AC07B31C481AFC00F9CF6F /* RecordingInterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC07871C481AFC00F9CF6F /* RecordingInterfaceController.m */; };
 		D0AC07B41C481AFC00F9CF6F /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC078C1C481AFC00F9CF6F /* JSONModel.m */; };
@@ -348,6 +353,10 @@
 		B15B15C01BDBC55A00C0C171 /* AWSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSModel.m; sourceTree = "<group>"; };
 		B15B15C21BDBC8CB00C0C171 /* RecorderResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecorderResponse.h; sourceTree = "<group>"; };
 		B15B15C31BDBC8CB00C0C171 /* RecorderResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecorderResponse.m; sourceTree = "<group>"; };
+		B15EEB951C607F350083658A /* Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Data.h; sourceTree = "<group>"; };
+		B15EEB961C607F350083658A /* Data.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Data.m; sourceTree = "<group>"; };
+		B15EEB981C6081F40083658A /* RecordersUpdateRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordersUpdateRequest.h; sourceTree = "<group>"; };
+		B15EEB991C6081F40083658A /* RecordersUpdateRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordersUpdateRequest.m; sourceTree = "<group>"; };
 		B15FDE641C117CCE007100EC /* Contact+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Contact+CoreDataProperties.h"; sourceTree = "<group>"; };
 		B15FDE651C117CCE007100EC /* Contact+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Contact+CoreDataProperties.m"; sourceTree = "<group>"; };
 		B15FDE661C117CCE007100EC /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
@@ -372,6 +381,8 @@
 		B15FDE831C117CFE007100EC /* CustomContactModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomContactModel.m; sourceTree = "<group>"; };
 		B15FDE851C119D60007100EC /* UIImage_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImage_Addition.h; sourceTree = "<group>"; };
 		B15FDE861C119D60007100EC /* UIImage_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImage_Addition.m; sourceTree = "<group>"; };
+		B16355781C5FB02200E0C07A /* Attribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attribute.h; sourceTree = "<group>"; };
+		B16355791C5FB02200E0C07A /* Attribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Attribute.m; sourceTree = "<group>"; };
 		B165EF101BB71A85008C6F71 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
 		B165EF111BB71A85008C6F71 /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
 		B165EF131BB71A99008C6F71 /* ContactsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ContactsModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -439,6 +450,12 @@
 		B17B3D731BB6C4B0009B8BC5 /* UIColor_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = UIColor_Addition.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B17B3D761BB6C90A009B8BC5 /* BaseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableViewCell.h; sourceTree = "<group>"; };
 		B17B3D771BB6C90A009B8BC5 /* BaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewCell.m; sourceTree = "<group>"; };
+		B17B9A251C60C6AC00B081F7 /* JwtsResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JwtsResponse.h; sourceTree = "<group>"; };
+		B17B9A261C60C6AC00B081F7 /* JwtsResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JwtsResponse.m; sourceTree = "<group>"; };
+		B17B9A281C60CCDD00B081F7 /* SetUpRecorderRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetUpRecorderRequest.h; sourceTree = "<group>"; };
+		B17B9A291C60CCDD00B081F7 /* SetUpRecorderRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetUpRecorderRequest.m; sourceTree = "<group>"; };
+		B17B9A2B1C60F34000B081F7 /* MessageRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageRequest.h; sourceTree = "<group>"; };
+		B17B9A2C1C60F34000B081F7 /* MessageRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageRequest.m; sourceTree = "<group>"; };
 		B184A0A51C1B0CF20087BB9C /* JwtInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JwtInformation.h; sourceTree = "<group>"; };
 		B184A0A61C1B0CF20087BB9C /* JwtInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JwtInformation.m; sourceTree = "<group>"; };
 		B1879A161C5810EE0036A660 /* StaticDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticDataTableViewController.h; sourceTree = "<group>"; };
@@ -797,6 +814,18 @@
 				B1FFFF291C18241E0049347D /* RecoverPasswordRequest.m */,
 				B184A0A51C1B0CF20087BB9C /* JwtInformation.h */,
 				B184A0A61C1B0CF20087BB9C /* JwtInformation.m */,
+				B16355781C5FB02200E0C07A /* Attribute.h */,
+				B16355791C5FB02200E0C07A /* Attribute.m */,
+				B15EEB951C607F350083658A /* Data.h */,
+				B15EEB961C607F350083658A /* Data.m */,
+				B15EEB981C6081F40083658A /* RecordersUpdateRequest.h */,
+				B15EEB991C6081F40083658A /* RecordersUpdateRequest.m */,
+				B17B9A251C60C6AC00B081F7 /* JwtsResponse.h */,
+				B17B9A261C60C6AC00B081F7 /* JwtsResponse.m */,
+				B17B9A281C60CCDD00B081F7 /* SetUpRecorderRequest.h */,
+				B17B9A291C60CCDD00B081F7 /* SetUpRecorderRequest.m */,
+				B17B9A2B1C60F34000B081F7 /* MessageRequest.h */,
+				B17B9A2C1C60F34000B081F7 /* MessageRequest.m */,
 			);
 			name = AWS;
 			sourceTree = "<group>";
@@ -1622,7 +1651,7 @@
 		B17B3D231BB6898C009B8BC5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Okan Kurtulus";
 				TargetAttributes = {
 					B17B3D2A1BB6898C009B8BC5 = {
@@ -1668,6 +1697,12 @@
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 0;
+							};
+							com.apple.SafariKeychain = {
+								enabled = 0;
 							};
 						};
 					};
@@ -1743,7 +1778,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0AC07B11C481AFC00F9CF6F /* Info.plist in Resources */,
 				D0AC07C11C481AFC00F9CF6F /* watch Extension.entitlements in Resources */,
 				D0AC07C01C481AFC00F9CF6F /* PushNotificationPayload.apns in Resources */,
 				D0AC07AD1C481AFC00F9CF6F /* Assets.xcassets in Resources */,
@@ -1821,6 +1855,7 @@
 			files = (
 				B149EB351C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m in Sources */,
 				D0AC07CF1C48223800F9CF6F /* JSONValueTransformer.m in Sources */,
+				B17B9A2A1C60CCDD00B081F7 /* SetUpRecorderRequest.m in Sources */,
 				D0D70D451C0495680068AB20 /* LoginWithEmailViewController.m in Sources */,
 				B184A0A71C1B0CF20087BB9C /* JwtInformation.m in Sources */,
 				B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */,
@@ -1836,6 +1871,7 @@
 				B16F01291C4E48350030BE65 /* ChatEntry.m in Sources */,
 				B1F045671BCFB36900A67942 /* BaseService.m in Sources */,
 				B11F8A5F1BDCC474000E79AA /* FinalizeUploadResponse.m in Sources */,
+				B15EEB971C607F350083658A /* Data.m in Sources */,
 				B1889FE11C4EBA3E003552CE /* ChatEntriesViewController.m in Sources */,
 				B13B075D1BD3716100974AC3 /* MandrillSendRequest.m in Sources */,
 				B165EF151BB71A99008C6F71 /* ContactsModel.m in Sources */,
@@ -1848,6 +1884,7 @@
 				B12EA4051C4FB1F40006F51F /* GoogleCloudMessagingModel.m in Sources */,
 				B13B07631BD3720100974AC3 /* MandrillMessage.m in Sources */,
 				B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */,
+				B15EEB9A1C6081F40083658A /* RecordersUpdateRequest.m in Sources */,
 				B1BB605F1BDE36AF00C1140B /* SignUpWithEmailViewController.m in Sources */,
 				B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */,
 				D02D2D061C0C379E00092A23 /* BaseTableViewController.m in Sources */,
@@ -1881,6 +1918,7 @@
 				B10C392E1BF6F9520070B49F /* AccountRequest.m in Sources */,
 				D0D70D491C049DC80068AB20 /* BaseButton.m in Sources */,
 				D0AC07C91C48221900F9CF6F /* JSONModel.m in Sources */,
+				B17B9A271C60C6AC00B081F7 /* JwtsResponse.m in Sources */,
 				B1EF40EE1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.m in Sources */,
 				B15B15BE1BDBC31F00C0C171 /* AWSService.m in Sources */,
 				B15FDE811C117CCE007100EC /* CachedMessage.m in Sources */,
@@ -1890,6 +1928,7 @@
 				B1BB1E5F1BD35CD300A1CE45 /* MandrillService.m in Sources */,
 				D0AC07CE1C48223500F9CF6F /* JSONKeyMapper.m in Sources */,
 				B1F93E981BC8E328005F2128 /* Repository.m in Sources */,
+				B17B9A2D1C60F34000B081F7 /* MessageRequest.m in Sources */,
 				D0AC07D81C48225100F9CF6F /* JSONHTTPClient.m in Sources */,
 				B17B3D6E1BB6BD13009B8BC5 /* ContactTableViewCell.m in Sources */,
 				B17B3D691BB6BCE5009B8BC5 /* CellFactory.m in Sources */,
@@ -1932,6 +1971,7 @@
 				D0AC07CA1C48221D00F9CF6F /* JSONModelArray.m in Sources */,
 				B15FDE7D1C117CCE007100EC /* RecentContact.m in Sources */,
 				B17B3D311BB6898C009B8BC5 /* main.m in Sources */,
+				B163557A1C5FB02200E0C07A /* Attribute.m in Sources */,
 				B108F8601BECAA5300267DEC /* SendVoiceMessageEmailModel.m in Sources */,
 				B102F9821BF0CE2000EDF7E6 /* LoginValidateEmailViewController.m in Sources */,
 				B16F01261C4E48350030BE65 /* Chat+CoreDataProperties.m in Sources */,
@@ -2150,7 +2190,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "44bb2083-c6a1-409c-9300-e3a5140c20c4";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2162,8 +2202,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Peppermint/Peppermint.entitlements;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2234,7 +2274,7 @@
 				INFOPLIST_FILE = watch/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "44bb2083-c6a1-409c-9300-e3a5140c20c4";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -2247,14 +2287,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = watch/watch.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				IBSC_MODULE = watch_Extension;
 				INFOPLIST_FILE = watch/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2aade9cd-38b1-44da-b0fe-93d1c3594c85";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -2273,7 +2313,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "44bb2083-c6a1-409c-9300-e3a5140c20c4";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -2285,14 +2325,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "watch Extension/watch Extension.entitlements";
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "a7a2178c-9824-4114-b84a-ea2576e6d177";
+				PROVISIONING_PROFILE = "a9a9dcbf-20ae-4e91-9b69-bb77b93c18ff";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;

@@ -58,6 +58,9 @@ sharedObject;\
 #pragma mark - Override Error
 #define override_error [NSException exceptionWithName:NSInternalInconsistencyException reason:[NSString stringWithFormat:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)] userInfo:nil];
 
+#pragma mark - Error
+#define exception(__key) [NSException exceptionWithName:@"User defined Exception" reason:(__key) userInfo:nil]
+
 #pragma mark - Colors Addition
 #import "UIColor_Addition.h"
 
@@ -89,6 +92,7 @@ sharedObject;\
 #define DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH  @"previousRecordingLength"
 #define DEFAULTS_KEY_TUTORIAL_TOOLTIP_IS_SHOWED @"isTutorialTooltipShowed"
 #define DEFAULTS_KEY_IS_FIRST_RUN               @"isFirstRun"
+#define DEFAULTS_GCM_REGSTRATION_TOKEN          @"GCMRegistrationToken"
 
 #pragma mark - OpenSans Fonts
 #import <OpenSans/UIFont+OpenSans.h>
@@ -118,8 +122,6 @@ sharedObject;\
 
 #define EXTENSION_M4A   @"m4a"
 #define EXTENSION_AAC   @"aac"
-
-#define KEYCHAIN_AWS_JWT            @"keychain-aws-jwt"
 
 #define CHARS_FOR_USERNAME  @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 "
 #define CHARS_FOR_EMAIL     @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@._-"

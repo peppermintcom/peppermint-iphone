@@ -44,12 +44,6 @@
     //NSLog(@"Dealloc %@ in status %d\n", self, (int)self.sendingStatus);
 }
 
--(void) setChatConversation {    
-#warning "Set transcription text!!"
-    
-    [chatModel createChatHistoryFor:self.selectedPeppermintContact withAudioData:_data transcription:@"Transcription" duration:_duration isSentByMe:YES];
-}
-
 -(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension andDuration:(NSTimeInterval)duration {
     
     NSAssert(!self.needsAuth || self.peppermintMessageSender.isValidToSendMessage , @"This model can not be triggered, because it need auth and there is no valid peppermintMessageSender");
@@ -90,6 +84,11 @@
 
 -(void) fileUploadCompletedWithPublicUrl:(NSString*) url {
     NSLog(@"File Upload is finished with url %@", url);
+
+#warning "What if contact is overSMS channel. Clearify&update below after speaking with Nuno&Andrew"
+    if( self.selectedPeppermintContact.communicationChannel == CommunicationChannelEmail ) {
+        [self sendMessageOverAWS:url];
+    }
 }
 
 #pragma mark - CustomContactModelDelegate
@@ -293,6 +292,25 @@
 
 -(void) chatHistoryCreatedWithSuccess {
     NSLog(@"chatHistoryCreatedWithSuccess");
+}
+
+#pragma mark - Chat
+
+-(void) setChatConversation {
+#warning "Set transcription text!!"
+    [chatModel createChatHistoryFor:self.selectedPeppermintContact withAudioData:_data transcription:@"Transcription" duration:_duration isSentByMe:YES];
+}
+
+#pragma mark - SendGCMMessage
+
+-(void) sendMessageOverAWS:(NSString*)publicUrl {
+#warning "Set transcription url!!"    
+    NSString *transcriptionUrl = [NSString stringWithFormat:@"http://www.youtube11.com/%@", [[NSString alloc] randomStringWithLength:3]];
+    [[AWSService new] sendMessageToRecepientEmail:self.selectedPeppermintContact.communicationChannelAddress
+                                      senderEmail:self.peppermintMessageSender.email
+                                 transcriptionUrl:transcriptionUrl
+                                         audioUrl:publicUrl
+                                              jwt:self.peppermintMessageSender.exchangedJwt];
 }
 
 @end

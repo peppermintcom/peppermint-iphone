@@ -10,6 +10,7 @@
 #import "A0SimpleKeychain.h"
 #import "JwtInformation.h"
 #import "PeppermintMessageSender.h"
+#import "GoogleCloudMessagingModel.h"
 
 @implementation AWSModel {
     NSString *jwt;
@@ -17,12 +18,14 @@
     NSString *_signedUrl;
     NSString *_contentType;
     NSData *_data;
+    BOOL isSetUpAccountAttemptActive;
 }
 
 -(id) init {
     self = [super init];
     if(self) {
         awsService = [AWSService new];
+        isSetUpAccountAttemptActive = NO;
     }
     return self;
 }
@@ -45,7 +48,7 @@
 
 -(BOOL) isJWTValid {
     BOOL result = NO;
-    jwt = [[A0SimpleKeychain keychain] stringForKey:KEYCHAIN_AWS_JWT];
+    jwt = [PeppermintMessageSender sharedInstance].recorderJwt;
     JwtInformation *jwtInformation = [JwtInformation instancewithJwt:jwt andError:nil];
     if(jwtInformation != nil) {
         //Future time is set to 2 days
@@ -67,9 +70,17 @@
 }
 
 SUBSCRIBE(RecorderSubmitSuccessful) {
-    jwt = event.jwt;
-    [[A0SimpleKeychain keychain] setString:jwt forKey:KEYCHAIN_AWS_JWT];
-    [self.delegate recorderInitIsSuccessful];
+    if(event.sender == awsService) {
+        jwt = event.jwt;
+        PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+        peppermintMessageSender.recorderJwt = jwt;
+        peppermintMessageSender.recorderId = event.recorder_id;
+        peppermintMessageSender.recorderClientId = event.recorder_client_id;
+        peppermintMessageSender.recorderKey = event.recorder_key;
+        [peppermintMessageSender save];
+        [self.delegate recorderInitIsSuccessful];
+        [self tryToUpdateGCMRegistrationToken];
+    }
 }
 
 #pragma mark - Upload File
@@ -101,7 +112,70 @@ SUBSCRIBE(FileUploadCompleted) {
 
 SUBSCRIBE(NetworkFailure) {
     if(event.sender == awsService) {
+        isSetUpAccountAttemptActive = NO;
         [self.delegate operationFailure:[event error]];
+    }
+}
+
+#pragma mark - Update GCM Registration Token
+
+- (void) tryToUpdateGCMRegistrationToken {
+    NSString *gcmToken = [GoogleCloudMessagingModel sharedInstance].registrationToken;
+    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+    if (gcmToken == nil || gcmToken.length == 0) {
+        NSLog(@"gcmToken is not defined yet!");
+    } else if (peppermintMessageSender.recorderId.length == 0 || peppermintMessageSender.recorderJwt.length == 0) {
+        NSLog(@"Recorder is not inited yet!");
+    } else {
+        [awsService updateGCMRegistrationTokenForRecorderId:peppermintMessageSender.recorderId
+                                                        jwt:peppermintMessageSender.recorderJwt
+                                                   gcmToken:gcmToken];
+    }
+}
+
+SUBSCRIBE(RecordersUpdateCompleted) {
+    if(event.sender == awsService) {
+        NSLog(@"GCM Registration token is saved to server!!");
+    }
+}
+
+#pragma mark - Set Up Recorder With Account
+
+- (void) tryToSetUpAccountWithRecorder {
+    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+    
+    if(!isSetUpAccountAttemptActive) {
+        if(peppermintMessageSender.email.length > 0 && peppermintMessageSender.password.length > 0
+           && peppermintMessageSender.recorderClientId.length>0 && peppermintMessageSender.recorderKey.length > 0) {
+            isSetUpAccountAttemptActive = YES;
+            [awsService exchangeCredentialsForEmail:peppermintMessageSender.email
+                                           password:peppermintMessageSender.password
+                                   recorderClientId:peppermintMessageSender.recorderClientId
+                                        recorderKey:peppermintMessageSender.recorderKey];
+        } else {
+            NSLog(@"Could not setup recorder with account. Not enough parameter!");
+        }
+    } else {
+        NSLog(@"A service call is already active. Not calling again!");
+    }
+}
+
+SUBSCRIBE(JwtsExchanged) {
+    if(event.sender == awsService) {
+        PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+        NSString *accountId = peppermintMessageSender.accountId;
+        NSString *recorderId = peppermintMessageSender.recorderId;
+        peppermintMessageSender.exchangedJwt = event.commonJwtsToken;
+        [peppermintMessageSender save];
+        [awsService setUpRecorderWithAccountId:accountId recorderId:recorderId jwt:event.commonJwtsToken];
+    }
+}
+
+SUBSCRIBE(SetUpAccountWithRecorderCompleted) {
+    if(event.sender == awsService) {
+        isSetUpAccountAttemptActive = NO;
+        [PeppermintMessageSender sharedInstance].isAccountSetUpWithRecorder = YES;
+        [[PeppermintMessageSender sharedInstance] save];
     }
 }
 

@@ -30,6 +30,13 @@ typedef enum : NSUInteger {
 @property (strong, nonatomic) NSString <Optional> * signature;
 @property (strong, nonatomic) NSString <Optional> * subject;
 @property (strong, nonatomic) NSString <Optional> * accountId;
+@property (strong, nonatomic) NSString <Optional> * recorderJwt;
+@property (strong, nonatomic) NSString <Optional> * recorderId;
+@property (strong, nonatomic) NSString <Optional> * recorderClientId;
+@property (strong, nonatomic) NSString <Optional> * recorderKey;
+@property (atomic) BOOL isAccountSetUpWithRecorder;
+
+@property (strong, nonatomic) NSString <Optional> * exchangedJwt;
 
 + (instancetype) sharedInstance;
 -(void) save;

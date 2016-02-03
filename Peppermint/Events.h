@@ -37,6 +37,9 @@
 
 @interface RecorderSubmitSuccessful : BaseEvent
 @property (strong, nonatomic) NSString *jwt;
+@property (strong, nonatomic) NSString *recorder_client_id;
+@property (strong, nonatomic) NSString *recorder_key;
+@property (strong, nonatomic) NSString *recorder_id;
 @end
 
 //Needs a unique handler
@@ -96,4 +99,14 @@
 @end
 
 @interface MessageSendingStatusIsUpdated : BaseEvent
+@end
+
+@interface RecordersUpdateCompleted : BaseEvent
+@end
+
+@interface JwtsExchanged : BaseEvent
+@property (strong, nonatomic) NSString *commonJwtsToken;
+@end
+
+@interface SetUpAccountWithRecorderCompleted : BaseEvent
 @end

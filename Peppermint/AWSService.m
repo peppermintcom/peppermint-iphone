@@ -49,9 +49,13 @@
                 RecorderResponse *recorderResponse = [[RecorderResponse alloc] initWithDictionary:responseObject error:&error];
                 if (error) {
                     [self failureWithOperation:nil andError:error];
-                }                
+                }
                 RecorderSubmitSuccessful *recorderSubmitSuccessful = [RecorderSubmitSuccessful new];
+                recorderSubmitSuccessful.sender = self;
                 recorderSubmitSuccessful.jwt = recorderResponse.at;
+                recorderSubmitSuccessful.recorder_client_id = recorderResponse.recorder.recorder_client_id;
+                recorderSubmitSuccessful.recorder_key = recorderResponse.recorder.recorder_key;
+                recorderSubmitSuccessful.recorder_id = recorderResponse.recorder.recorder_id;
                 PUBLISH(recorderSubmitSuccessful);
             }
         }];
@@ -308,6 +312,147 @@
         }];
         [dataTask resume];
     }
+}
+
+#pragma mark - InterApp Messaging
+
+- (void) updateGCMRegistrationTokenForRecorderId:(NSString*) recorderId jwt:(NSString*) jwt gcmToken:(NSString*)gcmToken {
+    NSParameterAssert(recorderId && jwt && gcmToken);
+    
+    NSString *url = [NSString stringWithFormat:@"%@%@%@", self.baseUrl, AWS_ENDPOINT_RECORDER_QUERY, recorderId];
+    NSString *tokenText = [self toketTextForJwt:jwt];
+    
+    AFHTTPRequestOperationManager *requestOperationManager = [[AFHTTPRequestOperationManager alloc]
+                                                              initWithBaseURL:[NSURL URLWithString:url]];
+    requestOperationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [requestOperationManager.requestSerializer setValue:tokenText forHTTPHeaderField:AUTHORIZATION];
+    [requestOperationManager.requestSerializer setValue:@"application/vnd.api+json" forHTTPHeaderField:@"Content-Type"];
+    [requestOperationManager.requestSerializer setValue:self.apiKey forHTTPHeaderField:X_API_KEY];
+    
+    Attribute *attribute = [Attribute new];
+    attribute.gcm_registration_token = gcmToken;
+    
+    Data *data = [Data new];
+    data.type = TYPE_RECORDERS;
+    data.id = recorderId;
+    data.attributes = attribute;
+    
+    RecordersUpdateRequest *recordersUpdateRequest = [RecordersUpdateRequest new];
+    recordersUpdateRequest.data = data;
+    NSDictionary *parameterDictionary = [recordersUpdateRequest toDictionary];
+    
+    [requestOperationManager PUT:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        RecordersUpdateCompleted *recordersUpdateCompleted = [RecordersUpdateCompleted new];
+        recordersUpdateCompleted.sender =self;
+        PUBLISH(recordersUpdateCompleted);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self failureWithOperation:nil andError:error];
+    }];
+}
+
+
+-(void) exchangeCredentialsForEmail:(NSString*)email password:(NSString*)password recorderClientId:(NSString*)recorderClientId recorderKey:(NSString*)recorderKey {
+    
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_JWTS];
+    NSMutableArray *authArray = [NSMutableArray new];
+    if(email.length > 0 && password.length > 0) {
+        NSString *authText = [NSString stringWithFormat:@"%@:%@", email, password];
+        authText =   [NSString stringWithFormat:@"account=%@", [authText base64String]];
+        [authArray addObject:authText];
+    }
+    if(recorderClientId.length > 0 && password.length > 0) {
+        NSString *authText = [NSString stringWithFormat:@"%@:%@", recorderClientId, recorderKey];
+        authText = [NSString stringWithFormat:@"recorder=%@", [authText base64String]];
+        [authArray addObject:authText];
+    }
+    
+    NSParameterAssert(authArray.count > 0);    
+    NSString *authHeader = [NSString stringWithFormat:@"Peppermint %@", [authArray componentsJoinedByString:@", "]];
+    
+    AFHTTPRequestOperationManager *requestOperationManager = [[AFHTTPRequestOperationManager alloc]
+                                                              initWithBaseURL:[NSURL URLWithString:url]];
+    [requestOperationManager.requestSerializer setValue:authHeader forHTTPHeaderField:AUTHORIZATION];
+    [requestOperationManager.requestSerializer setValue:self.apiKey forHTTPHeaderField:X_API_KEY];
+    requestOperationManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/vnd.api+json"];
+    
+    [requestOperationManager POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSError *error;
+        JwtsResponse *jwtsResponse = [[JwtsResponse alloc] initWithDictionary:responseObject error:&error];
+        if (error) {
+            [self failureWithOperation:nil andError:error];
+        } else {
+            JwtsExchanged *jwtsExchanged = [JwtsExchanged new];
+            jwtsExchanged.sender = self;
+            jwtsExchanged.commonJwtsToken = jwtsResponse.data.attributes.token;
+            PUBLISH(jwtsExchanged);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self failureWithOperation:nil andError:error];
+    }];    
+}
+
+-(void) setUpRecorderWithAccountId:(NSString*)accountId recorderId:(NSString*)recorderId jwt:(NSString*)jwt {
+    NSMutableString *url = [NSMutableString stringWithString:self.baseUrl];
+    [url appendFormat:AWS_ENDPOINT_SETUP_RECORDER_FORMAT, accountId];
+    
+    NSString *tokenText = [self toketTextForJwt:jwt];
+    AFHTTPRequestOperationManager *requestOperationManager = [[AFHTTPRequestOperationManager alloc]
+                                                              initWithBaseURL:[NSURL URLWithString:url]];
+    
+    requestOperationManager.requestSerializer = [AFJSONRequestSerializer new];
+    [requestOperationManager.requestSerializer setValue:@"application/vnd.api+json" forHTTPHeaderField:@"Content-Type"];
+    [requestOperationManager.requestSerializer setValue:self.apiKey forHTTPHeaderField:X_API_KEY];
+    [requestOperationManager.requestSerializer setValue:tokenText forHTTPHeaderField:AUTHORIZATION];
+    requestOperationManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/vnd.api+json"];
+    
+    Data *data = [Data new];
+    data.type = TYPE_RECORDERS;
+    data.id = recorderId;
+    SetUpRecorderRequest *setUpRecorderRequest = [SetUpRecorderRequest new];
+    setUpRecorderRequest.data = [NSArray arrayWithObjects:[data toDictionary], nil];
+    NSDictionary *parameterDictionary = [setUpRecorderRequest toDictionary];
+    
+    [requestOperationManager POST:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        SetUpAccountWithRecorderCompleted *setUpAccountWithRecorderCompleted = [SetUpAccountWithRecorderCompleted new];
+        setUpAccountWithRecorderCompleted.sender = self;
+        PUBLISH(setUpAccountWithRecorderCompleted);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self failureWithOperation:nil andError:error];
+    }];
+}
+
+-(void) sendMessageToRecepientEmail:(NSString*)recepientEmail senderEmail:(NSString*)senderEmail transcriptionUrl:(NSString*) transcriptionUrl audioUrl:(NSString*)audioUrl jwt:(NSString*) jwt {
+    
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_MESSAGES];
+    NSString *tokenText = [self toketTextForJwt:jwt];
+    AFHTTPRequestOperationManager *requestOperationManager = [[AFHTTPRequestOperationManager alloc]
+                                                              initWithBaseURL:[NSURL URLWithString:url]];
+    
+    requestOperationManager.requestSerializer = [AFJSONRequestSerializer new];
+    [requestOperationManager.requestSerializer setValue:@"application/vnd.api+json" forHTTPHeaderField:@"Content-Type"];
+    [requestOperationManager.requestSerializer setValue:self.apiKey forHTTPHeaderField:X_API_KEY];
+    [requestOperationManager.requestSerializer setValue:tokenText forHTTPHeaderField:AUTHORIZATION];
+    requestOperationManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/vnd.api+json"];
+    
+    Attribute *attribute = [Attribute new];
+    attribute.transcription_url = transcriptionUrl;
+    attribute.audio_url = audioUrl;
+    attribute.sender_email = senderEmail;
+    attribute.recipient_email = recepientEmail;
+    
+    Data *data = [Data new];
+    data.type = TYPE_MESSAGES;
+    data.attributes = attribute;
+    
+    MessageRequest *messageRequest = [MessageRequest new];
+    messageRequest.data = data;
+    NSDictionary *parameterDictionary = [messageRequest toDictionary];
+    
+    [requestOperationManager POST:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Message is sent!!");
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self failureWithOperation:operation andError:error];
+    }];
 }
 
 @end

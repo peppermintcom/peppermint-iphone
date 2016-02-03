@@ -24,4 +24,7 @@
 + (void) handleError:(NSError*) error;
 - (UIViewController *)visibleViewController;
 
+-(void) tryToSetUpAccountWithRecorder;
+-(void) tryToUpdateGCMRegistrationToken;
+
 @end
