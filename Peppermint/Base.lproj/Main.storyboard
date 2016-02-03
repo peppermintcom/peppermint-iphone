@@ -1273,14 +1273,14 @@ Version 1.0.0</string>
                         <viewControllerLayoutGuide type="bottom" id="IAs-su-oad"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="xWx-vW-Olo">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8mi-Uo-qC4" userLabel="NavigationView">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Chats" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="69h-gD-tgF">
-                                        <rect key="frame" x="0.0" y="18" width="414" height="46"/>
+                                        <rect key="frame" x="0.0" y="18" width="320" height="46"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1311,7 +1311,7 @@ Version 1.0.0</string>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Nre-9Y-nXj">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -1319,10 +1319,56 @@ Version 1.0.0</string>
                                     <outlet property="delegate" destination="1EZ-Sn-hRJ" id="zvA-be-Fbp"/>
                                 </connections>
                             </tableView>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nMM-NF-C2n">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_You haven't sent any messages yet!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BYc-kI-4bC">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="53"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="53" id="yCs-6M-PIC"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label clipsSubviews="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Go back and send a message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mvw-Mw-yXI">
+                                        <rect key="frame" x="-3" y="449" width="326" height="58"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="58" id="5tW-KT-qqg"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.36078431370000003" green="0.76862745099999996" blue="0.65098039220000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_defaultstate" translatesAutoresizingMaskIntoConstraints="NO" id="6Cb-uK-f2r">
+                                        <rect key="frame" x="91" y="53" width="138" height="138"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="138" id="eKn-5U-BtD"/>
+                                            <constraint firstAttribute="width" constant="138" id="frC-JP-QIx"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="6Cb-uK-f2r" firstAttribute="centerX" secondItem="nMM-NF-C2n" secondAttribute="centerX" id="1h9-eO-8ki"/>
+                                    <constraint firstItem="6Cb-uK-f2r" firstAttribute="top" secondItem="BYc-kI-4bC" secondAttribute="bottom" id="3tk-7I-vpW"/>
+                                    <constraint firstAttribute="trailing" secondItem="BYc-kI-4bC" secondAttribute="trailing" id="6zP-P0-Ehg"/>
+                                    <constraint firstItem="BYc-kI-4bC" firstAttribute="leading" secondItem="nMM-NF-C2n" secondAttribute="leading" id="CiK-VY-r64"/>
+                                    <constraint firstAttribute="trailing" secondItem="Mvw-Mw-yXI" secondAttribute="trailing" constant="-3" id="DEW-N1-89i"/>
+                                    <constraint firstAttribute="bottom" secondItem="Mvw-Mw-yXI" secondAttribute="bottom" constant="-3" id="GQf-O7-v6U"/>
+                                    <constraint firstItem="BYc-kI-4bC" firstAttribute="top" secondItem="nMM-NF-C2n" secondAttribute="top" id="hSI-Qe-olC"/>
+                                    <constraint firstItem="Mvw-Mw-yXI" firstAttribute="leading" secondItem="nMM-NF-C2n" secondAttribute="leading" constant="-3" id="w1U-k6-XeY"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="8mi-Uo-qC4" secondAttribute="trailing" id="9dg-jy-eTX"/>
+                            <constraint firstAttribute="trailing" secondItem="nMM-NF-C2n" secondAttribute="trailing" id="FWf-0V-UPz"/>
+                            <constraint firstItem="nMM-NF-C2n" firstAttribute="leading" secondItem="xWx-vW-Olo" secondAttribute="leading" id="IHS-VP-M1N"/>
+                            <constraint firstItem="nMM-NF-C2n" firstAttribute="top" secondItem="8mi-Uo-qC4" secondAttribute="bottom" id="PUh-uh-5G8"/>
+                            <constraint firstAttribute="bottom" secondItem="nMM-NF-C2n" secondAttribute="bottom" id="VR6-7Z-qkC"/>
                             <constraint firstAttribute="bottom" secondItem="Nre-9Y-nXj" secondAttribute="bottom" id="VTU-qR-Wal"/>
                             <constraint firstItem="8mi-Uo-qC4" firstAttribute="top" secondItem="xWx-vW-Olo" secondAttribute="top" id="gQ9-tl-Jjo"/>
                             <constraint firstAttribute="trailing" secondItem="Nre-9Y-nXj" secondAttribute="trailing" id="h9L-JP-toO"/>
@@ -1332,8 +1378,12 @@ Version 1.0.0</string>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="dxn-aQ-eKZ"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
                     <connections>
+                        <outlet property="chatsEmptyView" destination="nMM-NF-C2n" id="fka-sd-JLf"/>
+                        <outlet property="goBackAndSendMessageLabel" destination="Mvw-Mw-yXI" id="hhR-BE-gTp"/>
+                        <outlet property="informationLabel" destination="BYc-kI-4bC" id="IdE-LW-ZMj"/>
                         <outlet property="tableView" destination="Nre-9Y-nXj" id="w6R-2I-3WT"/>
                         <outlet property="titleLabel" destination="69h-gD-tgF" id="Rs9-xS-Gtg"/>
                         <segue destination="NAA-3N-hVr" kind="show" identifier="ChatEntriesViewControllerSegue" id="qlw-rs-M79"/>
@@ -1534,6 +1584,7 @@ Version 1.0.0</string>
         <image name="hold_to_record_background" width="244" height="41"/>
         <image name="icon_back" width="8" height="14"/>
         <image name="icon_close" width="14" height="14"/>
+        <image name="icon_defaultstate" width="139" height="139"/>
         <image name="icon_down" width="6" height="6"/>
         <image name="icon_menu" width="16" height="14"/>
         <image name="icon_mic_2" width="26" height="26"/>

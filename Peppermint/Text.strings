@@ -137,3 +137,5 @@
 "Please enter a valid name." = "Please enter a valid name.";
 "Please enter a valid email." = "Please enter a valid email.";
 "Please enter a valid phone number." = "Please enter a valid phone number.";
+"You haven't sent any messages yet!" = "You haven't sent any messages yet!";
+"Go back and send a message" = "Go back and send a message";

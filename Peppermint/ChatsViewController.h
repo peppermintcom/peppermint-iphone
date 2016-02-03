@@ -14,6 +14,11 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
+@property (weak, nonatomic) IBOutlet UIView     *chatsEmptyView;
+@property (weak, nonatomic) IBOutlet UILabel    *informationLabel;
+@property (weak, nonatomic) IBOutlet UILabel    *goBackAndSendMessageLabel;
+
+
 +(instancetype) createInstance;
 
 @end

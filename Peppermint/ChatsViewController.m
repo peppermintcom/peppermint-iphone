@@ -29,11 +29,13 @@
     
     chatModel = [ChatModel new];
     chatModel.delegate = self;
+    [self initChatsEmptyView];
 }
 
 -(void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     chatModel.delegate = self;
+    self.chatsEmptyView.hidden = YES;
     [chatModel refreshChatArray];
 }
 
@@ -52,6 +54,7 @@
 
 -(void) chatsArrayIsUpdated {
     [self.tableView reloadData];
+    self.chatsEmptyView.hidden = (chatModel.chatArray.count > 0);
 }
 
 #pragma mark - UITableView
@@ -116,4 +119,28 @@
     }
 }
 
+#pragma mark - ChatsEmptyView
+
+-(void) initChatsEmptyView {
+    int fontSize = 15;
+    self.informationLabel.font = [UIFont openSansSemiBoldFontOfSize:fontSize];
+    self.informationLabel.textColor = [UIColor emptyResultTableViewCellHeaderLabelTextcolorGray];
+    self.informationLabel.text = LOC(@"You haven't sent any messages yet!", @"title");
+
+    self.goBackAndSendMessageLabel.layer.borderWidth = 3;
+    self.goBackAndSendMessageLabel.layer.borderColor = [UIColor peppermintGray248].CGColor;
+    self.goBackAndSendMessageLabel.backgroundColor = [UIColor whiteColor];
+    self.goBackAndSendMessageLabel.textColor = [UIColor privacyPolicyGreen];
+    self.goBackAndSendMessageLabel.font = [UIFont openSansSemiBoldFontOfSize:fontSize];
+    self.goBackAndSendMessageLabel.text = LOC(@"Go back and send a message", @"message");
+    
+    [self.goBackAndSendMessageLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goBackAndSendAMessageLabelPressed)]];
+}
+
+-(void) goBackAndSendAMessageLabelPressed {
+    NSLog(@"goBackAndSendAMessageLabelPressed");
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+}
+     
 @end
