@@ -346,18 +346,22 @@
             UIResponder *nextResponder = [textFieldsArray objectAtIndex:(++index%textFieldsArray.count)];
             if (nextResponder) { [nextResponder becomeFirstResponder]; }
         }
-    } else {
-        if (textField == self.phoneNumberTextField) {
-            if (string.length == 0 && textField.text.length == 1) {
+    } else if (textField == self.phoneNumberTextField) {
+        
+        if([string isEqualToString:INTERNATIONAL_PHONE_SIGN]) {
+            if(textField.text.length == 0) {
                 textField.text = INTERNATIONAL_PHONE_SIGN;
-            } else if (textField.text.length == 0 && string.length != 0) {
-                textField.text = [NSString stringWithFormat:@"%@%@", INTERNATIONAL_PHONE_SIGN, string];
-            } else if (textField.text.length + string.length <= MAX_LENGTH_FOR_PHONE_NUMBER) {
-                result = YES;
             }
-        } else {
+            return NO;
+        } else if (string.length == 0 && textField.text.length == 1) {
+            textField.text = INTERNATIONAL_PHONE_SIGN;
+        } else if (textField.text.length == 0 && string.length != 0) {
+            textField.text = [NSString stringWithFormat:@"%@%@", INTERNATIONAL_PHONE_SIGN, string];
+        } else if (textField.text.length + string.length <= MAX_LENGTH_FOR_PHONE_NUMBER) {
             result = YES;
         }
+    } else {
+        result = YES;
     }
     return result;
 }

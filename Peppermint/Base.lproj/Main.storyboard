@@ -1273,14 +1273,14 @@ Version 1.0.0</string>
                         <viewControllerLayoutGuide type="bottom" id="IAs-su-oad"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="xWx-vW-Olo">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8mi-Uo-qC4" userLabel="NavigationView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Chats" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="69h-gD-tgF">
-                                        <rect key="frame" x="0.0" y="18" width="320" height="46"/>
+                                        <rect key="frame" x="0.0" y="18" width="414" height="46"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1311,7 +1311,7 @@ Version 1.0.0</string>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Nre-9Y-nXj">
-                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -1320,10 +1320,10 @@ Version 1.0.0</string>
                                 </connections>
                             </tableView>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nMM-NF-C2n">
-                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_You haven't sent any messages yet!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BYc-kI-4bC">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="53"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="53"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="53" id="yCs-6M-PIC"/>
                                         </constraints>
@@ -1332,7 +1332,7 @@ Version 1.0.0</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label clipsSubviews="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Go back and send a message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mvw-Mw-yXI">
-                                        <rect key="frame" x="-3" y="449" width="326" height="58"/>
+                                        <rect key="frame" x="-3" y="617" width="420" height="58"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="58" id="5tW-KT-qqg"/>
@@ -1342,7 +1342,7 @@ Version 1.0.0</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_defaultstate" translatesAutoresizingMaskIntoConstraints="NO" id="6Cb-uK-f2r">
-                                        <rect key="frame" x="91" y="53" width="138" height="138"/>
+                                        <rect key="frame" x="138" y="53" width="138" height="138"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="138" id="eKn-5U-BtD"/>
                                             <constraint firstAttribute="width" constant="138" id="frC-JP-QIx"/>
@@ -1378,8 +1378,7 @@ Version 1.0.0</string>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="dxn-aQ-eKZ"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="568"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="chatsEmptyView" destination="nMM-NF-C2n" id="fka-sd-JLf"/>
                         <outlet property="goBackAndSendMessageLabel" destination="Mvw-Mw-yXI" id="hhR-BE-gTp"/>
@@ -1391,7 +1390,7 @@ Version 1.0.0</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I6W-4L-781" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="633" y="1138"/>
+            <point key="canvasLocation" x="665" y="1138"/>
         </scene>
         <!--Chat Entries View Controller-->
         <scene sceneID="JVh-jH-lY8">
