@@ -22,10 +22,11 @@
 }
 
 -(void) contactInformationButtonTapped {
-    [self.delegate contactInformationButtonPressed];
+    [self.delegate contactInformationButtonPressed:self];
 }
 
 -(void) setViewForAddNewContact {
+    self.headerSeperatorView.hidden = YES;
     self.titleLabel.backgroundColor = [UIColor emailLoginColor];
     self.titleLabel.layer.shadowOffset = CGSizeMake(0, 4);
     self.titleLabel.layer.shadowColor = [UIColor shadowGreen].CGColor;
@@ -35,12 +36,27 @@
 }
 
 -(void) setViewForShowAllContacts {
+    self.headerSeperatorView.hidden = YES;
     self.titleLabel.backgroundColor = [UIColor clearColor];
     self.titleLabel.layer.shadowOffset = CGSizeMake(0, 0);
     self.titleLabel.layer.shadowColor = [UIColor clearColor].CGColor;
     self.titleLabel.layer.shadowOpacity = 0;
     self.titleLabel.layer.shadowRadius = 0;    
     [self setText:LOC(@"View All Contacts", @"Title") withImageNamed:@"icon_all" ofSize:17 andColor:[UIColor emailLoginColor]];
+}
+
+-(void) setViewForShowResultsFromPhoneContacts {
+    self.headerSeperatorView.backgroundColor = [UIColor progressContainerViewGray];
+    self.headerSeperatorView.hidden = NO;
+    self.titleLabel.backgroundColor = [UIColor clearColor];
+    self.titleLabel.layer.shadowOffset = CGSizeMake(0, 0);
+    self.titleLabel.layer.shadowColor = [UIColor clearColor].CGColor;
+    self.titleLabel.layer.shadowOpacity = 0;
+    self.titleLabel.layer.shadowRadius = 0;
+    self.titleLabel.textColor = [UIColor emailLoginColor];
+    self.titleLabel.font = [UIFont openSansSemiBoldFontOfSize:17];
+    self.titleLabel.text = LOC(@"Show results from iPhone contacts", @"Title");
+    
 }
 
 -(void) setText:(NSString*)text withImageNamed:(NSString*)imageName ofSize:(CGFloat)size andColor:(UIColor*) color {

@@ -14,15 +14,17 @@
 #import "FastReplyModel.h"
 #import "AddContactViewController.h"
 
-#define SECTION_COUNT                   4
+#define SECTION_COUNT                   5
 #define SECTION_FAST_REPLY_CONTACT      0
 #define SECTION_EMPTY_RESULT            1
 #define SECTION_CONTACTS                2
 #define SECTION_CELL_INFORMATION        3
+#define SECTION_CONTACTS_PERMISSION     4
 
 #define ROW_COUNT_FAST_REPLY            1
 #define ROW_COUNT_EMPTY_VIEW            1
 #define ROW_COUNT_SHOW_ALL_CONTACTS     1
+#define ROW_COUNT_CONTACT_PERMISSION    1
 
 #define CELL_TAG_ALL_CONTACTS           1
 #define CELL_TAG_RECENT_CONTACTS        2
@@ -46,10 +48,12 @@
     BOOL isScreenReady;
     NSUInteger activeRecordingView;
     NSTimer *holdToRecordViewTimer;
+    BOOL isContactsPermissionGranted;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    isContactsPermissionGranted = YES;
     if(!self.contactsModel) {
         self.contactsModel = [ContactsModel sharedInstance];
         self.contactsModel.delegate = self;
@@ -223,6 +227,8 @@ SUBSCRIBE(ReplyContactIsAdded) {
         numberOfRows = [self activeContactList].count;
     } else if (section == SECTION_CELL_INFORMATION) {
         numberOfRows = [self isCellInformationTableViewCellVisible] ? ROW_COUNT_SHOW_ALL_CONTACTS : 0;
+    } else if (section == SECTION_CONTACTS_PERMISSION) {
+        numberOfRows = isContactsPermissionGranted ? 0 : ROW_COUNT_CONTACT_PERMISSION;
     }
     return numberOfRows;
 }
@@ -269,6 +275,10 @@ SUBSCRIBE(ReplyContactIsAdded) {
         ContactInformationTableViewCell *cell = [CellFactory cellContactInformationTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
         [cell setViewForAddNewContact];
         preparedCell = cell;
+    } else if (indexPath.section == SECTION_CONTACTS_PERMISSION) {
+        ContactInformationTableViewCell *cell = [CellFactory cellContactInformationTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
+        [cell setViewForShowResultsFromPhoneContacts];
+        preparedCell = cell;
     }
     return preparedCell;
 }
@@ -278,8 +288,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
     if(indexPath.section == SECTION_FAST_REPLY_CONTACT) {
         height = CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
     } else if (indexPath.section == SECTION_EMPTY_RESULT) {
-        BOOL isBigScreen = [UIScreen mainScreen].bounds.size.height > SCREEN_HEIGHT_LIMIT;
-        height = isBigScreen ? CELL_HEIGHT_EMPTYRESULT_TABLEVIEWCELL : CELL_HEIGHT_EMPTYRESULT_TABLEVIEWCELL / 4;        
+        height = CELL_HEIGHT_EMPTYRESULT_TABLEVIEWCELL;
     } else if (indexPath.section == SECTION_CONTACTS) {
         if (indexPath.row < [self activeContactList].count) {
             height = CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
@@ -295,6 +304,10 @@ SUBSCRIBE(ReplyContactIsAdded) {
             }
         }
     } else if (indexPath.section == SECTION_CELL_INFORMATION) {
+        
+#warning "Dont forget to open!"
+        height = CELL_HEIGHT_CONTACT_INFORMATION_TABLEVIEWCELL;
+    } else if (indexPath.section == SECTION_CONTACTS_PERMISSION) {
         height = CELL_HEIGHT_CONTACT_INFORMATION_TABLEVIEWCELL;
     }
     return height;
@@ -482,9 +495,13 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 #pragma mark - ContactInformationTableViewCellDelegate
 
--(void) contactInformationButtonPressed {
-    isAddNewContactModalisUp = YES;
-    [AddContactViewController presentAddContactControllerWithText:self.searchContactsTextField.text withDelegate:self];
+-(void) contactInformationButtonPressed:(ContactInformationTableViewCell *)cell {
+    if(cell.indexPath.section == SECTION_CELL_INFORMATION) {
+        isAddNewContactModalisUp = YES;
+        [AddContactViewController presentAddContactControllerWithText:self.searchContactsTextField.text withDelegate:self];
+    } else if (cell.indexPath.section == SECTION_CONTACTS_PERMISSION) {
+        [self redirectToSettingsPageForPermission];
+    }
 }
 
 #pragma mark - RecordingViewDelegate
@@ -652,12 +669,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 -(void) contactsAccessRightsAreNotSupplied {
     [self.searchContactsTextField resignFirstResponder];
-    NSString *title = LOC(@"Information", @"Title Message");
-    NSString *message = LOC(@"Contacts access rights explanation", @"Directives to give access rights") ;
-    NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
-    NSString *settingsButtonTitle = LOC(@"Settings", @"Settings Message");
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:settingsButtonTitle, nil];
-    [alertView show];
+    isContactsPermissionGranted = NO;
 }
 
 -(void) contactListRefreshed {
@@ -784,25 +796,6 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 -(void) nameFieldUpdated:(NSString*)name {
     self.searchContactsTextField.text = self.contactsModel.filterText = name;
-}
-
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if([alertView.message isEqualToString:LOC(@"Contacts access rights explanation", @"Directives to give access rights")]) {
-        switch (buttonIndex) {
-            case ALERT_BUTTON_INDEX_CANCEL:
-                [self contactsAccessRightsAreNotSupplied];
-                break;
-            case ALERT_BUTTON_INDEX_OTHER_1:
-                [self redirectToSettingsPageForPermission];
-                break;
-            default:
-                NSLog(@"Unhandled button....");
-                break;
-        }
-    }
 }
 
 #pragma mark - Keyboard Actions

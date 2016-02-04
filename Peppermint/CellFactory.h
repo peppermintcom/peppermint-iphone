@@ -21,7 +21,7 @@
 
 @interface CellFactory : NSObject
 
-#define CELL_HEIGHT_EMPTYRESULT_TABLEVIEWCELL  210
+#define CELL_HEIGHT_EMPTYRESULT_TABLEVIEWCELL  52
 +(EmptyResultTableViewCell*) cellEmptyResultTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath;
 
 #define CELL_HEIGHT_CONTACT_TABLEVIEWCELL 56

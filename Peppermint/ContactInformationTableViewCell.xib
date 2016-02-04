@@ -14,6 +14,13 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="73"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uBd-7N-5Wh">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="JWT-JO-ULn"/>
+                        </constraints>
+                    </view>
                     <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cX2-fv-qTn">
                         <rect key="frame" x="111" y="15" width="99" height="43"/>
                         <attributedString key="attributedText">
@@ -29,10 +36,13 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="uBd-7N-5Wh" secondAttribute="trailing" id="2a4-hy-QBt"/>
                     <constraint firstItem="cX2-fv-qTn" firstAttribute="top" secondItem="HaG-Uv-VHi" secondAttribute="top" constant="15" id="4BF-Fz-jda"/>
                     <constraint firstItem="cX2-fv-qTn" firstAttribute="centerY" secondItem="HaG-Uv-VHi" secondAttribute="centerY" id="FJe-sm-e8K"/>
                     <constraint firstAttribute="bottom" secondItem="cX2-fv-qTn" secondAttribute="bottom" constant="5" id="Mmj-uh-cAN"/>
+                    <constraint firstItem="uBd-7N-5Wh" firstAttribute="top" secondItem="HaG-Uv-VHi" secondAttribute="top" id="WIc-cB-FVM"/>
                     <constraint firstItem="cX2-fv-qTn" firstAttribute="centerX" secondItem="HaG-Uv-VHi" secondAttribute="centerX" id="jNr-pg-0ix"/>
+                    <constraint firstItem="uBd-7N-5Wh" firstAttribute="leading" secondItem="HaG-Uv-VHi" secondAttribute="leading" id="qJV-fg-psz"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
@@ -41,6 +51,7 @@
                 </variation>
             </tableViewCellContentView>
             <connections>
+                <outlet property="headerSeperatorView" destination="uBd-7N-5Wh" id="fgG-aZ-Frh"/>
                 <outlet property="titleLabel" destination="cX2-fv-qTn" id="ZCq-IE-58s"/>
             </connections>
             <point key="canvasLocation" x="321" y="-130"/>

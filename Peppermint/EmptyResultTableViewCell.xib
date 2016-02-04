@@ -55,6 +55,6 @@ habe been found</string>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="icon_defaultstate" width="278" height="278"/>
+        <image name="icon_defaultstate" width="139" height="139"/>
     </resources>
 </document>

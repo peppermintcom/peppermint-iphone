@@ -57,6 +57,7 @@
             break;
         case APAddressBookAccessDenied:
             [self.delegate contactsAccessRightsAreNotSupplied];
+            [self initAPAddressBook];
             break;
         case APAddressBookAccessGranted:
             [self initAPAddressBook];
@@ -76,6 +77,7 @@
             dispatch_sync(dispatch_get_main_queue(), ^{
                 [self.delegate contactsAccessRightsAreNotSupplied];
             });
+            [self initAPAddressBook];
         } else {
             [self initAPAddressBook];
         }
@@ -121,7 +123,7 @@
      *  during a query is continuing.
      */
      if(++loadContactsTriggerCount == 1) {
-         
+         weakself_create();
          [addressBook loadContactsOnQueue:ContactsOperationQueue completion:
           ^(NSArray *contacts, NSError *error)
          {
@@ -162,52 +164,27 @@
 
                          for(NSString *rawPhone in contact.phones) {
                              NSString *phone = [self filterUnwantedChars:rawPhone];
-                             NSString *key = [NSString stringWithFormat:@"%@,%@", nameSurname, phone];
-                             if(self.filterText.length > 0 && ![key.lowercaseString containsString:self.filterText.lowercaseString]) {
-                                 continue;
-                             } else if([uniqueSet containsObject:key]) {
-                                 continue;
-                             } else {
-                                 [uniqueSet addObject:key];
+                             if(phone.length > 0) {
+                                 NSString *key = [NSString stringWithFormat:@"%@,%@", nameSurname, phone];
+                                 if(self.filterText.length > 0 && ![key.lowercaseString containsString:self.filterText.lowercaseString]) {
+                                     continue;
+                                 } else if([uniqueSet containsObject:key]) {
+                                     continue;
+                                 } else {
+                                     [uniqueSet addObject:key];
+                                 }
+                                 PeppermintContact *peppermintContact = [PeppermintContact new];
+                                 peppermintContact.communicationChannel = CommunicationChannelSMS;
+                                 peppermintContact.communicationChannelAddress = phone;
+                                 peppermintContact.nameSurname = nameSurname;
+                                 peppermintContact.avatarImage = contact.thumbnail;
+                                 [peppermintContactsArray addObject:peppermintContact];
                              }
-                             PeppermintContact *peppermintContact = [PeppermintContact new];
-                             peppermintContact.communicationChannel = CommunicationChannelSMS;
-                             peppermintContact.communicationChannelAddress = phone;
-                             peppermintContact.nameSurname = nameSurname;
-                             peppermintContact.avatarImage = contact.thumbnail;
-                             [peppermintContactsArray addObject:peppermintContact];
                          }
                      }
                  }
                  
-                 //Google Contacts
-                 NSArray *googleContactsArray =
-                 [GoogleContactsModel peppermintContactsArrayWithFilterText:self.filterText.trimmedText];
-                 [peppermintContactsArray addObjectsFromArray:googleContactsArray];
-                 
-                 //CustomContacts
-                 NSArray *customContactsArray =
-                 [CustomContactModel peppermintContactsArrayWithFilterText:self.filterText.trimmedText];
-                 [peppermintContactsArray addObjectsFromArray:customContactsArray];
-                 
-                 self.contactList = peppermintContactsArray;
-                 NSArray *sortedList = [self.contactList sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-                     NSString *first = [(PeppermintContact*)a nameSurname];
-                     NSString *second = [(PeppermintContact*)b nameSurname];
-                     return [first.lowercaseString compare:second.lowercaseString];
-                 }];
-                 self.contactList = [NSMutableArray arrayWithArray:sortedList];
-                 
-                 dispatch_async(LOW_PRIORITY_QUEUE, ^{
-                     for(PeppermintContact *peppermintContact in self.contactList) {
-                         [peppermintContact addToCoreSpotlightSearch];
-                     }
-                 });
-                 
-                 emailContactList = smsContactList = nil;
-                 dispatch_sync(dispatch_get_main_queue(), ^{
-                     [self.delegate contactListRefreshed];
-                 });
+                 [weakSelf callContactsDelegateWithArray:peppermintContactsArray];
              }
              
              if(--loadContactsTriggerCount > 0) {
@@ -219,6 +196,45 @@
              }
          }];
      }
+}
+
+-(void) callContactsDelegateWithArray:(NSArray*)contactsFromContacBook {
+    
+    NSMutableArray *peppermintContactsArray = [NSMutableArray new];
+    
+    //ContactBook Contacts
+    [peppermintContactsArray addObjectsFromArray:contactsFromContacBook];
+    
+    //Google Contacts
+    NSArray *googleContactsArray =
+    [GoogleContactsModel peppermintContactsArrayWithFilterText:self.filterText.trimmedText];
+    [peppermintContactsArray addObjectsFromArray:googleContactsArray];
+    
+    //CustomContacts
+    NSArray *customContactsArray =
+    [CustomContactModel peppermintContactsArrayWithFilterText:self.filterText.trimmedText];
+    [peppermintContactsArray addObjectsFromArray:customContactsArray];
+    
+    self.contactList = peppermintContactsArray;
+    NSArray *sortedList = [self.contactList sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        NSString *first = [(PeppermintContact*)a nameSurname];
+        NSString *second = [(PeppermintContact*)b nameSurname];
+        return [first.lowercaseString compare:second.lowercaseString];
+    }];
+    self.contactList = [NSMutableArray arrayWithArray:sortedList];
+    
+    dispatch_async(LOW_PRIORITY_QUEUE, ^{
+        for(PeppermintContact *peppermintContact in self.contactList) {
+            [peppermintContact addToCoreSpotlightSearch];
+        }
+    });
+    
+    emailContactList = smsContactList = nil;
+    weakself_create();
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [weakSelf.delegate contactListRefreshed];
+    });
+    
 }
 
 -(NSArray*) emailContactList {
