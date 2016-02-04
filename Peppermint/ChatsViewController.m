@@ -127,8 +127,9 @@
     self.informationLabel.textColor = [UIColor emptyResultTableViewCellHeaderLabelTextcolorGray];
     self.informationLabel.text = LOC(@"You haven't sent any messages yet!", @"title");
 
-    self.goBackAndSendMessageLabel.layer.borderWidth = 3;
-    self.goBackAndSendMessageLabel.layer.borderColor = [UIColor peppermintGray248].CGColor;
+    self.goBackAndSendMessageLabel.layer.borderWidth = 2;
+    self.goBackAndSendMessageLabel.layer.borderColor = [UIColor progressContainerViewGray].CGColor;
+    
     self.goBackAndSendMessageLabel.backgroundColor = [UIColor whiteColor];
     self.goBackAndSendMessageLabel.textColor = [UIColor privacyPolicyGreen];
     self.goBackAndSendMessageLabel.font = [UIFont openSansSemiBoldFontOfSize:fontSize];
