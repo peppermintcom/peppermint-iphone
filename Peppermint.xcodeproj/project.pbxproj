@@ -162,7 +162,6 @@
 		D0AC06ED1C4805FD00F9CF6F /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0AC06EB1C4805FD00F9CF6F /* Interface.storyboard */; };
 		D0AC06EF1C4805FD00F9CF6F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0AC06EE1C4805FD00F9CF6F /* Assets.xcassets */; };
 		D0AC06F61C4805FF00F9CF6F /* watch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D0AC06F51C4805FF00F9CF6F /* watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		D0AC070A1C48060000F9CF6F /* watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = D0AC06E91C4805FD00F9CF6F /* watch.app */; };
 		D0AC07611C48091800F9CF6F /* PeppermintContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF171BB71EC0008C6F71 /* PeppermintContact.m */; };
 		D0AC07631C4809D600F9CF6F /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0AC07621C4809D600F9CF6F /* WatchConnectivity.framework */; };
 		D0AC07651C4809E000F9CF6F /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0AC07641C4809E000F9CF6F /* Contacts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -234,13 +233,6 @@
 			remoteGlobalIDString = D0AC06F41C4805FF00F9CF6F;
 			remoteInfo = "watch Extension";
 		};
-		D0AC07081C48060000F9CF6F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B17B3D231BB6898C009B8BC5 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D0AC06E81C4805FD00F9CF6F;
-			remoteInfo = watch;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -253,17 +245,6 @@
 				D0AC06F61C4805FF00F9CF6F /* watch Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D0AC07121C48060100F9CF6F /* Embed Watch Content */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
-			dstSubfolderSpec = 16;
-			files = (
-				D0AC070A1C48060000F9CF6F /* watch.app in Embed Watch Content */,
-			);
-			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -1581,12 +1562,10 @@
 				99E5888A4AEAE0B8E8705C03 /* Copy Pods Resources */,
 				B1B6528C1BDDF8C0006987EA /* ShellScript */,
 				5C384387C21CFA56C1AB394F /* Embed Pods Frameworks */,
-				D0AC07121C48060100F9CF6F /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				D0AC07091C48060000F9CF6F /* PBXTargetDependency */,
 			);
 			name = Peppermint;
 			productName = Peppermint;
@@ -2056,11 +2035,6 @@
 			target = D0AC06F41C4805FF00F9CF6F /* watch Extension */;
 			targetProxy = D0AC06F71C4805FF00F9CF6F /* PBXContainerItemProxy */;
 		};
-		D0AC07091C48060000F9CF6F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D0AC06E81C4805FD00F9CF6F /* watch */;
-			targetProxy = D0AC07081C48060000F9CF6F /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -2202,8 +2176,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Peppermint/Peppermint.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Peppermint.com Inc (FG36H6PY86)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Peppermint.com Inc (FG36H6PY86)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2294,7 +2268,7 @@
 				INFOPLIST_FILE = watch/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5ee7fe6e-d734-4fac-a841-714eb2079cf5";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -2325,9 +2299,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "watch Extension/watch Extension.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				INFOPLIST_FILE = "watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app.watchkitapp.watchkitextension;
