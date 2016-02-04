@@ -24,4 +24,7 @@
 - (void) initGCM;
 - (void) connectGCM;
 - (void) disconnectGCM;
+
+-(void) handleIncomingMessage:(NSDictionary *) userInfo;
+
 @end

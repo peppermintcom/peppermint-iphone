@@ -156,4 +156,10 @@ NSString *const SubscriptionTopic = @"/topics/global";
     NSLog(@"didDeleteMessagesOnServer");
 }
 
+#pragma mark - Incoming Message
+
+-(void) handleIncomingMessage:(NSDictionary *) userInfo {
+    NSLog(@"Received UserInfo:\n%@", userInfo);
+}
+
 @end

@@ -274,19 +274,31 @@ SUBSCRIBE(DetachSuccess) {
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     NSLog(@"Notification received: %@", userInfo);
+    [self handleNotification:application userInfo:userInfo];
     // This works only if the app started the GCM service
-    [[GCMService sharedInstance] appDidReceiveMessage:userInfo];
+    //[[GCMService sharedInstance] appDidReceiveMessage:userInfo];
     // Handle the received message
     // ...
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))handler {
     NSLog(@"Notification received withFetchCompletionHandler: %@", userInfo);
+    [self handleNotification:application userInfo:userInfo];
     // This works only if the app started the GCM service
-    [[GCMService sharedInstance] appDidReceiveMessage:userInfo];
+    //[[GCMService sharedInstance] appDidReceiveMessage:userInfo];
     // Handle the received message
     // Invoke the completion handler passing the appropriate UIBackgroundFetchResult value
     // ...
+    
+}
+
+-(void) handleNotification:(UIApplication*) application userInfo:(NSDictionary*) userInfo {
+    [[GoogleCloudMessagingModel sharedInstance] handleIncomingMessage:userInfo];
+    
+    if(application.applicationState == UIApplicationStateActive) {
+        NSString *message = [NSString stringWithFormat:@"Message:\n%@", userInfo];
+        [[[UIAlertView alloc] initWithTitle:@"Notification" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
 }
 
 #pragma mark - Open URL
