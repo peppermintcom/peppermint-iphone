@@ -24,6 +24,8 @@
 #define IS_IPHONE_6P (IS_IPHONE && SCREEN_MAX_LENGTH == 736.0)
 #define IS_IPAD_PRO (IS_IPAD && SCREEN_MAX_LENGTH == 1366.0)
 
+#define IS_IOS8_2_AND_UP ([[UIDevice currentDevice].systemVersion floatValue] >= 8.2)
+
 #pragma mark - NSLOG Definition
 
 #ifdef DEBUG

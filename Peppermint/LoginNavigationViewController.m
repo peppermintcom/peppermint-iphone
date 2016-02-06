@@ -42,11 +42,12 @@
 }
 
 -(void) loginSucceed {
+    weakself_create();
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self dismissViewControllerAnimated:YES completion:^{
-            [self loginFinishedLoading];
+        [weakSelf dismissViewControllerAnimated:YES completion:^{
+            [weakSelf loginFinishedLoading];
             PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
-            [self.loginDelegate loginSucceedWithMessageSender:peppermintMessageSender];
+            [weakSelf.loginDelegate loginSucceedWithMessageSender:peppermintMessageSender];
         }];
     });
 }

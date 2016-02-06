@@ -99,10 +99,15 @@ int OPTION_LOG_OUT              = 0;
 -(void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if(![self.peppermintMessageSender isValidToSendMessage]) {
-        weakself_create();
-        [LoginNavigationViewController logUserInWithDelegate:nil completion:^{
-            [weakSelf.navigationController popViewControllerAnimated:NO];
-        }];
+        if(IS_IOS8_2_AND_UP) {
+            weakself_create();
+            [LoginNavigationViewController logUserInWithDelegate:nil completion:^{
+                [weakSelf.navigationController popViewControllerAnimated:NO];
+            }];
+        } else {
+            [self.navigationController popViewControllerAnimated:NO];
+            [LoginNavigationViewController logUserInWithDelegate:nil completion:nil];
+        }
     }
 }
 
