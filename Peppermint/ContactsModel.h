@@ -49,6 +49,7 @@
 +(NSPredicate*) contactPredicateWithCommunicationChannelAddress:(NSString *)communicationChannelAddress;
 
 +(NSPredicate*) contactPredicateWithNameSurname:(NSString*) nameSurname communicationChannel:(CommunicationChannel)communicationChannel;
++(NSPredicate*) contactPredicateWithNameSurnameMatchExact:(NSString*) nameSurname communicationChannel:(CommunicationChannel)communicationChannel;
 +(NSPredicate*) contactPredicateWithCommunicationChannelAddress:(NSString*)communicationChannelAddress communicationChannel:(CommunicationChannel)communicationChannel;
 +(NSPredicate*) contactPredicateWithNameSurname:(NSString*) nameSurname communicationChannelAddress:(NSString*)communicationChannelAddress communicationChannel:(CommunicationChannel)communicationChannel;
 

@@ -140,3 +140,10 @@
 "You haven't sent any messages yet!" = "You haven't sent any messages yet!";
 "Go back and send a message" = "Go back and send a message";
 "Show results from iPhone contacts" = "Show results from iPhone contacts";
+"Sending via SMS" = "Sending via SMS";
+"Sending via SMS may cost you money. Continue?" = "Sending via SMS may cost you\nmoney. Continue?";
+"Send to Email Instead" = "Send to Email Instead";
+"Do not ask this again and always send the SMS message" = "Do not ask this again and always\nsend the SMS message";
+"Yes" = "Yes";
+"No" = "No";
+"Add email address" = "Add email address";

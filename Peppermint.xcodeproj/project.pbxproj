@@ -10,6 +10,8 @@
 		392D9C861A6F3945B758D95F /* libPods-Peppermint.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4568D87C1B184E71C2B112BE /* libPods-Peppermint.a */; };
 		B100A54A1BEDD6F800EEB573 /* CacheModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B100A5491BEDD6F800EEB573 /* CacheModel.m */; };
 		B10125BC1BEB670500B5DD54 /* NSString_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B10125BB1BEB670500B5DD54 /* NSString_Addition.m */; };
+		B101633B1C637983008CC8D0 /* SMSChargeWarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B101633A1C637983008CC8D0 /* SMSChargeWarningView.xib */; };
+		B101633E1C6379AF008CC8D0 /* SMSChargeWarningView.m in Sources */ = {isa = PBXBuildFile; fileRef = B101633D1C6379AF008CC8D0 /* SMSChargeWarningView.m */; };
 		B102BBB81BCD03EC001E1E7A /* UIViewController_AdditionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B102BBB71BCD03EC001E1E7A /* UIViewController_AdditionViewController.m */; };
 		B102DD5E1BD0802100D71D62 /* BaseCustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = B102DD5D1BD0802100D71D62 /* BaseCustomView.m */; };
 		B102F9821BF0CE2000EDF7E6 /* LoginValidateEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B102F9811BF0CE2000EDF7E6 /* LoginValidateEmailViewController.m */; };
@@ -256,6 +258,9 @@
 		B100A5491BEDD6F800EEB573 /* CacheModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheModel.m; sourceTree = "<group>"; };
 		B10125BA1BEB670500B5DD54 /* NSString_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSString_Addition.h; sourceTree = "<group>"; };
 		B10125BB1BEB670500B5DD54 /* NSString_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSString_Addition.m; sourceTree = "<group>"; };
+		B101633A1C637983008CC8D0 /* SMSChargeWarningView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMSChargeWarningView.xib; sourceTree = "<group>"; };
+		B101633C1C6379AF008CC8D0 /* SMSChargeWarningView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMSChargeWarningView.h; sourceTree = "<group>"; };
+		B101633D1C6379AF008CC8D0 /* SMSChargeWarningView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMSChargeWarningView.m; sourceTree = "<group>"; };
 		B102BBB51BCCE039001E1E7A /* nsuserdefaults-helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "nsuserdefaults-helper.h"; sourceTree = "<group>"; };
 		B102BBB61BCD03EC001E1E7A /* UIViewController_AdditionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIViewController_AdditionViewController.h; sourceTree = "<group>"; };
 		B102BBB71BCD03EC001E1E7A /* UIViewController_AdditionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIViewController_AdditionViewController.m; sourceTree = "<group>"; };
@@ -664,6 +669,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B10163391C6378D0008CC8D0 /* SMSChargeWarningView */ = {
+			isa = PBXGroup;
+			children = (
+				B101633C1C6379AF008CC8D0 /* SMSChargeWarningView.h */,
+				B101633D1C6379AF008CC8D0 /* SMSChargeWarningView.m */,
+				B101633A1C637983008CC8D0 /* SMSChargeWarningView.xib */,
+			);
+			name = SMSChargeWarningView;
+			sourceTree = "<group>";
+		};
 		B102DD5B1BD0800B00D71D62 /* BaseCustomView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1046,6 +1061,7 @@
 		B17B3D551BB689F1009B8BC5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B10163391C6378D0008CC8D0 /* SMSChargeWarningView */,
 				B1DBEF441C537A1D007AAF4A /* RecordingGestureButton */,
 				B1D2A6D41C2006E9002BD6DF /* RecordingView */,
 				B17801731C1EFE6F00BA2436 /* TutorialView */,
@@ -1726,6 +1742,7 @@
 				B16DA2221BE10A8B00EBF043 /* SlideMenuTableViewCell.xib in Resources */,
 				D074A6741C0727700017EAC3 /* CountryRow.xib in Resources */,
 				B13B50281BF38D57009D3348 /* InformationTextTableViewCell.xib in Resources */,
+				B101633B1C637983008CC8D0 /* SMSChargeWarningView.xib in Resources */,
 				B1BB60171BDE0E3200C1140B /* LoginTableViewCell.xib in Resources */,
 				B17B3D3C1BB6898C009B8BC5 /* Images.xcassets in Resources */,
 				B15B15B21BDBBAB200C0C171 /* Login.storyboard in Resources */,
@@ -1870,6 +1887,7 @@
 				B15FDE841C117CFE007100EC /* CustomContactModel.m in Sources */,
 				B1A4AA511BF4DA9D005D55CB /* AccountViewController.m in Sources */,
 				B15FDE871C119D60007100EC /* UIImage_Addition.m in Sources */,
+				B101633E1C6379AF008CC8D0 /* SMSChargeWarningView.m in Sources */,
 				D02D2D071C0C3A8500092A23 /* Events.m in Sources */,
 				B10C39341BF6FC840070B49F /* AccountResponse.m in Sources */,
 				B17B3D5B1BB6A49E009B8BC5 /* BaseViewController.m in Sources */,

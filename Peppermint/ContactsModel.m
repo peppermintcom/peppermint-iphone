@@ -294,4 +294,14 @@
             [NSArray arrayWithObjects:namePredicate, mailPredicate, nil]];
 }
 
++(NSPredicate*) contactPredicateWithNameSurnameMatchExact:(NSString*) nameSurname communicationChannel:(CommunicationChannel)communicationChannel
+{
+    NSPredicate* nameExactMatchPredicate = [NSPredicate predicateWithFormat:@"self.nameSurname ==[cd] %@", nameSurname];
+    NSPredicate* communicationChannelPredicate = [self contactPredicateWithCommunicationChannel:communicationChannel];
+    return [NSCompoundPredicate andPredicateWithSubpredicates:
+            [NSArray arrayWithObjects: nameExactMatchPredicate, communicationChannelPredicate, nil]];
+}
+
+
+
 @end

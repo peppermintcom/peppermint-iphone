@@ -88,10 +88,6 @@
     return [MFMessageComposeViewController canSendText];
 }
 
--(void) messagePrepareIsStarting {
-    self.sendingStatus = SendingStatusStarting;
-}
-
 -(BOOL) isCancelAble {
     return
     self.sendingStatus == SendingStatusStarting

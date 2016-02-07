@@ -8,6 +8,8 @@
 
 #import "RecordingView.h"
 #import "LoginNavigationViewController.h"
+#import "SMSChargeWarningView.h"
+#import "SendVoiceMessageMandrillModel.h"
 
 typedef enum : NSUInteger {
     RecordingViewStatusResignActive,
@@ -17,7 +19,7 @@ typedef enum : NSUInteger {
     RecordingViewStatusFinishing,
 } RecordingViewStatus;
 
-@interface RecordingView() <LoginNavigationViewControllerDelegate>
+@interface RecordingView() <LoginNavigationViewControllerDelegate, SMSChargeWarningViewDelegate>
 
 @end
 
@@ -25,7 +27,8 @@ typedef enum : NSUInteger {
     RecordingViewStatus recordingViewStatus;
     NSData *audioData;
     NSString *audioDataExtension;
-    NSInteger totalSeconds;
+    NSInteger cachedSeconds;
+    SMSChargeWarningView *smsChargeWarningView;
 }
 
 #pragma mark - Must to override Functions
@@ -50,6 +53,7 @@ typedef enum : NSUInteger {
     self.hidden = YES;
     recordingViewStatus = RecordingViewStatusInit;
     defaults_set_object(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH, 0);
+    [self initSMSChargeView];
     REGISTER();
 }
 
@@ -104,8 +108,47 @@ typedef enum : NSUInteger {
 #pragma mark - PerformOperationsToSend
 
 -(void) performOperationsToSend {
+    cachedSeconds = self.totalSeconds;
+    
+    if(self.sendVoiceMessageModel.selectedPeppermintContact.communicationChannel
+       ==  CommunicationChannelSMS) {
+        [smsChargeWarningView presentOverView:self
+                               forNameSurname:self.sendVoiceMessageModel.selectedPeppermintContact.nameSurname];
+    } else {
+        [self triggerMessageSendProcess];
+    }
+}
+
+-(void) triggerMessageSendProcess {
     [self.sendVoiceMessageModel messagePrepareIsStarting];
     [self.recordingModel prepareRecordData];
+}
+
+#pragma mark - SMSChargeView
+
+-(void) initSMSChargeView {
+    smsChargeWarningView = [SMSChargeWarningView createInstanceWithDelegate:self];
+}
+
+#pragma mark - SMSChargeWarningViewDelegate
+
+- (void) userConfirmsToSendSMS {
+    [self triggerMessageSendProcess];
+}
+
+- (void) sendMailInsteadOfSmsToRecepient:(NSString*) email {
+    if(![email isValidEmail]) {
+        NSLog(@"%@ is not a valid email", email);
+    } else {
+        SendVoiceMessageMandrillModel *sendVoiceMessageMandrillModel = [SendVoiceMessageMandrillModel new];
+        sendVoiceMessageMandrillModel.selectedPeppermintContact = self.sendVoiceMessageModel.selectedPeppermintContact;
+        sendVoiceMessageMandrillModel.selectedPeppermintContact.communicationChannel = CommunicationChannelEmail;
+        sendVoiceMessageMandrillModel.selectedPeppermintContact.communicationChannelAddress = email;
+        sendVoiceMessageMandrillModel.peppermintMessageSender = self.sendVoiceMessageModel.peppermintMessageSender;
+        self.sendVoiceMessageModel = sendVoiceMessageMandrillModel;
+        self.sendVoiceMessageModel.delegate = self;
+        [self triggerMessageSendProcess];
+    };
 }
 
 #pragma mark - Record Actions
@@ -150,6 +193,8 @@ typedef enum : NSUInteger {
 
 -(void) timerUpdated:(NSTimeInterval) timeInterval {
     self.totalSeconds = timeInterval;
+    NSLog(@"total seconds: %.4f", self.totalSeconds);
+    
     self.currentMinutes = self.totalSeconds / 60;
     self.currentSeconds = ((int)self.totalSeconds) % 60;
     if(self.totalSeconds > MAX_RECORD_TIME) {
@@ -166,14 +211,17 @@ typedef enum : NSUInteger {
     [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:sendButtonTitle, nil] show];
 }
 
-- (void) recordDataIsPrepared:(NSData *)data withExtension:(NSString*) extension {    
-    if(!self.sendVoiceMessageModel.needsAuth
-       || self.sendVoiceMessageModel.peppermintMessageSender.isValidToSendMessage) {
-        [self.sendVoiceMessageModel sendVoiceMessageWithData:data withExtension:extension  andDuration:self.totalSeconds];
+- (void) recordDataIsPrepared:(NSData *)data withExtension:(NSString*) extension {
+    
+    BOOL isAuthProcessOK =
+    !self.sendVoiceMessageModel.needsAuth
+    || self.sendVoiceMessageModel.peppermintMessageSender.isValidToSendMessage;
+    
+    if(isAuthProcessOK) {
+        [self.sendVoiceMessageModel sendVoiceMessageWithData:data withExtension:extension  andDuration:cachedSeconds];
     } else {
         audioData = data;
         audioDataExtension = extension;
-        totalSeconds = self.totalSeconds;
         self.sendVoiceMessageModel.sendingStatus = SendingStatusCancelled;
         [LoginNavigationViewController logUserInWithDelegate:self completion:nil];
     }
@@ -183,10 +231,10 @@ typedef enum : NSUInteger {
 
 -(void) loginSucceedWithMessageSender:(PeppermintMessageSender*) peppermintMessageSender {    
     if(peppermintMessageSender.isValidToSendMessage) {
-        NSAssert(totalSeconds >= MIN_VOICE_MESSAGE_LENGTH
+        NSAssert(cachedSeconds >= MIN_VOICE_MESSAGE_LENGTH
                  && audioData && audioDataExtension , @"Audio data is not ready to send!");
         self.sendVoiceMessageModel.sendingStatus = SendingStatusInited;
-        [self.sendVoiceMessageModel sendVoiceMessageWithData:audioData withExtension:audioDataExtension  andDuration:totalSeconds];
+        [self.sendVoiceMessageModel sendVoiceMessageWithData:audioData withExtension:audioDataExtension  andDuration:cachedSeconds];
     }
 }
 
