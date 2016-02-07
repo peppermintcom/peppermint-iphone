@@ -219,6 +219,7 @@
     
     self.isAccountSetUpWithRecorder = NO;
     
+    defaults_reset();    
     [self save];
 }
 

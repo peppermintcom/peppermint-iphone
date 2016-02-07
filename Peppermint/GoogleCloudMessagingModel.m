@@ -162,4 +162,19 @@ NSString *const SubscriptionTopic = @"/topics/global";
     NSLog(@"Received UserInfo:\n%@", userInfo);
 }
 
+#pragma mark - Send Test Message
+
+-(void) sendTestMessage {
+#ifdef DEBUG
+    NSString *messageId = [[NSDate new] description];
+    NSString *gcmId = @"nfzdIh6UcPU:APA91bFFZXoD8ixLqlZJcP3oz3fn2EHLKi_iZ3-cRzJ59_zmNxQjLVwLzx_SyeZld03lVbaUYt8CdDSG5TF2CgZHLrRPbbEs5OVEC_-7Af96eyR9rRKABgTolTRKtjAMC4O5YUrmN3y_";
+    NSDictionary *infoDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                              messageId,    @"messageId",
+                              gcmId,        @"gcmId",
+                              nil];
+    [[GCMService sharedInstance] sendMessage:infoDict to:gcmId withId:messageId];
+#endif
+
+}
+
 @end

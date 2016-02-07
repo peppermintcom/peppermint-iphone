@@ -88,6 +88,8 @@
 #warning "What if contact is overSMS channel. Clearify&update below after speaking with Nuno&Andrew"
     if( self.selectedPeppermintContact.communicationChannel == CommunicationChannelEmail ) {
         [self sendMessageOverAWS:url];
+    } else {
+        NSLog(@"App does not send message over SMS address yet");
     }
 }
 
@@ -291,7 +293,7 @@
 #pragma mark - ChatModelDelegate
 
 -(void) chatHistoryCreatedWithSuccess {
-    NSLog(@"chatHistoryCreatedWithSuccess");
+    [self.delegate chatHistoryCreatedWithSuccess];
 }
 
 #pragma mark - Chat
@@ -305,6 +307,14 @@
 
 -(void) sendMessageOverAWS:(NSString*)publicUrl {
 #warning "Set transcription url!!"    
+    
+    
+    #warning "Remove JWT logging"
+    NSString *jwt = self.peppermintMessageSender.jwt;
+    NSString *recorderJwt = self.peppermintMessageSender.recorderJwt;
+    NSString *exchangedJwt = self.peppermintMessageSender.exchangedJwt;
+    NSLog(@"account jwt:\n%@\n\nrecorder jwt:\n%@\n\nexhanged jwt:\n%@\n\n", jwt, recorderJwt, exchangedJwt);    
+    
     NSString *transcriptionUrl = [NSString stringWithFormat:@"http://www.youtube11.com/%@", [[NSString alloc] randomStringWithLength:3]];
     [[AWSService new] sendMessageToRecepientEmail:self.selectedPeppermintContact.communicationChannelAddress
                                       senderEmail:self.peppermintMessageSender.email

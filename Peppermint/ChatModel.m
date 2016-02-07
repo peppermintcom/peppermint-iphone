@@ -30,8 +30,8 @@
     dispatch_async(LOW_PRIORITY_QUEUE, ^{
         Repository *repository = [Repository beginTransaction];
         _chatArray = [repository getResultsFromEntity:[Chat class] predicateOrNil:nil ascSortStringOrNil:nil descSortStringOrNil:[NSArray arrayWithObjects:@"lastMessageDate", nil]];
+
 #ifdef DEBUG
-        #warning "Dont forget to delete here!"
         //[self checkAndCreateRandomChats:repository];
 #endif
         dispatch_async(dispatch_get_main_queue(), ^{

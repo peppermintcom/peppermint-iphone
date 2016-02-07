@@ -451,7 +451,8 @@
     [requestOperationManager POST:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"Message is sent!!");
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self failureWithOperation:operation andError:error];
+        //[self failureWithOperation:operation andError:error];
+        NSLog(@"Message could not be sent!!");
     }];
 }
 

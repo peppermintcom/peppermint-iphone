@@ -176,6 +176,7 @@ SUBSCRIBE(SetUpAccountWithRecorderCompleted) {
         isSetUpAccountAttemptActive = NO;
         [PeppermintMessageSender sharedInstance].isAccountSetUpWithRecorder = YES;
         [[PeppermintMessageSender sharedInstance] save];
+        NSLog(@"SetUpAccountWithRecorderCompleted");
     }
 }
 

@@ -227,7 +227,6 @@
 
 -(void) recordingViewDissappeared {
     NSLog(@"recordingViewDissappeared");
-    [self.chatModel refreshChatEntries];
 }
 
 -(void) message:(NSString*) message isUpdatedWithStatus:(SendingStatus) sendingStatus cancelAble:(BOOL)isCacnelAble {
@@ -240,6 +239,7 @@
 
 -(void) chatHistoryCreatedWithSuccess {
     NSLog(@"chatHistoryCreatedWithSuccess");
+    [self.chatModel refreshChatEntries];
 }
 
 #pragma mark - HoldToRecordView

@@ -304,8 +304,6 @@ SUBSCRIBE(ReplyContactIsAdded) {
             }
         }
     } else if (indexPath.section == SECTION_CELL_INFORMATION) {
-        
-#warning "Dont forget to open!"
         height = CELL_HEIGHT_CONTACT_INFORMATION_TABLEVIEWCELL;
     } else if (indexPath.section == SECTION_CONTACTS_PERMISSION) {
         height = CELL_HEIGHT_CONTACT_INFORMATION_TABLEVIEWCELL;

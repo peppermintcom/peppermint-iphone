@@ -276,7 +276,9 @@ SUBSCRIBE(DetachSuccess) {
     NSLog(@"Notification received: %@", userInfo);
     [self handleNotification:application userInfo:userInfo];
     // This works only if the app started the GCM service
+    
     //[[GCMService sharedInstance] appDidReceiveMessage:userInfo];
+    
     // Handle the received message
     // ...
 }
@@ -285,7 +287,9 @@ SUBSCRIBE(DetachSuccess) {
     NSLog(@"Notification received withFetchCompletionHandler: %@", userInfo);
     [self handleNotification:application userInfo:userInfo];
     // This works only if the app started the GCM service
+    
     //[[GCMService sharedInstance] appDidReceiveMessage:userInfo];
+    
     // Handle the received message
     // Invoke the completion handler passing the appropriate UIBackgroundFetchResult value
     // ...
@@ -293,6 +297,9 @@ SUBSCRIBE(DetachSuccess) {
 }
 
 -(void) handleNotification:(UIApplication*) application userInfo:(NSDictionary*) userInfo {
+    
+    [[GCMService sharedInstance] appDidReceiveMessage:userInfo];
+    
     [[GoogleCloudMessagingModel sharedInstance] handleIncomingMessage:userInfo];
     
     if(application.applicationState == UIApplicationStateActive) {
