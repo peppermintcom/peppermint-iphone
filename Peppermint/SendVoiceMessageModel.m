@@ -82,12 +82,12 @@
     dispatch_semaphore_signal(dispatch_semaphore);
 }
 
--(void) fileUploadCompletedWithPublicUrl:(NSString*) url {
+-(void) fileUploadCompletedWithPublicUrl:(NSString*) url canonicalUrl:(NSString*)canonicalUrl {
     NSLog(@"File Upload is finished with url %@", url);
 
 #warning "What if contact is overSMS channel. Clearify&update below after speaking with Nuno&Andrew"
     if( self.selectedPeppermintContact.communicationChannel == CommunicationChannelEmail ) {
-        [self sendMessageOverAWS:url];
+        [self sendMessageOverAWS:canonicalUrl];
     } else {
         NSLog(@"App does not send message over SMS address yet");
     }
@@ -300,7 +300,9 @@
 
 -(void) setChatConversation {
 #warning "Set transcription text!!"
-    [chatModel createChatHistoryFor:self.selectedPeppermintContact withAudioData:_data transcription:@"Transcription" duration:_duration isSentByMe:YES];
+    NSDate *createDate = [NSDate new];
+    [chatModel createChatHistoryFor:self.selectedPeppermintContact withAudioData:_data audioUrl:nil
+                      transcription:@"Transcription" duration:_duration isSentByMe:YES createDate:createDate];
 }
 
 #pragma mark - SendGCMMessage

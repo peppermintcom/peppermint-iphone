@@ -12,6 +12,9 @@
 #if !(TARGET_OS_WATCH)
 #import "GoogleContactsModel.h"
 #import "AppDelegate.h"
+
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <Google/SignIn.h>
 #endif
 
 #define KEY                     @"PeppermintMessageSenderJson"
@@ -73,7 +76,7 @@
     [self watchSynchronize];
     [self.imageData writeToURL:[self imageFileUrl] atomically:YES];
     
-    if(!self.isAccountSetUpWithRecorder) {
+    if(!self.isAccountSetUpWithRecorder && self.gcmToken.length > 0) {
         [[AppDelegate Instance] tryToSetUpAccountWithRecorder];
     }
 #endif
@@ -216,10 +219,12 @@
     self.recorderClientId = nil;
     self.recorderKey = nil;
     self.exchangedJwt = nil;
+    self.gcmToken = nil;
     
     self.isAccountSetUpWithRecorder = NO;
     
-    defaults_reset();    
+    defaults_reset();
+    defaults_set_object(DEFAULTS_KEY_IS_FIRST_RUN, DEFAULTS_KEY_IS_FIRST_RUN);
     [self save];
 }
 
@@ -232,7 +237,21 @@
 -(void) verifyEmail {
     self.isEmailVerified = YES;
     [self save];
-    
+}
+
+
+#warning "Remove below 2 functions if they are not needed!!"
+
+-(NSString*) currentFacebookToken {
+    NSString *facebookToken = [FBSDKAccessToken currentAccessToken].tokenString;
+    NSLog(@"Facebook token: %@", facebookToken);
+    return facebookToken;
+}
+
+-(NSString*) currentGoogleToken {
+    NSString *googleToken = [[GIDSignIn sharedInstance].currentUser.authentication accessToken];
+    NSLog(@"Google token: %@", googleToken);
+    return googleToken;
 }
 
 #endif

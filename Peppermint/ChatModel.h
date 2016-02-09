@@ -24,7 +24,12 @@
 @property (strong, atomic, readonly) NSArray<ChatEntry*> *chatEntriesArray;
 
 -(void) refreshChatArray ;
+-(void) resetChatEntries;
 -(void) refreshChatEntries;
-- (void) createChatHistoryFor:(PeppermintContact*) peppermintContact withAudioData:(NSData*) audioData transcription:(NSString*) transcription duration:(NSTimeInterval)duration isSentByMe:(BOOL)isSentByMe;
+- (void) createChatHistoryFor:(PeppermintContact*) peppermintContact withAudioData:(NSData*) audioData audioUrl:(NSString*)audioUrl transcription:(NSString*) transcription duration:(NSTimeInterval)duration isSentByMe:(BOOL)isSentByMe createDate:(NSDate*)createDate;
+
++(void) markChatEntryListened:(ChatEntry *) chatEntry;
++(NSUInteger) unreadMessageCountOfChat:(Chat*) chat;
++(NSDate*) lastMessageDateOfChat:(Chat*) chat;
 
 @end

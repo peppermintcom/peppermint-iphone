@@ -24,7 +24,11 @@
 #import "SetUpRecorderRequest.h"
 #import "MessageRequest.h"
 
+#ifdef DEBUG
 #define AWS_API_KEY                     @"abc123"
+#else
+#define AWS_API_KEY                     @"AiaWKSSoYgNv5WdLFMqkh1j7TgKq7evmQlOiFNAQxkXL7GrIHVqQJw"
+#endif
 
 #define AWS_BASE_URL                    @"https://qdkkavugcd.execute-api.us-west-2.amazonaws.com/prod/v1"
 #define AWS_ENDPOINT_RECORDER           @"/recorder"
@@ -56,7 +60,7 @@
 -(void) recoverPasswordForEmail:(NSString*) email;
 
 -(void) updateGCMRegistrationTokenForRecorderId:(NSString*) recorderId jwt:(NSString*) jwt gcmToken:(NSString*)gcmToken;
--(void) exchangeCredentialsForEmail:(NSString*)email password:(NSString*)password recorderClientId:(NSString*)recorderClientId recorderKey:(NSString*)recorderKey;
+-(void) exchangeCredentialsWithPrefix:(NSString*)prefix forEmail:(NSString*)email password:(NSString*)password recorderClientId:(NSString*)recorderClientId recorderKey:(NSString*)recorderKey;
 -(void) setUpRecorderWithAccountId:(NSString*)accountId recorderId:(NSString*)recorderId jwt:(NSString*)jwt;
 -(void) sendMessageToRecepientEmail:(NSString*)recepientEmail senderEmail:(NSString*)senderEmail transcriptionUrl:(NSString*) transcriptionUrl audioUrl:(NSString*)audioUrl jwt:(NSString*) jwt;
 @end

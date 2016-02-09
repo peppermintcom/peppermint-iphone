@@ -208,7 +208,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
 #pragma mark - CellInformationTableViewCell
 
 -(BOOL) isCellInformationTableViewCellVisible {
-    return isScreenReady;
+    return isScreenReady && isContactsPermissionGranted;
 }
 
 #pragma mark - UITableView

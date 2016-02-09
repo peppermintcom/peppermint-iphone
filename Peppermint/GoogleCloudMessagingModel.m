@@ -9,9 +9,17 @@
 #import "GoogleCloudMessagingModel.h"
 #import <UIKit/UIApplication.h>
 #import "AppDelegate.h"
+#import "PeppermintMessageSender.h"
+#import "ChatModel.h"
+#import "PeppermintContact.h"
+#import "ContactsModel.h"
+
+#define RETRY_LIMIT_ON_ERROR    5
 
 @implementation GoogleCloudMessagingModel {
-    NSString *gcmSenderId;
+    NSMutableSet *errorMessagesSet;
+    int sameErrorOccuredCount;
+    ChatModel *chatModel;
 }
 
 NSString *const SubscriptionTopic = @"/topics/global";
@@ -28,6 +36,9 @@ NSString *const SubscriptionTopic = @"/topics/global";
 -(id) initShared {
     self = [super init];
     if(self) {
+        errorMessagesSet = [NSMutableSet new];
+        sameErrorOccuredCount = 0;
+        chatModel = [ChatModel new];
     }
     return self;
 }
@@ -64,11 +75,12 @@ NSString *const SubscriptionTopic = @"/topics/global";
         if (registrationToken != nil) {
             weakSelf.registrationToken = registrationToken;
             NSLog(@"Registration Token: %@", registrationToken);
-            [weakSelf subscribedToTopic];
             
-            NSString *existingToken = defaults_object(DEFAULTS_GCM_REGSTRATION_TOKEN);
-            if(!existingToken || ![existingToken isEqualToString:registrationToken]) {
-                defaults_set_object(DEFAULTS_GCM_REGSTRATION_TOKEN, registrationToken);
+            PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+            NSString *existingToken = peppermintMessageSender.gcmToken;
+            if(!existingToken
+               || !peppermintMessageSender.isAccountSetUpWithRecorder
+               || ![existingToken isEqualToString:registrationToken]) {
                 [[AppDelegate Instance] tryToUpdateGCMRegistrationToken];
             }
             
@@ -86,38 +98,25 @@ NSString *const SubscriptionTopic = @"/topics/global";
     };
 }
 
-- (void)subscribeToTopic {
-    // If the app has a registration token and is connected to GCM, proceed to subscribe to the
-    // topic
-    if (_registrationToken && _connectedToGCM) {
-        [[GCMPubSub sharedInstance] subscribeWithToken:_registrationToken
-                                                 topic:SubscriptionTopic
-                                               options:nil
-                                               handler:^(NSError *error) {
-                                                   if (error) {
-                                                       // Treat the "already subscribed" error more gently
-                                                       if (error.code == 3001) {
-                                                           NSLog(@"Already subscribed to %@",
-                                                                 SubscriptionTopic);
-                                                       } else {
-                                                           NSLog(@"Subscription failed: %@",
-                                                                 error.localizedDescription);
-                                                       }
-                                                   } else {
-                                                       self.subscribedToTopic = true;
-                                                       NSLog(@"Subscribed to %@", SubscriptionTopic);
-                                                   }
-                                               }];
+#pragma mark - GCM Connection
+
+-(BOOL) shouldTryAgainForError:(NSError*) error {
+    if([errorMessagesSet containsObject:error.localizedDescription]) {
+        sameErrorOccuredCount++;
     }
+    [errorMessagesSet addObject:error.localizedDescription];
+    return sameErrorOccuredCount < RETRY_LIMIT_ON_ERROR;
 }
 
-#pragma mark - GCM Connection
 
 - (void) connectGCM {
     // Connect to the GCM server to receive non-APNS notifications
     [[GCMService sharedInstance] connectWithHandler:^(NSError *error) {
         if (error) {
             NSLog(@"Could not connect to GCM: %@", error.localizedDescription);
+            if([self shouldTryAgainForError:error]) {
+                [self connectGCM];
+            }
         } else {
             _connectedToGCM = true;
             NSLog(@"Connected to GCM");
@@ -158,23 +157,38 @@ NSString *const SubscriptionTopic = @"/topics/global";
 
 #pragma mark - Incoming Message
 
--(void) handleIncomingMessage:(NSDictionary *) userInfo {
-    NSLog(@"Received UserInfo:\n%@", userInfo);
-}
-
-#pragma mark - Send Test Message
-
--(void) sendTestMessage {
-#ifdef DEBUG
-    NSString *messageId = [[NSDate new] description];
-    NSString *gcmId = @"nfzdIh6UcPU:APA91bFFZXoD8ixLqlZJcP3oz3fn2EHLKi_iZ3-cRzJ59_zmNxQjLVwLzx_SyeZld03lVbaUYt8CdDSG5TF2CgZHLrRPbbEs5OVEC_-7Af96eyR9rRKABgTolTRKtjAMC4O5YUrmN3y_";
-    NSDictionary *infoDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                              messageId,    @"messageId",
-                              gcmId,        @"gcmId",
-                              nil];
-    [[GCMService sharedInstance] sendMessage:infoDict to:gcmId withId:messageId];
-#endif
-
+-(Attribute*) handleIncomingMessage:(NSDictionary *) userInfo {
+    NSError *error;
+    Attribute *attribute = [[Attribute alloc] initWithDictionary:userInfo error:&error];
+    if(!error) {
+        PeppermintContact *peppermintContact = nil;
+        NSPredicate *contactPredicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:attribute.sender_email communicationChannel:CommunicationChannelEmail];
+        NSArray *filteredContactsArray = [[ContactsModel sharedInstance].contactList filteredArrayUsingPredicate:contactPredicate];
+        if(filteredContactsArray.count > 0) {
+            peppermintContact = filteredContactsArray.firstObject;
+        } else {
+            peppermintContact = [PeppermintContact new];
+            peppermintContact.nameSurname = attribute.sender_name;
+            peppermintContact.communicationChannel = CommunicationChannelEmail;
+            peppermintContact.communicationChannelAddress = attribute.sender_email;
+        }
+        
+        #warning "Add transcription and set duration"
+        
+            NSTimeInterval duration = 0;
+            [chatModel createChatHistoryFor:peppermintContact
+                              withAudioData:nil
+                                   audioUrl:attribute.audio_url
+                              transcription:@"Transcription"
+                                   duration:duration
+                                 isSentByMe:NO
+                                 createDate:attribute.createdDate];
+        
+    } else {
+        attribute = nil;
+        NSLog(@"Could not parse userInfo. Notification could not be processed:\n%@", userInfo);
+    }
+    return attribute;
 }
 
 @end

@@ -37,6 +37,7 @@ typedef enum : NSUInteger {
 @property (atomic) BOOL isAccountSetUpWithRecorder;
 
 @property (strong, nonatomic) NSString <Optional> * exchangedJwt;
+@property (strong, nonatomic) NSString <Optional> * gcmToken;
 
 + (instancetype) sharedInstance;
 -(void) save;
@@ -49,5 +50,8 @@ typedef enum : NSUInteger {
 
 -(NSString*) nameSurname;
 -(void) setNameSurname:(NSString*)nameSurname;
+
+-(NSString*) currentFacebookToken;
+-(NSString*) currentGoogleToken;
 
 @end

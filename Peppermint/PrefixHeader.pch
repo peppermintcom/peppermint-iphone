@@ -34,6 +34,10 @@
 #   define NSLog(...)
 #endif
 
+#pragma mark - NSLOG Frame
+
+#define NSLOGFrame(__frame) NSLog(@"frame x:%.4f, y:%.4f | width:%.4f, height:%.4f", __frame.origin.x, __frame.origin.y, __frame.size.width, __frame.size.height);
+
 #pragma mark - Localized Text Definition
 
 #define LOC(__key, __comment) \
@@ -94,7 +98,6 @@ sharedObject;\
 #define DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH  @"previousRecordingLength"
 #define DEFAULTS_KEY_TUTORIAL_TOOLTIP_IS_SHOWED @"isTutorialTooltipShowed"
 #define DEFAULTS_KEY_IS_FIRST_RUN               @"isFirstRun"
-#define DEFAULTS_GCM_REGSTRATION_TOKEN          @"GCMRegistrationToken"
 #define DEFAULTS_DONT_SHOW_SMS_WARNING          @"DontShowSMSWarning"
 
 #pragma mark - OpenSans Fonts

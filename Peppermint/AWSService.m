@@ -10,7 +10,7 @@
 
 #define AUTHORIZATION   @"Authorization"
 #define BEARER          @"Bearer"
-#define X_API_KEY @"X-Api-Key"
+#define X_API_KEY       @"X-Api-Key"
 
 @implementation AWSService
 
@@ -344,6 +344,7 @@
     [requestOperationManager PUT:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         RecordersUpdateCompleted *recordersUpdateCompleted = [RecordersUpdateCompleted new];
         recordersUpdateCompleted.sender =self;
+        recordersUpdateCompleted.gcmToken = gcmToken;
         PUBLISH(recordersUpdateCompleted);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self failureWithOperation:nil andError:error];
@@ -351,16 +352,16 @@
 }
 
 
--(void) exchangeCredentialsForEmail:(NSString*)email password:(NSString*)password recorderClientId:(NSString*)recorderClientId recorderKey:(NSString*)recorderKey {
+-(void) exchangeCredentialsWithPrefix:(NSString*)prefix forEmail:(NSString*)email password:(NSString*)password recorderClientId:(NSString*)recorderClientId recorderKey:(NSString*)recorderKey {
     
     NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_JWTS];
     NSMutableArray *authArray = [NSMutableArray new];
     if(email.length > 0 && password.length > 0) {
         NSString *authText = [NSString stringWithFormat:@"%@:%@", email, password];
-        authText =   [NSString stringWithFormat:@"account=%@", [authText base64String]];
+        authText =   [NSString stringWithFormat:@"%@=%@", prefix, [authText base64String]];
         [authArray addObject:authText];
     }
-    if(recorderClientId.length > 0 && password.length > 0) {
+    if(recorderClientId.length > 0 && recorderKey.length > 0) {
         NSString *authText = [NSString stringWithFormat:@"%@:%@", recorderClientId, recorderKey];
         authText = [NSString stringWithFormat:@"recorder=%@", [authText base64String]];
         [authArray addObject:authText];
@@ -381,8 +382,14 @@
         if (error) {
             [self failureWithOperation:nil andError:error];
         } else {
+            
+#warning "Refactor code to take account Id from JwtsResponse class"
+            NSString *accountId = [[[[[responseObject valueForKey:@"data"] valueForKey:@"relationships"] valueForKey:@"account"] valueForKey:@"data"] valueForKey:@"id"];
+            
+            
             JwtsExchanged *jwtsExchanged = [JwtsExchanged new];
             jwtsExchanged.sender = self;
+            jwtsExchanged.accountId = accountId;
             jwtsExchanged.commonJwtsToken = jwtsResponse.data.attributes.token;
             PUBLISH(jwtsExchanged);
         }

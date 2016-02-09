@@ -16,5 +16,9 @@
 @property (strong, nonatomic) NSString<Optional> *audio_url;
 @property (strong, nonatomic) NSString<Optional> *sender_email;
 @property (strong, nonatomic) NSString<Optional> *recipient_email;
+@property (strong, nonatomic) NSString<Optional> *sender_name;
+@property (strong, nonatomic) NSString<Optional> *created;
+
+-(NSDate*) createdDate;
 
 @end

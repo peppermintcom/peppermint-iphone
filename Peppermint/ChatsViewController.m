@@ -15,6 +15,7 @@
 @implementation ChatsViewController {
     NSDateFormatter *dateFormatter;
     ChatModel *chatModel;
+    PeppermintContact *peppermintContactToNavigate;
 }
 
 - (void)viewDidLoad {
@@ -55,6 +56,7 @@
 -(void) chatsArrayIsUpdated {
     [self.tableView reloadData];
     self.chatsEmptyView.hidden = (chatModel.chatArray.count > 0);
+    [self checkIfShouldNavigate];
 }
 
 #pragma mark - UITableView
@@ -75,10 +77,13 @@
     }
     
     [cell setInformationWithNameSurname:chat.nameSurname communicationChannelAddress:chat.communicationChannelAddress];
-    cell.rightDateLabel.text = [dateFormatter stringFromDate:chat.lastMessageDate];
     
-    cell.rightMessageCounterLabel.hidden = chat.unreadMessageCount.intValue <= 0;
-    cell.rightMessageCounterLabel.text = chat.unreadMessageCount.stringValue;
+    NSDate *lastMessageDate = [ChatModel lastMessageDateOfChat:chat];
+    cell.rightDateLabel.text = [dateFormatter stringFromDate:lastMessageDate];
+    
+    NSUInteger unreadMessageCount = [ChatModel unreadMessageCountOfChat:chat];
+    cell.rightMessageCounterLabel.hidden = unreadMessageCount <= 0;
+    cell.rightMessageCounterLabel.text = [NSString stringWithFormat:@"%ld",unreadMessageCount];
     return cell;
 }
 
@@ -115,6 +120,7 @@
     if([segue.identifier isEqualToString:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER]) {
         NSParameterAssert(chatModel.selectedChat);
         ChatEntriesViewController *chatEntriesViewController = (ChatEntriesViewController*)segue.destinationViewController;
+        [chatModel resetChatEntries];
         chatEntriesViewController.chatModel = chatModel;
     }
 }
@@ -143,5 +149,39 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
     
 }
-     
+
+#pragma mark - Navigate to ChatEntry
+
+-(void) scheduleNavigateToChatEntryWithEmail:(NSString*) email nameSurname:(NSString*)nameSurname {
+    PeppermintContact *peppermintContact = [PeppermintContact new];
+    peppermintContact.nameSurname = nameSurname;
+    peppermintContact.communicationChannelAddress = email;
+    peppermintContact.communicationChannel = CommunicationChannelEmail;
+    peppermintContactToNavigate = peppermintContact;
+}
+
+-(void) checkIfShouldNavigate {
+    if(peppermintContactToNavigate) {
+        NSPredicate *predicate = [ContactsModel contactPredicateWithNameSurname:peppermintContactToNavigate.nameSurname
+                                                    communicationChannelAddress:peppermintContactToNavigate.communicationChannelAddress
+                                                           communicationChannel:peppermintContactToNavigate.communicationChannel];
+        NSArray *matchingChatsArray = [chatModel.chatArray filteredArrayUsingPredicate:predicate];
+        if(matchingChatsArray.count > 0) {
+            chatModel.selectedChat = matchingChatsArray.firstObject;
+            [self performSegueWithIdentifier:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER sender:self];
+        } else {
+            NSLog(@"Could ot find matching chat with %@:%@",
+                  peppermintContactToNavigate.communicationChannelAddress,
+                  peppermintContactToNavigate.nameSurname);
+        }
+        peppermintContactToNavigate = nil;
+    }
+}
+
+#pragma mark - Refresh Content
+
+-(void) refreshContent {
+    [chatModel refreshChatArray];
+}
+
 @end

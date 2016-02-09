@@ -51,11 +51,8 @@
     [super viewWillAppear:animated];
     NSParameterAssert(self.chatModel);
     self.chatModel.delegate = self;
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [self.chatModel refreshChatEntries];
     
     Chat *chat = self.chatModel.selectedChat;
-    
     if(chat.avatarImageData) {
         CGRect frame = self.avatarImageView.frame;
         int width = frame.size.width;
@@ -83,7 +80,13 @@
 
 -(void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self initRecordingViewWithView:self.recordingButton];
+
+    [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
+    [self.chatModel refreshChatEntries];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self initRecordingViewWithView:self.recordingButton];
+    });
 }
 
 - (void)didReceiveMemoryWarning {
@@ -103,7 +106,7 @@
 #pragma mark - ChatModelDelegate
 
 -(void) chatEntriesArrayIsUpdated {
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [MBProgressHUD hideAllHUDsForView:self.tableView animated:YES];
     [self navigateToLastRow];
 }
 
@@ -130,7 +133,8 @@
     
     ChatTableViewCell *cell = [CellFactory cellChatTableViewCellFromTable:tableView forIndexPath:indexPath];    
     ChatEntry *chatEntry = (ChatEntry*)[self.chatModel.chatEntriesArray objectAtIndex:indexPath.row];
-    [cell fillInformation:chatEntry];
+    [cell fillInformation:chatEntry];    
+    cell.contentView.backgroundColor = self.tableView.backgroundColor;
     return cell;
 }
 
@@ -157,6 +161,7 @@
     self.recordingButton.delegate = self;
     self.recordingView = [FoggyRecordingView createInstanceWithDelegate:self];
     CGRect rect = self.view.frame;
+    
     self.recordingView.frame = rect;
     [self.view addSubview:self.recordingView];
     [self.view bringSubviewToFront:self.recordingView];
@@ -252,6 +257,12 @@
     } completion:^(BOOL finished) {
         self.holdToRecordView.hidden = YES;
     }];
+}
+
+#pragma mark - Refresh Content
+
+-(void) refreshContent {
+    [self.chatModel refreshChatEntries];
 }
 
 @end

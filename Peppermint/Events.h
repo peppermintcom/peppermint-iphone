@@ -102,10 +102,12 @@
 @end
 
 @interface RecordersUpdateCompleted : BaseEvent
+@property (strong, nonatomic) NSString *gcmToken;
 @end
 
 @interface JwtsExchanged : BaseEvent
 @property (strong, nonatomic) NSString *commonJwtsToken;
+@property (strong, nonatomic) NSString *accountId;
 @end
 
 @interface SetUpAccountWithRecorderCompleted : BaseEvent

@@ -61,6 +61,7 @@ typedef enum : NSUInteger {
 
 -(BOOL) presentWithAnimationInRect:(CGRect)rect onPoint:(CGPoint) point {
     if(recordingViewStatus == RecordingViewStatusInit) {
+        [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
         recordingViewStatus = RecordingViewStatusPresented;
         assert(self.sendVoiceMessageModel != nil);
         self.sendVoiceMessageModel.delegate = self;
@@ -101,6 +102,7 @@ typedef enum : NSUInteger {
 }
 
 -(void) recordingViewIsHidden {
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     recordingViewStatus = RecordingViewStatusInit;
     [self.delegate recordingViewDissappeared];
 }
@@ -192,9 +194,7 @@ typedef enum : NSUInteger {
 }
 
 -(void) timerUpdated:(NSTimeInterval) timeInterval {
-    self.totalSeconds = timeInterval;
-    NSLog(@"total seconds: %.4f", self.totalSeconds);
-    
+    self.totalSeconds = timeInterval;    
     self.currentMinutes = self.totalSeconds / 60;
     self.currentSeconds = ((int)self.totalSeconds) % 60;
     if(self.totalSeconds > MAX_RECORD_TIME) {

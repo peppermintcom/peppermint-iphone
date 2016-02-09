@@ -9,6 +9,7 @@
 #import "ChatTableViewCell.h"
 #import "ChatEntry.h"
 #import "PlayingModel.h"
+#import "ChatModel.h"
 
 #define DISTANCE_TO_BORDER  5
 #define TIMER_UPDATE_PERIOD 0.05
@@ -36,11 +37,10 @@
 - (void) layoutSubviews {
     self.centerViewWidth.constant = self.frame.size.width * 0.60;
     self.durationCircleView.layer.cornerRadius = self.durationCircleView.frame.size.height/2;
-    [super layoutSubviews];
-}
-
-- (void) fillInformation:(ChatEntry*) chatEntry {
-    if(chatEntry.isSentByMe.boolValue) {
+    
+    if(!self.chatEntry) {
+        self.leftDistanceConstraint.constant = 2000;
+    } else if(!self.chatEntry.isSentByMe.boolValue) {
         self.leftDistanceConstraint.constant = DISTANCE_TO_BORDER;
         self.leftImageView.image = imageConnected;
         self.rightImageView.image = [UIImage imageWithCGImage:imageFlat.CGImage
@@ -59,22 +59,34 @@
                                                   orientation:UIImageOrientationUpMirrored];;
     }
     
+    
+    [super layoutSubviews];
+}
+
+- (void) fillInformation:(ChatEntry*) chatEntry {
+    
+    self.spinnerView.hidden = YES;
     self.durationView.hidden = NO;
     self.durationViewWidthConstraint.constant = 0;
     self.durationCircleView.hidden = YES;
     
-    NSInteger minutes = chatEntry.duration.integerValue / 60;
-    NSInteger seconds = chatEntry.duration.integerValue % 60;
-    self.leftLabel.text = [NSString stringWithFormat:@"%.2ld:%.2ld", minutes, seconds];
+    self.chatEntry = chatEntry;
+    self.playPauseImageView.image = imagePlay;
+    [self setLeftLabel];
     [self setRightLabelWithDate:chatEntry.dateCreated];
     
-    self.playPauseImageView.image = imagePlay;
-    _playingModel = [PlayingModel alloc];
-    if([_playingModel playData:chatEntry.audio playerCompletitionBlock:^{ [self playPauseButtonPressed:nil]; }]) {
-        _playingModel.audioPlayer.volume = 1.0;
-        [_playingModel pause];
+    [_playingModel.audioPlayer stop];
+    _playingModel = nil;
+}
+
+-(void) setLeftLabel {
+    NSString *durationText = @"--:--";
+    if(self.chatEntry.duration.integerValue != 0) {
+        NSInteger minutes = self.chatEntry.duration.integerValue / 60;
+        NSInteger seconds = self.chatEntry.duration.integerValue % 60;
+        durationText = [NSString stringWithFormat:@"%.2ld:%.2ld", (long)minutes, (long)seconds];
     }
-    
+    self.leftLabel.text = durationText;
 }
 
 -(void) setRightLabelWithDate:(NSDate*) date {
@@ -86,8 +98,9 @@
                                                                    | NSCalendarUnitMonth
                                                                    | NSCalendarUnitYear )
                                                         fromDate:date
-                                                          toDate:[NSDate date]
+                                                          toDate:[NSDate new]
                                                          options:0];
+    
     NSInteger timeVariable;
     NSString *timeText = nil;
     if(components.year > 0) {
@@ -112,21 +125,44 @@
     }
     
     if(timeVariable > 1) {
-        timeText = [NSString stringWithFormat:@"%@%@", timeText, LOC(@"Plural Suffix", @"Plural Suffix")];
+        timeText = [NSString stringWithFormat:@"%@%@ ago", timeText, LOC(@"Plural Suffix", @"Plural Suffix")];
     }
-    self.rightLabel.text = [NSString stringWithFormat:@"%ld %@", timeVariable, timeText].lowercaseString;
+    self.rightLabel.text = [NSString stringWithFormat:@"%ld %@", (long)timeVariable, timeText].lowercaseString;
 }
-
 
 - (IBAction)playPauseButtonPressed:(id)sender {
     [self stopPlayingCell];
     if(_playingModel.audioPlayer.isPlaying) {
-        [_playingModel pause];
         self.playPauseImageView.image = imagePlay;
+        [_playingModel pause];
     } else {
-        [_playingModel play];
-        self.durationCircleView.hidden = NO;
-        self.playPauseImageView.image = imagePause;
+        if(!_playingModel) {
+            _playingModel = [PlayingModel alloc];
+            self.spinnerView.hidden = NO;
+            self.playPauseImageView.hidden = YES;
+            dispatch_async(LOW_PRIORITY_QUEUE, ^{
+                if(!self.chatEntry.audio) {
+                    NSURL *url = [NSURL URLWithString:self.chatEntry.audioUrl];
+                    self.chatEntry.audio = [NSData dataWithContentsOfURL:url];
+                }
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.spinnerView.hidden = YES;
+                    self.playPauseImageView.hidden = NO;
+                    if([_playingModel playData:self.chatEntry.audio playerCompletitionBlock:^{ [self playPauseButtonPressed:nil]; }]) {
+                        _playingModel.audioPlayer.volume = 1.0;
+                        self.chatEntry.duration = [NSNumber numberWithInt:_playingModel.audioPlayer.duration];
+                        [self setLeftLabel];
+                        [ChatModel markChatEntryListened:self.chatEntry];
+                        self.durationCircleView.hidden = NO;
+                        self.playPauseImageView.image = imagePause;
+                    }
+                });
+            });
+        } else {
+            [_playingModel play];
+            self.durationCircleView.hidden = NO;
+            self.playPauseImageView.image = imagePause;
+        }
     }
 }
 

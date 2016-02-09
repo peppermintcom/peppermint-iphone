@@ -12,6 +12,10 @@
 #import "PeppermintMessageSender.h"
 #import "GoogleCloudMessagingModel.h"
 
+#define AUTH_FACEBOOK   @"facebook"
+#define AUTH_GOOGLE     @"google"
+#define AUTH_PEPPERMINT @"account"
+
 @implementation AWSModel {
     NSString *jwt;
     AWSService *awsService;
@@ -100,7 +104,7 @@ SUBSCRIBE(RetrieveSignedUrlSuccessful) {
     if(event.sender == awsService) {
         _signedUrl = event.signedUrl;
         [awsService sendData:_data ofContentType:_contentType tosignedURL:_signedUrl];
-        [self.delegate fileUploadCompletedWithPublicUrl:event.short_url];
+        [self.delegate fileUploadCompletedWithPublicUrl:event.short_url canonicalUrl:event.canonical_url];
     }
 }
 
@@ -136,6 +140,8 @@ SUBSCRIBE(NetworkFailure) {
 SUBSCRIBE(RecordersUpdateCompleted) {
     if(event.sender == awsService) {
         NSLog(@"GCM Registration token is saved to server!!");
+        [PeppermintMessageSender sharedInstance].gcmToken = event.gcmToken;
+        [[PeppermintMessageSender sharedInstance] save];
     }
 }
 
@@ -145,11 +151,26 @@ SUBSCRIBE(RecordersUpdateCompleted) {
     PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
     
     if(!isSetUpAccountAttemptActive) {
-        if(peppermintMessageSender.email.length > 0 && peppermintMessageSender.password.length > 0
+        if(peppermintMessageSender.email.length > 0
            && peppermintMessageSender.recorderClientId.length>0 && peppermintMessageSender.recorderKey.length > 0) {
             isSetUpAccountAttemptActive = YES;
-            [awsService exchangeCredentialsForEmail:peppermintMessageSender.email
-                                           password:peppermintMessageSender.password
+            
+            NSString *prefix;
+            NSString *password;
+            if (peppermintMessageSender.loginSource == LOGINSOURCE_FACEBOOK) {
+                prefix = AUTH_FACEBOOK;
+                password = [peppermintMessageSender currentFacebookToken];
+            } else if (peppermintMessageSender.loginSource == LOGINSOURCE_GOOGLE) {
+                prefix = AUTH_GOOGLE;
+                password = peppermintMessageSender.password;
+            } else if (peppermintMessageSender.loginSource == LOGINSOURCE_PEPPERMINT) {
+                prefix = AUTH_PEPPERMINT;
+                password = peppermintMessageSender.password;
+            }
+            
+            [awsService exchangeCredentialsWithPrefix:prefix
+                                             forEmail:peppermintMessageSender.email
+                                           password:password
                                    recorderClientId:peppermintMessageSender.recorderClientId
                                         recorderKey:peppermintMessageSender.recorderKey];
         } else {
@@ -163,7 +184,7 @@ SUBSCRIBE(RecordersUpdateCompleted) {
 SUBSCRIBE(JwtsExchanged) {
     if(event.sender == awsService) {
         PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
-        NSString *accountId = peppermintMessageSender.accountId;
+        NSString *accountId = event.accountId;
         NSString *recorderId = peppermintMessageSender.recorderId;
         peppermintMessageSender.exchangedJwt = event.commonJwtsToken;
         [peppermintMessageSender save];

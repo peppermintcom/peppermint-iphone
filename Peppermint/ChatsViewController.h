@@ -20,5 +20,7 @@
 
 
 +(instancetype) createInstance;
+-(void) scheduleNavigateToChatEntryWithEmail:(NSString*) email nameSurname:(NSString*)nameSurname;
+-(void) refreshContent;
 
 @end

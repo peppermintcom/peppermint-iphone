@@ -8,6 +8,7 @@
 
 #import "BaseModel.h"
 #import <Google/CloudMessaging.h>
+#import "Attribute.h"
 
 @interface GoogleCloudMessagingModel : BaseModel <GCMReceiverDelegate>
 
@@ -25,6 +26,6 @@
 - (void) connectGCM;
 - (void) disconnectGCM;
 
--(void) handleIncomingMessage:(NSDictionary *) userInfo;
+-(Attribute*) handleIncomingMessage:(NSDictionary *) userInfo;
 
 @end

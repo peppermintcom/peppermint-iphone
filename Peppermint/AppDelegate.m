@@ -30,6 +30,8 @@
 #import "GAIFields.h"
 #import "GoogleCloudMessagingModel.h"
 #import "AWSModel.h"
+#import "ChatsViewController.h"
+#import "ChatEntriesViewController.h"
 
 @import WatchConnectivity;
 @import Contacts;
@@ -150,7 +152,6 @@
         [[PeppermintMessageSender sharedInstance] clearSender];
         defaults_set_object(DEFAULTS_KEY_IS_FIRST_RUN, DEFAULTS_KEY_IS_FIRST_RUN);
         [self initLocalNotification];
-        [self initRecorder];
     }
 }
 
@@ -201,6 +202,7 @@
     [self initWatchKitSession];
     [self initGCM];
     [self checkForFirstRun];
+    [self initRecorder];
     REGISTER();
     return YES;
 }
@@ -272,39 +274,40 @@ SUBSCRIBE(DetachSuccess) {
                                                       handler:googleCloudMessagingModel.registrationHandler];
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    NSLog(@"Notification received: %@", userInfo);
-    [self handleNotification:application userInfo:userInfo];
-    // This works only if the app started the GCM service
-    
-    //[[GCMService sharedInstance] appDidReceiveMessage:userInfo];
-    
-    // Handle the received message
-    // ...
-}
-
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))handler {
-    NSLog(@"Notification received withFetchCompletionHandler: %@", userInfo);
-    [self handleNotification:application userInfo:userInfo];
-    // This works only if the app started the GCM service
     
-    //[[GCMService sharedInstance] appDidReceiveMessage:userInfo];
-    
-    // Handle the received message
-    // Invoke the completion handler passing the appropriate UIBackgroundFetchResult value
-    // ...
-    
+    GoogleCloudMessagingModel *googleCloudMessagingModel = [GoogleCloudMessagingModel sharedInstance];    
+    Attribute *sender = [googleCloudMessagingModel handleIncomingMessage:userInfo];
+    if(sender) {
+        [[GCMService sharedInstance] appDidReceiveMessage:userInfo];
+        [self navigateToChatEntriesPageForEmail:sender.sender_email nameSurname:sender.sender_name];
+    }
+    handler(UIBackgroundFetchResultNewData);
 }
 
--(void) handleNotification:(UIApplication*) application userInfo:(NSDictionary*) userInfo {
-    
-    [[GCMService sharedInstance] appDidReceiveMessage:userInfo];
-    
-    [[GoogleCloudMessagingModel sharedInstance] handleIncomingMessage:userInfo];
-    
-    if(application.applicationState == UIApplicationStateActive) {
-        NSString *message = [NSString stringWithFormat:@"Message:\n%@", userInfo];
-        [[[UIAlertView alloc] initWithTitle:@"Notification" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+-(void) navigateToChatEntriesPageForEmail:(NSString*)email nameSurname:(NSString*)nameSurname {
+    UIViewController *vc = [self visibleViewController];
+    if([vc isKindOfClass:[ReSideMenuContainerViewController class]]) {
+        ReSideMenuContainerViewController *reSideMenuContainerViewController = (ReSideMenuContainerViewController*)vc;
+        UINavigationController *nvc = (UINavigationController*) reSideMenuContainerViewController.contentViewController;
+        
+        UIViewController *vc = nvc.viewControllers.lastObject;
+        if([vc isKindOfClass:[ChatEntriesViewController class]]) {
+            ChatEntriesViewController *chatEntriesViewController = (ChatEntriesViewController*)vc;
+            [chatEntriesViewController refreshContent];
+        } else if ([vc isKindOfClass:[ChatsViewController class]]) {
+            ChatsViewController *chatsViewController = (ChatsViewController*)vc;
+            [chatsViewController scheduleNavigateToChatEntryWithEmail:email nameSurname:nameSurname];
+            [chatsViewController refreshContent];
+        } else {
+            ChatsViewController *chatsViewController = [ChatsViewController createInstance];
+            [chatsViewController scheduleNavigateToChatEntryWithEmail:email nameSurname:nameSurname];
+            
+            [nvc popToRootViewControllerAnimated:NO];
+            [nvc pushViewController:chatsViewController animated:NO];
+        }
+    } else {
+        NSLog(@"Can not navigate to ContactsViewController");
     }
 }
 

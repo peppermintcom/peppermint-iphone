@@ -25,4 +25,6 @@
 @property (weak, nonatomic) ChatModel *chatModel;
 @property (strong, nonatomic) RecordingView *recordingView;
 
+-(void) refreshContent;
+
 @end

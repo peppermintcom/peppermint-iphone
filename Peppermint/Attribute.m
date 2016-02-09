@@ -10,4 +10,14 @@
 
 @implementation Attribute
 
+-(NSDate*) createdDate {
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *dateUTC = [dateFormatter dateFromString:self.created];
+    NSTimeInterval timeZoneSeconds = [[NSTimeZone localTimeZone] secondsFromGMT];
+    NSDate *dateInLocalTimezone = [dateUTC dateByAddingTimeInterval:timeZoneSeconds];
+    
+    return dateInLocalTimezone;
+}
+
 @end

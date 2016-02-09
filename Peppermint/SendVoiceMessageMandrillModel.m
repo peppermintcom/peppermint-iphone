@@ -29,8 +29,8 @@
 
 #pragma mark - AWSModelDelegate
 
--(void) fileUploadCompletedWithPublicUrl:(NSString*) url {
-    [super fileUploadCompletedWithPublicUrl:url];
+-(void) fileUploadCompletedWithPublicUrl:(NSString*) url canonicalUrl:(NSString*)canonicalUrl{
+    [super fileUploadCompletedWithPublicUrl:url canonicalUrl:canonicalUrl];
     if(![self isCancelled]) {
         self.sendingStatus = SendingStatusSending;
         [self fireMandrillMessageWithUrl:url];

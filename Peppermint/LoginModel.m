@@ -71,9 +71,11 @@
         if(user.profile.email) {
             peppermintMessageSender.email = user.profile.email;
         }
-      
-        peppermintMessageSender.subject = LOC(@"Mail Subject",@"Default Mail Subject");
-
+        
+#warning "Investigate and be sure fi we need this below line or not?"
+        peppermintMessageSender.password = [user.authentication accessToken];
+        peppermintMessageSender.subject = LOC(@"Mail Subject",@"Default Mail Subject");        
+        
         NSURL *imageUrl = [user.profile imageURLWithDimension:100];
         peppermintMessageSender.imageData = [NSData dataWithContentsOfURL:imageUrl];
         if([peppermintMessageSender isValidToUseApp]) {

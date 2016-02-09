@@ -18,13 +18,17 @@
 @property (weak, nonatomic) IBOutlet UIImageView *rightImageView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *playPauseImageView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinnerView;
 @property (weak, nonatomic) IBOutlet UIView *timelineView;
 @property (weak, nonatomic) IBOutlet UIView *durationView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *durationViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *rightLabel;
 @property (weak, nonatomic) IBOutlet UILabel *leftLabel;
 @property (weak, nonatomic) IBOutlet UIView *durationCircleView;
-@property(weak, nonatomic) UITableView *tableView;
+@property (weak, nonatomic) UITableView *tableView;
+@property (weak, nonatomic) ChatEntry *chatEntry;
+
+
 
 @property (strong, nonatomic, readonly) PlayingModel *playingModel;
 
