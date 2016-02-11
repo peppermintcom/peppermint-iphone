@@ -125,9 +125,9 @@
     }
     
     if(timeVariable > 1) {
-        timeText = [NSString stringWithFormat:@"%@%@ ago", timeText, LOC(@"Plural Suffix", @"Plural Suffix")];
+        timeText = [NSString stringWithFormat:@"%@%@", timeText, LOC(@"Plural Suffix", @"Plural Suffix")];
     }
-    self.rightLabel.text = [NSString stringWithFormat:@"%ld %@", (long)timeVariable, timeText].lowercaseString;
+    self.rightLabel.text = [NSString stringWithFormat:@"%ld %@ ago", (long)timeVariable, timeText].lowercaseString;
 }
 
 - (IBAction)playPauseButtonPressed:(id)sender {
