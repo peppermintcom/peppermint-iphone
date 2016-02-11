@@ -14,11 +14,7 @@
 #import "PeppermintContact.h"
 #import "ContactsModel.h"
 
-#define RETRY_LIMIT_ON_ERROR    5
-
 @implementation GoogleCloudMessagingModel {
-    NSMutableSet *errorMessagesSet;
-    int sameErrorOccuredCount;
     ChatModel *chatModel;
 }
 
@@ -36,8 +32,6 @@ NSString *const SubscriptionTopic = @"/topics/global";
 -(id) initShared {
     self = [super init];
     if(self) {
-        errorMessagesSet = [NSMutableSet new];
-        sameErrorOccuredCount = 0;
         chatModel = [ChatModel new];
     }
     return self;
@@ -47,12 +41,10 @@ NSString *const SubscriptionTopic = @"/topics/global";
     // [START_EXCLUDE]
     _registrationKey = @"onRegistrationCompleted";
     _messageKey = @"onMessageReceived";
-    // Configure the Google context: parses the GoogleService-Info.plist, and initializes
-    // the services that have entries in the file
-    NSError* configureError;
-    [[GGLContext sharedInstance] configureWithError:&configureError];
-    NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
     _gcmSenderID = [[[GGLContext sharedInstance] configuration] gcmSenderID];
+    
+    [self startGCMService];
+    
     // Register for remote notifications
     // iOS 8 or later
     // [END_EXCLUDE]
@@ -63,12 +55,6 @@ NSString *const SubscriptionTopic = @"/topics/global";
     [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
     [[UIApplication sharedApplication] registerForRemoteNotifications];
     
-    // [END register_for_remote_notifications]
-    // [START start_gcm_service]
-    GCMConfig *gcmConfig = [GCMConfig defaultConfig];
-    gcmConfig.receiverDelegate  = self;
-    [[GCMService sharedInstance] startWithConfig:gcmConfig];
-    // [END start_gcm_service]
     __weak typeof(self) weakSelf = self;
     // Handler for registration token request
     _registrationHandler = ^(NSString *registrationToken, NSError *error){
@@ -94,29 +80,32 @@ NSString *const SubscriptionTopic = @"/topics/global";
             [[NSNotificationCenter defaultCenter] postNotificationName:weakSelf.registrationKey
                                                                 object:nil
                                                               userInfo:userInfo];
+            
+            NSLog(@"Schedule re-init in 2 seconds!");
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf initGCM];
+            });
+            
         }
     };
 }
 
-#pragma mark - GCM Connection
-
--(BOOL) shouldTryAgainForError:(NSError*) error {
-    if([errorMessagesSet containsObject:error.localizedDescription]) {
-        sameErrorOccuredCount++;
-    }
-    [errorMessagesSet addObject:error.localizedDescription];
-    return sameErrorOccuredCount < RETRY_LIMIT_ON_ERROR;
+-(void) startGCMService {
+    // [END register_for_remote_notifications]
+    // [START start_gcm_service]
+    GCMConfig *gcmConfig = [GCMConfig defaultConfig];
+    gcmConfig.receiverDelegate  = self;
+    [[GCMService sharedInstance] startWithConfig:gcmConfig];
+    // [END start_gcm_service]
 }
 
+#pragma mark - GCM Connection
 
 - (void) connectGCM {
     // Connect to the GCM server to receive non-APNS notifications
     [[GCMService sharedInstance] connectWithHandler:^(NSError *error) {
         if (error) {
             NSLog(@"Could not connect to GCM: %@", error.localizedDescription);
-            if([self shouldTryAgainForError:error]) {
-                [self connectGCM];
-            }
         } else {
             _connectedToGCM = true;
             NSLog(@"Connected to GCM");

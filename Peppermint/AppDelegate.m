@@ -136,12 +136,6 @@
                              didFinishLaunchingWithOptions:launchOptions];
 }
 
--(void) initGoogleApp {
-    NSError* error;
-    [[GGLContext sharedInstance] configureWithError: &error];
-    NSLog(@"Error configuring Google services: %@", error);
-}
-
 -(void) initConnectionStatusChangeListening {
     [ConnectionModel sharedInstance];
 }
@@ -187,6 +181,17 @@
     [googleCloudMessagingModel initGCM];
 }
 
+-(void) initGoogleApp {
+    NSError* error;
+    // Configure the Google context: parses the GoogleService-Info.plist, and initializes the services that have entries in the file
+    [[GGLContext sharedInstance] configureWithError: &error];
+    if(error) {
+        NSLog(@"Error configuring Google services: %@", error);
+    } else {
+        [self initGCM];
+    }
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self initMutableArray];
@@ -197,10 +202,9 @@
     [self initInitialViewController];
     [self logServiceCalls];
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
-    [self initGoogleApp];
     [self initConnectionStatusChangeListening];
     [self initWatchKitSession];
-    [self initGCM];
+    [self initGoogleApp];
     [self checkForFirstRun];
     [self initRecorder];
     REGISTER();
