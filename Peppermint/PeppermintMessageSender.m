@@ -239,21 +239,6 @@
     [self save];
 }
 
-
-#warning "Remove below 2 functions if they are not needed!!"
-
--(NSString*) currentFacebookToken {
-    NSString *facebookToken = [FBSDKAccessToken currentAccessToken].tokenString;
-    NSLog(@"Facebook token: %@", facebookToken);
-    return facebookToken;
-}
-
--(NSString*) currentGoogleToken {
-    NSString *googleToken = [[GIDSignIn sharedInstance].currentUser.authentication accessToken];
-    NSLog(@"Google token: %@", googleToken);
-    return googleToken;
-}
-
 #endif
 
 @end

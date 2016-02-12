@@ -18,6 +18,7 @@
 @property (strong, nonatomic) NSString<Optional> *recipient_email;
 @property (strong, nonatomic) NSString<Optional> *sender_name;
 @property (strong, nonatomic) NSString<Optional> *created;
+@property (strong, nonatomic) NSNumber<Optional> *duration;
 
 -(NSDate*) createdDate;
 

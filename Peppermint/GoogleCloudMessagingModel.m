@@ -13,9 +13,11 @@
 #import "ChatModel.h"
 #import "PeppermintContact.h"
 #import "ContactsModel.h"
+#import "RecentContactsModel.h"
 
 @implementation GoogleCloudMessagingModel {
     ChatModel *chatModel;
+    RecentContactsModel *recentContactsModel;
 }
 
 NSString *const SubscriptionTopic = @"/topics/global";
@@ -33,8 +35,23 @@ NSString *const SubscriptionTopic = @"/topics/global";
     self = [super init];
     if(self) {
         chatModel = [ChatModel new];
+        recentContactsModel = [RecentContactsModel new];
     }
     return self;
+}
+
+-(NSSet*) notificationCategories {
+    UIMutableUserNotificationAction *replyAction = [UIMutableUserNotificationAction new];
+    [replyAction setActivationMode:UIUserNotificationActivationModeForeground];
+    replyAction.identifier = CATEGORY_IDENTIFIER_REPLY;
+    replyAction.title = [NSString stringWithFormat:@"\u2934%@", LOC(@"Reply", @"Reply Action Title")];
+    replyAction.authenticationRequired = YES;
+    UIMutableUserNotificationCategory *gcmNotificationCategory = [UIMutableUserNotificationCategory new];
+    gcmNotificationCategory.identifier = CATEGORY_GCM_AUDIO_MESSAGE;
+    [gcmNotificationCategory setActions: [NSArray arrayWithObjects:replyAction, nil] forContext:UIUserNotificationActionContextDefault];
+    
+    NSSet *categories = [NSSet setWithObject:gcmNotificationCategory];
+    return categories;
 }
 
 -(void) initGCM {
@@ -43,7 +60,12 @@ NSString *const SubscriptionTopic = @"/topics/global";
     _messageKey = @"onMessageReceived";
     _gcmSenderID = [[[GGLContext sharedInstance] configuration] gcmSenderID];
     
-    [self startGCMService];
+    // [END register_for_remote_notifications]
+    // [START start_gcm_service]
+    GCMConfig *gcmConfig = [GCMConfig defaultConfig];
+    gcmConfig.receiverDelegate  = self;
+    [[GCMService sharedInstance] startWithConfig:gcmConfig];
+    // [END start_gcm_service]
     
     // Register for remote notifications
     // iOS 8 or later
@@ -51,7 +73,7 @@ NSString *const SubscriptionTopic = @"/topics/global";
     UIUserNotificationType allNotificationTypes =
     (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
     UIUserNotificationSettings *settings =
-    [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
+    [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:[self notificationCategories]];
     [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
     [[UIApplication sharedApplication] registerForRemoteNotifications];
     
@@ -83,20 +105,10 @@ NSString *const SubscriptionTopic = @"/topics/global";
             
             NSLog(@"Schedule re-init in 2 seconds!");
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [weakSelf initGCM];
+                    [weakSelf initGCM];
             });
-            
         }
     };
-}
-
--(void) startGCMService {
-    // [END register_for_remote_notifications]
-    // [START start_gcm_service]
-    GCMConfig *gcmConfig = [GCMConfig defaultConfig];
-    gcmConfig.receiverDelegate  = self;
-    [[GCMService sharedInstance] startWithConfig:gcmConfig];
-    // [END start_gcm_service]
 }
 
 #pragma mark - GCM Connection
@@ -162,16 +174,18 @@ NSString *const SubscriptionTopic = @"/topics/global";
             peppermintContact.communicationChannelAddress = attribute.sender_email;
         }
         
-        #warning "Add transcription and set duration"
+        #warning "Add transcription and check duration"
         
-            NSTimeInterval duration = 0;
-            [chatModel createChatHistoryFor:peppermintContact
-                              withAudioData:nil
-                                   audioUrl:attribute.audio_url
-                              transcription:@"Transcription"
-                                   duration:duration
-                                 isSentByMe:NO
-                                 createDate:attribute.createdDate];
+        NSTimeInterval duration = attribute.duration.integerValue;
+        [chatModel createChatHistoryFor:peppermintContact
+                          withAudioData:nil
+                               audioUrl:attribute.audio_url
+                          transcription:@"Transcription"
+                               duration:duration
+                             isSentByMe:NO
+                             createDate:attribute.createdDate];
+        
+        [recentContactsModel save:peppermintContact];
         
     } else {
         attribute = nil;

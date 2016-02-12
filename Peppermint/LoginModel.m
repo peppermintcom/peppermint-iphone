@@ -72,7 +72,6 @@
             peppermintMessageSender.email = user.profile.email;
         }
         
-#warning "Investigate and be sure fi we need this below line or not?"
         peppermintMessageSender.password = [user.authentication accessToken];
         peppermintMessageSender.subject = LOC(@"Mail Subject",@"Default Mail Subject");        
         
@@ -82,7 +81,6 @@
             [peppermintMessageSender save];
             [self.delegate loginSucceed];
         }
-        
         
         GoogleContactsModel *googleContactsModel = [GoogleContactsModel new];
         [googleContactsModel syncGoogleContactsWithFetcherAuthorizer:user.authentication.fetcherAuthorizer];
@@ -143,6 +141,7 @@
                      NSData *data = [NSData dataWithContentsOfURL:url];
                      peppermintMessageSender.imageData = data;
                  }
+                 peppermintMessageSender.password = [FBSDKAccessToken currentAccessToken].tokenString;
                  peppermintMessageSender.subject = LOC(@"Mail Subject",@"Default Mail Subject");
                  
                  if([peppermintMessageSender isValidToUseApp]) {

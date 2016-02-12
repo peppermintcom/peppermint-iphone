@@ -51,7 +51,4 @@ typedef enum : NSUInteger {
 -(NSString*) nameSurname;
 -(void) setNameSurname:(NSString*)nameSurname;
 
--(NSString*) currentFacebookToken;
--(NSString*) currentGoogleToken;
-
 @end

@@ -257,8 +257,12 @@ SUBSCRIBE(DetachSuccess) {
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     GoogleCloudMessagingModel *googleCloudMessagingModel = [GoogleCloudMessagingModel sharedInstance];
+    BOOL isDebug = NO;
+#ifdef DEBUG
+    isDebug = YES;
+#endif
     googleCloudMessagingModel.registrationOptions = @{kGGLInstanceIDRegisterAPNSOption:deviceToken,
-                                                 kGGLInstanceIDAPNSServerTypeSandboxOption:@NO};
+                                                      kGGLInstanceIDAPNSServerTypeSandboxOption:[NSNumber numberWithBool:isDebug]};
     GGLInstanceIDConfig *instanceIDConfig = [GGLInstanceIDConfig defaultConfig];
     instanceIDConfig.delegate = self;
     [[GGLInstanceID sharedInstance] startWithConfig:instanceIDConfig];
@@ -278,41 +282,75 @@ SUBSCRIBE(DetachSuccess) {
                                                       handler:googleCloudMessagingModel.registrationHandler];
 }
 
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    NSLog(@"didReceiveRemoteNotification:%@", userInfo);
+    [self handleNotification:userInfo Inapplication:application];
+}
+
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))handler {
-    
-    GoogleCloudMessagingModel *googleCloudMessagingModel = [GoogleCloudMessagingModel sharedInstance];    
+    NSLog(@"didReceiveRemoteNotification:fetchCompletionHandler:\nuserinfo:%@", userInfo);
+    if( [self handleNotification:userInfo Inapplication:application] ) {
+        handler(UIBackgroundFetchResultNewData);
+    } else {
+        handler(UIBackgroundFetchResultFailed);
+    }
+}
+
+- (BOOL) handleNotification:(NSDictionary*)userInfo Inapplication:(UIApplication *)application {
+    GoogleCloudMessagingModel *googleCloudMessagingModel = [GoogleCloudMessagingModel sharedInstance];
     Attribute *sender = [googleCloudMessagingModel handleIncomingMessage:userInfo];
     if(sender) {
         [[GCMService sharedInstance] appDidReceiveMessage:userInfo];
-        [self navigateToChatEntriesPageForEmail:sender.sender_email nameSurname:sender.sender_name];
+        
+        if(application.applicationState == UIApplicationStateActive) {
+            NSLog(@"UIApplicationStateActive");
+            [self navigateToChatEntriesPageForEmail:sender.sender_email nameSurname:sender.sender_name];
+        } else if (application.applicationState == UIApplicationStateBackground) {
+            NSLog(@"UIApplicationStateBackground");
+            [self navigateToChatEntriesPageForEmail:sender.sender_email nameSurname:sender.sender_name];
+        } else if (application.applicationState == UIApplicationStateInactive) {
+            NSLog(@"UIApplicationStateInactive");
+            [self navigateToChatEntriesPageForEmail:sender.sender_email nameSurname:sender.sender_name];
+        }
     }
-    handler(UIBackgroundFetchResultNewData);
+    return (sender != nil);
+}
+
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(nullable NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler {
+    NSLog(@"handleActionWithIdentifier:completionHandler: is called with action %@", identifier);
+    if([identifier isEqualToString:CATEGORY_IDENTIFIER_REPLY]) {
+        NSLog(@"Perform reply operations");
+    }
+    completionHandler();
 }
 
 -(void) navigateToChatEntriesPageForEmail:(NSString*)email nameSurname:(NSString*)nameSurname {
-    UIViewController *vc = [self visibleViewController];
-    if([vc isKindOfClass:[ReSideMenuContainerViewController class]]) {
-        ReSideMenuContainerViewController *reSideMenuContainerViewController = (ReSideMenuContainerViewController*)vc;
-        UINavigationController *nvc = (UINavigationController*) reSideMenuContainerViewController.contentViewController;
-        
-        UIViewController *vc = nvc.viewControllers.lastObject;
-        if([vc isKindOfClass:[ChatEntriesViewController class]]) {
-            ChatEntriesViewController *chatEntriesViewController = (ChatEntriesViewController*)vc;
-            [chatEntriesViewController refreshContent];
-        } else if ([vc isKindOfClass:[ChatsViewController class]]) {
-            ChatsViewController *chatsViewController = (ChatsViewController*)vc;
-            [chatsViewController scheduleNavigateToChatEntryWithEmail:email nameSurname:nameSurname];
-            [chatsViewController refreshContent];
-        } else {
-            ChatsViewController *chatsViewController = [ChatsViewController createInstance];
-            [chatsViewController scheduleNavigateToChatEntryWithEmail:email nameSurname:nameSurname];
+    weakself_create();
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIViewController *vc = [weakSelf visibleViewController];
+        if([vc isKindOfClass:[ReSideMenuContainerViewController class]]) {
+            ReSideMenuContainerViewController *reSideMenuContainerViewController = (ReSideMenuContainerViewController*)vc;
+            UINavigationController *nvc = (UINavigationController*) reSideMenuContainerViewController.contentViewController;
             
-            [nvc popToRootViewControllerAnimated:NO];
-            [nvc pushViewController:chatsViewController animated:NO];
+            UIViewController *vc = nvc.viewControllers.lastObject;
+            if([vc isKindOfClass:[ChatEntriesViewController class]]) {
+                ChatEntriesViewController *chatEntriesViewController = (ChatEntriesViewController*)vc;
+                [chatEntriesViewController refreshContent];
+            } else if ([vc isKindOfClass:[ChatsViewController class]]) {
+                ChatsViewController *chatsViewController = (ChatsViewController*)vc;
+                [chatsViewController scheduleNavigateToChatEntryWithEmail:email nameSurname:nameSurname];
+                [chatsViewController refreshContent];
+            } else {
+                ChatsViewController *chatsViewController = [ChatsViewController createInstance];
+                [chatsViewController scheduleNavigateToChatEntryWithEmail:email nameSurname:nameSurname];
+                
+                [nvc popToRootViewControllerAnimated:NO];
+                [nvc pushViewController:chatsViewController animated:NO];
+            }
+        } else {
+            NSLog(@"Can not navigate to ContactsViewController");
         }
-    } else {
-        NSLog(@"Can not navigate to ContactsViewController");
-    }
+    });
 }
 
 #pragma mark - Open URL

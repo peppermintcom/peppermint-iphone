@@ -45,8 +45,9 @@
         udid = [NSString stringWithFormat:@"%@", (__bridge NSString *)string];
         CFRelease(string);
     }
+    
     //Last 5 chrarters are added to be sure about the uniqueness!
-    udid = [NSString stringWithFormat:@"%@_%@", udid, [[NSString alloc] randomStringWithLength:5]];
+    udid = [NSString stringWithFormat:@"%@_%@_%f", udid, [[NSString alloc] randomStringWithLength:5], [NSDate new].timeIntervalSince1970];
     return udid;
 }
 
@@ -159,7 +160,7 @@ SUBSCRIBE(RecordersUpdateCompleted) {
             NSString *password;
             if (peppermintMessageSender.loginSource == LOGINSOURCE_FACEBOOK) {
                 prefix = AUTH_FACEBOOK;
-                password = [peppermintMessageSender currentFacebookToken];
+                password = peppermintMessageSender.password;
             } else if (peppermintMessageSender.loginSource == LOGINSOURCE_GOOGLE) {
                 prefix = AUTH_GOOGLE;
                 password = peppermintMessageSender.password;
@@ -198,6 +199,17 @@ SUBSCRIBE(SetUpAccountWithRecorderCompleted) {
         [PeppermintMessageSender sharedInstance].isAccountSetUpWithRecorder = YES;
         [[PeppermintMessageSender sharedInstance] save];
         NSLog(@"SetUpAccountWithRecorderCompleted");
+        
+#ifdef DEBUG
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[[UIAlertView alloc] initWithTitle:@"Success"
+                                        message:@"SetUpAccountWithRecorderCompleted, now you can receive remote notifications!"
+                                       delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil] show];
+        });
+#endif
+        
     }
 }
 

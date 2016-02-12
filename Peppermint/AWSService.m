@@ -31,7 +31,8 @@
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
     RecorderRequest *recorderRequest = [RecorderRequest new];
-    recorderRequest.api_key = self.apiKey;
+
+    recorderRequest.api_key = self.apiKey;    
     Recorder *recorder = [Recorder new];
     recorder.recorder_client_id = clientId;
     recorderRequest.recorder = recorder;
@@ -106,7 +107,8 @@
     AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
     [requestSerializer setValue:contentType forHTTPHeaderField:@"Content-Type"];
     
-    NSURLRequest *request = [requestSerializer requestWithMethod:@"PUT" URLString:signedUrl parameters:nil error:&error];
+    NSDictionary *parameterDictionary = [NSDictionary new];
+    NSURLRequest *request = [requestSerializer requestWithMethod:@"PUT" URLString:signedUrl parameters:parameterDictionary error:&error];
     if(error) {
         [self failureDuringRequestCreationWithError:error];
     } else {
@@ -250,8 +252,14 @@
     NSString *tokenText = [self toketTextForJwt:jwt];
     requestOperationManager.requestSerializer = [AFJSONRequestSerializer serializer];
     [requestOperationManager.requestSerializer setValue:tokenText forHTTPHeaderField:AUTHORIZATION];
+    requestOperationManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:
+                                                                         @"application/vnd.api+json",
+                                                                         @"application/json",
+                                                                         @"text/plain",
+                                                                         nil];
     
-    [requestOperationManager POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSDictionary *parameterDictionary = [NSDictionary new];
+    [requestOperationManager POST:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         VerificationEmailSent *verificationEmailSent = [VerificationEmailSent new];
         verificationEmailSent.sender = self;
         verificationEmailSent.jwt = jwt;
@@ -271,7 +279,8 @@
     requestOperationManager.requestSerializer = [AFJSONRequestSerializer serializer];
     [requestOperationManager.requestSerializer setValue:tokenText forHTTPHeaderField:AUTHORIZATION];
     
-    [requestOperationManager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSDictionary *parameterDictionary = [NSDictionary new];
+    [requestOperationManager GET:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSError *error;
         User *user = [[User alloc] initWithDictionary:responseObject error:&error];
         if (error) {
@@ -374,9 +383,11 @@
                                                               initWithBaseURL:[NSURL URLWithString:url]];
     [requestOperationManager.requestSerializer setValue:authHeader forHTTPHeaderField:AUTHORIZATION];
     [requestOperationManager.requestSerializer setValue:self.apiKey forHTTPHeaderField:X_API_KEY];
+    [requestOperationManager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     requestOperationManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/vnd.api+json"];
     
-    [requestOperationManager POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSDictionary *parameterDictionary = [NSDictionary new];
+    [requestOperationManager POST:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSError *error;
         JwtsResponse *jwtsResponse = [[JwtsResponse alloc] initWithDictionary:responseObject error:&error];
         if (error) {
@@ -384,8 +395,11 @@
         } else {
             
 #warning "Refactor code to take account Id from JwtsResponse class"
-            NSString *accountId = [[[[[responseObject valueForKey:@"data"] valueForKey:@"relationships"] valueForKey:@"account"] valueForKey:@"data"] valueForKey:@"id"];
-            
+            NSString *accountId = [[[[[responseObject valueForKey:@"data"]
+                                      valueForKey:@"relationships"]
+                                     valueForKey:@"account"]
+                                    valueForKey:@"data"]
+                                   valueForKey:@"id"];
             
             JwtsExchanged *jwtsExchanged = [JwtsExchanged new];
             jwtsExchanged.sender = self;

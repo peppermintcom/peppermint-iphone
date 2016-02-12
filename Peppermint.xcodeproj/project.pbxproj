@@ -461,6 +461,7 @@
 		B1A366941BDC92FF00852B52 /* UploadsResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadsResponse.m; sourceTree = "<group>"; };
 		B1A4AA4F1BF4DA9D005D55CB /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
 		B1A4AA501BF4DA9D005D55CB /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
+		B1A792451C6D9F8300254528 /* PushKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PushKit.framework; path = System/Library/Frameworks/PushKit.framework; sourceTree = SDKROOT; };
 		B1B8018F1C3FF69B00958885 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		B1B801901C3FF69B00958885 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		B1BB1E5D1BD35CD300A1CE45 /* MandrillService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrillService.h; sourceTree = "<group>"; };
@@ -655,6 +656,7 @@
 		6C8541A65356EA01C859C162 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B1A792451C6D9F8300254528 /* PushKit.framework */,
 				D0AC07661C4809F300F9CF6F /* WatchConnectivity.framework */,
 				D0AC07641C4809E000F9CF6F /* Contacts.framework */,
 				D0AC07621C4809D600F9CF6F /* WatchConnectivity.framework */,
@@ -1657,7 +1659,7 @@
 								enabled = 1;
 							};
 							com.apple.BackgroundModes = {
-								enabled = 0;
+								enabled = 1;
 							};
 							com.apple.GameCenter = {
 								enabled = 0;
@@ -2168,8 +2170,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Peppermint/Peppermint.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Okan Kurtulus (3EKSBBURMR)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Okan Kurtulus (3EKSBBURMR)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2182,7 +2184,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d25e75cd-6f68-444a-82ec-7d3143fa7d82";
+				PROVISIONING_PROFILE = "30948671-1298-47e4-9c79-fdd186104da3";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2194,8 +2196,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Peppermint/Peppermint.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Peppermint.com Inc (FG36H6PY86)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Peppermint.com Inc (FG36H6PY86)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2208,7 +2210,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "54f8004e-e253-4e3f-aa2b-06015d1d1140";
+				PROVISIONING_PROFILE = "b8f9fd50-e888-44ee-8c15-177d29a6291d";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

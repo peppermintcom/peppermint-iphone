@@ -24,18 +24,19 @@
 }
 
 -(void) save:(PeppermintContact*) peppermintContact {
+    weakself_create();
     dispatch_async(DBQueue, ^() {
         Repository *repository = [Repository beginTransaction];
         NSArray *matchedRecentContacts = [repository getResultsFromEntity:[RecentContact class] predicateOrNil:[self recentContactPredicate:peppermintContact]];
         
         if(matchedRecentContacts.count > 1) {
             repository = nil;
-            [self promtMultipleRecordsWithSameValueErrorForPeppermintContact:peppermintContact];
+            [weakSelf promtMultipleRecordsWithSameValueErrorForPeppermintContact:peppermintContact];
         } else if (matchedRecentContacts.count == 1) {
             RecentContact *recentContact = [matchedRecentContacts objectAtIndex:0];
-            [self updateRecentContact:recentContact inRepository:repository];
+            [weakSelf updateRecentContact:recentContact inRepository:repository];
         } else if (matchedRecentContacts.count == 0) {
-            [self addNewRecentForPeppermintContact:peppermintContact inRepository:repository];
+            [weakSelf addNewRecentForPeppermintContact:peppermintContact inRepository:repository];
         }
     });
 }

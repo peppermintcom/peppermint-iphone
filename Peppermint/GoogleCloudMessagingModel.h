@@ -10,6 +10,9 @@
 #import <Google/CloudMessaging.h>
 #import "Attribute.h"
 
+#define CATEGORY_GCM_AUDIO_MESSAGE  @"AudioMessage"
+#define CATEGORY_IDENTIFIER_REPLY   @"Reply"
+
 @interface GoogleCloudMessagingModel : BaseModel <GCMReceiverDelegate>
 
 @property(nonatomic, readonly, strong) NSString *registrationKey;

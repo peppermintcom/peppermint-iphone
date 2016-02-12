@@ -24,8 +24,22 @@
 #import "SetUpRecorderRequest.h"
 #import "MessageRequest.h"
 
+
+#warning "Dont forget to fix below lines about API key!!!"
+
+/*
+ DEVELOPMENT:
+ iOS :          "ios-dev"
+ Android :      "android-dev"
+ 
+ PROD
+ iOS :          "AiaWKSSoYgNv5WdLFMqkh1j7TgKq7evmQlOiFNAQxkXL7GrIHVqQJw"
+ Android :      "la8H4E6Iw5teA6nelVZWgZWqVJh7kWc6Gn1rj21hsYcTP7y7JAmDDQ"
+ 
+*/
+
 #ifdef DEBUG
-#define AWS_API_KEY                     @"abc123"
+#define AWS_API_KEY                     @"ios-dev"
 #else
 #define AWS_API_KEY                     @"AiaWKSSoYgNv5WdLFMqkh1j7TgKq7evmQlOiFNAQxkXL7GrIHVqQJw"
 #endif
