@@ -145,9 +145,7 @@
 }
 
 -(void) goBackAndSendAMessageLabelPressed {
-    NSLog(@"goBackAndSendAMessageLabelPressed");
     [self.navigationController popToRootViewControllerAnimated:YES];
-    
 }
 
 #pragma mark - Navigate to ChatEntry

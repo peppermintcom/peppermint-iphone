@@ -97,6 +97,7 @@
 
 -(void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    self.recordingView = nil;
 #warning "What if the playing cell is not currently visible. Have further test and fix issue!"
     for(ChatTableViewCell* cell in [self.tableView visibleCells]) {
         [cell.playingModel.audioPlayer stop];

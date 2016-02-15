@@ -12,6 +12,11 @@
 
 #define DBQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
 
+#define     KEY_NAME_SURNAME                    @"NameSurname"
+#define     KEY_COMMUNICATION_CHANNEL           @"CommunicationChannel"
+#define     KEY_COMMUNICATION_CHANNEL_ADDRESS   @"CommunicationChannelAddress"
+#define     KEY_SENDER_CLASS                    @"SenderClass"
+
 @implementation CacheModel {
     volatile NSUInteger numberOfActiveCalls;
 }
@@ -138,6 +143,40 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
             }
         }
     }
+}
+
+
+#pragma mark - Cache On Defaults
+
+-(void) cacheOnDefaults:(SendVoiceMessageModel*) sendVoiceMessageModel {
+    NSString *nameSurname = sendVoiceMessageModel.selectedPeppermintContact.nameSurname;
+    NSNumber *communicationChannel = [NSNumber numberWithInt:sendVoiceMessageModel.selectedPeppermintContact.communicationChannel];
+    NSString *communicationChannelAddress = sendVoiceMessageModel.selectedPeppermintContact.communicationChannelAddress;
+    NSString *senderClass = [NSString stringWithFormat:@"%@", [sendVoiceMessageModel class]];
+    
+    NSDictionary *senderDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                                nameSurname,                    KEY_NAME_SURNAME,
+                                communicationChannel,           KEY_COMMUNICATION_CHANNEL,
+                                communicationChannelAddress,    KEY_COMMUNICATION_CHANNEL_ADDRESS,
+                                senderClass,                    KEY_SENDER_CLASS,
+                                nil];
+    
+    defaults_set_object(DEFAULTS_KEY_CACHED_SENDVOCIEMESSAGE_MODEL, senderDictionary);
+}
+
+-(SendVoiceMessageModel*) cachedSendVoiceMessageModelFromDefaults {
+    SendVoiceMessageModel *sendVoiceMessageModel = nil;
+    NSDictionary *senderDictionary = defaults_object(DEFAULTS_KEY_CACHED_SENDVOCIEMESSAGE_MODEL);
+    if(senderDictionary) {
+        PeppermintContact *peppermintContact = [PeppermintContact new];
+        peppermintContact.nameSurname = [senderDictionary objectForKey:KEY_NAME_SURNAME];
+        peppermintContact.communicationChannel =  [(NSNumber*)[senderDictionary objectForKey:KEY_COMMUNICATION_CHANNEL] integerValue];
+        peppermintContact.communicationChannelAddress = [senderDictionary objectForKey:KEY_COMMUNICATION_CHANNEL_ADDRESS];
+        
+        sendVoiceMessageModel = [[NSClassFromString([senderDictionary objectForKey:KEY_SENDER_CLASS]) alloc] init];
+        sendVoiceMessageModel.selectedPeppermintContact = peppermintContact;
+    }
+    return sendVoiceMessageModel;
 }
 
 @end

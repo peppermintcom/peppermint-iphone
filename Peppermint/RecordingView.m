@@ -367,35 +367,34 @@ SUBSCRIBE(MessageSendingStatusIsUpdated) {
 #pragma mark - App Interruption Actions
 
 SUBSCRIBE(ApplicationWillResignActive) {
-    recordingViewStatus = RecordingViewStatusResignActive;
-    [self.recordingModel backUpRecording];
+    if(!self.hidden) {
+        recordingViewStatus = RecordingViewStatusResignActive;
+        [self.recordingModel backUpRecording];
+        [[CacheModel sharedInstance] cacheOnDefaults:self.sendVoiceMessageModel];
+    }
 }
 
 SUBSCRIBE(ApplicationDidBecomeActive) {
-    [self handleAppIsActiveAgain];
+    if(!self.hidden) {
+        [self handleAppIsActiveAgain];
+    }
 }
 
 -(void) handleAppIsActiveAgain {
     if(recordingViewStatus == RecordingViewStatusResignActive) {
         recordingViewStatus = RecordingViewStatusRecoverFromBackUp;
         CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
-        if( previousFileLength > MIN_VOICE_MESSAGE_LENGTH) {
-            if(!self.sendVoiceMessageModel) {
-                NSError *error = [NSError errorWithDomain:@"sendVoiceMessageModel was released. This message can not be sent! :(" code:-1 userInfo:nil];
-                [self.delegate operationFailure:error];
-            } else {
-                self.sendVoiceMessageModel.delegate = self;
-                if(!self.recordingModel) {
-                    self.recordingModel = [RecordingModel new];
-                    self.recordingModel.delegate = self;
-                } else {
-                    self.recordingModel.delegate = self;
-                    [self showAlertForRecordIsCut];
-                }
-            }
-        } else {
+        BOOL isMessageLengthValid = previousFileLength > MIN_VOICE_MESSAGE_LENGTH;
+        self.sendVoiceMessageModel = [[CacheModel sharedInstance] cachedSendVoiceMessageModelFromDefaults];
+        
+        if(!isMessageLengthValid || self.sendVoiceMessageModel == nil) {
             [RecordingModel setPreviousFileLength:0];
             [self dissmissWithFadeOut];
+        } else {
+            self.sendVoiceMessageModel.delegate = self;
+            self.recordingModel = [RecordingModel new];
+            self.recordingModel.delegate = self;
+            [self showAlertForRecordIsCut];
         }
     }
 }

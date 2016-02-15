@@ -98,7 +98,9 @@ sharedObject;\
 #define DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH  @"previousRecordingLength"
 #define DEFAULTS_KEY_TUTORIAL_TOOLTIP_IS_SHOWED @"isTutorialTooltipShowed"
 #define DEFAULTS_KEY_IS_FIRST_RUN               @"isFirstRun"
-#define DEFAULTS_DONT_SHOW_SMS_WARNING          @"DontShowSMSWarning"
+#define DEFAULTS_KEY_DONT_SHOW_SMS_WARNING      @"DontShowSMSWarning"
+
+#define DEFAULTS_KEY_CACHED_SENDVOCIEMESSAGE_MODEL @"CachedSendVoiceMessageModel"
 
 #pragma mark - OpenSans Fonts
 #import <OpenSans/UIFont+OpenSans.h>

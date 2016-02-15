@@ -15,4 +15,9 @@
 -(void) cache:(SendVoiceMessageModel*) sendVoiceMessageModel WithData:(NSData*) data extension:(NSString*) extension duration:(NSTimeInterval)duration;
 -(void) triggerCachedMessages;
 -(void) cacheOngoingMessages;
+
+#pragma mark - Cache On Defaults
+-(void) cacheOnDefaults:(SendVoiceMessageModel*) sendVoiceMessageModel;
+-(SendVoiceMessageModel*) cachedSendVoiceMessageModelFromDefaults;
+
 @end
