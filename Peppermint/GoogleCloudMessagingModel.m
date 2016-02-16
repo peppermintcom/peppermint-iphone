@@ -14,10 +14,13 @@
 #import "PeppermintContact.h"
 #import "ContactsModel.h"
 #import "RecentContactsModel.h"
+#import "PlayingModel.h"
 
 @implementation GoogleCloudMessagingModel {
     ChatModel *chatModel;
     RecentContactsModel *recentContactsModel;
+    NSMutableSet *handledGoogleMessageIdSet;
+    PlayingModel *playingModel;
 }
 
 NSString *const SubscriptionTopic = @"/topics/global";
@@ -36,6 +39,9 @@ NSString *const SubscriptionTopic = @"/topics/global";
     if(self) {
         chatModel = [ChatModel new];
         recentContactsModel = [RecentContactsModel new];
+        handledGoogleMessageIdSet = [NSMutableSet new];
+        playingModel = [PlayingModel new];
+        [playingModel initReceivedMessageSound];
     }
     return self;
 }
@@ -161,7 +167,8 @@ NSString *const SubscriptionTopic = @"/topics/global";
 -(Attribute*) handleIncomingMessage:(NSDictionary *) userInfo {
     NSError *error;
     Attribute *attribute = [[Attribute alloc] initWithDictionary:userInfo error:&error];
-    if(!error) {
+    if(!error && ![handledGoogleMessageIdSet containsObject:attribute.message_id]) {
+        [handledGoogleMessageIdSet addObject:attribute.message_id];
         PeppermintContact *peppermintContact = nil;
         NSPredicate *contactPredicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:attribute.sender_email communicationChannel:CommunicationChannelEmail];
         NSArray *filteredContactsArray = [[ContactsModel sharedInstance].contactList filteredArrayUsingPredicate:contactPredicate];
@@ -186,7 +193,7 @@ NSString *const SubscriptionTopic = @"/topics/global";
                              createDate:attribute.createdDate];
         
         [recentContactsModel save:peppermintContact];
-        
+        [playingModel playPreparedAudiowithCompetitionBlock:nil];
     } else {
         attribute = nil;
         NSLog(@"Could not parse userInfo. Notification could not be processed:\n%@", userInfo);

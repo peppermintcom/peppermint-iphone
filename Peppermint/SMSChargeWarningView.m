@@ -117,7 +117,7 @@
 
 -(void) presentOverView:(UIView*) view forNameSurname:(NSString*)nameSurname {
     
-    NSNumber *savedValue = defaults_object(DEFAULTS_DONT_SHOW_SMS_WARNING);
+    NSNumber *savedValue = defaults_object(DEFAULTS_KEY_DONT_SHOW_SMS_WARNING);
     isUserConfirming = savedValue && savedValue.boolValue;
     alternateCommunicationChannelAddress = nil;
     contactNameSurname = nameSurname;
@@ -155,7 +155,7 @@
     [self hideSMSChargeWarningView];
     if(confirm) {
         isUserConfirming = !self.dontAskAgainImageView.hidden;
-        defaults_set_object(DEFAULTS_DONT_SHOW_SMS_WARNING, [NSNumber numberWithBool:isUserConfirming]);
+        defaults_set_object(DEFAULTS_KEY_DONT_SHOW_SMS_WARNING, [NSNumber numberWithBool:isUserConfirming]);
         [self.delegate userConfirmsToSendSMS];
     } else if([self.delegate respondsToSelector:@selector(userDeclinesToSendSMS)]) {
         [self.delegate userDeclinesToSendSMS];

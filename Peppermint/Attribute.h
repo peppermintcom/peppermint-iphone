@@ -19,6 +19,7 @@
 @property (strong, nonatomic) NSString<Optional> *sender_name;
 @property (strong, nonatomic) NSString<Optional> *created;
 @property (strong, nonatomic) NSNumber<Optional> *duration;
+@property (strong, nonatomic) NSString<Optional> *message_id;
 
 -(NSDate*) createdDate;
 

@@ -14,7 +14,10 @@ typedef void(^PlayerCompletitionBlock)(void);
 @interface PlayingModel : BaseModel
 @property (strong, nonatomic, readonly) AVAudioPlayer *audioPlayer;
 
--(BOOL) playBeginRecording:(PlayerCompletitionBlock) playerCompletitionBlock;
+-(void) initBeginRecordingSound;
+-(void) initReceivedMessageSound;
+-(BOOL) playPreparedAudiowithCompetitionBlock:(PlayerCompletitionBlock) playerCompletitionBlock;
+
 -(BOOL) playData:(NSData*) audioData playerCompletitionBlock:(PlayerCompletitionBlock) playerCompletitionBlock;
 -(void) pause;
 -(void) play;

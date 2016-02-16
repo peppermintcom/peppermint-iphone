@@ -26,6 +26,7 @@
 }
 
 +(UIImage*) makeSnapShotofView:(UIView*) view {
+#warning "Consider this function to be called when the view image is not rendered. What to do then?"
     UIGraphicsBeginImageContext(view.bounds.size);
     [view.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();

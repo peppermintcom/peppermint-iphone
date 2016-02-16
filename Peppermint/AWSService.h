@@ -39,7 +39,8 @@
 */
 
 #ifdef DEBUG
-#define AWS_API_KEY                     @"ios-dev"
+//#define AWS_API_KEY                     @"ios-dev"
+#define AWS_API_KEY                     @"AiaWKSSoYgNv5WdLFMqkh1j7TgKq7evmQlOiFNAQxkXL7GrIHVqQJw"
 #else
 #define AWS_API_KEY                     @"AiaWKSSoYgNv5WdLFMqkh1j7TgKq7evmQlOiFNAQxkXL7GrIHVqQJw"
 #endif

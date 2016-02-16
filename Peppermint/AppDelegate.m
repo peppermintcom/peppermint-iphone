@@ -151,10 +151,6 @@
 
 -(void) initLocalNotification {
     UIApplication *application = [UIApplication sharedApplication];
-    
-    [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil]];
-    
-    application.applicationIconBadgeNumber = 0;
     [application cancelAllLocalNotifications];
     
     int second = 1;
@@ -167,7 +163,6 @@
     notif.alertBody = LOC(@"You have installed Peppermint. Click to send your first message!", @"Notification Message");
     notif.alertAction = @"Send now!";
     notif.soundName = @"alert.caf";
-    
     [[UIApplication sharedApplication] scheduleLocalNotification:notif];
 }
 
@@ -297,10 +292,10 @@ SUBSCRIBE(DetachSuccess) {
 }
 
 - (BOOL) handleNotification:(NSDictionary*)userInfo Inapplication:(UIApplication *)application {
+    [[GCMService sharedInstance] appDidReceiveMessage:userInfo];
     GoogleCloudMessagingModel *googleCloudMessagingModel = [GoogleCloudMessagingModel sharedInstance];
     Attribute *sender = [googleCloudMessagingModel handleIncomingMessage:userInfo];
     if(sender) {
-        [[GCMService sharedInstance] appDidReceiveMessage:userInfo];
         
         if(application.applicationState == UIApplicationStateActive) {
             NSLog(@"UIApplicationStateActive");
@@ -620,6 +615,9 @@ SUBSCRIBE(DetachSuccess) {
         }
     } else if ([error.domain isEqualToString:AFURLResponseSerializationErrorDomain]) {
         switch (error.code) {
+            case -1011:
+                message = LOC(@"Please try again later", @"message");
+                break;
             default:
                 message = LOC(@"Please check your login information", @"message");
                 break;

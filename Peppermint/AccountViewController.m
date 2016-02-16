@@ -163,8 +163,7 @@ int OPTION_LOG_OUT              = 0;
         [self.peppermintMessageSender clearSender];
         [self.navigationController popViewControllerAnimated:NO];
         [LoginNavigationViewController logUserInWithDelegate:nil completion:nil];
-    }
-    else if (option == OPTION_DISPLAY_NAME) {
+    } else if (option == OPTION_DISPLAY_NAME) {
       UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:LOC(@"Display Name", nil) message:LOC(@"Display Name Description", nil) delegate:self cancelButtonTitle:LOC(@"Cancel", nil) otherButtonTitles:LOC(@"Save", nil), nil];
       alertView.alertViewStyle=UIAlertViewStylePlainTextInput;
       UITextField *textField = [alertView textFieldAtIndex:0];

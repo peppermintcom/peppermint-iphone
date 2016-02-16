@@ -19,6 +19,7 @@
     fastRecordingView.delegate = delegate;
     [fastRecordingView timerUpdated:0];
     fastRecordingView.playingModel = [PlayingModel new];
+    [fastRecordingView.playingModel initBeginRecordingSound];
     return fastRecordingView;
 }
 

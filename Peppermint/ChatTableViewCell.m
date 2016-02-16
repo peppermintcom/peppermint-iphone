@@ -70,20 +70,24 @@
     self.durationViewWidthConstraint.constant = 0;
     self.durationCircleView.hidden = YES;
     
+    [_playingModel.audioPlayer stop];
+    _playingModel = nil;
+    
     self.chatEntry = chatEntry;
     self.playPauseImageView.image = imagePlay;
     [self setLeftLabel];
     [self setRightLabelWithDate:chatEntry.dateCreated];
-    
-    [_playingModel.audioPlayer stop];
-    _playingModel = nil;
 }
 
 -(void) setLeftLabel {
     NSString *durationText = @"--:--";
     if(self.chatEntry.duration.integerValue != 0) {
-        NSInteger minutes = self.chatEntry.duration.integerValue / 60;
-        NSInteger seconds = self.chatEntry.duration.integerValue % 60;
+        NSUInteger totalSeconds = self.chatEntry.duration.integerValue;
+        if(self.playingModel.audioPlayer) {
+            totalSeconds = self.playingModel.audioPlayer.currentTime;
+        }
+        NSInteger minutes = totalSeconds / 60;
+        NSInteger seconds = totalSeconds % 60;
         durationText = [NSString stringWithFormat:@"%.2ld:%.2ld", (long)minutes, (long)seconds];
     }
     self.leftLabel.text = durationText;
@@ -140,21 +144,21 @@
             _playingModel = [PlayingModel alloc];
             self.spinnerView.hidden = NO;
             self.playPauseImageView.hidden = YES;
+            weakself_create();
             dispatch_async(LOW_PRIORITY_QUEUE, ^{
-                if(!self.chatEntry.audio) {
+                if(!weakSelf.chatEntry.audio) {
                     NSURL *url = [NSURL URLWithString:self.chatEntry.audioUrl];
-                    self.chatEntry.audio = [NSData dataWithContentsOfURL:url];
+                    weakSelf.chatEntry.audio = [NSData dataWithContentsOfURL:url];
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    self.spinnerView.hidden = YES;
-                    self.playPauseImageView.hidden = NO;
-                    if([_playingModel playData:self.chatEntry.audio playerCompletitionBlock:^{ [self playPauseButtonPressed:nil]; }]) {
-                        _playingModel.audioPlayer.volume = 1.0;
-                        self.chatEntry.duration = [NSNumber numberWithInt:_playingModel.audioPlayer.duration];
-                        [self setLeftLabel];
-                        [ChatModel markChatEntryListened:self.chatEntry];
-                        self.durationCircleView.hidden = NO;
-                        self.playPauseImageView.image = imagePause;
+                    weakSelf.spinnerView.hidden = YES;
+                    weakSelf.playPauseImageView.hidden = NO;
+                    if([_playingModel playData:weakSelf.chatEntry.audio playerCompletitionBlock:^{ [weakSelf playPauseButtonPressed:nil]; }]) {
+                        weakSelf.chatEntry.duration = [NSNumber numberWithInt:_playingModel.audioPlayer.duration];
+                        [weakSelf setLeftLabel];
+                        [ChatModel markChatEntryListened:weakSelf.chatEntry];
+                        weakSelf.durationCircleView.hidden = NO;
+                        weakSelf.playPauseImageView.image = imagePause;
                     }
                 });
             });
@@ -168,6 +172,7 @@
 
 -(void) updateDuration {
     if(_playingModel) {
+        [self setLeftLabel];
         CGFloat percent = _playingModel.audioPlayer.currentTime / _playingModel.audioPlayer.duration;
         if( _playingModel.audioPlayer.isPlaying) {
             CGFloat totalWidth = self.timelineView.frame.size.width - self.durationCircleView.frame.size.width;

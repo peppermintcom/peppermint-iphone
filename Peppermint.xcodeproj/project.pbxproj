@@ -44,6 +44,7 @@
 		B13B50281BF38D57009D3348 /* InformationTextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13B50271BF38D56009D3348 /* InformationTextTableViewCell.xib */; };
 		B149EB351C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B149EB341C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m */; };
 		B14EF8321C4D16570041FD24 /* MandrillNameContentPair.m in Sources */ = {isa = PBXBuildFile; fileRef = B14EF8311C4D16570041FD24 /* MandrillNameContentPair.m */; };
+		B156CD181C7205D40068F890 /* water_drop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B156CD161C7205D40068F890 /* water_drop.mp3 */; };
 		B15B15AC1BD9D8B800C0C171 /* ExplodingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15AB1BD9D8B800C0C171 /* ExplodingView.m */; };
 		B15B15B01BDA44E200C0C171 /* TPAACAudioConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15AF1BDA44E200C0C171 /* TPAACAudioConverter.m */; };
 		B15B15B21BDBBAB200C0C171 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B15B15B11BDBBAB200C0C171 /* Login.storyboard */; };
@@ -324,6 +325,7 @@
 		B14EF8311C4D16570041FD24 /* MandrillNameContentPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MandrillNameContentPair.m; sourceTree = "<group>"; };
 		B15228541BE898DF00C400C6 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		B15228561BE898F500C400C6 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		B156CD161C7205D40068F890 /* water_drop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = water_drop.mp3; sourceTree = "<group>"; };
 		B15B15AA1BD9D8B800C0C171 /* ExplodingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExplodingView.h; sourceTree = "<group>"; };
 		B15B15AB1BD9D8B800C0C171 /* ExplodingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExplodingView.m; sourceTree = "<group>"; };
 		B15B15AE1BDA44E200C0C171 /* TPAACAudioConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPAACAudioConverter.h; sourceTree = "<group>"; };
@@ -955,6 +957,7 @@
 		B17206D31BE4DE5C0021D855 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				B156CD161C7205D40068F890 /* water_drop.mp3 */,
 				B17206D81BE4E1450021D855 /* begin_record.mp3 */,
 			);
 			name = Sounds;
@@ -1742,6 +1745,7 @@
 				B12C03BD1BCFFC280085A55A /* FastRecordingView.xib in Resources */,
 				B17B3D701BB6BD2E009B8BC5 /* ContactTableViewCell.xib in Resources */,
 				B16DA2221BE10A8B00EBF043 /* SlideMenuTableViewCell.xib in Resources */,
+				B156CD181C7205D40068F890 /* water_drop.mp3 in Resources */,
 				D074A6741C0727700017EAC3 /* CountryRow.xib in Resources */,
 				B13B50281BF38D57009D3348 /* InformationTextTableViewCell.xib in Resources */,
 				B101633B1C637983008CC8D0 /* SMSChargeWarningView.xib in Resources */,

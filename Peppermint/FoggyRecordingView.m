@@ -27,6 +27,7 @@
     foggyRecordingView.delegate = delegate;
     [foggyRecordingView timerUpdated:0];
     foggyRecordingView.playingModel = [PlayingModel new];
+    [foggyRecordingView.playingModel initBeginRecordingSound];
     return foggyRecordingView;
 }
 

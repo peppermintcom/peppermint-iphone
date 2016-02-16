@@ -87,6 +87,7 @@
                 [addContactViewController.emailTextField becomeFirstResponder];
             }
         }
+        
         [addContactViewController updateScreen];
         [addContactViewController updateValidationRows];
     }];
@@ -147,6 +148,7 @@
     self.nameSurnameWarningCell.contentView.backgroundColor =
     [UIColor peppermintCancelOrange];
     
+    self.tableView.scrollEnabled = NO;
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -397,6 +399,7 @@
   }
 }
 
+/*
 #pragma mark- Keyboard
 
 - (void)handleKeyboardNotification:(NSNotification *)aNote {
@@ -408,6 +411,7 @@
   }
   [self.tableView setContentOffset:CGPointZero animated:NO];
 }
+*/
 
 #pragma mark - CustomContactModelDelegate
 

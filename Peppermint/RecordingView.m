@@ -175,7 +175,7 @@ typedef enum : NSUInteger {
         [self.recordingModel resetRecording];
         weakself_create();
         if([RecordingModel checkPreviousFileLength] < MIN_VOICE_MESSAGE_LENGTH) {
-            BOOL play =  [self.playingModel playBeginRecording:^{
+            BOOL play =  [self.playingModel playPreparedAudiowithCompetitionBlock:^{
                 if(!weakSelf.hidden
                    && recordingViewStatus == RecordingViewStatusPresented) {
                     [self beginRecording];
