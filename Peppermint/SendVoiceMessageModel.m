@@ -51,11 +51,15 @@
     _data = data;
     _extension = extension;
     _duration = duration;
-    [recentContactsModel save:self.selectedPeppermintContact];
-    [self setChatConversation];
+    
+    BOOL isPreviousCachedMessage = (self.delegate == nil);
+    if(!isPreviousCachedMessage) {
+        [recentContactsModel save:self.selectedPeppermintContact];
+        [self setChatConversation];
+        [self checkAndCleanFastReplyModel];
+    }
     
     [self attachProcessToAppDelegate];
-    [self checkAndCleanFastReplyModel];
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
 
     if(self.sendingStatus == SendingStatusIniting) {

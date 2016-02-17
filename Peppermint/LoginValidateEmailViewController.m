@@ -192,7 +192,7 @@
         [contactSupportModel sendContactSupportMail];
     } else if(indexPath.section == SECTION_CANCEL_REGISTRATION) {
         accountModel.delegate = nil;
-        [[PeppermintMessageSender sharedInstance] clearSender];
+        [accountModel logUserOut];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }

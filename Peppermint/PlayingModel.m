@@ -33,7 +33,7 @@
 }
 
 -(void) initReceivedMessageSound {
-    NSString *audioPath = [[NSBundle mainBundle]pathForResource:@"water_drop" ofType:@"mp3"];
+    NSString *audioPath = [[NSBundle mainBundle]pathForResource:@"water_drop" ofType:@"aiff"];
     [self prepareAudioForPath:audioPath];
 }
 
@@ -41,7 +41,7 @@
     if (audioPath) {
         audioUrl = [NSURL fileURLWithPath:audioPath];
         _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:audioUrl error:nil];
-        [_audioPlayer setNumberOfLoops:1];
+        [_audioPlayer setNumberOfLoops:0];
         [_audioPlayer prepareToPlay];
         _audioPlayer.delegate = self;
         [_audioPlayer play];

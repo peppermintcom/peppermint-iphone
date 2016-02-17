@@ -29,5 +29,5 @@
 -(void) checkEmailIsRegistered:(NSString *)email;
 -(void) logUserIn:(NSString*) email password:(NSString*) password;
 -(void) recoverPasswordForEmail:(NSString*) email;
-
+-(void) logUserOut;
 @end

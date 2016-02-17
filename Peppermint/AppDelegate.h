@@ -26,5 +26,6 @@
 
 -(void) tryToSetUpAccountWithRecorder;
 -(void) tryToUpdateGCMRegistrationToken;
+-(void) refreshBadgeNumber;
 
 @end

@@ -80,7 +80,6 @@
     
     NSDate *lastMessageDate = [ChatModel lastMessageDateOfChat:chat];
     cell.rightDateLabel.text = [dateFormatter stringFromDate:lastMessageDate];
-    
     NSUInteger unreadMessageCount = [ChatModel unreadMessageCountOfChat:chat];
     cell.rightMessageCounterLabel.hidden = unreadMessageCount <= 0;
     cell.rightMessageCounterLabel.text = [NSString stringWithFormat:@"%ld",unreadMessageCount];

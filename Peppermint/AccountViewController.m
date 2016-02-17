@@ -160,7 +160,7 @@ int OPTION_LOG_OUT              = 0;
     NSInteger option = indexPath.section;
 
     if(option == OPTION_LOG_OUT) {
-        [self.peppermintMessageSender clearSender];
+        [[AccountModel sharedInstance] logUserOut];
         [self.navigationController popViewControllerAnimated:NO];
         [LoginNavigationViewController logUserInWithDelegate:nil completion:nil];
     } else if (option == OPTION_DISPLAY_NAME) {

@@ -137,4 +137,14 @@ SUBSCRIBE(AccountPasswordRecovered) {
     }
 }
 
+#pragma mark - Logout user
+
+-(void) logUserOut {
+    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+    [awsService unlinkRecorder:peppermintMessageSender.recorderId
+                   fromAccount:peppermintMessageSender.accountId
+                       withJwt:peppermintMessageSender.recorderJwt];
+    [[PeppermintMessageSender sharedInstance] clearSender];
+}
+
 @end

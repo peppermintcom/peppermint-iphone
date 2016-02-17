@@ -698,7 +698,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="AddContactViewController" id="pyr-NR-460" userLabel="AddContactViewController" customClass="AddContactViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="lc9-2P-XTo">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.92941176469999998" green="0.95294117649999999" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -1025,13 +1025,12 @@ email contact or both</string>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="avatarImageView" destination="P5y-eU-OxC" id="lSC-WK-BTg"/>
                         <outlet property="emailImageView" destination="sqM-B5-gnk" id="Iqf-bU-dBF"/>
                         <outlet property="emailTextField" destination="HCM-xd-FfJ" id="F19-Cn-9LW"/>
                         <outlet property="emailWarningCell" destination="dgt-Ym-aar" id="XBP-cv-Phg"/>
-                        <outlet property="emailWarningLabel" destination="gDm-fc-dNI" id="jsd-Xm-XAd"/>
+                        <outlet property="explanationLabel" destination="v18-70-8vr" id="YAe-LX-lsY"/>
                         <outlet property="firstNameTextField" destination="dv5-8A-bHh" id="1V7-2u-vzP"/>
                         <outlet property="lastNameTextField" destination="QWV-QQ-i2D" id="38H-Ve-MrA"/>
                         <outlet property="nameSurnameWarningCell" destination="Q3Z-lh-9XR" id="dWe-jB-5bX"/>
@@ -1041,7 +1040,6 @@ email contact or both</string>
                         <outlet property="phoneNumberWarningCell" destination="ZFq-aK-nHX" id="MrI-UZ-hyN"/>
                         <outlet property="phoneNumberWarningLabel" destination="eUC-Vz-299" id="mXi-V1-gVX"/>
                         <outlet property="saveContactBarButtonItem" destination="w7i-KX-d7P" id="Rb9-4S-0W3"/>
-                        <outlet property="tableBottomView" destination="PnR-52-XkD" id="T3z-Lp-UMh"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="163-c9-WQw" userLabel="First Responder" sceneMemberID="firstResponder"/>

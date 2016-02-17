@@ -31,5 +31,6 @@
 +(void) markChatEntryListened:(ChatEntry *) chatEntry;
 +(NSUInteger) unreadMessageCountOfChat:(Chat*) chat;
 +(NSDate*) lastMessageDateOfChat:(Chat*) chat;
++(NSUInteger) unreadMessageCountOfAllChats;
 
 @end

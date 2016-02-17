@@ -50,7 +50,7 @@ NSString *const SubscriptionTopic = @"/topics/global";
     UIMutableUserNotificationAction *replyAction = [UIMutableUserNotificationAction new];
     [replyAction setActivationMode:UIUserNotificationActivationModeForeground];
     replyAction.identifier = CATEGORY_IDENTIFIER_REPLY;
-    replyAction.title = [NSString stringWithFormat:@"\u2934%@", LOC(@"Reply", @"Reply Action Title")];
+    replyAction.title = [NSString stringWithFormat:@"%@", LOC(@"Reply", @"Reply Action Title")];
     replyAction.authenticationRequired = YES;
     UIMutableUserNotificationCategory *gcmNotificationCategory = [UIMutableUserNotificationCategory new];
     gcmNotificationCategory.identifier = CATEGORY_GCM_AUDIO_MESSAGE;
@@ -167,7 +167,11 @@ NSString *const SubscriptionTopic = @"/topics/global";
 -(Attribute*) handleIncomingMessage:(NSDictionary *) userInfo {
     NSError *error;
     Attribute *attribute = [[Attribute alloc] initWithDictionary:userInfo error:&error];
-    if(!error && ![handledGoogleMessageIdSet containsObject:attribute.message_id]) {
+    
+    if(!error
+       && attribute.message_id
+       && ![handledGoogleMessageIdSet containsObject:attribute.message_id])
+    {
         [handledGoogleMessageIdSet addObject:attribute.message_id];
         PeppermintContact *peppermintContact = nil;
         NSPredicate *contactPredicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:attribute.sender_email communicationChannel:CommunicationChannelEmail];

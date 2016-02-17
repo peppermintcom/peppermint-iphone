@@ -39,8 +39,7 @@
 */
 
 #ifdef DEBUG
-//#define AWS_API_KEY                     @"ios-dev"
-#define AWS_API_KEY                     @"AiaWKSSoYgNv5WdLFMqkh1j7TgKq7evmQlOiFNAQxkXL7GrIHVqQJw"
+#define AWS_API_KEY                     @"ios-dev"
 #else
 #define AWS_API_KEY                     @"AiaWKSSoYgNv5WdLFMqkh1j7TgKq7evmQlOiFNAQxkXL7GrIHVqQJw"
 #endif
@@ -57,6 +56,7 @@
 #define AWS_ENDPOINT_JWTS               @"/jwts"
 #define AWS_ENDPOINT_SETUP_RECORDER_FORMAT  @"/accounts/%@/relationships/receivers" // SetUp recorder format
 #define AWS_ENDPOINT_MESSAGES           @"/messages"
+#define AWS_ENDPOINT_ACCOUNTS_DELETE_RECORDER   @"/accounts/%@/relationships/receivers/%@"  //Delete recorder from account format
 
 #define RESPONSE_CODE_CONFLICT      409
 
@@ -77,5 +77,7 @@
 -(void) updateGCMRegistrationTokenForRecorderId:(NSString*) recorderId jwt:(NSString*) jwt gcmToken:(NSString*)gcmToken;
 -(void) exchangeCredentialsWithPrefix:(NSString*)prefix forEmail:(NSString*)email password:(NSString*)password recorderClientId:(NSString*)recorderClientId recorderKey:(NSString*)recorderKey;
 -(void) setUpRecorderWithAccountId:(NSString*)accountId recorderId:(NSString*)recorderId jwt:(NSString*)jwt;
+-(void)unlinkRecorder:(NSString*)recorderId fromAccount:(NSString*) accountId withJwt:(NSString*)recorderJwt;
 -(void) sendMessageToRecepientEmail:(NSString*)recepientEmail senderEmail:(NSString*)senderEmail transcriptionUrl:(NSString*) transcriptionUrl audioUrl:(NSString*)audioUrl jwt:(NSString*) jwt;
+
 @end

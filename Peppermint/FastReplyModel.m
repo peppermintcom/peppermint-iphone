@@ -28,6 +28,8 @@
 }
 
 -(BOOL) setFastReplyContactWithNameSurname:(NSString*)nameSurname email:(NSString*)email {
+    NSAssert(nameSurname && email, @"Namesurname and email must be valid to add.Current data-> nameSurname:%@, email:%@", nameSurname, email);
+    
     PeppermintContact *contact = [PeppermintContact new];
     contact.nameSurname = nameSurname;
     contact.communicationChannel = CommunicationChannelEmail;

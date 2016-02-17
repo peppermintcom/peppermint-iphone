@@ -442,6 +442,24 @@
     }];
 }
 
+-(void)unlinkRecorder:(NSString*)recorderId fromAccount:(NSString*) accountId withJwt:(NSString*)recorderJwt {
+    NSString *servicePath = [NSString stringWithFormat:AWS_ENDPOINT_ACCOUNTS_DELETE_RECORDER, accountId, recorderId];
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, servicePath];
+    
+    NSString *tokenText = [self toketTextForJwt:recorderJwt];
+    AFHTTPRequestOperationManager *requestOperationManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:url]];
+    requestOperationManager.requestSerializer = [AFJSONRequestSerializer new];
+    [requestOperationManager.requestSerializer setValue:self.apiKey forHTTPHeaderField:X_API_KEY];
+    [requestOperationManager.requestSerializer setValue:tokenText forHTTPHeaderField:AUTHORIZATION];
+    
+    NSDictionary *parameterDictionary = [NSDictionary new];
+    [requestOperationManager DELETE:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Recorder is un-linked from Account");
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Message could not be sent!!");
+    }];
+}
+
 -(void) sendMessageToRecepientEmail:(NSString*)recepientEmail senderEmail:(NSString*)senderEmail transcriptionUrl:(NSString*) transcriptionUrl audioUrl:(NSString*)audioUrl jwt:(NSString*) jwt {
     
     NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_MESSAGES];

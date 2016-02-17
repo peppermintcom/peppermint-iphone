@@ -9,6 +9,8 @@
 #import "ChatModel.h"
 #import "ContactsModel.h"
 
+#define PREDICATE_UNREAD_MESSAGES [NSPredicate predicateWithFormat:@"self.isSeen = %@",@NO]
+
 @implementation ChatModel
 
 -(id) init {
@@ -29,8 +31,16 @@
     dispatch_async(LOW_PRIORITY_QUEUE, ^{
         Repository *repository = [Repository beginTransaction];
         _chatArray = [repository getResultsFromEntity:[Chat class] predicateOrNil:nil ascSortStringOrNil:nil descSortStringOrNil:nil];
-        //[NSArray arrayWithObjects:@"lastMessageDate", nil]
-
+        
+#warning "Update sorting according to the last message date"
+        /*
+        _chatArray = [_chatArray sortedArrayUsingComparator:^NSComparisonResult(id chat1, id chat2) {
+            NSDate *chat1lastDate = [ChatModel lastMessageDateOfChat:(Chat*)chat1];
+            NSDate *chat2lastDate = [ChatModel lastMessageDateOfChat:(Chat*)chat2];
+            return [chat1lastDate compare:chat2lastDate];
+        }];
+        */
+        
 #ifdef DEBUG
         //[self checkAndCreateRandomChats:repository];
 #endif
@@ -95,18 +105,18 @@
 #pragma mark - AddChatHistory
 
 - (void) createChatHistoryFor:(PeppermintContact*) peppermintContact withAudioData:(NSData*) audioData audioUrl:(NSString*)audioUrl transcription:(NSString*) transcription duration:(NSTimeInterval)duration isSentByMe:(BOOL)isSentByMe createDate:(NSDate*)createDate {
+    NSAssert(peppermintContact.nameSurname && peppermintContact.communicationChannelAddress, @"PeppermintContact must be valid to cache!");
     
     weakself_create();
     dispatch_async(LOW_PRIORITY_QUEUE, ^{
         Chat *matchedChat = nil;
         NSPredicate *addressPredicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:peppermintContact.communicationChannelAddress];
-        NSPredicate *nameSurnamePredicate = [ContactsModel contactPredicateWithNameSurname:peppermintContact.nameSurname];
-        NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:
-                                          [NSArray arrayWithObjects: addressPredicate, nameSurnamePredicate, nil]
-                                          ];
+        
+        //NSPredicate *nameSurnamePredicate = [ContactsModel contactPredicateWithNameSurname:peppermintContact.nameSurname];
+        //NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects: addressPredicate, nameSurnamePredicate, nil]];
         
         Repository *repository = [Repository beginTransaction];
-        NSArray *matchedChatsArray = [repository getResultsFromEntity:[Chat class] predicateOrNil:predicate];
+        NSArray *matchedChatsArray = [repository getResultsFromEntity:[Chat class] predicateOrNil:addressPredicate];
         if(matchedChatsArray.firstObject) {
             matchedChat = (Chat*) matchedChatsArray.firstObject;
         } else {
@@ -160,6 +170,10 @@
                 NSError *error = [repository endTransaction];
                 if(error) {
                     NSLog(@"Could not mark message as listened");
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [[AppDelegate Instance] refreshBadgeNumber];
+                    });
                 }
             } else {
                 NSLog(@"Could not find matching chatEntry with url:%@", chatEntry.audioUrl);
@@ -174,8 +188,7 @@
 #pragma mark - Chat Helper Functions
 
 +(NSUInteger) unreadMessageCountOfChat:(Chat*) chat {
-    NSPredicate *unreadPredicate = [NSPredicate predicateWithFormat:@"self.isSeen = %@",@NO];
-    return [chat.chatEntries filteredSetUsingPredicate:unreadPredicate].count;
+    return [chat.chatEntries filteredSetUsingPredicate:PREDICATE_UNREAD_MESSAGES].count;
 }
 
 +(NSDate*) lastMessageDateOfChat:(Chat*) chat {
@@ -183,6 +196,12 @@
     NSArray *descriptors = [NSArray arrayWithObject: descriptor];
     NSArray *orderedList = [chat.chatEntries sortedArrayUsingDescriptors:descriptors];
     return ((ChatEntry*)orderedList.firstObject).dateCreated;
+}
+
++(NSUInteger) unreadMessageCountOfAllChats {
+    Repository *repository = [Repository beginTransaction];
+    NSArray *unreadChatEntries = [repository getResultsFromEntity:[ChatEntry class] predicateOrNil:PREDICATE_UNREAD_MESSAGES];
+    return  unreadChatEntries.count;
 }
 
 @end

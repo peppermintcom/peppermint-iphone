@@ -44,7 +44,6 @@
 		B13B50281BF38D57009D3348 /* InformationTextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13B50271BF38D56009D3348 /* InformationTextTableViewCell.xib */; };
 		B149EB351C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B149EB341C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m */; };
 		B14EF8321C4D16570041FD24 /* MandrillNameContentPair.m in Sources */ = {isa = PBXBuildFile; fileRef = B14EF8311C4D16570041FD24 /* MandrillNameContentPair.m */; };
-		B156CD181C7205D40068F890 /* water_drop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B156CD161C7205D40068F890 /* water_drop.mp3 */; };
 		B15B15AC1BD9D8B800C0C171 /* ExplodingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15AB1BD9D8B800C0C171 /* ExplodingView.m */; };
 		B15B15B01BDA44E200C0C171 /* TPAACAudioConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15AF1BDA44E200C0C171 /* TPAACAudioConverter.m */; };
 		B15B15B21BDBBAB200C0C171 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B15B15B11BDBBAB200C0C171 /* Login.storyboard */; };
@@ -116,6 +115,8 @@
 		B1A366921BDC92DB00852B52 /* UploadsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A366911BDC92DB00852B52 /* UploadsRequest.m */; };
 		B1A366951BDC92FF00852B52 /* UploadsResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A366941BDC92FF00852B52 /* UploadsResponse.m */; };
 		B1A4AA511BF4DA9D005D55CB /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A4AA501BF4DA9D005D55CB /* AccountViewController.m */; };
+		B1B2F47B1C732679003A4220 /* water_drop.aiff in Resources */ = {isa = PBXBuildFile; fileRef = B1B2F47A1C732679003A4220 /* water_drop.aiff */; };
+		B1B2F47D1C73273A003A4220 /* notification.aiff in Resources */ = {isa = PBXBuildFile; fileRef = B1B2F47C1C73273A003A4220 /* notification.aiff */; };
 		B1B801911C3FF69B00958885 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B801901C3FF69B00958885 /* AboutViewController.m */; };
 		B1BB1E5F1BD35CD300A1CE45 /* MandrillService.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB1E5E1BD35CD300A1CE45 /* MandrillService.m */; };
 		B1BB1E631BD364FB00A1CE45 /* AFNetworkActivityLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB1E621BD364FB00A1CE45 /* AFNetworkActivityLogger.m */; };
@@ -325,7 +326,6 @@
 		B14EF8311C4D16570041FD24 /* MandrillNameContentPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MandrillNameContentPair.m; sourceTree = "<group>"; };
 		B15228541BE898DF00C400C6 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		B15228561BE898F500C400C6 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		B156CD161C7205D40068F890 /* water_drop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = water_drop.mp3; sourceTree = "<group>"; };
 		B15B15AA1BD9D8B800C0C171 /* ExplodingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExplodingView.h; sourceTree = "<group>"; };
 		B15B15AB1BD9D8B800C0C171 /* ExplodingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExplodingView.m; sourceTree = "<group>"; };
 		B15B15AE1BDA44E200C0C171 /* TPAACAudioConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPAACAudioConverter.h; sourceTree = "<group>"; };
@@ -464,6 +464,8 @@
 		B1A4AA4F1BF4DA9D005D55CB /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
 		B1A4AA501BF4DA9D005D55CB /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
 		B1A792451C6D9F8300254528 /* PushKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PushKit.framework; path = System/Library/Frameworks/PushKit.framework; sourceTree = SDKROOT; };
+		B1B2F47A1C732679003A4220 /* water_drop.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = water_drop.aiff; sourceTree = "<group>"; };
+		B1B2F47C1C73273A003A4220 /* notification.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = notification.aiff; sourceTree = "<group>"; };
 		B1B8018F1C3FF69B00958885 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		B1B801901C3FF69B00958885 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		B1BB1E5D1BD35CD300A1CE45 /* MandrillService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrillService.h; sourceTree = "<group>"; };
@@ -957,7 +959,8 @@
 		B17206D31BE4DE5C0021D855 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				B156CD161C7205D40068F890 /* water_drop.mp3 */,
+				B1B2F47C1C73273A003A4220 /* notification.aiff */,
+				B1B2F47A1C732679003A4220 /* water_drop.aiff */,
 				B17206D81BE4E1450021D855 /* begin_record.mp3 */,
 			);
 			name = Sounds;
@@ -1736,7 +1739,9 @@
 			files = (
 				B11B13561C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib in Resources */,
 				B1C83A1B1BDEB0FC00EB14C2 /* LoginTextFieldTableViewCell.xib in Resources */,
+				B1B2F47B1C732679003A4220 /* water_drop.aiff in Resources */,
 				B17B3D3A1BB6898C009B8BC5 /* Main.storyboard in Resources */,
+				B1B2F47D1C73273A003A4220 /* notification.aiff in Resources */,
 				B17B3D571BB68A39009B8BC5 /* Text.strings in Resources */,
 				B17206D91BE4E1450021D855 /* begin_record.mp3 in Resources */,
 				B179F83C1BC931820089D709 /* SearchMenuTableViewCell.xib in Resources */,
@@ -1745,7 +1750,6 @@
 				B12C03BD1BCFFC280085A55A /* FastRecordingView.xib in Resources */,
 				B17B3D701BB6BD2E009B8BC5 /* ContactTableViewCell.xib in Resources */,
 				B16DA2221BE10A8B00EBF043 /* SlideMenuTableViewCell.xib in Resources */,
-				B156CD181C7205D40068F890 /* water_drop.mp3 in Resources */,
 				D074A6741C0727700017EAC3 /* CountryRow.xib in Resources */,
 				B13B50281BF38D57009D3348 /* InformationTextTableViewCell.xib in Resources */,
 				B101633B1C637983008CC8D0 /* SMSChargeWarningView.xib in Resources */,
@@ -2174,8 +2178,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Peppermint/Peppermint.entitlements;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2188,7 +2192,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "30948671-1298-47e4-9c79-fdd186104da3";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2200,8 +2204,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Peppermint/Peppermint.entitlements;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2214,7 +2218,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b8f9fd50-e888-44ee-8c15-177d29a6291d";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -2292,7 +2296,7 @@
 				INFOPLIST_FILE = watch/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5ee7fe6e-d734-4fac-a841-714eb2079cf5";
+				PROVISIONING_PROFILE = "6371b418-9b16-468c-bb32-3de249c3a1ae";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -2330,7 +2334,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "a9a9dcbf-20ae-4e91-9b69-bb77b93c18ff";
+				PROVISIONING_PROFILE = "e38f2825-05c5-468a-bc3a-73163a4beb4d";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;

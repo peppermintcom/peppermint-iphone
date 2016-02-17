@@ -38,6 +38,9 @@
 @import CoreSpotlight;
 @import MobileCoreServices;
 
+#define PATH_EMAIL          @"gcm.notification.sender_email"
+#define PATH_FULL_NAME      @"gcm.notification.sender_name"
+
 @interface AppDelegate () <WCSessionDelegate, GGLInstanceIDDelegate>
 @end
 
@@ -202,6 +205,7 @@
     [self initGoogleApp];
     [self checkForFirstRun];
     [self initRecorder];
+    [self refreshBadgeNumber];
     REGISTER();
     return YES;
 }
@@ -295,6 +299,7 @@ SUBSCRIBE(DetachSuccess) {
     [[GCMService sharedInstance] appDidReceiveMessage:userInfo];
     GoogleCloudMessagingModel *googleCloudMessagingModel = [GoogleCloudMessagingModel sharedInstance];
     Attribute *sender = [googleCloudMessagingModel handleIncomingMessage:userInfo];
+    [self refreshBadgeNumber];
     if(sender) {
         
         if(application.applicationState == UIApplicationStateActive) {
@@ -314,7 +319,14 @@ SUBSCRIBE(DetachSuccess) {
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(nullable NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler {
     NSLog(@"handleActionWithIdentifier:completionHandler: is called with action %@", identifier);
     if([identifier isEqualToString:CATEGORY_IDENTIFIER_REPLY]) {
-        NSLog(@"Perform reply operations");
+        NSString *userEmail = [userInfo valueForKey:PATH_EMAIL];
+        NSString *userNameSurname = [userInfo valueForKey:PATH_FULL_NAME];
+        if(userEmail && userNameSurname) {
+            [[FastReplyModel sharedInstance] setFastReplyContactWithNameSurname:userNameSurname email:userEmail];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self navigateToContactsWithFilterText:userNameSurname];
+        });
     }
     completionHandler();
 }
@@ -343,9 +355,26 @@ SUBSCRIBE(DetachSuccess) {
                 [nvc pushViewController:chatsViewController animated:NO];
             }
         } else {
-            NSLog(@"Can not navigate to ContactsViewController");
+            NSLog(@"Can not navigate to ChatEntries");
         }
     });
+}
+
+-(BOOL) navigateToContactsWithFilterText:(NSString*) nameSurname {
+    BOOL result = NO;
+    UIViewController *vc = [self visibleViewController];
+    if([vc isKindOfClass:[ReSideMenuContainerViewController class]]) {
+        ReSideMenuContainerViewController *reSideMenuContainerViewController = (ReSideMenuContainerViewController*)vc;
+        UINavigationController *nvc = (UINavigationController*) reSideMenuContainerViewController.contentViewController;
+        [nvc popToRootViewControllerAnimated:YES];
+        ContactsViewController *contactsViewController =(ContactsViewController*)[nvc.viewControllers firstObject];
+        contactsViewController.searchContactsTextField.text = contactsViewController.contactsModel.filterText = nameSurname;
+        [contactsViewController refreshContacts];
+        result = YES;
+    } else {
+        NSLog(@"Can not navigate to ContactsViewController");
+    }
+    return result;
 }
 
 #pragma mark - Open URL
@@ -411,17 +440,7 @@ SUBSCRIBE(DetachSuccess) {
         if(nameSurname.length > 0 && [email isValidEmail]) {
             result = [[FastReplyModel sharedInstance] setFastReplyContactWithNameSurname:nameSurname email:email];
             if(result) {
-                UIViewController *vc = [self visibleViewController];
-                if([vc isKindOfClass:[ReSideMenuContainerViewController class]]) {
-                    ReSideMenuContainerViewController *reSideMenuContainerViewController = (ReSideMenuContainerViewController*)vc;
-                    UINavigationController *nvc = (UINavigationController*) reSideMenuContainerViewController.contentViewController;
-                    ContactsViewController *contactsViewController =(ContactsViewController*)[nvc.viewControllers firstObject];
-                    contactsViewController.searchContactsTextField.text = contactsViewController.contactsModel.filterText = nameSurname;
-                    [contactsViewController refreshContacts];
-                    result = YES;
-                } else {
-                    NSLog(@"Can not navigate to ContactsViewController");
-                }
+                result = [self navigateToContactsWithFilterText:nameSurname];
             }
         }
         else {
@@ -683,6 +702,11 @@ SUBSCRIBE(FileUploadCompleted) {
 
 -(void) tryToUpdateGCMRegistrationToken  {
     [awsModel tryToUpdateGCMRegistrationToken];
+}
+
+-(void) refreshBadgeNumber {
+    NSUInteger unreadMessagesCount = [ChatModel unreadMessageCountOfAllChats];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:unreadMessagesCount];
 }
 
 @end
