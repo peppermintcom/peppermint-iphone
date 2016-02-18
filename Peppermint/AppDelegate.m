@@ -32,6 +32,7 @@
 #import "AWSModel.h"
 #import "ChatsViewController.h"
 #import "ChatEntriesViewController.h"
+#import "AutoPlayModel.h"
 
 @import WatchConnectivity;
 @import Contacts;
@@ -190,6 +191,13 @@
     }
 }
 
+-(void) checkForRemoteNotificationInApplication:(UIApplication*)application launchOptions:(NSDictionary*)launchOptions {
+    NSDictionary *notificationDictionary = [launchOptions valueForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if(notificationDictionary) {
+        [self checkToScheduleAutoPlay:notificationDictionary application:application];
+    }
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self initMutableArray];
@@ -206,6 +214,7 @@
     [self checkForFirstRun];
     [self initRecorder];
     [self refreshBadgeNumber];
+    [self checkForRemoteNotificationInApplication:application launchOptions:launchOptions];
     REGISTER();
     return YES;
 }
@@ -288,32 +297,23 @@ SUBSCRIBE(DetachSuccess) {
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))handler {
     NSLog(@"didReceiveRemoteNotification:fetchCompletionHandler:\nuserinfo:%@", userInfo);
-    if( [self handleNotification:userInfo Inapplication:application] ) {
-        handler(UIBackgroundFetchResultNewData);
-    } else {
-        handler(UIBackgroundFetchResultFailed);
-    }
+    [self handleNotification:userInfo Inapplication:application];
+    handler(UIBackgroundFetchResultNoData);
 }
 
-- (BOOL) handleNotification:(NSDictionary*)userInfo Inapplication:(UIApplication *)application {
+- (void) handleNotification:(NSDictionary*)userInfo Inapplication:(UIApplication *)application {
     [[GCMService sharedInstance] appDidReceiveMessage:userInfo];
-    GoogleCloudMessagingModel *googleCloudMessagingModel = [GoogleCloudMessagingModel sharedInstance];
-    Attribute *sender = [googleCloudMessagingModel handleIncomingMessage:userInfo];
-    [self refreshBadgeNumber];
-    if(sender) {
-        
-        if(application.applicationState == UIApplicationStateActive) {
-            NSLog(@"UIApplicationStateActive");
-            [self navigateToChatEntriesPageForEmail:sender.sender_email nameSurname:sender.sender_name];
-        } else if (application.applicationState == UIApplicationStateBackground) {
-            NSLog(@"UIApplicationStateBackground");
-            [self navigateToChatEntriesPageForEmail:sender.sender_email nameSurname:sender.sender_name];
-        } else if (application.applicationState == UIApplicationStateInactive) {
-            NSLog(@"UIApplicationStateInactive");
+    if (application.applicationState == UIApplicationStateInactive) {
+        NSLog(@"User tapped the notification");
+        [self checkToScheduleAutoPlay:userInfo application:application];
+    } else if( application.applicationState == UIApplicationStateActive || application.applicationState == UIApplicationStateBackground) {
+        GoogleCloudMessagingModel *googleCloudMessagingModel = [GoogleCloudMessagingModel sharedInstance];
+        Attribute *sender = [googleCloudMessagingModel handleIncomingMessage:userInfo];
+        [self refreshBadgeNumber];
+        if(sender) {
             [self navigateToChatEntriesPageForEmail:sender.sender_email nameSurname:sender.sender_name];
         }
     }
-    return (sender != nil);
 }
 
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(nullable NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler {
@@ -330,6 +330,17 @@ SUBSCRIBE(DetachSuccess) {
     }
     completionHandler();
 }
+
+#pragma mark - AutoPlay
+
+-(void) checkToScheduleAutoPlay:(NSDictionary*)userInfo application:(UIApplication*)application {
+    PeppermintContact *peppermintContact = [PeppermintContact new];
+    peppermintContact.nameSurname = [userInfo valueForKey:PATH_FULL_NAME];
+    peppermintContact.communicationChannelAddress = [userInfo valueForKey:PATH_EMAIL];
+    [[AutoPlayModel sharedInstance] scheduleAutoPlayForPeppermintContact:peppermintContact];
+}
+
+#pragma mark - Navigation
 
 -(void) navigateToChatEntriesPageForEmail:(NSString*)email nameSurname:(NSString*)nameSurname {
     weakself_create();

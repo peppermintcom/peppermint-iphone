@@ -10,6 +10,7 @@
 #import "ChatEntry.h"
 #import "PlayingModel.h"
 #import "ChatModel.h"
+#import "AutoPlayModel.h"
 
 #define DISTANCE_TO_BORDER  5
 #define TIMER_UPDATE_PERIOD 0.05
@@ -77,6 +78,7 @@
     self.playPauseImageView.image = imagePlay;
     [self setLeftLabel];
     [self setRightLabelWithDate:chatEntry.dateCreated];
+    [self checkForAutoPlay];
 }
 
 -(void) setLeftLabel {
@@ -193,6 +195,17 @@
             [cell.playingModel.audioPlayer stop];
             cell.playPauseImageView.image = imagePlay;
         }
+    }
+}
+
+#pragma mark - AutoPlay
+
+-(void) checkForAutoPlay {
+    NSString *nameSurname = self.chatEntry.chat.nameSurname;
+    NSString *email = self.chatEntry.chat.communicationChannelAddress;
+    BOOL isAutoPlayScheduled = [[AutoPlayModel sharedInstance] isScheduledForPeppermintContactWithNameSurname:nameSurname email:email];
+    if(isAutoPlayScheduled) {
+        [self playPauseButtonPressed:nil];
     }
 }
 

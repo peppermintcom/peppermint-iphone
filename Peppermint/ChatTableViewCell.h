@@ -28,8 +28,6 @@
 @property (weak, nonatomic) UITableView *tableView;
 @property (weak, nonatomic) ChatEntry *chatEntry;
 
-
-
 @property (strong, nonatomic, readonly) PlayingModel *playingModel;
 
 - (void) fillInformation:(ChatEntry*) chatEntry;

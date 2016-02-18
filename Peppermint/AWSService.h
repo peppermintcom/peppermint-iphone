@@ -41,7 +41,8 @@
 #ifdef DEBUG
 #define AWS_API_KEY                     @"ios-dev"
 #else
-#define AWS_API_KEY                     @"AiaWKSSoYgNv5WdLFMqkh1j7TgKq7evmQlOiFNAQxkXL7GrIHVqQJw"
+#warning "Fix api key to have PROD value"
+#define AWS_API_KEY                     @"ios-dev"
 #endif
 
 #define AWS_BASE_URL                    @"https://qdkkavugcd.execute-api.us-west-2.amazonaws.com/prod/v1"
