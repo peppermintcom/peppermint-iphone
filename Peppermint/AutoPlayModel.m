@@ -25,7 +25,7 @@
 -(id) initShared {
     self = [super init];
     if(self) {
-        scheduledPeppermintContact = nil;
+        [self clearScheduledPeppermintContact];
     }
     return self;
 }
@@ -39,10 +39,13 @@
     if(scheduledPeppermintContact
        && [scheduledPeppermintContact.nameSurname.lowercaseString isEqualToString:nameSurname.lowercaseString]
        && [scheduledPeppermintContact.communicationChannelAddress.lowercaseString isEqualToString:email.lowercaseString]) {
-        scheduledPeppermintContact = nil;
         result = YES;
     }
     return result;
+}
+
+-(void) clearScheduledPeppermintContact {
+    scheduledPeppermintContact = nil;
 }
 
 @end

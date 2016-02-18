@@ -159,9 +159,8 @@
 
 -(void) checkIfShouldNavigate {
     if(peppermintContactToNavigate) {
-        NSPredicate *predicate = [ContactsModel contactPredicateWithNameSurname:peppermintContactToNavigate.nameSurname
-                                                    communicationChannelAddress:peppermintContactToNavigate.communicationChannelAddress
-                                                           communicationChannel:peppermintContactToNavigate.communicationChannel];
+        NSPredicate *predicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:peppermintContactToNavigate.communicationChannelAddress communicationChannel:CommunicationChannelEmail];
+        
         NSArray *matchingChatsArray = [chatModel.chatArray filteredArrayUsingPredicate:predicate];
         if(matchingChatsArray.count > 0) {
             chatModel.selectedChat = matchingChatsArray.firstObject;

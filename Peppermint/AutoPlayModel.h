@@ -14,5 +14,6 @@
 
 -(void) scheduleAutoPlayForPeppermintContact:(PeppermintContact*)peppermintContact;
 -(BOOL) isScheduledForPeppermintContactWithNameSurname:(NSString*)nameSurname email:(NSString*)email;
+-(void) clearScheduledPeppermintContact;
 
 @end

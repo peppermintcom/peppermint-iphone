@@ -12,6 +12,7 @@
         <attribute name="senderNameSurname" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Chat" representedClassName="Chat" parentEntity="Contact" syncable="YES">
+        <attribute name="lastMessageDate" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="chatEntries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ChatEntry" inverseName="chat" inverseEntity="ChatEntry" syncable="YES"/>
     </entity>
     <entity name="ChatEntry" representedClassName="ChatEntry" syncable="YES">
@@ -41,7 +42,7 @@
     </entity>
     <elements>
         <element name="CachedMessage" positionX="-135" positionY="-63" width="128" height="180"/>
-        <element name="Chat" positionX="-243" positionY="63" width="128" height="60"/>
+        <element name="Chat" positionX="-243" positionY="63" width="128" height="75"/>
         <element name="ChatEntry" positionX="-234" positionY="72" width="128" height="165"/>
         <element name="Contact" positionX="-353" positionY="3" width="128" height="105"/>
         <element name="CustomContact" positionX="-243" positionY="63" width="128" height="60"/>

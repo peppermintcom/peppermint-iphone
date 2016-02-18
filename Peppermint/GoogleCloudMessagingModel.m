@@ -14,11 +14,14 @@
 #import "PeppermintContact.h"
 #import "ContactsModel.h"
 #import "RecentContactsModel.h"
+#import "CustomContactModel.h"
 #import "PlayingModel.h"
+
 
 @implementation GoogleCloudMessagingModel {
     ChatModel *chatModel;
     RecentContactsModel *recentContactsModel;
+    CustomContactModel *customContactsModel;
     NSMutableSet *handledGoogleMessageIdSet;
     PlayingModel *playingModel;
 }
@@ -39,6 +42,7 @@ NSString *const SubscriptionTopic = @"/topics/global";
     if(self) {
         chatModel = [ChatModel new];
         recentContactsModel = [RecentContactsModel new];
+        customContactsModel = [CustomContactModel new];
         handledGoogleMessageIdSet = [NSMutableSet new];
         playingModel = [PlayingModel new];
         [playingModel initReceivedMessageSound];
@@ -197,12 +201,16 @@ NSString *const SubscriptionTopic = @"/topics/global";
                              createDate:attribute.createdDate];
         
         [recentContactsModel save:peppermintContact];
-        [playingModel playPreparedAudiowithCompetitionBlock:nil];
+        [customContactsModel save:peppermintContact];
     } else {
         attribute = nil;
         NSLog(@"Could not parse userInfo. Notification could not be processed:\n%@", userInfo);
     }
     return attribute;
+}
+
+-(void) playMessageReceivedSound {
+    [playingModel playPreparedAudiowithCompetitionBlock:nil];
 }
 
 @end

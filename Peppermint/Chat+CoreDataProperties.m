@@ -2,7 +2,7 @@
 //  Chat+CoreDataProperties.m
 //  Peppermint
 //
-//  Created by Okan Kurtulus on 09/02/16.
+//  Created by Okan Kurtulus on 18/02/16.
 //  Copyright © 2016 Okan Kurtulus. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -13,6 +13,7 @@
 
 @implementation Chat (CoreDataProperties)
 
+@dynamic lastMessageDate;
 @dynamic chatEntries;
 
 @end

@@ -30,5 +30,6 @@
 - (void) disconnectGCM;
 
 -(Attribute*) handleIncomingMessage:(NSDictionary *) userInfo;
+-(void) playMessageReceivedSound;
 
 @end

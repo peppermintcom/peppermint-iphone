@@ -292,19 +292,19 @@ SUBSCRIBE(DetachSuccess) {
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     NSLog(@"didReceiveRemoteNotification:%@", userInfo);
-    [self handleNotification:userInfo Inapplication:application];
+    [self handleNotification:userInfo inApplication:application];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))handler {
     NSLog(@"didReceiveRemoteNotification:fetchCompletionHandler:\nuserinfo:%@", userInfo);
-    [self handleNotification:userInfo Inapplication:application];
+    [self handleNotification:userInfo inApplication:application];
     handler(UIBackgroundFetchResultNoData);
 }
 
-- (void) handleNotification:(NSDictionary*)userInfo Inapplication:(UIApplication *)application {
+- (void) handleNotification:(NSDictionary*)userInfo inApplication:(UIApplication *)application {
+    NSLog(@"\n\nApplicationState:%ld\n\n", application.applicationState);
     [[GCMService sharedInstance] appDidReceiveMessage:userInfo];
     if (application.applicationState == UIApplicationStateInactive) {
-        NSLog(@"User tapped the notification");
         [self checkToScheduleAutoPlay:userInfo application:application];
     } else if( application.applicationState == UIApplicationStateActive || application.applicationState == UIApplicationStateBackground) {
         GoogleCloudMessagingModel *googleCloudMessagingModel = [GoogleCloudMessagingModel sharedInstance];
@@ -312,6 +312,8 @@ SUBSCRIBE(DetachSuccess) {
         [self refreshBadgeNumber];
         if(sender) {
             [self navigateToChatEntriesPageForEmail:sender.sender_email nameSurname:sender.sender_name];
+        } else {
+            [googleCloudMessagingModel playMessageReceivedSound];
         }
     }
 }
@@ -336,8 +338,12 @@ SUBSCRIBE(DetachSuccess) {
 -(void) checkToScheduleAutoPlay:(NSDictionary*)userInfo application:(UIApplication*)application {
     PeppermintContact *peppermintContact = [PeppermintContact new];
     peppermintContact.nameSurname = [userInfo valueForKey:PATH_FULL_NAME];
-    peppermintContact.communicationChannelAddress = [userInfo valueForKey:PATH_EMAIL];
-    [[AutoPlayModel sharedInstance] scheduleAutoPlayForPeppermintContact:peppermintContact];
+    peppermintContact.communicationChannelAddress = [userInfo valueForKey:PATH_EMAIL];    
+    if(peppermintContact.nameSurname.length > 0
+       && peppermintContact.communicationChannelAddress.length > 0) {
+        NSLog(@"User tapped the notification");
+        [[AutoPlayModel sharedInstance] scheduleAutoPlayForPeppermintContact:peppermintContact];
+    }
 }
 
 #pragma mark - Navigation
@@ -349,22 +355,11 @@ SUBSCRIBE(DetachSuccess) {
         if([vc isKindOfClass:[ReSideMenuContainerViewController class]]) {
             ReSideMenuContainerViewController *reSideMenuContainerViewController = (ReSideMenuContainerViewController*)vc;
             UINavigationController *nvc = (UINavigationController*) reSideMenuContainerViewController.contentViewController;
-            
-            UIViewController *vc = nvc.viewControllers.lastObject;
-            if([vc isKindOfClass:[ChatEntriesViewController class]]) {
-                ChatEntriesViewController *chatEntriesViewController = (ChatEntriesViewController*)vc;
-                [chatEntriesViewController refreshContent];
-            } else if ([vc isKindOfClass:[ChatsViewController class]]) {
-                ChatsViewController *chatsViewController = (ChatsViewController*)vc;
-                [chatsViewController scheduleNavigateToChatEntryWithEmail:email nameSurname:nameSurname];
-                [chatsViewController refreshContent];
-            } else {
-                ChatsViewController *chatsViewController = [ChatsViewController createInstance];
-                [chatsViewController scheduleNavigateToChatEntryWithEmail:email nameSurname:nameSurname];
-                
-                [nvc popToRootViewControllerAnimated:NO];
-                [nvc pushViewController:chatsViewController animated:NO];
-            }
+            [nvc popToRootViewControllerAnimated:NO];
+            ChatsViewController *chatsViewController = [ChatsViewController createInstance];
+            [chatsViewController scheduleNavigateToChatEntryWithEmail:email nameSurname:nameSurname];
+            [chatsViewController refreshContent];
+            [nvc pushViewController:chatsViewController animated:NO];
         } else {
             NSLog(@"Can not navigate to ChatEntries");
         }

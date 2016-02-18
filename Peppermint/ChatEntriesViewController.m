@@ -12,6 +12,7 @@
 #import "ChatModel.h"
 #import "FoggyRecordingView.h"
 #import "SendVoiceMessageSMSModel.h"
+#import "AutoPlayModel.h"
 
 @interface ChatEntriesViewController () <RecordingGestureButtonDelegate, ChatModelDelegate, RecordingViewDelegate>
 
@@ -98,6 +99,13 @@
 -(void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.recordingView = nil;
+    
+    AutoPlayModel *autoPlayModel =[AutoPlayModel sharedInstance];
+    BOOL isScheduledForCurrentVC = [autoPlayModel isScheduledForPeppermintContactWithNameSurname:self.chatModel.selectedChat.nameSurname email:self.chatModel.selectedChat.communicationChannelAddress];
+    if(isScheduledForCurrentVC) {
+        [autoPlayModel clearScheduledPeppermintContact];
+    }
+    
 #warning "What if the playing cell is not currently visible. Have further test and fix issue!"
     for(ChatTableViewCell* cell in [self.tableView visibleCells]) {
         [cell.playingModel.audioPlayer stop];

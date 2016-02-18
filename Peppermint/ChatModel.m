@@ -30,20 +30,8 @@
     self.selectedChat = nil;
     dispatch_async(LOW_PRIORITY_QUEUE, ^{
         Repository *repository = [Repository beginTransaction];
-        _chatArray = [repository getResultsFromEntity:[Chat class] predicateOrNil:nil ascSortStringOrNil:nil descSortStringOrNil:nil];
-        
-#warning "Update sorting according to the last message date"
-        /*
-        _chatArray = [_chatArray sortedArrayUsingComparator:^NSComparisonResult(id chat1, id chat2) {
-            NSDate *chat1lastDate = [ChatModel lastMessageDateOfChat:(Chat*)chat1];
-            NSDate *chat2lastDate = [ChatModel lastMessageDateOfChat:(Chat*)chat2];
-            return [chat1lastDate compare:chat2lastDate];
-        }];
-        */
-        
-#ifdef DEBUG
-        //[self checkAndCreateRandomChats:repository];
-#endif
+        _chatArray = [repository getResultsFromEntity:[Chat class] predicateOrNil:nil ascSortStringOrNil:nil descSortStringOrNil:
+                      [NSArray arrayWithObjects:@"lastMessageDate", nil]];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if([self.delegate respondsToSelector:@selector(chatsArrayIsUpdated)]) {
@@ -51,36 +39,6 @@
             }
         });
     });
-}
-
--(void) checkAndCreateRandomChats:(Repository*) repository {
-    if(_chatArray.count < 3) {
-        for(int i=0; i<7; i++) {
-            Chat *chat = (Chat*)[repository createEntity:[Chat class]];
-            chat.avatarImageData = nil;
-            chat.communicationChannel = @0;
-            chat.communicationChannelAddress = [NSString stringWithFormat:@"_%@", [[NSString alloc] randomStringWithLength: rand() % 15]];
-            chat.nameSurname = [NSString stringWithFormat:@"_%@ %@",
-                                [[NSString alloc] randomStringWithLength:rand() % 5],
-                                [[NSString alloc] randomStringWithLength:rand() % 7]];
-            
-            int messageCount = rand() % 9;
-            
-            for(int j=0; j< messageCount; j++) {
-                ChatEntry *chatEntry = (ChatEntry*)[repository createEntity:[ChatEntry class]];
-                chatEntry.audio = [NSData new];
-                chatEntry.dateCreated = [NSDate dateWithTimeIntervalSinceNow: - rand() % (60*60*24*30*12)];
-                chatEntry.isSeen = @NO;
-                chatEntry.isSentByMe = [NSNumber numberWithBool:(j%2 == 0)];
-                chatEntry.transcription = [[NSString alloc] randomStringWithLength:rand() % 15];
-                chatEntry.chat = chat;
-            }
-            
-        }
-        NSLog(@"Created chats for test usage!!!");
-        [repository endTransaction];
-        repository = [Repository beginTransaction];
-    }
 }
 
 -(void) resetChatEntries {
@@ -111,7 +69,6 @@
     dispatch_async(LOW_PRIORITY_QUEUE, ^{
         Chat *matchedChat = nil;
         NSPredicate *addressPredicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:peppermintContact.communicationChannelAddress];
-        
         //NSPredicate *nameSurnamePredicate = [ContactsModel contactPredicateWithNameSurname:peppermintContact.nameSurname];
         //NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects: addressPredicate, nameSurnamePredicate, nil]];
         
@@ -137,6 +94,10 @@
             chatEntry.dateCreated = createDate;
             chatEntry.isSeen = [NSNumber numberWithBool:isSentByMe];
             chatEntry.duration = [NSNumber numberWithDouble:duration];
+            
+            if(!matchedChat.lastMessageDate || [createDate laterDate:matchedChat.lastMessageDate]) {
+                matchedChat.lastMessageDate = createDate;
+            }
             
             NSError *error = [repository endTransaction];
             dispatch_async(dispatch_get_main_queue(), ^{

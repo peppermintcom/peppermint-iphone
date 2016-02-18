@@ -21,6 +21,7 @@
     UIImage *imagePlay;
     UIImage *imagePause;
     NSTimer *timer;
+    AutoPlayModel *autoPlayModel;
 }
 
 - (void)awakeFromNib {
@@ -32,6 +33,7 @@
     imageFlat = [UIImage imageNamed:@"icon_chat_left_flat"];
     imagePlay = [UIImage imageNamed:@"icon_play"];
     imagePause = [UIImage imageNamed:@"icon_pause"];
+    autoPlayModel = [AutoPlayModel sharedInstance];
     timer = [NSTimer scheduledTimerWithTimeInterval:TIMER_UPDATE_PERIOD target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
 }
 
@@ -155,7 +157,9 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     weakSelf.spinnerView.hidden = YES;
                     weakSelf.playPauseImageView.hidden = NO;
-                    if([_playingModel playData:weakSelf.chatEntry.audio playerCompletitionBlock:^{ [weakSelf playPauseButtonPressed:nil]; }]) {
+                    if([_playingModel playData:weakSelf.chatEntry.audio playerCompletitionBlock:^{
+                        [weakSelf playPauseButtonPressed:nil];
+                    }]) {
                         weakSelf.chatEntry.duration = [NSNumber numberWithInt:_playingModel.audioPlayer.duration];
                         [weakSelf setLeftLabel];
                         [ChatModel markChatEntryListened:weakSelf.chatEntry];
@@ -203,8 +207,13 @@
 -(void) checkForAutoPlay {
     NSString *nameSurname = self.chatEntry.chat.nameSurname;
     NSString *email = self.chatEntry.chat.communicationChannelAddress;
-    BOOL isAutoPlayScheduled = [[AutoPlayModel sharedInstance] isScheduledForPeppermintContactWithNameSurname:nameSurname email:email];
-    if(isAutoPlayScheduled) {
+    
+    BOOL isAutoPlayScheduled = [autoPlayModel isScheduledForPeppermintContactWithNameSurname:nameSurname email:email];
+    
+    if(!self.chatEntry.isSentByMe.boolValue
+       && !self.chatEntry.isSeen.boolValue
+       && isAutoPlayScheduled) {
+        [autoPlayModel clearScheduledPeppermintContact];
         [self playPauseButtonPressed:nil];
     }
 }

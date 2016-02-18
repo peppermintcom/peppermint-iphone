@@ -1030,6 +1030,7 @@ email contact or both</string>
                         <outlet property="emailImageView" destination="sqM-B5-gnk" id="Iqf-bU-dBF"/>
                         <outlet property="emailTextField" destination="HCM-xd-FfJ" id="F19-Cn-9LW"/>
                         <outlet property="emailWarningCell" destination="dgt-Ym-aar" id="XBP-cv-Phg"/>
+                        <outlet property="emailWarningLabel" destination="gDm-fc-dNI" id="RG9-oW-TE2"/>
                         <outlet property="explanationLabel" destination="v18-70-8vr" id="YAe-LX-lsY"/>
                         <outlet property="firstNameTextField" destination="dv5-8A-bHh" id="1V7-2u-vzP"/>
                         <outlet property="lastNameTextField" destination="QWV-QQ-i2D" id="38H-Ve-MrA"/>

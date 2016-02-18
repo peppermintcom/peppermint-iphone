@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Contact.h"
+@class ChatEntry;
 
 NS_ASSUME_NONNULL_BEGIN
 
