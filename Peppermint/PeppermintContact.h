@@ -19,8 +19,9 @@ typedef enum : NSUInteger {
 @interface PeppermintContact : NSObject
 @property (strong, nonatomic) UIImage *avatarImage;
 @property (strong, nonatomic) NSString* nameSurname;
-@property (strong, nonatomic) NSString* communicationChannelAddress;
-@property (nonatomic) CommunicationChannel communicationChannel;
+@property (assign, nonatomic) CommunicationChannel communicationChannel;
+@property (assign, nonatomic) BOOL hasReceivedMessageOverPeppermint;
+@property (strong, nonatomic) NSString *uniqueContactId;
 
 - (void)addToCoreSpotlightSearch;
 - (BOOL) equals:(PeppermintContact*)peppermintContact;
@@ -28,5 +29,11 @@ typedef enum : NSUInteger {
 
 + (PeppermintContact *)peppermintContactWithData:(NSData *)data;
 - (NSData *)archivedRootData;
+
+#pragma mark - CommunicationChannelAddress
+//Added setter&getter instead of -> @property (strong, nonatomic) NSString* communicationChannelAddress;
+
+-(NSString*) communicationChannelAddress;
+-(void) setCommunicationChannelAddress:(NSString*)communicationChannelAddress;
 
 @end

@@ -171,7 +171,9 @@
 }
 
 -(void) initRecorder {
-    awsModel = [AWSModel new];
+    if(!awsModel) {
+        awsModel = [AWSModel new];
+    }
     [awsModel initRecorder];
 }
 
@@ -701,6 +703,10 @@ SUBSCRIBE(FileUploadCompleted) {
 }
 
 #pragma mark - Inter App Messaging
+
+SUBSCRIBE(NewUserLoggedIn) {
+    [self initRecorder];
+}
 
 -(void) tryToSetUpAccountWithRecorder {
     [awsModel tryToSetUpAccountWithRecorder];

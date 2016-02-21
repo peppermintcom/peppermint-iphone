@@ -196,16 +196,20 @@
         activeServiceCall++;
     }
     
+    NSString *uniqueId = [NSString stringWithFormat:@"%f", [NSDate new].timeIntervalSince1970];
+    
     if(self.emailImageView.highlighted) {
         PeppermintContact *peppermintContact = [self createdContact];
         peppermintContact.communicationChannelAddress = self.emailTextField.text;
         peppermintContact.communicationChannel = CommunicationChannelEmail;
+        peppermintContact.uniqueContactId = uniqueId;
         [customContactModel save:peppermintContact];
     }
     if(self.phoneImageView.highlighted) {
         PeppermintContact *peppermintContact = [self createdContact];
         peppermintContact.communicationChannelAddress = self.phoneNumberTextField.text;
         peppermintContact.communicationChannel = CommunicationChannelSMS;
+        peppermintContact.uniqueContactId = uniqueId;
         [customContactModel save:peppermintContact];
     }
 }

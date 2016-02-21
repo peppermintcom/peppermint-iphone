@@ -16,6 +16,7 @@
     NSDateFormatter *dateFormatter;
     ChatModel *chatModel;
     PeppermintContact *peppermintContactToNavigate;
+    NSSet* receivedMessagesEmailSet;
 }
 
 - (void)viewDidLoad {
@@ -30,6 +31,7 @@
     
     chatModel = [ChatModel new];
     chatModel.delegate = self;
+    receivedMessagesEmailSet = [ChatModel receivedMessagesEmailSet];
     [self initChatsEmptyView];
 }
 
@@ -76,7 +78,11 @@
         cell.avatarImageView.image = [UIImage imageNamed:@"avatar_empty"];
     }
     
-    [cell setInformationWithNameSurname:chat.nameSurname communicationChannelAddress:chat.communicationChannelAddress];
+    NSString *communicationChannelAddressToShow = chat.communicationChannelAddress;
+    if([receivedMessagesEmailSet containsObject:communicationChannelAddressToShow]) {
+        communicationChannelAddressToShow = LOC(@"Peppermint", @"Peppermint");
+    }
+    [cell setInformationWithNameSurname:chat.nameSurname communicationChannelAddress:communicationChannelAddressToShow];
     
     NSDate *lastMessageDate = [ChatModel lastMessageDateOfChat:chat];
     cell.rightDateLabel.text = [dateFormatter stringFromDate:lastMessageDate];

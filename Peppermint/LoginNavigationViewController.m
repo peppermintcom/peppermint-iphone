@@ -48,6 +48,10 @@
             [weakSelf loginFinishedLoading];
             PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
             [weakSelf.loginDelegate loginSucceedWithMessageSender:peppermintMessageSender];
+            
+            NewUserLoggedIn *newUserLoggedIn = [NewUserLoggedIn new];
+            newUserLoggedIn.sender = self;
+            PUBLISH(newUserLoggedIn);
         }];
     });
 }

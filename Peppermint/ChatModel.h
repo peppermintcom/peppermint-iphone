@@ -32,5 +32,6 @@
 +(NSUInteger) unreadMessageCountOfChat:(Chat*) chat;
 +(NSDate*) lastMessageDateOfChat:(Chat*) chat;
 +(NSUInteger) unreadMessageCountOfAllChats;
++(NSSet*) receivedMessagesEmailSet;
 
 @end

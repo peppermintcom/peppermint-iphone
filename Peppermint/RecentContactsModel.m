@@ -8,17 +8,21 @@
 
 #import "RecentContactsModel.h"
 #import "ContactsModel.h"
+#import "ChatModel.h"
 
 @import WatchConnectivity;
 
 #define DBQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
 
-@implementation RecentContactsModel
+@implementation RecentContactsModel {
+    NSSet *receivedMessagesEmailSet;
+}
 
 -(id) init {
     self = [super init];
     if(self) {
         self.contactList = [NSMutableArray new];
+        receivedMessagesEmailSet = nil;
     }
     return self;
 }
@@ -97,6 +101,7 @@
         NSMutableArray *recentPeppermintContacts = [NSMutableArray new];
         NSMutableArray * recentPeppermintContactsData = [NSMutableArray new];
 
+        receivedMessagesEmailSet = [ChatModel receivedMessagesEmailSet];
         for(RecentContact *recentContact in recentContactsArray) {
           PeppermintContact * ppm_contact = [self peppermintContactWithRecentContact:recentContact];
             [recentPeppermintContacts addObject:ppm_contact];
@@ -128,6 +133,7 @@
     peppermintContact.nameSurname = recentContact.nameSurname;
     peppermintContact.communicationChannelAddress = recentContact.communicationChannelAddress;
     peppermintContact.communicationChannel = !recentContact.communicationChannel ? -1 : recentContact.communicationChannel.intValue;
+    peppermintContact.hasReceivedMessageOverPeppermint = [receivedMessagesEmailSet containsObject:peppermintContact.communicationChannelAddress];
     return peppermintContact;
 }
 

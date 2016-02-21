@@ -165,4 +165,17 @@
     return  unreadChatEntries.count;
 }
 
+
++(NSSet*) receivedMessagesEmailSet {
+    Repository *repository = [Repository beginTransaction];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.isSentByMe == %@", @NO];
+    NSArray *chatEntries = [repository getResultsFromEntity:[ChatEntry class] predicateOrNil:predicate];
+    
+    NSMutableSet *mutableSet = [NSMutableSet new];
+    for(ChatEntry *chatEntry in chatEntries) {
+        [mutableSet addObject:chatEntry.chat.communicationChannelAddress];
+    }
+    return mutableSet;
+}
+
 @end

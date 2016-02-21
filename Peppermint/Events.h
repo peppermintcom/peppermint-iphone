@@ -112,3 +112,6 @@
 
 @interface SetUpAccountWithRecorderCompleted : BaseEvent
 @end
+
+@interface NewUserLoggedIn : BaseEvent
+@end

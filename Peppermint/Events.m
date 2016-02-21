@@ -83,3 +83,6 @@
 
 @implementation SetUpAccountWithRecorderCompleted
 @end
+
+@implementation NewUserLoggedIn
+@end

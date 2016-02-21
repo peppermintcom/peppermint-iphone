@@ -12,7 +12,19 @@
 #import "SpotlightModel.h"
 #endif
 
-@implementation PeppermintContact
+@implementation PeppermintContact {
+    NSString *_communicationChannelAddress;
+}
+
+-(id) init {
+    self = [super init];
+    if(self) {
+        _communicationChannelAddress = nil;
+        self.hasReceivedMessageOverPeppermint = NO;
+        self.uniqueContactId = nil;
+    }
+    return self;
+}
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
   //Encode properties, other class variables, etc
@@ -61,12 +73,35 @@
   }
   
   PeppermintContact * other = (PeppermintContact *)object;
-  return other.communicationChannel == self.communicationChannel && [self.communicationChannelAddress isEqualToString:other.communicationChannelAddress] && [self.nameSurname isEqualToString:other.nameSurname];
+  return other.communicationChannel == self.communicationChannel
+    && ((self.hasReceivedMessageOverPeppermint && other.hasReceivedMessageOverPeppermint)
+        || [self.communicationChannelAddress isEqualToString:other.communicationChannelAddress]
+        )
+    && [self.nameSurname isEqualToString:other.nameSurname];
+}
+
+- (NSUInteger)hash {    
+    NSMutableString *uniqueString = [NSMutableString stringWithFormat:@"%lu%@", (unsigned long)self.communicationChannel, self.nameSurname];
+    if(!self.hasReceivedMessageOverPeppermint) {
+        [uniqueString appendString:self.communicationChannelAddress];
+    }
+    NSUInteger hashValue = [uniqueString hash];
+    return hashValue;
 }
 
 - (NSData *)archivedRootData {
   NSData *encodedObject = [NSKeyedArchiver archivedDataWithRootObject:self];
   return encodedObject;
+}
+
+#pragma mark - CommunicationChannelAddress
+
+-(NSString*) communicationChannelAddress {
+    return _communicationChannelAddress;
+}
+
+-(void) setCommunicationChannelAddress:(NSString*)communicationChannelAddress {
+    _communicationChannelAddress = communicationChannelAddress;
 }
 
 @end

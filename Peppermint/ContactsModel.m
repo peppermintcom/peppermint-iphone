@@ -11,6 +11,7 @@
 #if !(TARGET_OS_WATCH)
 #import "GoogleContactsModel.h"
 #import "CustomContactModel.h"
+#import "ChatModel.h"
 #endif
 
 
@@ -23,6 +24,7 @@
     NSCharacterSet *unwantedCharsSet;
     NSArray *emailContactList;
     NSArray *smsContactList;
+    NSMutableSet *uniqueContactIdsToRemoveMutableSet;
 }
 
 + (instancetype) sharedInstance {
@@ -41,6 +43,7 @@
         self.filterText = @"";
         loadContactsTriggerCount = 0;
         unwantedCharsSet = [[NSCharacterSet characterSetWithCharactersInString:CHARS_FOR_PHONE] invertedSet];
+        uniqueContactIdsToRemoveMutableSet = [NSMutableSet new];
     }
     return self;
 }
@@ -90,7 +93,8 @@
         APContactFieldCompositeName
         | APContactFieldPhones
         | APContactFieldEmails
-        | APContactFieldThumbnail;
+        | APContactFieldThumbnail
+        | APContactFieldRecordID;
     addressBook.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"firstName" ascending:YES],
                                     [NSSortDescriptor sortDescriptorWithKey:@"lastName" ascending:YES]];
     addressBook.filterBlock = ^BOOL(APContact *contact) {
@@ -154,6 +158,8 @@
                              } else {
                                  [uniqueSet addObject:key];
                                  PeppermintContact *peppermintContact = [PeppermintContact new];
+                                 peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%@",
+                                                                      CONTACT_PHONEBOOK,contact.recordID];
                                  peppermintContact.communicationChannel = CommunicationChannelEmail;
                                  peppermintContact.communicationChannelAddress = email;
                                  peppermintContact.nameSurname = nameSurname;
@@ -174,6 +180,8 @@
                                      [uniqueSet addObject:key];
                                  }
                                  PeppermintContact *peppermintContact = [PeppermintContact new];
+                                 peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%@",
+                                                                      CONTACT_PHONEBOOK,contact.recordID];
                                  peppermintContact.communicationChannel = CommunicationChannelSMS;
                                  peppermintContact.communicationChannelAddress = phone;
                                  peppermintContact.nameSurname = nameSurname;
@@ -215,6 +223,9 @@
     [CustomContactModel peppermintContactsArrayWithFilterText:self.filterText.trimmedText];
     [peppermintContactsArray addObjectsFromArray:customContactsArray];
     
+    //Unify for via Peppermint
+    peppermintContactsArray = [self mergeContactsConsideringViaPeppermint:peppermintContactsArray];
+    
     self.contactList = peppermintContactsArray;
     NSArray *sortedList = [self.contactList sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
         NSString *first = [(PeppermintContact*)a nameSurname];
@@ -252,6 +263,25 @@
     }
     return smsContactList;
 }
+
+#pragma mark - Merge Contacts to show via Peppermint
+
+-(NSMutableArray*) mergeContactsConsideringViaPeppermint:(NSMutableArray*) currentPeppermintContactsArray {
+    NSSet *receivedMessagesEmailSet = [ChatModel receivedMessagesEmailSet];
+    
+    for(PeppermintContact *peppermintContact in currentPeppermintContactsArray) {
+        if([receivedMessagesEmailSet containsObject:peppermintContact.communicationChannelAddress]) {
+            peppermintContact.hasReceivedMessageOverPeppermint = YES;
+            [uniqueContactIdsToRemoveMutableSet addObject:peppermintContact.uniqueContactId];
+        }
+    }
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.hasReceivedMessageOverPeppermint == %@ OR NOT(self.uniqueContactId IN %@)", @YES, uniqueContactIdsToRemoveMutableSet];
+    NSArray *filteredArray = [currentPeppermintContactsArray filteredArrayUsingPredicate:predicate];
+    filteredArray  = [[NSSet setWithArray:filteredArray] allObjects];    
+    return [NSMutableArray arrayWithArray:filteredArray];
+}
+
 
 #endif
 

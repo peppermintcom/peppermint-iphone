@@ -33,6 +33,7 @@
     PeppermintContact *contact = [PeppermintContact new];
     contact.nameSurname = nameSurname;
     contact.communicationChannel = CommunicationChannelEmail;
+    contact.hasReceivedMessageOverPeppermint = YES;
     contact.communicationChannelAddress = email;
     contact.avatarImage = [UIImage imageNamed:@"avatar_empty"];;
     [FastReplyModel sharedInstance].peppermintContact = contact;

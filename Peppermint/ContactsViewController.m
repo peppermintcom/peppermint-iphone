@@ -240,7 +240,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
         ContactTableViewCell *cell = [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
         PeppermintContact *contact = [FastReplyModel sharedInstance].peppermintContact;
         [cell setAvatarImage:contact.avatarImage];
-        [cell setInformationWithNameSurname:contact.nameSurname communicationChannelAddress:contact.communicationChannelAddress andIconImage:[UIImage imageNamed:@"icon_reply"]];
+        [cell setInformationWithNameSurname:contact.nameSurname communicationChannelAddress:LOC(@"Peppermint", @"Peppermint") andIconImage:[UIImage imageNamed:@"icon_reply"]];
         preparedCell = cell;
     } else if (indexPath.section == SECTION_EMPTY_RESULT) {
         EmptyResultTableViewCell *cell = [CellFactory cellEmptyResultTableViewCellFromTable:tableView forIndexPath:indexPath];
@@ -255,7 +255,12 @@ SUBSCRIBE(ReplyContactIsAdded) {
             } else {
                 cell.avatarImageView.image = [UIImage imageNamed:@"avatar_empty"];
             }
-            [cell setInformationWithNameSurname:peppermintContact.nameSurname communicationChannelAddress:peppermintContact.communicationChannelAddress];
+            
+            NSString *communicationChannelAddressToShow = peppermintContact.communicationChannelAddress;
+            if(peppermintContact.hasReceivedMessageOverPeppermint) {
+                communicationChannelAddressToShow = LOC(@"Peppermint", @"Peppermint");
+            }
+            [cell setInformationWithNameSurname:peppermintContact.nameSurname communicationChannelAddress:communicationChannelAddressToShow];
             
             /*
             NSPredicate *predicate = [self.recentContactsModel recentContactPredicate:peppermintContact];

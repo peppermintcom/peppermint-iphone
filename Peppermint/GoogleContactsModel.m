@@ -83,7 +83,7 @@
 
 -(void) processEntries:(NSArray*) entries {
     for (GDataEntryContact *contactEntry in entries) {
-        
+
         NSString *name = [[contactEntry name] fullName].stringValue;
         name = name ? name : contactEntry.title.stringValue;
 
@@ -101,20 +101,20 @@
                     image = [UIImage imageWithData:photoData];
                     if(image != nil) {
                         for(GDataEmail* gDataEmail in contactEntry.emailAddresses) {
-                            [self saveContactWithName:name email:gDataEmail.address image:image];
+                            [self saveContactWithName:name email:gDataEmail.address image:image identifier:contactEntry.identifier];
                         }
                     }
                 }
             }];
         } else {
             for(GDataEmail* gDataEmail in contactEntry.emailAddresses) {
-                [self saveContactWithName:name email:gDataEmail.address image:nil];
+                [self saveContactWithName:name email:gDataEmail.address image:nil identifier:contactEntry.identifier];
             }
         }
     }
 }
 
--(void) saveContactWithName:(NSString*) name email:(NSString*) email image:(UIImage*) image {
+-(void) saveContactWithName:(NSString*) name email:(NSString*) email image:(UIImage*) image identifier:(NSString*) identifier {
     if([email isValidEmail]) {
         name = name && name.length > 0 ? name : email;
         Repository *repository = [Repository beginTransaction];
@@ -130,6 +130,7 @@
             googleContact.communicationChannel = [NSNumber numberWithInt:CommunicationChannelEmail];
             googleContact.avatarImageData = UIImagePNGRepresentation(image);
             googleContact.accountEmail = [_fetcherAuthorizer userEmail];
+            googleContact.identifier = identifier;
             NSError *err = [repository endTransaction];
             dispatch_async(dispatch_get_main_queue(), ^{
                 if(err) {
@@ -160,6 +161,8 @@
     
     for(GoogleContact *matchedGoogleContact in matchingGoogleContacts) {
         PeppermintContact *peppermintContact = [PeppermintContact new];
+        peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%@",
+                                             CONTACT_GOOGLE, matchedGoogleContact.identifier];
         peppermintContact.avatarImage = [UIImage imageWithData:matchedGoogleContact.avatarImageData];
         peppermintContact.nameSurname = matchedGoogleContact.nameSurname;
         peppermintContact.communicationChannel = matchedGoogleContact.communicationChannel.intValue;

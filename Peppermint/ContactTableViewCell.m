@@ -33,7 +33,7 @@
     UIView *rootView;
     BOOL isCellAvailableToHaveUserInteraction;
     NSString *nameSurname;
-    NSString *communicationChannelAddress;
+    NSString *cellCommunicationChannelAddress;
     NSUInteger sizeLarge;
     NSUInteger sizeSmall;
 }
@@ -47,7 +47,7 @@
     rootView = [UIApplication sharedApplication].keyWindow.rootViewController.view;
     isCellAvailableToHaveUserInteraction = YES;
     nameSurname = @"";
-    communicationChannelAddress = @"";
+    cellCommunicationChannelAddress = @"";
     sizeLarge = SIZE_LARGE;
     sizeSmall = SIZE_SMALL;
 }
@@ -62,8 +62,8 @@
     }
     
     width = self.informationLabel.frame.size.width * 0.90;
-    while ([NSString widthOfText:communicationChannelAddress withSize:sizeSmall andHeight:height] > width) {
-        communicationChannelAddress = [communicationChannelAddress limitTo:communicationChannelAddress.length - 3];
+    while ([NSString widthOfText:cellCommunicationChannelAddress withSize:sizeSmall andHeight:height] > width) {
+        cellCommunicationChannelAddress = [cellCommunicationChannelAddress limitTo:cellCommunicationChannelAddress.length - 3];
     }
 }
 
@@ -74,8 +74,8 @@
 
 -(void) setInformationWithNameSurname:(NSString*)contactNameSurname communicationChannelAddress:(NSString*)contactCommunicationChannelAddress andIconImage:(UIImage*) image {
     nameSurname = contactNameSurname;
-    communicationChannelAddress = contactCommunicationChannelAddress;    
-    NSAssert(nameSurname.length > 0 && communicationChannelAddress.length > 0, @"NameSurname&communicationchannel address lengths must be longer than 0");
+    cellCommunicationChannelAddress = contactCommunicationChannelAddress;    
+    NSAssert(nameSurname.length > 0 && cellCommunicationChannelAddress.length > 0, @"NameSurname&communicationchannel address lengths must be longer than 0");
     
     self.rightIconImageView.hidden = image == nil;
     self.rightIconImageView.image = image;
@@ -103,7 +103,7 @@
     [information addText:@"\n" ofSize:sizeLarge ofColor:[UIColor clearColor]];
     [information addText:LOC(@"via", @"Localized value for the word via") ofSize:sizeSmall ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
     [information addText:@" " ofSize:sizeSmall ofColor:[UIColor clearColor]];
-    [information addText:communicationChannelAddress ofSize:sizeSmall ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
+    [information addText:cellCommunicationChannelAddress ofSize:sizeSmall ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
     [self.informationLabel setAttributedText:information];
 }
 
@@ -116,7 +116,7 @@
     [information addText:@"\n" ofSize:sizeSmall ofColor:[UIColor clearColor]];
     [information addText:LOC(@"via", @"Localized value for the word via") ofSize:sizeSmall ofColor:[UIColor textFieldTintGreen] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
     [information addText:@" " ofSize:sizeSmall ofColor:[UIColor clearColor]];
-    [information addText:communicationChannelAddress ofSize:sizeSmall ofColor:[UIColor viaInformationLabelTextGreen] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
+    [information addText:cellCommunicationChannelAddress ofSize:sizeSmall ofColor:[UIColor viaInformationLabelTextGreen] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
     [self.informationLabel setAttributedText:information];
     
 }

@@ -219,7 +219,7 @@
     self.recorderClientId = nil;
     self.recorderKey = nil;
     self.exchangedJwt = nil;
-    self.gcmToken = nil;
+    //self.gcmToken = nil; -> Do not clear GCM token, cos maybe the app will not be restarted& [recorder init] will need gcmToken
     
     self.isAccountSetUpWithRecorder = NO;
     
