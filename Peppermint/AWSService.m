@@ -265,6 +265,9 @@
         verificationEmailSent.jwt = jwt;
         PUBLISH(verificationEmailSent);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if(operation.response.statusCode / 100 == 4) { //4XX errors mean hard bounce,soft bounce or spam...
+            error = [NSError errorWithDomain:DOMAIN_MANDRILL code:-1 userInfo:error.userInfo];
+        }
         [self failureWithOperation:nil andError:error];
     }];
 }

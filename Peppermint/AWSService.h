@@ -41,7 +41,7 @@
 #ifdef DEBUG
 #define AWS_API_KEY                     @"ios-dev"
 #else
-#warning "Fix api key to have PROD value"
+#warning "Added for test purposes, dont forget to open again!"
 #define AWS_API_KEY                     @"ios-dev"
 #endif
 

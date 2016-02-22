@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *centerViewWidth;
 @property (weak, nonatomic) IBOutlet UIImageView *rightImageView;
 
+@property (weak, nonatomic) IBOutlet UIView *messageView;
 @property (weak, nonatomic) IBOutlet UIImageView *playPauseImageView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinnerView;
 @property (weak, nonatomic) IBOutlet UIView *timelineView;
@@ -31,5 +32,6 @@
 @property (strong, nonatomic, readonly) PlayingModel *playingModel;
 
 - (void) fillInformation:(ChatEntry*) chatEntry;
+- (IBAction)playPauseButtonPressed:(id)sender;
 
 @end

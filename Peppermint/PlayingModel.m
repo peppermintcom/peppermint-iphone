@@ -33,7 +33,7 @@
 }
 
 -(void) initReceivedMessageSound {
-    NSString *audioPath = [[NSBundle mainBundle]pathForResource:@"water_drop" ofType:@"aiff"];
+    NSString *audioPath = [[NSBundle mainBundle]pathForResource:@"water_drop" ofType:@"mp3"];
     [self prepareAudioForPath:audioPath];
 }
 

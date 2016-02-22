@@ -21,7 +21,7 @@
     UIImage *imagePlay;
     UIImage *imagePause;
     NSTimer *timer;
-    AutoPlayModel *autoPlayModel;
+    NSUInteger totalSeconds;
 }
 
 - (void)awakeFromNib {
@@ -33,8 +33,8 @@
     imageFlat = [UIImage imageNamed:@"icon_chat_left_flat"];
     imagePlay = [UIImage imageNamed:@"icon_play"];
     imagePause = [UIImage imageNamed:@"icon_pause"];
-    autoPlayModel = [AutoPlayModel sharedInstance];
     timer = [NSTimer scheduledTimerWithTimeInterval:TIMER_UPDATE_PERIOD target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
+    totalSeconds = 0;
 }
 
 - (void) layoutSubviews {
@@ -78,16 +78,19 @@
     
     self.chatEntry = chatEntry;
     self.playPauseImageView.image = imagePlay;
+    self.playPauseImageView.hidden = NO;
     [self setLeftLabel];
     [self setRightLabelWithDate:chatEntry.dateCreated];
-    [self checkForAutoPlay];
 }
 
 -(void) setLeftLabel {
     NSString *durationText = @"--:--";
-    if(self.chatEntry.duration.integerValue != 0) {
-        NSUInteger totalSeconds = self.chatEntry.duration.integerValue;
-        if(self.playingModel.audioPlayer) {
+    if(self.chatEntry
+       && self.chatEntry.duration
+       && self.chatEntry.duration.integerValue != 0) {
+        totalSeconds = self.chatEntry.duration.integerValue;
+        BOOL isPlayingOrPaused = !self.durationCircleView.hidden;
+        if(self.playingModel.audioPlayer.isPlaying || isPlayingOrPaused) {
             totalSeconds = self.playingModel.audioPlayer.currentTime;
         }
         NSInteger minutes = totalSeconds / 60;
@@ -144,27 +147,30 @@
         self.playPauseImageView.image = imagePlay;
         [_playingModel pause];
     } else {
-        if(!_playingModel) {
+        if(!_playingModel || !_playingModel.audioPlayer.data ) {
             _playingModel = [PlayingModel alloc];
             self.spinnerView.hidden = NO;
             self.playPauseImageView.hidden = YES;
             weakself_create();
             dispatch_async(LOW_PRIORITY_QUEUE, ^{
+                NSError *error = nil;
                 if(!weakSelf.chatEntry.audio) {
                     NSURL *url = [NSURL URLWithString:self.chatEntry.audioUrl];
-                    weakSelf.chatEntry.audio = [NSData dataWithContentsOfURL:url];
+                    NSData *audioData = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
+                    if(!error) {
+                        weakSelf.chatEntry.audio = audioData;
+                    }
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
                     weakSelf.spinnerView.hidden = YES;
                     weakSelf.playPauseImageView.hidden = NO;
-                    if([_playingModel playData:weakSelf.chatEntry.audio playerCompletitionBlock:^{
-                        [weakSelf playPauseButtonPressed:nil];
-                    }]) {
+                    if(weakSelf.chatEntry.audio != nil && [_playingModel playData:weakSelf.chatEntry.audio playerCompletitionBlock:nil]) {
                         weakSelf.chatEntry.duration = [NSNumber numberWithInt:_playingModel.audioPlayer.duration];
                         [weakSelf setLeftLabel];
                         [ChatModel markChatEntryListened:weakSelf.chatEntry];
                         weakSelf.durationCircleView.hidden = NO;
                         weakSelf.playPauseImageView.image = imagePause;
+                        [[AutoPlayModel sharedInstance] clearScheduledPeppermintContact];
                     }
                 });
             });
@@ -178,11 +184,22 @@
 
 -(void) updateDuration {
     if(_playingModel) {
-        [self setLeftLabel];
         CGFloat percent = _playingModel.audioPlayer.currentTime / _playingModel.audioPlayer.duration;
         if( _playingModel.audioPlayer.isPlaying) {
+            
+            if((int)_playingModel.audioPlayer.currentTime != totalSeconds) {
+                [self setLeftLabel];
+            }
+            
             CGFloat totalWidth = self.timelineView.frame.size.width - self.durationCircleView.frame.size.width;
-            self.durationViewWidthConstraint.constant = totalWidth * percent;
+            [self.messageView layoutIfNeeded];
+            CGFloat destinationValue = totalWidth * percent;
+            if(destinationValue > self.durationViewWidthConstraint.constant || destinationValue < 2) {
+                [UIView animateWithDuration:TIMER_UPDATE_PERIOD animations:^{
+                    self.durationViewWidthConstraint.constant = destinationValue;
+                    [self.messageView layoutIfNeeded];
+                }];
+            }
         } else {
             self.playPauseImageView.image = imagePlay;
             if(percent < 0.00001) {
@@ -199,22 +216,6 @@
             [cell.playingModel.audioPlayer stop];
             cell.playPauseImageView.image = imagePlay;
         }
-    }
-}
-
-#pragma mark - AutoPlay
-
--(void) checkForAutoPlay {
-    NSString *nameSurname = self.chatEntry.chat.nameSurname;
-    NSString *email = self.chatEntry.chat.communicationChannelAddress;
-    
-    BOOL isAutoPlayScheduled = [autoPlayModel isScheduledForPeppermintContactWithNameSurname:nameSurname email:email];
-    
-    if(!self.chatEntry.isSentByMe.boolValue
-       && !self.chatEntry.isSeen.boolValue
-       && isAutoPlayScheduled) {
-        [autoPlayModel clearScheduledPeppermintContact];
-        [self playPauseButtonPressed:nil];
     }
 }
 

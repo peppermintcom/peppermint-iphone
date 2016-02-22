@@ -33,13 +33,13 @@
     [super fileUploadCompletedWithPublicUrl:url canonicalUrl:canonicalUrl];
     if(![self isCancelled]) {
         self.sendingStatus = SendingStatusSending;
-        [self fireMandrillMessageWithUrl:url];
+        [self fireMandrillMessageWithUrl:url canonicalUrl:canonicalUrl];
     } else {
         NSLog(@"Mandrill message sending is not fired, cos message is cancelled");
     }
 }
 
--(void) fireMandrillMessageWithUrl:(NSString*) url {
+-(void) fireMandrillMessageWithUrl:(NSString*) url canonicalUrl:(NSString*)canonicalUrl {
     
     NSString* nameSurname = @"";
     if(self.peppermintMessageSender.nameSurname.length > 0) {
@@ -71,7 +71,7 @@
     mandrillMessage.subject = subject;
     
     mandrillMessage.html = nil;
-    mandrillMessage.global_merge_vars = [self mandrillNameContentPairForUrlPath:url extension:_extension signature:signature duration:_duration];
+    mandrillMessage.global_merge_vars = [self mandrillNameContentPairForUrlPath:url extension:_extension signature:signature duration:_duration canonicalUrl:canonicalUrl];
     
     NSString *textBody = [NSString stringWithFormat:LOC(@"Mail Text Format",@"Default Mail Text Format"), url, [self fastReplyUrlForSender], signature];
     mandrillMessage.text = textBody;
@@ -140,7 +140,7 @@ SUBSCRIBE(MandrillMesssageSent) {
     return result;
 }
 
--(NSMutableArray<MandrillNameContentPair>*) mandrillNameContentPairForUrlPath:(NSString*)urlPath extension:(NSString*)extension signature:(NSString*) signature duration:(NSTimeInterval) duration {
+-(NSMutableArray<MandrillNameContentPair>*) mandrillNameContentPairForUrlPath:(NSString*)urlPath extension:(NSString*)extension signature:(NSString*) signature duration:(NSTimeInterval) duration canonicalUrl:(NSString*)canonicalUrl{
     
     int minutes = duration / 60;
     int seconds = (int)duration % 60;
@@ -154,6 +154,7 @@ SUBSCRIBE(MandrillMesssageSent) {
     NSMutableArray<MandrillNameContentPair> *contentMutableArray = [NSMutableArray<MandrillNameContentPair> new];
     [contentMutableArray addObject:[MandrillNameContentPair createWithName:@"url" content:urlPath]];
     [contentMutableArray addObject:[MandrillNameContentPair createWithName:@"replyLink" content:replyLink]];
+    [contentMutableArray addObject:[MandrillNameContentPair createWithName:@"canonicalUrl" content:canonicalUrl]];
     
     [contentMutableArray addObject:[MandrillNameContentPair createWithName:@"minutesDigit1" content:[NSString stringWithFormat:@"%d", minutesDigit1]]];
     [contentMutableArray addObject:[MandrillNameContentPair createWithName:@"minutesDigit2" content:[NSString stringWithFormat:@"%d", minutesDigit2]]];

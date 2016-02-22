@@ -29,7 +29,7 @@
     dateFormatter = [NSDateFormatter new];
     [dateFormatter setDateFormat:@"MMM dd"];
     
-    chatModel = [ChatModel new];
+    chatModel = [ChatModel sharedInstance];
     chatModel.delegate = self;
     receivedMessagesEmailSet = [ChatModel receivedMessagesEmailSet];
     [self initChatsEmptyView];

@@ -20,6 +20,7 @@
 
 @implementation ChatEntriesViewController {
     NSTimer *holdToRecordViewTimer;
+    AutoPlayModel *autoPlayModel;
 }
 
 - (void)viewDidLoad {
@@ -46,6 +47,7 @@
      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
     [self.holdToRecordView addGestureRecognizer:
      [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
+    autoPlayModel =[AutoPlayModel sharedInstance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -100,7 +102,6 @@
     [super viewWillDisappear:animated];
     self.recordingView = nil;
     
-    AutoPlayModel *autoPlayModel =[AutoPlayModel sharedInstance];
     BOOL isScheduledForCurrentVC = [autoPlayModel isScheduledForPeppermintContactWithNameSurname:self.chatModel.selectedChat.nameSurname email:self.chatModel.selectedChat.communicationChannelAddress];
     if(isScheduledForCurrentVC) {
         [autoPlayModel clearScheduledPeppermintContact];
@@ -117,6 +118,7 @@
 -(void) chatEntriesArrayIsUpdated {
     [MBProgressHUD hideAllHUDsForView:self.tableView animated:YES];
     [self navigateToLastRow];
+    [self checkForAutoPlay];
 }
 
 -(void) navigateToLastRow {
@@ -272,6 +274,21 @@
 
 -(void) refreshContent {
     [self.chatModel refreshChatEntries];
+}
+
+#pragma mark - AutoPlay
+
+-(void) checkForAutoPlay {
+    NSString *nameSurname = self.chatModel.selectedChat.nameSurname;
+    NSString *email = self.chatModel.selectedChat.communicationChannelAddress;
+    BOOL isAutoPlayScheduled = [autoPlayModel isScheduledForPeppermintContactWithNameSurname:nameSurname email:email];
+    if(isAutoPlayScheduled) {
+        NSUInteger lastSection = 0;
+        NSUInteger lastRowNumber = [self.tableView numberOfRowsInSection:lastSection] - 1;
+        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:lastRowNumber inSection:lastSection];
+        ChatTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        [cell playPauseButtonPressed:nil];
+    }
 }
 
 @end

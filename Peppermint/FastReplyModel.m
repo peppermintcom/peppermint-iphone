@@ -7,6 +7,7 @@
 //
 
 #import "FastReplyModel.h"
+#import "ContactsModel.h"
 
 @implementation FastReplyModel
 
@@ -36,6 +37,13 @@
     contact.hasReceivedMessageOverPeppermint = YES;
     contact.communicationChannelAddress = email;
     contact.avatarImage = [UIImage imageNamed:@"avatar_empty"];;
+    for(PeppermintContact *peppermintContact in [ContactsModel sharedInstance].contactList) {
+        if([peppermintContact isIdenticalForImage:contact]) {
+            contact.avatarImage = peppermintContact.avatarImage;
+            break;
+        }
+    }
+    
     [FastReplyModel sharedInstance].peppermintContact = contact;
     
     ReplyContactIsAdded *replyContactIsAdded = [ReplyContactIsAdded new];

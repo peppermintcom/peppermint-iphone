@@ -161,6 +161,7 @@ sharedObject;\
 //#define PEPPERMINT_GCM_SENDER_ID        @"896089644819"   --> Deprecated in GoogleService-Info.plist
 
 #define DOMAIN_PEPPERMINT               @"peppermint.com"
+#define DOMAIN_MANDRILL                 @"mandrill.com"
 
 //Define Host&Path information as lowercase Text
 #define HOST_FASTREPLY                  @"reply"

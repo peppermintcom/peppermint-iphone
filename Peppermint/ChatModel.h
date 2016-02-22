@@ -23,6 +23,7 @@
 @property (weak, nonatomic) Chat *selectedChat;
 @property (strong, atomic, readonly) NSArray<ChatEntry*> *chatEntriesArray;
 
++ (instancetype) sharedInstance;
 -(void) refreshChatArray ;
 -(void) resetChatEntries;
 -(void) refreshChatEntries;

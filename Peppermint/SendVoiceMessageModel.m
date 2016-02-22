@@ -11,6 +11,7 @@
 #import "CacheModel.h"
 #import "FastReplyModel.h"
 #import <Crashlytics/Crashlytics.h>
+#import "ChatModel.h"
 
 #define DISPATCH_SEMAPHORE_PERIOD   15000000000 //15seconds in nanoseconds
 
@@ -34,8 +35,6 @@
         [awsModel initRecorder];
         customContactModel = [CustomContactModel new];
         customContactModel.delegate = self;
-        chatModel = [ChatModel new];
-        chatModel.delegate = self;
     }
     return self;
 }
@@ -294,17 +293,13 @@
     return _sendingStatus;
 }
 
-#pragma mark - ChatModelDelegate
-
--(void) chatHistoryCreatedWithSuccess {
-    [self.delegate chatHistoryCreatedWithSuccess];
-}
-
 #pragma mark - Chat
 
 -(void) setChatConversation {
 #warning "Set transcription text!!"
     NSDate *createDate = [NSDate new];
+    
+    ChatModel *chatModel = [ChatModel sharedInstance];
     [chatModel createChatHistoryFor:self.selectedPeppermintContact withAudioData:_data audioUrl:nil
                       transcription:@"Transcription" duration:_duration isSentByMe:YES createDate:createDate];
 }

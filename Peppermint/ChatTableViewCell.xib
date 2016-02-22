@@ -139,6 +139,7 @@
                 <outlet property="leftDistanceConstraint" destination="Uhy-dT-uh8" id="hxx-Sh-kXY"/>
                 <outlet property="leftImageView" destination="JSg-5m-bvD" id="78v-7r-PNc"/>
                 <outlet property="leftLabel" destination="N9o-U6-Dxl" id="mYA-x3-FML"/>
+                <outlet property="messageView" destination="DRh-1G-YWR" id="g1c-fz-04a"/>
                 <outlet property="playPauseImageView" destination="N6k-WJ-i9s" id="uc1-5t-dap"/>
                 <outlet property="rightImageView" destination="gwE-ca-PTN" id="eEB-2v-9QC"/>
                 <outlet property="rightLabel" destination="7Il-AU-Y5a" id="LSM-6p-w3s"/>

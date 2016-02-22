@@ -13,7 +13,16 @@
 
 @implementation ChatModel
 
++ (instancetype) sharedInstance {
+    return SHARED_INSTANCE( [[self alloc] initShared] );
+}
+
 -(id) init {
+    NSAssert(false, @"This model instance is singleton so should not be inited - %@", self);
+    return nil;
+}
+
+-(id) initShared {
     self = [super init];
     if(self) {
         _chatArray = [NSArray new];
@@ -103,8 +112,11 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 if(error) {
                     [weakSelf.delegate operationFailure:error];
-                } else {
-                    [weakSelf.delegate chatHistoryCreatedWithSuccess];
+                } else {                    
+                    if([weakSelf.delegate respondsToSelector:@selector(chatHistoryCreatedWithSuccess)]) {
+                        [weakSelf.delegate chatHistoryCreatedWithSuccess];
+                    }
+                    [weakSelf refreshChatEntries];
                 }
             });
             
@@ -112,7 +124,7 @@
     });
 }
 
-#pragma mark - Mark ChatEn
+#pragma mark - Mark ChatEntry
 
 +(void) markChatEntryListened:(ChatEntry *) chatEntry {
     if(!chatEntry.isSentByMe.boolValue) {

@@ -179,10 +179,6 @@
     NSLog(@"New recent contact is saved");
 }
 
--(void) chatHistoryCreatedWithSuccess {
-    NSLog(@"chatHistoryCreatedWithSuccess");
-}
-
 SUBSCRIBE(MessageSendingStatusIsUpdated) {
     SendVoiceMessageModel *model = [SendVoiceMessageModel activeSendVoiceMessageModel];
     if(model == self.sendVoiceMessageModel) {

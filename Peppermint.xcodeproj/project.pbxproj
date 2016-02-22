@@ -115,7 +115,6 @@
 		B1A366921BDC92DB00852B52 /* UploadsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A366911BDC92DB00852B52 /* UploadsRequest.m */; };
 		B1A366951BDC92FF00852B52 /* UploadsResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A366941BDC92FF00852B52 /* UploadsResponse.m */; };
 		B1A4AA511BF4DA9D005D55CB /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A4AA501BF4DA9D005D55CB /* AccountViewController.m */; };
-		B1B2F47B1C732679003A4220 /* water_drop.aiff in Resources */ = {isa = PBXBuildFile; fileRef = B1B2F47A1C732679003A4220 /* water_drop.aiff */; };
 		B1B2F47D1C73273A003A4220 /* notification.aiff in Resources */ = {isa = PBXBuildFile; fileRef = B1B2F47C1C73273A003A4220 /* notification.aiff */; };
 		B1B801911C3FF69B00958885 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B801901C3FF69B00958885 /* AboutViewController.m */; };
 		B1BB1E5F1BD35CD300A1CE45 /* MandrillService.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB1E5E1BD35CD300A1CE45 /* MandrillService.m */; };
@@ -126,6 +125,7 @@
 		B1BB601A1BDE127500C1140B /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB60191BDE127500C1140B /* LoginViewController.m */; };
 		B1BB601D1BDE16D400C1140B /* UIStoryboard_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB601C1BDE16D400C1140B /* UIStoryboard_Addition.m */; };
 		B1BB605F1BDE36AF00C1140B /* SignUpWithEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB605E1BDE36AF00C1140B /* SignUpWithEmailViewController.m */; };
+		B1BDD36C1C7A6FB300C8BDF4 /* water_drop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B1BDD36B1C7A6FB300C8BDF4 /* water_drop.mp3 */; };
 		B1C4A7731BF73E3B00272AD7 /* LoginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C4A7721BF73E3B00272AD7 /* LoginRequest.m */; };
 		B1C4A7761BF73E4900272AD7 /* LoginResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C4A7751BF73E4900272AD7 /* LoginResponse.m */; };
 		B1C83A191BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C83A181BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m */; };
@@ -465,7 +465,6 @@
 		B1A4AA4F1BF4DA9D005D55CB /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
 		B1A4AA501BF4DA9D005D55CB /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
 		B1A792451C6D9F8300254528 /* PushKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PushKit.framework; path = System/Library/Frameworks/PushKit.framework; sourceTree = SDKROOT; };
-		B1B2F47A1C732679003A4220 /* water_drop.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = water_drop.aiff; sourceTree = "<group>"; };
 		B1B2F47C1C73273A003A4220 /* notification.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = notification.aiff; sourceTree = "<group>"; };
 		B1B8018F1C3FF69B00958885 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		B1B801901C3FF69B00958885 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
@@ -483,6 +482,7 @@
 		B1BB601C1BDE16D400C1140B /* UIStoryboard_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIStoryboard_Addition.m; sourceTree = "<group>"; };
 		B1BB605D1BDE36AF00C1140B /* SignUpWithEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpWithEmailViewController.h; sourceTree = "<group>"; };
 		B1BB605E1BDE36AF00C1140B /* SignUpWithEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpWithEmailViewController.m; sourceTree = "<group>"; };
+		B1BDD36B1C7A6FB300C8BDF4 /* water_drop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = water_drop.mp3; sourceTree = "<group>"; };
 		B1C4A7711BF73E3B00272AD7 /* LoginRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRequest.h; sourceTree = "<group>"; };
 		B1C4A7721BF73E3B00272AD7 /* LoginRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginRequest.m; sourceTree = "<group>"; };
 		B1C4A7741BF73E4900272AD7 /* LoginResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginResponse.h; sourceTree = "<group>"; };
@@ -965,7 +965,7 @@
 			isa = PBXGroup;
 			children = (
 				B1B2F47C1C73273A003A4220 /* notification.aiff */,
-				B1B2F47A1C732679003A4220 /* water_drop.aiff */,
+				B1BDD36B1C7A6FB300C8BDF4 /* water_drop.mp3 */,
 				B17206D81BE4E1450021D855 /* begin_record.mp3 */,
 			);
 			name = Sounds;
@@ -1744,7 +1744,6 @@
 			files = (
 				B11B13561C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib in Resources */,
 				B1C83A1B1BDEB0FC00EB14C2 /* LoginTextFieldTableViewCell.xib in Resources */,
-				B1B2F47B1C732679003A4220 /* water_drop.aiff in Resources */,
 				B17B3D3A1BB6898C009B8BC5 /* Main.storyboard in Resources */,
 				B1B2F47D1C73273A003A4220 /* notification.aiff in Resources */,
 				B17B3D571BB68A39009B8BC5 /* Text.strings in Resources */,
@@ -1761,6 +1760,7 @@
 				B1BB60171BDE0E3200C1140B /* LoginTableViewCell.xib in Resources */,
 				B17B3D3C1BB6898C009B8BC5 /* Images.xcassets in Resources */,
 				B15B15B21BDBBAB200C0C171 /* Login.storyboard in Resources */,
+				B1BDD36C1C7A6FB300C8BDF4 /* water_drop.mp3 in Resources */,
 				B11B30FD1C4E507200966A48 /* ChatContactTableViewCell.xib in Resources */,
 				B1BB2A531BE6AA2000A4BFB4 /* GoogleService-Info.plist in Resources */,
 				B17801781C1EFEA700BA2436 /* TutorialView.xib in Resources */,

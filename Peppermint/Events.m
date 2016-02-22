@@ -57,7 +57,6 @@
 @end
 
 @implementation AccountCheckEmail
-
 @end
 
 @implementation SyncGoogleContactsSuccess

@@ -48,6 +48,7 @@
 @implementation AppDelegate {
     __block UIBackgroundTaskIdentifier bgTask;
     AWSModel *awsModel;
+    UIView *appLoadingView;
 }
 
 -(void) initMutableArray {
@@ -59,6 +60,7 @@
 -(void) initNavigationViewController {
     [[UINavigationBar appearance] setBarTintColor:[UIColor peppermintGreen]];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    appLoadingView = nil;
 }
 
 -(void) initInitialViewController {
@@ -222,6 +224,7 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    [self refreshBadgeNumber];
     //PUBLISH([ApplicationWillEnterForeground new]);
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
@@ -313,9 +316,14 @@ SUBSCRIBE(DetachSuccess) {
         Attribute *sender = [googleCloudMessagingModel handleIncomingMessage:userInfo];
         [self refreshBadgeNumber];
         if(sender) {
-            [self navigateToChatEntriesPageForEmail:sender.sender_email nameSurname:sender.sender_name];
+            BOOL isInFastReplyMode = [[FastReplyModel sharedInstance] doesFastReplyContactsContains:@""];
+            if(!isInFastReplyMode) {
+                [self hideAppCoverLoadingView];
+                [self navigateToChatEntriesPageForEmail:sender.sender_email nameSurname:sender.sender_name];
+            }
         } else {
-            [googleCloudMessagingModel playMessageReceivedSound];
+#warning "Should sound play here or not? decide about it"
+            //[googleCloudMessagingModel playMessageReceivedSound];
         }
     }
 }
@@ -344,6 +352,7 @@ SUBSCRIBE(DetachSuccess) {
     if(peppermintContact.nameSurname.length > 0
        && peppermintContact.communicationChannelAddress.length > 0) {
         NSLog(@"User tapped the notification");
+        [self showAppCoverLoading];
         [[AutoPlayModel sharedInstance] scheduleAutoPlayForPeppermintContact:peppermintContact];
     }
 }
@@ -351,21 +360,27 @@ SUBSCRIBE(DetachSuccess) {
 #pragma mark - Navigation
 
 -(void) navigateToChatEntriesPageForEmail:(NSString*)email nameSurname:(NSString*)nameSurname {
-    weakself_create();
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UIViewController *vc = [weakSelf visibleViewController];
-        if([vc isKindOfClass:[ReSideMenuContainerViewController class]]) {
-            ReSideMenuContainerViewController *reSideMenuContainerViewController = (ReSideMenuContainerViewController*)vc;
-            UINavigationController *nvc = (UINavigationController*) reSideMenuContainerViewController.contentViewController;
+    UIViewController *vc = [self visibleViewController];
+    if([vc isKindOfClass:[ReSideMenuContainerViewController class]]) {
+        ReSideMenuContainerViewController *reSideMenuContainerViewController = (ReSideMenuContainerViewController*)vc;
+        UINavigationController *nvc = (UINavigationController*) reSideMenuContainerViewController.contentViewController;
+        
+        UIViewController *vc = nvc.viewControllers.lastObject;
+        
+        BOOL isInCorrectScreen = [vc isKindOfClass:[ChatEntriesViewController class]]
+        && [((ChatEntriesViewController*)vc).chatModel.selectedChat.communicationChannelAddress isEqualToString:email];
+        
+        if(!isInCorrectScreen) {
             [nvc popToRootViewControllerAnimated:NO];
             ChatsViewController *chatsViewController = [ChatsViewController createInstance];
             [chatsViewController scheduleNavigateToChatEntryWithEmail:email nameSurname:nameSurname];
             [chatsViewController refreshContent];
             [nvc pushViewController:chatsViewController animated:NO];
-        } else {
-            NSLog(@"Can not navigate to ChatEntries");
         }
-    });
+        
+    } else {
+        NSLog(@"Can not navigate to ChatEntries");
+    }
 }
 
 -(BOOL) navigateToContactsWithFilterText:(NSString*) nameSurname {
@@ -448,7 +463,7 @@ SUBSCRIBE(DetachSuccess) {
         if(nameSurname.length > 0 && [email isValidEmail]) {
             result = [[FastReplyModel sharedInstance] setFastReplyContactWithNameSurname:nameSurname email:email];
             if(result) {
-                result = [self navigateToContactsWithFilterText:nameSurname];
+                result = [self navigateToContactsWithFilterText:@""];
             }
         }
         else {
@@ -488,18 +503,12 @@ SUBSCRIBE(DetachSuccess) {
     
     BOOL result = jwtInformation != nil && [peppermintMessageSender.email isEqualToString:jwtInformation.sub];
     if(result) {
-        UIView *tempView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        tempView.backgroundColor = [UIColor clearColor];
-        [[[UIApplication sharedApplication] keyWindow] addSubview:tempView];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [MBProgressHUD showHUDAddedTo:tempView animated:YES];
-            dispatch_async(LOW_PRIORITY_QUEUE, ^{
-                [NSData dataWithContentsOfURL:url]; //--> Verify email on the server
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self navigateToVerifyEmail];
-                    [MBProgressHUD hideHUDForView:tempView animated:YES];
-                    [tempView removeFromSuperview];
-                });
+        [self showAppCoverLoading];
+        dispatch_async(LOW_PRIORITY_QUEUE, ^{
+            [NSData dataWithContentsOfURL:url]; //--> Verify email on the server
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self navigateToVerifyEmail];
+                [self hideAppCoverLoadingView];
             });
         });
     }
@@ -659,6 +668,8 @@ SUBSCRIBE(DetachSuccess) {
         }
     } else if ([error.domain isEqualToString:@"Could not start recording"]) {
         message = LOC(@"Microphone is in use", @"message");
+    } else if ([error.domain isEqualToString:DOMAIN_MANDRILL]) {
+        message = LOC(@"Mandrill message can not be delivered", @"Mandrill message can not be delivered");
     }
     return message;
 }
@@ -719,6 +730,29 @@ SUBSCRIBE(NewUserLoggedIn) {
 -(void) refreshBadgeNumber {
     NSUInteger unreadMessagesCount = [ChatModel unreadMessageCountOfAllChats];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:unreadMessagesCount];
+}
+
+#pragma mark - App Cover Loading
+
+-(void) showAppCoverLoading {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if(appLoadingView) {
+            [appLoadingView removeFromSuperview];
+        }
+        appLoadingView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        appLoadingView.backgroundColor = [UIColor clearColor];
+        [[[UIApplication sharedApplication] keyWindow] addSubview:appLoadingView];
+        [MBProgressHUD showHUDAddedTo:appLoadingView animated:YES];
+    });
+}
+
+-(void) hideAppCoverLoadingView {
+    if(appLoadingView) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideHUDForView:appLoadingView animated:YES];
+            [appLoadingView removeFromSuperview];
+        });
+    }
 }
 
 @end

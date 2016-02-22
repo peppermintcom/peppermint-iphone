@@ -46,7 +46,7 @@
 }
 
 -(NSPredicate*) recentContactPredicate:(PeppermintContact*) peppermintContact {
-    return [ContactsModel contactPredicateWithNameSurname:peppermintContact.nameSurname communicationChannelAddress:peppermintContact.communicationChannelAddress communicationChannel:peppermintContact.communicationChannel];
+    return [ContactsModel contactPredicateWithCommunicationChannelAddress:peppermintContact.communicationChannelAddress communicationChannel:peppermintContact.communicationChannel];
 }
 
 
@@ -119,8 +119,8 @@
           }
         }
       }
-        self.contactList = recentPeppermintContacts;
         
+        self.contactList = recentPeppermintContacts;
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.delegate recentPeppermintContactsRefreshed];
         });

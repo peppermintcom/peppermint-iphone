@@ -19,7 +19,6 @@
 
 
 @implementation GoogleCloudMessagingModel {
-    ChatModel *chatModel;
     RecentContactsModel *recentContactsModel;
     CustomContactModel *customContactsModel;
     NSMutableSet *handledGoogleMessageIdSet;
@@ -40,7 +39,6 @@ NSString *const SubscriptionTopic = @"/topics/global";
 -(id) initShared {
     self = [super init];
     if(self) {
-        chatModel = [ChatModel new];
         recentContactsModel = [RecentContactsModel new];
         customContactsModel = [CustomContactModel new];
         handledGoogleMessageIdSet = [NSMutableSet new];
@@ -192,6 +190,7 @@ NSString *const SubscriptionTopic = @"/topics/global";
         #warning "Add transcription and check duration"
         
         NSTimeInterval duration = attribute.duration.integerValue;
+        ChatModel *chatModel = [ChatModel sharedInstance];
         [chatModel createChatHistoryFor:peppermintContact
                           withAudioData:nil
                                audioUrl:attribute.audio_url
