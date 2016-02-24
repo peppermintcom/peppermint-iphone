@@ -27,7 +27,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *leftLabel;
 @property (weak, nonatomic) IBOutlet UIView *durationCircleView;
 @property (weak, nonatomic) UITableView *tableView;
-@property (weak, nonatomic) ChatEntry *chatEntry;
+
+@property (strong, nonatomic, readonly) ChatEntry *chatEntry;
 
 @property (strong, nonatomic, readonly) PlayingModel *playingModel;
 

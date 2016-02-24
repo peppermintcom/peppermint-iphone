@@ -107,9 +107,8 @@ SUBSCRIBE(ReplyContactIsAdded) {
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if([self checkIfuserIsLoggedIn]) {
-        if(!self.tutorialView) {
-            [self initTutorialView];
-        }
+        if(self.tutorialView) { [self.tutorialView removeFromSuperview]; }
+        [self initTutorialView];
         [self registerKeyboardActions];
         [self hideHoldToRecordInfoView];
         if(isAddNewContactModalisUp) {
@@ -301,7 +300,8 @@ SUBSCRIBE(ReplyContactIsAdded) {
             if(fastReplyContact) {
                 PeppermintContact *activeContact = [[self activeContactList] objectAtIndex:indexPath.row];
                 if([activeContact isIdenticalForImage:fastReplyContact]
-                   && [fastReplyContact.avatarImage isEqual:[UIImage imageNamed:@"avatar_empty"]]) {
+                   && [fastReplyContact.avatarImage isEqual:[UIImage imageNamed:@"avatar_empty"]]
+                   && activeContact.avatarImage != nil) {
                     fastReplyContact.avatarImage = activeContact.avatarImage;
                 }
                 if([activeContact equals:fastReplyContact]) {

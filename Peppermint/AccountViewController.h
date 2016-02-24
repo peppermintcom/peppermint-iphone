@@ -11,6 +11,7 @@
 
 @interface AccountViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, LoginTableViewCellDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *iconCloseImageView;
+@property (weak, nonatomic) IBOutlet UILabel *emailLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewWidthConstraint;

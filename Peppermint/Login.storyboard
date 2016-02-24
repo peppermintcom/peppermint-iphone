@@ -656,11 +656,22 @@ an account yet? click here</string>
                                     <action selector="closeButtonPressed:" destination="ift-Jc-9vD" eventType="touchUpInside" id="mOX-De-Uwf"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_You are currently logged in using ...." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RZJ-km-OqQ">
-                                <rect key="frame" x="40" y="28" width="334" height="115"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_okankurtulus@gmail.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NNh-RN-UFK">
+                                <rect key="frame" x="40" y="41" width="334" height="39"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="115" id="azd-7B-wTe"/>
+                                    <constraint firstAttribute="height" constant="39" id="mEP-Ox-FDc"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RZJ-km-OqQ">
+                                <rect key="frame" x="40" y="72" width="334" height="71"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="71" id="wiO-nm-O2j"/>
+                                </constraints>
+                                <string key="text">_You are currently logged i 
+using Facebook/Peppemirnt/Google</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -679,33 +690,41 @@ an account yet? click here</string>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="RZJ-km-OqQ" secondAttribute="trailing" constant="40" id="6l2-Dt-hoA"/>
                             <constraint firstItem="p55-Yg-96H" firstAttribute="top" secondItem="RZJ-km-OqQ" secondAttribute="bottom" constant="8" id="7G2-9c-Th6"/>
                             <constraint firstItem="9Nm-rr-ykK" firstAttribute="leading" secondItem="ciK-8N-CkE" secondAttribute="leading" id="B6Q-89-odc"/>
-                            <constraint firstItem="RZJ-km-OqQ" firstAttribute="leading" secondItem="ciK-8N-CkE" secondAttribute="leading" constant="40" id="IDn-HB-faX"/>
+                            <constraint firstItem="NNh-RN-UFK" firstAttribute="leading" secondItem="ciK-8N-CkE" secondAttribute="leadingMargin" constant="20" id="D3C-Eq-jn1"/>
                             <constraint firstItem="e3F-jy-gFZ" firstAttribute="top" secondItem="p55-Yg-96H" secondAttribute="bottom" id="JvK-LV-J49"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="NNh-RN-UFK" secondAttribute="trailing" constant="20" id="KH6-Ca-lYR"/>
+                            <constraint firstItem="RZJ-km-OqQ" firstAttribute="top" secondItem="NNh-RN-UFK" secondAttribute="bottom" id="KoB-D5-t7c"/>
                             <constraint firstItem="p55-Yg-96H" firstAttribute="centerX" secondItem="ciK-8N-CkE" secondAttribute="centerX" id="LhX-bt-9Bv"/>
                             <constraint firstItem="N9N-Pv-mSb" firstAttribute="top" secondItem="ciK-8N-CkE" secondAttribute="top" id="OKI-S3-l1j"/>
-                            <constraint firstItem="p55-Yg-96H" firstAttribute="top" secondItem="RZJ-km-OqQ" secondAttribute="bottom" constant="8" id="TJU-1o-8nK"/>
-                            <constraint firstAttribute="trailing" secondItem="RZJ-km-OqQ" secondAttribute="trailing" constant="40" id="U23-6z-vNP"/>
+                            <constraint firstItem="p55-Yg-96H" firstAttribute="top" secondItem="RZJ-km-OqQ" secondAttribute="bottom" constant="8" symbolic="YES" id="UIX-3n-vjn"/>
                             <constraint firstItem="N9N-Pv-mSb" firstAttribute="leading" secondItem="ciK-8N-CkE" secondAttribute="leading" id="WIi-ir-0si"/>
-                            <constraint firstItem="RZJ-km-OqQ" firstAttribute="top" secondItem="QHB-1j-8hS" secondAttribute="bottom" constant="8" id="YEy-nA-H0K"/>
                             <constraint firstItem="p55-Yg-96H" firstAttribute="centerY" secondItem="ciK-8N-CkE" secondAttribute="centerY" id="dNe-jx-PPS"/>
+                            <constraint firstItem="NNh-RN-UFK" firstAttribute="top" secondItem="QHB-1j-8hS" secondAttribute="bottom" constant="21" id="fgB-KO-D60"/>
+                            <constraint firstItem="p55-Yg-96H" firstAttribute="top" secondItem="RZJ-km-OqQ" secondAttribute="bottom" constant="8" id="fut-Gi-dNp"/>
+                            <constraint firstItem="RZJ-km-OqQ" firstAttribute="top" secondItem="NNh-RN-UFK" secondAttribute="bottom" constant="-8" id="gQY-AG-CjT"/>
                             <constraint firstAttribute="trailing" secondItem="N9N-Pv-mSb" secondAttribute="trailing" id="iHd-2C-Zq2"/>
                             <constraint firstItem="e3F-jy-gFZ" firstAttribute="top" secondItem="N9N-Pv-mSb" secondAttribute="bottom" id="jdS-s0-cTD"/>
                             <constraint firstItem="LcO-RC-ZdI" firstAttribute="leading" secondItem="ciK-8N-CkE" secondAttribute="leading" constant="14" id="nKI-lA-4US"/>
                             <constraint firstItem="9Nm-rr-ykK" firstAttribute="top" secondItem="ciK-8N-CkE" secondAttribute="top" id="qBc-VL-B1U"/>
                             <constraint firstItem="LcO-RC-ZdI" firstAttribute="top" secondItem="QHB-1j-8hS" secondAttribute="bottom" constant="8" id="qM2-kE-ZYr"/>
+                            <constraint firstItem="RZJ-km-OqQ" firstAttribute="leading" secondItem="ciK-8N-CkE" secondAttribute="leading" constant="40" id="y5o-zw-NLT"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="KoB-D5-t7c"/>
                                 <exclude reference="7G2-9c-Th6"/>
                                 <exclude reference="dNe-jx-PPS"/>
+                                <exclude reference="fut-Gi-dNp"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="mIk-67-AeA"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
+                        <outlet property="emailLabel" destination="NNh-RN-UFK" id="SXg-hN-L1t"/>
                         <outlet property="iconCloseImageView" destination="LcO-RC-ZdI" id="kE4-1x-U1O"/>
                         <outlet property="tableView" destination="p55-Yg-96H" id="eeu-OF-pK1"/>
                         <outlet property="tableViewWidthConstraint" destination="Ytf-WE-JYR" id="Zal-I5-vfh"/>

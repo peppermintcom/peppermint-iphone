@@ -49,8 +49,8 @@ int OPTION_LOG_OUT              = 0;
     
     self.iconCloseImageView.image = [UIImage imageNamed:@"icon_back"];
     
-    self.titleLabel.textColor = [UIColor whiteColor];
-    self.titleLabel.font = [UIFont openSansSemiBoldFontOfSize:18];
+    self.titleLabel.textColor = self.emailLabel.textColor = [UIColor whiteColor];
+    self.titleLabel.font = self.emailLabel.font = [UIFont openSansSemiBoldFontOfSize:18];
     [self setTableContent];
 }
 
@@ -86,14 +86,19 @@ int OPTION_LOG_OUT              = 0;
         self.titleLabel.hidden = YES;
         self.tableView.hidden = YES;
     } else {
-        self.titleLabel.text = [NSString stringWithFormat:
-                                LOC(@"Logged in message format", @"Logged in message format"),
-                                [self.peppermintMessageSender loginMethod]
-                                ];
+        [self updateTitleLabel];
         [self.titleLabel sizeToFit];
         self.tableViewWidthConstraint.constant = self.view.frame.size.width / 2;
         [self.view setNeedsDisplay];
     }
+}
+
+-(void) updateTitleLabel {
+    self.emailLabel.text = self.peppermintMessageSender.email;
+    self.titleLabel.text = [NSString stringWithFormat:
+                            LOC(@"Logged in message format", @"Logged in message format"),
+                            [self.peppermintMessageSender loginMethod]
+                            ];
 }
 
 -(void) viewDidAppear:(BOOL)animated {
@@ -214,11 +219,8 @@ int OPTION_LOG_OUT              = 0;
 #pragma mark - LoginNavigationViewControllerDelegate
 
 - (void)loginSucceedWithMessageSender:(PeppermintMessageSender *)peppermintMessageSender {
-  self.peppermintMessageSender = peppermintMessageSender;
-  self.titleLabel.text = [NSString stringWithFormat:
-                          LOC(@"Logged in message format", @"Logged in message format"),
-                          [self.peppermintMessageSender loginMethod]
-                          ];
+    self.peppermintMessageSender = peppermintMessageSender;
+    [self updateTitleLabel];
 }
 
 

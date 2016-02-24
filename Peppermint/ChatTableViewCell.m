@@ -76,7 +76,7 @@
     [_playingModel.audioPlayer stop];
     _playingModel = nil;
     
-    self.chatEntry = chatEntry;
+    _chatEntry = chatEntry;
     self.playPauseImageView.image = imagePlay;
     self.playPauseImageView.hidden = NO;
     [self setLeftLabel];

@@ -34,10 +34,9 @@
     scheduledPeppermintContact = peppermintContact;
 }
 
--(BOOL) isScheduledForPeppermintContactWithNameSurname:(NSString*)nameSurname email:(NSString*)email {
+-(BOOL) isScheduledForPeppermintContactWithEmail:(NSString*)email {
     BOOL result = NO;
     if(scheduledPeppermintContact
-       && [scheduledPeppermintContact.nameSurname.lowercaseString isEqualToString:nameSurname.lowercaseString]
        && [scheduledPeppermintContact.communicationChannelAddress.lowercaseString isEqualToString:email.lowercaseString]) {
         result = YES;
     }

@@ -71,10 +71,8 @@
     mandrillMessage.subject = subject;
     
     mandrillMessage.html = nil;
+    mandrillMessage.text = nil; // HTML and text is set from template!
     mandrillMessage.global_merge_vars = [self mandrillNameContentPairForUrlPath:url extension:_extension signature:signature duration:_duration canonicalUrl:canonicalUrl];
-    
-    NSString *textBody = [NSString stringWithFormat:LOC(@"Mail Text Format",@"Default Mail Text Format"), url, [self fastReplyUrlForSender], signature];
-    mandrillMessage.text = textBody;
     
     MandrillToObject *recipient = [MandrillToObject new];
     recipient.email = self.selectedPeppermintContact.communicationChannelAddress;

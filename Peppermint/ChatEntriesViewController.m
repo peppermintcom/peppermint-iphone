@@ -102,7 +102,7 @@
     [super viewWillDisappear:animated];
     self.recordingView = nil;
     
-    BOOL isScheduledForCurrentVC = [autoPlayModel isScheduledForPeppermintContactWithNameSurname:self.chatModel.selectedChat.nameSurname email:self.chatModel.selectedChat.communicationChannelAddress];
+    BOOL isScheduledForCurrentVC = [autoPlayModel isScheduledForPeppermintContactWithEmail:self.chatModel.selectedChat.communicationChannelAddress];
     if(isScheduledForCurrentVC) {
         [autoPlayModel clearScheduledPeppermintContact];
     }
@@ -118,7 +118,11 @@
 -(void) chatEntriesArrayIsUpdated {
     [MBProgressHUD hideAllHUDsForView:self.tableView animated:YES];
     [self navigateToLastRow];
-    [self checkForAutoPlay];
+    
+#warning "Added a latency for checking auto-play. Please investigate if we need this latency or not"
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self checkForAutoPlay];
+    });
 }
 
 -(void) navigateToLastRow {
@@ -279,10 +283,10 @@
 #pragma mark - AutoPlay
 
 -(void) checkForAutoPlay {
-    NSString *nameSurname = self.chatModel.selectedChat.nameSurname;
     NSString *email = self.chatModel.selectedChat.communicationChannelAddress;
-    BOOL isAutoPlayScheduled = [autoPlayModel isScheduledForPeppermintContactWithNameSurname:nameSurname email:email];
+    BOOL isAutoPlayScheduled = [autoPlayModel isScheduledForPeppermintContactWithEmail:email];
     if(isAutoPlayScheduled) {
+        [[AppDelegate Instance] hideAppCoverLoadingView];
         NSUInteger lastSection = 0;
         NSUInteger lastRowNumber = [self.tableView numberOfRowsInSection:lastSection] - 1;
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:lastRowNumber inSection:lastSection];

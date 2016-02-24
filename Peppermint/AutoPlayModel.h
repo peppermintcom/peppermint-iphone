@@ -13,7 +13,7 @@
 + (instancetype) sharedInstance;
 
 -(void) scheduleAutoPlayForPeppermintContact:(PeppermintContact*)peppermintContact;
--(BOOL) isScheduledForPeppermintContactWithNameSurname:(NSString*)nameSurname email:(NSString*)email;
+-(BOOL) isScheduledForPeppermintContactWithEmail:(NSString*)email;
 -(void) clearScheduledPeppermintContact;
 
 @end

@@ -354,6 +354,7 @@ SUBSCRIBE(DetachSuccess) {
         NSLog(@"User tapped the notification");
         [self showAppCoverLoading];
         [[AutoPlayModel sharedInstance] scheduleAutoPlayForPeppermintContact:peppermintContact];
+        [self navigateToChatEntriesPageForEmail:peppermintContact.communicationChannelAddress nameSurname:peppermintContact.nameSurname];
     }
 }
 

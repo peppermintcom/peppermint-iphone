@@ -11,7 +11,9 @@
 
 #define PREDICATE_UNREAD_MESSAGES [NSPredicate predicateWithFormat:@"self.isSeen = %@",@NO]
 
-@implementation ChatModel
+@implementation ChatModel {
+    Repository *repository;
+}
 
 + (instancetype) sharedInstance {
     return SHARED_INSTANCE( [[self alloc] initShared] );
@@ -28,8 +30,18 @@
         _chatArray = [NSArray new];
         self.selectedChat = nil;
         _chatEntriesArray = [NSArray new];
+        repository = [Repository beginTransaction];
     }
     return self;
+}
+
+-(void) dealloc {
+    if(repository) {
+       NSError *error = [repository endTransaction];
+        if(error) {
+            [self.delegate operationFailure:error];
+        }
+    }
 }
 
 #pragma mark - Refresh
@@ -37,17 +49,17 @@
 -(void) refreshChatArray {
     _chatEntriesArray = [NSArray new];
     self.selectedChat = nil;
-    dispatch_async(LOW_PRIORITY_QUEUE, ^{
-        Repository *repository = [Repository beginTransaction];
+    //dispatch_async(LOW_PRIORITY_QUEUE, ^{
+        
         _chatArray = [repository getResultsFromEntity:[Chat class] predicateOrNil:nil ascSortStringOrNil:nil descSortStringOrNil:
                       [NSArray arrayWithObjects:@"lastMessageDate", nil]];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
+      //  dispatch_async(dispatch_get_main_queue(), ^{
             if([self.delegate respondsToSelector:@selector(chatsArrayIsUpdated)]) {
                 [self.delegate chatsArrayIsUpdated];
             }
-        });
-    });
+     //   });
+    //});
 }
 
 -(void) resetChatEntries {
@@ -56,7 +68,6 @@
 
 -(void) refreshChatEntries {
     dispatch_async(LOW_PRIORITY_QUEUE, ^{
-        Repository *repository = [Repository beginTransaction];
         NSPredicate *chatPredicate = [NSPredicate predicateWithFormat:@"self.chat.nameSurname = %@ AND self.chat.communicationChannelAddress = %@",
                                       self.selectedChat.nameSurname,
                                       self.selectedChat.communicationChannelAddress];
@@ -75,13 +86,10 @@
     NSAssert(peppermintContact.nameSurname && peppermintContact.communicationChannelAddress, @"PeppermintContact must be valid to cache!");
     
     weakself_create();
-    dispatch_async(LOW_PRIORITY_QUEUE, ^{
+    //dispatch_async(LOW_PRIORITY_QUEUE, ^{
         Chat *matchedChat = nil;
         NSPredicate *addressPredicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:peppermintContact.communicationChannelAddress];
-        //NSPredicate *nameSurnamePredicate = [ContactsModel contactPredicateWithNameSurname:peppermintContact.nameSurname];
-        //NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects: addressPredicate, nameSurnamePredicate, nil]];
         
-        Repository *repository = [Repository beginTransaction];
         NSArray *matchedChatsArray = [repository getResultsFromEntity:[Chat class] predicateOrNil:addressPredicate];
         if(matchedChatsArray.firstObject) {
             matchedChat = (Chat*) matchedChatsArray.firstObject;
@@ -109,7 +117,7 @@
             }
             
             NSError *error = [repository endTransaction];
-            dispatch_async(dispatch_get_main_queue(), ^{
+            //dispatch_async(dispatch_get_main_queue(), ^{
                 if(error) {
                     [weakSelf.delegate operationFailure:error];
                 } else {                    
@@ -118,10 +126,10 @@
                     }
                     [weakSelf refreshChatEntries];
                 }
-            });
+            //});
             
         }
-    });
+    //});
 }
 
 #pragma mark - Mark ChatEntry
