@@ -339,7 +339,7 @@ SUBSCRIBE(DetachSuccess) {
             NSAssert(false, @"Got not expected notification msg in UIApplicationStateBackground state");
         }
     }
-}
+} 
 
 #pragma mark - AutoPlay
 
