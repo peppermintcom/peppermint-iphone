@@ -10,19 +10,23 @@
 #import <UIKit/UIApplication.h>
 #import "AppDelegate.h"
 #import "PeppermintMessageSender.h"
-#import "ChatModel.h"
 #import "PeppermintContact.h"
 #import "ContactsModel.h"
 #import "RecentContactsModel.h"
 #import "CustomContactModel.h"
-#import "PlayingModel.h"
+#import "Attribute.h"
+#import "ChatEntryModel.h"
 
+@interface GoogleCloudMessagingModel() <ChatEntryModelDelegate>
+@end
 
 @implementation GoogleCloudMessagingModel {
     RecentContactsModel *recentContactsModel;
     CustomContactModel *customContactsModel;
     NSMutableSet *handledGoogleMessageIdSet;
-    PlayingModel *playingModel;
+    ChatEntryModel *chatEntryModel;
+    BOOL isServiceCallActive;
+    NSMutableArray *attributeEntitiesToBeProcessed;
 }
 
 NSString *const SubscriptionTopic = @"/topics/global";
@@ -42,8 +46,10 @@ NSString *const SubscriptionTopic = @"/topics/global";
         recentContactsModel = [RecentContactsModel new];
         customContactsModel = [CustomContactModel new];
         handledGoogleMessageIdSet = [NSMutableSet new];
-        playingModel = [PlayingModel new];
-        [playingModel initReceivedMessageSound];
+        chatEntryModel = [ChatEntryModel new];
+        chatEntryModel.delegate = self;
+        isServiceCallActive = NO;
+        attributeEntitiesToBeProcessed = [NSMutableArray new];
     }
     return self;
 }
@@ -166,50 +172,88 @@ NSString *const SubscriptionTopic = @"/topics/global";
 
 #pragma mark - Incoming Message
 
--(Attribute*) handleIncomingMessage:(NSDictionary *) userInfo {
-    NSError *error;
-    Attribute *attribute = [[Attribute alloc] initWithDictionary:userInfo error:&error];
-    
-    if(!error
-       && attribute.message_id
-       && ![handledGoogleMessageIdSet containsObject:attribute.message_id])
-    {
-        [handledGoogleMessageIdSet addObject:attribute.message_id];
-        PeppermintContact *peppermintContact = nil;
-        NSPredicate *contactPredicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:attribute.sender_email communicationChannel:CommunicationChannelEmail];
-        NSArray *filteredContactsArray = [[ContactsModel sharedInstance].contactList filteredArrayUsingPredicate:contactPredicate];
-        if(filteredContactsArray.count > 0) {
-            peppermintContact = filteredContactsArray.firstObject;
-        } else {
-            peppermintContact = [PeppermintContact new];
-            peppermintContact.nameSurname = attribute.sender_name;
-            peppermintContact.communicationChannel = CommunicationChannelEmail;
-            peppermintContact.communicationChannelAddress = attribute.sender_email;
-        }
-        
-        #warning "Add transcription and check duration"
-        
-        NSTimeInterval duration = attribute.duration.integerValue;
-        ChatModel *chatModel = [ChatModel sharedInstance];
-        [chatModel createChatHistoryFor:peppermintContact
-                          withAudioData:nil
-                               audioUrl:attribute.audio_url
-                          transcription:@"Transcription"
-                               duration:duration
-                             isSentByMe:NO
-                             createDate:attribute.createdDate];
-        
-        [recentContactsModel save:peppermintContact];
-        [customContactsModel save:peppermintContact];
+-(PeppermintContact*) tryToMatchPreSavedPeppermintContactWithEmail:(NSString*)email nameSurname:(NSString*)nameSurname {
+    PeppermintContact *peppermintContact = nil;
+    NSPredicate *contactPredicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:email];
+    NSArray *filteredContactsArray = [[ContactsModel sharedInstance].contactList filteredArrayUsingPredicate:contactPredicate];
+    if(filteredContactsArray.count > 0) {
+        peppermintContact = filteredContactsArray.firstObject;
     } else {
-        attribute = nil;
-        NSLog(@"Could not parse userInfo. Notification could not be processed:\n%@", userInfo);
+        peppermintContact = [PeppermintContact new];
+        peppermintContact.communicationChannel = CommunicationChannelEmail;
+        peppermintContact.nameSurname = nameSurname;
+        peppermintContact.communicationChannelAddress = email;
     }
-    return attribute;
+    return peppermintContact;
 }
 
--(void) playMessageReceivedSound {
-    [playingModel playPreparedAudiowithCompetitionBlock:nil];
+-(PeppermintChatEntry*) createPeppermintChatEntryFromAttribute:(Attribute*) attribute {
+    PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry new];
+    peppermintChatEntry.audio = nil;
+    peppermintChatEntry.audioUrl = attribute.audio_url;
+    peppermintChatEntry.dateCreated = attribute.createdDate;
+    peppermintChatEntry.contactEmail = attribute.sender_email;
+    peppermintChatEntry.contactNameSurname = attribute.sender_name;
+    peppermintChatEntry.duration = attribute.duration.integerValue;
+    peppermintChatEntry.isSentByMe = NO;
+    return peppermintChatEntry;
+}
+
+-(BOOL) handleIncomingMessage:(NSDictionary *) userInfo {
+    NSError *error;
+    BOOL result = NO;
+    Attribute *attribute = [[Attribute alloc] initWithDictionary:userInfo error:&error];
+    
+    NSLog(@"Got GCM Message:\n%@", userInfo);
+    if(!error && attribute.message_id && ![handledGoogleMessageIdSet containsObject:attribute.message_id]) {        
+        [handledGoogleMessageIdSet addObject:attribute.message_id];
+        [attributeEntitiesToBeProcessed addObject:attribute];
+        [self processAttributesArray];
+        result = YES;
+    }
+    return result;
+}
+
+-(void) processAttributesArray {
+    if(isServiceCallActive) {
+        NSLog(@"Not processing in this cycle. Will process when active service call completes.");
+    } else if (attributeEntitiesToBeProcessed.count == 0) {
+        PUBLISH([GoogleCloudMessagingProcessedAllMessages new]);
+    } else {
+        isServiceCallActive = YES;
+        NSLog(@"attributeEntitiesToBeProcessed has %ld queued objects...", attributeEntitiesToBeProcessed.count);
+        
+        Attribute *attribute = [attributeEntitiesToBeProcessed firstObject];
+        PeppermintChatEntry *peppermintChatEntry = [self createPeppermintChatEntryFromAttribute:attribute];
+        PeppermintContact *peppermintContact = [self tryToMatchPreSavedPeppermintContactWithEmail:attribute.sender_email
+                                                                                      nameSurname:attribute.sender_name];
+        [chatEntryModel createChatHistory:peppermintChatEntry forPeppermintContact:peppermintContact];
+        [customContactsModel save:peppermintContact];
+        [recentContactsModel save:peppermintContact forContactDate:peppermintChatEntry.dateCreated];
+        [attributeEntitiesToBeProcessed removeObject:attribute];
+    }
+}
+
+
+#pragma mark - ChatEntryModelDelegate
+
+-(void) chatHistoryCreatedWithSuccess {
+    NSLog(@"ChatHistoryCreatedWithSuccess in GCM Model");
+    isServiceCallActive = NO;
+    [self processAttributesArray];
+}
+
+-(void) chatEntriesArrayIsUpdated {
+    NSLog(@"chatEntriesArrayIsUpdated");
+}
+
+-(void) peppermintChatEntrySavedWithSuccess:(PeppermintChatEntry*)peppermintChatEntry {
+    NSLog(@"peppermintChatEntrySavedWithSuccess");
+}
+
+-(void) operationFailure:(NSError*) error {
+    NSLog(@"operationFailure:%@", error.localizedDescription);
+    [AppDelegate handleError:error];
 }
 
 @end

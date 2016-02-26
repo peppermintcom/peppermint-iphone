@@ -9,13 +9,14 @@
 #import "ChatsViewController.h"
 #import "ChatEntriesViewController.h"
 #import "ContactsViewController.h"
+#import "ChatModel.h"
 
 #define SEGUE_CHAT_ENTRIES_VIEWCONTROLLER   @"ChatEntriesViewControllerSegue"
 
 @implementation ChatsViewController {
     NSDateFormatter *dateFormatter;
-    ChatModel *chatModel;
-    PeppermintContact *peppermintContactToNavigate;
+    RecentContactsModel *recentContactsModel;
+    NSString *peppermintContactEmailToNavigate;
     NSSet* receivedMessagesEmailSet;
 }
 
@@ -29,22 +30,23 @@
     dateFormatter = [NSDateFormatter new];
     [dateFormatter setDateFormat:@"MMM dd"];
     
-    chatModel = [ChatModel sharedInstance];
-    chatModel.delegate = self;
+    recentContactsModel = [RecentContactsModel new];
+    recentContactsModel.delegate = self;
     receivedMessagesEmailSet = [ChatModel receivedMessagesEmailSet];
     [self initChatsEmptyView];
+    REGISTER();
 }
 
 -(void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    chatModel.delegate = self;
+    recentContactsModel.delegate = self;
     self.chatsEmptyView.hidden = YES;
-    [chatModel refreshChatArray];
+    [recentContactsModel refreshRecentContactList];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    chatModel = nil;
+    recentContactsModel = nil;
 }
 
 +(instancetype) createInstance {
@@ -53,48 +55,54 @@
     return chatsViewController;
 }
 
-#pragma mark - ChatModelDelegate
 
--(void) chatsArrayIsUpdated {
+#pragma mark - RecentContactsModelDelegate
+
+-(void) recentPeppermintContactsRefreshed {
     [self.tableView reloadData];
-    self.chatsEmptyView.hidden = (chatModel.chatArray.count > 0);
+    self.chatsEmptyView.hidden = (recentContactsModel.contactList.count > 0);
     [self checkIfShouldNavigate];
+}
+
+-(void) recentPeppermintContactSavedSucessfully:(PeppermintContact*) recentContact {
+    NSLog(@"recentPeppermintContactSavedSucessfully...");
 }
 
 #pragma mark - UITableView
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger numberOfRows = chatModel.chatArray.count;
+    NSInteger numberOfRows = recentContactsModel.contactList.count;
     return numberOfRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ChatContactTableViewCell *cell = [CellFactory cellChatContactTableViewCellFromTable:tableView forIndexPath:indexPath];
         
-    Chat *chat = [chatModel.chatArray objectAtIndex:indexPath.row];
-    if(chat.avatarImageData) {
-        [cell setAvatarImage:[UIImage imageWithData:chat.avatarImageData]];
+    PeppermintContact *peppermintContact = [recentContactsModel.contactList objectAtIndex:indexPath.row];
+    if(peppermintContact.avatarImage) {
+        [cell setAvatarImage:peppermintContact.avatarImage];
     } else {
         cell.avatarImageView.image = [UIImage imageNamed:@"avatar_empty"];
     }
     
-    NSString *communicationChannelAddressToShow = chat.communicationChannelAddress;
+    NSString *communicationChannelAddressToShow = peppermintContact.communicationChannelAddress;
     if([receivedMessagesEmailSet containsObject:communicationChannelAddressToShow]) {
         communicationChannelAddressToShow = LOC(@"Peppermint", @"Peppermint");
     }
-    [cell setInformationWithNameSurname:chat.nameSurname communicationChannelAddress:communicationChannelAddressToShow];
+    [cell setInformationWithNameSurname:peppermintContact.nameSurname communicationChannelAddress:communicationChannelAddressToShow];
     
-    NSDate *lastMessageDate = [ChatModel lastMessageDateOfChat:chat];
+    
+    NSDate *lastMessageDate = peppermintContact.lastMessageDate;
     cell.rightDateLabel.text = [dateFormatter stringFromDate:lastMessageDate];
-    NSUInteger unreadMessageCount = [ChatModel unreadMessageCountOfChat:chat];
+    NSUInteger unreadMessageCount = peppermintContact.unreadMessageCount;
     cell.rightMessageCounterLabel.hidden = unreadMessageCount <= 0;
-    cell.rightMessageCounterLabel.text = [NSString stringWithFormat:@"%ld",unreadMessageCount];
+    cell.rightMessageCounterLabel.text = [NSString stringWithFormat:@"%ld",(unsigned long)unreadMessageCount];
     return cell;
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    chatModel.selectedChat = [chatModel.chatArray objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER sender:self];
+    PeppermintContact *peppermintContact = [recentContactsModel.contactList objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER sender:peppermintContact];
 }
 
 #pragma mark - Slide Menu
@@ -123,10 +131,13 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {    
     if([segue.identifier isEqualToString:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER]) {
-        NSParameterAssert(chatModel.selectedChat);
-        ChatEntriesViewController *chatEntriesViewController = (ChatEntriesViewController*)segue.destinationViewController;
-        [chatModel resetChatEntries];
-        chatEntriesViewController.chatModel = chatModel;
+        if([sender isKindOfClass:[PeppermintContact class]]) {
+            PeppermintContact *peppermintContact = (PeppermintContact*)sender;
+            ChatEntriesViewController *chatEntriesViewController = (ChatEntriesViewController*)segue.destinationViewController;
+            chatEntriesViewController.peppermintContact = peppermintContact;
+        } else {
+            NSLog(@"sender must be an instance of 'PeppermintContact' to navigate!");
+        }
     }
 }
 
@@ -153,37 +164,31 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
+#pragma mark - New Message Received
+
+SUBSCRIBE(GoogleCloudMessagingProcessedAllMessages) {
+    [recentContactsModel refreshRecentContactList];
+}
+
 #pragma mark - Navigate to ChatEntry
 
--(void) scheduleNavigateToChatEntryWithEmail:(NSString*) email nameSurname:(NSString*)nameSurname {
-    PeppermintContact *peppermintContact = [PeppermintContact new];
-    peppermintContact.nameSurname = nameSurname;
-    peppermintContact.communicationChannelAddress = email;
-    peppermintContact.communicationChannel = CommunicationChannelEmail;
-    peppermintContactToNavigate = peppermintContact;
+-(void) scheduleNavigateToChatEntryWithEmail:(NSString*) email {
+    peppermintContactEmailToNavigate = email;
+    [recentContactsModel refreshRecentContactList];
 }
 
 -(void) checkIfShouldNavigate {
-    if(peppermintContactToNavigate) {
-        NSPredicate *predicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:peppermintContactToNavigate.communicationChannelAddress communicationChannel:CommunicationChannelEmail];
-        
-        NSArray *matchingChatsArray = [chatModel.chatArray filteredArrayUsingPredicate:predicate];
+    if([peppermintContactEmailToNavigate isValidEmail]) {
+        NSPredicate *predicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:peppermintContactEmailToNavigate];
+        NSArray *matchingChatsArray = [recentContactsModel.contactList filteredArrayUsingPredicate:predicate];
         if(matchingChatsArray.count > 0) {
-            chatModel.selectedChat = matchingChatsArray.firstObject;
-            [self performSegueWithIdentifier:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER sender:self];
+            PeppermintContact *peppermintContact = matchingChatsArray.firstObject;
+            [self performSegueWithIdentifier:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER sender:peppermintContact];
         } else {
-            NSLog(@"Could ot find matching chat with %@:%@",
-                  peppermintContactToNavigate.communicationChannelAddress,
-                  peppermintContactToNavigate.nameSurname);
+            NSLog(@"Could not find matching chat with email: %@", peppermintContactEmailToNavigate);
         }
-        peppermintContactToNavigate = nil;
+        peppermintContactEmailToNavigate = nil;
     }
-}
-
-#pragma mark - Refresh Content
-
--(void) refreshContent {
-    [chatModel refreshChatArray];
 }
 
 @end

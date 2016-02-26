@@ -33,12 +33,13 @@ typedef enum : NSUInteger {
 @protocol SendVoiceMessageDelegate <BaseModelDelegate>
 @required
 -(void) newRecentContactisSaved;
+-(void) chatHistoryCreatedWithSuccess;
 @end
 
 @interface SendVoiceMessageModel : BaseModel <RecentContactsModelDelegate, AWSModelDelegate, CustomContactModelDelegate> {
     RecentContactsModel *recentContactsModel;
     AWSModel *awsModel;
-    CustomContactModel *customContactModel;
+    CustomContactModel *customContactModel;    
     NSData *_data;
     NSString *_extension;
     NSTimeInterval _duration;

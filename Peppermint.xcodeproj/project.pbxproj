@@ -136,6 +136,8 @@
 		B1D2A6DD1C20380D002BD6DF /* FoggyRecordingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1D2A6DC1C20380D002BD6DF /* FoggyRecordingView.xib */; };
 		B1DBEF431C537345007AAF4A /* RecordingGestureButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B1DBEF421C537345007AAF4A /* RecordingGestureButton.m */; };
 		B1E2DF9B1C76061F0037FFBF /* AutoPlayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E2DF9A1C76061F0037FFBF /* AutoPlayModel.m */; };
+		B1E5160E1C7D99E3002BD49C /* ChatEntryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E5160D1C7D99E3002BD49C /* ChatEntryModel.m */; };
+		B1E516111C7D9A69002BD49C /* PeppermintChatEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E516101C7D9A69002BD49C /* PeppermintChatEntry.m */; };
 		B1EF03751C2184F80054FA02 /* AnalyticsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF03741C2184F80054FA02 /* AnalyticsModel.m */; };
 		B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40E41BB7D58C00042E4B /* RecordingModel.m */; };
 		B1EF40EB1BB7E78C00042E4B /* SendVoiceMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40EA1BB7E78C00042E4B /* SendVoiceMessageModel.m */; };
@@ -501,6 +503,10 @@
 		B1DBEF421C537345007AAF4A /* RecordingGestureButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordingGestureButton.m; sourceTree = "<group>"; };
 		B1E2DF991C76061F0037FFBF /* AutoPlayModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoPlayModel.h; sourceTree = "<group>"; };
 		B1E2DF9A1C76061F0037FFBF /* AutoPlayModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoPlayModel.m; sourceTree = "<group>"; };
+		B1E5160C1C7D99E3002BD49C /* ChatEntryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatEntryModel.h; sourceTree = "<group>"; };
+		B1E5160D1C7D99E3002BD49C /* ChatEntryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatEntryModel.m; sourceTree = "<group>"; };
+		B1E5160F1C7D9A69002BD49C /* PeppermintChatEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeppermintChatEntry.h; sourceTree = "<group>"; };
+		B1E516101C7D9A69002BD49C /* PeppermintChatEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeppermintChatEntry.m; sourceTree = "<group>"; };
 		B1EF03731C2184F80054FA02 /* AnalyticsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsModel.h; sourceTree = "<group>"; };
 		B1EF03741C2184F80054FA02 /* AnalyticsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsModel.m; sourceTree = "<group>"; };
 		B1EF40E31BB7D58C00042E4B /* RecordingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RecordingModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -896,6 +902,8 @@
 				B12EA4041C4FB1F40006F51F /* GoogleCloudMessagingModel.m */,
 				B1E2DF991C76061F0037FFBF /* AutoPlayModel.h */,
 				B1E2DF9A1C76061F0037FFBF /* AutoPlayModel.m */,
+				B1E5160C1C7D99E3002BD49C /* ChatEntryModel.h */,
+				B1E5160D1C7D99E3002BD49C /* ChatEntryModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -907,6 +915,8 @@
 				B165EF171BB71EC0008C6F71 /* PeppermintContact.m */,
 				B18BF95C1BD674CD009B665E /* PeppermintMessageSender.h */,
 				B18BF95D1BD674CD009B665E /* PeppermintMessageSender.m */,
+				B1E5160F1C7D9A69002BD49C /* PeppermintChatEntry.h */,
+				B1E516101C7D9A69002BD49C /* PeppermintChatEntry.m */,
 			);
 			name = Entity;
 			sourceTree = "<group>";
@@ -1958,6 +1968,7 @@
 				B18BF95E1BD674CD009B665E /* PeppermintMessageSender.m in Sources */,
 				B15FDE7C1C117CCE007100EC /* RecentContact+CoreDataProperties.m in Sources */,
 				B1A366951BDC92FF00852B52 /* UploadsResponse.m in Sources */,
+				B1E516111C7D9A69002BD49C /* PeppermintChatEntry.m in Sources */,
 				B1BB1E631BD364FB00A1CE45 /* AFNetworkActivityLogger.m in Sources */,
 				B15B15AC1BD9D8B800C0C171 /* ExplodingView.m in Sources */,
 				B10C39311BF6FB150070B49F /* User.m in Sources */,
@@ -1995,6 +2006,7 @@
 				B1D2A6D71C200706002BD6DF /* RecordingView.m in Sources */,
 				B1C83A191BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m in Sources */,
 				B17933121BE0B7B00016F158 /* LoginNavigationViewController.m in Sources */,
+				B1E5160E1C7D99E3002BD49C /* ChatEntryModel.m in Sources */,
 				B1879A181C5810EE0036A660 /* StaticDataTableViewController.m in Sources */,
 				B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */,
 				B1F93E901BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld in Sources */,

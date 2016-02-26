@@ -26,8 +26,6 @@
 
 -(void) tryToSetUpAccountWithRecorder;
 -(void) tryToUpdateGCMRegistrationToken;
--(void) refreshBadgeNumber;
 
--(void) hideAppCoverLoadingView;
-
+-(void) cleanDatabase;
 @end

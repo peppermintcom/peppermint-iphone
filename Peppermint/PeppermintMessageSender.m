@@ -220,11 +220,13 @@
     self.recorderKey = nil;
     self.exchangedJwt = nil;
     //self.gcmToken = nil; -> Do not clear GCM token, cos maybe the app will not be restarted& [recorder init] will need gcmToken
-    
     self.isAccountSetUpWithRecorder = NO;
     
-    defaults_reset();
-    defaults_set_object(DEFAULTS_KEY_IS_FIRST_RUN, DEFAULTS_KEY_IS_FIRST_RUN);
+    defaults_remove(DEFAULTS_KEY_CACHED_SENDVOCIEMESSAGE_MODEL);
+    defaults_remove(DEFAULTS_KEY_DONT_SHOW_SMS_WARNING);
+    defaults_remove(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH);
+    
+    [[AppDelegate Instance] cleanDatabase];
     [self save];
 }
 

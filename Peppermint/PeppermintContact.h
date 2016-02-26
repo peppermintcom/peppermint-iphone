@@ -22,6 +22,9 @@ typedef enum : NSUInteger {
 @property (assign, nonatomic) CommunicationChannel communicationChannel;
 @property (assign, nonatomic) BOOL hasReceivedMessageOverPeppermint;
 @property (strong, nonatomic) NSString *uniqueContactId;
+@property (strong, nonatomic) NSDate *lastMessageDate;
+@property (assign, nonatomic) NSUInteger unreadMessageCount;
+
 
 - (void)addToCoreSpotlightSearch;
 - (BOOL) equals:(PeppermintContact*)peppermintContact;

@@ -11,14 +11,18 @@
 #import "CacheModel.h"
 #import "FastReplyModel.h"
 #import <Crashlytics/Crashlytics.h>
-#import "ChatModel.h"
+#import "ChatEntryModel.h"
 
 #define DISPATCH_SEMAPHORE_PERIOD   15000000000 //15seconds in nanoseconds
+
+@interface SendVoiceMessageModel () <ChatEntryModelDelegate>
+@end
 
 @implementation SendVoiceMessageModel {
     NSLock *arrayLock;
     SendingStatus _sendingStatus;
     dispatch_semaphore_t dispatch_semaphore;
+    ChatEntryModel *chatEntryModel;
 }
 
 -(id) init {
@@ -35,6 +39,8 @@
         [awsModel initRecorder];
         customContactModel = [CustomContactModel new];
         customContactModel.delegate = self;
+        chatEntryModel = [ChatEntryModel new];
+        chatEntryModel.delegate = self;
     }
     return self;
 }
@@ -53,7 +59,7 @@
     
     BOOL isPreviousCachedMessage = (self.delegate == nil);
     if(!isPreviousCachedMessage) {
-        [recentContactsModel save:self.selectedPeppermintContact];
+        [recentContactsModel save:self.selectedPeppermintContact forContactDate:[NSDate new]];
         [self setChatConversation];
         [self checkAndCleanFastReplyModel];
     }
@@ -296,19 +302,20 @@
 #pragma mark - Chat
 
 -(void) setChatConversation {
-#warning "Set transcription text!!"
+#warning "Set transcription text"
     NSDate *createDate = [NSDate new];
-    
-    ChatModel *chatModel = [ChatModel sharedInstance];
-    [chatModel createChatHistoryFor:self.selectedPeppermintContact withAudioData:_data audioUrl:nil
-                      transcription:@"Transcription" duration:_duration isSentByMe:YES createDate:createDate];
+    PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry new];
+    peppermintChatEntry.audio = _data;
+    peppermintChatEntry.duration = _duration;
+    peppermintChatEntry.isSentByMe = YES;
+    peppermintChatEntry.dateCreated = createDate;
+    [chatEntryModel createChatHistory:peppermintChatEntry forPeppermintContact:self.selectedPeppermintContact];
 }
 
 #pragma mark - SendGCMMessage
 
 -(void) sendMessageOverAWS:(NSString*)publicUrl {
 #warning "Set transcription url!!"    
-    
     
     #warning "Remove JWT logging"
     NSString *jwt = self.peppermintMessageSender.jwt;
@@ -322,6 +329,16 @@
                                  transcriptionUrl:transcriptionUrl
                                          audioUrl:publicUrl
                                               jwt:self.peppermintMessageSender.exchangedJwt];
+}
+
+#pragma mark - ChatEntryModelDelegate
+
+-(void) chatEntriesArrayIsUpdated {
+    NSLog(@"chatEntriesArrayIsUpdated");
+}
+
+-(void) chatHistoryCreatedWithSuccess {
+    [self.delegate chatHistoryCreatedWithSuccess];
 }
 
 @end

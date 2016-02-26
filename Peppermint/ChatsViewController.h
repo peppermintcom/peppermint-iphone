@@ -7,9 +7,9 @@
 //
 
 #import "BaseViewController.h"
-#import "ChatModel.h"
+#import "RecentContactsModel.h"
 
-@interface ChatsViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, ChatModelDelegate>
+@interface ChatsViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, RecentContactsModelDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -20,7 +20,5 @@
 
 
 +(instancetype) createInstance;
--(void) scheduleNavigateToChatEntryWithEmail:(NSString*) email nameSurname:(NSString*)nameSurname;
--(void) refreshContent;
-
+-(void) scheduleNavigateToChatEntryWithEmail:(NSString*) email;
 @end

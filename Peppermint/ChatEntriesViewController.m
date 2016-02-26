@@ -9,18 +9,18 @@
 #import "ChatEntriesViewController.h"
 #import "SendVoiceMessageMandrillModel.h"
 #import "RecordingGestureButton.h"
-#import "ChatModel.h"
 #import "FoggyRecordingView.h"
 #import "SendVoiceMessageSMSModel.h"
 #import "AutoPlayModel.h"
+#import "PeppermintContact.h"
 
-@interface ChatEntriesViewController () <RecordingGestureButtonDelegate, ChatModelDelegate, RecordingViewDelegate>
-
+@interface ChatEntriesViewController () <RecordingGestureButtonDelegate, RecordingViewDelegate>
 @end
 
 @implementation ChatEntriesViewController {
     NSTimer *holdToRecordViewTimer;
     AutoPlayModel *autoPlayModel;
+    __block BOOL isPlayingMessageExists;
 }
 
 - (void)viewDidLoad {
@@ -48,30 +48,32 @@
     [self.holdToRecordView addGestureRecognizer:
      [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
     autoPlayModel =[AutoPlayModel sharedInstance];
+    
+    self.chatEntryModel = [ChatEntryModel new];
+    self.chatEntryModel.delegate = self;
+    REGISTER();
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    NSParameterAssert(self.chatModel);
-    self.chatModel.delegate = self;
-    
-    Chat *chat = self.chatModel.selectedChat;
-    if(chat.avatarImageData) {
+    NSParameterAssert(self.peppermintContact);
+    isPlayingMessageExists = NO;
+    if(self.peppermintContact.avatarImage) {
         CGRect frame = self.avatarImageView.frame;
         int width = frame.size.width;
         int height = frame.size.height;
-        self.avatarImageView.image = [[UIImage imageWithData:chat.avatarImageData] resizedImageWithWidth:width height:height];
+        self.avatarImageView.image = [self.peppermintContact.avatarImage resizedImageWithWidth:width height:height];
     }
     [self setTitleText];
 }
 
 -(void) setTitleText {
-    Chat *chat = self.chatModel.selectedChat;
+
     CGFloat width = SCREEN_WIDTH - 90; //self.titleLabel.frame.size.width - 20;
     CGFloat height = 23; // self.titleLabel.frame.size.height;
     
-    NSString *nameSurname = [chat.nameSurname limitToFitInWidth:width height:height andFonttSize:17];
-    NSString *communicationChannelAddress = [chat.communicationChannelAddress limitToFitInWidth:width height:height andFonttSize:13];
+    NSString *nameSurname = [self.peppermintContact.nameSurname limitToFitInWidth:width height:height andFonttSize:17];
+    NSString *communicationChannelAddress = [self.peppermintContact.communicationChannelAddress limitToFitInWidth:width height:height andFonttSize:13];
     
     NSMutableAttributedString *attrText = [NSMutableAttributedString new];
     [attrText addText:nameSurname ofSize:17 ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:17]];
@@ -85,8 +87,7 @@
     [super viewDidAppear:animated];
 
     [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
-    [self.chatModel refreshChatEntries];
-    
+    [self refreshContent];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self initRecordingViewWithView:self.recordingButton];
     });
@@ -94,36 +95,33 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    self.chatModel = nil;
+    self.chatEntryModel = nil;
     self.recordingView = nil;
+    self.peppermintContact = nil;
 }
 
 -(void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.recordingView = nil;
-    
-    BOOL isScheduledForCurrentVC = [autoPlayModel isScheduledForPeppermintContactWithEmail:self.chatModel.selectedChat.communicationChannelAddress];
-    if(isScheduledForCurrentVC) {
-        [autoPlayModel clearScheduledPeppermintContact];
-    }
-    
-#warning "What if the playing cell is not currently visible. Have further test and fix issue!"
-    for(ChatTableViewCell* cell in [self.tableView visibleCells]) {
-        [cell.playingModel.audioPlayer stop];
-    }
+
+    StopAllPlayingMessages *stopAllPlayingMessages = [StopAllPlayingMessages new];
+    stopAllPlayingMessages.sender = self;
+    PUBLISH(stopAllPlayingMessages);
 }
 
-#pragma mark - ChatModelDelegate
+#pragma mark - ChatEntryModelDelegate
 
 -(void) chatEntriesArrayIsUpdated {
     [MBProgressHUD hideAllHUDsForView:self.tableView animated:YES];
     [self navigateToLastRow];
-    
-#warning "Added a latency for checking auto-play. Please investigate if we need this latency or not"
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self checkForAutoPlay];
-    });
+    [self checkForAutoPlay];
 }
+
+-(void) peppermintChatEntrySavedWithSuccess:(PeppermintChatEntry*)peppermintChatEntry {
+    NSLog(@"peppermintChatEntrySavedWithSuccess");
+}
+
+#pragma mark - UITableView
 
 -(void) navigateToLastRow {
     [self.tableView reloadData];
@@ -134,21 +132,18 @@
     if(indexPath.row >= 0 && indexPath.section >= 0) {
         [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
     }
-    
 }
 
-#pragma mark - UITableView
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger numberOfRows = [self.chatModel.chatEntriesArray count];
+    NSInteger numberOfRows = [self.chatEntryModel.chatEntriesArray count];
     return numberOfRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     ChatTableViewCell *cell = [CellFactory cellChatTableViewCellFromTable:tableView forIndexPath:indexPath];    
-    ChatEntry *chatEntry = (ChatEntry*)[self.chatModel.chatEntriesArray objectAtIndex:indexPath.row];
-    [cell fillInformation:chatEntry];    
+    PeppermintChatEntry *peppermintChatEntry = (PeppermintChatEntry*)[self.chatEntryModel.chatEntriesArray objectAtIndex:indexPath.row];
+    [cell fillInformation:peppermintChatEntry];
     cell.contentView.backgroundColor = self.tableView.backgroundColor;
     return cell;
 }
@@ -198,19 +193,14 @@
 }
 
 -(void) touchHoldSuccessOnLocation:(CGPoint) touchBeginPoint {
-    PeppermintContact *peppermintContact = [PeppermintContact new];
-    peppermintContact.nameSurname = self.chatModel.selectedChat.nameSurname;
-    peppermintContact.communicationChannel = self.chatModel.selectedChat.communicationChannel.intValue;
-    peppermintContact.communicationChannelAddress = self.chatModel.selectedChat.communicationChannelAddress;
-    
     SendVoiceMessageModel *sendVoiceMessageModel = nil;
-    if(peppermintContact.communicationChannel == CommunicationChannelEmail) {
+    if(self.peppermintContact.communicationChannel == CommunicationChannelEmail) {
         sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
-    } else if (peppermintContact.communicationChannel == CommunicationChannelSMS) {
+    } else if (self.peppermintContact.communicationChannel == CommunicationChannelSMS) {
         sendVoiceMessageModel = [SendVoiceMessageSMSModel new];
     }
     
-    sendVoiceMessageModel.selectedPeppermintContact = peppermintContact;
+    sendVoiceMessageModel.selectedPeppermintContact = self.peppermintContact;
     self.recordingView.sendVoiceMessageModel = sendVoiceMessageModel;
     
     CGRect rect = self.recordingButton.frame;
@@ -259,7 +249,7 @@
 
 -(void) chatHistoryCreatedWithSuccess {
     NSLog(@"chatHistoryCreatedWithSuccess");
-    [self.chatModel refreshChatEntries];
+    [self refreshContent];
 }
 
 #pragma mark - HoldToRecordView
@@ -276,23 +266,43 @@
 
 #pragma mark - Refresh Content
 
+SUBSCRIBE(ApplicationWillResignActive) {
+    isPlayingMessageExists = NO;
+}
+
+SUBSCRIBE(MessagePlayingStarted) {
+    isPlayingMessageExists = YES;
+}
+
+SUBSCRIBE(MessagePlayingEnded) {
+    if(isPlayingMessageExists) {
+        isPlayingMessageExists = NO;
+        [self refreshContent];
+    }
+}
+
 -(void) refreshContent {
-    [self.chatModel refreshChatEntries];
+    if(!isPlayingMessageExists) {
+        [self.chatEntryModel refreshChatEntriesForContactEmail:self.peppermintContact.communicationChannelAddress];
+    }
 }
 
 #pragma mark - AutoPlay
 
 -(void) checkForAutoPlay {
-    NSString *email = self.chatModel.selectedChat.communicationChannelAddress;
+    NSString *email = self.peppermintContact.communicationChannelAddress;
     BOOL isAutoPlayScheduled = [autoPlayModel isScheduledForPeppermintContactWithEmail:email];
     if(isAutoPlayScheduled) {
-        [[AppDelegate Instance] hideAppCoverLoadingView];
         NSUInteger lastSection = 0;
         NSUInteger lastRowNumber = [self.tableView numberOfRowsInSection:lastSection] - 1;
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:lastRowNumber inSection:lastSection];
         ChatTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
         [cell playPauseButtonPressed:nil];
     }
+}
+
+SUBSCRIBE(GoogleCloudMessagingProcessedAllMessages) {
+    [self refreshContent];
 }
 
 @end

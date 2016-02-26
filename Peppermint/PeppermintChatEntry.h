@@ -1,0 +1,22 @@
+//
+//  PeppermintChatEntry.h
+//  Peppermint
+//
+//  Created by Okan Kurtulus on 24/02/16.
+//  Copyright © 2016 Okan Kurtulus. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface PeppermintChatEntry : NSObject
+
+@property (strong, nonatomic) NSData *audio;
+@property (strong, nonatomic) NSString *audioUrl;
+@property (strong, nonatomic) NSDate *dateCreated;
+@property (strong, nonatomic) NSString *contactEmail;
+@property (strong, nonatomic) NSString *contactNameSurname;
+@property (assign, nonatomic) NSInteger duration;
+@property (assign, nonatomic) BOOL isSeen;
+@property (assign, nonatomic) BOOL isSentByMe;
+
+@end

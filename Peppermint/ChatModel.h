@@ -7,31 +7,20 @@
 //
 
 #import "BaseModel.h"
-#import "Repository.h"
 @class PeppermintContact;
 
 @protocol ChatModelDelegate <BaseModelDelegate>
 @optional
 -(void) chatsArrayIsUpdated;
--(void) chatEntriesArrayIsUpdated;
--(void) chatHistoryCreatedWithSuccess;
 @end
 
 @interface ChatModel : BaseModel
 @property (weak, nonatomic) id<ChatModelDelegate> delegate;
-@property (strong, atomic, readonly) NSArray<Chat*> *chatArray;
-@property (weak, nonatomic) Chat *selectedChat;
-@property (strong, atomic, readonly) NSArray<ChatEntry*> *chatEntriesArray;
+@property (strong, atomic) NSArray<PeppermintContact*> *chatArray;
 
-+ (instancetype) sharedInstance;
 -(void) refreshChatArray ;
--(void) resetChatEntries;
--(void) refreshChatEntries;
-- (void) createChatHistoryFor:(PeppermintContact*) peppermintContact withAudioData:(NSData*) audioData audioUrl:(NSString*)audioUrl transcription:(NSString*) transcription duration:(NSTimeInterval)duration isSentByMe:(BOOL)isSentByMe createDate:(NSDate*)createDate;
 
-+(void) markChatEntryListened:(ChatEntry *) chatEntry;
-+(NSUInteger) unreadMessageCountOfChat:(Chat*) chat;
-+(NSDate*) lastMessageDateOfChat:(Chat*) chat;
++(NSPredicate*) unreadMessagesPredicateForEmail:(NSString*) email;
 +(NSUInteger) unreadMessageCountOfAllChats;
 +(NSSet*) receivedMessagesEmailSet;
 

@@ -33,6 +33,7 @@
 #import "ChatsViewController.h"
 #import "ChatEntriesViewController.h"
 #import "AutoPlayModel.h"
+#import "ChatModel.h"
 
 @import WatchConnectivity;
 @import Contacts;
@@ -49,6 +50,13 @@
     __block UIBackgroundTaskIdentifier bgTask;
     AWSModel *awsModel;
     UIView *appLoadingView;
+    PeppermintContact *peppermintContactToNavigate;
+    PlayingModel *playingModel;
+}
+
+-(void) initPlayingModel {
+    playingModel = [PlayingModel new];
+    [playingModel initReceivedMessageSound];
 }
 
 -(void) initMutableArray {
@@ -159,11 +167,8 @@
     UIApplication *application = [UIApplication sharedApplication];
     [application cancelAllLocalNotifications];
     
-    int second = 1;
-    int minute = second * 60;
-    
     UILocalNotification *notif = [[UILocalNotification alloc] init];
-    notif.fireDate = [NSDate dateWithTimeIntervalSinceNow:3 * minute];
+    notif.fireDate = [NSDate dateWithTimeIntervalSinceNow:3 * MINUTE];
     notif.timeZone = [NSTimeZone defaultTimeZone];
     
     notif.alertBody = LOC(@"You have installed Peppermint. Click to send your first message!", @"Notification Message");
@@ -195,15 +200,9 @@
     }
 }
 
--(void) checkForRemoteNotificationInApplication:(UIApplication*)application launchOptions:(NSDictionary*)launchOptions {
-    NSDictionary *notificationDictionary = [launchOptions valueForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-    if(notificationDictionary) {
-        [self checkToScheduleAutoPlay:notificationDictionary application:application];
-    }
-}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [self initPlayingModel];
     [self initMutableArray];
     [self initNavigationViewController];
     [self initFabric];
@@ -218,7 +217,6 @@
     [self checkForFirstRun];
     [self initRecorder];
     [self refreshBadgeNumber];
-    [self checkForRemoteNotificationInApplication:application launchOptions:launchOptions];
     REGISTER();
     return YES;
 }
@@ -236,6 +234,7 @@
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
+    [self refreshBadgeNumber];
     PUBLISH([ApplicationWillResignActive new]);
 }
 
@@ -296,36 +295,12 @@ SUBSCRIBE(DetachSuccess) {
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    NSLog(@"didReceiveRemoteNotification:%@", userInfo);
     [self handleNotification:userInfo inApplication:application];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))handler {
-    NSLog(@"didReceiveRemoteNotification:fetchCompletionHandler:\nuserinfo:%@", userInfo);
     [self handleNotification:userInfo inApplication:application];
-    handler(UIBackgroundFetchResultNoData);
-}
-
-- (void) handleNotification:(NSDictionary*)userInfo inApplication:(UIApplication *)application {
-    NSLog(@"\n\nApplicationState:%ld\n\n", application.applicationState);
-    [[GCMService sharedInstance] appDidReceiveMessage:userInfo];
-    if (application.applicationState == UIApplicationStateInactive) {
-        [self checkToScheduleAutoPlay:userInfo application:application];
-    } else if( application.applicationState == UIApplicationStateActive || application.applicationState == UIApplicationStateBackground) {
-        GoogleCloudMessagingModel *googleCloudMessagingModel = [GoogleCloudMessagingModel sharedInstance];
-        Attribute *sender = [googleCloudMessagingModel handleIncomingMessage:userInfo];
-        [self refreshBadgeNumber];
-        if(sender) {
-            BOOL isInFastReplyMode = [[FastReplyModel sharedInstance] doesFastReplyContactsContains:@""];
-            if(!isInFastReplyMode) {
-                [self hideAppCoverLoadingView];
-                [self navigateToChatEntriesPageForEmail:sender.sender_email nameSurname:sender.sender_name];
-            }
-        } else {
-#warning "Should sound play here or not? decide about it"
-            //[googleCloudMessagingModel playMessageReceivedSound];
-        }
-    }
+    handler(UIBackgroundFetchResultNewData);
 }
 
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(nullable NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler {
@@ -343,44 +318,76 @@ SUBSCRIBE(DetachSuccess) {
     completionHandler();
 }
 
+- (void) handleNotification:(NSDictionary*)userInfo inApplication:(UIApplication *)application {
+    [[GCMService sharedInstance] appDidReceiveMessage:userInfo];
+    GoogleCloudMessagingModel *googleCloudMessagingModel = [GoogleCloudMessagingModel sharedInstance];
+    BOOL isValidGCMDataMessage = [googleCloudMessagingModel handleIncomingMessage:userInfo];
+    if(isValidGCMDataMessage) {
+        if (application.applicationState == UIApplicationStateActive) {
+            NSLog(@"GCM Data message handling is triggered in GoogleCloudMessagingModel");
+        } else if(application.applicationState == UIApplicationStateInactive) {
+            NSAssert(false, @"Got not expected data msg in UIApplicationStateInactive state");
+        } else if (application.applicationState == UIApplicationStateBackground) {
+            NSAssert(false, @"Got not expected data msg in UIApplicationStateBackground state");
+        }
+    } else {
+        if (application.applicationState == UIApplicationStateActive) {
+            NSLog(@"Got notification when the app is active. Data payload will be handled, so not doing any handling.");
+        } else if(application.applicationState == UIApplicationStateInactive) {
+            [self gotGCMNotificationForAutoPlay:userInfo];
+        } else if (application.applicationState == UIApplicationStateBackground) {
+            NSAssert(false, @"Got not expected notification msg in UIApplicationStateBackground state");
+        }
+    }
+}
+
 #pragma mark - AutoPlay
 
--(void) checkToScheduleAutoPlay:(NSDictionary*)userInfo application:(UIApplication*)application {
-    PeppermintContact *peppermintContact = [PeppermintContact new];
-    peppermintContact.nameSurname = [userInfo valueForKey:PATH_FULL_NAME];
-    peppermintContact.communicationChannelAddress = [userInfo valueForKey:PATH_EMAIL];    
-    if(peppermintContact.nameSurname.length > 0
-       && peppermintContact.communicationChannelAddress.length > 0) {
-        NSLog(@"User tapped the notification");
-        [self showAppCoverLoading];
-        [[AutoPlayModel sharedInstance] scheduleAutoPlayForPeppermintContact:peppermintContact];
-        [self navigateToChatEntriesPageForEmail:peppermintContact.communicationChannelAddress nameSurname:peppermintContact.nameSurname];
+-(void) gotGCMNotificationForAutoPlay:(NSDictionary*)userInfo {
+    [self showAppCoverLoading];
+    peppermintContactToNavigate = [PeppermintContact new];
+    peppermintContactToNavigate.nameSurname = [userInfo valueForKey:PATH_FULL_NAME];
+    peppermintContactToNavigate.communicationChannelAddress = [userInfo valueForKey:PATH_EMAIL];
+    [[AutoPlayModel sharedInstance] scheduleAutoPlayForPeppermintContact:peppermintContactToNavigate];
+}
+
+SUBSCRIBE(GoogleCloudMessagingProcessedAllMessages) {
+    if(peppermintContactToNavigate
+       && peppermintContactToNavigate.nameSurname.length > 0
+       && peppermintContactToNavigate.communicationChannelAddress.length > 0) {
+        [self navigateToChatEntriesPageForEmail:peppermintContactToNavigate.communicationChannelAddress
+                                    nameSurname:peppermintContactToNavigate.nameSurname];
+        peppermintContactToNavigate = nil;
+    } else {
+        [playingModel playPreparedAudiowithCompetitionBlock:nil];
     }
 }
 
 #pragma mark - Navigation
 
--(void) navigateToChatEntriesPageForEmail:(NSString*)email nameSurname:(NSString*)nameSurname {
+-(void) navigateToChatEntriesPageForEmail:(NSString*)email nameSurname:(NSString*) nameSurname {
     UIViewController *vc = [self visibleViewController];
     if([vc isKindOfClass:[ReSideMenuContainerViewController class]]) {
         ReSideMenuContainerViewController *reSideMenuContainerViewController = (ReSideMenuContainerViewController*)vc;
         UINavigationController *nvc = (UINavigationController*) reSideMenuContainerViewController.contentViewController;
         
         UIViewController *vc = nvc.viewControllers.lastObject;
-        
         BOOL isInCorrectScreen = [vc isKindOfClass:[ChatEntriesViewController class]]
-        && [((ChatEntriesViewController*)vc).chatModel.selectedChat.communicationChannelAddress isEqualToString:email];
+        && [((ChatEntriesViewController*)vc).peppermintContact.communicationChannelAddress isEqualToString:email];
         
-        if(!isInCorrectScreen) {
+        if(isInCorrectScreen) {
+            ChatEntriesViewController *chatEntriesViewController = (ChatEntriesViewController*)vc;
+            [chatEntriesViewController refreshContent];
+        } else {
             [nvc popToRootViewControllerAnimated:NO];
             ChatsViewController *chatsViewController = [ChatsViewController createInstance];
-            [chatsViewController scheduleNavigateToChatEntryWithEmail:email nameSurname:nameSurname];
-            [chatsViewController refreshContent];
             [nvc pushViewController:chatsViewController animated:NO];
+            [chatsViewController scheduleNavigateToChatEntryWithEmail:email];
         }
-        
+        [self hideAppCoverLoadingView];
     } else {
         NSLog(@"Can not navigate to ChatEntries");
+        [self hideAppCoverLoadingView];
     }
 }
 
@@ -592,6 +599,20 @@ SUBSCRIBE(DetachSuccess) {
     return _persistentStoreCoordinator;
 }
 
+-(void) cleanDatabase {
+    NSLog(@"**************************************************");
+    NSLog(@"*******CLEANING ALL RECORDS IN DATABASE***********");
+    NSLog(@"**************************************************\n\n\n");
+    
+    NSPersistentStoreCoordinator *nsPersistentStoreCoordinator = [self persistentStoreCoordinator];
+    NSArray *stores = [nsPersistentStoreCoordinator persistentStores];
+    for(NSPersistentStore *store in stores) {
+        [nsPersistentStoreCoordinator removePersistentStore:store error:nil];
+        [[NSFileManager defaultManager] removeItemAtPath:store.URL.path error:nil];
+    }
+    _persistentStoreCoordinator = nil;
+    [self refreshBadgeNumber];
+}
 
 - (NSManagedObjectContext *)managedObjectContext {
     // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.)
@@ -652,11 +673,11 @@ SUBSCRIBE(DetachSuccess) {
         }
     } else if ([error.domain isEqualToString:AFURLResponseSerializationErrorDomain]) {
         switch (error.code) {
-            case -1011:
-                message = LOC(@"Please try again later", @"message");
+            case CODE_WRONG_CREDENTIALS:
+                message = LOC(@"Please check your login information", @"message");
                 break;
             default:
-                message = LOC(@"Please check your login information", @"message");
+                message = LOC(@"Please try again later", @"message");
                 break;
         }
     } else if ([error.domain isEqualToString:NSOSStatusErrorDomain]) {

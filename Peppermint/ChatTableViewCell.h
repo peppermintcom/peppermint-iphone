@@ -7,7 +7,7 @@
 //
 
 #import "BaseTableViewCell.h"
-@class ChatEntry;
+@class PeppermintChatEntry;
 @class PlayingModel;
 
 @interface ChatTableViewCell : BaseTableViewCell
@@ -28,11 +28,11 @@
 @property (weak, nonatomic) IBOutlet UIView *durationCircleView;
 @property (weak, nonatomic) UITableView *tableView;
 
-@property (strong, nonatomic, readonly) ChatEntry *chatEntry;
+@property (strong, nonatomic, readonly) PeppermintChatEntry *peppermintChatEntry;
 
 @property (strong, nonatomic, readonly) PlayingModel *playingModel;
 
-- (void) fillInformation:(ChatEntry*) chatEntry;
+- (void) fillInformation:(PeppermintChatEntry*) chatEntry;
 - (IBAction)playPauseButtonPressed:(id)sender;
 
 @end

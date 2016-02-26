@@ -510,6 +510,10 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 #pragma mark - RecordingViewDelegate
 
+-(void) chatHistoryCreatedWithSuccess {
+    NSLog(@"chatHistoryCreatedWithSuccess");
+}
+
 -(void) recordingViewDissappeared {
     self.reSideMenuContainerViewController.panGestureEnabled = YES;
 }
@@ -843,6 +847,10 @@ SUBSCRIBE(ReplyContactIsAdded) {
     [UIView animateWithDuration:0.3 animations:^{
         [self.tableView layoutIfNeeded];
     }];
+}
+
+SUBSCRIBE(GoogleCloudMessagingProcessedAllMessages) {
+    [self.recentContactsModel refreshRecentContactList];
 }
 
 @end

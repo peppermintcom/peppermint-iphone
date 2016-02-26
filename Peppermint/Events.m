@@ -85,3 +85,15 @@
 
 @implementation NewUserLoggedIn
 @end
+
+@implementation GoogleCloudMessagingProcessedAllMessages
+@end
+
+@implementation StopAllPlayingMessages
+@end
+
+@implementation MessagePlayingStarted
+@end
+
+@implementation MessagePlayingEnded
+@end

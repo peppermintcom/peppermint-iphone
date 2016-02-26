@@ -16,6 +16,7 @@
 
 @implementation RecentContactsModel {
     NSSet *receivedMessagesEmailSet;
+    __block int activeServiceCallCount;
 }
 
 -(id) init {
@@ -23,11 +24,12 @@
     if(self) {
         self.contactList = [NSMutableArray new];
         receivedMessagesEmailSet = nil;
+        activeServiceCallCount = 0;
     }
     return self;
 }
 
--(void) save:(PeppermintContact*) peppermintContact {
+-(void) save:(PeppermintContact*) peppermintContact forContactDate:(NSDate*) contactDate {
     weakself_create();
     dispatch_async(DBQueue, ^() {
         Repository *repository = [Repository beginTransaction];
@@ -38,9 +40,9 @@
             [weakSelf promtMultipleRecordsWithSameValueErrorForPeppermintContact:peppermintContact];
         } else if (matchedRecentContacts.count == 1) {
             RecentContact *recentContact = [matchedRecentContacts objectAtIndex:0];
-            [weakSelf updateRecentContact:recentContact inRepository:repository];
+            [weakSelf updateRecentContact:recentContact inRepository:repository date:contactDate];
         } else if (matchedRecentContacts.count == 0) {
-            [weakSelf addNewRecentForPeppermintContact:peppermintContact inRepository:repository];
+            [weakSelf addNewRecentForPeppermintContact:peppermintContact inRepository:repository date:contactDate];
         }
     });
 }
@@ -58,13 +60,14 @@
                                   @"communicationChannel", [NSNumber numberWithInt:peppermintContact.communicationChannel],
                                   nil];
         NSString *domain = @"More than one object exists in Db with same predicate";
+        NSLog(@"%@", domain);
         NSError *err = [NSError errorWithDomain:domain code:-1 userInfo:userInfo];
         [self.delegate operationFailure:err];
     });
 }
 
--(void) updateRecentContact:(RecentContact*) recentContact inRepository:(Repository*) repository {
-    recentContact.contactDate = [NSDate new];
+-(void) updateRecentContact:(RecentContact*) recentContact inRepository:(Repository*) repository date:(NSDate*)contactDate  {
+    recentContact.contactDate = contactDate;
     NSError *err = [repository endTransaction];
     PeppermintContact *peppermintContact = [self peppermintContactWithRecentContact:recentContact];
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -76,9 +79,9 @@
     });
 }
 
--(void) addNewRecentForPeppermintContact:(PeppermintContact*) peppermintContact inRepository:(Repository*) repository {
+-(void) addNewRecentForPeppermintContact:(PeppermintContact*) peppermintContact inRepository:(Repository*) repository date:(NSDate*)contactDate {
     RecentContact *recentContact = (RecentContact*)[repository createEntity:[RecentContact class]];
-    recentContact.contactDate = [NSDate new];
+    recentContact.contactDate = contactDate;
     recentContact.nameSurname = peppermintContact.nameSurname;
     recentContact.communicationChannelAddress = peppermintContact.communicationChannelAddress;
     recentContact.communicationChannel = [NSNumber numberWithInt:peppermintContact.communicationChannel];
@@ -94,6 +97,7 @@
 }
 
 -(void) refreshRecentContactList {
+    activeServiceCallCount ++;
     dispatch_async(DBQueue, ^{
         Repository *repository = [Repository beginTransaction];
         NSArray *recentContactsArray = [repository getResultsFromEntity:[RecentContact class] predicateOrNil:nil ascSortStringOrNil:nil descSortStringOrNil:[NSArray arrayWithObjects:@"contactDate", nil]];
@@ -103,27 +107,40 @@
 
         receivedMessagesEmailSet = [ChatModel receivedMessagesEmailSet];
         for(RecentContact *recentContact in recentContactsArray) {
-          PeppermintContact * ppm_contact = [self peppermintContactWithRecentContact:recentContact];
+            PeppermintContact * ppm_contact = [self peppermintContactWithRecentContact:recentContact];
+            NSArray *unreadMessages = [repository getResultsFromEntity:[ChatEntry class]
+                                                        predicateOrNil:
+                                       [ChatModel unreadMessagesPredicateForEmail:ppm_contact.communicationChannelAddress]];
+            ppm_contact.unreadMessageCount = unreadMessages.count;
+            
+            
+            
+            
+            
             [recentPeppermintContacts addObject:ppm_contact];
 #if !(TARGET_OS_WATCH)
             [recentPeppermintContactsData addObject:[ppm_contact archivedRootData]];
 #endif
         }
-      
-      if (NSClassFromString(@"WCSession") && recentPeppermintContactsData.count > 0) {
-        if ([WCSession isSupported]) {
-          NSError * err;
-          [[WCSession defaultSession] updateApplicationContext:@{@"contact":recentPeppermintContactsData} error:&err];
-          if (err) {
-            NSLog(@"%s: %@", __PRETTY_FUNCTION__, err);
-          }
-        }
-      }
         
-        self.contactList = recentPeppermintContacts;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.delegate recentPeppermintContactsRefreshed];
-        });
+        if (NSClassFromString(@"WCSession") && recentPeppermintContactsData.count > 0) {
+            if ([WCSession isSupported]) {
+                NSError * err;
+                [[WCSession defaultSession] updateApplicationContext:@{@"contact":recentPeppermintContactsData} error:&err];
+                if (err) {
+                    NSLog(@"%s: %@", __PRETTY_FUNCTION__, err);
+                }
+            }
+        }
+        
+        if(--activeServiceCallCount==0) {
+            self.contactList = recentPeppermintContacts;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate recentPeppermintContactsRefreshed];
+            });
+        } else {
+            NSLog(@"Did not complete refresh, cos another refresh call is active!");
+        }
     });
 }
 
@@ -134,6 +151,7 @@
     peppermintContact.communicationChannelAddress = recentContact.communicationChannelAddress;
     peppermintContact.communicationChannel = !recentContact.communicationChannel ? -1 : recentContact.communicationChannel.intValue;
     peppermintContact.hasReceivedMessageOverPeppermint = [receivedMessagesEmailSet containsObject:peppermintContact.communicationChannelAddress];
+    peppermintContact.lastMessageDate = recentContact.contactDate;
     return peppermintContact;
 }
 

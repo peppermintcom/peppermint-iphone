@@ -115,3 +115,15 @@
 
 @interface NewUserLoggedIn : BaseEvent
 @end
+
+@interface GoogleCloudMessagingProcessedAllMessages : BaseEvent
+@end
+
+@interface StopAllPlayingMessages : BaseEvent
+@end
+
+@interface MessagePlayingStarted : BaseEvent
+@end
+
+@interface MessagePlayingEnded : BaseEvent
+@end

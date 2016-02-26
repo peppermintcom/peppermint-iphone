@@ -7,13 +7,14 @@
 //
 
 #import "ChatTableViewCell.h"
-#import "ChatEntry.h"
+#import "PeppermintChatEntry.h"
 #import "PlayingModel.h"
-#import "ChatModel.h"
 #import "AutoPlayModel.h"
+#import "ChatEntryModel.h"
 
 #define DISTANCE_TO_BORDER  5
 #define TIMER_UPDATE_PERIOD 0.05
+
 
 @implementation ChatTableViewCell {
     UIImage *imageConnected;
@@ -21,7 +22,8 @@
     UIImage *imagePlay;
     UIImage *imagePause;
     NSTimer *timer;
-    NSUInteger totalSeconds;
+    NSInteger totalSeconds;
+    __block BOOL stopMessageReceived;
 }
 
 - (void)awakeFromNib {
@@ -35,15 +37,17 @@
     imagePause = [UIImage imageNamed:@"icon_pause"];
     timer = [NSTimer scheduledTimerWithTimeInterval:TIMER_UPDATE_PERIOD target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
     totalSeconds = 0;
+    stopMessageReceived = NO;
+    REGISTER();
 }
 
 - (void) layoutSubviews {
     self.centerViewWidth.constant = self.frame.size.width * 0.60;
     self.durationCircleView.layer.cornerRadius = self.durationCircleView.frame.size.height/2;
     
-    if(!self.chatEntry) {
+    if(!self.peppermintChatEntry) {
         self.leftDistanceConstraint.constant = 2000;
-    } else if(!self.chatEntry.isSentByMe.boolValue) {
+    } else if(!self.peppermintChatEntry.isSentByMe) {
         self.leftDistanceConstraint.constant = DISTANCE_TO_BORDER;
         self.leftImageView.image = imageConnected;
         self.rightImageView.image = [UIImage imageWithCGImage:imageFlat.CGImage
@@ -66,7 +70,7 @@
     [super layoutSubviews];
 }
 
-- (void) fillInformation:(ChatEntry*) chatEntry {
+- (void) fillInformation:(PeppermintChatEntry*) chatEntry {
     
     self.spinnerView.hidden = YES;
     self.durationView.hidden = NO;
@@ -76,7 +80,7 @@
     [_playingModel.audioPlayer stop];
     _playingModel = nil;
     
-    _chatEntry = chatEntry;
+    _peppermintChatEntry = chatEntry;
     self.playPauseImageView.image = imagePlay;
     self.playPauseImageView.hidden = NO;
     [self setLeftLabel];
@@ -85,10 +89,8 @@
 
 -(void) setLeftLabel {
     NSString *durationText = @"--:--";
-    if(self.chatEntry
-       && self.chatEntry.duration
-       && self.chatEntry.duration.integerValue != 0) {
-        totalSeconds = self.chatEntry.duration.integerValue;
+    if(self.peppermintChatEntry && self.peppermintChatEntry.duration != 0) {
+        totalSeconds = self.peppermintChatEntry.duration;
         BOOL isPlayingOrPaused = !self.durationCircleView.hidden;
         if(self.playingModel.audioPlayer.isPlaying || isPlayingOrPaused) {
             totalSeconds = self.playingModel.audioPlayer.currentTime;
@@ -97,37 +99,34 @@
         NSInteger seconds = totalSeconds % 60;
         durationText = [NSString stringWithFormat:@"%.2ld:%.2ld", (long)minutes, (long)seconds];
     }
+    
+    if(!self.peppermintChatEntry.isSeen) {
+        durationText = [NSString stringWithFormat:@"(new) %@", durationText];
+    }
     self.leftLabel.text = durationText;
 }
 
 -(void) setRightLabelWithDate:(NSDate*) date {
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSDateComponents *components = [gregorianCalendar components: (NSCalendarUnitHour
-                                                                   | NSCalendarUnitMinute
-                                                                   | NSCalendarUnitSecond
-                                                                   | NSCalendarUnitDay
-                                                                   | NSCalendarUnitMonth
-                                                                   | NSCalendarUnitYear )
-                                                        fromDate:date
-                                                          toDate:[NSDate new]
-                                                         options:0];
-    
-    NSInteger timeVariable;
+    NSUInteger timeInterval = (NSUInteger)[[NSDate date] timeIntervalSinceDate:date];
+    NSTimeInterval timeVariable;
     NSString *timeText = nil;
-    if(components.year > 0) {
-        timeVariable = components.year;
+    if(timeInterval > YEAR) {
+        timeVariable = timeInterval / YEAR;
         timeText = LOC(@"Year", @"Year");
-    } else if (components.month > 0) {
-        timeVariable = components.month;
+    } else if (timeInterval > MONTH) {
+        timeVariable = timeInterval / MONTH;
         timeText = LOC(@"Month", @"Month");
-    } else if (components.day > 0) {
-        timeVariable = components.day;
+    } else if (timeInterval > DAY) {
+        timeVariable = timeInterval / DAY;
         timeText = LOC(@"Day", @"Day");
-    } else if (components.minute > 0) {
-        timeVariable = components.minute;
+    } else if (timeInterval > HOUR) {
+        timeVariable = timeInterval / HOUR;
+        timeText = LOC(@"Hour", @"Hour");
+    } else if (timeInterval > MINUTE) {
+        timeVariable = timeInterval / MINUTE;
         timeText = LOC(@"Minute", @"Minute");
-    } else if (components.second > 0) {
-        timeVariable = components.second;
+    } else if (timeInterval > SECOND) {
+        timeVariable = timeInterval;
         timeText = LOC(@"Second", @"Second");
     } else {
         timeVariable = 0;
@@ -147,6 +146,7 @@
         self.playPauseImageView.image = imagePlay;
         [_playingModel pause];
     } else {
+        PUBLISH([MessagePlayingStarted new]);
         if(!_playingModel || !_playingModel.audioPlayer.data ) {
             _playingModel = [PlayingModel alloc];
             self.spinnerView.hidden = NO;
@@ -154,23 +154,28 @@
             weakself_create();
             dispatch_async(LOW_PRIORITY_QUEUE, ^{
                 NSError *error = nil;
-                if(!weakSelf.chatEntry.audio) {
-                    NSURL *url = [NSURL URLWithString:self.chatEntry.audioUrl];
+                if(!weakSelf.peppermintChatEntry.audio) {
+                    NSURL *url = [NSURL URLWithString:self.peppermintChatEntry.audioUrl];
                     NSData *audioData = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
                     if(!error) {
-                        weakSelf.chatEntry.audio = audioData;
+                        weakSelf.peppermintChatEntry.audio = audioData;
                     }
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
                     weakSelf.spinnerView.hidden = YES;
                     weakSelf.playPauseImageView.hidden = NO;
-                    if(weakSelf.chatEntry.audio != nil && [_playingModel playData:weakSelf.chatEntry.audio playerCompletitionBlock:nil]) {
-                        weakSelf.chatEntry.duration = [NSNumber numberWithInt:_playingModel.audioPlayer.duration];
+                    [[AutoPlayModel sharedInstance] clearScheduledPeppermintContact];
+                    
+                    if([self playAudio:weakSelf.peppermintChatEntry.audio]) {
+                        
+#warning "add ChatEntryModel and handle error situation"
+                        weakSelf.peppermintChatEntry.isSeen = YES;
+                        [[ChatEntryModel new] update:weakSelf.peppermintChatEntry];
+                        
+                        weakSelf.peppermintChatEntry.duration = _playingModel.audioPlayer.duration;
                         [weakSelf setLeftLabel];
-                        [ChatModel markChatEntryListened:weakSelf.chatEntry];
                         weakSelf.durationCircleView.hidden = NO;
                         weakSelf.playPauseImageView.image = imagePause;
-                        [[AutoPlayModel sharedInstance] clearScheduledPeppermintContact];
                     }
                 });
             });
@@ -180,6 +185,16 @@
             self.playPauseImageView.image = imagePause;
         }
     }
+}
+
+-(BOOL) playAudio:(NSData*)audioData {
+    BOOL result = NO;
+    if(audioData && !stopMessageReceived) {
+        result = [_playingModel playData:audioData playerCompletitionBlock:^{
+            PUBLISH([MessagePlayingEnded new]);
+        }];
+    }
+    return result;
 }
 
 -(void) updateDuration {
@@ -217,6 +232,11 @@
             cell.playPauseImageView.image = imagePlay;
         }
     }
+}
+
+SUBSCRIBE(StopAllPlayingMessages) {
+    stopMessageReceived = YES;
+    [_playingModel.audioPlayer stop];
 }
 
 @end

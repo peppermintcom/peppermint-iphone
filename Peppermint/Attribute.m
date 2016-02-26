@@ -8,16 +8,20 @@
 
 #import "Attribute.h"
 
-@implementation Attribute
+@implementation Attribute {
+    NSDate *cachedDate;
+}
 
--(NSDate*) createdDate {
-    NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDate *dateUTC = [dateFormatter dateFromString:self.created];
-    NSTimeInterval timeZoneSeconds = [[NSTimeZone localTimeZone] secondsFromGMT];
-    NSDate *dateInLocalTimezone = [dateUTC dateByAddingTimeInterval:timeZoneSeconds];
-    
-    return dateInLocalTimezone;
+-(NSDate*) createdDate;{
+    if( !cachedDate) {
+        NSDateFormatter *dateFormatter = [NSDateFormatter new];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+        [dateFormatter setTimeZone:gmt];
+        NSDate *dateGMT = [dateFormatter dateFromString:self.created];
+        cachedDate = dateGMT;
+    }
+    return cachedDate;
 }
 
 @end

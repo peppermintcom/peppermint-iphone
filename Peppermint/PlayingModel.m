@@ -68,6 +68,7 @@
     
     if(!error) {
         _audioPlayer = [[AVAudioPlayer alloc] initWithData:audioData error:&error];
+        _audioPlayer.delegate = self;
         if(!error) {
             cachedBlock = playerCompletitionBlock;
             [_audioPlayer prepareToPlay];

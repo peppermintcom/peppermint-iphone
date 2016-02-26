@@ -7,23 +7,25 @@
 //
 
 #import "BaseViewController.h"
+#import "ChatEntryModel.h"
+
+@class PeppermintContact;
 @class RecordingGestureButton;
-@class ChatModel;
 @class RecordingView;
 
-@interface ChatEntriesViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate>
+@interface ChatEntriesViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, ChatEntryModelDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bottomInformationLabel;
 @property (weak, nonatomic) IBOutlet UIView *microphoneView;
 @property (weak, nonatomic) IBOutlet RecordingGestureButton *recordingButton;
-
 @property (weak, nonatomic) IBOutlet UIView *holdToRecordView;
 @property (weak, nonatomic) IBOutlet UILabel *holdToRecordLabel;
 
-@property (weak, nonatomic) ChatModel *chatModel;
+@property (strong, nonatomic) ChatEntryModel *chatEntryModel;
 @property (strong, nonatomic) RecordingView *recordingView;
+@property (strong, nonatomic) PeppermintContact *peppermintContact;
 
 -(void) refreshContent;
 

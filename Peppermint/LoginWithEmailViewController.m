@@ -125,6 +125,9 @@
 
 - (void)operationFailure:(NSError *)error {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    if([error.localizedDescription isEqualToString:@"Request failed: unauthorized (401)"]) {
+        error = [NSError errorWithDomain:error.domain code:CODE_WRONG_CREDENTIALS userInfo:error.userInfo];
+    }
     [super operationFailure:error];
 }
 
