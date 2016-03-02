@@ -83,6 +83,7 @@ int OPTION_LOG_OUT              = 0;
     self.peppermintMessageSender = [PeppermintMessageSender sharedInstance];
  
     if(![self.peppermintMessageSender isValidToSendMessage]) {        
+        self.emailLabel.hidden = YES;
         self.titleLabel.hidden = YES;
         self.tableView.hidden = YES;
     } else {
