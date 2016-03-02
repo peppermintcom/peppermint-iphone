@@ -76,14 +76,11 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
 }
 
 -(void) triggerCachedMessages {
-    NSLog(@"triggerCachedMessages function is called");
-        if(++numberOfActiveCalls == 1) {
+    if(++numberOfActiveCalls == 1) {
             dispatch_async(LOW_PRIORITY_QUEUE, ^() {
                 Repository *repository = [Repository beginTransaction];
                 NSArray *cachedMessageArray =
                 [repository getResultsFromEntity:[CachedMessage class]];
-                
-                NSLog(@"Now, there is %lu nontriggered cached voice messages", (unsigned long)cachedMessageArray.count);
                 
                 for(int i=0; i<cachedMessageArray.count; i++) {
                     CachedMessage *cachedMessage = [cachedMessageArray objectAtIndex:i];
@@ -105,15 +102,12 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
                 }
                 [repository endTransaction];
                 if(--numberOfActiveCalls > 0) {
-                    NSLog(@"recalled %lu times while sending cached messages!!!", (unsigned long)numberOfActiveCalls);
                     numberOfActiveCalls = 0;
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [[CacheModel sharedInstance] triggerCachedMessages];
                     });
                 }
             });
-        } else {
-            NSLog(@"called triggerCachedMessages function is marked to called again on complete!");
         }
 }
 

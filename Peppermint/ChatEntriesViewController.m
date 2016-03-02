@@ -20,7 +20,7 @@
 @implementation ChatEntriesViewController {
     NSTimer *holdToRecordViewTimer;
     AutoPlayModel *autoPlayModel;
-    __block BOOL isPlayingMessageExists;
+    __block BOOL scheduleRefresh;
 }
 
 - (void)viewDidLoad {
@@ -57,7 +57,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     NSParameterAssert(self.peppermintContact);
-    isPlayingMessageExists = NO;
+    scheduleRefresh = NO;
     if(self.peppermintContact.avatarImage) {
         CGRect frame = self.avatarImageView.frame;
         int width = frame.size.width;
@@ -111,13 +111,13 @@
 
 #pragma mark - ChatEntryModelDelegate
 
--(void) chatEntriesArrayIsUpdated {
+-(void) peppermintChatEntriesArrayIsUpdated {
     [MBProgressHUD hideAllHUDsForView:self.tableView animated:YES];
     [self navigateToLastRow];
     [self checkForAutoPlay];
 }
 
--(void) peppermintChatEntrySavedWithSuccess:(PeppermintChatEntry*)peppermintChatEntry {
+-(void) peppermintChatEntrySavedWithSuccess:(NSArray*) savedPeppermintChatEnryArray {
     NSLog(@"peppermintChatEntrySavedWithSuccess");
 }
 
@@ -267,23 +267,26 @@
 #pragma mark - Refresh Content
 
 SUBSCRIBE(ApplicationWillResignActive) {
-    isPlayingMessageExists = NO;
+    self.tableView.scrollEnabled = YES;
 }
 
 SUBSCRIBE(MessagePlayingStarted) {
-    isPlayingMessageExists = YES;
+    self.tableView.scrollEnabled = NO;
 }
 
 SUBSCRIBE(MessagePlayingEnded) {
-    if(isPlayingMessageExists) {
-        isPlayingMessageExists = NO;
+    self.tableView.scrollEnabled = YES;
+    if(scheduleRefresh) {
+        scheduleRefresh = NO;
         [self refreshContent];
     }
 }
 
 -(void) refreshContent {
-    if(!isPlayingMessageExists) {
-        [self.chatEntryModel refreshChatEntriesForContactEmail:self.peppermintContact.communicationChannelAddress];
+    if(self.tableView.scrollEnabled) {
+        [self.chatEntryModel refreshPeppermintChatEntriesForContactEmail:self.peppermintContact.communicationChannelAddress];
+    } else {
+        scheduleRefresh = YES;
     }
 }
 
@@ -301,8 +304,13 @@ SUBSCRIBE(MessagePlayingEnded) {
     }
 }
 
-SUBSCRIBE(GoogleCloudMessagingProcessedAllMessages) {
-    [self refreshContent];
+SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
+    for(PeppermintChatEntry *peppermintChatEntry in event.peppermintChatEntriesArray) {
+        if([peppermintChatEntry.contactEmail isEqualToString:self.peppermintContact.communicationChannelAddress]) {
+            [self refreshContent];
+            break;
+        }
+    }
 }
 
 @end

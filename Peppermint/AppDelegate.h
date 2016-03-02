@@ -26,6 +26,7 @@
 
 -(void) tryToSetUpAccountWithRecorder;
 -(void) tryToUpdateGCMRegistrationToken;
+-(void) refreshIncomingMessages;
 
 -(void) cleanDatabase;
 @end

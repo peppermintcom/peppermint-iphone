@@ -8,7 +8,6 @@
 
 #import "BaseModel.h"
 #import <Google/CloudMessaging.h>
-#import "PeppermintChatEntry.h"
 
 #define CATEGORY_GCM_AUDIO_MESSAGE  @"AudioMessage"
 #define CATEGORY_IDENTIFIER_REPLY   @"Reply"
@@ -28,7 +27,5 @@
 - (void) initGCM;
 - (void) connectGCM;
 - (void) disconnectGCM;
-
--(BOOL) handleIncomingMessage:(NSDictionary *) userInfo;
 
 @end

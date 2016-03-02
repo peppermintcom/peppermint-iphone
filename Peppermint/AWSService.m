@@ -493,8 +493,71 @@
     [requestOperationManager POST:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"Message is sent!!");
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+#warning "Handle un-delivered in-app messages"
+        [self failureWithOperation:operation andError:error];
+        //NSLog(@"Message could not be sent!!");
+    }];
+}
+
+-(void) getMessagesForRecipientAccountId:(NSString*) accountId jwt:(NSString*)jwt since:(NSDate*)sinceDate {
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_MESSAGES];
+    NSString *tokenText = [self toketTextForJwt:jwt];
+    AFHTTPRequestOperationManager *requestOperationManager = [[AFHTTPRequestOperationManager alloc]
+                                                              initWithBaseURL:[NSURL URLWithString:url]];
+    
+    requestOperationManager.requestSerializer = [AFJSONRequestSerializer new];
+    [requestOperationManager.requestSerializer setValue:self.apiKey forHTTPHeaderField:X_API_KEY];
+    [requestOperationManager.requestSerializer setValue:tokenText forHTTPHeaderField:AUTHORIZATION];
+    requestOperationManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/vnd.api+json"];
+    
+    MessageGetRequest *messageGetRequest = [MessageGetRequest new];
+    messageGetRequest.recipient = accountId;
+    [messageGetRequest setSinceDate:sinceDate];
+    NSDictionary *parameterDictionary = [messageGetRequest toDictionary];
+
+    [requestOperationManager GET:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSError *error;
+        MessageGetResponse *messageGetResponse = [[MessageGetResponse alloc] initWithDictionary:responseObject error:&error];
+        if (error) {
+            [self failureWithOperation:nil andError:error];
+        } else {
+            GetMessagesAreSuccessful *getMessagesAreSuccessful = [GetMessagesAreSuccessful new];
+            getMessagesAreSuccessful.sender = self;
+            getMessagesAreSuccessful.dataOfMessagesArray = messageGetResponse.data;
+            getMessagesAreSuccessful.existsMoreMessages = (messageGetResponse.links.next != nil);
+            PUBLISH(getMessagesAreSuccessful);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self failureWithOperation:operation andError:error];
+    }];
+}
+
+-(void) markMessageAsReadWithJwt:(NSString*)jwt messageId:(NSString*)messageId {
+    
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_READS];
+    NSString *tokenText = [self toketTextForJwt:jwt];
+    AFHTTPRequestOperationManager *requestOperationManager = [[AFHTTPRequestOperationManager alloc]
+                                                              initWithBaseURL:[NSURL URLWithString:url]];
+    
+    requestOperationManager.requestSerializer = [AFJSONRequestSerializer new];
+    [requestOperationManager.requestSerializer setValue:@"application/vnd.api+json" forHTTPHeaderField:@"Content-Type"];
+    [requestOperationManager.requestSerializer setValue:self.apiKey forHTTPHeaderField:X_API_KEY];
+    [requestOperationManager.requestSerializer setValue:tokenText forHTTPHeaderField:AUTHORIZATION];
+    requestOperationManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/vnd.api+json"];
+    
+    Data *data = [Data new];
+    data.type = TYPE_READS;
+    data.id = messageId;
+    
+    MessageRequest *messageRequest = [MessageRequest new];
+    messageRequest.data = data;
+    NSDictionary *parameterDictionary = [messageRequest toDictionary];
+    
+    [requestOperationManager POST:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Message with id:%@ is marked as read!", messageId);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //[self failureWithOperation:operation andError:error];
-        NSLog(@"Message could not be sent!!");
+        NSLog(@"Message with id:%@ could not be marked as read!", messageId);
     }];
 }
 

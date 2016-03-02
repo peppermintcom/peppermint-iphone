@@ -7,6 +7,7 @@
 //
 
 #import "JSONModel.h"
+@class PeppermintChatEntry;
 
 @interface Attribute : JSONModel
 @property (strong, nonatomic) NSString<Optional> *gcm_registration_token;
@@ -20,6 +21,7 @@
 @property (strong, nonatomic) NSString<Optional> *created;
 @property (strong, nonatomic) NSNumber<Optional> *duration;
 @property (strong, nonatomic) NSString<Optional> *message_id;
+@property (strong, nonatomic) NSString<Optional> *read;
 
 -(NSDate*) createdDate;
 

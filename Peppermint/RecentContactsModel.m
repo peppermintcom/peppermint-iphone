@@ -30,22 +30,46 @@
 }
 
 -(void) save:(PeppermintContact*) peppermintContact forContactDate:(NSDate*) contactDate {
+    peppermintContact.lastMessageDate = contactDate;
+    [self saveMultiple:[NSArray arrayWithObject:peppermintContact]];
+}
+
+-(void) saveMultiple:(NSArray<PeppermintContact*>*) peppermintContactArray {
     weakself_create();
     dispatch_async(DBQueue, ^() {
         Repository *repository = [Repository beginTransaction];
-        NSArray *matchedRecentContacts = [repository getResultsFromEntity:[RecentContact class] predicateOrNil:[self recentContactPredicate:peppermintContact]];
         
-        if(matchedRecentContacts.count > 1) {
-            repository = nil;
-            [weakSelf promtMultipleRecordsWithSameValueErrorForPeppermintContact:peppermintContact];
-        } else if (matchedRecentContacts.count == 1) {
-            RecentContact *recentContact = [matchedRecentContacts objectAtIndex:0];
-            [weakSelf updateRecentContact:recentContact inRepository:repository date:contactDate];
-        } else if (matchedRecentContacts.count == 0) {
-            [weakSelf addNewRecentForPeppermintContact:peppermintContact inRepository:repository date:contactDate];
+        for(PeppermintContact *peppermintContact in peppermintContactArray) {
+            NSPredicate *predicate = [self recentContactPredicate:peppermintContact];
+            NSArray *matchedRecentContacts = [repository getResultsFromEntity:[RecentContact class] predicateOrNil:predicate];
+            
+            RecentContact *recentContact = nil;
+            if (matchedRecentContacts.count == 0) {
+                recentContact = (RecentContact*)[repository createEntity:[RecentContact class]];
+            } else if (matchedRecentContacts.count == 1) {
+                recentContact = [matchedRecentContacts firstObject];
+            } else {
+                [weakSelf promtMultipleRecordsWithSameValueErrorForPeppermintContact:peppermintContact];
+            }
+            
+            recentContact.contactDate = peppermintContact.lastMessageDate;
+            recentContact.nameSurname = peppermintContact.nameSurname;
+            recentContact.communicationChannelAddress = peppermintContact.communicationChannelAddress;
+            recentContact.communicationChannel = [NSNumber numberWithInt:peppermintContact.communicationChannel];
+            recentContact.avatarImageData = UIImagePNGRepresentation(peppermintContact.avatarImage);
         }
+        
+        NSError *err = [repository endTransaction];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(err) {
+                [self.delegate operationFailure:err];
+            } else {
+                [self.delegate recentPeppermintContactsSavedSucessfully:peppermintContactArray];
+            }
+        });
     });
 }
+
 
 -(NSPredicate*) recentContactPredicate:(PeppermintContact*) peppermintContact {
     return [ContactsModel contactPredicateWithCommunicationChannelAddress:peppermintContact.communicationChannelAddress communicationChannel:peppermintContact.communicationChannel];
@@ -66,36 +90,6 @@
     });
 }
 
--(void) updateRecentContact:(RecentContact*) recentContact inRepository:(Repository*) repository date:(NSDate*)contactDate  {
-    recentContact.contactDate = contactDate;
-    NSError *err = [repository endTransaction];
-    PeppermintContact *peppermintContact = [self peppermintContactWithRecentContact:recentContact];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if(err) {
-            [self.delegate operationFailure:err];
-        } else {
-            [self.delegate recentPeppermintContactSavedSucessfully:peppermintContact];
-        }
-    });
-}
-
--(void) addNewRecentForPeppermintContact:(PeppermintContact*) peppermintContact inRepository:(Repository*) repository date:(NSDate*)contactDate {
-    RecentContact *recentContact = (RecentContact*)[repository createEntity:[RecentContact class]];
-    recentContact.contactDate = contactDate;
-    recentContact.nameSurname = peppermintContact.nameSurname;
-    recentContact.communicationChannelAddress = peppermintContact.communicationChannelAddress;
-    recentContact.communicationChannel = [NSNumber numberWithInt:peppermintContact.communicationChannel];
-    recentContact.avatarImageData = UIImagePNGRepresentation(peppermintContact.avatarImage);
-    NSError *err = [repository endTransaction];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if(err) {
-            [self.delegate operationFailure:err];
-        } else {
-            [self.delegate recentPeppermintContactSavedSucessfully:peppermintContact];
-        }
-    });
-}
-
 -(void) refreshRecentContactList {
     activeServiceCallCount ++;
     dispatch_async(DBQueue, ^{
@@ -112,10 +106,6 @@
                                                         predicateOrNil:
                                        [ChatModel unreadMessagesPredicateForEmail:ppm_contact.communicationChannelAddress]];
             ppm_contact.unreadMessageCount = unreadMessages.count;
-            
-            
-            
-            
             
             [recentPeppermintContacts addObject:ppm_contact];
 #if !(TARGET_OS_WATCH)

@@ -38,6 +38,7 @@ typedef enum : NSUInteger {
 
 @property (strong, nonatomic) NSString <Optional> * exchangedJwt;
 @property (strong, nonatomic) NSString <Optional> * gcmToken;
+@property (strong, nonatomic) NSDate <Optional> *lastMessageSyncDate;
 
 + (instancetype) sharedInstance;
 -(void) save;

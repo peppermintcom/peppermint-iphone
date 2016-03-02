@@ -20,14 +20,7 @@
 @interface GoogleCloudMessagingModel() <ChatEntryModelDelegate>
 @end
 
-@implementation GoogleCloudMessagingModel {
-    RecentContactsModel *recentContactsModel;
-    CustomContactModel *customContactsModel;
-    NSMutableSet *handledGoogleMessageIdSet;
-    ChatEntryModel *chatEntryModel;
-    BOOL isServiceCallActive;
-    NSMutableArray *attributeEntitiesToBeProcessed;
-}
+@implementation GoogleCloudMessagingModel
 
 NSString *const SubscriptionTopic = @"/topics/global";
 
@@ -43,13 +36,7 @@ NSString *const SubscriptionTopic = @"/topics/global";
 -(id) initShared {
     self = [super init];
     if(self) {
-        recentContactsModel = [RecentContactsModel new];
-        customContactsModel = [CustomContactModel new];
-        handledGoogleMessageIdSet = [NSMutableSet new];
-        chatEntryModel = [ChatEntryModel new];
-        chatEntryModel.delegate = self;
-        isServiceCallActive = NO;
-        attributeEntitiesToBeProcessed = [NSMutableArray new];
+        //init...
     }
     return self;
 }
@@ -168,92 +155,6 @@ NSString *const SubscriptionTopic = @"/topics/global";
     // because the TTL expired. The client should notify the app server of this, so that the app
     // server can resend those messages.
     NSLog(@"didDeleteMessagesOnServer");
-}
-
-#pragma mark - Incoming Message
-
--(PeppermintContact*) tryToMatchPreSavedPeppermintContactWithEmail:(NSString*)email nameSurname:(NSString*)nameSurname {
-    PeppermintContact *peppermintContact = nil;
-    NSPredicate *contactPredicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:email];
-    NSArray *filteredContactsArray = [[ContactsModel sharedInstance].contactList filteredArrayUsingPredicate:contactPredicate];
-    if(filteredContactsArray.count > 0) {
-        peppermintContact = filteredContactsArray.firstObject;
-    } else {
-        peppermintContact = [PeppermintContact new];
-        peppermintContact.communicationChannel = CommunicationChannelEmail;
-        peppermintContact.nameSurname = nameSurname;
-        peppermintContact.communicationChannelAddress = email;
-    }
-    return peppermintContact;
-}
-
--(PeppermintChatEntry*) createPeppermintChatEntryFromAttribute:(Attribute*) attribute {
-    PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry new];
-    peppermintChatEntry.audio = nil;
-    peppermintChatEntry.audioUrl = attribute.audio_url;
-    peppermintChatEntry.dateCreated = attribute.createdDate;
-    peppermintChatEntry.contactEmail = attribute.sender_email;
-    peppermintChatEntry.contactNameSurname = attribute.sender_name;
-    peppermintChatEntry.duration = attribute.duration.integerValue;
-    peppermintChatEntry.isSentByMe = NO;
-    return peppermintChatEntry;
-}
-
--(BOOL) handleIncomingMessage:(NSDictionary *) userInfo {
-    NSError *error;
-    BOOL result = NO;
-    Attribute *attribute = [[Attribute alloc] initWithDictionary:userInfo error:&error];
-    
-    NSLog(@"Got GCM Message:\n%@", userInfo);
-    if(!error && attribute.message_id && ![handledGoogleMessageIdSet containsObject:attribute.message_id]) {        
-        [handledGoogleMessageIdSet addObject:attribute.message_id];
-        [attributeEntitiesToBeProcessed addObject:attribute];
-        [self processAttributesArray];
-        result = YES;
-    }
-    return result;
-}
-
--(void) processAttributesArray {
-    if(isServiceCallActive) {
-        NSLog(@"Not processing in this cycle. Will process when active service call completes.");
-    } else if (attributeEntitiesToBeProcessed.count == 0) {
-        PUBLISH([GoogleCloudMessagingProcessedAllMessages new]);
-    } else {
-        isServiceCallActive = YES;
-        NSLog(@"attributeEntitiesToBeProcessed has %ld queued objects...", attributeEntitiesToBeProcessed.count);
-        
-        Attribute *attribute = [attributeEntitiesToBeProcessed firstObject];
-        PeppermintChatEntry *peppermintChatEntry = [self createPeppermintChatEntryFromAttribute:attribute];
-        PeppermintContact *peppermintContact = [self tryToMatchPreSavedPeppermintContactWithEmail:attribute.sender_email
-                                                                                      nameSurname:attribute.sender_name];
-        [chatEntryModel createChatHistory:peppermintChatEntry forPeppermintContact:peppermintContact];
-        [customContactsModel save:peppermintContact];
-        [recentContactsModel save:peppermintContact forContactDate:peppermintChatEntry.dateCreated];
-        [attributeEntitiesToBeProcessed removeObject:attribute];
-    }
-}
-
-
-#pragma mark - ChatEntryModelDelegate
-
--(void) chatHistoryCreatedWithSuccess {
-    NSLog(@"ChatHistoryCreatedWithSuccess in GCM Model");
-    isServiceCallActive = NO;
-    [self processAttributesArray];
-}
-
--(void) chatEntriesArrayIsUpdated {
-    NSLog(@"chatEntriesArrayIsUpdated");
-}
-
--(void) peppermintChatEntrySavedWithSuccess:(PeppermintChatEntry*)peppermintChatEntry {
-    NSLog(@"peppermintChatEntrySavedWithSuccess");
-}
-
--(void) operationFailure:(NSError*) error {
-    NSLog(@"operationFailure:%@", error.localizedDescription);
-    [AppDelegate handleError:error];
 }
 
 @end

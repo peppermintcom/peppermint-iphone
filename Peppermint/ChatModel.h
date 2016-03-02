@@ -7,21 +7,12 @@
 //
 
 #import "BaseModel.h"
-@class PeppermintContact;
-
-@protocol ChatModelDelegate <BaseModelDelegate>
-@optional
--(void) chatsArrayIsUpdated;
-@end
 
 @interface ChatModel : BaseModel
-@property (weak, nonatomic) id<ChatModelDelegate> delegate;
-@property (strong, atomic) NSArray<PeppermintContact*> *chatArray;
-
--(void) refreshChatArray ;
 
 +(NSPredicate*) unreadMessagesPredicateForEmail:(NSString*) email;
 +(NSUInteger) unreadMessageCountOfAllChats;
 +(NSSet*) receivedMessagesEmailSet;
++(NSArray*) unreadMessagesFromArray:(NSArray*) peppermintChatEntryArray;
 
 @end

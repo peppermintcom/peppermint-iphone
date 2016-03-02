@@ -7,7 +7,6 @@
 //
 
 #import "ChatEntry.h"
-#import "Chat.h"
 
 @implementation ChatEntry
 

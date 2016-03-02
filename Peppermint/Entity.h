@@ -17,7 +17,6 @@
 #import "GoogleContact.h"
 #import "CachedMessage.h"
 #import "CustomContact.h"
-#import "Chat.h"
 #import "ChatEntry.h"
 #endif
 

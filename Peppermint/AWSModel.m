@@ -11,6 +11,7 @@
 #import "JwtInformation.h"
 #import "PeppermintMessageSender.h"
 #import "GoogleCloudMessagingModel.h"
+#import "ChatEntryModel.h"
 
 #define AUTH_FACEBOOK   @"facebook"
 #define AUTH_GOOGLE     @"google"
@@ -188,7 +189,9 @@ SUBSCRIBE(JwtsExchanged) {
         NSString *accountId = event.accountId;
         NSString *recorderId = peppermintMessageSender.recorderId;
         peppermintMessageSender.exchangedJwt = event.commonJwtsToken;
+        peppermintMessageSender.accountId = event.accountId;
         [peppermintMessageSender save];
+        PUBLISH([AccountIdIsUpdated new]);
         [awsService setUpRecorderWithAccountId:accountId recorderId:recorderId jwt:event.commonJwtsToken];
     }
 }

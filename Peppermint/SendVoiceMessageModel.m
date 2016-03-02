@@ -80,8 +80,12 @@
 
 #pragma mark - RecentContactsModelDelegate
 
--(void) recentPeppermintContactSavedSucessfully:(PeppermintContact*) recentContact {
+-(void) recentPeppermintContactsSavedSucessfully:(NSArray<PeppermintContact*>*) recentContactsArray {
     [self.delegate newRecentContactisSaved];
+}
+
+-(void) recentPeppermintContactsRefreshed {
+    NSLog(@"recentPeppermintContactsRefreshed");
 }
 
 #pragma mark - AWSModelDelegate
@@ -309,7 +313,10 @@
     peppermintChatEntry.duration = _duration;
     peppermintChatEntry.isSentByMe = YES;
     peppermintChatEntry.dateCreated = createDate;
-    [chatEntryModel createChatHistory:peppermintChatEntry forPeppermintContact:self.selectedPeppermintContact];
+    peppermintChatEntry.messageId = [NSString stringWithFormat:@"%f", createDate.timeIntervalSince1970];
+    peppermintChatEntry.isSeen = YES;
+    peppermintChatEntry.contactEmail = self.selectedPeppermintContact.communicationChannelAddress;
+    [chatEntryModel savePeppermintChatEntry:peppermintChatEntry];
 }
 
 #pragma mark - SendGCMMessage
@@ -323,21 +330,20 @@
     NSString *exchangedJwt = self.peppermintMessageSender.exchangedJwt;
     NSLog(@"account jwt:\n%@\n\nrecorder jwt:\n%@\n\nexhanged jwt:\n%@\n\n", jwt, recorderJwt, exchangedJwt);    
     
-    NSString *transcriptionUrl = [NSString stringWithFormat:@"http://www.youtube11.com/%@", [[NSString alloc] randomStringWithLength:3]];
     [[AWSService new] sendMessageToRecepientEmail:self.selectedPeppermintContact.communicationChannelAddress
                                       senderEmail:self.peppermintMessageSender.email
-                                 transcriptionUrl:transcriptionUrl
+                                 transcriptionUrl:nil
                                          audioUrl:publicUrl
                                               jwt:self.peppermintMessageSender.exchangedJwt];
 }
 
 #pragma mark - ChatEntryModelDelegate
 
--(void) chatEntriesArrayIsUpdated {
-    NSLog(@"chatEntriesArrayIsUpdated");
+-(void) peppermintChatEntriesArrayIsUpdated {
+    NSLog(@"peppermintChatEntriesArrayIsUpdated");
 }
 
--(void) chatHistoryCreatedWithSuccess {
+-(void) peppermintChatEntrySavedWithSuccess:(NSArray*) savedPeppermintChatEnryArray {
     [self.delegate chatHistoryCreatedWithSuccess];
 }
 

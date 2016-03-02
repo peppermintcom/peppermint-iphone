@@ -23,7 +23,8 @@
 #import "JwtsResponse.h"
 #import "SetUpRecorderRequest.h"
 #import "MessageRequest.h"
-
+#import "MessageGetRequest.h"
+#import "MessageGetResponse.h"
 
 #warning "Dont forget to fix below lines about API key!!!"
 
@@ -58,6 +59,7 @@
 #define AWS_ENDPOINT_SETUP_RECORDER_FORMAT  @"/accounts/%@/relationships/receivers" // SetUp recorder format
 #define AWS_ENDPOINT_MESSAGES           @"/messages"
 #define AWS_ENDPOINT_ACCOUNTS_DELETE_RECORDER   @"/accounts/%@/relationships/receivers/%@"  //Delete recorder from account format
+#define AWS_ENDPOINT_READS              @"/reads"
 
 #define RESPONSE_CODE_CONFLICT      409
 
@@ -80,5 +82,7 @@
 -(void) setUpRecorderWithAccountId:(NSString*)accountId recorderId:(NSString*)recorderId jwt:(NSString*)jwt;
 -(void)unlinkRecorder:(NSString*)recorderId fromAccount:(NSString*) accountId withJwt:(NSString*)recorderJwt;
 -(void) sendMessageToRecepientEmail:(NSString*)recepientEmail senderEmail:(NSString*)senderEmail transcriptionUrl:(NSString*) transcriptionUrl audioUrl:(NSString*)audioUrl jwt:(NSString*) jwt;
+-(void) getMessagesForRecipientAccountId:(NSString*) accountId jwt:(NSString*)jwt since:(NSDate*)sinceDate;
+-(void) markMessageAsReadWithJwt:(NSString*)jwt messageId:(NSString*)messageId;
 
 @end

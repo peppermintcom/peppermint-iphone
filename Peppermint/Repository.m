@@ -30,15 +30,19 @@
     repository.managedObjectContext =
     [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     [repository.managedObjectContext setPersistentStoreCoordinator:persistentStoreCoordinator];
+    [repository.managedObjectContext setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
+    
     return repository;
 }
 
 -(NSError*) endTransaction
 {
     NSError *error = nil;
-    if(!self.managedObjectContext)
+    if(!self.managedObjectContext) {
         error = [NSError errorWithDomain:@"Current context is nil. Please create repository entity with [Repository beginTransaction] command." code:0 userInfo:nil];
-    else if ([self.managedObjectContext hasChanges]) {
+    } else if(self.managedObjectContext.persistentStoreCoordinator.persistentStores.count == 0) {
+        error = [NSError errorWithDomain:@"Can not end Trasaction, because the database file is removed." code:-1 userInfo:nil];
+    } else if ([self.managedObjectContext hasChanges]) {
         [self.managedObjectContext save:&error];
     }
     

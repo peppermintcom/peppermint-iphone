@@ -11,9 +11,6 @@
         <attribute name="senderEmail" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="senderNameSurname" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Chat" representedClassName="Chat" parentEntity="Contact" syncable="YES">
-        <attribute name="lastMessageDate" optional="YES" attributeType="Date" syncable="YES"/>
-    </entity>
     <entity name="ChatEntry" representedClassName="ChatEntry" syncable="YES">
         <attribute name="audio" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="audioUrl" optional="YES" attributeType="String" syncable="YES"/>
@@ -22,6 +19,7 @@
         <attribute name="duration" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="isSeen" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isSentByMe" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="messageId" attributeType="String" syncable="YES"/>
         <attribute name="transcription" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Contact" representedClassName="Contact" isAbstract="YES" syncable="YES">
@@ -43,8 +41,7 @@
     </entity>
     <elements>
         <element name="CachedMessage" positionX="-135" positionY="-63" width="128" height="180"/>
-        <element name="Chat" positionX="-243" positionY="63" width="128" height="60"/>
-        <element name="ChatEntry" positionX="-234" positionY="72" width="128" height="165"/>
+        <element name="ChatEntry" positionX="-234" positionY="72" width="128" height="180"/>
         <element name="Contact" positionX="-353" positionY="3" width="128" height="105"/>
         <element name="CustomContact" positionX="-243" positionY="63" width="128" height="75"/>
         <element name="GoogleContact" positionX="-333" positionY="174" width="128" height="75"/>

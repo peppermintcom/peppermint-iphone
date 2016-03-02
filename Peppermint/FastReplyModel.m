@@ -31,21 +31,10 @@
 -(BOOL) setFastReplyContactWithNameSurname:(NSString*)nameSurname email:(NSString*)email {
     NSAssert(nameSurname && email, @"Namesurname and email must be valid to add.Current data-> nameSurname:%@, email:%@", nameSurname, email);
     
-    PeppermintContact *contact = [PeppermintContact new];
-    contact.nameSurname = nameSurname;
-    contact.communicationChannel = CommunicationChannelEmail;
+    PeppermintContact *contact = [[ContactsModel sharedInstance] matchingPeppermintContactForEmail:email
+                                                                                                 nameSurname:nameSurname];
     contact.hasReceivedMessageOverPeppermint = YES;
-    contact.communicationChannelAddress = email;
-    contact.avatarImage = [UIImage imageNamed:@"avatar_empty"];;
-    for(PeppermintContact *peppermintContact in [ContactsModel sharedInstance].contactList) {
-        if([peppermintContact isIdenticalForImage:contact]) {
-            contact.avatarImage = peppermintContact.avatarImage;
-            break;
-        }
-    }
-    
-    [FastReplyModel sharedInstance].peppermintContact = contact;
-    
+    [FastReplyModel sharedInstance].peppermintContact = contact;    
     ReplyContactIsAdded *replyContactIsAdded = [ReplyContactIsAdded new];
     replyContactIsAdded.sender = self;
     PUBLISH(replyContactIsAdded);

@@ -11,6 +11,7 @@
 
 #define TYPE_RECORDERS                  @"recorders"
 #define TYPE_MESSAGES                   @"messages"
+#define TYPE_READS                      @"reads"
 
 @protocol Data
 @end

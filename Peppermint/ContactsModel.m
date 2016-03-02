@@ -25,6 +25,7 @@
     NSArray *emailContactList;
     NSArray *smsContactList;
     NSMutableSet *uniqueContactIdsToRemoveMutableSet;
+    NSArray *nonFilteredContactsArray;
 }
 
 + (instancetype) sharedInstance {
@@ -44,6 +45,7 @@
         loadContactsTriggerCount = 0;
         unwantedCharsSet = [[NSCharacterSet characterSetWithCharactersInString:CHARS_FOR_PHONE] invertedSet];
         uniqueContactIdsToRemoveMutableSet = [NSMutableSet new];
+        nonFilteredContactsArray = [NSArray new];
     }
     return self;
 }
@@ -241,6 +243,9 @@
     });
     
     emailContactList = smsContactList = nil;
+    if(self.filterText.trimmedText.length == 0) {
+        nonFilteredContactsArray = [NSArray arrayWithArray:self.contactList];
+    }
     weakself_create();
     dispatch_sync(dispatch_get_main_queue(), ^{
         [weakSelf.delegate contactListRefreshed];
@@ -282,6 +287,25 @@
     return [NSMutableArray arrayWithArray:filteredArray];
 }
 
+
+#pragma mark - Match PeppermintContact for Email&Name
+
+-(PeppermintContact*) matchingPeppermintContactForEmail:(NSString*) email nameSurname:(NSString*) nameSurname {
+    PeppermintContact *peppermintContact = nil;
+    NSPredicate *contactPredicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:email];
+    NSArray *filteredContactsArray = [nonFilteredContactsArray filteredArrayUsingPredicate:contactPredicate];
+    if(filteredContactsArray.count > 0) {
+        peppermintContact = filteredContactsArray.firstObject;
+    } else {
+        nameSurname = (nameSurname.trimmedText.length == 0) ? email : nameSurname;
+        peppermintContact = [PeppermintContact new];
+        peppermintContact.communicationChannel = CommunicationChannelEmail;
+        peppermintContact.nameSurname = nameSurname;
+        peppermintContact.communicationChannelAddress = email;
+        peppermintContact.avatarImage = [UIImage imageNamed:@"avatar_empty"];
+    }
+    return peppermintContact;
+}
 
 #endif
 

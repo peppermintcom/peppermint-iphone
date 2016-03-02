@@ -33,6 +33,9 @@
 		B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B12C03BA1BCFFC060085A55A /* FastRecordingView.m */; };
 		B12C03BD1BCFFC280085A55A /* FastRecordingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B12C03BC1BCFFC280085A55A /* FastRecordingView.xib */; };
 		B12EA4051C4FB1F40006F51F /* GoogleCloudMessagingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B12EA4041C4FB1F40006F51F /* GoogleCloudMessagingModel.m */; };
+		B13AE4361C8420570046AF6E /* MessageGetRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B13AE4351C8420570046AF6E /* MessageGetRequest.m */; };
+		B13AE4391C8435A20046AF6E /* MessageGetResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B13AE4381C8435A20046AF6E /* MessageGetResponse.m */; };
+		B13AE43C1C8436410046AF6E /* Link.m in Sources */ = {isa = PBXBuildFile; fileRef = B13AE43B1C8436410046AF6E /* Link.m */; };
 		B13B075A1BD3686500974AC3 /* MandrillInformationResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07591BD3686500974AC3 /* MandrillInformationResponse.m */; };
 		B13B075D1BD3716100974AC3 /* MandrillSendRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B075C1BD3716100974AC3 /* MandrillSendRequest.m */; };
 		B13B07601BD3719500974AC3 /* MandrillToObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B075F1BD3719500974AC3 /* MandrillToObject.m */; };
@@ -75,8 +78,6 @@
 		B16DA2171BE0F2C100EBF043 /* SlideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B16DA2161BE0F2C100EBF043 /* SlideMenuViewController.m */; };
 		B16DA2201BE10A7A00EBF043 /* SlideMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B16DA21F1BE10A7A00EBF043 /* SlideMenuTableViewCell.m */; };
 		B16DA2221BE10A8B00EBF043 /* SlideMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B16DA2211BE10A8B00EBF043 /* SlideMenuTableViewCell.xib */; };
-		B16F01261C4E48350030BE65 /* Chat+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B16F011F1C4E48350030BE65 /* Chat+CoreDataProperties.m */; };
-		B16F01271C4E48350030BE65 /* Chat.m in Sources */ = {isa = PBXBuildFile; fileRef = B16F01211C4E48350030BE65 /* Chat.m */; };
 		B16F01281C4E48350030BE65 /* ChatEntry+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B16F01231C4E48350030BE65 /* ChatEntry+CoreDataProperties.m */; };
 		B16F01291C4E48350030BE65 /* ChatEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = B16F01251C4E48350030BE65 /* ChatEntry.m */; };
 		B1714CC81BE11EE6004F13A4 /* ReSideMenuContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1714CC71BE11EE6004F13A4 /* ReSideMenuContainerViewController.m */; };
@@ -306,6 +307,12 @@
 		B12C03BC1BCFFC280085A55A /* FastRecordingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FastRecordingView.xib; sourceTree = "<group>"; };
 		B12EA4031C4FB1F40006F51F /* GoogleCloudMessagingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleCloudMessagingModel.h; sourceTree = "<group>"; };
 		B12EA4041C4FB1F40006F51F /* GoogleCloudMessagingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleCloudMessagingModel.m; sourceTree = "<group>"; };
+		B13AE4341C8420570046AF6E /* MessageGetRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageGetRequest.h; sourceTree = "<group>"; };
+		B13AE4351C8420570046AF6E /* MessageGetRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageGetRequest.m; sourceTree = "<group>"; };
+		B13AE4371C8435A20046AF6E /* MessageGetResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageGetResponse.h; sourceTree = "<group>"; };
+		B13AE4381C8435A20046AF6E /* MessageGetResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageGetResponse.m; sourceTree = "<group>"; };
+		B13AE43A1C8436410046AF6E /* Link.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Link.h; sourceTree = "<group>"; };
+		B13AE43B1C8436410046AF6E /* Link.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Link.m; sourceTree = "<group>"; };
 		B13B07581BD3686500974AC3 /* MandrillInformationResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrillInformationResponse.h; sourceTree = "<group>"; };
 		B13B07591BD3686500974AC3 /* MandrillInformationResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MandrillInformationResponse.m; sourceTree = "<group>"; };
 		B13B075B1BD3716100974AC3 /* MandrillSendRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrillSendRequest.h; sourceTree = "<group>"; };
@@ -389,10 +396,6 @@
 		B16DA21E1BE10A7A00EBF043 /* SlideMenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SlideMenuTableViewCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B16DA21F1BE10A7A00EBF043 /* SlideMenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SlideMenuTableViewCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B16DA2211BE10A8B00EBF043 /* SlideMenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SlideMenuTableViewCell.xib; sourceTree = "<group>"; };
-		B16F011E1C4E48350030BE65 /* Chat+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Chat+CoreDataProperties.h"; sourceTree = "<group>"; };
-		B16F011F1C4E48350030BE65 /* Chat+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Chat+CoreDataProperties.m"; sourceTree = "<group>"; };
-		B16F01201C4E48350030BE65 /* Chat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chat.h; sourceTree = "<group>"; };
-		B16F01211C4E48350030BE65 /* Chat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chat.m; sourceTree = "<group>"; };
 		B16F01221C4E48350030BE65 /* ChatEntry+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ChatEntry+CoreDataProperties.h"; sourceTree = "<group>"; };
 		B16F01231C4E48350030BE65 /* ChatEntry+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ChatEntry+CoreDataProperties.m"; sourceTree = "<group>"; };
 		B16F01241C4E48350030BE65 /* ChatEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatEntry.h; sourceTree = "<group>"; };
@@ -837,6 +840,12 @@
 				B17B9A291C60CCDD00B081F7 /* SetUpRecorderRequest.m */,
 				B17B9A2B1C60F34000B081F7 /* MessageRequest.h */,
 				B17B9A2C1C60F34000B081F7 /* MessageRequest.m */,
+				B13AE4341C8420570046AF6E /* MessageGetRequest.h */,
+				B13AE4351C8420570046AF6E /* MessageGetRequest.m */,
+				B13AE4371C8435A20046AF6E /* MessageGetResponse.h */,
+				B13AE4381C8435A20046AF6E /* MessageGetResponse.m */,
+				B13AE43A1C8436410046AF6E /* Link.h */,
+				B13AE43B1C8436410046AF6E /* Link.m */,
 			);
 			name = AWS;
 			sourceTree = "<group>";
@@ -1343,10 +1352,6 @@
 		B1F93E911BC8E2A0005F2128 /* NSManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
-				B16F011E1C4E48350030BE65 /* Chat+CoreDataProperties.h */,
-				B16F011F1C4E48350030BE65 /* Chat+CoreDataProperties.m */,
-				B16F01201C4E48350030BE65 /* Chat.h */,
-				B16F01211C4E48350030BE65 /* Chat.m */,
 				B16F01221C4E48350030BE65 /* ChatEntry+CoreDataProperties.h */,
 				B16F01231C4E48350030BE65 /* ChatEntry+CoreDataProperties.m */,
 				B16F01241C4E48350030BE65 /* ChatEntry.h */,
@@ -1903,6 +1908,7 @@
 				B11B13541C0C5EAD00782FC4 /* ContactInformationTableViewCell.m in Sources */,
 				B102DD5E1BD0802100D71D62 /* BaseCustomView.m in Sources */,
 				B12EA4051C4FB1F40006F51F /* GoogleCloudMessagingModel.m in Sources */,
+				B13AE43C1C8436410046AF6E /* Link.m in Sources */,
 				B13B07631BD3720100974AC3 /* MandrillMessage.m in Sources */,
 				B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */,
 				B15EEB9A1C6081F40083658A /* RecordersUpdateRequest.m in Sources */,
@@ -1930,7 +1936,6 @@
 				B1A366921BDC92DB00852B52 /* UploadsRequest.m in Sources */,
 				B13B075A1BD3686500974AC3 /* MandrillInformationResponse.m in Sources */,
 				B15B15C41BDBC8CB00C0C171 /* RecorderResponse.m in Sources */,
-				B16F01271C4E48350030BE65 /* Chat.m in Sources */,
 				B15FDE7F1C117CCE007100EC /* GoogleContact.m in Sources */,
 				B1D2A6DB1C2037FB002BD6DF /* FoggyRecordingView.m in Sources */,
 				B17B3D641BB6AE8B009B8BC5 /* RecordingViewController.m in Sources */,
@@ -1945,6 +1950,7 @@
 				B15B15BE1BDBC31F00C0C171 /* AWSService.m in Sources */,
 				B15FDE811C117CCE007100EC /* CachedMessage.m in Sources */,
 				B165EF181BB71EC0008C6F71 /* PeppermintContact.m in Sources */,
+				B13AE4361C8420570046AF6E /* MessageGetRequest.m in Sources */,
 				B16F01281C4E48350030BE65 /* ChatEntry+CoreDataProperties.m in Sources */,
 				B15FDE7B1C117CCE007100EC /* CustomContact.m in Sources */,
 				B1BB1E5F1BD35CD300A1CE45 /* MandrillService.m in Sources */,
@@ -1998,8 +2004,8 @@
 				B108F8601BECAA5300267DEC /* SendVoiceMessageEmailModel.m in Sources */,
 				B102F9821BF0CE2000EDF7E6 /* LoginValidateEmailViewController.m in Sources */,
 				B1E2DF9B1C76061F0037FFBF /* AutoPlayModel.m in Sources */,
-				B16F01261C4E48350030BE65 /* Chat+CoreDataProperties.m in Sources */,
 				B1EF40F91BB8782F00042E4B /* SwipeView.m in Sources */,
+				B13AE4391C8435A20046AF6E /* MessageGetResponse.m in Sources */,
 				B1BB60151BDE0E0200C1140B /* LoginTableViewCell.m in Sources */,
 				B15FDE801C117CCE007100EC /* CachedMessage+CoreDataProperties.m in Sources */,
 				B13B07671BD3736400974AC3 /* MandrillMailAttachment.m in Sources */,

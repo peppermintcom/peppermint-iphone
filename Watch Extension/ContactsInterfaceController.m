@@ -187,7 +187,8 @@
   [self loadTableData];
 }
 
-- (void)recentPeppermintContactSavedSucessfully:(PeppermintContact *)peppermintContact {
+-(void) recentPeppermintContactsSavedSucessfully:(NSArray<PeppermintContact*>*) recentContactsArray {
+  PeppermintContact *peppermintContact = [recentContactsArray firstObject];
   if (![self.datasource containsObject:peppermintContact]) {
     [self.datasource addObject:peppermintContact];
   }

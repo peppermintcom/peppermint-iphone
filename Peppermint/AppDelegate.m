@@ -43,7 +43,7 @@
 #define PATH_EMAIL          @"gcm.notification.sender_email"
 #define PATH_FULL_NAME      @"gcm.notification.sender_name"
 
-@interface AppDelegate () <WCSessionDelegate, GGLInstanceIDDelegate>
+@interface AppDelegate () <WCSessionDelegate, GGLInstanceIDDelegate, ChatEntryModelDelegate>
 @end
 
 @implementation AppDelegate {
@@ -52,6 +52,8 @@
     UIView *appLoadingView;
     PeppermintContact *peppermintContactToNavigate;
     PlayingModel *playingModel;
+    ChatEntryModel *chatEntryModel;
+    NSInteger unreadMessagesCount;
 }
 
 -(void) initPlayingModel {
@@ -200,6 +202,14 @@
     }
 }
 
+-(void) refreshIncomingMessages {
+    if(!chatEntryModel) {
+        chatEntryModel = [ChatEntryModel new];
+        chatEntryModel.delegate = self;
+    }
+    [chatEntryModel queryServerForIncomingMessages];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self initPlayingModel];
@@ -217,12 +227,12 @@
     [self checkForFirstRun];
     [self initRecorder];
     [self refreshBadgeNumber];
+    [self refreshIncomingMessages];
     REGISTER();
     return YES;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    [self refreshBadgeNumber];
     //PUBLISH([ApplicationWillEnterForeground new]);
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
@@ -230,6 +240,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [FBSDKAppEvents activateApp];
     [[GoogleCloudMessagingModel sharedInstance] connectGCM];
+    [self refreshIncomingMessages];
     PUBLISH([ApplicationDidBecomeActive new]);
 }
 
@@ -320,26 +331,15 @@ SUBSCRIBE(DetachSuccess) {
 
 - (void) handleNotification:(NSDictionary*)userInfo inApplication:(UIApplication *)application {
     [[GCMService sharedInstance] appDidReceiveMessage:userInfo];
-    GoogleCloudMessagingModel *googleCloudMessagingModel = [GoogleCloudMessagingModel sharedInstance];
-    BOOL isValidGCMDataMessage = [googleCloudMessagingModel handleIncomingMessage:userInfo];
-    if(isValidGCMDataMessage) {
-        if (application.applicationState == UIApplicationStateActive) {
-            NSLog(@"GCM Data message handling is triggered in GoogleCloudMessagingModel");
-        } else if(application.applicationState == UIApplicationStateInactive) {
-            NSAssert(false, @"Got not expected data msg in UIApplicationStateInactive state");
-        } else if (application.applicationState == UIApplicationStateBackground) {
-            NSAssert(false, @"Got not expected data msg in UIApplicationStateBackground state");
-        }
-    } else {
-        if (application.applicationState == UIApplicationStateActive) {
-            NSLog(@"Got notification when the app is active. Data payload will be handled, so not doing any handling.");
-        } else if(application.applicationState == UIApplicationStateInactive) {
-            [self gotGCMNotificationForAutoPlay:userInfo];
-        } else if (application.applicationState == UIApplicationStateBackground) {
-            NSAssert(false, @"Got not expected notification msg in UIApplicationStateBackground state");
-        }
+    [self refreshIncomingMessages];
+    if (application.applicationState == UIApplicationStateActive) {
+        NSLog(@"Got notification when the app is active. Data payload will be handled, so not doing any handling.");
+    } else if(application.applicationState == UIApplicationStateInactive) {
+        [self gotGCMNotificationForAutoPlay:userInfo];
+    } else if (application.applicationState == UIApplicationStateBackground) {
+        NSAssert(false, @"Got not expected notification msg in UIApplicationStateBackground state");
     }
-} 
+}
 
 #pragma mark - AutoPlay
 
@@ -351,16 +351,44 @@ SUBSCRIBE(DetachSuccess) {
     [[AutoPlayModel sharedInstance] scheduleAutoPlayForPeppermintContact:peppermintContactToNavigate];
 }
 
-SUBSCRIBE(GoogleCloudMessagingProcessedAllMessages) {
+#pragma mark - ChatEntryModelDelegate
+-(void) peppermintChatEntriesArrayIsUpdated {
+    NSLog(@"peppermintChatEntriesArrayIsUpdated");
+}
+
+-(void) peppermintChatEntrySavedWithSuccess:(NSArray<PeppermintChatEntry*>*) savedPeppermintChatEnryArray {
+    NSMutableArray *newMessagesArray = [NSMutableArray new];
+    unreadMessagesCount = 0;
+    for(PeppermintChatEntry *peppermintChatEntry in savedPeppermintChatEnryArray) {
+        if(peppermintChatEntry.performedOperation == PerformedOperationCreated) {
+            [newMessagesArray addObject:peppermintChatEntry];
+            if(!peppermintChatEntry.isSeen) {
+                unreadMessagesCount++;
+            }
+        }
+    }
+    [self refreshBadgeNumber];
+    
     if(peppermintContactToNavigate
        && peppermintContactToNavigate.nameSurname.length > 0
        && peppermintContactToNavigate.communicationChannelAddress.length > 0) {
         [self navigateToChatEntriesPageForEmail:peppermintContactToNavigate.communicationChannelAddress
                                     nameSurname:peppermintContactToNavigate.nameSurname];
         peppermintContactToNavigate = nil;
-    } else {
-        [playingModel playPreparedAudiowithCompetitionBlock:nil];
     }
+    
+    if(newMessagesArray.count > 0) {
+        [playingModel playPreparedAudiowithCompetitionBlock:nil];
+        
+        RefreshIncomingMessagesCompletedWithSuccess *refreshIncomingMessagesCompletedWithSuccess = [RefreshIncomingMessagesCompletedWithSuccess new];
+        refreshIncomingMessagesCompletedWithSuccess.sender = self;
+        refreshIncomingMessagesCompletedWithSuccess.peppermintChatEntriesArray = newMessagesArray;
+        PUBLISH(refreshIncomingMessagesCompletedWithSuccess);
+    }    
+}
+
+-(void) operationFailure:(NSError *)error {
+    [AppDelegate handleError:error];
 }
 
 #pragma mark - Navigation
@@ -600,9 +628,10 @@ SUBSCRIBE(GoogleCloudMessagingProcessedAllMessages) {
 }
 
 -(void) cleanDatabase {
-    NSLog(@"**************************************************");
-    NSLog(@"*******CLEANING ALL RECORDS IN DATABASE***********");
-    NSLog(@"**************************************************\n\n\n");
+    NSLog(@"\n\n\n");
+    NSLog(@"*******************************************");
+    NSLog(@"****CLEANING ALL RECORDS IN DATABASE*******");
+    NSLog(@"*******************************************\n\n\n");
     
     NSPersistentStoreCoordinator *nsPersistentStoreCoordinator = [self persistentStoreCoordinator];
     NSArray *stores = [nsPersistentStoreCoordinator persistentStores];
@@ -611,7 +640,6 @@ SUBSCRIBE(GoogleCloudMessagingProcessedAllMessages) {
         [[NSFileManager defaultManager] removeItemAtPath:store.URL.path error:nil];
     }
     _persistentStoreCoordinator = nil;
-    [self refreshBadgeNumber];
 }
 
 - (NSManagedObjectContext *)managedObjectContext {
@@ -738,7 +766,13 @@ SUBSCRIBE(FileUploadCompleted) {
 #pragma mark - Inter App Messaging
 
 SUBSCRIBE(NewUserLoggedIn) {
+    unreadMessagesCount = 0;
     [self initRecorder];
+    [self navigateToContactsWithFilterText:@""];
+}
+
+SUBSCRIBE(AccountIdIsUpdated) {
+    [self refreshIncomingMessages];
 }
 
 -(void) tryToSetUpAccountWithRecorder {
@@ -750,7 +784,7 @@ SUBSCRIBE(NewUserLoggedIn) {
 }
 
 -(void) refreshBadgeNumber {
-    NSUInteger unreadMessagesCount = [ChatModel unreadMessageCountOfAllChats];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:unreadMessagesCount];
 }
 

@@ -95,6 +95,8 @@
 }
 
 -(void) authorizeFacebook {
+    [FBSDKAccessToken setCurrentAccessToken:nil];
+    [FBSDKProfile setCurrentProfile:nil]; //this is added to fix, if user logout&login in same session, (http://stackoverflow.com/a/34784301/5171866)
     FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
     [login logOut]; //this is added to fix, if user changes account,(http://stackoverflow.com/a/30388750/5171866)
     [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];

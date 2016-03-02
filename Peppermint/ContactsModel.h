@@ -30,7 +30,7 @@
 }
 
 @property (weak, nonatomic) id<ContactsModelDelegate> delegate;
-@property (strong, atomic) NSMutableArray *contactList;
+@property (strong, atomic) NSMutableArray<PeppermintContact *> *contactList;
 @property (strong, nonatomic) NSString *filterText;
 
 + (instancetype) sharedInstance;
@@ -40,6 +40,7 @@
 
 -(NSArray*) emailContactList;
 -(NSArray*) smsContactList;
+-(PeppermintContact*) matchingPeppermintContactForEmail:(NSString*) email nameSurname:(NSString*) nameSurname;
 
 #endif
 #pragma mark - NSPredicate

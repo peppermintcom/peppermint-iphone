@@ -86,9 +86,6 @@
 @implementation NewUserLoggedIn
 @end
 
-@implementation GoogleCloudMessagingProcessedAllMessages
-@end
-
 @implementation StopAllPlayingMessages
 @end
 
@@ -96,4 +93,13 @@
 @end
 
 @implementation MessagePlayingEnded
+@end
+
+@implementation GetMessagesAreSuccessful
+@end
+
+@implementation RefreshIncomingMessagesCompletedWithSuccess
+@end
+
+@implementation AccountIdIsUpdated
 @end

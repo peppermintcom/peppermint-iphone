@@ -11,9 +11,8 @@
 #import "PeppermintContact.h"
 
 @protocol RecentContactsModelDelegate <BaseModelDelegate>
-@optional
 -(void) recentPeppermintContactsRefreshed;
--(void) recentPeppermintContactSavedSucessfully:(PeppermintContact*) recentContact;
+-(void) recentPeppermintContactsSavedSucessfully:(NSArray<PeppermintContact*>*) recentContactsArray;
 @end
 
 @interface RecentContactsModel : BaseModel
@@ -21,6 +20,8 @@
 @property (strong, nonatomic) NSMutableArray *contactList;
 
 -(void) save:(PeppermintContact*) peppermintContact forContactDate:(NSDate*) contactDate;
--(NSPredicate*) recentContactPredicate:(PeppermintContact*) peppermintContact;
+-(void) saveMultiple:(NSArray<PeppermintContact*>*) peppermintContactArray;
 -(void) refreshRecentContactList;
+
+-(NSPredicate*) recentContactPredicate:(PeppermintContact*) peppermintContact;
 @end

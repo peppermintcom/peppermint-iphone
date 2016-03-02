@@ -20,6 +20,7 @@ typedef enum : NSUInteger {
 @property (strong, nonatomic) UIImage *avatarImage;
 @property (strong, nonatomic) NSString* nameSurname;
 @property (assign, nonatomic) CommunicationChannel communicationChannel;
+
 @property (assign, nonatomic) BOOL hasReceivedMessageOverPeppermint;
 @property (strong, nonatomic) NSString *uniqueContactId;
 @property (strong, nonatomic) NSDate *lastMessageDate;

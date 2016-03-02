@@ -7,6 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+@class Attribute;
+
+typedef enum : NSUInteger {
+    PerformedOperationNone,
+    PerformedOperationCreated,
+    PerformedOperationUpdated,
+} PerformedOperation;
 
 @interface PeppermintChatEntry : NSObject
 
@@ -18,5 +25,9 @@
 @property (assign, nonatomic) NSInteger duration;
 @property (assign, nonatomic) BOOL isSeen;
 @property (assign, nonatomic) BOOL isSentByMe;
+@property (strong, nonatomic) NSString *messageId;
+@property (assign, nonatomic) PerformedOperation performedOperation;
+
++(PeppermintChatEntry*) createFromAttribute:(Attribute*) attribute;
 
 @end

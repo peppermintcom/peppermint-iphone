@@ -1415,13 +1415,19 @@ Version 1.0.0</string>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0zV-MH-Pcm">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_back" translatesAutoresizingMaskIntoConstraints="NO" id="uxG-1U-krp">
                                         <rect key="frame" x="0.0" y="24" width="40" height="34"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="34" id="5fo-j2-JYB"/>
-                                            <constraint firstAttribute="width" constant="40" id="OtS-zB-Tb4"/>
+                                            <constraint firstAttribute="height" constant="34" id="ljD-yu-Sel"/>
+                                            <constraint firstAttribute="width" constant="40" id="qdS-Ve-0dp"/>
                                         </constraints>
-                                        <state key="normal" image="icon_back"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0zV-MH-Pcm">
+                                        <rect key="frame" x="0.0" y="0.0" width="94" height="58"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="58" id="5fo-j2-JYB"/>
+                                            <constraint firstAttribute="width" constant="94" id="OtS-zB-Tb4"/>
+                                        </constraints>
                                         <connections>
                                             <action selector="backButtonTouchDown:" destination="NAA-3N-hVr" eventType="touchDown" id="0Zz-lq-bY8"/>
                                             <action selector="backButtonTouchUp:" destination="NAA-3N-hVr" eventType="touchUpOutside" id="ctx-Nb-Auo"/>
@@ -1440,10 +1446,12 @@ Version 1.0.0</string>
                                     <constraint firstAttribute="trailing" secondItem="7tN-X6-rqR" secondAttribute="trailing" id="0ez-ti-4ID"/>
                                     <constraint firstItem="7tN-X6-rqR" firstAttribute="leading" secondItem="c98-TQ-lrM" secondAttribute="trailing" id="9y0-dM-nw8"/>
                                     <constraint firstItem="7tN-X6-rqR" firstAttribute="top" secondItem="Vfi-st-4Ne" secondAttribute="top" constant="18" id="9yt-Q5-oXF"/>
-                                    <constraint firstItem="c98-TQ-lrM" firstAttribute="leading" secondItem="0zV-MH-Pcm" secondAttribute="trailing" constant="-4" id="BHP-xb-7wQ"/>
-                                    <constraint firstItem="0zV-MH-Pcm" firstAttribute="top" secondItem="Vfi-st-4Ne" secondAttribute="top" constant="24" id="Bvq-N3-HHT"/>
+                                    <constraint firstItem="c98-TQ-lrM" firstAttribute="leading" secondItem="0zV-MH-Pcm" secondAttribute="trailing" constant="-58" id="BHP-xb-7wQ"/>
+                                    <constraint firstItem="0zV-MH-Pcm" firstAttribute="top" secondItem="Vfi-st-4Ne" secondAttribute="top" id="Bvq-N3-HHT"/>
                                     <constraint firstAttribute="height" constant="64" id="NLk-Rt-sDU"/>
+                                    <constraint firstItem="uxG-1U-krp" firstAttribute="top" secondItem="Vfi-st-4Ne" secondAttribute="top" constant="24" id="S6q-y6-GL0"/>
                                     <constraint firstAttribute="bottom" secondItem="c98-TQ-lrM" secondAttribute="bottom" constant="6" id="Zd0-mz-UbV"/>
+                                    <constraint firstItem="uxG-1U-krp" firstAttribute="leading" secondItem="Vfi-st-4Ne" secondAttribute="leading" id="Znc-kG-dsA"/>
                                     <constraint firstItem="c98-TQ-lrM" firstAttribute="top" secondItem="Vfi-st-4Ne" secondAttribute="top" constant="23" id="bLr-aW-kkX"/>
                                     <constraint firstAttribute="bottom" secondItem="7tN-X6-rqR" secondAttribute="bottom" id="j3d-ls-eW7"/>
                                     <constraint firstItem="0zV-MH-Pcm" firstAttribute="leading" secondItem="Vfi-st-4Ne" secondAttribute="leading" id="svx-g7-9g9"/>
@@ -1499,7 +1507,7 @@ Version 1.0.0</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="7Fs-Q4-edK"/>
                                     <constraint firstItem="b2s-bN-Z3E" firstAttribute="top" secondItem="4XM-r8-jWN" secondAttribute="top" id="RWM-Xg-VrK"/>

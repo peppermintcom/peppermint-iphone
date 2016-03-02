@@ -80,12 +80,22 @@
                                 <color key="textColor" red="0.54117647058823526" green="0.6588235294117647" blue="0.6470588235294118" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RDh-gW-uQJ">
+                                <rect key="frame" x="0.0" y="0.0" width="400" height="50"/>
+                                <connections>
+                                    <action selector="playPauseButtonPressed:" destination="0hh-73-Plp" eventType="touchUpInside" id="cf8-Zk-qDn"/>
+                                    <action selector="touchEndOutside:withEvent:" destination="0hh-73-Plp" eventType="touchUpOutside" id="MAX-xz-RmS"/>
+                                    <action selector="touchMoved:withEvent:" destination="0hh-73-Plp" eventType="touchDragOutside" id="UuV-h4-Yzr"/>
+                                    <action selector="touchMoved:withEvent:" destination="0hh-73-Plp" eventType="touchDragInside" id="eMO-ys-JUi"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Cq1-S2-cTh" firstAttribute="centerY" secondItem="DRh-1G-YWR" secondAttribute="centerY" id="2WA-Z1-avq"/>
                             <constraint firstItem="N6k-WJ-i9s" firstAttribute="centerY" secondItem="DRh-1G-YWR" secondAttribute="centerY" id="2lo-kW-y7U"/>
                             <constraint firstAttribute="bottom" secondItem="N9o-U6-Dxl" secondAttribute="bottom" id="7Kn-rl-eza"/>
+                            <constraint firstItem="RDh-gW-uQJ" firstAttribute="leading" secondItem="DRh-1G-YWR" secondAttribute="leading" id="97d-re-hlt"/>
                             <constraint firstAttribute="trailing" secondItem="7Il-AU-Y5a" secondAttribute="trailing" constant="8" id="FSO-lZ-O9A"/>
                             <constraint firstItem="Cq1-S2-cTh" firstAttribute="leading" secondItem="N6k-WJ-i9s" secondAttribute="trailing" constant="7" id="GS3-w7-wfw"/>
                             <constraint firstAttribute="height" constant="50" id="JiX-eC-jzC"/>
@@ -96,8 +106,11 @@
                             <constraint firstAttribute="bottom" secondItem="7Il-AU-Y5a" secondAttribute="bottom" id="UMK-2d-C6a"/>
                             <constraint firstItem="N6k-WJ-i9s" firstAttribute="leading" secondItem="DRh-1G-YWR" secondAttribute="leading" constant="10" id="Ui0-w8-arX"/>
                             <constraint firstItem="J8h-VN-VK6" firstAttribute="leading" secondItem="Ui9-Zg-KdI" secondAttribute="trailing" constant="2" id="UrY-3y-1Wc"/>
+                            <constraint firstAttribute="trailing" secondItem="RDh-gW-uQJ" secondAttribute="trailing" id="aES-hw-nb3"/>
                             <constraint firstItem="N9o-U6-Dxl" firstAttribute="leading" secondItem="N6k-WJ-i9s" secondAttribute="trailing" constant="7" id="al1-zv-MNx"/>
                             <constraint firstItem="Ui9-Zg-KdI" firstAttribute="leading" secondItem="DRh-1G-YWR" secondAttribute="leading" constant="32" id="fIx-HX-gxx"/>
+                            <constraint firstAttribute="bottom" secondItem="RDh-gW-uQJ" secondAttribute="bottom" id="naC-Aj-NQW"/>
+                            <constraint firstItem="RDh-gW-uQJ" firstAttribute="top" secondItem="DRh-1G-YWR" secondAttribute="top" id="r7J-og-2Sy"/>
                             <constraint firstItem="N6k-WJ-i9s" firstAttribute="centerY" secondItem="DRh-1G-YWR" secondAttribute="centerY" id="rHm-RJ-CSA"/>
                             <constraint firstItem="J8h-VN-VK6" firstAttribute="centerY" secondItem="DRh-1G-YWR" secondAttribute="centerY" id="rnd-W2-3p2"/>
                             <constraint firstItem="Qcp-xJ-gQY" firstAttribute="leading" secondItem="DRh-1G-YWR" secondAttribute="leading" constant="10" id="sDL-xD-MF3"/>
@@ -106,31 +119,18 @@
                             <constraint firstItem="7Il-AU-Y5a" firstAttribute="width" secondItem="N9o-U6-Dxl" secondAttribute="width" id="w66-FZ-W1G"/>
                         </constraints>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RDh-gW-uQJ">
-                        <rect key="frame" x="0.0" y="0.0" width="448" height="59"/>
-                        <connections>
-                            <action selector="playPauseButtonPressed:" destination="0hh-73-Plp" eventType="touchUpInside" id="cf8-Zk-qDn"/>
-                            <action selector="touchEndOutside:withEvent:" destination="0hh-73-Plp" eventType="touchUpOutside" id="MAX-xz-RmS"/>
-                            <action selector="touchMoved:withEvent:" destination="0hh-73-Plp" eventType="touchDragOutside" id="UuV-h4-Yzr"/>
-                            <action selector="touchMoved:withEvent:" destination="0hh-73-Plp" eventType="touchDragInside" id="eMO-ys-JUi"/>
-                        </connections>
-                    </button>
                 </subviews>
                 <color key="backgroundColor" red="1" green="0.39276204549999999" blue="0.95142387949999996" alpha="1" colorSpace="calibratedRGB"/>
                 <gestureRecognizers/>
                 <constraints>
                     <constraint firstItem="DRh-1G-YWR" firstAttribute="centerY" secondItem="JSg-5m-bvD" secondAttribute="centerY" id="5dG-ke-zje"/>
                     <constraint firstItem="gwE-ca-PTN" firstAttribute="centerY" secondItem="JSg-5m-bvD" secondAttribute="centerY" id="9C0-EO-xXa"/>
-                    <constraint firstAttribute="bottom" secondItem="RDh-gW-uQJ" secondAttribute="bottom" id="DX5-qj-dcA"/>
                     <constraint firstItem="DRh-1G-YWR" firstAttribute="centerY" secondItem="Bxj-xB-dM6" secondAttribute="centerY" id="J2a-p8-QYc"/>
                     <constraint firstItem="JSg-5m-bvD" firstAttribute="leading" secondItem="Bxj-xB-dM6" secondAttribute="leading" constant="8" id="Uhy-dT-uh8"/>
-                    <constraint firstItem="RDh-gW-uQJ" firstAttribute="top" secondItem="Bxj-xB-dM6" secondAttribute="top" id="Ym8-6P-atY"/>
                     <constraint firstItem="JSg-5m-bvD" firstAttribute="centerY" secondItem="Bxj-xB-dM6" secondAttribute="centerY" id="cSb-8n-fWm"/>
                     <constraint firstItem="gwE-ca-PTN" firstAttribute="leading" secondItem="DRh-1G-YWR" secondAttribute="trailing" id="dq0-Z8-lfv"/>
-                    <constraint firstItem="RDh-gW-uQJ" firstAttribute="leading" secondItem="Bxj-xB-dM6" secondAttribute="leading" id="hsc-lL-1Kw"/>
                     <constraint firstItem="gwE-ca-PTN" firstAttribute="centerY" secondItem="Bxj-xB-dM6" secondAttribute="centerY" id="imw-N6-7cz"/>
                     <constraint firstItem="DRh-1G-YWR" firstAttribute="leading" secondItem="JSg-5m-bvD" secondAttribute="trailing" id="jhT-JK-UvG"/>
-                    <constraint firstAttribute="trailing" secondItem="RDh-gW-uQJ" secondAttribute="trailing" id="qbd-pM-Avg"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

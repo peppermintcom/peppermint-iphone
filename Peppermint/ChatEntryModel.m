@@ -9,25 +9,30 @@
 #import "ChatEntryModel.h"
 #import "Repository.h"
 #import "PeppermintChatEntry.h"
-#import "PeppermintContact.h"
+#import "PeppermintMessageSender.h"
+#import "AWSService.h"
 #import "RecentContactsModel.h"
-
 #import "ContactsModel.h"
+#import "CustomContactModel.h"
 
-@implementation ChatEntryModel
+@implementation ChatEntryModel {
+    AWSService *awsService;
+    __block int activeServiceCallCount;
+}
 
 -(id) init {
     self = [super init];
     if(self) {
         self.chatEntriesArray = [NSArray new];
+        awsService = [AWSService new];
+        activeServiceCallCount = 0;
     }
     return self;
 }
 
--(void) refreshChatEntriesForContactEmail:(NSString*) contactEmail {
+-(void) refreshPeppermintChatEntriesForContactEmail:(NSString*) contactEmail {
     dispatch_async(LOW_PRIORITY_QUEUE, ^{
         NSPredicate *chatPredicate = [NSPredicate predicateWithFormat:@"self.contactEmail == %@", contactEmail];
-        
         Repository *repository = [Repository beginTransaction];
         NSArray *chatEntryArray = [repository getResultsFromEntity:[ChatEntry class]
                                                     predicateOrNil:chatPredicate
@@ -42,8 +47,10 @@
         self.chatEntriesArray = peppermintChatEntryArray;
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            if([self.delegate respondsToSelector:@selector(chatEntriesArrayIsUpdated)]) {
-                [self.delegate chatEntriesArrayIsUpdated];
+            if([self.delegate respondsToSelector:@selector(peppermintChatEntriesArrayIsUpdated)]) {
+                [self.delegate peppermintChatEntriesArrayIsUpdated];
+            } else {
+                NSLog(@"Delegate did not implement function peppermintChatEntriesArrayIsUpdated");
             }
         });
     });
@@ -58,62 +65,124 @@
     peppermintChatEntry.duration = chatEntry.duration.integerValue;
     peppermintChatEntry.isSeen = chatEntry.isSeen.boolValue;
     peppermintChatEntry.isSentByMe = chatEntry.isSentByMe.boolValue;
+    peppermintChatEntry.messageId = chatEntry.messageId;
     return peppermintChatEntry;
 }
 
--(void) update:(PeppermintChatEntry *) peppermintChatEntry {
-    weakself_create();
-    dispatch_async(LOW_PRIORITY_QUEUE, ^{
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.audioUrl  ==[c] %@", peppermintChatEntry.audioUrl];
-        Repository *repository = [Repository beginTransaction];
-        NSArray *matchedChatEntries = [repository getResultsFromEntity:[ChatEntry class] predicateOrNil:predicate];
-        
-        if(matchedChatEntries.count > 0) {
-            ChatEntry *chatEntryInDb = matchedChatEntries.firstObject;
-            chatEntryInDb.isSeen = [NSNumber numberWithBool:peppermintChatEntry.isSeen];
-            chatEntryInDb.duration = [NSNumber numberWithInteger:peppermintChatEntry.duration];
-            chatEntryInDb.audio = peppermintChatEntry.audio;
-            
-            NSError *error = [repository endTransaction];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if(error) {
-                    [weakSelf.delegate operationFailure:error];
-                } else {
-                    [weakSelf.delegate peppermintChatEntrySavedWithSuccess:peppermintChatEntry];
-                }
-            });
-        } else {
-            NSLog(@"Could not find matching chatEntry with url:%@", peppermintChatEntry.audioUrl);
-        }
-    });
+#pragma mark - Save
+
+-(void) savePeppermintChatEntry:(PeppermintChatEntry*)peppermintChatEntry {
+    [self savePeppermintChatEntryArray:[NSArray arrayWithObject:peppermintChatEntry]];
 }
 
-#pragma mark - AddChatHistory
-
--(void) createChatHistory:(PeppermintChatEntry*)peppermintChatEntry forPeppermintContact:(PeppermintContact*)peppermintContact {
-    NSAssert(peppermintContact.nameSurname && peppermintContact.communicationChannelAddress, @"PeppermintContact must be valid to cache!");
+-(void) savePeppermintChatEntryArray:(NSArray*)peppermintChatEntryArray {
     weakself_create();
     dispatch_async(LOW_PRIORITY_QUEUE, ^{
         Repository *repository = [Repository beginTransaction];
-        ChatEntry *chatEntry = (ChatEntry*)[repository createEntity:[ChatEntry class]];
-        chatEntry.contactEmail = peppermintContact.communicationChannelAddress;
-        chatEntry.audio = peppermintChatEntry.audio;
-        chatEntry.audioUrl = peppermintChatEntry.audioUrl;
-        chatEntry.transcription = @"...Transcription should be added...";
-        chatEntry.isSentByMe = [NSNumber numberWithBool:peppermintChatEntry.isSentByMe];
-        chatEntry.dateCreated = peppermintChatEntry.dateCreated;
-        chatEntry.isSeen = [NSNumber numberWithBool:peppermintChatEntry.isSentByMe];
-        chatEntry.duration = [NSNumber numberWithDouble:peppermintChatEntry.duration];
+        for(PeppermintChatEntry *peppermintChatEntry in peppermintChatEntryArray) {
+            ChatEntry *chatEntry = nil;
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.messageId == %@", peppermintChatEntry.messageId];
+            NSArray *existingChatEntriesArray = [repository getResultsFromEntity:[ChatEntry class] predicateOrNil:predicate];
+            
+            if(!existingChatEntriesArray || existingChatEntriesArray.count == 0) {
+                chatEntry = (ChatEntry*)[repository createEntity:[ChatEntry class]];
+                peppermintChatEntry.performedOperation = PerformedOperationCreated;
+            } else if(existingChatEntriesArray.count == 1) {
+                chatEntry = existingChatEntriesArray.firstObject;
+                [self checkChatEntry:chatEntry andMarkAsReadIfNeededWithPeppermintChatEntry:peppermintChatEntry];
+                peppermintChatEntry.performedOperation = PerformedOperationUpdated;
+            } else {
+                NSString *errorText = [NSString stringWithFormat:
+                                       @"Can not exists more than one message with same id %@", peppermintChatEntry.messageId];
+                [exception(errorText) raise];
+            }
+            
+            chatEntry.messageId = peppermintChatEntry.messageId;
+            chatEntry.contactEmail = peppermintChatEntry.contactEmail;
+            chatEntry.audio = peppermintChatEntry.audio;
+            chatEntry.audioUrl = peppermintChatEntry.audioUrl;
+            chatEntry.transcription = @"...Transcription should be added...";
+            chatEntry.isSentByMe = [NSNumber numberWithBool:peppermintChatEntry.isSentByMe];
+            chatEntry.dateCreated = peppermintChatEntry.dateCreated;
+            chatEntry.isSeen = [NSNumber numberWithBool: peppermintChatEntry.isSeen
+                                || (peppermintChatEntry.audio && peppermintChatEntry.isSentByMe)];
+            chatEntry.duration = [NSNumber numberWithDouble:peppermintChatEntry.duration];
+        }
         
         NSError *error = [repository endTransaction];
         dispatch_async(dispatch_get_main_queue(), ^{
             if(error) {
                 [weakSelf.delegate operationFailure:error];
             } else {
-                [weakSelf.delegate chatHistoryCreatedWithSuccess];
+                if( --activeServiceCallCount > 0) {
+                    activeServiceCallCount = 0;
+                    [weakSelf queryServerForIncomingMessages];
+                } else {
+                    [weakSelf.delegate peppermintChatEntrySavedWithSuccess:peppermintChatEntryArray];
+                }
             }
         });
     });
+}
+
+#pragma mark - Server Query
+
+-(void) queryServerForIncomingMessages {
+    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+    BOOL canQueryServer = peppermintMessageSender.accountId.length > 0 && peppermintMessageSender.exchangedJwt.length > 0;
+    
+    if(!canQueryServer) {
+        NSLog(@"Could not query Server, please complete login process first.");
+    } else if(++activeServiceCallCount == 1) {
+        [awsService getMessagesForRecipientAccountId:peppermintMessageSender.accountId
+                                                 jwt:peppermintMessageSender.exchangedJwt
+                                               since:peppermintMessageSender.lastMessageSyncDate];
+    } else {
+        NSLog(@"Server query is queued...");
+    }
+}
+
+SUBSCRIBE(GetMessagesAreSuccessful) {
+    if(event.sender == awsService) {
+        ContactsModel *contactsModel = [ContactsModel sharedInstance];
+        NSMutableSet *peppermintContactsSet = [NSMutableSet new];
+        PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+        NSMutableArray *peppermintChatEntryArray = [NSMutableArray new];
+        CustomContactModel *customContactModel = [CustomContactModel new];
+        for (Data *messageData in event.dataOfMessagesArray) {
+            messageData.attributes.message_id = messageData.id;
+            PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry createFromAttribute:messageData.attributes];
+            [peppermintChatEntryArray addObject:peppermintChatEntry];
+            if([peppermintChatEntry.dateCreated laterDate:peppermintMessageSender.lastMessageSyncDate]) {
+                peppermintMessageSender.lastMessageSyncDate = peppermintChatEntry.dateCreated;
+            }
+            
+            PeppermintContact *peppermintContact = [contactsModel matchingPeppermintContactForEmail:peppermintChatEntry.contactEmail
+                                                                                        nameSurname:peppermintChatEntry.contactNameSurname];
+            peppermintContact.lastMessageDate = peppermintChatEntry.dateCreated;
+            [peppermintContactsSet addObject:peppermintContact];
+            [customContactModel save:peppermintContact];
+        }
+        
+        [self savePeppermintChatEntryArray:peppermintChatEntryArray];
+        
+        RecentContactsModel *recentContactsModel = [RecentContactsModel new];
+        [recentContactsModel saveMultiple:[peppermintContactsSet allObjects]];
+        
+        [peppermintMessageSender save];
+        if(event.existsMoreMessages) {
+            [self queryServerForIncomingMessages];
+        }
+    }
+}
+
+#pragma mark - Mark As Read
+
+-(void) checkChatEntry:(ChatEntry*)chatEntry andMarkAsReadIfNeededWithPeppermintChatEntry:(PeppermintChatEntry*)peppermintChatEntry {
+    if(!chatEntry.isSeen.boolValue && peppermintChatEntry.isSeen) {
+        PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+        [awsService markMessageAsReadWithJwt:peppermintMessageSender.exchangedJwt messageId:peppermintChatEntry.messageId];
+    }
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "Attribute.h"
+#import "PeppermintChatEntry.h"
 
 @implementation Attribute {
     NSDate *cachedDate;
@@ -15,8 +16,8 @@
 -(NSDate*) createdDate;{
     if( !cachedDate) {
         NSDateFormatter *dateFormatter = [NSDateFormatter new];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+        [dateFormatter setDateFormat:DATE_TIME_FORMAT];
+        NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:GMT];
         [dateFormatter setTimeZone:gmt];
         NSDate *dateGMT = [dateFormatter dateFromString:self.created];
         cachedDate = dateGMT;

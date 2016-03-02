@@ -683,8 +683,10 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 #pragma mark - RecentContactsModelDelegate
 
--(void) recentPeppermintContactSavedSucessfully:(PeppermintContact*) recentContact {
-    NSLog(@"Contact saved successfully. %@", recentContact.nameSurname);
+-(void) recentPeppermintContactsSavedSucessfully:(NSArray<PeppermintContact*>*) recentContactsArray {
+    for(PeppermintContact *recentContact in recentContactsArray) {
+        NSLog(@"Contact saved successfully. %@", recentContact.nameSurname);
+    }
 }
 
 -(void) recentPeppermintContactsRefreshed {
@@ -849,7 +851,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
     }];
 }
 
-SUBSCRIBE(GoogleCloudMessagingProcessedAllMessages) {
+SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
     [self.recentContactsModel refreshRecentContactList];
 }
 

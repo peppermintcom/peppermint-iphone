@@ -204,6 +204,12 @@
     return loginMethodString;
 }
 
+-(NSDate*) defaultLastMessageSyncDate {
+    NSTimeInterval currentTimeInterval = [NSDate new].timeIntervalSince1970;
+    NSTimeInterval timeIntervalToUse = currentTimeInterval - (15 * DAY);
+    return [NSDate dateWithTimeIntervalSince1970:timeIntervalToUse];
+}
+
 -(void) clearSender {
     self.name = @"";
     self.surname = @"";
@@ -213,6 +219,7 @@
     self.loginSource = -1;
     self.jwt = @"";
     self.isEmailVerified = NO;
+    self.accountId = nil;
     
     self.recorderJwt = nil;
     self.recorderId = nil;
@@ -221,6 +228,8 @@
     self.exchangedJwt = nil;
     //self.gcmToken = nil; -> Do not clear GCM token, cos maybe the app will not be restarted& [recorder init] will need gcmToken
     self.isAccountSetUpWithRecorder = NO;
+    self.lastMessageSyncDate = [self defaultLastMessageSyncDate];
+    
     
     defaults_remove(DEFAULTS_KEY_CACHED_SENDVOCIEMESSAGE_MODEL);
     defaults_remove(DEFAULTS_KEY_DONT_SHOW_SMS_WARNING);

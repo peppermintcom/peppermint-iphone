@@ -116,9 +116,6 @@
 @interface NewUserLoggedIn : BaseEvent
 @end
 
-@interface GoogleCloudMessagingProcessedAllMessages : BaseEvent
-@end
-
 @interface StopAllPlayingMessages : BaseEvent
 @end
 
@@ -126,4 +123,16 @@
 @end
 
 @interface MessagePlayingEnded : BaseEvent
+@end
+
+@interface GetMessagesAreSuccessful : BaseEvent
+@property (strong, nonatomic) NSArray* dataOfMessagesArray;
+@property (assign, nonatomic) BOOL existsMoreMessages;
+@end
+
+@interface RefreshIncomingMessagesCompletedWithSuccess : BaseEvent
+@property (strong, nonatomic) NSArray* peppermintChatEntriesArray;
+@end
+
+@interface AccountIdIsUpdated : BaseEvent
 @end

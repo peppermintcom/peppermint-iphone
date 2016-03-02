@@ -64,8 +64,8 @@
     [self checkIfShouldNavigate];
 }
 
--(void) recentPeppermintContactSavedSucessfully:(PeppermintContact*) recentContact {
-    NSLog(@"recentPeppermintContactSavedSucessfully...");
+-(void) recentPeppermintContactsSavedSucessfully:(NSArray<PeppermintContact*>*) recentContactsArray {
+    NSLog(@"recentPeppermintContactsSavedSucessfully...");
 }
 
 #pragma mark - UITableView
@@ -166,7 +166,7 @@
 
 #pragma mark - New Message Received
 
-SUBSCRIBE(GoogleCloudMessagingProcessedAllMessages) {
+SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
     [recentContactsModel refreshRecentContactList];
 }
 

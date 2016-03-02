@@ -144,6 +144,7 @@
     if(_playingModel.audioPlayer.isPlaying) {
         self.playPauseImageView.image = imagePlay;
         [_playingModel pause];
+        PUBLISH([MessagePlayingEnded new]);
     } else {
         PUBLISH([MessagePlayingStarted new]);
         if(!_playingModel || !_playingModel.audioPlayer.data ) {
@@ -169,7 +170,7 @@
                         
 #warning "add ChatEntryModel and handle error situation"
                         weakSelf.peppermintChatEntry.isSeen = YES;
-                        [[ChatEntryModel new] update:weakSelf.peppermintChatEntry];
+                        [[ChatEntryModel new] savePeppermintChatEntry:weakSelf.peppermintChatEntry];
                         
                         weakSelf.peppermintChatEntry.duration = _playingModel.audioPlayer.duration;
                         [weakSelf setLeftLabel];
@@ -217,7 +218,7 @@
             self.playPauseImageView.image = imagePlay;
             if(percent < 0.00001) {
                 self.durationCircleView.hidden = YES;
-                self.durationViewWidthConstraint.constant = 0;                
+                self.durationViewWidthConstraint.constant = 0;
             }
         }
     }
