@@ -15,7 +15,6 @@
 #define DISTANCE_TO_BORDER  5
 #define TIMER_UPDATE_PERIOD 0.05
 
-
 @implementation ChatTableViewCell {
     UIImage *imageConnected;
     UIImage *imageFlat;
@@ -201,7 +200,6 @@
     if(_playingModel) {
         CGFloat percent = _playingModel.audioPlayer.currentTime / _playingModel.audioPlayer.duration;
         if( _playingModel.audioPlayer.isPlaying) {
-            
             if((int)_playingModel.audioPlayer.currentTime != totalSeconds) {
                 [self setLeftLabel];
             }
@@ -218,8 +216,8 @@
         } else {
             self.playPauseImageView.image = imagePlay;
             if(percent < 0.00001) {
-                self.durationViewWidthConstraint.constant = 0;
                 self.durationCircleView.hidden = YES;
+                self.durationViewWidthConstraint.constant = 0;                
             }
         }
     }
@@ -237,6 +235,35 @@
 SUBSCRIBE(StopAllPlayingMessages) {
     stopMessageReceived = YES;
     [_playingModel.audioPlayer stop];
+}
+
+-(IBAction)touchMoved:(id)sender withEvent:(UIEvent *)event {
+    UITouch *touch = [[event allTouches] anyObject];
+    CGPoint currentPoint = [touch locationInView:self];
+    CGFloat totalWidth = self.timelineView.frame.size.width ;
+    
+    CGFloat newConstant = currentPoint.x
+    - self.leftDistanceConstraint.constant
+    - self.timelineView.frame.origin.x
+    - self.leftImageView.frame.size.width;
+    BOOL isValidGesture = (newConstant > 0 && newConstant < totalWidth) && _playingModel;
+    
+    if(isValidGesture) {
+        [self stopPlayingCell];
+        [_playingModel.audioPlayer pause];
+        self.durationCircleView.hidden = NO;
+        self.durationViewWidthConstraint.constant = newConstant;
+        CGFloat currentWidth = self.durationView.frame.size.width;
+        NSTimeInterval totalTime = _playingModel.audioPlayer.duration;
+        _playingModel.audioPlayer.currentTime = (currentWidth/totalWidth) * totalTime;
+        [self setLeftLabel];
+    }
+}
+
+-(IBAction)touchEndOutside:(id)sender withEvent:(UIEvent *)event {
+    if(_playingModel) {
+        [self playPauseButtonPressed:sender];
+    }
 }
 
 @end

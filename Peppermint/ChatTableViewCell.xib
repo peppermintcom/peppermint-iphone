@@ -21,6 +21,13 @@
                             <constraint firstAttribute="width" constant="14" id="fZH-s5-iGF"/>
                         </constraints>
                     </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_chat_left_flat" translatesAutoresizingMaskIntoConstraints="NO" id="gwE-ca-PTN">
+                        <rect key="frame" x="422" y="5" width="14" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="2yM-jX-QYb"/>
+                            <constraint firstAttribute="width" constant="14" id="puC-5q-xDM"/>
+                        </constraints>
+                    </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DRh-1G-YWR" userLabel="MessageView">
                         <rect key="frame" x="22" y="5" width="400" height="50"/>
                         <subviews>
@@ -99,17 +106,13 @@
                             <constraint firstItem="7Il-AU-Y5a" firstAttribute="width" secondItem="N9o-U6-Dxl" secondAttribute="width" id="w66-FZ-W1G"/>
                         </constraints>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_chat_left_flat" translatesAutoresizingMaskIntoConstraints="NO" id="gwE-ca-PTN">
-                        <rect key="frame" x="422" y="5" width="14" height="50"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="50" id="2yM-jX-QYb"/>
-                            <constraint firstAttribute="width" constant="14" id="puC-5q-xDM"/>
-                        </constraints>
-                    </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RDh-gW-uQJ">
                         <rect key="frame" x="0.0" y="0.0" width="448" height="59"/>
                         <connections>
                             <action selector="playPauseButtonPressed:" destination="0hh-73-Plp" eventType="touchUpInside" id="cf8-Zk-qDn"/>
+                            <action selector="touchEndOutside:withEvent:" destination="0hh-73-Plp" eventType="touchUpOutside" id="MAX-xz-RmS"/>
+                            <action selector="touchMoved:withEvent:" destination="0hh-73-Plp" eventType="touchDragOutside" id="UuV-h4-Yzr"/>
+                            <action selector="touchMoved:withEvent:" destination="0hh-73-Plp" eventType="touchDragInside" id="eMO-ys-JUi"/>
                         </connections>
                     </button>
                 </subviews>
