@@ -53,7 +53,6 @@
     PeppermintContact *peppermintContactToNavigate;
     PlayingModel *playingModel;
     ChatEntryModel *chatEntryModel;
-    NSInteger unreadMessagesCount;
 }
 
 -(void) initPlayingModel {
@@ -358,13 +357,9 @@ SUBSCRIBE(DetachSuccess) {
 
 -(void) peppermintChatEntrySavedWithSuccess:(NSArray<PeppermintChatEntry*>*) savedPeppermintChatEnryArray {
     NSMutableArray *newMessagesArray = [NSMutableArray new];
-    unreadMessagesCount = 0;
     for(PeppermintChatEntry *peppermintChatEntry in savedPeppermintChatEnryArray) {
         if(peppermintChatEntry.performedOperation == PerformedOperationCreated) {
             [newMessagesArray addObject:peppermintChatEntry];
-            if(!peppermintChatEntry.isSeen) {
-                unreadMessagesCount++;
-            }
         }
     }
     [self refreshBadgeNumber];
@@ -732,16 +727,6 @@ SUBSCRIBE(DetachSuccess) {
     [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
 }
 
-#pragma mark - Loggin message procesdure
-
-SUBSCRIBE(RetrieveSignedUrlSuccessful) {
-    NSLog(@"RetrieveSignedUrlSuccessful %@\nSignedUrl:%@", event.short_url, event.signedUrl);
-}
-
-SUBSCRIBE(FileUploadCompleted) {
-    NSLog(@"FileUploadCompleted %@", event.signedUrl);
-}
-
 #pragma mark - VisibleViewController
 
 - (UIViewController *)visibleViewController {
@@ -766,7 +751,6 @@ SUBSCRIBE(FileUploadCompleted) {
 #pragma mark - Inter App Messaging
 
 SUBSCRIBE(NewUserLoggedIn) {
-    unreadMessagesCount = 0;
     [self initRecorder];
     [self navigateToContactsWithFilterText:@""];
 }
@@ -784,6 +768,7 @@ SUBSCRIBE(AccountIdIsUpdated) {
 }
 
 -(void) refreshBadgeNumber {
+    NSUInteger unreadMessagesCount = [ChatModel unreadMessageCountOfAllChats];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:unreadMessagesCount];
 }

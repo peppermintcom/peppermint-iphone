@@ -26,4 +26,18 @@
     return peppermintChatEntry;
 }
 
+- (BOOL)isEqual:(id)object {
+    if (![object isKindOfClass:[PeppermintChatEntry class]]) {
+        return NO;
+    }
+    PeppermintChatEntry * other = (PeppermintChatEntry *)object;
+    return [other.messageId isEqualToString:self.messageId];
+}
+
+- (NSUInteger)hash {
+    NSString *uniqueString = self.messageId;
+    NSUInteger hashValue = [uniqueString hash];
+    return hashValue;
+}
+
 @end

@@ -9,6 +9,12 @@
 #import "BaseTableViewCell.h"
 @class PeppermintChatEntry;
 @class PlayingModel;
+@class ChatTableViewCell;
+
+@protocol ChatTableViewCellDelegate <NSObject>
+-(void) startedPlayingMessage:(ChatTableViewCell*)chatTableViewCell;
+-(void) stoppedPlayingMessage:(ChatTableViewCell*)chatTableViewCell;
+@end
 
 @interface ChatTableViewCell : BaseTableViewCell
 
@@ -26,13 +32,18 @@
 @property (weak, nonatomic) IBOutlet UILabel *rightLabel;
 @property (weak, nonatomic) IBOutlet UILabel *leftLabel;
 @property (weak, nonatomic) IBOutlet UIView *durationCircleView;
+
 @property (weak, nonatomic) UITableView *tableView;
 
+@property (weak, nonatomic) id<ChatTableViewCellDelegate> delegate;
 @property (strong, nonatomic, readonly) PeppermintChatEntry *peppermintChatEntry;
-
 @property (strong, nonatomic, readonly) PlayingModel *playingModel;
+
+
 
 - (void) fillInformation:(PeppermintChatEntry*) chatEntry;
 - (IBAction)playPauseButtonPressed:(id)sender;
+
+-(void) setCancelButtonVisibilty:(BOOL)isCacnelAble;
 
 @end

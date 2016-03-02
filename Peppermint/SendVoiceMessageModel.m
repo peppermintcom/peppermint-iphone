@@ -23,6 +23,7 @@
     SendingStatus _sendingStatus;
     dispatch_semaphore_t dispatch_semaphore;
     ChatEntryModel *chatEntryModel;
+    NSString *cachedCanonicalUrl;
 }
 
 -(id) init {
@@ -60,7 +61,6 @@
     BOOL isPreviousCachedMessage = (self.delegate == nil);
     if(!isPreviousCachedMessage) {
         [recentContactsModel save:self.selectedPeppermintContact forContactDate:[NSDate new]];
-        [self setChatConversation];
         [self checkAndCleanFastReplyModel];
     }
     
@@ -69,6 +69,15 @@
 
     if(self.sendingStatus == SendingStatusIniting) {
         dispatch_semaphore_wait(dispatch_semaphore,dispatch_time(DISPATCH_TIME_NOW, DISPATCH_SEMAPHORE_PERIOD));
+    }
+}
+
+#pragma mark - Operations connected with message sending
+
+-(void) checkAndPerformOperationsConnectedWithMessageSending {
+    if(self.sendingStatus == SendingStatusSendingWithNoCancelOption) {
+        [self setChatConversation];
+        [self sendMessageOverAWS:cachedCanonicalUrl];
     }
 }
 
@@ -96,14 +105,7 @@
 }
 
 -(void) fileUploadCompletedWithPublicUrl:(NSString*) url canonicalUrl:(NSString*)canonicalUrl {
-    NSLog(@"File Upload is finished with url %@", url);
-
-#warning "What if contact is overSMS channel. Clearify&update below after speaking with Nuno&Andrew"
-    if( self.selectedPeppermintContact.communicationChannel == CommunicationChannelEmail ) {
-        [self sendMessageOverAWS:canonicalUrl];
-    } else {
-        NSLog(@"App does not send message over SMS address yet");
-    }
+    cachedCanonicalUrl = canonicalUrl;
 }
 
 #pragma mark - CustomContactModelDelegate
@@ -292,6 +294,7 @@
 -(void)setSendingStatus:(SendingStatus) sendingStatus {
     if(_sendingStatus != sendingStatus) {
         _sendingStatus = sendingStatus;
+        [self checkAndPerformOperationsConnectedWithMessageSending];
         MessageSendingStatusIsUpdated *messageSendingStatusIsUpdated = [MessageSendingStatusIsUpdated new];
         messageSendingStatusIsUpdated.sender = self;
         PUBLISH(messageSendingStatusIsUpdated);
@@ -322,19 +325,16 @@
 #pragma mark - SendGCMMessage
 
 -(void) sendMessageOverAWS:(NSString*)publicUrl {
-#warning "Set transcription url!!"    
-    
-    #warning "Remove JWT logging"
-    NSString *jwt = self.peppermintMessageSender.jwt;
-    NSString *recorderJwt = self.peppermintMessageSender.recorderJwt;
-    NSString *exchangedJwt = self.peppermintMessageSender.exchangedJwt;
-    NSLog(@"account jwt:\n%@\n\nrecorder jwt:\n%@\n\nexhanged jwt:\n%@\n\n", jwt, recorderJwt, exchangedJwt);    
-    
-    [[AWSService new] sendMessageToRecepientEmail:self.selectedPeppermintContact.communicationChannelAddress
-                                      senderEmail:self.peppermintMessageSender.email
-                                 transcriptionUrl:nil
-                                         audioUrl:publicUrl
-                                              jwt:self.peppermintMessageSender.exchangedJwt];
+    #warning "What if contact is overSMS channel. Clearify&update below after speaking with Nuno&Andrew"
+    if( self.selectedPeppermintContact.communicationChannel != CommunicationChannelEmail ) {
+        NSLog(@"App does not send message over SMS address yet");
+    } else {
+        [[AWSService new] sendMessageToRecepientEmail:self.selectedPeppermintContact.communicationChannelAddress
+                                          senderEmail:self.peppermintMessageSender.email
+                                     transcriptionUrl:nil
+                                             audioUrl:publicUrl
+                                                  jwt:self.peppermintMessageSender.exchangedJwt];
+    }
 }
 
 #pragma mark - ChatEntryModelDelegate

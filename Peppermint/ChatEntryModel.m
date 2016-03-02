@@ -17,7 +17,8 @@
 
 @implementation ChatEntryModel {
     AWSService *awsService;
-    __block int activeServiceCallCount;
+    __block int activeServerQueryCount;
+    NSMutableSet *mergedPeppermintChatEntrySet;
 }
 
 -(id) init {
@@ -25,7 +26,8 @@
     if(self) {
         self.chatEntriesArray = [NSArray new];
         awsService = [AWSService new];
-        activeServiceCallCount = 0;
+        activeServerQueryCount = 0;
+        mergedPeppermintChatEntrySet = [NSMutableSet new];
     }
     return self;
 }
@@ -89,7 +91,7 @@
                 peppermintChatEntry.performedOperation = PerformedOperationCreated;
             } else if(existingChatEntriesArray.count == 1) {
                 chatEntry = existingChatEntriesArray.firstObject;
-                [self checkChatEntry:chatEntry andMarkAsReadIfNeededWithPeppermintChatEntry:peppermintChatEntry];
+                [weakSelf checkChatEntry:chatEntry andMarkAsReadIfNeededWithPeppermintChatEntry:peppermintChatEntry];
                 peppermintChatEntry.performedOperation = PerformedOperationUpdated;
             } else {
                 NSString *errorText = [NSString stringWithFormat:
@@ -114,12 +116,8 @@
             if(error) {
                 [weakSelf.delegate operationFailure:error];
             } else {
-                if( --activeServiceCallCount > 0) {
-                    activeServiceCallCount = 0;
-                    [weakSelf queryServerForIncomingMessages];
-                } else {
-                    [weakSelf.delegate peppermintChatEntrySavedWithSuccess:peppermintChatEntryArray];
-                }
+                mergedPeppermintChatEntrySet = [NSMutableSet new];
+                [weakSelf.delegate peppermintChatEntrySavedWithSuccess:peppermintChatEntryArray];
             }
         });
     });
@@ -133,46 +131,60 @@
     
     if(!canQueryServer) {
         NSLog(@"Could not query Server, please complete login process first.");
-    } else if(++activeServiceCallCount == 1) {
+    } else {
+        ++activeServerQueryCount;
         [awsService getMessagesForRecipientAccountId:peppermintMessageSender.accountId
                                                  jwt:peppermintMessageSender.exchangedJwt
                                                since:peppermintMessageSender.lastMessageSyncDate];
-    } else {
-        NSLog(@"Server query is queued...");
     }
 }
 
 SUBSCRIBE(GetMessagesAreSuccessful) {
     if(event.sender == awsService) {
-        ContactsModel *contactsModel = [ContactsModel sharedInstance];
-        NSMutableSet *peppermintContactsSet = [NSMutableSet new];
-        PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
-        NSMutableArray *peppermintChatEntryArray = [NSMutableArray new];
-        CustomContactModel *customContactModel = [CustomContactModel new];
-        for (Data *messageData in event.dataOfMessagesArray) {
-            messageData.attributes.message_id = messageData.id;
-            PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry createFromAttribute:messageData.attributes];
-            [peppermintChatEntryArray addObject:peppermintChatEntry];
-            if([peppermintChatEntry.dateCreated laterDate:peppermintMessageSender.lastMessageSyncDate]) {
-                peppermintMessageSender.lastMessageSyncDate = peppermintChatEntry.dateCreated;
-            }
-            
-            PeppermintContact *peppermintContact = [contactsModel matchingPeppermintContactForEmail:peppermintChatEntry.contactEmail
-                                                                                        nameSurname:peppermintChatEntry.contactNameSurname];
-            peppermintContact.lastMessageDate = peppermintChatEntry.dateCreated;
-            [peppermintContactsSet addObject:peppermintContact];
-            [customContactModel save:peppermintContact];
-        }
-        
-        [self savePeppermintChatEntryArray:peppermintChatEntryArray];
-        
-        RecentContactsModel *recentContactsModel = [RecentContactsModel new];
-        [recentContactsModel saveMultiple:[peppermintContactsSet allObjects]];
-        
-        [peppermintMessageSender save];
-        if(event.existsMoreMessages) {
+        BOOL gotNewQueryRequestWhileServiceCallWasActive = (--activeServerQueryCount > 0);
+        activeServerQueryCount = 0;
+        if(gotNewQueryRequestWhileServiceCallWasActive) {
             [self queryServerForIncomingMessages];
+        } else {
+            [self processEvent:event];
         }
+    }
+}
+
+-(void) processEvent:(GetMessagesAreSuccessful*) event {
+    ContactsModel *contactsModel = [ContactsModel sharedInstance];
+    NSMutableSet *peppermintContactsSet = [NSMutableSet new];
+    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+    CustomContactModel *customContactModel = [CustomContactModel new];
+    for (Data *messageData in event.dataOfMessagesArray) {
+        messageData.attributes.message_id = messageData.id;
+        PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry createFromAttribute:messageData.attributes];
+        [mergedPeppermintChatEntrySet addObject:peppermintChatEntry];
+        if([peppermintChatEntry.dateCreated laterDate:peppermintMessageSender.lastMessageSyncDate]) {
+            peppermintMessageSender.lastMessageSyncDate = peppermintChatEntry.dateCreated;
+        }
+        
+        PeppermintContact *peppermintContact = [contactsModel matchingPeppermintContactForEmail:peppermintChatEntry.contactEmail
+                                                                                    nameSurname:peppermintChatEntry.contactNameSurname];
+        peppermintContact.lastMessageDate = peppermintChatEntry.dateCreated;
+        [peppermintContactsSet addObject:peppermintContact];
+        [customContactModel save:peppermintContact];
+    }
+    
+    RecentContactsModel *recentContactsModel = [RecentContactsModel new];
+    [recentContactsModel saveMultiple:[peppermintContactsSet allObjects]];
+    
+    
+    NSLog(@"___received : %ld objects, Set has %ld objects", event.dataOfMessagesArray.count, mergedPeppermintChatEntrySet.count);
+    
+    
+    
+    
+    [peppermintMessageSender save];
+    if(event.existsMoreMessages) {
+        [self queryServerForIncomingMessages];
+    } else {
+        [self savePeppermintChatEntryArray:[mergedPeppermintChatEntrySet allObjects]];
     }
 }
 

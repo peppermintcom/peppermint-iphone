@@ -13,7 +13,7 @@
 @class RecordingGestureButton;
 @class RecordingView;
 
-@interface ChatEntriesViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, ChatEntryModelDelegate>
+@interface ChatEntriesViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, ChatEntryModelDelegate, ChatTableViewCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet RecordingGestureButton *recordingButton;
 @property (weak, nonatomic) IBOutlet UIView *holdToRecordView;
 @property (weak, nonatomic) IBOutlet UILabel *holdToRecordLabel;
+@property (weak, nonatomic) IBOutlet UIButton *cancelSendingButton;
 
 @property (strong, nonatomic) ChatEntryModel *chatEntryModel;
 @property (strong, nonatomic) RecordingView *recordingView;

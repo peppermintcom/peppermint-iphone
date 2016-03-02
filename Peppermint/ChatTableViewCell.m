@@ -144,9 +144,9 @@
     if(_playingModel.audioPlayer.isPlaying) {
         self.playPauseImageView.image = imagePlay;
         [_playingModel pause];
-        PUBLISH([MessagePlayingEnded new]);
+        [self.delegate stoppedPlayingMessage:self];
     } else {
-        PUBLISH([MessagePlayingStarted new]);
+        [self.delegate startedPlayingMessage:self];
         if(!_playingModel || !_playingModel.audioPlayer.data ) {
             _playingModel = [PlayingModel alloc];
             self.spinnerView.hidden = NO;
@@ -191,7 +191,7 @@
     BOOL result = NO;
     if(audioData && !stopMessageReceived) {
         result = [_playingModel playData:audioData playerCompletitionBlock:^{
-            PUBLISH([MessagePlayingEnded new]);
+            [self.delegate stoppedPlayingMessage:self];
         }];
     }
     return result;

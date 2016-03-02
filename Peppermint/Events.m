@@ -89,12 +89,6 @@
 @implementation StopAllPlayingMessages
 @end
 
-@implementation MessagePlayingStarted
-@end
-
-@implementation MessagePlayingEnded
-@end
-
 @implementation GetMessagesAreSuccessful
 @end
 

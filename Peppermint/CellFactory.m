@@ -122,7 +122,7 @@
     return cell;
 }
 
-+(ChatTableViewCell*) cellChatTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath {
++(ChatTableViewCell*) cellChatTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath andDelegate:(id<ChatTableViewCellDelegate>) delegate {
     NSString *cellKey = @"ChatTableViewCell";
     ChatTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellKey];
     if(!cell) {
@@ -130,7 +130,8 @@
         cell = [topLevelObjects objectAtIndex:0];
     }
     cell.tableView = tableView;
-    cell.indexPath = indexPath;    
+    cell.indexPath = indexPath;
+    cell.delegate = delegate;
     return cell;
 }
 

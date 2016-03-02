@@ -119,12 +119,6 @@
 @interface StopAllPlayingMessages : BaseEvent
 @end
 
-@interface MessagePlayingStarted : BaseEvent
-@end
-
-@interface MessagePlayingEnded : BaseEvent
-@end
-
 @interface GetMessagesAreSuccessful : BaseEvent
 @property (strong, nonatomic) NSArray* dataOfMessagesArray;
 @property (assign, nonatomic) BOOL existsMoreMessages;

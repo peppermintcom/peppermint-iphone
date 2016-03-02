@@ -14,6 +14,8 @@
 #import "AutoPlayModel.h"
 #import "PeppermintContact.h"
 
+#define BOTTOM_RESET_IME    2
+
 @interface ChatEntriesViewController () <RecordingGestureButtonDelegate, RecordingViewDelegate>
 @end
 
@@ -27,13 +29,7 @@
     [super viewDidLoad];
     self.tableView.rowHeight = CELL_HEIGHT_CHAT_TABLEVIEWCELL;
     
-    self.tableView.backgroundColor = [UIColor slideMenuTableViewColor];
-    self.bottomInformationLabel.font = [UIFont openSansSemiBoldFontOfSize:18];
-    self.bottomInformationLabel.textColor = [UIColor textFieldTintGreen];
-    self.bottomInformationLabel.backgroundColor = [UIColor peppermintGray248];
-    self.bottomInformationLabel.layer.borderWidth = 1;
-    self.bottomInformationLabel.layer.borderColor = [UIColor cellSeperatorGray].CGColor;
-    self.bottomInformationLabel.text = LOC(@"Record a Message", @"Record a Message");
+    [self resetBottomInformationLabel];
     
     self.avatarImageView.layer.cornerRadius = 5;
     self.holdToRecordView.hidden = YES;
@@ -52,6 +48,17 @@
     self.chatEntryModel = [ChatEntryModel new];
     self.chatEntryModel.delegate = self;
     REGISTER();
+}
+
+-(void) resetBottomInformationLabel {
+    self.tableView.backgroundColor = [UIColor slideMenuTableViewColor];
+    self.bottomInformationLabel.font = [UIFont openSansSemiBoldFontOfSize:18];
+    self.bottomInformationLabel.textColor = [UIColor textFieldTintGreen];
+    self.bottomInformationLabel.backgroundColor = [UIColor peppermintGray248];
+    self.bottomInformationLabel.layer.borderWidth = 1;
+    self.bottomInformationLabel.layer.borderColor = [UIColor cellSeperatorGray].CGColor;
+    self.bottomInformationLabel.text = LOC(@"Record a Message", @"Record a Message");
+    self.microphoneView.hidden = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -140,12 +147,11 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    ChatTableViewCell *cell = [CellFactory cellChatTableViewCellFromTable:tableView forIndexPath:indexPath];    
+    ChatTableViewCell *chatTableViewCell = [CellFactory cellChatTableViewCellFromTable:tableView forIndexPath:indexPath andDelegate:self];
     PeppermintChatEntry *peppermintChatEntry = (PeppermintChatEntry*)[self.chatEntryModel.chatEntriesArray objectAtIndex:indexPath.row];
-    [cell fillInformation:peppermintChatEntry];
-    cell.contentView.backgroundColor = self.tableView.backgroundColor;
-    return cell;
+    [chatTableViewCell fillInformation:peppermintChatEntry];
+    chatTableViewCell.contentView.backgroundColor = self.tableView.backgroundColor;
+    return chatTableViewCell;
 }
 
 #pragma mark - Back button
@@ -178,7 +184,7 @@
     
     FoggyRecordingView *foggyRecordingView = (FoggyRecordingView*)self.recordingView;
     if(foggyRecordingView) {
-        foggyRecordingView.swipeInAnyDirectionView.hidden = YES;
+        //foggyRecordingView.swipeInAnyDirectionView.hidden = YES;
         CGRect frame = foggyRecordingView.microphoneImageView.frame;
         foggyRecordingView.microphoneViewRightOffsetConstraint.constant =  -1 * (frame.size.width * 0.2);
         foggyRecordingView.microphoneViewCenterYConstraint.constant = -1 * (frame.size.height * 0.1);
@@ -240,7 +246,64 @@
 }
 
 -(void) message:(NSString*) message isUpdatedWithStatus:(SendingStatus) sendingStatus cancelAble:(BOOL)isCacnelAble {
-    NSLog(@"message:isUpdatedWithStatus:cancelable:");
+    
+#warning "Refactor code& make it more readable"
+    
+    NSMutableAttributedString *infoAttrText = [NSMutableAttributedString new];
+    UIColor *textColor = [UIColor textFieldTintGreen];
+    self.microphoneView.hidden = YES;
+    if(sendingStatus == SendingStatusUploading) {
+        [infoAttrText addText:LOC(@"Uploading", @"Info") ofSize:13 ofColor:textColor];
+    } else if (sendingStatus == SendingStatusStarting) {
+        [infoAttrText addText:LOC(@"Starting", @"Info") ofSize:13 ofColor:textColor];
+    } else if (sendingStatus == SendingStatusSending) {
+        [infoAttrText addText:LOC(@"Sending", @"Info") ofSize:13 ofColor:textColor];
+    } else if ( sendingStatus == SendingStatusSendingWithNoCancelOption) {
+        [infoAttrText addText:LOC(@"Sending", @"Info") ofSize:15 ofColor:textColor];
+    }  else if (sendingStatus == SendingStatusSent) {
+        [infoAttrText addImageNamed:@"icon_tick" ofSize:14];
+        [infoAttrText addText:@"  " ofSize:14 ofColor:textColor];
+        [infoAttrText addText:LOC(@"Sent", @"Info") ofSize:21 ofColor:textColor];
+    }  else if (sendingStatus == SendingStatusCancelled) {
+        [infoAttrText addText:LOC(@"Cancelled", @"Info") ofSize:13 ofColor:textColor];
+    } else if (sendingStatus == SendingStatusCached) {
+        [infoAttrText addImageNamed:@"icon_warning" ofSize:10];
+        [infoAttrText addText:@" " ofSize:13 ofColor:textColor];
+        [infoAttrText addText:LOC(@"Your message will be sent later", @"Cached Info") ofSize:10 ofColor:textColor];
+    } else if (sendingStatus == SendingStatusError) {
+        [infoAttrText addImageNamed:@"icon_warning" ofSize:13];
+        [infoAttrText addText:@" " ofSize:13 ofColor:textColor];
+        [infoAttrText addText:LOC(@"An error occured", @"Info") ofSize:13 ofColor:textColor];
+    }
+    
+    if(isCacnelAble && infoAttrText.length > 0) {
+        self.cancelSendingButton.hidden = NO;
+        [infoAttrText addText:LOC(@"Tap to cancel", @"Info") ofSize:13 ofColor:[UIColor peppermintCancelOrange]];
+    } else {
+        self.cancelSendingButton.hidden = YES;
+    }
+    self.bottomInformationLabel.attributedText = [infoAttrText centerText];
+    
+    weakself_create();
+    switch (sendingStatus) {
+        case  SendingStatusIniting:
+        case  SendingStatusInited:
+        case  SendingStatusStarting:
+        case  SendingStatusUploading:
+        case  SendingStatusSending:
+            break;
+        case  SendingStatusSendingWithNoCancelOption:
+            [self refreshContent];
+            break;
+        case  SendingStatusError:
+        case  SendingStatusCancelled:
+        case  SendingStatusCached:
+        case  SendingStatusSent:
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(BOTTOM_RESET_IME * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf resetBottomInformationLabel];
+            });
+            break;
+    }
 }
 
 -(void) newRecentContactisSaved {
@@ -250,6 +313,12 @@
 -(void) chatHistoryCreatedWithSuccess {
     NSLog(@"chatHistoryCreatedWithSuccess");
     [self refreshContent];
+}
+
+#pragma makr - Cancel Message Sending
+
+-(IBAction)cancelSendingButtonPressed:(id)sender {
+    [self.recordingView cancelMessageSending];
 }
 
 #pragma mark - HoldToRecordView
@@ -264,22 +333,24 @@
     }];
 }
 
-#pragma mark - Refresh Content
+#pragma mark - ChatTableViewCellDelegate
 
-SUBSCRIBE(ApplicationWillResignActive) {
-    self.tableView.scrollEnabled = YES;
-}
-
-SUBSCRIBE(MessagePlayingStarted) {
+-(void) startedPlayingMessage:(ChatTableViewCell*)chatTableViewCell {
     self.tableView.scrollEnabled = NO;
 }
 
-SUBSCRIBE(MessagePlayingEnded) {
+-(void) stoppedPlayingMessage:(ChatTableViewCell*)chatTableViewCell {
     self.tableView.scrollEnabled = YES;
     if(scheduleRefresh) {
         scheduleRefresh = NO;
         [self refreshContent];
     }
+}
+
+#pragma mark - Refresh Content
+
+SUBSCRIBE(ApplicationWillResignActive) {
+    self.tableView.scrollEnabled = YES;
 }
 
 -(void) refreshContent {

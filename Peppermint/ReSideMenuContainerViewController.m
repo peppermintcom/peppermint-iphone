@@ -23,8 +23,13 @@
     self = [super initWithCoder:aDecoder];
     if(self) {
         [self initSlideMenu];
+        REGISTER();
     }
     return self;
+}
+
+SUBSCRIBE(ApplicationDidBecomeActive) {
+    [self hideMenuViewController];
 }
 
 #pragma mark - SlidingMenu
