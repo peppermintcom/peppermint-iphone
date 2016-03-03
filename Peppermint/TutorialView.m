@@ -56,6 +56,7 @@
             self.alpha = 0;
         } completion:^(BOOL finished) {
             self.hidden = YES;
+            [self removeFromSuperview];
         }];
     }
     defaults_set_object(DEFAULTS_KEY_TUTORIAL_TOOLTIP_IS_SHOWED, DEFAULTS_KEY_TUTORIAL_TOOLTIP_IS_SHOWED);

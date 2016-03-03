@@ -45,8 +45,7 @@
      [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
     autoPlayModel =[AutoPlayModel sharedInstance];
     
-    self.chatEntryModel = [ChatEntryModel new];
-    self.chatEntryModel.delegate = self;
+    self.recordingButton.delegate = self;
     REGISTER();
 }
 
@@ -95,16 +94,12 @@
 
     [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
     [self refreshContent];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self initRecordingViewWithView:self.recordingButton];
-    });
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    self.chatEntryModel = nil;
-    self.recordingView = nil;
-    self.peppermintContact = nil;
+    _chatEntryModel = nil;
+    _recordingView = nil;    
 }
 
 -(void) viewWillDisappear:(BOOL)animated {
@@ -147,10 +142,12 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ChatTableViewCell *chatTableViewCell = [CellFactory cellChatTableViewCellFromTable:tableView forIndexPath:indexPath andDelegate:self];
-    PeppermintChatEntry *peppermintChatEntry = (PeppermintChatEntry*)[self.chatEntryModel.chatEntriesArray objectAtIndex:indexPath.row];
-    [chatTableViewCell fillInformation:peppermintChatEntry];
-    chatTableViewCell.contentView.backgroundColor = self.tableView.backgroundColor;
+    ChatTableViewCell *chatTableViewCell = [CellFactory cellChatTableViewCellFromTable:tableView forIndexPath:indexPath andDelegate:self];    
+    if(self.chatEntryModel.chatEntriesArray.count > indexPath.row) {
+        PeppermintChatEntry *peppermintChatEntry = (PeppermintChatEntry*)[self.chatEntryModel.chatEntriesArray objectAtIndex:indexPath.row];
+        [chatTableViewCell fillInformation:peppermintChatEntry];
+        chatTableViewCell.contentView.backgroundColor = self.tableView.backgroundColor;
+    }
     return chatTableViewCell;
 }
 
@@ -176,14 +173,13 @@
 -(void) initRecordingViewWithView:(UIControl*) control {
     self.recordingButton.delegate = self;
     self.recordingView = [FoggyRecordingView createInstanceWithDelegate:self];
-    CGRect rect = self.view.frame;
-    
-    self.recordingView.frame = rect;
+
+    self.recordingView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     [self.view addSubview:self.recordingView];
     [self.view bringSubviewToFront:self.recordingView];
     
-    FoggyRecordingView *foggyRecordingView = (FoggyRecordingView*)self.recordingView;
-    if(foggyRecordingView) {
+    if([self.recordingView isKindOfClass:[FoggyRecordingView class]]) {
+        FoggyRecordingView *foggyRecordingView = (FoggyRecordingView *)_recordingView;
         //foggyRecordingView.swipeInAnyDirectionView.hidden = YES;
         CGRect frame = foggyRecordingView.microphoneImageView.frame;
         foggyRecordingView.microphoneViewRightOffsetConstraint.constant =  -1 * (frame.size.width * 0.2);
@@ -382,6 +378,24 @@ SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
             break;
         }
     }
+}
+
+#pragma mark - lazy Loading
+
+-(ChatEntryModel*) chatEntryModel {
+    if(_chatEntryModel == nil) {
+        _chatEntryModel = [ChatEntryModel new];
+        _chatEntryModel.delegate = self;
+        [_chatEntryModel refreshPeppermintChatEntriesForContactEmail:self.peppermintContact.communicationChannelAddress];
+    }
+    return _chatEntryModel;
+}
+
+-(RecordingView*) recordingView {
+    if(_recordingView == nil) {
+        [self initRecordingViewWithView:self.recordingButton];
+    }
+    return _recordingView;
 }
 
 @end

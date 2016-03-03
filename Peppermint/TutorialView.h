@@ -14,8 +14,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabelSecondPart;
 
 +(TutorialView*) createInstance;
--(void) show;
--(void) hide;
 
 
 @end

@@ -54,28 +54,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     isContactsPermissionGranted = YES;
-    if(!self.contactsModel) {
-        self.contactsModel = [ContactsModel sharedInstance];
-        self.contactsModel.delegate = self;
-        [self.contactsModel setup];
-    } else if (self.contactsModel.contactList.count == 0) {
-        [self.contactsModel setup];
-    }
-    self.recentContactsModel = [RecentContactsModel new];
-    self.recentContactsModel.delegate = self;
+    
     self.searchContactsTextField.font = [UIFont openSansFontOfSize:14];
     self.searchContactsTextField.text = self.contactsModel.filterText;
     self.searchContactsTextField.placeholder = LOC(@"Search for Contacts", @"Placeholder text");
     self.searchContactsTextField.tintColor = [UIColor textFieldTintGreen];
     self.searchContactsTextField.delegate = self;
     self.searchContactsTextField.autocorrectionType = UITextAutocorrectionTypeNo;
-    [self initSearchMenu];
+    
     activeCellTag = CELL_TAG_ALL_CONTACTS;
     cachedActiveCellTag = CELL_TAG_ALL_CONTACTS;
     self.sendingIndicatorView.hidden = YES;
     self.sendingInformationLabel.text = @"";
     self.seperatorView.backgroundColor = [UIColor cellSeperatorGray];
-    [self initRecordingView];
+    
     self.tutorialView = nil;
     isScrolling  = NO;
     [self initHoldToRecordInfoView];
@@ -89,10 +81,12 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    self.contactsModel = nil;
-    self.recentContactsModel = nil;
-    self.searchMenu = nil;
-    self.recordingView = nil;
+    [_contactsModel.contactList removeAllObjects];
+    _contactsModel = nil;
+    _recentContactsModel = nil;
+    _searchMenu = nil;
+    [_recordingView removeFromSuperview];
+    _recordingView = nil;
     self.tutorialView = nil;
 }
 
@@ -107,7 +101,10 @@ SUBSCRIBE(ReplyContactIsAdded) {
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if([self checkIfuserIsLoggedIn]) {
-        if(self.tutorialView) { [self.tutorialView removeFromSuperview]; }
+        if(self.tutorialView) {
+            [self.tutorialView removeFromSuperview];
+            self.tutorialView = nil;
+        }
         [self initTutorialView];
         [self registerKeyboardActions];
         [self hideHoldToRecordInfoView];
@@ -425,7 +422,9 @@ SUBSCRIBE(ReplyContactIsAdded) {
 }
 
 -(void) didBeginItemSelectionOnIndexpath:(NSIndexPath*) indexPath location:(CGPoint) location {
-    if(!isScrolling) {
+    BOOL isActiveContactListStillValid = [self activeContactList].count > indexPath.row;
+    if(!isScrolling
+       && isActiveContactListStillValid) {
         [self.searchContactsTextField resignFirstResponder];
         CGRect cellRect = [self.tableView rectForRowAtIndexPath:indexPath];
         cellRect = CGRectOffset(cellRect, -self.tableView.contentOffset.x, -self.tableView.contentOffset.y);
@@ -451,7 +450,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
         
         PeppermintContact *selectedContact = [FastReplyModel sharedInstance].peppermintContact;
         if(indexPath.section == SECTION_CONTACTS) {
-            selectedContact = [[self activeContactList] objectAtIndex:indexPath.row];
+                selectedContact = [[self activeContactList] objectAtIndex:indexPath.row];
         }
         [self.searchContactsTextField resignFirstResponder];
         
@@ -853,6 +852,43 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
     [self.recentContactsModel refreshRecentContactList];
+}
+
+#pragma mark - Lazy Loading
+
+-(ContactsModel*) contactsModel {
+    if(_contactsModel == nil) {
+        _contactsModel = [ContactsModel sharedInstance];
+        _contactsModel.delegate = self;
+        [_contactsModel setup];
+        [_contactsModel refreshContactList];
+    } else if (_contactsModel.contactList.count == 0) {
+        [_contactsModel setup];
+    }
+    return _contactsModel;
+}
+
+-(RecentContactsModel*) recentContactsModel {
+    if(_recentContactsModel == nil) {
+        _recentContactsModel = [RecentContactsModel new];
+        _recentContactsModel.delegate = self;
+        [_recentContactsModel refreshRecentContactList];
+    }
+    return _recentContactsModel;
+}
+
+-(REMenu*) searchMenu {
+    if(_searchMenu == nil) {
+        [self initSearchMenu];
+    }
+    return _searchMenu;
+}
+
+-(RecordingView*) recordingView {
+    if(_recordingView == nil) {
+        [self initRecordingView];
+    }
+    return _recordingView;
 }
 
 @end

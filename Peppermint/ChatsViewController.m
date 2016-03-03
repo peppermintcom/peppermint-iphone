@@ -15,7 +15,7 @@
 
 @implementation ChatsViewController {
     NSDateFormatter *dateFormatter;
-    RecentContactsModel *recentContactsModel;
+    RecentContactsModel *_recentContactsModel;
     NSString *peppermintContactEmailToNavigate;
     NSSet* receivedMessagesEmailSet;
 }
@@ -30,8 +30,6 @@
     dateFormatter = [NSDateFormatter new];
     [dateFormatter setDateFormat:@"MMM dd"];
     
-    recentContactsModel = [RecentContactsModel new];
-    recentContactsModel.delegate = self;
     receivedMessagesEmailSet = [ChatModel receivedMessagesEmailSet];
     [self initChatsEmptyView];
     REGISTER();
@@ -39,14 +37,21 @@
 
 -(void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    recentContactsModel.delegate = self;
     self.chatsEmptyView.hidden = YES;
-    [recentContactsModel refreshRecentContactList];
+    [self.recentContactsModel refreshRecentContactList];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    recentContactsModel = nil;
+    _recentContactsModel = nil;
+}
+
+-(RecentContactsModel*) recentContactsModel {
+    if(_recentContactsModel == nil) {
+        _recentContactsModel = [RecentContactsModel new];
+        _recentContactsModel.delegate = self;
+    }
+    return _recentContactsModel;
 }
 
 +(instancetype) createInstance {
@@ -60,7 +65,7 @@
 
 -(void) recentPeppermintContactsRefreshed {
     [self.tableView reloadData];
-    self.chatsEmptyView.hidden = (recentContactsModel.contactList.count > 0);
+    self.chatsEmptyView.hidden = (self.recentContactsModel.contactList.count > 0);
     [self checkIfShouldNavigate];
 }
 
@@ -71,14 +76,14 @@
 #pragma mark - UITableView
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger numberOfRows = recentContactsModel.contactList.count;
+    NSInteger numberOfRows = self.recentContactsModel.contactList.count;
     return numberOfRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ChatContactTableViewCell *cell = [CellFactory cellChatContactTableViewCellFromTable:tableView forIndexPath:indexPath];
         
-    PeppermintContact *peppermintContact = [recentContactsModel.contactList objectAtIndex:indexPath.row];
+    PeppermintContact *peppermintContact = [self.recentContactsModel.contactList objectAtIndex:indexPath.row];
     if(peppermintContact.avatarImage) {
         [cell setAvatarImage:peppermintContact.avatarImage];
     } else {
@@ -101,7 +106,7 @@
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    PeppermintContact *peppermintContact = [recentContactsModel.contactList objectAtIndex:indexPath.row];
+    PeppermintContact *peppermintContact = [self.recentContactsModel.contactList objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER sender:peppermintContact];
 }
 
@@ -167,20 +172,20 @@
 #pragma mark - New Message Received
 
 SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
-    [recentContactsModel refreshRecentContactList];
+    [self.recentContactsModel refreshRecentContactList];
 }
 
 #pragma mark - Navigate to ChatEntry
 
 -(void) scheduleNavigateToChatEntryWithEmail:(NSString*) email {
     peppermintContactEmailToNavigate = email;
-    [recentContactsModel refreshRecentContactList];
+    [self.recentContactsModel refreshRecentContactList];
 }
 
 -(void) checkIfShouldNavigate {
     if([peppermintContactEmailToNavigate isValidEmail]) {
         NSPredicate *predicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:peppermintContactEmailToNavigate];
-        NSArray *matchingChatsArray = [recentContactsModel.contactList filteredArrayUsingPredicate:predicate];
+        NSArray *matchingChatsArray = [self.recentContactsModel.contactList filteredArrayUsingPredicate:predicate];
         if(matchingChatsArray.count > 0) {
             PeppermintContact *peppermintContact = matchingChatsArray.firstObject;
             [self performSegueWithIdentifier:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER sender:peppermintContact];

@@ -97,9 +97,9 @@
     } else if (indexPath.row == INDEX_FEEDBACK) {
         [self.reSideMenuContainerViewController sendFeedback];
     } else if (indexPath.row == INDEX_TUTORIAL) {
-        UINavigationController *nvc = (UINavigationController*)self.reSideMenuContainerViewController.contentViewController;
-        ContactsViewController *cvc = [nvc.viewControllers firstObject];
-        [cvc.tutorialView show];
+        //UINavigationController *nvc = (UINavigationController*)self.reSideMenuContainerViewController.contentViewController;
+        //ContactsViewController *cvc = [nvc.viewControllers firstObject];
+        NSLog(@"Show tutorial....");
     } else if (indexPath.row == INDEX_ACCOUNT) {        
         UINavigationController *navigationController = (UINavigationController*)self.reSideMenuContainerViewController.contentViewController;
         
