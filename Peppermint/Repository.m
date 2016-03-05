@@ -115,7 +115,7 @@
     [request setSortDescriptors:sortDescriptors];
     
 	NSError *error;
-    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&error];
+    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&error];    
     if(error) {
         NSLog(@"An error occured during DB operation. Err: %@", error);
     }    

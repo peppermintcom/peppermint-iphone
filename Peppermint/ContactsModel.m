@@ -124,6 +124,7 @@
 }
 
 -(void) refreshContactList {
+    
     /*
      *  Load Contacts trigger count variable prevents multiple calls to the APAddressBook framework
      *  during a query is continuing.
@@ -149,7 +150,7 @@
                          }
                      }
                      
-                     if(nameSurname) {
+                     if(nameSurname) {                         
                          nameSurname = [nameSurname capitalizedString];
                          for(NSString *email in contact.emails) {
                              NSString *key = [NSString stringWithFormat:@"%@,%@", nameSurname, email];
@@ -198,7 +199,6 @@
              }
              
              if(--loadContactsTriggerCount > 0) {
-                 //NSLog(@"Load contacts method is recalled %lu times during the previous query", (unsigned long)loadContactsTriggerCount);
                  loadContactsTriggerCount = 0;
                  dispatch_sync(dispatch_get_main_queue(), ^{
                      [self refreshContactList];
@@ -236,15 +236,14 @@
     }];
     self.contactList = [NSMutableArray arrayWithArray:sortedList];
     
-    dispatch_async(LOW_PRIORITY_QUEUE, ^{
-        for(PeppermintContact *peppermintContact in self.contactList) {
-            [peppermintContact addToCoreSpotlightSearch];
-        }
-    });
-    
     emailContactList = smsContactList = nil;
     if(self.filterText.trimmedText.length == 0) {
         nonFilteredContactsArray = [NSArray arrayWithArray:self.contactList];
+        dispatch_async(LOW_PRIORITY_QUEUE, ^{
+            for(PeppermintContact *peppermintContact in nonFilteredContactsArray) {
+                [peppermintContact addToCoreSpotlightSearch];
+            }
+        });
     }
     weakself_create();
     dispatch_sync(dispatch_get_main_queue(), ^{
@@ -302,6 +301,9 @@
         peppermintContact.communicationChannel = CommunicationChannelEmail;
         peppermintContact.nameSurname = nameSurname;
         peppermintContact.communicationChannelAddress = email;
+    }
+    
+    if(!peppermintContact.avatarImage) {
         peppermintContact.avatarImage = [UIImage imageNamed:@"avatar_empty"];
     }
     return peppermintContact;

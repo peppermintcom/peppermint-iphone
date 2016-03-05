@@ -30,17 +30,16 @@ NSString * const CSSearchItemIdentifierJoinString = @".PPM.";
   attibuteSet.contentDescription = LOC(@"Touch to send an audio message", nil);
   attibuteSet.keywords = @[@"Peppermint", contact.nameSurname, contact.communicationChannelAddress, @"email"];
   
-  
-  UIImage *image;
+  UIImage *image = nil;
   if (contact.avatarImage) {
     image = contact.avatarImage;
   } else {
     image = [UIImage imageNamed:@"avatar_empty"];
   }
   
-  NSData *imageData = [NSData dataWithData:UIImagePNGRepresentation(image)];
+  NSData *imageData = [NSData dataWithData:UIImageJPEGRepresentation(image, 0)];
   attibuteSet.thumbnailData = imageData;
-  
+    
   NSString * uniqueKey = [@[contact.nameSurname, contact.communicationChannelAddress] componentsJoinedByString:CSSearchItemIdentifierJoinString];
   
   CSSearchableItem *item = [[CSSearchableItem alloc] initWithUniqueIdentifier:uniqueKey

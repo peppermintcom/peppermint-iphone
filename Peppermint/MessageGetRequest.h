@@ -11,6 +11,7 @@
 @interface MessageGetRequest : JSONModel
 
 @property (strong, nonatomic) NSString<Optional>* recipient;
+@property (strong, nonatomic) NSString<Optional>* sender;
 @property (strong, nonatomic) NSString<Optional>* since;
 
 -(void) setSinceDate:(NSDate*) sinceDate;

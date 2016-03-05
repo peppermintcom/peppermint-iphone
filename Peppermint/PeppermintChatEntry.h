@@ -28,6 +28,6 @@ typedef enum : NSUInteger {
 @property (strong, nonatomic) NSString *messageId;
 @property (assign, nonatomic) PerformedOperation performedOperation;
 
-+(PeppermintChatEntry*) createFromAttribute:(Attribute*) attribute;
++(PeppermintChatEntry*) createFromAttribute:(Attribute*) attribute forLoggedInAccountEmail:(NSString*)email;
 
 @end

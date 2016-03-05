@@ -56,7 +56,7 @@
             recentContact.nameSurname = peppermintContact.nameSurname;
             recentContact.communicationChannelAddress = peppermintContact.communicationChannelAddress;
             recentContact.communicationChannel = [NSNumber numberWithInt:peppermintContact.communicationChannel];
-            recentContact.avatarImageData = UIImagePNGRepresentation(peppermintContact.avatarImage);
+            recentContact.avatarImageData = UIImageJPEGRepresentation(peppermintContact.avatarImage, 0);
         }
         
         NSError *err = [repository endTransaction];

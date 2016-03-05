@@ -332,7 +332,9 @@
 #pragma mark - ChatTableViewCellDelegate
 
 -(void) startedPlayingMessage:(ChatTableViewCell*)chatTableViewCell {
-    self.tableView.scrollEnabled = NO;
+    if(chatTableViewCell) {
+        self.tableView.scrollEnabled = NO;
+    }
 }
 
 -(void) stoppedPlayingMessage:(ChatTableViewCell*)chatTableViewCell {
@@ -341,6 +343,11 @@
         scheduleRefresh = NO;
         [self refreshContent];
     }
+}
+
+-(void) playMessageInCell:(ChatTableViewCell *)chatTableViewCell gotError:(NSError *)error {
+    self.tableView.scrollEnabled = YES;
+    NSLog(@"Error in playing, %@", error);
 }
 
 #pragma mark - Refresh Content

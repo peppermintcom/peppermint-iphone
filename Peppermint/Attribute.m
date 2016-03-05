@@ -16,7 +16,7 @@
 -(NSDate*) createdDate;{
     if( !cachedDate) {
         NSDateFormatter *dateFormatter = [NSDateFormatter new];
-        [dateFormatter setDateFormat:DATE_TIME_FORMAT];
+        [dateFormatter setDateFormat:DATE_TIME_FORMAT_WITH_SECONDS];
         NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:GMT];
         [dateFormatter setTimeZone:gmt];
         NSDate *dateGMT = [dateFormatter dateFromString:self.created];

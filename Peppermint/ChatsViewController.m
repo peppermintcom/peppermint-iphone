@@ -17,7 +17,7 @@
     NSDateFormatter *dateFormatter;
     RecentContactsModel *_recentContactsModel;
     NSString *peppermintContactEmailToNavigate;
-    NSSet* receivedMessagesEmailSet;
+    NSSet* _receivedMessagesEmailSet;
 }
 
 - (void)viewDidLoad {
@@ -30,7 +30,6 @@
     dateFormatter = [NSDateFormatter new];
     [dateFormatter setDateFormat:@"MMM dd"];
     
-    receivedMessagesEmailSet = [ChatModel receivedMessagesEmailSet];
     [self initChatsEmptyView];
     REGISTER();
 }
@@ -38,20 +37,12 @@
 -(void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.chatsEmptyView.hidden = YES;
-    [self.recentContactsModel refreshRecentContactList];
+    [self refreshContent];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     _recentContactsModel = nil;
-}
-
--(RecentContactsModel*) recentContactsModel {
-    if(_recentContactsModel == nil) {
-        _recentContactsModel = [RecentContactsModel new];
-        _recentContactsModel.delegate = self;
-    }
-    return _recentContactsModel;
 }
 
 +(instancetype) createInstance {
@@ -91,7 +82,7 @@
     }
     
     NSString *communicationChannelAddressToShow = peppermintContact.communicationChannelAddress;
-    if([receivedMessagesEmailSet containsObject:communicationChannelAddressToShow]) {
+    if([self.receivedMessagesEmailSet containsObject:communicationChannelAddressToShow]) {
         communicationChannelAddressToShow = LOC(@"Peppermint", @"Peppermint");
     }
     [cell setInformationWithNameSurname:peppermintContact.nameSurname communicationChannelAddress:communicationChannelAddressToShow];
@@ -169,17 +160,24 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
+#pragma mark - Refresh
+
+-(void) refreshContent {
+    _receivedMessagesEmailSet = nil;
+    [self.recentContactsModel refreshRecentContactList];
+}
+
 #pragma mark - New Message Received
 
 SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
-    [self.recentContactsModel refreshRecentContactList];
+    [self refreshContent];
 }
 
 #pragma mark - Navigate to ChatEntry
 
 -(void) scheduleNavigateToChatEntryWithEmail:(NSString*) email {
     peppermintContactEmailToNavigate = email;
-    [self.recentContactsModel refreshRecentContactList];
+    [self refreshContent];
 }
 
 -(void) checkIfShouldNavigate {
@@ -194,6 +192,23 @@ SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
         }
         peppermintContactEmailToNavigate = nil;
     }
+}
+
+#pragma mark - Lazy Loading
+
+-(RecentContactsModel*) recentContactsModel {
+    if(_recentContactsModel == nil) {
+        _recentContactsModel = [RecentContactsModel new];
+        _recentContactsModel.delegate = self;
+    }
+    return _recentContactsModel;
+}
+
+-(NSSet*) receivedMessagesEmailSet {
+    if(_receivedMessagesEmailSet == nil) {
+        _receivedMessagesEmailSet = [ChatModel receivedMessagesEmailSet];
+    }
+    return _receivedMessagesEmailSet;
 }
 
 @end

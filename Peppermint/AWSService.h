@@ -82,7 +82,7 @@
 -(void) setUpRecorderWithAccountId:(NSString*)accountId recorderId:(NSString*)recorderId jwt:(NSString*)jwt;
 -(void)unlinkRecorder:(NSString*)recorderId fromAccount:(NSString*) accountId withJwt:(NSString*)recorderJwt;
 -(void) sendMessageToRecepientEmail:(NSString*)recepientEmail senderEmail:(NSString*)senderEmail transcriptionUrl:(NSString*) transcriptionUrl audioUrl:(NSString*)audioUrl jwt:(NSString*) jwt;
--(void) getMessagesForRecipientAccountId:(NSString*) accountId jwt:(NSString*)jwt since:(NSDate*)sinceDate;
+-(void) getMessagesForAccountId:(NSString*) accountId jwt:(NSString*)jwt since:(NSDate*)sinceDate recipient:(BOOL)isForRecipient;
 -(void) markMessageAsReadWithJwt:(NSString*)jwt messageId:(NSString*)messageId;
 
 @end

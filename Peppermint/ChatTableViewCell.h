@@ -14,6 +14,7 @@
 @protocol ChatTableViewCellDelegate <NSObject>
 -(void) startedPlayingMessage:(ChatTableViewCell*)chatTableViewCell;
 -(void) stoppedPlayingMessage:(ChatTableViewCell*)chatTableViewCell;
+-(void) playMessageInCell:(ChatTableViewCell*)chatTableViewCell gotError:(NSError*)error;
 @end
 
 @interface ChatTableViewCell : BaseTableViewCell

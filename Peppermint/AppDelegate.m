@@ -355,13 +355,20 @@ SUBSCRIBE(DetachSuccess) {
     NSLog(@"peppermintChatEntriesArrayIsUpdated");
 }
 
--(void) peppermintChatEntrySavedWithSuccess:(NSArray<PeppermintChatEntry*>*) savedPeppermintChatEnryArray {
+-(NSArray*) filterNewIncomingMessagesInArray:(NSArray*)peppermintChatEntryArray {
     NSMutableArray *newMessagesArray = [NSMutableArray new];
-    for(PeppermintChatEntry *peppermintChatEntry in savedPeppermintChatEnryArray) {
-        if(peppermintChatEntry.performedOperation == PerformedOperationCreated) {
+    for(PeppermintChatEntry *peppermintChatEntry in peppermintChatEntryArray) {
+        if(peppermintChatEntry.performedOperation == PerformedOperationCreated
+           && peppermintChatEntry.isSeen == NO ) {
             [newMessagesArray addObject:peppermintChatEntry];
         }
     }
+    return newMessagesArray;
+}
+
+-(void) peppermintChatEntrySavedWithSuccess:(NSArray<PeppermintChatEntry*>*) savedPeppermintChatEnryArray {
+    [self hideAppCoverLoadingView];
+    NSArray<PeppermintChatEntry*> *newMessagesArray = [self filterNewIncomingMessagesInArray:savedPeppermintChatEnryArray];
     [self refreshBadgeNumber];
     
     if(peppermintContactToNavigate
@@ -370,11 +377,11 @@ SUBSCRIBE(DetachSuccess) {
         [self navigateToChatEntriesPageForEmail:peppermintContactToNavigate.communicationChannelAddress
                                     nameSurname:peppermintContactToNavigate.nameSurname];
         peppermintContactToNavigate = nil;
-    }
+    } else if (newMessagesArray.count > 0 && !newMessagesArray.firstObject.isSentByMe) {
+        [playingModel playPreparedAudiowithCompetitionBlock:nil];
+    }    
     
     if(newMessagesArray.count > 0) {
-        [playingModel playPreparedAudiowithCompetitionBlock:nil];
-        
         RefreshIncomingMessagesCompletedWithSuccess *refreshIncomingMessagesCompletedWithSuccess = [RefreshIncomingMessagesCompletedWithSuccess new];
         refreshIncomingMessagesCompletedWithSuccess.sender = self;
         refreshIncomingMessagesCompletedWithSuccess.peppermintChatEntriesArray = newMessagesArray;
@@ -407,10 +414,8 @@ SUBSCRIBE(DetachSuccess) {
             [nvc pushViewController:chatsViewController animated:NO];
             [chatsViewController scheduleNavigateToChatEntryWithEmail:email];
         }
-        [self hideAppCoverLoadingView];
     } else {
         NSLog(@"Can not navigate to ChatEntries");
-        [self hideAppCoverLoadingView];
     }
 }
 

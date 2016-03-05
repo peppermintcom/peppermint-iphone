@@ -146,7 +146,7 @@
         [_playingModel pause];
         [self.delegate stoppedPlayingMessage:self];
     } else {
-        [self.delegate startedPlayingMessage:self];
+        [self.delegate startedPlayingMessage:sender ? self : nil];
         if(!_playingModel || !_playingModel.audioPlayer.data ) {
             _playingModel = [PlayingModel alloc];
             self.spinnerView.hidden = NO;
@@ -159,6 +159,8 @@
                     NSData *audioData = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
                     if(!error) {
                         weakSelf.peppermintChatEntry.audio = audioData;
+                    } else {
+                        [self.delegate playMessageInCell:self gotError:error];
                     }
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -168,7 +170,7 @@
                     
                     if([self playAudio:weakSelf.peppermintChatEntry.audio]) {
                         
-#warning "add ChatEntryModel and handle error situation"
+#warning "add ChatEntryModel and handle error situation for save"
                         weakSelf.peppermintChatEntry.isSeen = YES;
                         [[ChatEntryModel new] savePeppermintChatEntry:weakSelf.peppermintChatEntry];
                         

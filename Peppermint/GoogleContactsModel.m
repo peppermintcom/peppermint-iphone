@@ -128,7 +128,7 @@
             googleContact.nameSurname = name;
             googleContact.communicationChannelAddress = email;
             googleContact.communicationChannel = [NSNumber numberWithInt:CommunicationChannelEmail];
-            googleContact.avatarImageData = UIImagePNGRepresentation(image);
+            googleContact.avatarImageData = UIImageJPEGRepresentation(image, 0);
             googleContact.accountEmail = [_fetcherAuthorizer userEmail];
             googleContact.identifier = identifier;
             NSError *err = [repository endTransaction];

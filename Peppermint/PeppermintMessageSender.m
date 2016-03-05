@@ -229,7 +229,7 @@
     //self.gcmToken = nil; -> Do not clear GCM token, cos maybe the app will not be restarted& [recorder init] will need gcmToken
     self.isAccountSetUpWithRecorder = NO;
     self.lastMessageSyncDate = [self defaultLastMessageSyncDate];
-    
+    self.lastMessageSyncDateForSentMessages = [self defaultLastMessageSyncDate];
     
     defaults_remove(DEFAULTS_KEY_CACHED_SENDVOCIEMESSAGE_MODEL);
     defaults_remove(DEFAULTS_KEY_DONT_SHOW_SMS_WARNING);

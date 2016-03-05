@@ -499,7 +499,7 @@
     }];
 }
 
--(void) getMessagesForRecipientAccountId:(NSString*) accountId jwt:(NSString*)jwt since:(NSDate*)sinceDate {
+-(void) getMessagesForAccountId:(NSString*) accountId jwt:(NSString*)jwt since:(NSDate*)sinceDate recipient:(BOOL)isForRecipient {
     NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_MESSAGES];
     NSString *tokenText = [self toketTextForJwt:jwt];
     AFHTTPRequestOperationManager *requestOperationManager = [[AFHTTPRequestOperationManager alloc]
@@ -511,7 +511,11 @@
     requestOperationManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/vnd.api+json"];
     
     MessageGetRequest *messageGetRequest = [MessageGetRequest new];
-    messageGetRequest.recipient = accountId;
+    if(isForRecipient) {
+        messageGetRequest.recipient = accountId;
+    } else {
+        messageGetRequest.sender = accountId;
+    }    
     [messageGetRequest setSinceDate:sinceDate];
     NSDictionary *parameterDictionary = [messageGetRequest toDictionary];
 

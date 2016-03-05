@@ -8,6 +8,7 @@
 
 #import "FastReplyModel.h"
 #import "ContactsModel.h"
+#import "ChatModel.h"
 
 @implementation FastReplyModel
 
@@ -33,7 +34,9 @@
     
     PeppermintContact *contact = [[ContactsModel sharedInstance] matchingPeppermintContactForEmail:email
                                                                                                  nameSurname:nameSurname];
-    contact.hasReceivedMessageOverPeppermint = YES;
+    
+    
+    contact.hasReceivedMessageOverPeppermint = [[ChatModel receivedMessagesEmailSet] containsObject:email];
     [FastReplyModel sharedInstance].peppermintContact = contact;    
     ReplyContactIsAdded *replyContactIsAdded = [ReplyContactIsAdded new];
     replyContactIsAdded.sender = self;

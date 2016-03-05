@@ -235,7 +235,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
     if(indexPath.section == SECTION_FAST_REPLY_CONTACT) {
         ContactTableViewCell *cell = [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
         PeppermintContact *contact = [FastReplyModel sharedInstance].peppermintContact;
-        [cell setAvatarImage:contact.avatarImage]; //Avatar image will be set in tableView:heightForRowAtIndexPath:
+        [cell setAvatarImage:contact.avatarImage];
         [cell setInformationWithNameSurname:contact.nameSurname communicationChannelAddress:LOC(@"Peppermint", @"Peppermint") andIconImage:[UIImage imageNamed:@"icon_reply"]];
         preparedCell = cell;
     } else if (indexPath.section == SECTION_EMPTY_RESULT) {
@@ -296,11 +296,12 @@ SUBSCRIBE(ReplyContactIsAdded) {
             PeppermintContact *fastReplyContact = [FastReplyModel sharedInstance].peppermintContact;
             if(fastReplyContact) {
                 PeppermintContact *activeContact = [[self activeContactList] objectAtIndex:indexPath.row];
+                /*an                
                 if([activeContact isIdenticalForImage:fastReplyContact]
                    && [fastReplyContact.avatarImage isEqual:[UIImage imageNamed:@"avatar_empty"]]
                    && activeContact.avatarImage != nil) {
                     fastReplyContact.avatarImage = activeContact.avatarImage;
-                }
+                }*/
                 if([activeContact equals:fastReplyContact]) {
                     height = 0;
                 }

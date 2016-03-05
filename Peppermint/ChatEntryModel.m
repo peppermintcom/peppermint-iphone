@@ -19,6 +19,7 @@
     AWSService *awsService;
     __block int activeServerQueryCount;
     NSMutableSet *mergedPeppermintChatEntrySet;
+    BOOL queryForIncoming;
 }
 
 -(id) init {
@@ -28,6 +29,7 @@
         awsService = [AWSService new];
         activeServerQueryCount = 0;
         mergedPeppermintChatEntrySet = [NSMutableSet new];
+        queryForIncoming = NO;
     }
     return self;
 }
@@ -83,7 +85,7 @@
         Repository *repository = [Repository beginTransaction];
         for(PeppermintChatEntry *peppermintChatEntry in peppermintChatEntryArray) {
             ChatEntry *chatEntry = nil;
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.messageId == %@", peppermintChatEntry.messageId];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.messageId == %@ OR self.audioUrl == %@", peppermintChatEntry.messageId, peppermintChatEntry.audioUrl];
             NSArray *existingChatEntriesArray = [repository getResultsFromEntity:[ChatEntry class] predicateOrNil:predicate];
             
             if(!existingChatEntriesArray || existingChatEntriesArray.count == 0) {
@@ -133,9 +135,17 @@
         NSLog(@"Could not query Server, please complete login process first.");
     } else {
         ++activeServerQueryCount;
-        [awsService getMessagesForRecipientAccountId:peppermintMessageSender.accountId
-                                                 jwt:peppermintMessageSender.exchangedJwt
-                                               since:peppermintMessageSender.lastMessageSyncDate];
+        if(queryForIncoming) {
+            [awsService getMessagesForAccountId:peppermintMessageSender.accountId
+                                            jwt:peppermintMessageSender.exchangedJwt
+                                          since:peppermintMessageSender.lastMessageSyncDate
+                                      recipient:YES];
+        } else {
+            [awsService getMessagesForAccountId:peppermintMessageSender.accountId
+                                            jwt:peppermintMessageSender.exchangedJwt
+                                          since:peppermintMessageSender.lastMessageSyncDateForSentMessages
+                                      recipient:NO];
+        }
     }
 }
 
@@ -144,6 +154,7 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
         BOOL gotNewQueryRequestWhileServiceCallWasActive = (--activeServerQueryCount > 0);
         activeServerQueryCount = 0;
         if(gotNewQueryRequestWhileServiceCallWasActive) {
+            queryForIncoming = NO;
             [self queryServerForIncomingMessages];
         } else {
             [self processEvent:event];
@@ -158,15 +169,24 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
     CustomContactModel *customContactModel = [CustomContactModel new];
     for (Data *messageData in event.dataOfMessagesArray) {
         messageData.attributes.message_id = messageData.id;
-        PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry createFromAttribute:messageData.attributes];
+        PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry createFromAttribute:messageData.attributes
+                                                                    forLoggedInAccountEmail:peppermintMessageSender.email];
         [mergedPeppermintChatEntrySet addObject:peppermintChatEntry];
         if([peppermintChatEntry.dateCreated laterDate:peppermintMessageSender.lastMessageSyncDate]) {
-            peppermintMessageSender.lastMessageSyncDate = peppermintChatEntry.dateCreated;
+            if(queryForIncoming) {
+                peppermintMessageSender.lastMessageSyncDate = peppermintChatEntry.dateCreated;
+            } else {
+               peppermintMessageSender.lastMessageSyncDateForSentMessages = peppermintChatEntry.dateCreated;
+            }
         }
         
         PeppermintContact *peppermintContact = [contactsModel matchingPeppermintContactForEmail:peppermintChatEntry.contactEmail
                                                                                     nameSurname:peppermintChatEntry.contactNameSurname];
-        peppermintContact.lastMessageDate = peppermintChatEntry.dateCreated;
+        
+        if(!peppermintContact.lastMessageDate
+           || [peppermintChatEntry.dateCreated laterDate:peppermintContact.lastMessageDate]) {
+            peppermintContact.lastMessageDate = peppermintChatEntry.dateCreated;
+        }
         [peppermintContactsSet addObject:peppermintContact];
         [customContactModel save:peppermintContact];
     }
@@ -174,14 +194,15 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
     RecentContactsModel *recentContactsModel = [RecentContactsModel new];
     [recentContactsModel saveMultiple:[peppermintContactsSet allObjects]];
     
-    
-    NSLog(@"___received : %ld objects, Set has %ld objects", event.dataOfMessagesArray.count, mergedPeppermintChatEntrySet.count);
-    
-    
-    
-    
     [peppermintMessageSender save];
+    
+    NSLog(@"existsMoreMessages: %d , queryForIncoming:%d", event.existsMoreMessages, queryForIncoming);
+    
+    
     if(event.existsMoreMessages) {
+        [self queryServerForIncomingMessages];
+    } else if (!queryForIncoming) {
+        queryForIncoming = YES;
         [self queryServerForIncomingMessages];
     } else {
         [self savePeppermintChatEntryArray:[mergedPeppermintChatEntrySet allObjects]];

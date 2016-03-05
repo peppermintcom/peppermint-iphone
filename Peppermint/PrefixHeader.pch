@@ -194,6 +194,7 @@ sharedObject;\
 
 #define CODE_WRONG_CREDENTIALS          123123123
 
+#define DATE_TIME_FORMAT_WITH_SECONDS   @"yyyy-MM-dd HH:mm:ss"
 #define DATE_TIME_FORMAT                @"yyyy-MM-dd HH:mm:ss"
 #define GMT                             @"GMT"
 
