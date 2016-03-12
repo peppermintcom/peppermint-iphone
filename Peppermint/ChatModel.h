@@ -10,6 +10,7 @@
 
 @interface ChatModel : BaseModel
 
++(NSPredicate*) contactEmailPredicate:(NSString*) email;
 +(NSPredicate*) unreadMessagesPredicateForEmail:(NSString*) email;
 +(NSUInteger) unreadMessageCountOfAllChats;
 +(NSSet*) receivedMessagesEmailSet;

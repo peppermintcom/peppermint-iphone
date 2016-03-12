@@ -16,13 +16,13 @@
 
 #pragma mark - Chat Helper Functions
 
-+(NSPredicate*) lastChatEntryPredicateForEmail:(NSString*) email {
-    NSPredicate *lastChatEntryPredicate = [NSPredicate predicateWithFormat:@"self.contactEmail == %@ AND self.lastMessageDate==max(lastMessageDate)", email];
-    return lastChatEntryPredicate;
++(NSPredicate*) contactEmailPredicate:(NSString*) email {
+    NSPredicate *emailPredicate = [NSPredicate predicateWithFormat:@"self.contactEmail ==[cd] %@", email];
+    return emailPredicate;
 }
 
 +(NSPredicate*) unreadMessagesPredicateForEmail:(NSString*) email {
-    NSPredicate *emailPredicate = [NSPredicate predicateWithFormat:@"self.contactEmail == %@", email];
+    NSPredicate *emailPredicate = [ChatModel contactEmailPredicate:email];
     return [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:
                                                         emailPredicate,
                                                         PREDICATE_UNREAD_MESSAGES,
