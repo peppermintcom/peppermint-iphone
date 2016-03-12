@@ -695,6 +695,9 @@ SUBSCRIBE(DetachSuccess) {
         }
     } else if ([error.domain isEqualToString:@"com.google.GIDSignIn"]) {
         switch (error.code) {
+            case -2:
+                message = error.localizedDescription;
+                break;
             default:
                 message = LOC(@"Please connect to the Internet then Log In", @"message");
                 break;

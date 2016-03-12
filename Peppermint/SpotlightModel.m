@@ -37,7 +37,7 @@ NSString * const CSSearchItemIdentifierJoinString = @".PPM.";
     image = [UIImage imageNamed:@"avatar_empty"];
   }
   
-  NSData *imageData = [NSData dataWithData:UIImageJPEGRepresentation(image, 0)];
+  NSData *imageData = [NSData dataWithData:UIImageJPEGRepresentation(image, 1)];
   attibuteSet.thumbnailData = imageData;
     
   NSString * uniqueKey = [@[contact.nameSurname, contact.communicationChannelAddress] componentsJoinedByString:CSSearchItemIdentifierJoinString];

@@ -216,7 +216,7 @@
 
 -(PeppermintContact*) createdContact {
     PeppermintContact *peppermintContact = [PeppermintContact new];
-    peppermintContact.avatarImage = hasCustomAvatarImage ? self.avatarImageView.image : [UIImage imageNamed:@"avatar_empty"];
+    peppermintContact.avatarImage = hasCustomAvatarImage ? self.avatarImageView.image : nil;
     peppermintContact.nameSurname = [[NSArray arrayWithObjects:self.firstNameTextField.text.trimmedText, self.lastNameTextField.text.trimmedText, nil] componentsJoinedByString:@" "];
     return peppermintContact;
 }

@@ -86,7 +86,7 @@
     customContact.nameSurname = peppermintContact.nameSurname;
     customContact.communicationChannelAddress = peppermintContact.communicationChannelAddress;
     customContact.communicationChannel = [NSNumber numberWithInt:peppermintContact.communicationChannel];
-    customContact.avatarImageData = UIImageJPEGRepresentation(peppermintContact.avatarImage, 0);
+    customContact.avatarImageData = UIImageJPEGRepresentation(peppermintContact.avatarImage, 1);
     
     customContact.identifier = peppermintContact.uniqueContactId;
     NSError *err = [repository endTransaction];

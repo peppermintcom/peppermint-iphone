@@ -301,11 +301,7 @@
         peppermintContact.communicationChannel = CommunicationChannelEmail;
         peppermintContact.nameSurname = nameSurname;
         peppermintContact.communicationChannelAddress = email;
-    }
-    
-    if(!peppermintContact.avatarImage) {
-        peppermintContact.avatarImage = [UIImage imageNamed:@"avatar_empty"];
-    }
+    }    
     return peppermintContact;
 }
 

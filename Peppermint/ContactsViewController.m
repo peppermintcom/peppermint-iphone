@@ -49,6 +49,7 @@
     NSUInteger activeRecordingView;
     NSTimer *holdToRecordViewTimer;
     BOOL isContactsPermissionGranted;
+    UIImage *emptyProfileImage;
 }
 
 - (void)viewDidLoad {
@@ -75,6 +76,7 @@
     isAddNewContactModalisUp = NO;
     timer = nil;
     isScreenReady = NO;
+    emptyProfileImage = [UIImage imageNamed:@"avatar_empty"];
     [self.searchContactsTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     REGISTER();
 }
@@ -253,7 +255,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
             if(peppermintContact.avatarImage) {
                 [cell setAvatarImage:peppermintContact.avatarImage];
             } else {
-                cell.avatarImageView.image = [UIImage imageNamed:@"avatar_empty"];
+                [cell setAvatarImage:emptyProfileImage];
             }
             
             NSString *communicationChannelAddressToShow = peppermintContact.communicationChannelAddress;
@@ -300,12 +302,6 @@ SUBSCRIBE(ReplyContactIsAdded) {
             PeppermintContact *fastReplyContact = [FastReplyModel sharedInstance].peppermintContact;
             if(fastReplyContact) {
                 PeppermintContact *activeContact = [[self activeContactList] objectAtIndex:indexPath.row];
-                /*an                
-                if([activeContact isIdenticalForImage:fastReplyContact]
-                   && [fastReplyContact.avatarImage isEqual:[UIImage imageNamed:@"avatar_empty"]]
-                   && activeContact.avatarImage != nil) {
-                    fastReplyContact.avatarImage = activeContact.avatarImage;
-                }*/
                 if([activeContact equals:fastReplyContact]) {
                     height = 0;
                 }
