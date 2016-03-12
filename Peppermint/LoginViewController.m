@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "LoginNavigationViewController.h"
 #import "LoginWithEmailViewController.h"
+#import "ConnectionModel.h"
 
 #define NUMBER_OF_SECTIONS                  4
 #define SECTION_LOGIN_WITH_FACEBOOK         0
@@ -172,27 +173,39 @@
     
     NSLog(@"selectedLoginTableViewCell:atIndexPath:");
     
-    NSDate *nowDate = [NSDate new];
-    if(!referanceDate || [nowDate timeIntervalSinceDate:referanceDate] > 1) {
-        referanceDate = nowDate;
-        
-        NSInteger index = indexPath.section;
-        LoginNavigationViewController *loginNavigationViewController = (LoginNavigationViewController*)self.navigationController;
-        if(index == SECTION_LOGIN_WITH_GOOGLE) {
-            peppermintMessageSender.loginSource = LOGINSOURCE_GOOGLE;
-            [loginNavigationViewController.loginModel performGoogleLogin];
-        } else if (index == SECTION_LOGIN_WITH_FACEBOOK) {
-            peppermintMessageSender.loginSource = LOGINSOURCE_FACEBOOK;
-            [loginNavigationViewController.loginModel performFacebookLogin];
-        } else if (index == SECTION_LOGIN_WITH_EMAIL) {
-            peppermintMessageSender.loginSource = LOGINSOURCE_PEPPERMINT;
-            if([peppermintMessageSender isInMailVerificationProcess]) {
-                [loginNavigationViewController loginRequireEmailVerification];
-            } else {
-                [self performSegueWithIdentifier:SEGUE_LOGIN_WITH_EMAIL sender:self];
+    BOOL isConnectionValid = [[ConnectionModel sharedInstance] isInternetReachable];
+    if(isConnectionValid) {
+        NSDate *nowDate = [NSDate new];
+        if(!referanceDate || [nowDate timeIntervalSinceDate:referanceDate] > 1) {
+            referanceDate = nowDate; //Prevent multiple touch!
+            
+            NSInteger index = indexPath.section;
+            LoginNavigationViewController *loginNavigationViewController = (LoginNavigationViewController*)self.navigationController;
+            if(index == SECTION_LOGIN_WITH_GOOGLE) {
+                peppermintMessageSender.loginSource = LOGINSOURCE_GOOGLE;
+                [loginNavigationViewController.loginModel performGoogleLogin];
+            } else if (index == SECTION_LOGIN_WITH_FACEBOOK) {
+                peppermintMessageSender.loginSource = LOGINSOURCE_FACEBOOK;
+                [loginNavigationViewController.loginModel performFacebookLogin];
+            } else if (index == SECTION_LOGIN_WITH_EMAIL) {
+                peppermintMessageSender.loginSource = LOGINSOURCE_PEPPERMINT;
+                if([peppermintMessageSender isInMailVerificationProcess]) {
+                    [loginNavigationViewController loginRequireEmailVerification];
+                } else {
+                    [self performSegueWithIdentifier:SEGUE_LOGIN_WITH_EMAIL sender:self];
+                }
             }
         }
+    } else {
+        [self showInternetIsNotReachableError];
     }
+}
+
+-(void) showInternetIsNotReachableError {
+    NSString *title = LOC(@"Information", @"Information");
+    NSString *message = LOC(@"You should have internet connection to login", @"Message");
+    NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
+    [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
 }
 
 #pragma mark - WithoutLoginLabelPressed

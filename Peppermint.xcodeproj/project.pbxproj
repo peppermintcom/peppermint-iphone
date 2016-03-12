@@ -716,6 +716,26 @@
 			name = LoginValidateEmailTableViewCell;
 			sourceTree = "<group>";
 		};
+		B1122BD51C94760C00B35BB0 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				B16DA2151BE0F2C100EBF043 /* SlideMenuViewController.h */,
+				B16DA2161BE0F2C100EBF043 /* SlideMenuViewController.m */,
+				B1714CC61BE11EE6004F13A4 /* ReSideMenuContainerViewController.h */,
+				B1714CC71BE11EE6004F13A4 /* ReSideMenuContainerViewController.m */,
+			);
+			name = Navigation;
+			sourceTree = "<group>";
+		};
+		B1122BD61C94762E00B35BB0 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				B1EF40FA1BB8786500042E4B /* TutorialViewController.h */,
+				B1EF40FB1BB8786500042E4B /* TutorialViewController.m */,
+			);
+			name = Tutorial;
+			sourceTree = "<group>";
+		};
 		B11B13511C0C5E8800782FC4 /* ContactInformationTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1262,18 +1282,14 @@
 		B1EF40E11BB7CE5600042E4B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				B1122BD61C94762E00B35BB0 /* Tutorial */,
+				B1122BD51C94760C00B35BB0 /* Navigation */,
 				B16DA2111BE0F1CA00EBF043 /* Base */,
 				B16DA2101BE0F1BE00EBF043 /* Login */,
-				B1EF40FA1BB8786500042E4B /* TutorialViewController.h */,
-				B1EF40FB1BB8786500042E4B /* TutorialViewController.m */,
 				B17B3D5C1BB6A504009B8BC5 /* ContactsViewController.h */,
 				B17B3D5D1BB6A504009B8BC5 /* ContactsViewController.m */,
 				B17B3D621BB6AE8B009B8BC5 /* RecordingViewController.h */,
 				B17B3D631BB6AE8B009B8BC5 /* RecordingViewController.m */,
-				B16DA2151BE0F2C100EBF043 /* SlideMenuViewController.h */,
-				B16DA2161BE0F2C100EBF043 /* SlideMenuViewController.m */,
-				B1714CC61BE11EE6004F13A4 /* ReSideMenuContainerViewController.h */,
-				B1714CC71BE11EE6004F13A4 /* ReSideMenuContainerViewController.m */,
 				D0BA6E881C070A1C00B8D85B /* AddContactViewController.h */,
 				D0BA6E891C070A1C00B8D85B /* AddContactViewController.m */,
 				B1B8018F1C3FF69B00958885 /* AboutViewController.h */,
