@@ -129,83 +129,83 @@
      *  Load Contacts trigger count variable prevents multiple calls to the APAddressBook framework
      *  during a query is continuing.
      */
-     if(++loadContactsTriggerCount == 1) {
-         weakself_create();
-         [addressBook loadContactsOnQueue:ContactsOperationQueue completion:
-          ^(NSArray *contacts, NSError *error)
-         {
-             if(error) {
-                 [self.delegate operationFailure:error];
-             } else {
-                 NSMutableSet *uniqueSet = [NSMutableSet new];
-                 NSMutableArray *peppermintContactsArray = [NSMutableArray new];
-                 for(APContact *contact in contacts) {
-                     NSString *nameSurname = contact.compositeName;
-                     if(!nameSurname) {
-                         NSMutableArray *communicationChannels = [NSMutableArray new];
-                         [communicationChannels addObjectsFromArray:contact.phones];
-                         [communicationChannels addObjectsFromArray:contact.emails];
-                         for (NSString *communicationChannel in communicationChannels) {
-                             nameSurname = communicationChannel;
+    
+    ++loadContactsTriggerCount;
+    weakself_create();
+    [addressBook loadContactsOnQueue:ContactsOperationQueue completion:
+     ^(NSArray *contacts, NSError *error)
+     {
+         NSMutableArray *peppermintContactsArray = [NSMutableArray new];
+         if(error) {
+             [self.delegate operationFailure:error];
+         } else {
+             NSMutableSet *uniqueSet = [NSMutableSet new];
+             for(APContact *contact in contacts) {
+                 NSString *nameSurname = contact.compositeName;
+                 if(!nameSurname) {
+                     NSMutableArray *communicationChannels = [NSMutableArray new];
+                     [communicationChannels addObjectsFromArray:contact.phones];
+                     [communicationChannels addObjectsFromArray:contact.emails];
+                     for (NSString *communicationChannel in communicationChannels) {
+                         nameSurname = communicationChannel;
+                     }
+                 }
+                 
+                 if(nameSurname) {
+                     nameSurname = [nameSurname capitalizedString];
+                     for(NSString *email in contact.emails) {
+                         NSString *key = [NSString stringWithFormat:@"%@,%@", nameSurname, email];
+                         if(self.filterText.length > 0 && ![key.lowercaseString containsString:self.filterText.lowercaseString]) {
+                             continue;
+                         } else if([uniqueSet containsObject:key]) {
+                             continue;
+                         } else {
+                             [uniqueSet addObject:key];
+                             PeppermintContact *peppermintContact = [PeppermintContact new];
+                             peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%@",
+                                                                  CONTACT_PHONEBOOK,contact.recordID];
+                             peppermintContact.communicationChannel = CommunicationChannelEmail;
+                             peppermintContact.communicationChannelAddress = email;
+                             peppermintContact.nameSurname = nameSurname;
+                             peppermintContact.avatarImage = contact.thumbnail;
+                             [peppermintContactsArray addObject:peppermintContact];
                          }
                      }
                      
-                     if(nameSurname) {                         
-                         nameSurname = [nameSurname capitalizedString];
-                         for(NSString *email in contact.emails) {
-                             NSString *key = [NSString stringWithFormat:@"%@,%@", nameSurname, email];
+                     for(NSString *rawPhone in contact.phones) {
+                         NSString *phone = [self filterUnwantedChars:rawPhone];
+                         if(phone.length > 0) {
+                             NSString *key = [NSString stringWithFormat:@"%@,%@", nameSurname, phone];
                              if(self.filterText.length > 0 && ![key.lowercaseString containsString:self.filterText.lowercaseString]) {
                                  continue;
                              } else if([uniqueSet containsObject:key]) {
                                  continue;
                              } else {
                                  [uniqueSet addObject:key];
-                                 PeppermintContact *peppermintContact = [PeppermintContact new];
-                                 peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%@",
-                                                                      CONTACT_PHONEBOOK,contact.recordID];
-                                 peppermintContact.communicationChannel = CommunicationChannelEmail;
-                                 peppermintContact.communicationChannelAddress = email;
-                                 peppermintContact.nameSurname = nameSurname;
-                                 peppermintContact.avatarImage = contact.thumbnail;
-                                 [peppermintContactsArray addObject:peppermintContact];
                              }
-                         }
-
-                         for(NSString *rawPhone in contact.phones) {
-                             NSString *phone = [self filterUnwantedChars:rawPhone];
-                             if(phone.length > 0) {
-                                 NSString *key = [NSString stringWithFormat:@"%@,%@", nameSurname, phone];
-                                 if(self.filterText.length > 0 && ![key.lowercaseString containsString:self.filterText.lowercaseString]) {
-                                     continue;
-                                 } else if([uniqueSet containsObject:key]) {
-                                     continue;
-                                 } else {
-                                     [uniqueSet addObject:key];
-                                 }
-                                 PeppermintContact *peppermintContact = [PeppermintContact new];
-                                 peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%@",
-                                                                      CONTACT_PHONEBOOK,contact.recordID];
-                                 peppermintContact.communicationChannel = CommunicationChannelSMS;
-                                 peppermintContact.communicationChannelAddress = phone;
-                                 peppermintContact.nameSurname = nameSurname;
-                                 peppermintContact.avatarImage = contact.thumbnail;
-                                 [peppermintContactsArray addObject:peppermintContact];
-                             }
+                             PeppermintContact *peppermintContact = [PeppermintContact new];
+                             peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%@",
+                                                                  CONTACT_PHONEBOOK,contact.recordID];
+                             peppermintContact.communicationChannel = CommunicationChannelSMS;
+                             peppermintContact.communicationChannelAddress = phone;
+                             peppermintContact.nameSurname = nameSurname;
+                             peppermintContact.avatarImage = contact.thumbnail;
+                             [peppermintContactsArray addObject:peppermintContact];
                          }
                      }
                  }
-                 
-                 [weakSelf callContactsDelegateWithArray:peppermintContactsArray];
              }
-             
-             if(--loadContactsTriggerCount > 0) {
-                 loadContactsTriggerCount = 0;
-                 dispatch_sync(dispatch_get_main_queue(), ^{
-                     [self refreshContactList];
-                 });
-             }
-         }];
-     }
+         }
+         
+         if(--loadContactsTriggerCount > 0) {
+             loadContactsTriggerCount = 0;
+             dispatch_sync(dispatch_get_main_queue(), ^{
+                 [self refreshContactList];
+             });
+         } else {
+             [weakSelf callContactsDelegateWithArray:peppermintContactsArray];
+         }
+     }];
 }
 
 -(void) callContactsDelegateWithArray:(NSArray*)contactsFromContacBook {
