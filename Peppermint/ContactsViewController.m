@@ -101,12 +101,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if([self checkIfuserIsLoggedIn]) {
-        if(self.tutorialView) {
-            [self.tutorialView removeFromSuperview];
-            self.tutorialView = nil;
-        }
-        [self initTutorialView];
-        [self registerKeyboardActions];
+        [self performTutorialViewProcess];
         [self hideHoldToRecordInfoView];
         if(isAddNewContactModalisUp) {
             isAddNewContactModalisUp = !isAddNewContactModalisUp;
@@ -120,6 +115,15 @@ SUBSCRIBE(ReplyContactIsAdded) {
             [self.recentContactsModel refreshRecentContactList];
         }
     }
+}
+
+-(void) performTutorialViewProcess {
+    if(self.tutorialView) {
+        [self.tutorialView removeFromSuperview];
+        self.tutorialView = nil;
+    }
+    [self initTutorialView];
+    [self registerKeyboardActions];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
