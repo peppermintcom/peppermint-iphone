@@ -867,8 +867,6 @@ SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
         _contactsModel.delegate = self;
         [_contactsModel setup];
         [_contactsModel refreshContactList];
-    } else if (_contactsModel.contactList.count == 0) {
-        [_contactsModel setup];
     }
     return _contactsModel;
 }

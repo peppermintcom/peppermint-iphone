@@ -20,9 +20,9 @@ PODS:
   - AFNetworking/UIKit (2.6.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - APAddressBook (0.1.11):
-    - APAddressBook/Core (= 0.1.11)
-  - APAddressBook/Core (0.1.11)
+  - APAddressBook (0.1.12):
+    - APAddressBook/Core (= 0.1.12)
+  - APAddressBook/Core (0.1.12)
   - Base64 (1.0.1)
   - Bolts (1.4.0):
     - Bolts/AppLinks (= 1.4.0)
@@ -110,7 +110,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
-  - APAddressBook
+  - APAddressBook (= 0.1.12)
   - Base64
   - Crashlytics (~> 3.3.1)
   - EasyMailSender
@@ -140,7 +140,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
-  APAddressBook: 2c949367b190a993d2cce769a3b20bce8bcf000c
+  APAddressBook: b4b07d46e55f016889cc5a6e729e5d4a50f9ecea
   Base64: 4924bf3ca6fa559a5161ef717291bd450eb7bd1a
   Bolts: 0e9bce58b9b9f5e8a7a4d47b16d2fabec289072b
   Crashlytics: 41c082440d2e14da444186fff65e79c0b4b35d4c

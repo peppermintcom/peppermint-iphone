@@ -14,12 +14,13 @@
 #import "RecentContactsModel.h"
 #import "ContactsModel.h"
 #import "CustomContactModel.h"
+#import "ChatModel.h"
 
 @implementation ChatEntryModel {
     AWSService *awsService;
     __block int activeServerQueryCount;
     NSMutableSet *mergedPeppermintChatEntrySet;
-    BOOL queryForIncoming;
+    __block BOOL queryForIncoming;
 }
 
 -(id) init {
@@ -36,7 +37,7 @@
 
 -(void) refreshPeppermintChatEntriesForContactEmail:(NSString*) contactEmail {
     dispatch_async(LOW_PRIORITY_QUEUE, ^{
-        NSPredicate *chatPredicate = [NSPredicate predicateWithFormat:@"self.contactEmail == %@", contactEmail];
+        NSPredicate *chatPredicate = [ChatModel contactEmailPredicate:contactEmail];
         Repository *repository = [Repository beginTransaction];
         NSArray *chatEntryArray = [repository getResultsFromEntity:[ChatEntry class]
                                                     predicateOrNil:chatPredicate

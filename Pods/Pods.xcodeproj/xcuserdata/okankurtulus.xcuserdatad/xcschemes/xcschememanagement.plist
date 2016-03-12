@@ -142,11 +142,6 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>69BF9C954B82732CC113C2769C9CC76E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>76196FDB3B386F778EE902059A85171A</key>
 		<dict>
 			<key>primary</key>
@@ -183,6 +178,11 @@
 			<true/>
 		</dict>
 		<key>CCBAA90C7355DCFA64AF34594666598F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CD9F644D6AE65EA2A7309F166775FA39</key>
 		<dict>
 			<key>primary</key>
 			<true/>
