@@ -25,12 +25,18 @@
     return explodingView;
 }
 
++(BOOL) isBoundSizeValid:(CGRect)bound {
+    return bound.size.width > 0 && bound.size.height > 0;
+}
+
 +(UIImage*) makeSnapShotofView:(UIView*) view {
-#warning "Consider this function to be called when the view image is not rendered. What to do then?"
-    UIGraphicsBeginImageContext(view.bounds.size);
-    [view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+    UIImage *viewImage = [[UIImage alloc] init];
+    if(view && [ExplodingView isBoundSizeValid:view.bounds]) {
+        UIGraphicsBeginImageContext(view.bounds.size);
+        [view.layer renderInContext:UIGraphicsGetCurrentContext()];
+        viewImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
     return viewImage;
 }
 
@@ -56,10 +62,13 @@ float randomFloat()
 
 - (UIImage *)imageFromLayer:(CALayer *)layer
 {
-    UIGraphicsBeginImageContext([layer frame].size);
-    [layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *outputImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+    UIImage *outputImage = [UIImage new];
+    if([ExplodingView isBoundSizeValid:layer.bounds]) {
+        UIGraphicsBeginImageContext([layer frame].size);
+        [layer renderInContext:UIGraphicsGetCurrentContext()];
+        outputImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
     return outputImage;
 }
 

@@ -102,6 +102,7 @@
 }
 
 -(void) touchDownCancelled:(id) sender event:(UIEvent *)event {
+    isCellAvailableToHaveUserInteraction = YES;
     [self.delegate touchDownCancelledWithEvent:event];
 }
 

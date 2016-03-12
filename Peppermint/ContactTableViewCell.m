@@ -215,7 +215,7 @@
         [timer invalidate];
     timer = nil;
     [self applyNonSelectedStyle];
-    //isCellAvailableToHaveUserInteraction = YES;
+    isCellAvailableToHaveUserInteraction = YES;
     [self.delegate didCancelItemSelectionOnIndexpath:self.indexPath location:touchBeginPoint];
 }
 

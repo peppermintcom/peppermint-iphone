@@ -33,7 +33,7 @@
 "Email Contacts" = "Email Contacts";
 "Phone Contacts" = "Phone Contacts";
 "Enter a filter text" = "Your selection can only work with a filter text. Please type a filter text";
-"Mic Access rights explanation" = "To be able to use Peppermint you should give access to your microphone. You can change the access rights from your phone settings.";
+"Mic Access rights explanation" = "You should enable microphone access for recording.";
 "Settings URL is not supported" = "Your iOS version does not support redirecting to the Settings Page. Please go to the Home Screen -> Settings -> Peppermint to change permissions";
 "Settings" = "Settings";
 "Recording is cut" = "Your voice recording was stopped. Would you like to send it?";
@@ -150,3 +150,4 @@
 "Reply" = "Reply";
 "Please try again later" = "Please try again later";
 "Mandrill message can not be delivered" = "Peppermint could not deliver verification email. Please check your inbox settings";
+"Enable" = "Enable";

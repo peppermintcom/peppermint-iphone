@@ -109,8 +109,8 @@
 -(void) microphoneAccessRightsAreNotSupplied {
     NSString *title = LOC(@"Information", @"Title Message");
     NSString *message = LOC(@"Mic Access rights explanation", @"Directives to give access rights") ;
-    NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
-    NSString *settingsButtonTitle = LOC(@"Settings", @"Settings Message");
+    NSString *cancelButtonTitle = LOC(@"Cancel", @"Cancel Message");
+    NSString *settingsButtonTitle = LOC(@"Enable", @"Enable message");
     [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:settingsButtonTitle, nil] show];
 }
 

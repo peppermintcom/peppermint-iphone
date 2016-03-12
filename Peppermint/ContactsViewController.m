@@ -480,7 +480,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
             hud.yOffset = location.y - center;
             hud.removeFromSuperViewOnHide = YES;
             [hud hide:YES afterDelay:WARN_TIME/2];
-        } else if ([RecordingModel checkRecordPermissions]) {
+        } else {
             sendVoiceMessageModel.selectedPeppermintContact = selectedContact;
             self.recordingView.sendVoiceMessageModel = sendVoiceMessageModel;
             self.reSideMenuContainerViewController.panGestureEnabled = NO;

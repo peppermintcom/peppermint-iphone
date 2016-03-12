@@ -60,7 +60,10 @@ typedef enum : NSUInteger {
 #pragma mark - Record Methods
 
 -(BOOL) presentWithAnimationInRect:(CGRect)rect onPoint:(CGPoint) point {
-    if(recordingViewStatus == RecordingViewStatusInit) {
+    
+    if(![RecordingModel checkRecordPermissions]) {
+        [self microphoneAccessRightsAreNotSupplied];
+    } else if(recordingViewStatus == RecordingViewStatusInit) {
         [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
         recordingViewStatus = RecordingViewStatusPresented;
         assert(self.sendVoiceMessageModel != nil);
@@ -165,8 +168,8 @@ typedef enum : NSUInteger {
 -(void) microphoneAccessRightsAreNotSupplied {
     NSString *title = LOC(@"Information", @"Title Message");
     NSString *message = LOC(@"Mic Access rights explanation", @"Directives to give access rights") ;
-    NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
-    NSString *settingsButtonTitle = LOC(@"Settings", @"Settings Message");
+    NSString *cancelButtonTitle = LOC(@"Cancel", @"Cancel Message");
+    NSString *settingsButtonTitle = LOC(@"Enable", @"Enable message");
     [[[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:settingsButtonTitle, nil] show];
 }
 
@@ -309,7 +312,7 @@ typedef enum : NSUInteger {
             default:
                 break;
         }
-    } if ([alertView.message isEqualToString:LOC(@"Time is up", @"Max time reached information message")]) {
+    } else if ([alertView.message isEqualToString:LOC(@"Time is up", @"Max time reached information message")]) {
         switch (buttonIndex) {
             case ALERT_BUTTON_INDEX_CANCEL:
                 [self dissmissWithExplode];
