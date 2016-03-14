@@ -12,25 +12,25 @@
 @implementation PeppermintChatEntry
 
 
-+(PeppermintChatEntry*) createFromAttribute:(Attribute*) attribute forLoggedInAccountEmail:(NSString*)email {
-    NSAssert(email.length > 0, @"LoggedInAccount email is empty!");
++(PeppermintChatEntry*) createFromAttribute:(Attribute*) attribute isIncomingMessage:(BOOL)isIncoming {
+    
     PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry new];
     peppermintChatEntry.audio = nil;
     peppermintChatEntry.audioUrl = attribute.audio_url;
     peppermintChatEntry.dateCreated = attribute.createdDate;
     
-    if([attribute.sender_email isEqualToString:attribute.recipient_email]
-       || [attribute.recipient_email isEqualToString:email]) {
+    if(isIncoming) {
+        peppermintChatEntry.contactNameSurname = attribute.sender_name;
         peppermintChatEntry.contactEmail = attribute.sender_email;
         peppermintChatEntry.isSentByMe = NO;
         peppermintChatEntry.isSeen = attribute.read.length > 0;
-    } else if([attribute.sender_email isEqualToString:email]) {
+    } else {
+        peppermintChatEntry.contactNameSurname = attribute.recipient_email;
         peppermintChatEntry.contactEmail = attribute.recipient_email;
         peppermintChatEntry.isSentByMe = YES;
         peppermintChatEntry.isSeen = YES;
     }
     
-    peppermintChatEntry.contactNameSurname = attribute.sender_name;
     peppermintChatEntry.duration = attribute.duration.integerValue;
     peppermintChatEntry.messageId = attribute.message_id;
     
@@ -42,12 +42,15 @@
         return NO;
     }
     PeppermintChatEntry * other = (PeppermintChatEntry *)object;
-    BOOL doesMessageIdsMatch = self.messageId && other.messageId && [other.messageId isEqualToString:self.messageId];
-    return [other.audioUrl isEqualToString:self.audioUrl] || doesMessageIdsMatch;
+    BOOL isSentByMeMatches = self.isSentByMe == other.isSentByMe;
+    BOOL doesMessageIdsMatch = !self.messageId || !other.messageId || [other.messageId isEqualToString:self.messageId];
+    BOOL isAudioUrlMatches = self.audioUrl.length == 0 || other.audioUrl.length == 0 || [self.audioUrl isEqualToString:other.audioUrl];
+    BOOL isAudioMatches = !self.audio || !other.audio || self.audio == other.audio;
+    return isSentByMeMatches && doesMessageIdsMatch && isAudioUrlMatches && isAudioMatches;
 }
 
 - (NSUInteger)hash {
-    NSString *uniqueString = [NSString stringWithFormat:@"%@%@", self.audioUrl, self.messageId];
+    NSString *uniqueString = [NSString stringWithFormat:@"%@%@%@%d", self.audioUrl, self.messageId, self.audio, self.isSentByMe];
     NSUInteger hashValue = [uniqueString hash];
     return hashValue;
 }

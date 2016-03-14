@@ -87,9 +87,15 @@
         for(PeppermintChatEntry *peppermintChatEntry in peppermintChatEntryArray) {
             ChatEntry *chatEntry = nil;
             NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                                      @"((self.messageId.length > 0 AND self.messageId == %@) OR self.audioUrl == %@)"
+                                      @"((self.messageId.length==0 OR self.messageId == %@) \
+                                      AND (self.audioUrl.length==0 OR self.audioUrl == %@) \
+                                      AND (self.audio==NULL OR self.audio == %@) \
+                                      AND (self.isSentByMe == %d))"
                                       , peppermintChatEntry.messageId
-                                      , peppermintChatEntry.audioUrl];
+                                      , peppermintChatEntry.audioUrl
+                                      , peppermintChatEntry.audio
+                                      , peppermintChatEntry.isSentByMe];
+            
             NSArray *existingChatEntriesArray = [repository getResultsFromEntity:[ChatEntry class] predicateOrNil:predicate];
             
             if(!existingChatEntriesArray || existingChatEntriesArray.count == 0) {
@@ -131,7 +137,7 @@
 
 #pragma mark - Server Query
 
--(void) queryServerForIncomingMessages {
+-(void) queryServerForIncomingMessages {    
     PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
     BOOL canQueryServer = peppermintMessageSender.accountId.length > 0 && peppermintMessageSender.exchangedJwt.length > 0;
     
@@ -177,8 +183,8 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
     CustomContactModel *customContactModel = [CustomContactModel new];
     for (Data *messageData in event.dataOfMessagesArray) {
         messageData.attributes.message_id = messageData.id;
-        PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry createFromAttribute:messageData.attributes
-                                                                    forLoggedInAccountEmail:peppermintMessageSender.email];
+        PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry createFromAttribute:messageData.attributes isIncomingMessage:queryForIncoming];
+        
         [mergedPeppermintChatEntrySet addObject:peppermintChatEntry];
         if([peppermintChatEntry.dateCreated laterDate:peppermintMessageSender.lastMessageSyncDate]) {
             if(queryForIncoming) {
@@ -187,7 +193,6 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
                peppermintMessageSender.lastMessageSyncDateForSentMessages = peppermintChatEntry.dateCreated;
             }
         }
-        
         PeppermintContact *peppermintContact = [contactsModel matchingPeppermintContactForEmail:peppermintChatEntry.contactEmail
                                                                                     nameSurname:peppermintChatEntry.contactNameSurname];
         
@@ -203,9 +208,7 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
     [recentContactsModel saveMultiple:[peppermintContactsSet allObjects]];
     
     [peppermintMessageSender save];
-    
     NSLog(@"existsMoreMessages: %d , queryForIncoming:%d", event.existsMoreMessages, queryForIncoming);
-    
     
     if(event.existsMoreMessages) {
         [self queryServerForIncomingMessages];
