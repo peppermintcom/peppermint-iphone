@@ -10,10 +10,6 @@
 #import "Tolo.h"
 #import "Events.h"
 
-#define EVENT                   @"Event"
-#define HOLD_LIMIT              0.050
-#define SWIPE_SPEED_LIMIT       20
-
 #define SIZE_LARGE              17
 #define SIZE_SMALL              13
 
@@ -22,16 +18,11 @@
 
 @interface ContactTableViewCell ()
 @property (weak, nonatomic) IBOutlet UILabel *informationLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *rightIconImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *informationLabelRightConstraint;
 
 @end
 
 @implementation ContactTableViewCell {
-    CGPoint touchBeginPoint;
-    NSTimer *timer;
-    UIView *rootView;
-    BOOL isCellAvailableToHaveUserInteraction;
     NSString *nameSurname;
     NSString *cellCommunicationChannelAddress;
     NSUInteger sizeLarge;
@@ -40,16 +31,29 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.recordingGestureButton.delegate = self;
     self.avatarImageView.layer.cornerRadius = 5;
     self.avatarImageView.layer.borderColor  = [UIColor whiteColor].CGColor;
     self.cellSeperatorView.backgroundColor = [UIColor cellSeperatorGray];
-    timer = nil;
-    rootView = [UIApplication sharedApplication].keyWindow.rootViewController.view;
-    isCellAvailableToHaveUserInteraction = YES;
+    
     nameSurname = @"";
     cellCommunicationChannelAddress = @"";
     sizeLarge = SIZE_LARGE;
     sizeSmall = SIZE_SMALL;
+    
+    [self initRecentContactViews];
+}
+
+-(void) initRecentContactViews {
+    int fontSize = 12;
+#warning "Check font size&update to SIZE_SMALL if possible?"
+    self.rightDateLabel.font = [UIFont openSansSemiBoldFontOfSize:fontSize];
+    self.rightDateLabel.textColor = [UIColor textFieldTintGreen];
+    
+    self.rightMessageCounterLabel.font = [UIFont openSansSemiBoldFontOfSize:fontSize];
+    self.rightMessageCounterLabel.backgroundColor = [UIColor viaInformationLabelTextGreen];
+    self.rightMessageCounterLabel.textColor = [UIColor whiteColor];
+    self.rightMessageCounterLabel.layer.cornerRadius = 4;
 }
 
 #pragma mark - Arrange Font size and Place Text
@@ -77,8 +81,9 @@
     cellCommunicationChannelAddress = contactCommunicationChannelAddress;    
     NSAssert(nameSurname.length > 0 && cellCommunicationChannelAddress.length > 0, @"NameSurname&communicationchannel address lengths must be longer than 0");
     
-    self.rightIconImageView.hidden = image == nil;
-    self.rightIconImageView.image = image;
+    self.rightDateLabel.text = @"";
+    self.rightMessageCounterLabel.text = @"";
+    self.rightMessageCounterLabel.hidden = YES;
     self.informationLabelRightConstraint.constant = image == nil ? INFORMATION_LABEL_RIGHT_CONSTANT_MIN : INFORMATION_LABEL_RIGHT_CONSTANT;
     
     [self calculateCorrectSizeForFonts];
@@ -142,81 +147,36 @@
     return result;
 }
 
--(IBAction) touchDownOnIndexPath:(id) sender event:(UIEvent *)event {
-    if([self isAllowedToHandleTouch] && isCellAvailableToHaveUserInteraction) {
-        isCellAvailableToHaveUserInteraction = NO;
+#pragma mark - RecordingGestureButtonDelegate
+
+-(void) touchDownBeginOnIndexPath:(id) sender event:(UIEvent *)event {
+    if([self isAllowedToHandleTouch]) {
         [self applySelectedStyle];
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:event forKey:EVENT];
-        touchBeginPoint = CGPointMake(0, 0);
-        timer = [NSTimer scheduledTimerWithTimeInterval:HOLD_LIMIT target:self selector:@selector(touchingHold) userInfo:userInfo repeats:NO];
     }
 }
 
--(void) touchingHold {
-    if(!isCellAvailableToHaveUserInteraction) {
-        UIEvent *event = [timer.userInfo valueForKey:EVENT];
-        [timer invalidate];
-        UITouch *touch = [[event allTouches] anyObject];
-        touchBeginPoint = [touch locationInView:rootView];
-        [self.delegate didBeginItemSelectionOnIndexpath:self.indexPath location:touchBeginPoint];
-    }
+-(void) touchHoldSuccessOnLocation:(CGPoint) touchBeginPoint {
+    [self.delegate didBeginItemSelectionOnIndexpath:self.indexPath location:touchBeginPoint];
 }
 
--(IBAction) touchDragging:(id)sender event:(UIEvent *)event {
-    if(timer) {
-        UITouch *touch = [[event allTouches] anyObject];
-        CGPoint location = [touch locationInView:rootView];
-        CGRect bounds = UIScreen.mainScreen.bounds;
-        
-        BOOL speedIsInLimit = YES;
-        if(touchBeginPoint.x != 0 || touchBeginPoint.y != 0) {
-            CGFloat xDist = (location.x - touchBeginPoint.x);
-            CGFloat yDist = (location.y - touchBeginPoint.y);
-            CGFloat speed = sqrt((xDist * xDist) + (yDist * yDist));
-            touchBeginPoint = location;
-            speedIsInLimit = speed <= SWIPE_SPEED_LIMIT;
-        }
-        
-        BOOL isOutOfBounds = bounds.origin.x >= location.x || bounds.origin.y >= location.y
-        || bounds.size.width <= location.x || bounds.size.height <= location.y;
-        
-        if(!isCellAvailableToHaveUserInteraction && (!speedIsInLimit || isOutOfBounds)) {
-            if(timer.isValid)
-                [timer invalidate];
-            timer = nil;
-            [self applyNonSelectedStyle];
-            isCellAvailableToHaveUserInteraction = YES;
-            [self.delegate didCancelItemSelectionOnIndexpath:self.indexPath location:touchBeginPoint];
-        }
-    }
-}
-
--(IBAction) touchDownFinishedOnIndexPath:(id) sender event:(UIEvent *)event {
-    if(!isCellAvailableToHaveUserInteraction) {
-        isCellAvailableToHaveUserInteraction = YES;
-        if(timer != nil) {
-            [self applyNonSelectedStyle];
-            if(timer.isValid)  {
-                [timer invalidate];
-                timer = nil;
-                UITouch *touch = [[event allTouches] anyObject];
-                CGPoint endPoint = [touch locationInView:rootView];
-                [self.delegate didShortTouchOnIndexPath:self.indexPath location:endPoint];
-            } else {
-                timer = nil;
-                [self.delegate didFinishItemSelectionOnIndexPath:self.indexPath location:touchBeginPoint];
-            }
-        }
-    }
-}
-
--(IBAction) touchDownCancelledOnIndexPath:(id) sender event:(UIEvent *)event {
-    if(timer.isValid)
-        [timer invalidate];
-    timer = nil;
+-(void) touchSwipeActionOccuredOnLocation:(CGPoint) location {
     [self applyNonSelectedStyle];
-    isCellAvailableToHaveUserInteraction = YES;
-    [self.delegate didCancelItemSelectionOnIndexpath:self.indexPath location:touchBeginPoint];
+    [self.delegate didCancelItemSelectionOnIndexpath:self.indexPath location:location];
+}
+
+-(void) touchShortTapActionOccuredOnLocation:(CGPoint) location {
+    [self applyNonSelectedStyle];
+    [self.delegate didShortTouchOnIndexPath:self.indexPath location:location];
+}
+
+-(void) touchCompletedAsExpectedWithSuccessOnLocation:(CGPoint) location {
+    [self applyNonSelectedStyle];
+    [self.delegate didFinishItemSelectionOnIndexPath:self.indexPath location:location];
+}
+
+-(void) touchDownCancelledWithEvent:(UIEvent *)event location:(CGPoint) location {
+    [self applyNonSelectedStyle];
+    [self.delegate didCancelItemSelectionOnIndexpath:self.indexPath location:location];
 }
 
 @end

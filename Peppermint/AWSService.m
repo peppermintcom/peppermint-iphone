@@ -559,6 +559,9 @@
     
     [requestOperationManager POST:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"Message with id:%@ is marked as read!", messageId);
+        MessageIsMarkedAsRead *messageIsMarkedAsRead = [MessageIsMarkedAsRead new];
+        messageIsMarkedAsRead.sender = self;
+        PUBLISH(messageIsMarkedAsRead);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //[self failureWithOperation:operation andError:error];
         NSLog(@"Message with id:%@ could not be marked as read!", messageId);

@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -36,45 +37,50 @@ via okankurtulus@gmail.com</string>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_all" translatesAutoresizingMaskIntoConstraints="NO" id="c6S-OH-FxE">
-                        <rect key="frame" x="379" y="21" width="14" height="14"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Oct 18" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LTB-nu-Tni">
+                        <rect key="frame" x="353" y="10" width="50" height="17"/>
                         <constraints>
-                            <constraint firstAttribute="height" priority="750" constant="14" id="Hc4-dD-zPb"/>
-                            <constraint firstAttribute="width" priority="750" constant="14" id="cAv-2g-5xj"/>
+                            <constraint firstAttribute="width" constant="50" id="1P0-IE-Wu4"/>
+                            <constraint firstAttribute="height" constant="17" id="d08-ys-ors"/>
                         </constraints>
-                    </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9h8-TZ-qu8" userLabel="CellActionButton">
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AmQ-9E-NNX">
+                        <rect key="frame" x="378" y="29" width="25" height="15"/>
+                        <color key="backgroundColor" red="0.0" green="0.52760416669999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="25" id="oD1-0h-yXZ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EDQ-8r-4xP" customClass="RecordingGestureButton">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
-                        <gestureRecognizers/>
-                        <state key="normal">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="touchDownCancelledOnIndexPath:event:" destination="8e4-VB-87A" eventType="touchCancel" id="u68-II-Q7w"/>
-                            <action selector="touchDownFinishedOnIndexPath:event:" destination="8e4-VB-87A" eventType="touchUpInside" id="jwa-Jr-a9d"/>
-                            <action selector="touchDownFinishedOnIndexPath:event:" destination="8e4-VB-87A" eventType="touchUpOutside" id="wzB-As-aRi"/>
-                            <action selector="touchDownOnIndexPath:event:" destination="8e4-VB-87A" eventType="touchDown" id="AVs-TW-Att"/>
-                            <action selector="touchDragging:event:" destination="8e4-VB-87A" eventType="touchDragOutside" id="Skj-V1-xH0"/>
-                            <action selector="touchDragging:event:" destination="8e4-VB-87A" eventType="touchDragInside" id="sDg-KG-stx"/>
-                        </connections>
                     </button>
                 </subviews>
                 <gestureRecognizers/>
                 <constraints>
-                    <constraint firstItem="9h8-TZ-qu8" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" priority="750" id="2Fu-b4-URx"/>
                     <constraint firstAttribute="bottom" secondItem="JcO-0x-7sn" secondAttribute="bottom" priority="750" constant="4" id="4JV-3t-VEv"/>
                     <constraint firstItem="aEQ-5s-Sav" firstAttribute="top" secondItem="JcO-0x-7sn" secondAttribute="bottom" priority="750" constant="9" id="4rl-qE-y12"/>
-                    <constraint firstAttribute="trailing" secondItem="c6S-OH-FxE" secondAttribute="trailing" priority="750" constant="21" id="B63-1D-etj"/>
+                    <constraint firstItem="LTB-nu-Tni" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" constant="10" id="6Ud-7V-ejS"/>
                     <constraint firstAttribute="trailing" secondItem="aEQ-5s-Sav" secondAttribute="trailing" priority="750" id="C2v-Bc-bQy"/>
-                    <constraint firstAttribute="trailing" secondItem="9h8-TZ-qu8" secondAttribute="trailing" priority="750" id="G3Q-78-E0j"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="LTB-nu-Tni" secondAttribute="trailing" constant="11" id="DJ9-7Z-QOQ"/>
+                    <constraint firstAttribute="trailing" secondItem="LTB-nu-Tni" secondAttribute="trailing" constant="11" id="IWJ-Pf-Gyo"/>
                     <constraint firstAttribute="trailing" secondItem="JcO-0x-7sn" secondAttribute="trailing" priority="750" constant="35" id="KEL-EX-raH"/>
+                    <constraint firstItem="LTB-nu-Tni" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="topMargin" constant="11" id="L1G-AX-o3V"/>
+                    <constraint firstAttribute="bottom" secondItem="EDQ-8r-4xP" secondAttribute="bottom" id="RLY-JJ-A1N"/>
                     <constraint firstItem="aEQ-5s-Sav" firstAttribute="leading" secondItem="ejf-Un-hy5" secondAttribute="leading" priority="750" id="T1O-ci-IwN"/>
-                    <constraint firstItem="c6S-OH-FxE" firstAttribute="leading" secondItem="JcO-0x-7sn" secondAttribute="trailing" priority="750" id="TXC-C5-RF4"/>
+                    <constraint firstItem="EDQ-8r-4xP" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" id="TVD-yB-5x8"/>
                     <constraint firstItem="1G5-fy-gLb" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" priority="750" constant="10" id="bDo-0S-BDQ"/>
-                    <constraint firstItem="9h8-TZ-qu8" firstAttribute="leading" secondItem="ejf-Un-hy5" secondAttribute="leading" priority="750" id="lbc-pb-MIJ"/>
-                    <constraint firstAttribute="bottom" secondItem="9h8-TZ-qu8" secondAttribute="bottom" priority="750" id="qGD-ZP-1sN"/>
+                    <constraint firstAttribute="trailing" secondItem="AmQ-9E-NNX" secondAttribute="trailing" constant="11" id="k2e-Px-7Pc"/>
+                    <constraint firstAttribute="trailing" secondItem="EDQ-8r-4xP" secondAttribute="trailing" id="kuh-25-oJM"/>
+                    <constraint firstItem="LTB-nu-Tni" firstAttribute="leading" secondItem="AmQ-9E-NNX" secondAttribute="trailing" constant="9" id="pXu-8L-Kcv"/>
+                    <constraint firstItem="aEQ-5s-Sav" firstAttribute="top" secondItem="AmQ-9E-NNX" secondAttribute="bottom" constant="10" id="qVc-eP-jpW"/>
+                    <constraint firstItem="EDQ-8r-4xP" firstAttribute="leading" secondItem="ejf-Un-hy5" secondAttribute="leading" id="qVy-3g-pcz"/>
                     <constraint firstItem="JcO-0x-7sn" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" priority="750" constant="4" id="qwp-sH-02o"/>
-                    <constraint firstAttribute="centerY" secondItem="c6S-OH-FxE" secondAttribute="centerY" priority="750" id="u8w-pq-dqK"/>
                     <constraint firstAttribute="bottom" secondItem="aEQ-5s-Sav" secondAttribute="bottom" priority="750" id="wxc-Nh-MF3"/>
                     <constraint firstItem="aEQ-5s-Sav" firstAttribute="top" secondItem="1G5-fy-gLb" secondAttribute="bottom" priority="750" constant="9" id="xS1-aO-lqk"/>
                     <constraint firstItem="JcO-0x-7sn" firstAttribute="leading" secondItem="1G5-fy-gLb" secondAttribute="trailing" priority="750" constant="8" id="xc9-Nu-ngN"/>
@@ -85,22 +91,22 @@ via okankurtulus@gmail.com</string>
                     <mask key="constraints">
                         <exclude reference="4rl-qE-y12"/>
                         <exclude reference="xS1-aO-lqk"/>
-                        <exclude reference="TXC-C5-RF4"/>
+                        <exclude reference="DJ9-7Z-QOQ"/>
+                        <exclude reference="L1G-AX-o3V"/>
+                        <exclude reference="pXu-8L-Kcv"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="avatarImageView" destination="1G5-fy-gLb" id="ho6-S4-xrJ"/>
-                <outlet property="cellActionButton" destination="9h8-TZ-qu8" id="m2C-CG-ckU"/>
                 <outlet property="cellSeperatorView" destination="aEQ-5s-Sav" id="oBZ-9K-8s7"/>
                 <outlet property="informationLabel" destination="JcO-0x-7sn" id="p1X-Nt-9WT"/>
                 <outlet property="informationLabelRightConstraint" destination="KEL-EX-raH" id="VgI-h4-dcq"/>
-                <outlet property="rightIconImageView" destination="c6S-OH-FxE" id="20x-4t-0SI"/>
+                <outlet property="recordingGestureButton" destination="EDQ-8r-4xP" id="OPQ-Dg-S9M"/>
+                <outlet property="rightDateLabel" destination="LTB-nu-Tni" id="wE1-br-wet"/>
+                <outlet property="rightMessageCounterLabel" destination="AmQ-9E-NNX" id="wLI-WE-GE9"/>
             </connections>
             <point key="canvasLocation" x="304" y="275"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="icon_all" width="14" height="14"/>
-    </resources>
 </document>

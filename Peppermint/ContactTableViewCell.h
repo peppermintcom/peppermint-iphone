@@ -7,6 +7,7 @@
 //
 
 #import "BaseTableViewCell.h"
+#import "RecordingGestureButton.h"
 
 @protocol ContactTableViewCellDelegate <BaseTableViewCellDelegate>
 @required
@@ -16,10 +17,12 @@
 -(void) didFinishItemSelectionOnIndexPath:(NSIndexPath*) indexPath location:(CGPoint) location;
 @end
 
-@interface ContactTableViewCell : BaseTableViewCell
+@interface ContactTableViewCell : BaseTableViewCell <RecordingGestureButtonDelegate>
 @property(weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property(weak, nonatomic) IBOutlet UIView *cellSeperatorView;
-@property (weak, nonatomic) IBOutlet UIButton* cellActionButton;
+@property(weak, nonatomic) IBOutlet RecordingGestureButton *recordingGestureButton;
+@property(weak, nonatomic) IBOutlet UILabel *rightDateLabel;
+@property(weak, nonatomic) IBOutlet UILabel *rightMessageCounterLabel;
 @property(weak, nonatomic) id<ContactTableViewCellDelegate> delegate;
 @property(weak, nonatomic) UITableView *tableView;
 

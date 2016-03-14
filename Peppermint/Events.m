@@ -97,3 +97,6 @@
 
 @implementation AccountIdIsUpdated
 @end
+
+@implementation MessageIsMarkedAsRead
+@end

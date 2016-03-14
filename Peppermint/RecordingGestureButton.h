@@ -14,7 +14,7 @@
 -(void) touchSwipeActionOccuredOnLocation:(CGPoint) location;
 -(void) touchShortTapActionOccuredOnLocation:(CGPoint) location;
 -(void) touchCompletedAsExpectedWithSuccessOnLocation:(CGPoint) location;
--(void) touchDownCancelledWithEvent:(UIEvent *)event;
+-(void) touchDownCancelledWithEvent:(UIEvent *)event location:(CGPoint)location;
 @end
 
 @interface RecordingGestureButton : UIButton

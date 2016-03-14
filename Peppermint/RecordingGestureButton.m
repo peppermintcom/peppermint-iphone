@@ -102,8 +102,10 @@
 }
 
 -(void) touchDownCancelled:(id) sender event:(UIEvent *)event {
-    isCellAvailableToHaveUserInteraction = YES;
-    [self.delegate touchDownCancelledWithEvent:event];
+    isCellAvailableToHaveUserInteraction = YES;    
+    UITouch *touch = [[event allTouches] anyObject];
+    CGPoint endPoint = [touch locationInView:rootView];
+    [self.delegate touchDownCancelledWithEvent:event location:endPoint];
 }
 
 @end

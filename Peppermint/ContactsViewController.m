@@ -13,6 +13,7 @@
 #import "SlideMenuViewController.h"
 #import "FastReplyModel.h"
 #import "AddContactViewController.h"
+#import "ChatEntriesViewController.h"
 
 #define SECTION_COUNT                   5
 #define SECTION_FAST_REPLY_CONTACT      0
@@ -33,6 +34,8 @@
 
 #define MESSAGE_SHOW_DURATION           2
 
+#define SEGUE_CHAT_ENTRIES_VIEWCONTROLLER   @"ChatEntriesViewControllerSegue"
+
 @interface ContactsViewController () <AddContactViewControllerDelegate>
 
 @end
@@ -44,12 +47,14 @@
     MBProgressHUD *_loadingHud;
     BOOL isNewRecordAvailable;
     BOOL isAddNewContactModalisUp;
+    BOOL isNavigatedToChatEntries;
     NSTimer *timer;
     BOOL isScreenReady;
     NSUInteger activeRecordingView;
     NSTimer *holdToRecordViewTimer;
     BOOL isContactsPermissionGranted;
     UIImage *emptyProfileImage;
+    NSDateFormatter *dateFormatter;
 }
 
 - (void)viewDidLoad {
@@ -74,10 +79,14 @@
     [self initHoldToRecordInfoView];
     isNewRecordAvailable = YES;
     isAddNewContactModalisUp = NO;
+    isNavigatedToChatEntries = NO;
     timer = nil;
     isScreenReady = NO;
     emptyProfileImage = [UIImage imageNamed:@"avatar_empty"];
     [self.searchContactsTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    
+    dateFormatter = [NSDateFormatter new];
+    [dateFormatter setDateFormat:@"MMM dd"];
     REGISTER();
 }
 
@@ -107,16 +116,23 @@ SUBSCRIBE(ReplyContactIsAdded) {
         [self hideHoldToRecordInfoView];
         if(isAddNewContactModalisUp) {
             isAddNewContactModalisUp = !isAddNewContactModalisUp;
-            [self cellSelectedWithTag:activeCellTag];
+            [self textFieldDidChange:self.searchContactsTextField];
+        } else if (isNavigatedToChatEntries) {
+            isNavigatedToChatEntries = !isNavigatedToChatEntries;
+            //Add if some more action will need to be taken?
         } else {
-            self.searchContactsTextField.text = self.contactsModel.filterText = @"";
-            activeCellTag = CELL_TAG_RECENT_CONTACTS;
-            self.searchSourceIconImageView.image = [UIImage imageNamed:@"icon_recent"];
-            [[self loadingHud] show:YES];
-            [self.tableView reloadData];
-            [self.recentContactsModel refreshRecentContactList];
+            [self resetUserInterface];
         }
     }
+}
+
+-(void) resetUserInterface {
+    self.searchContactsTextField.text = self.contactsModel.filterText = @"";
+    activeCellTag = CELL_TAG_RECENT_CONTACTS;
+    self.searchSourceIconImageView.image = [UIImage imageNamed:@"icon_recent"];
+    [[self loadingHud] show:YES];
+    [self.tableView reloadData];
+    [self.recentContactsModel refreshRecentContactList];
 }
 
 -(void) performTutorialViewProcess {
@@ -252,6 +268,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
         ContactTableViewCell *cell = [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
         if (indexPath.row < [self activeContactList].count) {
             PeppermintContact *peppermintContact = [[self activeContactList] objectAtIndex:indexPath.row];
+            
             if(peppermintContact.avatarImage) {
                 [cell setAvatarImage:peppermintContact.avatarImage];
             } else {
@@ -263,19 +280,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
                 communicationChannelAddressToShow = LOC(@"Peppermint", @"Peppermint");
             }
             [cell setInformationWithNameSurname:peppermintContact.nameSurname communicationChannelAddress:communicationChannelAddressToShow];
-            
-            /*
-            NSPredicate *predicate = [self.recentContactsModel recentContactPredicate:peppermintContact];
-            NSArray *filteredArray = [self.recentContactsModel.contactList filteredArrayUsingPredicate:predicate];
-            
-            if(filteredArray.count > 0) {
-                cell.rightIconImageView.image = [UIImage imageNamed:@"icon_recent"];
-            } else if(peppermintContact.communicationChannel == CommunicationChannelEmail) {
-                cell.rightIconImageView.image = [UIImage imageNamed:@"icon_mail"];
-            } else if (peppermintContact.communicationChannel == CommunicationChannelSMS) {
-                cell.rightIconImageView.image = [UIImage imageNamed:@"icon_phone"];
-            }
-            */
+            [self markReadFieldsIfNecessaryForPeppermintContact:peppermintContact inTableViewCell:cell];
         }
         preparedCell = cell;
     } else if (indexPath.section == SECTION_CELL_INFORMATION) {
@@ -313,6 +318,25 @@ SUBSCRIBE(ReplyContactIsAdded) {
         height = CELL_HEIGHT_CONTACT_INFORMATION_TABLEVIEWCELL;
     }
     return height;
+}
+
+#pragma mark - RecentContact Helper
+
+-(PeppermintContact*) recentContactForPeppermintContact:(PeppermintContact*)peppermintContact {
+    NSPredicate *predicate = [self.recentContactsModel recentContactPredicate:peppermintContact];
+    NSArray *filteredArray = [self.recentContactsModel.contactList filteredArrayUsingPredicate:predicate];
+    return filteredArray.count > 0 ? filteredArray.firstObject : nil;
+}
+
+-(void) markReadFieldsIfNecessaryForPeppermintContact:(PeppermintContact*) peppermintContact inTableViewCell:(ContactTableViewCell*)cell {
+    PeppermintContact *recentContact = [self recentContactForPeppermintContact:peppermintContact];
+    if(recentContact) {
+        NSDate *lastMessageDate = recentContact.lastMessageDate;
+        cell.rightDateLabel.text = [dateFormatter stringFromDate:lastMessageDate];
+        NSUInteger unreadMessageCount = recentContact.unreadMessageCount;
+        cell.rightMessageCounterLabel.hidden = unreadMessageCount <= 0;
+        cell.rightMessageCounterLabel.text = [NSString stringWithFormat:@"%ld",(unsigned long)unreadMessageCount];
+    }
 }
 
 #pragma mark - ScrollView Delegate
@@ -386,6 +410,28 @@ SUBSCRIBE(ReplyContactIsAdded) {
      [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
 }
 
+-(void) showHoldToRecordViewAtLocation:(CGPoint) location {
+    [holdToRecordViewTimer invalidate];
+    self.holdToRecordInfoView.hidden = YES;
+    CGFloat cellHeight = CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
+    location.y +=  cellHeight * (3/4);
+    if(location.y + self.holdToRecordInfoView.frame.size.height
+       <= self.view.frame.size.height) {
+        self.holdToRecordInfoViewYValueConstraint.constant = location.y;
+        [self.view layoutIfNeeded];
+        self.holdToRecordInfoView.alpha = 0;
+        self.holdToRecordInfoView.hidden = NO;
+        [UIView animateWithDuration:ANIM_TIME animations:^{
+            self.holdToRecordInfoView.alpha = 1;
+        } completion:^(BOOL finished) {
+            [RecordingModel new];   //Init recording model to get permission for microphone!
+            holdToRecordViewTimer = [NSTimer scheduledTimerWithTimeInterval:MESSAGE_SHOW_DURATION/2 target:self selector:@selector(hideHoldToRecordInfoView) userInfo:nil repeats:NO];
+        }];
+    } else {
+        NSLog(@"Can not show holdToRecordView out of the view");
+    }
+}
+
 -(void) hideHoldToRecordInfoView {
     [holdToRecordViewTimer invalidate];
     holdToRecordViewTimer = nil;
@@ -400,24 +446,17 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 -(void) didShortTouchOnIndexPath:(NSIndexPath*) indexPath location:(CGPoint) location {
     if(!isScrolling) {
-        [holdToRecordViewTimer invalidate];
-        self.holdToRecordInfoView.hidden = YES;
-        CGFloat cellHeight = CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
-        location.y +=  cellHeight * (3/4);
-        if(location.y + self.holdToRecordInfoView.frame.size.height
-           <= self.view.frame.size.height) {
-            self.holdToRecordInfoViewYValueConstraint.constant = location.y;
-            [self.view layoutIfNeeded];
-            self.holdToRecordInfoView.alpha = 0;
-            self.holdToRecordInfoView.hidden = NO;
-            [UIView animateWithDuration:ANIM_TIME animations:^{
-                self.holdToRecordInfoView.alpha = 1;
-            } completion:^(BOOL finished) {
-                [RecordingModel new];   //Init recording model to get permission for microphone!
-                holdToRecordViewTimer = [NSTimer scheduledTimerWithTimeInterval:MESSAGE_SHOW_DURATION/2 target:self selector:@selector(hideHoldToRecordInfoView) userInfo:nil repeats:NO];
-            }];
+        PeppermintContact *peppermintContact = [[self activeContactList] objectAtIndex:indexPath.row];
+        PeppermintContact *recentContact = [self recentContactForPeppermintContact:peppermintContact];
+        
+        if(self.searchContactsTextField.isFirstResponder) {
+            [self.searchContactsTextField resignFirstResponder];
         } else {
-            NSLog(@"Can not show holdToRecordView out of the view");
+            [self showHoldToRecordViewAtLocation:location];
+        }
+        
+        if(recentContact) {
+            [self performSegueWithIdentifier:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER sender:recentContact];
         }
     }
 }
@@ -855,6 +894,10 @@ SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
     [self.recentContactsModel refreshRecentContactList];
 }
 
+SUBSCRIBE(MessageIsMarkedAsRead) {
+    [self.recentContactsModel refreshRecentContactList];
+}
+
 #pragma mark - Lazy Loading
 
 -(ContactsModel*) contactsModel {
@@ -888,6 +931,21 @@ SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
         [self initRecordingView];
     }
     return _recordingView;
+}
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER]) {
+        if([sender isKindOfClass:[PeppermintContact class]]) {
+            PeppermintContact *peppermintContact = (PeppermintContact*)sender;
+            ChatEntriesViewController *chatEntriesViewController = (ChatEntriesViewController*)segue.destinationViewController;
+            chatEntriesViewController.peppermintContact = peppermintContact;
+            isNavigatedToChatEntries = YES;
+        } else {
+            NSLog(@"sender must be an instance of 'PeppermintContact' to navigate!");
+        }
+    }
 }
 
 @end

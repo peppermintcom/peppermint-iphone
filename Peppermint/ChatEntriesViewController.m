@@ -231,7 +231,7 @@
     [self.recordingView finishRecordingWithGestureIsValid:YES];
 }
 
--(void) touchDownCancelledWithEvent:(UIEvent *)event {
+-(void) touchDownCancelledWithEvent:(UIEvent *)event location:(CGPoint)location {
     [self.recordingView finishRecordingWithGestureIsValid:NO];
 }
 
@@ -243,7 +243,7 @@
 
 -(void) message:(NSString*) message isUpdatedWithStatus:(SendingStatus) sendingStatus cancelAble:(BOOL)isCacnelAble {
     
-#warning "Refactor code& make it more readable"
+#warning "Refactor code & merge below code with the one in 'ContactsViewController.m' "
     
     NSMutableAttributedString *infoAttrText = [NSMutableAttributedString new];
     UIColor *textColor = [UIColor textFieldTintGreen];

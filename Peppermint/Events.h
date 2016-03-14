@@ -130,3 +130,6 @@
 
 @interface AccountIdIsUpdated : BaseEvent
 @end
+
+@interface MessageIsMarkedAsRead : BaseEvent
+@end

@@ -20,29 +20,33 @@
 @property (strong, nonatomic) RecentContactsModel *recentContactsModel;
 @property (strong, nonatomic) REMenu *searchMenu;
 
-@property (weak, nonatomic) IBOutlet UIView *searchMenuViewContainer;
-@property (weak, nonatomic) IBOutlet UIView *searchMenuView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *searchContactsTextField;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewBottomConstraint;
 @property (weak, nonatomic) IBOutlet UIView *sendingIndicatorView;
 @property (weak, nonatomic) IBOutlet UILabel *sendingInformationLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sendingImageHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIView *seperatorView;
 @property (weak, nonatomic) IBOutlet UIView *holdToRecordInfoView;
 @property (weak, nonatomic) IBOutlet UILabel *holdToRecordInfoViewLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *holdToRecordInfoViewYValueConstraint;
-@property (weak, nonatomic) IBOutlet UIImageView *searchSourceIconImageView;
 @property (weak, nonatomic) IBOutlet UIButton *cancelMessageSendingButton;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cancelMessageButtonWidthConstraint;
 @property (weak, nonatomic) IBOutlet UIView *whiteEllipseView;
 @property (strong, nonatomic) RecordingView *recordingView;
 @property (weak, nonatomic) ReSideMenuContainerViewController *reSideMenuContainerViewController;
 @property (strong, nonatomic) TutorialView *tutorialView;
 
-
--(IBAction)searchButtonPressed:(id)sender;
+-(void) resetUserInterface;
 -(IBAction)messageCancelButtonPressed:(id)sender;
 -(void) refreshContacts;
+
+
+//Search Button Components
+
+@property (weak, nonatomic) IBOutlet UIView *searchMenuViewContainer;
+@property (weak, nonatomic) IBOutlet UIView *searchMenuView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sendingImageHeightConstraint;
+@property (weak, nonatomic) IBOutlet UIImageView *searchSourceIconImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cancelMessageButtonWidthConstraint;
+-(IBAction)searchButtonPressed:(id)sender;
 
 @end

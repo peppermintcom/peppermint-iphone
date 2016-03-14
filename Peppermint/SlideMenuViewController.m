@@ -14,13 +14,13 @@
 #import "ChatsViewController.h"
 
 #define INDEX_TUTORIAL      -1
+#define INDEX_CHATS         -2
 
-#define NUMBER_OF_OPTIONS   5
+#define NUMBER_OF_OPTIONS   4
 #define INDEX_CONTACTS      0
-#define INDEX_CHATS         1
-#define INDEX_FEEDBACK      2
-#define INDEX_ACCOUNT       3
-#define INDEX_ABOUT         4
+#define INDEX_FEEDBACK      1
+#define INDEX_ACCOUNT       2
+#define INDEX_ABOUT         3
 
 
 @interface SlideMenuViewController ()
@@ -93,6 +93,8 @@
     [self.reSideMenuContainerViewController hideMenuViewController];
     if(indexPath.row == INDEX_CONTACTS) {
         UINavigationController *navigationController = (UINavigationController*)self.reSideMenuContainerViewController.contentViewController;
+        ContactsViewController *contactsViewController = navigationController.viewControllers.firstObject;
+        [contactsViewController resetUserInterface];
         [navigationController popToRootViewControllerAnimated:YES];
     } else if (indexPath.row == INDEX_FEEDBACK) {
         [self.reSideMenuContainerViewController sendFeedback];
