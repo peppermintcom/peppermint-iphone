@@ -86,7 +86,10 @@
         Repository *repository = [Repository beginTransaction];
         for(PeppermintChatEntry *peppermintChatEntry in peppermintChatEntryArray) {
             ChatEntry *chatEntry = nil;
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.messageId == %@ OR self.audioUrl == %@", peppermintChatEntry.messageId, peppermintChatEntry.audioUrl];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                                      @"((self.messageId.length > 0 AND self.messageId == %@) OR self.audioUrl == %@)"
+                                      , peppermintChatEntry.messageId
+                                      , peppermintChatEntry.audioUrl];
             NSArray *existingChatEntriesArray = [repository getResultsFromEntity:[ChatEntry class] predicateOrNil:predicate];
             
             if(!existingChatEntriesArray || existingChatEntriesArray.count == 0) {

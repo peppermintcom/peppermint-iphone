@@ -42,11 +42,12 @@
         return NO;
     }
     PeppermintChatEntry * other = (PeppermintChatEntry *)object;
-    return [other.audioUrl isEqualToString:self.audioUrl] || [other.messageId isEqualToString:self.messageId];
+    BOOL doesMessageIdsMatch = self.messageId && other.messageId && [other.messageId isEqualToString:self.messageId];
+    return [other.audioUrl isEqualToString:self.audioUrl] || doesMessageIdsMatch;
 }
 
 - (NSUInteger)hash {
-    NSString *uniqueString = self.audioUrl ? self.audioUrl : self.messageId;
+    NSString *uniqueString = [NSString stringWithFormat:@"%@%@", self.audioUrl, self.messageId];
     NSUInteger hashValue = [uniqueString hash];
     return hashValue;
 }
