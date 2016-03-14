@@ -19,6 +19,7 @@
 
 #define KEY                     @"PeppermintMessageSenderJson"
 #define SURNAME_EMPTY           @"   "  //We use spaces, cos surname length must be bigger than 0
+#define NIL_TEXT                @""
 
 @import WatchConnectivity;
 
@@ -211,21 +212,24 @@
 }
 
 -(void) clearSender {
-    self.name = @"";
-    self.surname = @"";
-    self.email = @"";
-    self.password = @"";
-    self.imageData = nil;
-    self.loginSource = -1;
-    self.jwt = @"";
-    self.isEmailVerified = NO;
-    self.accountId = nil;
+
+#warning "Implement a better approach to clean all properties"
     
-    self.recorderJwt = nil;
-    self.recorderId = nil;
-    self.recorderClientId = nil;
-    self.recorderKey = nil;
-    self.exchangedJwt = nil;
+    self.name = NIL_TEXT;
+    self.surname = NIL_TEXT;
+    self.email = NIL_TEXT;
+    self.password = NIL_TEXT;
+    self.imageData = [NSData new];
+    self.loginSource = -1;
+    self.jwt = NIL_TEXT;
+    self.isEmailVerified = NO;
+    self.accountId = NIL_TEXT;
+    
+    self.recorderJwt = NIL_TEXT;
+    self.recorderId = NIL_TEXT;
+    self.recorderClientId = NIL_TEXT;
+    self.recorderKey = NIL_TEXT;
+    self.exchangedJwt = NIL_TEXT;
     //self.gcmToken = nil; -> Do not clear GCM token, cos maybe the app will not be restarted& [recorder init] will need gcmToken
     self.isAccountSetUpWithRecorder = NO;
     self.lastMessageSyncDate = [self defaultLastMessageSyncDate];

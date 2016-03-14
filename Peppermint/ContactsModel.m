@@ -130,6 +130,8 @@
      *  during a query is continuing.
      */
     
+    
+    #warning "loadContactsTriggerCount approach works nice! However it may cause more service calls than needed. Refactor code for not making a service call when another call is in progress."
     ++loadContactsTriggerCount;
     weakself_create();
     [addressBook loadContactsOnQueue:ContactsOperationQueue completion:
@@ -197,7 +199,7 @@
              }
          }
          
-         if(--loadContactsTriggerCount > 0) {
+         if(--loadContactsTriggerCount != 0) {
              loadContactsTriggerCount = 0;
              dispatch_sync(dispatch_get_main_queue(), ^{
                  [self refreshContactList];

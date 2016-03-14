@@ -13,6 +13,7 @@
 
 
 +(PeppermintChatEntry*) createFromAttribute:(Attribute*) attribute forLoggedInAccountEmail:(NSString*)email {
+    NSAssert(email.length > 0, @"LoggedInAccount email is empty!");
     PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry new];
     peppermintChatEntry.audio = nil;
     peppermintChatEntry.audioUrl = attribute.audio_url;

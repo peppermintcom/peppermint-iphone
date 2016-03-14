@@ -135,6 +135,7 @@
     if(!canQueryServer) {
         NSLog(@"Could not query Server, please complete login process first.");
     } else {
+#warning "activeServerQueryCount approach works nice! However it may cause more service calls than needed. Refactor code for not making a service call when another call is in progress."
         ++activeServerQueryCount;
         if(queryForIncoming) {
             [awsService getMessagesForAccountId:peppermintMessageSender.accountId
@@ -151,8 +152,11 @@
 }
 
 SUBSCRIBE(GetMessagesAreSuccessful) {
-    if(event.sender == awsService) {
-        BOOL gotNewQueryRequestWhileServiceCallWasActive = (--activeServerQueryCount > 0);
+    BOOL isUserStillLoggedIn = [PeppermintMessageSender sharedInstance].email.length > 0;
+    if(!isUserStillLoggedIn) {
+        NSLog(@" User has logged out during an existing service call. Ignoring the response from server.");
+    } else if(event.sender == awsService) {
+        BOOL gotNewQueryRequestWhileServiceCallWasActive = (--activeServerQueryCount != 0);
         activeServerQueryCount = 0;
         if(gotNewQueryRequestWhileServiceCallWasActive) {
             queryForIncoming = NO;

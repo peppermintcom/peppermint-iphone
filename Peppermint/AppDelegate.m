@@ -226,7 +226,6 @@
     [self checkForFirstRun];
     [self initRecorder];
     [self refreshBadgeNumber];
-    [self refreshIncomingMessages];
     REGISTER();
     return YES;
 }

@@ -80,9 +80,11 @@
     && [self.nameSurname isEqualToString:other.nameSurname];
 }
 
-- (NSUInteger)hash {    
+- (NSUInteger)hash {
+    NSAssert( self.nameSurname && self.communicationChannelAddress, @"User must have name&email for calculating the hash value!" );
+    
     NSMutableString *uniqueString = [NSMutableString stringWithFormat:@"%lu%@", (unsigned long)self.communicationChannel, self.nameSurname];
-    if(!self.hasReceivedMessageOverPeppermint) {
+    if(!self.hasReceivedMessageOverPeppermint && self.communicationChannelAddress.length > 0 ) {
         [uniqueString appendString:self.communicationChannelAddress];
     }
     NSUInteger hashValue = [uniqueString hash];
