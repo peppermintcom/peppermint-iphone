@@ -379,7 +379,7 @@ SUBSCRIBE(ApplicationWillResignActive) {
 }
 
 SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
-    for(PeppermintChatEntry *peppermintChatEntry in event.peppermintChatEntriesArray) {
+    for(PeppermintChatEntry *peppermintChatEntry in event.peppermintChatEntryNewMesssagesArray) {
         if([peppermintChatEntry.contactEmail isEqualToString:self.peppermintContact.communicationChannelAddress]) {
             [self refreshContent];
             break;

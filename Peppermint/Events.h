@@ -120,12 +120,13 @@
 @end
 
 @interface GetMessagesAreSuccessful : BaseEvent
+@property (assign, nonatomic) BOOL isForRecipient;
 @property (strong, nonatomic) NSArray* dataOfMessagesArray;
 @property (assign, nonatomic) BOOL existsMoreMessages;
 @end
 
 @interface RefreshIncomingMessagesCompletedWithSuccess : BaseEvent
-@property (strong, nonatomic) NSArray* peppermintChatEntriesArray;
+@property (strong, nonatomic) NSArray* peppermintChatEntryNewMesssagesArray;
 @end
 
 @interface AccountIdIsUpdated : BaseEvent

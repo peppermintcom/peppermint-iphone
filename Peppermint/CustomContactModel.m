@@ -33,7 +33,7 @@
             [self addNewCustomForPeppermintContact:peppermintContact inRepository:repository];
         } else {
             repository = nil;
-            NSLog(@"Did not save custom Peppermint Contact as it already exists. %@ - %@", peppermintContact.nameSurname, peppermintContact.communicationChannelAddress);
+            //NSLog(@"Did not save custom Peppermint Contact as it already exists. %@ - %@", peppermintContact.nameSurname, peppermintContact.communicationChannelAddress);
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.delegate customPeppermintContactSavedSucessfully:peppermintContact];
             });

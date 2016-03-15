@@ -91,6 +91,9 @@ sharedObject;\
 #pragma mark - UIImage Addition
 #import "UIImage_Addition.h"
 
+#pragma mark - NSMutableSet Addition
+#import "NSmutableSet_Addition.h"
+
 #pragma mark - Base64 Additions
 #import "MF_Base64Additions.h"
 

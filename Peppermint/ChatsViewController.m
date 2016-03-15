@@ -170,7 +170,9 @@
 #pragma mark - New Message Received
 
 SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
-    [self refreshContent];
+    if(event.peppermintChatEntryNewMesssagesArray.count > 0) {
+        [self refreshContent];
+    }
 }
 
 #pragma mark - Navigate to ChatEntry

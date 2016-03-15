@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @protocol BaseTableViewCellDelegate <NSObject>
-
+@optional
+-(void) operationFailure:(NSError*) error;
 @end
 
 @interface BaseTableViewCell : UITableViewCell

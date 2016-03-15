@@ -269,6 +269,11 @@ SUBSCRIBE(ReplyContactIsAdded) {
         if (indexPath.row < [self activeContactList].count) {
             PeppermintContact *peppermintContact = [[self activeContactList] objectAtIndex:indexPath.row];
             
+            PeppermintContact *recentContact = [self recentContactForPeppermintContact:peppermintContact];
+            if(recentContact) {
+                peppermintContact = recentContact;
+            }
+            
             if(peppermintContact.avatarImage) {
                 [cell setAvatarImage:peppermintContact.avatarImage];
             } else {
@@ -449,14 +454,12 @@ SUBSCRIBE(ReplyContactIsAdded) {
         PeppermintContact *peppermintContact = [[self activeContactList] objectAtIndex:indexPath.row];
         PeppermintContact *recentContact = [self recentContactForPeppermintContact:peppermintContact];
         
-        if(self.searchContactsTextField.isFirstResponder) {
+        if (self.searchContactsTextField.isFirstResponder) {
             [self.searchContactsTextField resignFirstResponder];
+        } else if(recentContact) {
+            [self performSegueWithIdentifier:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER sender:recentContact];
         } else {
             [self showHoldToRecordViewAtLocation:location];
-        }
-        
-        if(recentContact) {
-            [self performSegueWithIdentifier:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER sender:recentContact];
         }
     }
 }
@@ -891,7 +894,11 @@ SUBSCRIBE(ReplyContactIsAdded) {
 }
 
 SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
-    [self.recentContactsModel refreshRecentContactList];
+    if(self.recentContactsModel.contactList.count == 0 ) {
+        [self cellSelectedWithTag:CELL_TAG_RECENT_CONTACTS];
+    } else {
+        [self.recentContactsModel refreshRecentContactList];
+    }
 }
 
 SUBSCRIBE(MessageIsMarkedAsRead) {

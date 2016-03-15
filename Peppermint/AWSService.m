@@ -529,6 +529,11 @@
             getMessagesAreSuccessful.sender = self;
             getMessagesAreSuccessful.dataOfMessagesArray = messageGetResponse.data;
             getMessagesAreSuccessful.existsMoreMessages = (messageGetResponse.links.next != nil);
+            
+            #warning "Watch logs&Decide to add next date in event to publish!"
+            NSLog(@"isForRecipient:%d,S:%@ --> next:%@",isForRecipient, sinceDate, messageGetResponse.links.next);
+            
+            getMessagesAreSuccessful.isForRecipient = isForRecipient;
             PUBLISH(getMessagesAreSuccessful);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

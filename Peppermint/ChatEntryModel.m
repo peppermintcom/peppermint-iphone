@@ -20,6 +20,7 @@
     AWSService *awsService;
     __block int activeServerQueryCount;
     NSMutableSet *mergedPeppermintChatEntrySet;
+    NSMutableSet *mergedPeppermintContacts;
     __block BOOL queryForIncoming;
 }
 
@@ -29,7 +30,6 @@
         self.chatEntriesArray = [NSArray new];
         awsService = [AWSService new];
         activeServerQueryCount = 0;
-        mergedPeppermintChatEntrySet = [NSMutableSet new];
         queryForIncoming = NO;
     }
     return self;
@@ -89,13 +89,10 @@
             NSPredicate *predicate = [NSPredicate predicateWithFormat:
                                       @"((self.messageId.length==0 OR self.messageId == %@) \
                                       AND (self.audioUrl.length==0 OR self.audioUrl == %@) \
-                                      AND (self.audio==NULL OR self.audio == %@) \
                                       AND (self.isSentByMe == %d))"
                                       , peppermintChatEntry.messageId
                                       , peppermintChatEntry.audioUrl
-                                      , peppermintChatEntry.audio
                                       , peppermintChatEntry.isSentByMe];
-            
             NSArray *existingChatEntriesArray = [repository getResultsFromEntity:[ChatEntry class] predicateOrNil:predicate];
             
             if(!existingChatEntriesArray || existingChatEntriesArray.count == 0) {
@@ -118,7 +115,9 @@
             chatEntry.transcription = @"...Transcription should be added...";
             chatEntry.isSentByMe = [NSNumber numberWithBool:peppermintChatEntry.isSentByMe];
             chatEntry.dateCreated = peppermintChatEntry.dateCreated;
-            chatEntry.isSeen = [NSNumber numberWithBool: peppermintChatEntry.isSeen
+            chatEntry.isSeen = [NSNumber numberWithBool:
+                                chatEntry.isSeen.boolValue
+                                || peppermintChatEntry.isSeen
                                 || (peppermintChatEntry.audio && peppermintChatEntry.isSentByMe)];
             chatEntry.duration = [NSNumber numberWithDouble:peppermintChatEntry.duration];
         }
@@ -128,7 +127,6 @@
             if(error) {
                 [weakSelf.delegate operationFailure:error];
             } else {
-                mergedPeppermintChatEntrySet = [NSMutableSet new];
                 [weakSelf.delegate peppermintChatEntrySavedWithSuccess:peppermintChatEntryArray];
             }
         });
@@ -137,6 +135,13 @@
 
 #pragma mark - Server Query
 
+-(void) makeSyncRequestForMessages {
+    queryForIncoming = NO;
+    mergedPeppermintChatEntrySet = [NSMutableSet new];
+    mergedPeppermintContacts = [NSMutableSet new];
+    [self queryServerForIncomingMessages];
+}
+
 -(void) queryServerForIncomingMessages {    
     PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
     BOOL canQueryServer = peppermintMessageSender.accountId.length > 0 && peppermintMessageSender.exchangedJwt.length > 0;
@@ -144,7 +149,6 @@
     if(!canQueryServer) {
         NSLog(@"Could not query Server, please complete login process first.");
     } else {
-#warning "activeServerQueryCount approach works nice! However it may cause more service calls than needed. Refactor code for not making a service call when another call is in progress."
         ++activeServerQueryCount;
         if(queryForIncoming) {
             [awsService getMessagesForAccountId:peppermintMessageSender.accountId
@@ -165,57 +169,58 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
     if(!isUserStillLoggedIn) {
         NSLog(@" User has logged out during an existing service call. Ignoring the response from server.");
     } else if(event.sender == awsService) {
-        BOOL gotNewQueryRequestWhileServiceCallWasActive = (--activeServerQueryCount != 0);
+        BOOL gotNewQueryRequestWhileServiceCallWasActive = (--activeServerQueryCount > 0);
+        BOOL shouldProcessData = (activeServerQueryCount == 0);
         activeServerQueryCount = 0;
         if(gotNewQueryRequestWhileServiceCallWasActive) {
-            queryForIncoming = NO;
-            [self queryServerForIncomingMessages];
-        } else {
+            [self makeSyncRequestForMessages];
+        } else if(shouldProcessData) {
             [self processEvent:event];
         }
     }
 }
 
+-(void) checkToUpdateLastSyncDate:(NSDate*)dateCreated forPeppermintMessageSender:(PeppermintMessageSender*)peppermintMessageSender isRecipient:(BOOL)isRecipient {
+    if(isRecipient && [dateCreated laterDate:peppermintMessageSender.lastMessageSyncDate]) {
+        peppermintMessageSender.lastMessageSyncDate = dateCreated;
+    } else if (!isRecipient && [dateCreated laterDate:peppermintMessageSender.lastMessageSyncDateForSentMessages]) {
+        peppermintMessageSender.lastMessageSyncDateForSentMessages = dateCreated;
+    }
+}
+
 -(void) processEvent:(GetMessagesAreSuccessful*) event {
     ContactsModel *contactsModel = [ContactsModel sharedInstance];
-    NSMutableSet *peppermintContactsSet = [NSMutableSet new];
     PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
     CustomContactModel *customContactModel = [CustomContactModel new];
     for (Data *messageData in event.dataOfMessagesArray) {
         messageData.attributes.message_id = messageData.id;
-        PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry createFromAttribute:messageData.attributes isIncomingMessage:queryForIncoming];
-        
+        PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry createFromAttribute:messageData.attributes isIncomingMessage:event.isForRecipient];
         [mergedPeppermintChatEntrySet addObject:peppermintChatEntry];
-        if([peppermintChatEntry.dateCreated laterDate:peppermintMessageSender.lastMessageSyncDate]) {
-            if(queryForIncoming) {
-                peppermintMessageSender.lastMessageSyncDate = peppermintChatEntry.dateCreated;
-            } else {
-               peppermintMessageSender.lastMessageSyncDateForSentMessages = peppermintChatEntry.dateCreated;
-            }
-        }
+        
+        [self checkToUpdateLastSyncDate:peppermintChatEntry.dateCreated
+             forPeppermintMessageSender:peppermintMessageSender
+                            isRecipient:event.isForRecipient];
+        
         PeppermintContact *peppermintContact = [contactsModel matchingPeppermintContactForEmail:peppermintChatEntry.contactEmail
                                                                                     nameSurname:peppermintChatEntry.contactNameSurname];
         
-        if(!peppermintContact.lastMessageDate
-           || [peppermintChatEntry.dateCreated laterDate:peppermintContact.lastMessageDate]) {
+        if(!peppermintContact.lastMessageDate || [peppermintChatEntry.dateCreated laterDate:peppermintContact.lastMessageDate]) {
             peppermintContact.lastMessageDate = peppermintChatEntry.dateCreated;
         }
-        [peppermintContactsSet addObject:peppermintContact];
+        
+        [mergedPeppermintContacts addOrUpdateObject:peppermintContact];
         [customContactModel save:peppermintContact];
     }
-    
-    RecentContactsModel *recentContactsModel = [RecentContactsModel new];
-    [recentContactsModel saveMultiple:[peppermintContactsSet allObjects]];
-    
     [peppermintMessageSender save];
-    NSLog(@"existsMoreMessages: %d , queryForIncoming:%d", event.existsMoreMessages, queryForIncoming);
     
     if(event.existsMoreMessages) {
         [self queryServerForIncomingMessages];
-    } else if (!queryForIncoming) {
+    } else if (!event.isForRecipient) {
         queryForIncoming = YES;
         [self queryServerForIncomingMessages];
     } else {
+        RecentContactsModel *recentContactsModel = [RecentContactsModel new];
+        [recentContactsModel saveMultiple:[mergedPeppermintContacts allObjects]];
         [self savePeppermintChatEntryArray:[mergedPeppermintChatEntrySet allObjects]];
     }
 }

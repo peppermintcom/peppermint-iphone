@@ -131,7 +131,6 @@
      */
     
     
-    #warning "loadContactsTriggerCount approach works nice! However it may cause more service calls than needed. Refactor code for not making a service call when another call is in progress."
     ++loadContactsTriggerCount;
     weakself_create();
     [addressBook loadContactsOnQueue:ContactsOperationQueue completion:
@@ -199,12 +198,14 @@
              }
          }
          
-         if(--loadContactsTriggerCount != 0) {
-             loadContactsTriggerCount = 0;
+         BOOL gotNewRequestWhileOperating = --loadContactsTriggerCount > 0;
+         BOOL processOperation = loadContactsTriggerCount == 0;
+         loadContactsTriggerCount = 0;         
+         if(gotNewRequestWhileOperating) {
              dispatch_sync(dispatch_get_main_queue(), ^{
                  [self refreshContactList];
              });
-         } else {
+         } else if (processOperation) {
              [weakSelf callContactsDelegateWithArray:peppermintContactsArray];
          }
      }];
@@ -214,13 +215,13 @@
     
     NSMutableArray *peppermintContactsArray = [NSMutableArray new];
     
-    //ContactBook Contacts
-    [peppermintContactsArray addObjectsFromArray:contactsFromContacBook];
-    
     //Google Contacts
     NSArray *googleContactsArray =
     [GoogleContactsModel peppermintContactsArrayWithFilterText:self.filterText.trimmedText];
     [peppermintContactsArray addObjectsFromArray:googleContactsArray];
+    
+    //ContactBook Contacts
+    [peppermintContactsArray addObjectsFromArray:contactsFromContacBook];
     
     //CustomContacts
     NSArray *customContactsArray =
@@ -230,7 +231,9 @@
     //Unify for via Peppermint
     peppermintContactsArray = [self mergeContactsConsideringViaPeppermint:peppermintContactsArray];
     
-    self.contactList = peppermintContactsArray;
+    NSArray *resultArray = [[NSSet setWithArray:peppermintContactsArray] allObjects];
+    self.contactList = [NSMutableArray arrayWithArray:resultArray];
+    
     NSArray *sortedList = [self.contactList sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
         NSString *first = [(PeppermintContact*)a nameSurname];
         NSString *second = [(PeppermintContact*)b nameSurname];

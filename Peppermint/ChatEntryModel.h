@@ -21,6 +21,6 @@
 -(void) refreshPeppermintChatEntriesForContactEmail:(NSString*) contactEmail;
 -(void) savePeppermintChatEntry:(PeppermintChatEntry*)peppermintChatEntry;
 -(void) savePeppermintChatEntryArray:(NSArray*)peppermintChatEntryArray;
--(void) queryServerForIncomingMessages;
+-(void) makeSyncRequestForMessages;
 
 @end

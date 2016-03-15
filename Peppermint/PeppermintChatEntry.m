@@ -50,7 +50,7 @@
 }
 
 - (NSUInteger)hash {
-    NSString *uniqueString = [NSString stringWithFormat:@"%@%@%@%d", self.audioUrl, self.messageId, self.audio, self.isSentByMe];
+    NSString *uniqueString = [NSString stringWithFormat:@"%@%@%d", self.audioUrl, self.messageId, self.isSentByMe];
     NSUInteger hashValue = [uniqueString hash];
     return hashValue;
 }

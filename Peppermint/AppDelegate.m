@@ -206,7 +206,7 @@
         chatEntryModel = [ChatEntryModel new];
         chatEntryModel.delegate = self;
     }
-    [chatEntryModel queryServerForIncomingMessages];
+    [chatEntryModel makeSyncRequestForMessages];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -218,7 +218,7 @@
     [self initFlurry];
     [self initGoogleAnalytics];
     [self initInitialViewController];
-    [self logServiceCalls];
+    //[self logServiceCalls];
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
     [self initConnectionStatusChangeListening];
     [self initWatchKitSession];
@@ -378,14 +378,12 @@ SUBSCRIBE(DetachSuccess) {
         peppermintContactToNavigate = nil;
     } else if (newMessagesArray.count > 0 && !newMessagesArray.firstObject.isSentByMe) {
         [playingModel playPreparedAudiowithCompetitionBlock:nil];
-    }    
+    }
     
-    if(newMessagesArray.count > 0) {
-        RefreshIncomingMessagesCompletedWithSuccess *refreshIncomingMessagesCompletedWithSuccess = [RefreshIncomingMessagesCompletedWithSuccess new];
-        refreshIncomingMessagesCompletedWithSuccess.sender = self;
-        refreshIncomingMessagesCompletedWithSuccess.peppermintChatEntriesArray = newMessagesArray;
-        PUBLISH(refreshIncomingMessagesCompletedWithSuccess);
-    }    
+    RefreshIncomingMessagesCompletedWithSuccess *refreshIncomingMessagesCompletedWithSuccess = [RefreshIncomingMessagesCompletedWithSuccess new];
+    refreshIncomingMessagesCompletedWithSuccess.sender = self;
+    refreshIncomingMessagesCompletedWithSuccess.peppermintChatEntryNewMesssagesArray = newMessagesArray;
+    PUBLISH(refreshIncomingMessagesCompletedWithSuccess);
 }
 
 -(void) operationFailure:(NSError *)error {

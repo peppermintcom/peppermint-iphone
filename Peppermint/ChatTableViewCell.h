@@ -10,8 +10,9 @@
 @class PeppermintChatEntry;
 @class PlayingModel;
 @class ChatTableViewCell;
+@class ChatEntryModel;
 
-@protocol ChatTableViewCellDelegate <NSObject>
+@protocol ChatTableViewCellDelegate <BaseTableViewCellDelegate>
 -(void) startedPlayingMessage:(ChatTableViewCell*)chatTableViewCell;
 -(void) stoppedPlayingMessage:(ChatTableViewCell*)chatTableViewCell;
 -(void) playMessageInCell:(ChatTableViewCell*)chatTableViewCell gotError:(NSError*)error;
@@ -40,7 +41,7 @@
 @property (strong, nonatomic, readonly) PeppermintChatEntry *peppermintChatEntry;
 @property (strong, nonatomic, readonly) PlayingModel *playingModel;
 
-
+@property (strong, nonatomic, readonly) ChatEntryModel *chatEntryModel;
 
 - (void) fillInformation:(PeppermintChatEntry*) chatEntry;
 - (IBAction)playPauseButtonPressed:(id)sender;

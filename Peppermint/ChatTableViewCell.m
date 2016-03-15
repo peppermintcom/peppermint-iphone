@@ -15,6 +15,9 @@
 #define DISTANCE_TO_BORDER  5
 #define TIMER_UPDATE_PERIOD 0.05
 
+@interface ChatTableViewCell () <ChatEntryModelDelegate>
+@end
+
 @implementation ChatTableViewCell {
     UIImage *imageConnected;
     UIImage *imageFlat;
@@ -37,6 +40,8 @@
     timer = [NSTimer scheduledTimerWithTimeInterval:TIMER_UPDATE_PERIOD target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
     totalSeconds = 0;
     stopMessageReceived = NO;
+    _chatEntryModel = [ChatEntryModel new];
+    _chatEntryModel.delegate = self;
     REGISTER();
 }
 
@@ -150,6 +155,8 @@
         if(!_playingModel || !_playingModel.audioPlayer.data ) {
             _playingModel = [PlayingModel alloc];
             self.spinnerView.hidden = NO;
+            [self.spinnerView startAnimating];
+            
             self.playPauseImageView.hidden = YES;
             weakself_create();
             dispatch_async(LOW_PRIORITY_QUEUE, ^{
@@ -169,10 +176,9 @@
                     [[AutoPlayModel sharedInstance] clearScheduledPeppermintContact];
                     
                     if([self playAudio:weakSelf.peppermintChatEntry.audio]) {
-                        
-#warning "add ChatEntryModel and handle error situation for save"
+                        [self stopPlayingCell];
                         weakSelf.peppermintChatEntry.isSeen = YES;
-                        [[ChatEntryModel new] savePeppermintChatEntry:weakSelf.peppermintChatEntry];
+                        [weakSelf.chatEntryModel savePeppermintChatEntry:weakSelf.peppermintChatEntry];
                         
                         weakSelf.peppermintChatEntry.duration = _playingModel.audioPlayer.duration;
                         [weakSelf setLeftLabel];
@@ -267,6 +273,20 @@ SUBSCRIBE(StopAllPlayingMessages) {
     if(_playingModel) {
         [self playPauseButtonPressed:sender];
     }
+}
+
+#pragma mark - ChatEntryModelDelegate
+
+-(void) operationFailure:(NSError*) error {
+    [self.delegate operationFailure:error];
+}
+
+-(void) peppermintChatEntriesArrayIsUpdated {
+    NSLog(@"peppermintChatEntriesArrayIsUpdated");
+}
+
+-(void) peppermintChatEntrySavedWithSuccess:(NSArray*) savedPeppermintChatEnryArray {
+    NSLog(@"peppermintChatEntrySavedWithSuccess");
 }
 
 @end
