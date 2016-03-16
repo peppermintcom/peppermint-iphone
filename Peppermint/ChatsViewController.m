@@ -11,6 +11,8 @@
 #import "ContactsViewController.h"
 #import "ChatModel.h"
 
+#warning "Clear all code connected with ChatsViewController& delete this class!"
+
 #define SEGUE_CHAT_ENTRIES_VIEWCONTROLLER   @"ChatEntriesViewControllerSegue"
 
 @implementation ChatsViewController {

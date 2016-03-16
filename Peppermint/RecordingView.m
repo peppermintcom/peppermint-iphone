@@ -60,10 +60,7 @@ typedef enum : NSUInteger {
 #pragma mark - Record Methods
 
 -(BOOL) presentWithAnimationInRect:(CGRect)rect onPoint:(CGPoint) point {
-    
-    if(![RecordingModel checkRecordPermissions]) {
-        [self microphoneAccessRightsAreNotSupplied];
-    } else if(recordingViewStatus == RecordingViewStatusInit) {
+    if(recordingViewStatus == RecordingViewStatusInit) {
         [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
         recordingViewStatus = RecordingViewStatusPresented;
         assert(self.sendVoiceMessageModel != nil);

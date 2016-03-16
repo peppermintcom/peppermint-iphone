@@ -218,7 +218,7 @@
     [self initFlurry];
     [self initGoogleAnalytics];
     [self initInitialViewController];
-    [self logServiceCalls];
+    //[self logServiceCalls];
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
     [self initConnectionStatusChangeListening];
     [self initWatchKitSession];

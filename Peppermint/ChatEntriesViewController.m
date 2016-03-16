@@ -165,7 +165,7 @@
 
 -(IBAction) backButtonValidAction:(id)sender {
     [self backButtonTouchUp:sender];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark - RecordingView Settings
@@ -195,18 +195,21 @@
 }
 
 -(void) touchHoldSuccessOnLocation:(CGPoint) touchBeginPoint {
-    SendVoiceMessageModel *sendVoiceMessageModel = nil;
-    if(self.peppermintContact.communicationChannel == CommunicationChannelEmail) {
-        sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
-    } else if (self.peppermintContact.communicationChannel == CommunicationChannelSMS) {
-        sendVoiceMessageModel = [SendVoiceMessageSMSModel new];
+    if(![RecordingModel checkRecordPermissions]) {
+        [self initRecordingModel];
+    } else {
+        SendVoiceMessageModel *sendVoiceMessageModel = nil;
+        if(self.peppermintContact.communicationChannel == CommunicationChannelEmail) {
+            sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
+        } else if (self.peppermintContact.communicationChannel == CommunicationChannelSMS) {
+            sendVoiceMessageModel = [SendVoiceMessageSMSModel new];
+        }
+        sendVoiceMessageModel.selectedPeppermintContact = self.peppermintContact;
+        self.recordingView.sendVoiceMessageModel = sendVoiceMessageModel;
+        
+        CGRect rect = self.recordingButton.frame;
+        [self.recordingView presentWithAnimationInRect:rect onPoint:CGPointMake(0, 0)];
     }
-    
-    sendVoiceMessageModel.selectedPeppermintContact = self.peppermintContact;
-    self.recordingView.sendVoiceMessageModel = sendVoiceMessageModel;
-    
-    CGRect rect = self.recordingButton.frame;
-    [self.recordingView presentWithAnimationInRect:rect onPoint:CGPointMake(0, 0)];
 }
 
 -(void) touchSwipeActionOccuredOnLocation:(CGPoint) location {
@@ -223,8 +226,14 @@
     [UIView animateWithDuration:0.3 animations:^{
         self.holdToRecordView.alpha = 1;
     } completion:^(BOOL finished) {
+        [self initRecordingModel];
         holdToRecordViewTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(hideHoldToRecordInfoView) userInfo:nil repeats:NO];
     }];
+}
+
+-(void) initRecordingModel {
+    RecordingModel *recordingModel = [RecordingModel new];
+    recordingModel.delegate = self.recordingView;
 }
 
 -(void) touchCompletedAsExpectedWithSuccessOnLocation:(CGPoint) location {

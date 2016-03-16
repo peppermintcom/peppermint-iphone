@@ -429,12 +429,17 @@ SUBSCRIBE(ReplyContactIsAdded) {
         [UIView animateWithDuration:ANIM_TIME animations:^{
             self.holdToRecordInfoView.alpha = 1;
         } completion:^(BOOL finished) {
-            [RecordingModel new];   //Init recording model to get permission for microphone!
+            [self initRecordingModel];   //Init recording model to get permission for microphone!
             holdToRecordViewTimer = [NSTimer scheduledTimerWithTimeInterval:MESSAGE_SHOW_DURATION/2 target:self selector:@selector(hideHoldToRecordInfoView) userInfo:nil repeats:NO];
         }];
     } else {
         NSLog(@"Can not show holdToRecordView out of the view");
     }
+}
+
+-(void) initRecordingModel {
+    RecordingModel *recordingModel = [RecordingModel new];   //Init recording model to get permission for microphone!
+    recordingModel.delegate = self.recordingView;
 }
 
 -(void) hideHoldToRecordInfoView {
@@ -518,6 +523,8 @@ SUBSCRIBE(ReplyContactIsAdded) {
             hud.yOffset = location.y - center;
             hud.removeFromSuperViewOnHide = YES;
             [hud hide:YES afterDelay:WARN_TIME/2];
+        } else if(![RecordingModel checkRecordPermissions]) {
+            [self initRecordingModel];
         } else {
             sendVoiceMessageModel.selectedPeppermintContact = selectedContact;
             self.recordingView.sendVoiceMessageModel = sendVoiceMessageModel;
