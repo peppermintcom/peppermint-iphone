@@ -75,8 +75,16 @@
 #pragma mark - Operations connected with message sending
 
 -(void) checkAndPerformOperationsConnectedWithMessageSending {
-    if(self.sendingStatus == SendingStatusSendingWithNoCancelOption) {
-        [self setChatConversation];
+    if(self.sendingStatus == SendingStatusCached) {
+        NSString *tempUrl = [NSString stringWithFormat:@"%f", [NSDate new].timeIntervalSince1970];
+        [self setChatConversation:tempUrl];
+    } else if(self.sendingStatus == SendingStatusSendingWithNoCancelOption) {
+        BOOL isPreviousCachedMessage = (self.delegate == nil);
+        if(isPreviousCachedMessage) {
+            [chatEntryModel updateChatEntryWithAudio:_data toAudioUrl:cachedCanonicalUrl];
+        } else {
+            [self setChatConversation:cachedCanonicalUrl];
+        }
         [self sendMessageOverAWS:cachedCanonicalUrl];
     }
 }
@@ -308,15 +316,16 @@
 
 #pragma mark - Chat
 
--(void) setChatConversation {
+-(void) setChatConversation:(NSString*) publicAudioUrl {
 #warning "Set transcription text"
     NSDate *createDate = [NSDate new];
     PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry new];
     peppermintChatEntry.audio = _data;
+    peppermintChatEntry.audioUrl = publicAudioUrl;
     peppermintChatEntry.duration = _duration;
     peppermintChatEntry.isSentByMe = YES;
     peppermintChatEntry.dateCreated = createDate;
-    peppermintChatEntry.messageId = [NSString stringWithFormat:@"%f", createDate.timeIntervalSince1970];
+    peppermintChatEntry.messageId = nil; //We leave message Id as nil, cos we would like it to be merged when it sync with server!
     peppermintChatEntry.isSeen = YES;
     peppermintChatEntry.contactEmail = self.selectedPeppermintContact.communicationChannelAddress;
     [chatEntryModel savePeppermintChatEntry:peppermintChatEntry];

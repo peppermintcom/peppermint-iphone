@@ -41,7 +41,7 @@
         Repository *repository = [Repository beginTransaction];
         NSArray *chatEntryArray = [repository getResultsFromEntity:[ChatEntry class]
                                                     predicateOrNil:chatPredicate
-                                                ascSortStringOrNil:[NSArray arrayWithObjects:@"dateCreated", nil]
+                                                ascSortStringOrNil:[NSArray arrayWithObjects:@"dateCreated", @"isSentByMe", nil]
                                                descSortStringOrNil:nil];
         
         NSMutableArray *peppermintChatEntryArray = [NSMutableArray new];
@@ -87,12 +87,15 @@
         for(PeppermintChatEntry *peppermintChatEntry in peppermintChatEntryArray) {
             ChatEntry *chatEntry = nil;
             NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                                      @"((self.messageId.length==0 OR self.messageId == %@) \
-                                      AND (self.audioUrl.length==0 OR self.audioUrl == %@) \
-                                      AND (self.isSentByMe == %d))"
+                                      @"((self.messageId == nil OR self.messageId == %@) \
+                                      AND (self.audioUrl == nil OR self.audioUrl == %@) \
+                                      AND (self.isSentByMe == %d) \
+                                      AND (self.contactEmail == %@))"
                                       , peppermintChatEntry.messageId
                                       , peppermintChatEntry.audioUrl
-                                      , peppermintChatEntry.isSentByMe];
+                                      , peppermintChatEntry.isSentByMe
+                                      , peppermintChatEntry.contactEmail
+                                      ];
             NSArray *existingChatEntriesArray = [repository getResultsFromEntity:[ChatEntry class] predicateOrNil:predicate];
             
             if(!existingChatEntriesArray || existingChatEntriesArray.count == 0) {
@@ -102,7 +105,12 @@
                 chatEntry = existingChatEntriesArray.firstObject;
                 [weakSelf checkChatEntry:chatEntry andMarkAsReadIfNeededWithPeppermintChatEntry:peppermintChatEntry];
                 peppermintChatEntry.performedOperation = PerformedOperationUpdated;
-            } else {
+            } else if(peppermintChatEntry.messageId != nil) {
+                
+                for(ChatEntry *chatEntry in existingChatEntriesArray) {
+                    NSLog(@"M:%@, A:%@, s:%@", chatEntry.messageId, chatEntry.audioUrl, chatEntry.isSentByMe);
+                }
+                
                 NSString *errorText = [NSString stringWithFormat:
                                        @"Can not exists more than one message with same id %@", peppermintChatEntry.messageId];
                 [exception(errorText) raise];
@@ -110,7 +118,7 @@
             
             chatEntry.messageId = peppermintChatEntry.messageId;
             chatEntry.contactEmail = peppermintChatEntry.contactEmail;
-            chatEntry.audio = peppermintChatEntry.audio;
+            chatEntry.audio = peppermintChatEntry.audio ? peppermintChatEntry.audio : chatEntry.audio;
             chatEntry.audioUrl = peppermintChatEntry.audioUrl;
             chatEntry.transcription = @"...Transcription should be added...";
             chatEntry.isSentByMe = [NSNumber numberWithBool:peppermintChatEntry.isSentByMe];
@@ -195,6 +203,7 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
     for (Data *messageData in event.dataOfMessagesArray) {
         messageData.attributes.message_id = messageData.id;
         PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry createFromAttribute:messageData.attributes isIncomingMessage:event.isForRecipient];
+        
         [mergedPeppermintChatEntrySet addObject:peppermintChatEntry];
         
         [self checkToUpdateLastSyncDate:peppermintChatEntry.dateCreated
@@ -228,10 +237,44 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
 #pragma mark - Mark As Read
 
 -(void) checkChatEntry:(ChatEntry*)chatEntry andMarkAsReadIfNeededWithPeppermintChatEntry:(PeppermintChatEntry*)peppermintChatEntry {
-    if(!chatEntry.isSeen.boolValue && peppermintChatEntry.isSeen) {
+    if(!chatEntry.isSeen.boolValue && peppermintChatEntry.isSeen && peppermintChatEntry.messageId.length > 0) {
         PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
         [awsService markMessageAsReadWithJwt:peppermintMessageSender.exchangedJwt messageId:peppermintChatEntry.messageId];
     }
+}
+
+#pragma mark - Update AudioUrl
+
+-(void) updateChatEntryWithAudio:(NSData*)audio toAudioUrl:(NSString*)audioUrl {
+    weakself_create();
+    dispatch_async(LOW_PRIORITY_QUEUE, ^{
+        Repository *repository = [Repository beginTransaction];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.audio == %@ AND self.isSentByMe == %d", audio, YES];
+        NSArray *matchingChatEntries = [repository getResultsFromEntity:[ChatEntry class] predicateOrNil:predicate];
+        if(matchingChatEntries.count == 1) {
+            ChatEntry *chatEntry = matchingChatEntries.firstObject;
+            chatEntry.audioUrl = audioUrl;
+        } else {
+            NSLog(@"Found chatEntries: %ld ", matchingChatEntries.count);
+            if(matchingChatEntries.count == 0) {
+                NSLog(@"Seems this is not a cached message");
+            } else {
+                for(ChatEntry *chatEntry in matchingChatEntries) {
+                    NSLog(@"Chat Data: %@", chatEntry.audio);
+                }
+                NSLog(@"More than one chatEntry exists.");
+            }
+        }
+        
+        NSError *error = [repository endTransaction];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(error) {
+                [weakSelf.delegate operationFailure:error];
+            } else {
+                NSLog(@"Operation success");
+            }
+        });
+    });
 }
 
 @end

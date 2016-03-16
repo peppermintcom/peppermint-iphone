@@ -22,5 +22,6 @@
 -(void) savePeppermintChatEntry:(PeppermintChatEntry*)peppermintChatEntry;
 -(void) savePeppermintChatEntryArray:(NSArray*)peppermintChatEntryArray;
 -(void) makeSyncRequestForMessages;
+-(void) updateChatEntryWithAudio:(NSData*)audio toAudioUrl:(NSString*)audioUrl;
 
 @end
