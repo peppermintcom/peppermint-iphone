@@ -19,7 +19,7 @@
         <attribute name="duration" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="isSeen" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isSentByMe" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="messageId" attributeType="String" syncable="YES"/>
+        <attribute name="messageId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="transcription" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Contact" representedClassName="Contact" isAbstract="YES" syncable="YES">

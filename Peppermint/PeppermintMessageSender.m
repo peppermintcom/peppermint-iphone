@@ -207,7 +207,7 @@
 
 -(NSDate*) defaultLastMessageSyncDate {
     NSTimeInterval currentTimeInterval = [NSDate new].timeIntervalSince1970;
-    NSTimeInterval timeIntervalToUse = currentTimeInterval - (15 * DAY);
+    NSTimeInterval timeIntervalToUse = currentTimeInterval - (21 * DAY);
     return [NSDate dateWithTimeIntervalSince1970:timeIntervalToUse];
 }
 
