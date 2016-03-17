@@ -41,8 +41,8 @@
         Repository *repository = [Repository beginTransaction];
         NSArray *chatEntryArray = [repository getResultsFromEntity:[ChatEntry class]
                                                     predicateOrNil:chatPredicate
-                                                ascSortStringOrNil:[NSArray arrayWithObjects:@"dateCreated", @"isSentByMe", nil]
-                                               descSortStringOrNil:nil];
+                                                ascSortStringOrNil:[NSArray arrayWithObjects:@"dateCreated", nil]
+                                               descSortStringOrNil:[NSArray arrayWithObjects:@"isSentByMe",  nil]];
         
         NSMutableArray *peppermintChatEntryArray = [NSMutableArray new];
         for(ChatEntry* chatEntry in chatEntryArray) {

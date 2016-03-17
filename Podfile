@@ -22,6 +22,8 @@ pod 'Base64'
 pod 'Flurry-iOS-SDK/FlurrySDK'
 pod 'GoogleAnalytics'
 pod 'Google/CloudMessaging'
+pod 'UIView+Shake'
+pod 'DeviceMotion'
 end
 
 target 'PeppermintTests' do

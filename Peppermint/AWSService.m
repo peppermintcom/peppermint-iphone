@@ -495,7 +495,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 #warning "Handle un-delivered in-app messages"
         [self failureWithOperation:operation andError:error];
-        //NSLog(@"Message could not be sent!!");
+        NSLog(@"Message could not be sent!!");
     }];
 }
 

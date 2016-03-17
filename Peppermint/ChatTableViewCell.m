@@ -14,6 +14,7 @@
 
 #define DISTANCE_TO_BORDER  5
 #define TIMER_UPDATE_PERIOD 0.05
+#define REWIND_TIME_DURING_SPEAKER_UPDATE   2
 
 @interface ChatTableViewCell () <ChatEntryModelDelegate>
 @end
@@ -197,7 +198,9 @@
 
 -(BOOL) playAudio:(NSData*)audioData {
     BOOL result = NO;
-    if(audioData && !stopMessageReceived) {
+    if(stopMessageReceived) {
+        stopMessageReceived = !stopMessageReceived;
+    } else if(audioData) {
         result = [_playingModel playData:audioData playerCompletitionBlock:^{
             [self.delegate stoppedPlayingMessage:self];
         }];
@@ -242,8 +245,11 @@
 }
 
 SUBSCRIBE(StopAllPlayingMessages) {
-    stopMessageReceived = YES;
-    [_playingModel.audioPlayer stop];
+    if(!self.spinnerView.hidden) {
+        stopMessageReceived = YES;
+    } else {
+        [_playingModel.audioPlayer stop];
+    }
 }
 
 -(IBAction)touchMoved:(id)sender withEvent:(UIEvent *)event {
@@ -287,6 +293,27 @@ SUBSCRIBE(StopAllPlayingMessages) {
 
 -(void) peppermintChatEntrySavedWithSuccess:(NSArray*) savedPeppermintChatEnryArray {
     NSLog(@"peppermintChatEntrySavedWithSuccess");
+}
+
+#pragma mark - Raise to listen on built-in headset
+
+-(void) rewindPlayer {
+    NSTimeInterval timeInterval = self.playingModel.audioPlayer.currentTime;
+    timeInterval = timeInterval > REWIND_TIME_DURING_SPEAKER_UPDATE ? timeInterval-REWIND_TIME_DURING_SPEAKER_UPDATE : 0;
+    [self.playingModel.audioPlayer setCurrentTime:timeInterval];
+}
+
+
+SUBSCRIBE(ProximitySensorValueIsUpdated) {
+    BOOL isPlaying = (self.playingModel.audioPlayer.isPlaying);
+    if (event.isDeviceOrientationCorrectOnEar && isPlaying) {
+        if(event.isDeviceCloseToUser) {
+            [self rewindPlayer];
+        } else {
+            [self.playingModel.audioPlayer pause];
+            [self.delegate stoppedPlayingMessage:self];
+        }
+    }
 }
 
 @end

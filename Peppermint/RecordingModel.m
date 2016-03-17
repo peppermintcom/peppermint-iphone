@@ -131,7 +131,7 @@
     BOOL result = NO;
     NSError *error = nil;
     AVAudioSession *session = [AVAudioSession sharedInstance];
-    [session setCategory :AVAudioSessionCategoryPlayAndRecord error:&error];
+    [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
     if(error){
         [self.delegate operationFailure:error];
         result = NO;

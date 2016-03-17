@@ -112,7 +112,7 @@ SUBSCRIBE(RetrieveSignedUrlSuccessful) {
 
 SUBSCRIBE(FileUploadCompleted) {
     if([event.signedUrl isEqualToString:_signedUrl] && event.sender == awsService) {
-        NSLog(@"File upload is completed with signedURL:%@", _signedUrl);
+        //NSLog(@"File upload is completed with signedURL:%@", _signedUrl);
     }
 }
 

@@ -51,11 +51,11 @@
 }
 
 -(void) tapped {
-    [self finishRecordingWithGestureIsValid:YES];
+    [self finishRecordingWithGestureIsValid:YES needsPause:NO];
 }
 
 -(void) swiped {
-    [self finishRecordingWithGestureIsValid:NO];
+    [self finishRecordingWithGestureIsValid:NO needsPause:NO];
 }
 
 #pragma mark - Record Methods

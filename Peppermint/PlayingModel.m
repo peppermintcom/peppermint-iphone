@@ -7,6 +7,7 @@
 //
 
 #import "PlayingModel.h"
+#import "ProximitySensorModel.h"
 
 @interface PlayingModel() <AVAudioPlayerDelegate>
 
@@ -23,6 +24,7 @@
         cachedBlock = nil;
         _audioPlayer = nil;
         [self initBeginRecordingSound];
+        REGISTER();
     }
     return self;
 }
@@ -61,11 +63,7 @@
 }
 
 -(BOOL) playData:(NSData*) audioData playerCompletitionBlock:(PlayerCompletitionBlock) playerCompletitionBlock {
-    NSError *error;
-    
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    [session setCategory :AVAudioSessionCategoryPlayback error:&error];
-    
+    NSError *error = [self updateCategory];
     if(!error) {
         _audioPlayer = [[AVAudioPlayer alloc] initWithData:audioData error:&error];
         _audioPlayer.delegate = self;
@@ -84,7 +82,10 @@
 }
 
 -(void) play {
-    [_audioPlayer play];
+    NSError *error = [self updateCategory];
+    if(!error) {
+        [_audioPlayer play];
+    }
 }
 
 #pragma mark - AVAudioPlayerDelegate
@@ -97,6 +98,27 @@
             });
         }
     }
+}
+
+#pragma mark - ProximitySensor
+
+-(NSError*) updateCategory {
+    NSError *error;
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
+    if(!error) {
+        BOOL isOnEar = [[ProximitySensorModel sharedInstance] isDeviceOrientationCorrectOnEar];
+        if(isOnEar) {
+            [audioSession overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:nil];
+        } else {
+            [audioSession overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
+        }
+    }
+    return error;
+}
+
+SUBSCRIBE(ProximitySensorValueIsUpdated) {    
+    [self updateCategory];
 }
 
 #warning "Fade animation can be added to voice"

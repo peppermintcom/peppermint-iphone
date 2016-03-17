@@ -174,6 +174,7 @@
         UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:LOC(@"Email", nil) message:contactNameSurname delegate:self cancelButtonTitle:LOC(@"Cancel", nil) otherButtonTitles:LOC(@"Save", nil), nil];
         alertView.alertViewStyle=UIAlertViewStylePlainTextInput;
         UITextField *textField = [alertView textFieldAtIndex:0];
+        textField.keyboardType = UIKeyboardTypeEmailAddress;
         textField.text = @"";
         [alertView show];
     }
@@ -189,6 +190,8 @@
         if([email isValidEmail]) {
             alternateCommunicationChannelAddress = email;
             [self sendMessageToMailAddress];
+        } else {
+            [self.sendViaEmailLabel shake:15 withDelta:5];
         }
     }
 }

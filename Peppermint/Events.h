@@ -134,3 +134,12 @@
 
 @interface MessageIsMarkedAsRead : BaseEvent
 @end
+
+@interface ProximitySensorValueIsUpdated : BaseEvent
+@property (nonatomic, assign) BOOL isDeviceCloseToUser;
+@property (nonatomic, assign) UIDeviceOrientation deviceOrientation;
+@property (nonatomic, assign) BOOL isDeviceOrientationCorrectOnEar;
+@end
+
+@interface ShakeGestureOccured : BaseEvent
+@end

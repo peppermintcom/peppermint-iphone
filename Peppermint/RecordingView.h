@@ -29,9 +29,11 @@
 +(RecordingView*) createInstanceWithDelegate:(UIViewController<RecordingViewDelegate>*) delegate;
 
 -(BOOL) presentWithAnimationInRect:(CGRect)rect onPoint:(CGPoint) point;
--(BOOL) finishRecordingWithGestureIsValid:(BOOL) isGestureValid;
+-(BOOL) finishRecordingWithGestureIsValid:(BOOL) isGestureValid needsPause:(BOOL)needsPause;
 -(void) cancelMessageSending;
 -(void) recordingViewIsHidden;
+-(void) pause;
+-(void) stop;
 
 SUBSCRIBE(MessageSendingStatusIsUpdated);
 SUBSCRIBE(ApplicationWillResignActive);

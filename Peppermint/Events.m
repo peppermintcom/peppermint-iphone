@@ -100,3 +100,9 @@
 
 @implementation MessageIsMarkedAsRead
 @end
+
+@implementation ProximitySensorValueIsUpdated
+@end
+
+@implementation ShakeGestureOccured
+@end

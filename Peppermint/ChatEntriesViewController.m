@@ -13,8 +13,11 @@
 #import "SendVoiceMessageSMSModel.h"
 #import "AutoPlayModel.h"
 #import "PeppermintContact.h"
+#import "ProximitySensorModel.h"
 
-#define BOTTOM_RESET_IME    2
+#define BOTTOM_RESET_IME            2
+
+#define WAIT_FOR_SHAKE_DURATION     2
 
 @interface ChatEntriesViewController () <RecordingGestureButtonDelegate, RecordingViewDelegate>
 @end
@@ -23,10 +26,16 @@
     NSTimer *holdToRecordViewTimer;
     AutoPlayModel *autoPlayModel;
     __block BOOL scheduleRefresh;
+    BOOL isScrolling;
+    BOOL isPlaying;
+    NSTimer *proximityTimer;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    isScrolling = NO;
+    isPlaying = NO;
+    proximityTimer = nil;
     self.tableView.rowHeight = CELL_HEIGHT_CHAT_TABLEVIEWCELL;
     
     [self resetBottomInformationLabel];
@@ -91,7 +100,7 @@
 
 -(void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-
+    [self startListeningProximitySensor];
     [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
     [self refreshContent];
 }
@@ -105,7 +114,11 @@
 -(void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.recordingView = nil;
+    [self fireStopPlayingMessage];
+    [self stopListeningProximitySensor];
+}
 
+-(void) fireStopPlayingMessage {
     StopAllPlayingMessages *stopAllPlayingMessages = [StopAllPlayingMessages new];
     stopAllPlayingMessages.sender = self;
     PUBLISH(stopAllPlayingMessages);
@@ -187,14 +200,8 @@
     }
 };
 
-
-#pragma mark - RecordingGestureButtonDelegate
-
--(void) touchDownBeginOnIndexPath:(id) sender event:(UIEvent *)event {
-    NSLog(@"touchDownBeginOnIndexPath");
-}
-
--(void) touchHoldSuccessOnLocation:(CGPoint) touchBeginPoint {
+-(void) startAudioRecording {
+    [self fireStopPlayingMessage];
     if(![RecordingModel checkRecordPermissions]) {
         [self initRecordingModel];
     } else {
@@ -212,8 +219,18 @@
     }
 }
 
+#pragma mark - RecordingGestureButtonDelegate
+
+-(void) touchDownBeginOnIndexPath:(id) sender event:(UIEvent *)event {
+    NSLog(@"touchDownBeginOnIndexPath");
+}
+
+-(void) touchHoldSuccessOnLocation:(CGPoint) touchBeginPoint {
+    [self startAudioRecording];
+}
+
 -(void) touchSwipeActionOccuredOnLocation:(CGPoint) location {
-    [self.recordingView finishRecordingWithGestureIsValid:NO];
+    [self.recordingView finishRecordingWithGestureIsValid:NO needsPause:NO];
 }
 
 -(void) touchShortTapActionOccuredOnLocation:(CGPoint) location {
@@ -237,11 +254,11 @@
 }
 
 -(void) touchCompletedAsExpectedWithSuccessOnLocation:(CGPoint) location {
-    [self.recordingView finishRecordingWithGestureIsValid:YES];
+    [self.recordingView finishRecordingWithGestureIsValid:YES needsPause:NO];
 }
 
 -(void) touchDownCancelledWithEvent:(UIEvent *)event location:(CGPoint)location {
-    [self.recordingView finishRecordingWithGestureIsValid:NO];
+    [self.recordingView finishRecordingWithGestureIsValid:NO needsPause:NO];
 }
 
 #pragma mark - RecordingViewDelegate
@@ -323,6 +340,11 @@
 #pragma makr - Cancel Message Sending
 
 -(IBAction)cancelSendingButtonPressed:(id)sender {
+    if(proximityTimer) {
+        [proximityTimer invalidate];
+        proximityTimer = nil;
+        [self.recordingView finishRecordingWithGestureIsValid:NO needsPause:NO];
+    }
     [self.recordingView cancelMessageSending];
 }
 
@@ -338,16 +360,36 @@
     }];
 }
 
+#pragma mark - ScrollView Delegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    isScrolling = YES;
+    [self fireStopPlayingMessage];
+    [self hideHoldToRecordInfoView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    isScrolling = NO;
+}
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+    isScrolling = YES;
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    isScrolling = NO;
+}
+
 #pragma mark - ChatTableViewCellDelegate
 
 -(void) startedPlayingMessage:(ChatTableViewCell*)chatTableViewCell {
     if(chatTableViewCell) {
-        self.tableView.scrollEnabled = NO;
+        isPlaying = YES;
     }
 }
 
 -(void) stoppedPlayingMessage:(ChatTableViewCell*)chatTableViewCell {
-    self.tableView.scrollEnabled = YES;
+    isPlaying = NO;
     if(scheduleRefresh) {
         scheduleRefresh = NO;
         [self refreshContent];
@@ -355,21 +397,21 @@
 }
 
 -(void) playMessageInCell:(ChatTableViewCell *)chatTableViewCell gotError:(NSError *)error {
-    self.tableView.scrollEnabled = YES;
+    isPlaying = NO;
     NSLog(@"Error in playing, %@", error);
 }
 
 #pragma mark - Refresh Content
 
 SUBSCRIBE(ApplicationWillResignActive) {
-    self.tableView.scrollEnabled = YES;
+    isPlaying = NO;
 }
 
 -(void) refreshContent {
-    if(self.tableView.scrollEnabled) {
-        [self.chatEntryModel refreshPeppermintChatEntriesForContactEmail:self.peppermintContact.communicationChannelAddress];
-    } else {
+    if(isPlaying) {
         scheduleRefresh = YES;
+    } else {
+        [self.chatEntryModel refreshPeppermintChatEntriesForContactEmail:self.peppermintContact.communicationChannelAddress];
     }
 }
 
@@ -383,13 +425,13 @@ SUBSCRIBE(ApplicationWillResignActive) {
         NSUInteger lastRowNumber = [self.tableView numberOfRowsInSection:lastSection] - 1;
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:lastRowNumber inSection:lastSection];
         ChatTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-        [cell playPauseButtonPressed:nil];
+        [cell playPauseButtonPressed:self];
     }
 }
 
 SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
     for(PeppermintChatEntry *peppermintChatEntry in event.peppermintChatEntryNewMesssagesArray) {
-        if([peppermintChatEntry.contactEmail isEqualToString:self.peppermintContact.communicationChannelAddress]) {
+        if([peppermintChatEntry.contactEmail caseInsensitiveCompare:self.peppermintContact.communicationChannelAddress] == NSOrderedSame) {
             [self refreshContent];
             break;
         }
@@ -412,6 +454,66 @@ SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
         [self initRecordingViewWithView:self.recordingButton];
     }
     return _recordingView;
+}
+
+#pragma mark - Proximity Sensor Monitor
+
+-(void) startListeningProximitySensor {
+    [[ProximitySensorModel sharedInstance] startMonitoring];
+    [self.view becomeFirstResponder];
+}
+
+-(void) stopListeningProximitySensor {
+    [[ProximitySensorModel sharedInstance] stopMonitoring];
+    [self.view resignFirstResponder];
+}
+
+SUBSCRIBE(ProximitySensorValueIsUpdated) {
+    if(isPlaying) {
+        NSLog(@"exist active playing.Don't take action...");
+    } else if ([self doesExistUnheardMessage]) {
+        [self checkAndPlayFirstUnheardMessage];
+    } else if (event.isDeviceOrientationCorrectOnEar) {
+        if (event.isDeviceCloseToUser) {
+            [self startAudioRecording];
+        } else {
+            proximityTimer = [NSTimer scheduledTimerWithTimeInterval:WAIT_FOR_SHAKE_DURATION
+                                                              target:self
+                                                            selector:@selector(completeRecordingPauseProcess)
+                                                            userInfo:nil
+                                                             repeats:NO];
+            [self.recordingView finishRecordingWithGestureIsValid:YES needsPause:YES];
+        }
+    }
+}
+
+-(BOOL) doesExistUnheardMessage {
+    BOOL result = NO;
+    for(PeppermintChatEntry *peppermintChatEntry in self.chatEntryModel.chatEntriesArray) {
+        if(!peppermintChatEntry.isSeen) {
+            result = YES;
+            break;
+        }
+    }
+    return result;
+}
+
+-(void) checkAndPlayFirstUnheardMessage {
+    for(ChatTableViewCell *chatTableViewCell in self.tableView.visibleCells) {
+        if(!chatTableViewCell.peppermintChatEntry.isSeen) {
+            [chatTableViewCell playPauseButtonPressed:self];
+        }
+    }
+}
+
+-(void) completeRecordingPauseProcess {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.recordingView finishRecordingWithGestureIsValid:YES needsPause:NO];
+    });
+}
+
+SUBSCRIBE(ShakeGestureOccured) {
+    [self cancelSendingButtonPressed:self.cancelSendingButton];
 }
 
 @end

@@ -135,6 +135,8 @@
 		B1D2A6D71C200706002BD6DF /* RecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D2A6D61C200706002BD6DF /* RecordingView.m */; };
 		B1D2A6DB1C2037FB002BD6DF /* FoggyRecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D2A6DA1C2037FB002BD6DF /* FoggyRecordingView.m */; };
 		B1D2A6DD1C20380D002BD6DF /* FoggyRecordingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1D2A6DC1C20380D002BD6DF /* FoggyRecordingView.xib */; };
+		B1D646541C99728F00600183 /* ProximitySensorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D646531C99728F00600183 /* ProximitySensorModel.m */; };
+		B1D646581C998FB300600183 /* ShakeGestureView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D646571C998FB300600183 /* ShakeGestureView.m */; };
 		B1DBEF431C537345007AAF4A /* RecordingGestureButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B1DBEF421C537345007AAF4A /* RecordingGestureButton.m */; };
 		B1E2DF9B1C76061F0037FFBF /* AutoPlayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E2DF9A1C76061F0037FFBF /* AutoPlayModel.m */; };
 		B1E5160E1C7D99E3002BD49C /* ChatEntryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E5160D1C7D99E3002BD49C /* ChatEntryModel.m */; };
@@ -503,6 +505,10 @@
 		B1D2A6D91C2037FB002BD6DF /* FoggyRecordingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoggyRecordingView.h; sourceTree = "<group>"; };
 		B1D2A6DA1C2037FB002BD6DF /* FoggyRecordingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoggyRecordingView.m; sourceTree = "<group>"; };
 		B1D2A6DC1C20380D002BD6DF /* FoggyRecordingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FoggyRecordingView.xib; sourceTree = "<group>"; };
+		B1D646521C99728F00600183 /* ProximitySensorModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProximitySensorModel.h; sourceTree = "<group>"; };
+		B1D646531C99728F00600183 /* ProximitySensorModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProximitySensorModel.m; sourceTree = "<group>"; };
+		B1D646561C998FB300600183 /* ShakeGestureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShakeGestureView.h; sourceTree = "<group>"; };
+		B1D646571C998FB300600183 /* ShakeGestureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShakeGestureView.m; sourceTree = "<group>"; };
 		B1DBEF411C537345007AAF4A /* RecordingGestureButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingGestureButton.h; sourceTree = "<group>"; };
 		B1DBEF421C537345007AAF4A /* RecordingGestureButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordingGestureButton.m; sourceTree = "<group>"; };
 		B1E2DF991C76061F0037FFBF /* AutoPlayModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoPlayModel.h; sourceTree = "<group>"; };
@@ -936,6 +942,8 @@
 				B1E2DF9A1C76061F0037FFBF /* AutoPlayModel.m */,
 				B1E5160C1C7D99E3002BD49C /* ChatEntryModel.h */,
 				B1E5160D1C7D99E3002BD49C /* ChatEntryModel.m */,
+				B1D646521C99728F00600183 /* ProximitySensorModel.h */,
+				B1D646531C99728F00600183 /* ProximitySensorModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1116,6 +1124,7 @@
 		B17B3D551BB689F1009B8BC5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B1D646551C998FA000600183 /* ShakeGestureView */,
 				B10163391C6378D0008CC8D0 /* SMSChargeWarningView */,
 				B1DBEF441C537A1D007AAF4A /* RecordingGestureButton */,
 				B1D2A6D41C2006E9002BD6DF /* RecordingView */,
@@ -1273,6 +1282,15 @@
 				B1D2A6DC1C20380D002BD6DF /* FoggyRecordingView.xib */,
 			);
 			name = FoggyRecordingView;
+			sourceTree = "<group>";
+		};
+		B1D646551C998FA000600183 /* ShakeGestureView */ = {
+			isa = PBXGroup;
+			children = (
+				B1D646561C998FB300600183 /* ShakeGestureView.h */,
+				B1D646571C998FB300600183 /* ShakeGestureView.m */,
+			);
+			name = ShakeGestureView;
 			sourceTree = "<group>";
 		};
 		B1DBEF441C537A1D007AAF4A /* RecordingGestureButton */ = {
@@ -1931,6 +1949,7 @@
 				B12EA4051C4FB1F40006F51F /* GoogleCloudMessagingModel.m in Sources */,
 				B13AE43C1C8436410046AF6E /* Link.m in Sources */,
 				B13B07631BD3720100974AC3 /* MandrillMessage.m in Sources */,
+				B1D646581C998FB300600183 /* ShakeGestureView.m in Sources */,
 				B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */,
 				B15EEB9A1C6081F40083658A /* RecordersUpdateRequest.m in Sources */,
 				B1BB605F1BDE36AF00C1140B /* SignUpWithEmailViewController.m in Sources */,
@@ -1993,6 +2012,7 @@
 				B14EF8321C4D16570041FD24 /* MandrillNameContentPair.m in Sources */,
 				B1F5158D1C2ABCBE0033A779 /* ContactSupportModel.m in Sources */,
 				B18BF95E1BD674CD009B665E /* PeppermintMessageSender.m in Sources */,
+				B1D646541C99728F00600183 /* ProximitySensorModel.m in Sources */,
 				B15FDE7C1C117CCE007100EC /* RecentContact+CoreDataProperties.m in Sources */,
 				B1A366951BDC92FF00852B52 /* UploadsResponse.m in Sources */,
 				B1E516111C7D9A69002BD49C /* PeppermintChatEntry.m in Sources */,

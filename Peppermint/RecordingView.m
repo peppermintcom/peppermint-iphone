@@ -72,7 +72,7 @@ typedef enum : NSUInteger {
     return NO;
 }
 
--(BOOL) finishRecordingWithGestureIsValid:(BOOL) isGestureValid {
+-(BOOL) finishRecordingWithGestureIsValid:(BOOL) isGestureValid needsPause:(BOOL)needsPause {
     BOOL result = NO;
     if(recordingViewStatus == RecordingViewStatusPresented) {
         recordingViewStatus = RecordingViewStatusFinishing;
@@ -87,6 +87,10 @@ typedef enum : NSUInteger {
             [self dissmissWithExplode];
         } else if (isRecordingShort) {
             [self showAlertToRecordMoreThanMinimumMessageLength];
+        } else if (needsPause) {
+            recordingViewStatus = RecordingViewStatusPresented;
+            self.sendVoiceMessageModel.sendingStatus = SendingStatusStarting;
+            self.hidden = YES;
         } else {
             [self dissmissWithFadeOut];
             [self performOperationsToSend];
@@ -150,6 +154,9 @@ typedef enum : NSUInteger {
         self.sendVoiceMessageModel = sendVoiceMessageMandrillModel;
         self.sendVoiceMessageModel.delegate = self;
         [self triggerMessageSendProcess];
+        
+        CustomContactModel *customContactModel = [CustomContactModel new];
+        [customContactModel save:sendVoiceMessageMandrillModel.selectedPeppermintContact];
     };
 }
 
@@ -158,6 +165,14 @@ typedef enum : NSUInteger {
 -(void) beginRecording {
     [self.recordingModel stop];
     [self.recordingModel record];
+}
+
+-(void) pause {
+    [self.recordingModel pause];
+}
+
+-(void) stop {
+    [self.recordingModel stop];
 }
 
 #pragma mark - RecordingModel Delegate
@@ -304,7 +319,7 @@ typedef enum : NSUInteger {
             case ALERT_BUTTON_INDEX_OTHER_1:
                 [self.recordingModel record];
                 recordingViewStatus = RecordingViewStatusPresented;
-                [self finishRecordingWithGestureIsValid:YES];
+                [self finishRecordingWithGestureIsValid:YES needsPause:NO];
                 break;
             default:
                 break;

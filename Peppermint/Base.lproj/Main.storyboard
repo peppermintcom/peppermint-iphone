@@ -1333,7 +1333,7 @@ Version 1.0.0</string>
                         <viewControllerLayoutGuide type="top" id="9Xk-3P-aLq"/>
                         <viewControllerLayoutGuide type="bottom" id="9uv-HA-C7W"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="4qC-EC-dhR">
+                    <view key="view" contentMode="scaleToFill" id="4qC-EC-dhR" customClass="ShakeGestureView">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>

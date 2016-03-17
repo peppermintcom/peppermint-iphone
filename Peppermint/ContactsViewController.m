@@ -538,12 +538,12 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 -(void) didCancelItemSelectionOnIndexpath:(NSIndexPath*) indexPath location:(CGPoint) location {
     self.tableView.bounces = YES;
-    [self.recordingView finishRecordingWithGestureIsValid:NO];
+    [self.recordingView finishRecordingWithGestureIsValid:NO needsPause:NO];
 }
 
 -(void) didFinishItemSelectionOnIndexPath:(NSIndexPath*) indexPath location:(CGPoint) location {
     self.tableView.bounces = YES;
-    [self.recordingView finishRecordingWithGestureIsValid:YES];
+    [self.recordingView finishRecordingWithGestureIsValid:YES needsPause:NO];
 }
 
 #pragma mark - ContactInformationTableViewCellDelegate

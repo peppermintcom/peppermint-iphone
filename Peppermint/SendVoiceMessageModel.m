@@ -239,7 +239,7 @@
         case SendingStatusCancelled:
         case SendingStatusCached:
         case SendingStatusSent:
-            NSLog(@"%@ changed status to %d, soon it will be detached.", self, (int)self.sendingStatus);
+            //NSLog(@"%@ changed status to %d, soon it will be detached.", self, (int)self.sendingStatus);
             [self performDetach];
             return;
         default:
@@ -254,7 +254,7 @@
         [arrayLock lock];
         [array removeObject:self];
         [arrayLock unlock];
-        NSLog(@"Comleted& Detached voice message %@ with status %d", self, (int)self.sendingStatus);
+        //NSLog(@"Comleted& Detached voice message %@ with status %d", self, (int)self.sendingStatus);
         DetachSuccess *detachSuccess = [DetachSuccess new];
         detachSuccess.sender = self;
         PUBLISH(detachSuccess);

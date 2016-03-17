@@ -1,0 +1,1 @@
+../../../DeviceMotion/Pod/Classes/DeviceMotionMager.h

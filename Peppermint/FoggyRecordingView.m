@@ -68,11 +68,11 @@
 }
 
 -(void) tapped {
-    [self finishRecordingWithGestureIsValid:YES];
+    [self finishRecordingWithGestureIsValid:YES needsPause:NO];
 }
 
 -(void) swiped {
-    [self finishRecordingWithGestureIsValid:NO];
+    [self finishRecordingWithGestureIsValid:NO needsPause:NO];
 }
 
 #pragma mark - Record Methods
@@ -111,7 +111,7 @@
     return result;
 }
 
--(BOOL) finishRecordingWithGestureIsValid:(BOOL) isGestureValid {
+-(BOOL) finishRecordingWithGestureIsValid:(BOOL) isGestureValid needsPause:(BOOL)needsPause{
     BOOL isRecordingShort = self.totalSeconds <= MIN_VOICE_MESSAGE_LENGTH;
     if(isGestureValid && isRecordingShort) {
         CGRect frame = CGRectMake(
@@ -127,7 +127,7 @@
             self.microphoneImageView.frame = originalMicrophoneFrame;
         }];
     }
-    return [super finishRecordingWithGestureIsValid:isGestureValid];
+    return [super finishRecordingWithGestureIsValid:isGestureValid needsPause:needsPause];
 }
 
 #pragma mark - Show

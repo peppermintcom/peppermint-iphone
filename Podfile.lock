@@ -31,6 +31,7 @@ PODS:
     - Bolts/Tasks
   - Bolts/Tasks (1.4.0)
   - Crashlytics (3.3.4)
+  - DeviceMotion (0.1.0)
   - EasyMailSender (0.0.1)
   - Fabric (1.5.5):
     - Fabric/Base (= 1.5.5)
@@ -107,12 +108,14 @@ PODS:
   - REMenu (1.10)
   - RESideMenu (4.0.7)
   - tolo (1.0.0)
+  - UIView+Shake (1.1.3)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - APAddressBook (= 0.1.12)
   - Base64
   - Crashlytics (~> 3.3.1)
+  - DeviceMotion
   - EasyMailSender
   - Fabric (~> 1.5.1)
   - FBSDKCoreKit
@@ -128,6 +131,7 @@ DEPENDENCIES:
   - REMenu (~> 1.10)
   - RESideMenu (~> 4.0.7)
   - tolo
+  - UIView+Shake
 
 EXTERNAL SOURCES:
   GData:
@@ -144,6 +148,7 @@ SPEC CHECKSUMS:
   Base64: 4924bf3ca6fa559a5161ef717291bd450eb7bd1a
   Bolts: 0e9bce58b9b9f5e8a7a4d47b16d2fabec289072b
   Crashlytics: 41c082440d2e14da444186fff65e79c0b4b35d4c
+  DeviceMotion: f3a14766e1ac1602590b17ed25be2e645e2f9a4f
   EasyMailSender: f50b6b5fa49b47f4b60998a56345600b848f2121
   Fabric: 190bf1a6eb65f7500de1347d027d2e59a7e53db1
   FBSDKCoreKit: 9141b70960a37930850370495fe565f4a27ac141
@@ -170,5 +175,6 @@ SPEC CHECKSUMS:
   REMenu: 30dad195930adf6c5eeb8041e3257aa60bf9fa49
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
   tolo: 906f6fe2943451e7354c694ce968d76ea344c01d
+  UIView+Shake: a7ea3fd810a64297cb56b7cbdbd2b0fd5f964a6e
 
 COCOAPODS: 0.39.0
