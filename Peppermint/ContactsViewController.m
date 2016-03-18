@@ -257,7 +257,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
     if(indexPath.section == SECTION_FAST_REPLY_CONTACT) {
         ContactTableViewCell *cell = [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
         PeppermintContact *contact = [FastReplyModel sharedInstance].peppermintContact;
-        [cell setAvatarImage:contact.avatarImage];
+        [cell setAvatarImage:contact.avatarImage ? contact.avatarImage : emptyProfileImage];
         [cell setInformationWithNameSurname:contact.nameSurname communicationChannelAddress:LOC(@"Peppermint", @"Peppermint") andIconImage:[UIImage imageNamed:@"icon_reply"]];
         preparedCell = cell;
     } else if (indexPath.section == SECTION_EMPTY_RESULT) {
@@ -274,11 +274,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
                 peppermintContact = recentContact;
             }
             
-            if(peppermintContact.avatarImage) {
-                [cell setAvatarImage:peppermintContact.avatarImage];
-            } else {
-                [cell setAvatarImage:emptyProfileImage];
-            }
+            [cell setAvatarImage:peppermintContact.avatarImage ? peppermintContact.avatarImage : emptyProfileImage];
             
             NSString *communicationChannelAddressToShow = peppermintContact.communicationChannelAddress;
             if(peppermintContact.hasReceivedMessageOverPeppermint) {

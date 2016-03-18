@@ -18,6 +18,7 @@
 
 @interface ContactTableViewCell ()
 @property (weak, nonatomic) IBOutlet UILabel *informationLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *rightIconImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *informationLabelRightConstraint;
 
 @end
@@ -84,6 +85,8 @@
     self.rightDateLabel.text = @"";
     self.rightMessageCounterLabel.text = @"";
     self.rightMessageCounterLabel.hidden = YES;
+    self.rightIconImageView.hidden = image == nil;
+    self.rightIconImageView.image = image;
     self.informationLabelRightConstraint.constant = image == nil ? INFORMATION_LABEL_RIGHT_CONSTANT_MIN : INFORMATION_LABEL_RIGHT_CONSTANT;
     
     [self calculateCorrectSizeForFonts];

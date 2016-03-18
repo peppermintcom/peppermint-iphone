@@ -60,6 +60,13 @@ via okankurtulus@gmail.com</string>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EDQ-8r-4xP" customClass="RecordingGestureButton">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
                     </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PXW-gj-hHd">
+                        <rect key="frame" x="387" y="18" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="KEn-ju-LGI"/>
+                            <constraint firstAttribute="width" constant="20" id="zhm-hF-a8d"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <gestureRecognizers/>
                 <constraints>
@@ -74,6 +81,8 @@ via okankurtulus@gmail.com</string>
                     <constraint firstAttribute="bottom" secondItem="EDQ-8r-4xP" secondAttribute="bottom" id="RLY-JJ-A1N"/>
                     <constraint firstItem="aEQ-5s-Sav" firstAttribute="leading" secondItem="ejf-Un-hy5" secondAttribute="leading" priority="750" id="T1O-ci-IwN"/>
                     <constraint firstItem="EDQ-8r-4xP" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" id="TVD-yB-5x8"/>
+                    <constraint firstItem="PXW-gj-hHd" firstAttribute="centerY" secondItem="JcO-0x-7sn" secondAttribute="centerY" id="TlR-Gk-vbq"/>
+                    <constraint firstItem="PXW-gj-hHd" firstAttribute="leading" secondItem="JcO-0x-7sn" secondAttribute="trailing" constant="8" id="aOs-Ux-Rj5"/>
                     <constraint firstItem="1G5-fy-gLb" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" priority="750" constant="10" id="bDo-0S-BDQ"/>
                     <constraint firstAttribute="trailing" secondItem="AmQ-9E-NNX" secondAttribute="trailing" constant="11" id="k2e-Px-7Pc"/>
                     <constraint firstAttribute="trailing" secondItem="EDQ-8r-4xP" secondAttribute="trailing" id="kuh-25-oJM"/>
@@ -104,6 +113,7 @@ via okankurtulus@gmail.com</string>
                 <outlet property="informationLabelRightConstraint" destination="KEL-EX-raH" id="VgI-h4-dcq"/>
                 <outlet property="recordingGestureButton" destination="EDQ-8r-4xP" id="OPQ-Dg-S9M"/>
                 <outlet property="rightDateLabel" destination="LTB-nu-Tni" id="wE1-br-wet"/>
+                <outlet property="rightIconImageView" destination="PXW-gj-hHd" id="Izs-w7-BvT"/>
                 <outlet property="rightMessageCounterLabel" destination="AmQ-9E-NNX" id="wLI-WE-GE9"/>
             </connections>
             <point key="canvasLocation" x="304" y="275"/>

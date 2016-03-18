@@ -321,7 +321,7 @@ SUBSCRIBE(DetachSuccess) {
             [[FastReplyModel sharedInstance] setFastReplyContactWithNameSurname:userNameSurname email:userEmail];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self navigateToContactsWithFilterText:userNameSurname];
+            [self navigateToChatEntriesPageForEmail:userEmail nameSurname:userNameSurname];
         });
     }
     completionHandler();
@@ -496,7 +496,7 @@ SUBSCRIBE(DetachSuccess) {
         if(nameSurname.length > 0 && [email isValidEmail]) {
             result = [[FastReplyModel sharedInstance] setFastReplyContactWithNameSurname:nameSurname email:email];
             if(result) {
-                result = [self navigateToContactsWithFilterText:@""];
+                [self navigateToChatEntriesPageForEmail:email nameSurname:nameSurname];
             }
         }
         else {
