@@ -477,6 +477,7 @@ SUBSCRIBE(ProximitySensorValueIsUpdated) {
         if (event.isDeviceCloseToUser) {
             [self startAudioRecording];
         } else {
+            [proximityTimer invalidate];
             proximityTimer = [NSTimer scheduledTimerWithTimeInterval:WAIT_FOR_SHAKE_DURATION
                                                               target:self
                                                             selector:@selector(completeRecordingPauseProcess)
@@ -502,6 +503,7 @@ SUBSCRIBE(ProximitySensorValueIsUpdated) {
     for(ChatTableViewCell *chatTableViewCell in self.tableView.visibleCells) {
         if(!chatTableViewCell.peppermintChatEntry.isSeen) {
             [chatTableViewCell playPauseButtonPressed:self];
+            break;
         }
     }
 }

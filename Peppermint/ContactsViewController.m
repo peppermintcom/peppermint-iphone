@@ -824,10 +824,10 @@ SUBSCRIBE(ReplyContactIsAdded) {
 #pragma mark - SearchMenuTableViewCellDelegate
 
 -(void)cellSelectedWithTag:(NSUInteger) cellTag {
+    activeCellTag = cellTag;
+    /*
     [self.searchMenu close];
     [self.searchContactsTextField resignFirstResponder];
-    
-    activeCellTag = cellTag;
 
     NSPredicate *itemWithTagPredicate = [NSPredicate predicateWithFormat:@"self.tag == %d", cellTag];
     NSArray *filteredArray = [self.searchMenu.items filteredArrayUsingPredicate:itemWithTagPredicate];
@@ -836,6 +836,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
     self.searchSourceIconImageView.image = [UIImage imageNamed:activeMenuTableViewCell.iconImageName];
     
     [[self loadingHud] show:YES];
+    */
     if(cellTag == CELL_TAG_RECENT_CONTACTS) {
         [self.recentContactsModel refreshRecentContactList];
     } else {
@@ -897,11 +898,15 @@ SUBSCRIBE(ReplyContactIsAdded) {
 }
 
 SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
-    if(self.recentContactsModel.contactList.count == 0 ) {
-        [self cellSelectedWithTag:CELL_TAG_RECENT_CONTACTS];
-    } else {
-        [self.recentContactsModel refreshRecentContactList];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"Received RefreshIncomingMessagesCompletedWithSuccess....");
+        if(event.peppermintChatEntryAllMesssagesArray.count > 0) {
+            if (self.recentContactsModel.contactList.count == 0 ) {
+                activeCellTag = CELL_TAG_RECENT_CONTACTS;
+            }
+            [self.recentContactsModel refreshRecentContactList];
+        }
+    });
 }
 
 SUBSCRIBE(MessageIsMarkedAsRead) {

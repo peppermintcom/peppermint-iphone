@@ -123,10 +123,12 @@
 @property (assign, nonatomic) BOOL isForRecipient;
 @property (strong, nonatomic) NSArray* dataOfMessagesArray;
 @property (assign, nonatomic) BOOL existsMoreMessages;
+@property (assign, nonatomic) NSString* nextUrl;
 @end
 
 @interface RefreshIncomingMessagesCompletedWithSuccess : BaseEvent
 @property (strong, nonatomic) NSArray* peppermintChatEntryNewMesssagesArray;
+@property (strong, nonatomic) NSArray* peppermintChatEntryAllMesssagesArray;
 @end
 
 @interface AccountIdIsUpdated : BaseEvent

@@ -306,12 +306,12 @@ SUBSCRIBE(StopAllPlayingMessages) {
 
 SUBSCRIBE(ProximitySensorValueIsUpdated) {
     BOOL isPlaying = (self.playingModel.audioPlayer.isPlaying);
-    if (event.isDeviceOrientationCorrectOnEar && isPlaying) {
-        if(event.isDeviceCloseToUser) {
-            [self rewindPlayer];
-        } else {
+    if(isPlaying) {
+        if(!event.isDeviceCloseToUser) {
             [self.playingModel.audioPlayer pause];
             [self.delegate stoppedPlayingMessage:self];
+        } else if (event.isDeviceOrientationCorrectOnEar) {
+            [self rewindPlayer];
         }
     }
 }

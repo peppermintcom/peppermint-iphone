@@ -22,6 +22,7 @@
     NSMutableSet *mergedPeppermintChatEntrySet;
     NSMutableSet *mergedPeppermintContacts;
     __block BOOL queryForIncoming;
+    __block NSString *nextUrl;
 }
 
 -(id) init {
@@ -147,6 +148,7 @@
     queryForIncoming = NO;
     mergedPeppermintChatEntrySet = [NSMutableSet new];
     mergedPeppermintContacts = [NSMutableSet new];
+    nextUrl = nil;
     [self queryServerForIncomingMessages];
 }
 
@@ -161,11 +163,13 @@
         if(queryForIncoming) {
             [awsService getMessagesForAccountId:peppermintMessageSender.accountId
                                             jwt:peppermintMessageSender.exchangedJwt
+                                        nextUrl:nextUrl
                                           since:peppermintMessageSender.lastMessageSyncDate
                                       recipient:YES];
         } else {
             [awsService getMessagesForAccountId:peppermintMessageSender.accountId
                                             jwt:peppermintMessageSender.exchangedJwt
+                                        nextUrl:nextUrl
                                           since:peppermintMessageSender.lastMessageSyncDateForSentMessages
                                       recipient:NO];
         }
@@ -183,6 +187,7 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
         if(gotNewQueryRequestWhileServiceCallWasActive) {
             [self makeSyncRequestForMessages];
         } else if(shouldProcessData) {
+            nextUrl = event.nextUrl;
             [self processEvent:event];
         }
     }

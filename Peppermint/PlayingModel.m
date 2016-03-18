@@ -107,7 +107,8 @@
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
     if(!error) {
-        BOOL isOnEar = [[ProximitySensorModel sharedInstance] isDeviceOrientationCorrectOnEar];
+        ProximitySensorModel *proximitySensorModel = [ProximitySensorModel sharedInstance];
+        BOOL isOnEar = proximitySensorModel.isDeviceOrientationCorrectOnEar && proximitySensorModel.isDeviceCloseToUser;
         if(isOnEar) {
             [audioSession overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:nil];
         } else {
@@ -117,7 +118,7 @@
     return error;
 }
 
-SUBSCRIBE(ProximitySensorValueIsUpdated) {    
+SUBSCRIBE(ProximitySensorValueIsUpdated) {
     [self updateCategory];
 }
 

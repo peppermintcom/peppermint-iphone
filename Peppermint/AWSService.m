@@ -499,8 +499,21 @@
     }];
 }
 
--(void) getMessagesForAccountId:(NSString*) accountId jwt:(NSString*)jwt since:(NSDate*)sinceDate recipient:(BOOL)isForRecipient {
-    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_MESSAGES];
+-(void) getMessagesForAccountId:(NSString*) accountId jwt:(NSString*)jwt nextUrl:(NSString*)url since:(NSDate*)sinceDate recipient:(BOOL)isForRecipient  {
+    
+    NSDictionary *parameterDictionary = [NSDictionary new];
+    if(!url) {
+        url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_MESSAGES];
+        MessageGetRequest *messageGetRequest = [MessageGetRequest new];
+        if(isForRecipient) {
+            messageGetRequest.recipient = accountId;
+        } else {
+            messageGetRequest.sender = accountId;
+        }
+        [messageGetRequest setSinceDate:sinceDate];
+        parameterDictionary = [messageGetRequest toDictionary];
+    }
+    
     NSString *tokenText = [self toketTextForJwt:jwt];
     AFHTTPRequestOperationManager *requestOperationManager = [[AFHTTPRequestOperationManager alloc]
                                                               initWithBaseURL:[NSURL URLWithString:url]];
@@ -509,15 +522,6 @@
     [requestOperationManager.requestSerializer setValue:self.apiKey forHTTPHeaderField:X_API_KEY];
     [requestOperationManager.requestSerializer setValue:tokenText forHTTPHeaderField:AUTHORIZATION];
     requestOperationManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/vnd.api+json"];
-    
-    MessageGetRequest *messageGetRequest = [MessageGetRequest new];
-    if(isForRecipient) {
-        messageGetRequest.recipient = accountId;
-    } else {
-        messageGetRequest.sender = accountId;
-    }    
-    [messageGetRequest setSinceDate:sinceDate];
-    NSDictionary *parameterDictionary = [messageGetRequest toDictionary];
 
     [requestOperationManager GET:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSError *error;
@@ -529,6 +533,7 @@
             getMessagesAreSuccessful.sender = self;
             getMessagesAreSuccessful.dataOfMessagesArray = messageGetResponse.data;
             getMessagesAreSuccessful.existsMoreMessages = (messageGetResponse.links.next != nil);
+            getMessagesAreSuccessful.nextUrl = messageGetResponse.links.next;
             
             #warning "Watch logs&Decide to add next date in event to publish!"
             NSLog(@"isForRecipient:%d,S:%@ --> next:%@",isForRecipient, sinceDate, messageGetResponse.links.next);

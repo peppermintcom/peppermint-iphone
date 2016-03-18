@@ -225,7 +225,6 @@
     [self initGoogleApp];
     [self checkForFirstRun];
     [self initRecorder];
-    [self refreshBadgeNumber];
     REGISTER();
     return YES;
 }
@@ -239,6 +238,7 @@
     [FBSDKAppEvents activateApp];
     [[GoogleCloudMessagingModel sharedInstance] connectGCM];
     [self refreshIncomingMessages];
+    [self refreshBadgeNumber];
     PUBLISH([ApplicationDidBecomeActive new]);
 }
 
@@ -383,6 +383,7 @@ SUBSCRIBE(DetachSuccess) {
     RefreshIncomingMessagesCompletedWithSuccess *refreshIncomingMessagesCompletedWithSuccess = [RefreshIncomingMessagesCompletedWithSuccess new];
     refreshIncomingMessagesCompletedWithSuccess.sender = self;
     refreshIncomingMessagesCompletedWithSuccess.peppermintChatEntryNewMesssagesArray = newMessagesArray;
+    refreshIncomingMessagesCompletedWithSuccess.peppermintChatEntryAllMesssagesArray = savedPeppermintChatEnryArray;
     PUBLISH(refreshIncomingMessagesCompletedWithSuccess);
 }
 
