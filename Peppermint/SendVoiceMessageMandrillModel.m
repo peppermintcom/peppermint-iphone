@@ -65,9 +65,10 @@
     mandrillMessage = [MandrillMessage new];
     mandrillMessage.from_email = @"support@peppermint.com"; //self.peppermintMessageSender.email;
     
-    mandrillMessage.from_name =
-    [NSString stringWithFormat:@"%@ <%@>", nameSurname, self.peppermintMessageSender.email];
+    NSString *fromName = [NSString stringWithFormat:@"%@ [%@]", nameSurname, self.peppermintMessageSender.email];
+    //[NSString stringWithFormat:@"%@ <%@>", nameSurname, self.peppermintMessageSender.email];
     
+    mandrillMessage.from_name = fromName;
     mandrillMessage.subject = subject;
     
     mandrillMessage.html = nil;
