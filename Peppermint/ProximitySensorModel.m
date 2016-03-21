@@ -88,6 +88,10 @@
             _currentDeviceOrientation = UIDeviceOrientationUnknown;
             _isDeviceOrientationCorrectOnEar = YES;
         }
+        
+        if(_isDeviceOrientationCorrectOnEar && ![UIDevice currentDevice].proximityMonitoringEnabled) {
+            [[UIDevice currentDevice] setProximityMonitoringEnabled:YES];
+        }
     }];
     
     /* //Currently rotation is not used.
