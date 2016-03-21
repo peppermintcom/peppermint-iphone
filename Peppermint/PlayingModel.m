@@ -10,7 +10,9 @@
 #import "ProximitySensorModel.h"
 #import "AppDelegate.h"
 
-@interface PlayingModel() <AVAudioPlayerDelegate>
+@interface PlayingModel() <AVAudioPlayerDelegate> {
+    NSString *audioPath;
+}
 
 @end
 
@@ -31,19 +33,17 @@
 }
 
 -(void) initBeginRecordingSound {
-    NSString *audioPath = [[NSBundle mainBundle]pathForResource:@"begin_record" ofType:@"mp3"];
-    [self prepareAudioForPath:audioPath];
+    audioPath = [[NSBundle mainBundle]pathForResource:@"begin_record" ofType:@"mp3"];
 }
 
 -(void) initReceivedMessageSound {
-    NSString *audioPath = [[NSBundle mainBundle]pathForResource:@"water_drop" ofType:@"mp3"];
-    [self prepareAudioForPath:audioPath];
+    audioPath = [[NSBundle mainBundle]pathForResource:@"water_drop" ofType:@"mp3"];
 }
 
--(void) prepareAudioForPath:(NSString*) audioPath {
-    if (audioPath) {
+-(void) prepareAudioForPath:(NSString*) myAudioPath {
+    if (myAudioPath) {
         NSError *error;
-        audioUrl = [NSURL fileURLWithPath:audioPath];
+        audioUrl = [NSURL fileURLWithPath:myAudioPath];
         _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:audioUrl error:&error];
         if(!error) {
             _audioPlayer.delegate = self;
@@ -58,6 +58,7 @@
 }
 
 -(BOOL) playPreparedAudiowithCompetitionBlock:(PlayerCompletitionBlock) playerCompletitionBlock {
+    [self prepareAudioForPath:audioPath];
     cachedBlock = playerCompletitionBlock;
     [_audioPlayer stop];
     _audioPlayer.currentTime = 0;
