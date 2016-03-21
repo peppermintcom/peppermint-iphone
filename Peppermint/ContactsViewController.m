@@ -452,15 +452,22 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 -(void) didShortTouchOnIndexPath:(NSIndexPath*) indexPath location:(CGPoint) location {
     if(!isScrolling) {
-        PeppermintContact *peppermintContact = [[self activeContactList] objectAtIndex:indexPath.row];
-        PeppermintContact *recentContact = [self recentContactForPeppermintContact:peppermintContact];
-        
-        if (self.searchContactsTextField.isFirstResponder) {
-            [self.searchContactsTextField resignFirstResponder];
-        } else if(recentContact) {
-            [self performSegueWithIdentifier:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER sender:recentContact];
+        PeppermintContact *peppermintContact = nil;
+        if([self isFastReplyRowVisible] && indexPath.row == 0) {
+            peppermintContact = [FastReplyModel sharedInstance].peppermintContact;
         } else {
-            [self showHoldToRecordViewAtLocation:location];
+            peppermintContact = [[self activeContactList] objectAtIndex:indexPath.row];
+        }
+        
+        if(peppermintContact) {
+            PeppermintContact *recentContact = [self recentContactForPeppermintContact:peppermintContact];
+            if (self.searchContactsTextField.isFirstResponder) {
+                [self.searchContactsTextField resignFirstResponder];
+            } else if(recentContact) {
+                [self performSegueWithIdentifier:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER sender:recentContact];
+            } else {
+                [self showHoldToRecordViewAtLocation:location];
+            }
         }
     }
 }
