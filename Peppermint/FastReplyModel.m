@@ -9,6 +9,7 @@
 #import "FastReplyModel.h"
 #import "ContactsModel.h"
 #import "ChatModel.h"
+#import "RecordingModel.h"
 
 @implementation FastReplyModel
 
@@ -32,6 +33,7 @@
 -(BOOL) setFastReplyContactWithNameSurname:(NSString*)nameSurname email:(NSString*)email {
     NSAssert(nameSurname && email, @"Namesurname and email must be valid to add.Current data-> nameSurname:%@, email:%@", nameSurname, email);
     
+    [[RecordingModel new] cleanCache];
     PeppermintContact *contact = [[ContactsModel sharedInstance] matchingPeppermintContactForEmail:email
                                                                                                  nameSurname:nameSurname];
     

@@ -8,6 +8,7 @@
 
 #import "PlayingModel.h"
 #import "ProximitySensorModel.h"
+#import "AppDelegate.h"
 
 @interface PlayingModel() <AVAudioPlayerDelegate>
 
@@ -41,13 +42,16 @@
 
 -(void) prepareAudioForPath:(NSString*) audioPath {
     if (audioPath) {
+        NSError *error;
         audioUrl = [NSURL fileURLWithPath:audioPath];
-        _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:audioUrl error:nil];
-        [_audioPlayer setNumberOfLoops:0];
-        [_audioPlayer prepareToPlay];
-        _audioPlayer.delegate = self;
-        [_audioPlayer play];
-        [_audioPlayer stop];
+        _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:audioUrl error:&error];
+        if(!error) {
+            _audioPlayer.delegate = self;
+            [_audioPlayer setNumberOfLoops:0];
+            [_audioPlayer prepareToPlay];
+        } else {
+            [AppDelegate handleError:error];
+        }
     } else {
         NSLog(@"Resource not found");
     }
@@ -58,22 +62,22 @@
     [_audioPlayer stop];
     _audioPlayer.currentTime = 0;
     
-    BOOL result = [_audioPlayer play];
+    BOOL result = [self play];
     return result;
 }
 
 -(BOOL) playData:(NSData*) audioData playerCompletitionBlock:(PlayerCompletitionBlock) playerCompletitionBlock {
-    NSError *error = [self updateCategory];
+    NSError *error = nil;
+    _audioPlayer = [[AVAudioPlayer alloc] initWithData:audioData error:&error];
+    _audioPlayer.delegate = self;
     if(!error) {
-        _audioPlayer = [[AVAudioPlayer alloc] initWithData:audioData error:&error];
-        _audioPlayer.delegate = self;
-        if(!error) {
-            cachedBlock = playerCompletitionBlock;
-            [_audioPlayer prepareToPlay];
-        }
+        cachedBlock = playerCompletitionBlock;
+        [_audioPlayer prepareToPlay];
+    } else {
+        [AppDelegate handleError:error];
     }
     
-    BOOL result = [_audioPlayer play];
+    BOOL result = [self play];
     return result;
 }
 
@@ -81,17 +85,25 @@
     [_audioPlayer pause];
 }
 
--(void) play {
+-(BOOL) play {
+    BOOL result = NO;
     NSError *error = [self updateCategory];
     if(!error) {
-        [_audioPlayer play];
+        result = [_audioPlayer play];
+        if(result) {
+            [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+        }
+    } else {
+        [AppDelegate handleError:error];
     }
+    return result;
 }
 
 #pragma mark - AVAudioPlayerDelegate
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     if(player == _audioPlayer && flag ) {
+        [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
         if(cachedBlock) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 cachedBlock();
@@ -110,9 +122,12 @@
         ProximitySensorModel *proximitySensorModel = [ProximitySensorModel sharedInstance];
         BOOL isOnEar = proximitySensorModel.isDeviceOrientationCorrectOnEar && proximitySensorModel.isDeviceCloseToUser;
         if(isOnEar) {
-            [audioSession overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:nil];
+            [audioSession overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:&error];
         } else {
-            [audioSession overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
+            [audioSession overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
+        }
+        if(error) {
+            [AppDelegate handleError:error];
         }
     }
     return error;

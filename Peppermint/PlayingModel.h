@@ -20,5 +20,5 @@ typedef void(^PlayerCompletitionBlock)(void);
 
 -(BOOL) playData:(NSData*) audioData playerCompletitionBlock:(PlayerCompletitionBlock) playerCompletitionBlock;
 -(void) pause;
--(void) play;
+-(BOOL) play;
 @end

@@ -94,6 +94,9 @@ sharedObject;\
 #pragma mark - NSMutableSet Addition
 #import "NSmutableSet_Addition.h"
 
+#pragma mark - NSDate Addition
+#import "NSDate_Addition.h"
+
 #pragma mark - UIView Shake Addition
 #import "UIView+Shake.h"
 

@@ -39,7 +39,6 @@
 -(void) resetRecording;
 -(void) prepareRecordData;
 
--(void) beep;
 -(void) cleanCache;
 
 @end
