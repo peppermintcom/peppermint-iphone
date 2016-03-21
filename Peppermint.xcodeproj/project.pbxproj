@@ -132,6 +132,7 @@
 		B1C83A191BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C83A181BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m */; };
 		B1C83A1B1BDEB0FC00EB14C2 /* LoginTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1C83A1A1BDEB0FC00EB14C2 /* LoginTextFieldTableViewCell.xib */; };
 		B1C978771C02EB6A00F402C2 /* GoogleContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C978761C02EB6A00F402C2 /* GoogleContactsModel.m */; };
+		B1D1E2C31CA04149008CFCB7 /* NSDate_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D1E2C21CA04149008CFCB7 /* NSDate_Addition.m */; };
 		B1D2A6D71C200706002BD6DF /* RecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D2A6D61C200706002BD6DF /* RecordingView.m */; };
 		B1D2A6DB1C2037FB002BD6DF /* FoggyRecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D2A6DA1C2037FB002BD6DF /* FoggyRecordingView.m */; };
 		B1D2A6DD1C20380D002BD6DF /* FoggyRecordingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1D2A6DC1C20380D002BD6DF /* FoggyRecordingView.xib */; };
@@ -500,6 +501,8 @@
 		B1C83A1A1BDEB0FC00EB14C2 /* LoginTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginTextFieldTableViewCell.xib; sourceTree = "<group>"; };
 		B1C978751C02EB6A00F402C2 /* GoogleContactsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleContactsModel.h; sourceTree = "<group>"; };
 		B1C978761C02EB6A00F402C2 /* GoogleContactsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleContactsModel.m; sourceTree = "<group>"; };
+		B1D1E2C11CA04149008CFCB7 /* NSDate_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDate_Addition.h; sourceTree = "<group>"; };
+		B1D1E2C21CA04149008CFCB7 /* NSDate_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDate_Addition.m; sourceTree = "<group>"; };
 		B1D2A6D51C200706002BD6DF /* RecordingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RecordingView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B1D2A6D61C200706002BD6DF /* RecordingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RecordingView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B1D2A6D91C2037FB002BD6DF /* FoggyRecordingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoggyRecordingView.h; sourceTree = "<group>"; };
@@ -1192,6 +1195,8 @@
 				B15FDE861C119D60007100EC /* UIImage_Addition.m */,
 				B1EB69B11C9828E20031F37E /* NSmutableSet_Addition.h */,
 				B1EB69B21C9828E20031F37E /* NSmutableSet_Addition.m */,
+				B1D1E2C11CA04149008CFCB7 /* NSDate_Addition.h */,
+				B1D1E2C21CA04149008CFCB7 /* NSDate_Addition.m */,
 			);
 			name = Addition;
 			sourceTree = "<group>";
@@ -1923,6 +1928,7 @@
 				B17B9A2A1C60CCDD00B081F7 /* SetUpRecorderRequest.m in Sources */,
 				D0D70D451C0495680068AB20 /* LoginWithEmailViewController.m in Sources */,
 				B184A0A71C1B0CF20087BB9C /* JwtInformation.m in Sources */,
+				B1D1E2C31CA04149008CFCB7 /* NSDate_Addition.m in Sources */,
 				B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */,
 				B1EF40F51BB857C800042E4B /* M13ProgressViewPie.m in Sources */,
 				B19B6B591C16F415001895BF /* CheckEmailResponse.m in Sources */,
@@ -2258,7 +2264,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0c15f428-934c-445d-9fbc-8268eab5807b";
+				PROVISIONING_PROFILE = "ac69407f-0834-4934-a293-abb5188c06e6";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2284,7 +2290,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8f8d3e40-7931-4424-9814-7cc82330f3d5";
+				PROVISIONING_PROFILE = "8514ade9-d404-44f9-8b8f-f19546aa2723";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

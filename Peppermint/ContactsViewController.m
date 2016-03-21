@@ -333,7 +333,14 @@ SUBSCRIBE(ReplyContactIsAdded) {
     PeppermintContact *recentContact = [self recentContactForPeppermintContact:peppermintContact];
     if(recentContact) {
         NSDate *lastMessageDate = recentContact.lastMessageDate;
-        cell.rightDateLabel.text = [dateFormatter stringFromDate:lastMessageDate];
+        if([lastMessageDate isToday]) {
+            cell.rightDateLabel.text = LOC(@"Today", @"Today");
+        } else if ([lastMessageDate isYesterday]) {
+            cell.rightDateLabel.text = LOC(@"Yesterday", @"Yesterday");
+        } else {
+            cell.rightDateLabel.text = [dateFormatter stringFromDate:lastMessageDate];
+        }
+        
         NSUInteger unreadMessageCount = recentContact.unreadMessageCount;
         cell.rightMessageCounterLabel.hidden = unreadMessageCount <= 0;
         cell.rightMessageCounterLabel.text = [NSString stringWithFormat:@"%ld",(unsigned long)unreadMessageCount];

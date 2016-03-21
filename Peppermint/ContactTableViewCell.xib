@@ -38,9 +38,9 @@ via okankurtulus@gmail.com</string>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Oct 18" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LTB-nu-Tni">
-                        <rect key="frame" x="353" y="10" width="50" height="17"/>
+                        <rect key="frame" x="343" y="10" width="60" height="17"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="50" id="1P0-IE-Wu4"/>
+                            <constraint firstAttribute="width" constant="60" id="1P0-IE-Wu4"/>
                             <constraint firstAttribute="height" constant="17" id="d08-ys-ors"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
