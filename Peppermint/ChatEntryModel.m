@@ -107,14 +107,14 @@
                 [weakSelf checkChatEntry:chatEntry andMarkAsReadIfNeededWithPeppermintChatEntry:peppermintChatEntry];
                 peppermintChatEntry.performedOperation = PerformedOperationUpdated;
             } else if(peppermintChatEntry.messageId != nil) {
-                
+                chatEntry = [existingChatEntriesArray objectAtIndex:0];
+                int i=0;
                 for(ChatEntry *chatEntry in existingChatEntriesArray) {
-                    NSLog(@"M:%@, A:%@, s:%@", chatEntry.messageId, chatEntry.audioUrl, chatEntry.isSentByMe);
+                    NSLog(@"%d.M:%@, A:%@, s:%@", ++i, chatEntry.messageId, chatEntry.audioUrl, chatEntry.isSentByMe);
                 }
-                
-                NSString *errorText = [NSString stringWithFormat:
-                                       @"Can not exists more than one message with same id %@", peppermintChatEntry.messageId];
-                [exception(errorText) raise];
+                NSLog(@"More than 1 unique chatEntry record is active as seen above...");
+            } else {
+                exception(@"This case should not happen!");
             }
             
             chatEntry.messageId = peppermintChatEntry.messageId;

@@ -38,7 +38,6 @@
 
 -(void) startMonitoring {
     [self startListeningDeviceMotionMager];
-    [[UIDevice currentDevice] setProximityMonitoringEnabled:YES];
 }
 
 -(void) stopMonitoring {
@@ -47,12 +46,15 @@
 }
 
 - (void)sensorStateMonitor:(NSNotificationCenter *)notification {
-    _isDeviceCloseToUser = [[UIDevice currentDevice] proximityState] == YES;
+    [self updateSensorState:[[UIDevice currentDevice] proximityState]];
+}
+
+-(void) updateSensorState:(BOOL)state {
+    _isDeviceCloseToUser = state;
     ProximitySensorValueIsUpdated *proximitySensorValueIsUpdated = [ProximitySensorValueIsUpdated new];
     proximitySensorValueIsUpdated.isDeviceCloseToUser = self.isDeviceCloseToUser;
     proximitySensorValueIsUpdated.deviceOrientation = self.currentDeviceOrientation;
     proximitySensorValueIsUpdated.isDeviceOrientationCorrectOnEar = self.isDeviceOrientationCorrectOnEar;
-    
     PUBLISH(proximitySensorValueIsUpdated);
 }
 
