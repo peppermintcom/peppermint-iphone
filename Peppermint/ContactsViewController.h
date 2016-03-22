@@ -38,7 +38,7 @@
 -(void) resetUserInterface;
 -(IBAction)messageCancelButtonPressed:(id)sender;
 -(void) refreshContacts;
-
+-(void) scheduleNavigateToChatEntryWithEmail:(NSString*) email;
 
 //Search Button Components
 

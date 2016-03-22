@@ -408,9 +408,10 @@ SUBSCRIBE(DetachSuccess) {
             [chatEntriesViewController refreshContent];
         } else {
             [nvc popToRootViewControllerAnimated:NO];
-            ChatsViewController *chatsViewController = [ChatsViewController createInstance];
-            [nvc pushViewController:chatsViewController animated:NO];
-            [chatsViewController scheduleNavigateToChatEntryWithEmail:email];
+            ContactsViewController *contactsViewController = (ContactsViewController*)[nvc.viewControllers objectAtIndex:0];
+            if(contactsViewController) {
+                [contactsViewController scheduleNavigateToChatEntryWithEmail:email];
+            }
         }
     } else {
         NSLog(@"Can not navigate to ChatEntries");

@@ -19,6 +19,6 @@
 @property (weak, nonatomic) IBOutlet UILabel    *goBackAndSendMessageLabel;
 
 
-+(instancetype) createInstance;
--(void) scheduleNavigateToChatEntryWithEmail:(NSString*) email;
+//+(instancetype) createInstance;
+//-(void) scheduleNavigateToChatEntryWithEmail:(NSString*) email;
 @end

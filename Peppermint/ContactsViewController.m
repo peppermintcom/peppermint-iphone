@@ -977,4 +977,19 @@ SUBSCRIBE(MessageIsMarkedAsRead) {
     }
 }
 
+-(void) scheduleNavigateToChatEntryWithEmail:(NSString *)email {
+#warning "What if the searched email is not in active list but it is existing in the DB?"
+    if([email isValidEmail]) {
+        NSPredicate *predicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:email];
+        NSArray *matchingChatsArray = [self.recentContactsModel.contactList filteredArrayUsingPredicate:predicate];
+        if(matchingChatsArray.count > 0) {
+            PeppermintContact *peppermintContact = matchingChatsArray.firstObject;
+            
+            [self performSegueWithIdentifier:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER sender:peppermintContact];
+        } else {
+            NSLog(@"Could not find matching chat with email: %@", email);
+        }
+    }
+}
+
 @end

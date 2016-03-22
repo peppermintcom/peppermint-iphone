@@ -113,8 +113,8 @@
         [navigationController pushViewController:aboutViewController animated:YES];
     } else if (indexPath.row == INDEX_CHATS) {
         UINavigationController *navigationController = (UINavigationController*)self.reSideMenuContainerViewController.contentViewController;
-        ChatsViewController *chatsViewController = [ChatsViewController createInstance];
-        [navigationController pushViewController:chatsViewController animated:YES];
+        //ChatsViewController *chatsViewController = [ChatsViewController createInstance];
+        //[navigationController pushViewController:chatsViewController animated:YES];
     }
 }
 
