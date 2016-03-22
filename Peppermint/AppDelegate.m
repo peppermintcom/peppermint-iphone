@@ -53,6 +53,8 @@
     PeppermintContact *peppermintContactToNavigate;
     PlayingModel *playingModel;
     ChatEntryModel *chatEntryModel;
+    void (^cachedCompletionHandler)(UIBackgroundFetchResult);
+    NSDate *fetchStart;
 }
 
 -(void) initPlayingModel {
@@ -209,6 +211,10 @@
     [chatEntryModel makeSyncRequestForMessages];
 }
 
+-(void) setBackgrounFetchInterval {
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self initPlayingModel];
@@ -225,6 +231,7 @@
     [self initGoogleApp];
     [self checkForFirstRun];
     [self initRecorder];
+    [self setBackgrounFetchInterval];
     REGISTER();
     return YES;
 }
@@ -339,6 +346,14 @@ SUBSCRIBE(DetachSuccess) {
     }
 }
 
+#pragma mark - Backgroun Fetch
+
+-(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
+    fetchStart = [NSDate new];
+    cachedCompletionHandler = completionHandler;
+    [self refreshIncomingMessages];
+}
+
 #pragma mark - AutoPlay
 
 -(void) gotGCMNotificationForAutoPlay:(NSDictionary*)userInfo {
@@ -385,9 +400,25 @@ SUBSCRIBE(DetachSuccess) {
     refreshIncomingMessagesCompletedWithSuccess.peppermintChatEntryNewMesssagesArray = newMessagesArray;
     refreshIncomingMessagesCompletedWithSuccess.peppermintChatEntryAllMesssagesArray = savedPeppermintChatEnryArray;
     PUBLISH(refreshIncomingMessagesCompletedWithSuccess);
+    
+    if(cachedCompletionHandler) {
+        NSDate *fetchEnd = [NSDate date];
+        NSTimeInterval timeElapsed = [fetchEnd timeIntervalSinceDate:fetchStart];
+        NSLog(@"Background Fetch Duration: %f seconds", timeElapsed);
+        if(newMessagesArray.count > 0) {
+            cachedCompletionHandler(UIBackgroundFetchResultNewData);
+            NSLog(@"UIBackgroundFetchResultNewData");
+        } else {
+            cachedCompletionHandler(UIBackgroundFetchResultNoData);
+            NSLog(@"UIBackgroundFetchResultNoData");
+        }
+    } else {
+        NSLog(@"Background fetch değil!");
+    }
 }
 
 -(void) operationFailure:(NSError *)error {
+    cachedCompletionHandler(UIBackgroundFetchResultFailed);
     [AppDelegate handleError:error];
 }
 

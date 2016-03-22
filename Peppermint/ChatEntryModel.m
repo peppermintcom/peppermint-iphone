@@ -152,12 +152,17 @@
     [self queryServerForIncomingMessages];
 }
 
+-(void) notifyDelegateToFinishBackgroundFetchInCase {
+    [self.delegate peppermintChatEntrySavedWithSuccess:[NSArray new]];
+}
+
 -(void) queryServerForIncomingMessages {    
     PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
     BOOL canQueryServer = peppermintMessageSender.accountId.length > 0 && peppermintMessageSender.exchangedJwt.length > 0;
     
     if(!canQueryServer) {
         NSLog(@"Could not query Server, please complete login process first.");
+        [self notifyDelegateToFinishBackgroundFetchInCase];
     } else {
         ++activeServerQueryCount;
         if(queryForIncoming) {
@@ -173,6 +178,12 @@
                                           since:peppermintMessageSender.lastMessageSyncDateForSentMessages
                                       recipient:NO];
         }
+    }
+}
+
+SUBSCRIBE(NetworkFailure) {
+    if(event.sender == awsService) {
+        [self.delegate operationFailure:[event error]];
     }
 }
 
