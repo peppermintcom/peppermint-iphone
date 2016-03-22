@@ -9,11 +9,11 @@
       "resizing" : {
         "mode" : "9-part",
         "center" : {
-          "mode" : "tile",
+          "mode" : "fill",
           "width" : 1,
           "height" : 1
         },
-        "cap-insets" : {
+        "capInsets" : {
           "bottom" : 45,
           "top" : 44,
           "right" : 242,
