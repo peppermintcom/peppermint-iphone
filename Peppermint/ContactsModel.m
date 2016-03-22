@@ -237,7 +237,18 @@
     NSArray *sortedList = [self.contactList sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
         NSString *first = [(PeppermintContact*)a nameSurname];
         NSString *second = [(PeppermintContact*)b nameSurname];
-        return [first.lowercaseString compare:second.lowercaseString];
+        BOOL firstReceived = [(PeppermintContact*)a hasReceivedMessageOverPeppermint];
+        BOOL secondReceived = [(PeppermintContact*)b hasReceivedMessageOverPeppermint];
+        
+        NSComparisonResult result = NSOrderedSame;
+        if(firstReceived && !secondReceived) {
+            result = NSOrderedAscending;
+        } else if (!firstReceived && secondReceived) {
+            result = NSOrderedDescending;
+        } else {
+            result = [first.lowercaseString compare:second.lowercaseString];
+        }
+        return result;
     }];
     self.contactList = [NSMutableArray arrayWithArray:sortedList];
     

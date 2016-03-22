@@ -716,8 +716,15 @@ SUBSCRIBE(ReplyContactIsAdded) {
     }
 }
 
+-(void) scrollToTop {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView setContentOffset:CGPointZero animated:YES];
+    });
+}
+
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     [self.searchMenu close];
+    [self scrollToTop];
     return YES;
 }
 
