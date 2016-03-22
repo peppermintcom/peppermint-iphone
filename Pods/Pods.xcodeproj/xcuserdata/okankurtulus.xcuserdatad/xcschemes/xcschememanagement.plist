@@ -54,11 +54,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Flurry-iOS-SDK.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>GData.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -122,7 +117,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>01E2471EEB9F385481AA460E68F50ABD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>080B3D418D632B0380CF4EBF7BDE656D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>19AC9BAB532243813BA0FF02A10EE942</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -152,12 +157,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>66AD7B74D97D118944C27A6483D7B1E2</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>6FA597A6623590D4DE60C88CA6D86E0D</key>
+		<key>6B11D7B1F113E03CA0C5CDC37CCD97D9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -177,22 +177,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9D379AD84778883F4A80CDFE3B2FAFF4</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>9EE17E6CFF2189238CD7DFECE14E69BF</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>A48601FEE4437A924848DB48369BA809</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>AF4E429E2B66ED5C71EE4F2F218B0132</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C6E9AC6BAA30472C319CF888F480F0A8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -207,17 +202,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D079C0B8D193CBDF60F39822F384E43F</key>
+		<key>D2026794C62B7E878750D9DAFF8A72A2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>D9D445AAC29DB89731ACBF3AD432CA94</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E59C2071DF6D679429512EBEB583F053</key>
 		<dict>
 			<key>primary</key>
 			<true/>
