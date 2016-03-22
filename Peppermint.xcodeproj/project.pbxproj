@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		392D9C861A6F3945B758D95F /* libPods-Peppermint.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4568D87C1B184E71C2B112BE /* libPods-Peppermint.a */; };
+		679E4C4B891A2848B1C68BDB /* libPods-Peppermint.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A946D4660352C7CE0546C670 /* libPods-Peppermint.a */; };
 		B100A54A1BEDD6F800EEB573 /* CacheModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B100A5491BEDD6F800EEB573 /* CacheModel.m */; };
 		B10125BC1BEB670500B5DD54 /* NSString_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B10125BB1BEB670500B5DD54 /* NSString_Addition.m */; };
 		B101633B1C637983008CC8D0 /* SMSChargeWarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B101633A1C637983008CC8D0 /* SMSChargeWarningView.xib */; };
@@ -45,8 +45,10 @@
 		B13B076D1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B076C1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m */; };
 		B13B50261BF38D48009D3348 /* InformationTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B50251BF38D48009D3348 /* InformationTextTableViewCell.m */; };
 		B13B50281BF38D57009D3348 /* InformationTextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13B50271BF38D56009D3348 /* InformationTextTableViewCell.xib */; };
+		B142EC661CA161A8008681D2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D3B1BB6898C009B8BC5 /* Images.xcassets */; };
 		B149EB351C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B149EB341C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m */; };
 		B14EF8321C4D16570041FD24 /* MandrillNameContentPair.m in Sources */ = {isa = PBXBuildFile; fileRef = B14EF8311C4D16570041FD24 /* MandrillNameContentPair.m */; };
+		B1531A9F1CA10EF000A49A73 /* TutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B17801771C1EFEA700BA2436 /* TutorialView.xib */; };
 		B15B15AC1BD9D8B800C0C171 /* ExplodingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15AB1BD9D8B800C0C171 /* ExplodingView.m */; };
 		B15B15B01BDA44E200C0C171 /* TPAACAudioConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15AF1BDA44E200C0C171 /* TPAACAudioConverter.m */; };
 		B15B15B21BDBBAB200C0C171 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B15B15B11BDBBAB200C0C171 /* Login.storyboard */; };
@@ -85,14 +87,12 @@
 		B17206D91BE4E1450021D855 /* begin_record.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B17206D81BE4E1450021D855 /* begin_record.mp3 */; };
 		B17206DC1BE4E2D40021D855 /* PlayingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B17206DB1BE4E2D40021D855 /* PlayingModel.m */; };
 		B17801761C1EFE9000BA2436 /* TutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = B17801751C1EFE9000BA2436 /* TutorialView.m */; };
-		B17801781C1EFEA700BA2436 /* TutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B17801771C1EFEA700BA2436 /* TutorialView.xib */; };
 		B17933121BE0B7B00016F158 /* LoginNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17933111BE0B7B00016F158 /* LoginNavigationViewController.m */; };
 		B17933151BE0C19C0016F158 /* LoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B17933141BE0C19C0016F158 /* LoginModel.m */; };
 		B179F83A1BC9316F0089D709 /* SearchMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B179F8391BC9316F0089D709 /* SearchMenuTableViewCell.m */; };
 		B179F83C1BC931820089D709 /* SearchMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B179F83B1BC931820089D709 /* SearchMenuTableViewCell.xib */; };
 		B17B3D311BB6898C009B8BC5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D301BB6898C009B8BC5 /* main.m */; };
 		B17B3D3A1BB6898C009B8BC5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D381BB6898C009B8BC5 /* Main.storyboard */; };
-		B17B3D3C1BB6898C009B8BC5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D3B1BB6898C009B8BC5 /* Images.xcassets */; };
 		B17B3D4B1BB6898C009B8BC5 /* PeppermintTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D4A1BB6898C009B8BC5 /* PeppermintTests.m */; };
 		B17B3D571BB68A39009B8BC5 /* Text.strings in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D561BB68A39009B8BC5 /* Text.strings */; };
 		B17B3D5B1BB6A49E009B8BC5 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D5A1BB6A49E009B8BC5 /* BaseViewController.m */; };
@@ -106,6 +106,8 @@
 		B17B9A271C60C6AC00B081F7 /* JwtsResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B9A261C60C6AC00B081F7 /* JwtsResponse.m */; };
 		B17B9A2A1C60CCDD00B081F7 /* SetUpRecorderRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B9A291C60CCDD00B081F7 /* SetUpRecorderRequest.m */; };
 		B17B9A2D1C60F34000B081F7 /* MessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B9A2C1C60F34000B081F7 /* MessageRequest.m */; };
+		B17BF3A21CA132DA00497B8F /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B17BF3A11CA132DA00497B8F /* AddressBook.framework */; };
+		B17BF3A41CA133E200497B8F /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B17BF3A31CA133E200497B8F /* AddressBookUI.framework */; };
 		B184A0A71C1B0CF20087BB9C /* JwtInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = B184A0A61C1B0CF20087BB9C /* JwtInformation.m */; };
 		B1879A181C5810EE0036A660 /* StaticDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1879A171C5810EE0036A660 /* StaticDataTableViewController.m */; };
 		B1889FE11C4EBA3E003552CE /* ChatEntriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1889FE01C4EBA3E003552CE /* ChatEntriesViewController.m */; };
@@ -135,7 +137,6 @@
 		B1D1E2C31CA04149008CFCB7 /* NSDate_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D1E2C21CA04149008CFCB7 /* NSDate_Addition.m */; };
 		B1D2A6D71C200706002BD6DF /* RecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D2A6D61C200706002BD6DF /* RecordingView.m */; };
 		B1D2A6DB1C2037FB002BD6DF /* FoggyRecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D2A6DA1C2037FB002BD6DF /* FoggyRecordingView.m */; };
-		B1D2A6DD1C20380D002BD6DF /* FoggyRecordingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1D2A6DC1C20380D002BD6DF /* FoggyRecordingView.xib */; };
 		B1D646541C99728F00600183 /* ProximitySensorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D646531C99728F00600183 /* ProximitySensorModel.m */; };
 		B1D646581C998FB300600183 /* ShakeGestureView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D646571C998FB300600183 /* ShakeGestureView.m */; };
 		B1DBEF431C537345007AAF4A /* RecordingGestureButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B1DBEF421C537345007AAF4A /* RecordingGestureButton.m */; };
@@ -166,17 +167,13 @@
 		D02D2D071C0C3A8500092A23 /* Events.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F0456A1BCFB4E400A67942 /* Events.m */; };
 		D074A66D1C07174D0017EAC3 /* CountryFormatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D074A66C1C07174D0017EAC3 /* CountryFormatModel.m */; };
 		D074A6721C07275B0017EAC3 /* CountryRow.m in Sources */ = {isa = PBXBuildFile; fileRef = D074A6711C07275B0017EAC3 /* CountryRow.m */; };
-		D074A6741C0727700017EAC3 /* CountryRow.xib in Resources */ = {isa = PBXBuildFile; fileRef = D074A6731C0727700017EAC3 /* CountryRow.xib */; };
 		D0A7C0DA1BFA0C7900ACD33E /* DeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A7C0D91BFA0C7900ACD33E /* DeviceModel.m */; };
 		D0A7C0EE1BFC589B00ACD33E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A7C0ED1BFC589B00ACD33E /* MobileCoreServices.framework */; };
-		D0A7C0F01BFC58A300ACD33E /* CoreSpotlight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A7C0EF1BFC58A300ACD33E /* CoreSpotlight.framework */; };
 		D0A7C0F31BFC5BC200ACD33E /* SpotlightModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A7C0F21BFC5BC200ACD33E /* SpotlightModel.m */; };
 		D0AC06ED1C4805FD00F9CF6F /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0AC06EB1C4805FD00F9CF6F /* Interface.storyboard */; };
 		D0AC06EF1C4805FD00F9CF6F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0AC06EE1C4805FD00F9CF6F /* Assets.xcassets */; };
 		D0AC06F61C4805FF00F9CF6F /* watch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D0AC06F51C4805FF00F9CF6F /* watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D0AC07611C48091800F9CF6F /* PeppermintContact.m in Sources */ = {isa = PBXBuildFile; fileRef = B165EF171BB71EC0008C6F71 /* PeppermintContact.m */; };
-		D0AC07631C4809D600F9CF6F /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0AC07621C4809D600F9CF6F /* WatchConnectivity.framework */; };
-		D0AC07651C4809E000F9CF6F /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0AC07641C4809E000F9CF6F /* Contacts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D0AC07671C4809F300F9CF6F /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0AC07661C4809F300F9CF6F /* WatchConnectivity.framework */; };
 		D0AC07681C480B2400F9CF6F /* PeppermintMessageSender.m in Sources */ = {isa = PBXBuildFile; fileRef = B18BF95D1BD674CD009B665E /* PeppermintMessageSender.m */; };
 		D0AC076C1C480DC200F9CF6F /* MandrillRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B07691BD3752900974AC3 /* MandrillRequest.m */; };
@@ -262,8 +259,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4568D87C1B184E71C2B112BE /* libPods-Peppermint.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Peppermint.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A3AC8DCFCC2ADAD1159483F0 /* Pods-Peppermint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peppermint.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint.debug.xcconfig"; sourceTree = "<group>"; };
+		60B24A624E2BEBF339E43BDC /* Pods-Peppermint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peppermint.release.xcconfig"; path = "Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint.release.xcconfig"; sourceTree = "<group>"; };
+		A946D4660352C7CE0546C670 /* libPods-Peppermint.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Peppermint.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B100A5481BEDD6F800EEB573 /* CacheModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheModel.h; sourceTree = "<group>"; };
 		B100A5491BEDD6F800EEB573 /* CacheModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheModel.m; sourceTree = "<group>"; };
 		B10125BA1BEB670500B5DD54 /* NSString_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSString_Addition.h; sourceTree = "<group>"; };
@@ -454,6 +451,9 @@
 		B17B9A291C60CCDD00B081F7 /* SetUpRecorderRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetUpRecorderRequest.m; sourceTree = "<group>"; };
 		B17B9A2B1C60F34000B081F7 /* MessageRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageRequest.h; sourceTree = "<group>"; };
 		B17B9A2C1C60F34000B081F7 /* MessageRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageRequest.m; sourceTree = "<group>"; };
+		B17BF39F1CA132D100497B8F /* libAPAddressBook.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAPAddressBook.a; path = "Pods/../build/Debug-iphoneos/libAPAddressBook.a"; sourceTree = "<group>"; };
+		B17BF3A11CA132DA00497B8F /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		B17BF3A31CA133E200497B8F /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		B184A0A51C1B0CF20087BB9C /* JwtInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JwtInformation.h; sourceTree = "<group>"; };
 		B184A0A61C1B0CF20087BB9C /* JwtInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JwtInformation.m; sourceTree = "<group>"; };
 		B1879A161C5810EE0036A660 /* StaticDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticDataTableViewController.h; sourceTree = "<group>"; };
@@ -560,7 +560,7 @@
 		B1FE184F1BE1676D002772B4 /* FeedBackModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedBackModel.m; sourceTree = "<group>"; };
 		B1FFFF281C18241D0049347D /* RecoverPasswordRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecoverPasswordRequest.h; sourceTree = "<group>"; };
 		B1FFFF291C18241E0049347D /* RecoverPasswordRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecoverPasswordRequest.m; sourceTree = "<group>"; };
-		C388433C48F87557ED2F3C2D /* Pods-Peppermint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peppermint.release.xcconfig"; path = "Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint.release.xcconfig"; sourceTree = "<group>"; };
+		CA9E6AD65E916946FE9FF5E9 /* Pods-Peppermint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peppermint.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint.debug.xcconfig"; sourceTree = "<group>"; };
 		D02D2D041C0C379E00092A23 /* BaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableViewController.h; sourceTree = "<group>"; };
 		D02D2D051C0C379E00092A23 /* BaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewController.m; sourceTree = "<group>"; };
 		D074A66B1C07174D0017EAC3 /* CountryFormatModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryFormatModel.h; sourceTree = "<group>"; };
@@ -640,17 +640,23 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2A674D6131DAA8984435C02C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B17B3D281BB6898C009B8BC5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0AC07651C4809E000F9CF6F /* Contacts.framework in Frameworks */,
-				D0AC07631C4809D600F9CF6F /* WatchConnectivity.framework in Frameworks */,
-				D0A7C0F01BFC58A300ACD33E /* CoreSpotlight.framework in Frameworks */,
+				B17BF3A41CA133E200497B8F /* AddressBookUI.framework in Frameworks */,
+				B17BF3A21CA132DA00497B8F /* AddressBook.framework in Frameworks */,
 				D0A7C0EE1BFC589B00ACD33E /* MobileCoreServices.framework in Frameworks */,
 				B190F5BC1BDD7F040094B391 /* AudioToolbox.framework in Frameworks */,
 				B1F93E8C1BC8E0D9005F2128 /* CoreData.framework in Frameworks */,
-				392D9C861A6F3945B758D95F /* libPods-Peppermint.a in Frameworks */,
+				679E4C4B891A2848B1C68BDB /* libPods-Peppermint.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -672,18 +678,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0EC1EC4EC6188F1BAA69C949 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				A3AC8DCFCC2ADAD1159483F0 /* Pods-Peppermint.debug.xcconfig */,
-				C388433C48F87557ED2F3C2D /* Pods-Peppermint.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		6C8541A65356EA01C859C162 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B17BF3A31CA133E200497B8F /* AddressBookUI.framework */,
+				B17BF3A11CA132DA00497B8F /* AddressBook.framework */,
+				B17BF39F1CA132D100497B8F /* libAPAddressBook.a */,
 				B1A792451C6D9F8300254528 /* PushKit.framework */,
 				D0AC07661C4809F300F9CF6F /* WatchConnectivity.framework */,
 				D0AC07641C4809E000F9CF6F /* Contacts.framework */,
@@ -694,7 +694,7 @@
 				B15228541BE898DF00C400C6 /* AdSupport.framework */,
 				B190F5BB1BDD7F040094B391 /* AudioToolbox.framework */,
 				B1F93E8B1BC8E0D9005F2128 /* CoreData.framework */,
-				4568D87C1B184E71C2B112BE /* libPods-Peppermint.a */,
+				A946D4660352C7CE0546C670 /* libPods-Peppermint.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1052,8 +1052,8 @@
 				D0AC06EA1C4805FD00F9CF6F /* watch */,
 				D0AC06F91C4805FF00F9CF6F /* watch Extension */,
 				B17B3D2C1BB6898C009B8BC5 /* Products */,
-				0EC1EC4EC6188F1BAA69C949 /* Pods */,
 				6C8541A65356EA01C859C162 /* Frameworks */,
+				E872170D57FC92EA54BD2F89 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1636,6 +1636,15 @@
 			name = BaseButton;
 			sourceTree = "<group>";
 		};
+		E872170D57FC92EA54BD2F89 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CA9E6AD65E916946FE9FF5E9 /* Pods-Peppermint.debug.xcconfig */,
+				60B24A624E2BEBF339E43BDC /* Pods-Peppermint.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1643,13 +1652,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B17B3D4E1BB6898C009B8BC5 /* Build configuration list for PBXNativeTarget "Peppermint" */;
 			buildPhases = (
-				BA057164F91858255C6D867A /* Check Pods Manifest.lock */,
+				03549212F2FF6EC6D4AC8D8A /* Check Pods Manifest.lock */,
 				B17B3D271BB6898C009B8BC5 /* Sources */,
 				B17B3D281BB6898C009B8BC5 /* Frameworks */,
 				B17B3D291BB6898C009B8BC5 /* Resources */,
-				99E5888A4AEAE0B8E8705C03 /* Copy Pods Resources */,
 				B1B6528C1BDDF8C0006987EA /* ShellScript */,
-				5C384387C21CFA56C1AB394F /* Embed Pods Frameworks */,
+				D9B671622F025AC437DD6D9B /* Embed Pods Frameworks */,
+				ECE073C98346822AD01546FA /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1684,6 +1693,7 @@
 			buildPhases = (
 				D0AC06E71C4805FD00F9CF6F /* Resources */,
 				D0AC07101C48060100F9CF6F /* Embed App Extensions */,
+				2A674D6131DAA8984435C02C /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1813,18 +1823,16 @@
 				B12C03BD1BCFFC280085A55A /* FastRecordingView.xib in Resources */,
 				B17B3D701BB6BD2E009B8BC5 /* ContactTableViewCell.xib in Resources */,
 				B16DA2221BE10A8B00EBF043 /* SlideMenuTableViewCell.xib in Resources */,
-				D074A6741C0727700017EAC3 /* CountryRow.xib in Resources */,
 				B13B50281BF38D57009D3348 /* InformationTextTableViewCell.xib in Resources */,
 				B101633B1C637983008CC8D0 /* SMSChargeWarningView.xib in Resources */,
 				B1BB60171BDE0E3200C1140B /* LoginTableViewCell.xib in Resources */,
-				B17B3D3C1BB6898C009B8BC5 /* Images.xcassets in Resources */,
+				B142EC661CA161A8008681D2 /* Images.xcassets in Resources */,
+				B1531A9F1CA10EF000A49A73 /* TutorialView.xib in Resources */,
 				B15B15B21BDBBAB200C0C171 /* Login.storyboard in Resources */,
 				B1BDD36C1C7A6FB300C8BDF4 /* water_drop.mp3 in Resources */,
 				B11B30FD1C4E507200966A48 /* ChatContactTableViewCell.xib in Resources */,
 				B1BB2A531BE6AA2000A4BFB4 /* GoogleService-Info.plist in Resources */,
-				B17801781C1EFEA700BA2436 /* TutorialView.xib in Resources */,
 				B1FC538D1C52658400C0A472 /* ChatTableViewCell.xib in Resources */,
-				B1D2A6DD1C20380D002BD6DF /* FoggyRecordingView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1858,34 +1866,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5C384387C21CFA56C1AB394F /* Embed Pods Frameworks */ = {
+		03549212F2FF6EC6D4AC8D8A /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		99E5888A4AEAE0B8E8705C03 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint-resources.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		B1B6528C1BDDF8C0006987EA /* ShellScript */ = {
@@ -1901,19 +1894,34 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" b0f9447ce570c6a59d66e84fd53f91a0fadc63cc de219f36d61063c1e338d39f9fe3a31f1860ef71964ea41cce98a4a3d2dcabb5";
 		};
-		BA057164F91858255C6D867A /* Check Pods Manifest.lock */ = {
+		D9B671622F025AC437DD6D9B /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ECE073C98346822AD01546FA /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2195,7 +2203,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
@@ -2234,7 +2242,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
@@ -2245,7 +2253,7 @@
 		};
 		B17B3D4F1BB6898C009B8BC5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A3AC8DCFCC2ADAD1159483F0 /* Pods-Peppermint.debug.xcconfig */;
+			baseConfigurationReference = CA9E6AD65E916946FE9FF5E9 /* Pods-Peppermint.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -2261,6 +2269,10 @@
 				INFOPLIST_FILE = Peppermint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2271,7 +2283,7 @@
 		};
 		B17B3D501BB6898C009B8BC5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C388433C48F87557ED2F3C2D /* Pods-Peppermint.release.xcconfig */;
+			baseConfigurationReference = 60B24A624E2BEBF339E43BDC /* Pods-Peppermint.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -2287,6 +2299,10 @@
 				INFOPLIST_FILE = Peppermint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
