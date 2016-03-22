@@ -9,8 +9,6 @@
 #import "WKContact.h"
 #import "PeppermintContact.h"
 
-@import Contacts;
-
 @implementation WKContact
 
 + (void)allContacts:(void (^)(NSArray <PeppermintContact *> * contacts))block {

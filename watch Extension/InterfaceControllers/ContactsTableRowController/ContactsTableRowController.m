@@ -8,8 +8,6 @@
 
 #import "ContactsTableRowController.h"
 
-@import Contacts;
-
 @implementation ContactsTableRowController
 
 
