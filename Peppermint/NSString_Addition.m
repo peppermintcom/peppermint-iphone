@@ -76,4 +76,8 @@
     return trimmedText;
 }
 
+- (BOOL)containsString:(NSString *)aString {
+    return ([self.lowercaseString rangeOfString:aString].location != NSNotFound);
+}
+
 @end
