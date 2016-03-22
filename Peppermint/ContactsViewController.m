@@ -150,7 +150,11 @@ SUBSCRIBE(ReplyContactIsAdded) {
 }
 
 -(void) initRecordingView {
-    self.recordingView = [FoggyRecordingView createInstanceWithDelegate:self];
+    if(IS_IOS8_AND_UP) {
+        self.recordingView = [FoggyRecordingView createInstanceWithDelegate:self];
+    } else {
+        self.recordingView = [FastRecordingView createInstanceWithDelegate:self];
+    }
     self.recordingView.frame = self.view.frame;
     [self.view addSubview:self.recordingView];
     [self.view bringSubviewToFront:self.recordingView];
@@ -742,7 +746,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 #pragma mark - RecentContactsModelDelegate
 
--(void) recentPeppermintContactsSavedSucessfully:(NSArray<PeppermintContact*>*) recentContactsArray {
+-(void) recentPeppermintContactsSavedSucessfully:(NSArray*) recentContactsArray {
     for(PeppermintContact *recentContact in recentContactsArray) {
         NSLog(@"Contact saved successfully. %@", recentContact.nameSurname);
     }

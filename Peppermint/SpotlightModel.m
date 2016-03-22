@@ -9,14 +9,18 @@
 #import "SpotlightModel.h"
 #import "FastReplyModel.h"
 
+#if (TARGET_OS_WATCH)
 @import CoreSpotlight;
 @import MobileCoreServices;
+#endif
 
 NSString * const CSSearchItemIdentifierJoinString = @".PPM.";
 
 @implementation SpotlightModel
 
 + (void)createSearchableItemForContact:(PeppermintContact *)contact {
+#if (TARGET_OS_WATCH)
+    
   if (!NSClassFromString(@"CSSearchableIndex")) {
     return; //only ios9
   }
@@ -52,6 +56,7 @@ NSString * const CSSearchItemIdentifierJoinString = @".PPM.";
       }
     }];
   }
+#endif
 }
 
 + (BOOL)handleSearchItemUniqueIdentifier:(NSString *)uniqueId {

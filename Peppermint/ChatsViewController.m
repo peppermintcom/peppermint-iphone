@@ -62,7 +62,7 @@
     [self checkIfShouldNavigate];
 }
 
--(void) recentPeppermintContactsSavedSucessfully:(NSArray<PeppermintContact*>*) recentContactsArray {
+-(void) recentPeppermintContactsSavedSucessfully:(NSArray*) recentContactsArray {
     NSLog(@"recentPeppermintContactsSavedSucessfully...");
 }
 

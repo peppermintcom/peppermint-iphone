@@ -21,7 +21,9 @@
 #define SURNAME_EMPTY           @"   "  //We use spaces, cos surname length must be bigger than 0
 #define NIL_TEXT                @""
 
+#if (TARGET_OS_WATCH)
 @import WatchConnectivity;
+#endif
 
 @implementation PeppermintMessageSender
 
@@ -85,12 +87,14 @@
 }
 
 - (void)watchSynchronize {
+#if (TARGET_OS_WATCH)
   if (NSClassFromString(@"WCSession")) {
     if ([WCSession isSupported]) {
       NSError * err;
       [[WCSession defaultSession] updateApplicationContext:@{@"user":[self toJSONString]} error:&err];
     }
   }
+#endif
 }
 
 #if !(TARGET_OS_WATCH)
@@ -162,10 +166,10 @@
     
     for (NSString *word in words)
     {
-        if(![word localizedCaseInsensitiveContainsString:@"iPhone"]
-           && ![word localizedCaseInsensitiveContainsString:@"iPod"]
-           && ![word localizedCaseInsensitiveContainsString:@"iPad"]
-           && ![word localizedCaseInsensitiveContainsString:@"mini"]
+        if(![word.lowercaseString containsString:@"iphone"]
+           && ![word.lowercaseString containsString:@"ipod"]
+           && ![word.lowercaseString containsString:@"ipad"]
+           && ![word.lowercaseString containsString:@"mini"]
            && [word length] > 2
            )
         {

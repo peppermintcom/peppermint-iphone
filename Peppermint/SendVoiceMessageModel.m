@@ -97,7 +97,7 @@
 
 #pragma mark - RecentContactsModelDelegate
 
--(void) recentPeppermintContactsSavedSucessfully:(NSArray<PeppermintContact*>*) recentContactsArray {
+-(void) recentPeppermintContactsSavedSucessfully:(NSArray*) recentContactsArray {
     [self.delegate newRecentContactisSaved];
 }
 

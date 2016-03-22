@@ -8,16 +8,12 @@
 
 #import "AnalyticsModel.h"
 #import <Crashlytics/Crashlytics.h>
-#import "Flurry.h"
-#import "GAI.h"
-#import "GAIDictionaryBuilder.h"
 
 @implementation AnalyticsModel
 
 +(void) logError:(NSError*) error {
     [self logErrorToAnswers:error];
     [self logErrorToGoogleAnalytics:error];
-    [self logErrorToFlurry:error];
 }
 
 +(void) logErrorToAnswers:(NSError*) error {
@@ -30,20 +26,7 @@
 }
 
 +(void) logErrorToGoogleAnalytics:(NSError*) error {
-    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    NSString *action = [NSString stringWithFormat:@"%ld| %@ (%@)",
-                        (long)error.code,
-                        error.localizedDescription,
-                        error.description];
-    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:error.domain
-                                                          action:action
-                                                           label:error.userInfo.description
-                                                           value:@1] build]];
-}
-
-+(void) logErrorToFlurry:(NSError*) error {
-    [Flurry logError:error.localizedDescription message:@"NSError Occured" error:error];
-    
+    NSLog(@"%@", error);
 }
 
 @end

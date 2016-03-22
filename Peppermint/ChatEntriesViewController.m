@@ -14,6 +14,7 @@
 #import "AutoPlayModel.h"
 #import "PeppermintContact.h"
 #import "ProximitySensorModel.h"
+#import "FastRecordingView.h"
 
 #define BOTTOM_RESET_IME            2
 
@@ -185,7 +186,11 @@
 
 -(void) initRecordingViewWithView:(UIControl*) control {
     self.recordingButton.delegate = self;
-    self.recordingView = [FoggyRecordingView createInstanceWithDelegate:self];
+    if(IS_IOS8_AND_UP) {
+        self.recordingView = [FoggyRecordingView createInstanceWithDelegate:self];
+    } else {
+        self.recordingView = [FastRecordingView createInstanceWithDelegate:self];
+    }
 
     self.recordingView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     [self.view addSubview:self.recordingView];

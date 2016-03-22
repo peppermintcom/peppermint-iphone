@@ -11,9 +11,8 @@
 #import "BaseModel.h"
 #import "MBProgressHUD.h"
 #import "JPAttributedString.h"
-#import "GAITrackedViewController.h"
 
-@interface BaseViewController : GAITrackedViewController <BaseModelDelegate>
+@interface BaseViewController : UIViewController <BaseModelDelegate>
 -(void) redirectToSettingsPageForPermission;
 
 -(BOOL) checkIfuserIsLoggedIn;

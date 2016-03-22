@@ -53,11 +53,22 @@
 
 -(BOOL) doesFastReplyContactsContains:(NSString*) filterText {
     filterText = [filterText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+    BOOL nameSurnameMatches = NO;
+    BOOL communicationChannelAddressMatches = NO;
+    if(IS_IOS8_2_AND_UP) {
+        nameSurnameMatches = [self.peppermintContact.nameSurname localizedCaseInsensitiveContainsString:filterText];
+        communicationChannelAddressMatches = [self.peppermintContact.communicationChannelAddress localizedCaseInsensitiveContainsString:filterText];
+    } else {
+        nameSurnameMatches = [self.peppermintContact.nameSurname.lowercaseString containsString:filterText.lowercaseString];
+        communicationChannelAddressMatches = [self.peppermintContact.communicationChannelAddress.lowercaseString containsString:filterText.lowercaseString];
+    }
+    
     return self.peppermintContact
     && (filterText.length == 0
-        || [self.peppermintContact.nameSurname localizedCaseInsensitiveContainsString:filterText]
-        || [self.peppermintContact.communicationChannelAddress localizedCaseInsensitiveContainsString:filterText]
-        );
+        || nameSurnameMatches
+        || communicationChannelAddressMatches
+        );    
 }
 
 @end

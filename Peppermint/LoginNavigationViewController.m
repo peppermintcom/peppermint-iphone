@@ -74,7 +74,6 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSLog(@"Segue %@ is performing", segue.identifier);
-    NSLog(@"Destination viewcontroller is %@", [segue destinationViewController].class);
 }
 
 #pragma mark - PresentLoginModalView

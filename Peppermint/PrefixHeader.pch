@@ -25,6 +25,7 @@
 #define IS_IPAD_PRO (IS_IPAD && SCREEN_MAX_LENGTH == 1366.0)
 
 #define IS_IOS8_2_AND_UP ([[UIDevice currentDevice].systemVersion floatValue] >= 8.2)
+#define IS_IOS8_AND_UP ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0)
 
 #pragma mark - NSLOG Definition
 

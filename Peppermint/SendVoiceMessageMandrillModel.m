@@ -139,7 +139,7 @@ SUBSCRIBE(MandrillMesssageSent) {
     return result;
 }
 
--(NSMutableArray<MandrillNameContentPair>*) mandrillNameContentPairForUrlPath:(NSString*)urlPath extension:(NSString*)extension signature:(NSString*) signature duration:(NSTimeInterval) duration canonicalUrl:(NSString*)canonicalUrl{
+-(NSMutableArray*) mandrillNameContentPairForUrlPath:(NSString*)urlPath extension:(NSString*)extension signature:(NSString*) signature duration:(NSTimeInterval) duration canonicalUrl:(NSString*)canonicalUrl{
     
     int minutes = duration / 60;
     int seconds = (int)duration % 60;
@@ -150,7 +150,7 @@ SUBSCRIBE(MandrillMesssageSent) {
     int secondsDigit2 = seconds % 10;
     NSString *replyLink = [self fastReplyUrlForSender];
     
-    NSMutableArray<MandrillNameContentPair> *contentMutableArray = [NSMutableArray<MandrillNameContentPair> new];
+    NSMutableArray *contentMutableArray = [NSMutableArray new];
     [contentMutableArray addObject:[MandrillNameContentPair createWithName:@"url" content:urlPath]];
     [contentMutableArray addObject:[MandrillNameContentPair createWithName:@"replyLink" content:replyLink]];
     [contentMutableArray addObject:[MandrillNameContentPair createWithName:@"canonicalUrl" content:canonicalUrl]];

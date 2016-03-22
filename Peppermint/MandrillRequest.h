@@ -21,6 +21,6 @@
 @property (strong, nonatomic) NSString *key;
 @property (strong, nonatomic) MandrillMessage *message;
 @property (strong, nonatomic) NSString *template_name;
-@property (strong, nonatomic) NSArray<MandrillNameContentPair> *template_content;
+@property (strong, nonatomic) NSArray *template_content;
 
 @end

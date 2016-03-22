@@ -10,7 +10,9 @@
 #import "ContactsModel.h"
 #import "ChatModel.h"
 
+#if (TARGET_OS_WATCH)
 @import WatchConnectivity;
+#endif
 
 #define DBQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
 
@@ -34,7 +36,7 @@
     [self saveMultiple:[NSArray arrayWithObject:peppermintContact]];
 }
 
--(void) saveMultiple:(NSArray<PeppermintContact*>*) peppermintContactArray {
+-(void) saveMultiple:(NSArray*) peppermintContactArray {
     weakself_create();
     dispatch_async(DBQueue, ^() {
         Repository *repository = [Repository beginTransaction];
@@ -111,8 +113,11 @@
 #if !(TARGET_OS_WATCH)
             [recentPeppermintContactsData addObject:[ppm_contact archivedRootData]];
 #endif
+            
+
         }
-        
+
+#if (TARGET_OS_WATCH)
         if (NSClassFromString(@"WCSession") && recentPeppermintContactsData.count > 0) {
             if ([WCSession isSupported]) {
                 NSError * err;
@@ -122,6 +127,7 @@
                 }
             }
         }
+#endif
         
         if(--activeServiceCallCount==0) {
             self.contactList = recentPeppermintContacts;

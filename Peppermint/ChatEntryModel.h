@@ -16,7 +16,7 @@
 
 @interface ChatEntryModel : BaseModel
 @property (weak, nonatomic) id<ChatEntryModelDelegate> delegate;
-@property (strong, nonatomic) NSArray<PeppermintChatEntry*> *chatEntriesArray;
+@property (strong, nonatomic) NSArray *chatEntriesArray;
 
 -(void) refreshPeppermintChatEntriesForContactEmail:(NSString*) contactEmail;
 -(void) savePeppermintChatEntry:(PeppermintChatEntry*)peppermintChatEntry;

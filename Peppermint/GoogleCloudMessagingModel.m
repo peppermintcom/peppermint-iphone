@@ -69,14 +69,21 @@ NSString *const SubscriptionTopic = @"/topics/global";
     // [END start_gcm_service]
     
     // Register for remote notifications
-    // iOS 8 or later
-    // [END_EXCLUDE]
-    UIUserNotificationType allNotificationTypes =
-    (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
-    UIUserNotificationSettings *settings =
-    [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:[self notificationCategories]];
-    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-    [[UIApplication sharedApplication] registerForRemoteNotifications];
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1) {
+        // iOS 7.1 or earlier
+        UIRemoteNotificationType allNotificationTypes =
+        (UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge);
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:allNotificationTypes];
+    } else {
+        // iOS 8 or later
+        // [END_EXCLUDE]
+        UIUserNotificationType allNotificationTypes =
+        (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
+        UIUserNotificationSettings *settings =
+        [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:[self notificationCategories]];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    }
     
     __weak typeof(self) weakSelf = self;
     // Handler for registration token request

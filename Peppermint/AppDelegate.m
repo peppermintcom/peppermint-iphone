@@ -24,10 +24,7 @@
 #import "LoginValidateEmailViewController.h"
 #import "LoginViewController.h"
 #import "JwtInformation.h"
-#import "Flurry.h"
-#import "GAI.h"
 #import "AnalyticsModel.h"
-#import "GAIFields.h"
 #import "GoogleCloudMessagingModel.h"
 #import "AWSModel.h"
 #import "ChatsViewController.h"
@@ -35,16 +32,23 @@
 #import "AutoPlayModel.h"
 #import "ChatModel.h"
 
+#if (TARGET_OS_WATCH)
 @import WatchConnectivity;
-@import Contacts;
-@import CoreSpotlight;
+#endif
+
 @import MobileCoreServices;
 
 #define PATH_EMAIL          @"gcm.notification.sender_email"
 #define PATH_FULL_NAME      @"gcm.notification.sender_name"
 
+
+#if (TARGET_OS_WATCH)
 @interface AppDelegate () <WCSessionDelegate, GGLInstanceIDDelegate, ChatEntryModelDelegate>
 @end
+#else
+@interface AppDelegate () <GGLInstanceIDDelegate, ChatEntryModelDelegate>
+@end
+#endif
 
 @implementation AppDelegate {
     __block UIBackgroundTaskIdentifier bgTask;
@@ -106,36 +110,15 @@
 #endif
 }
 
--(void) initFlurry {
-    [Flurry startSession:FLURRY_API_KEY];
-}
-
--(void) initGoogleAnalytics {
-    [GAI sharedInstance].trackUncaughtExceptions = YES;
-#ifdef DEBUG
-    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelNone];
-#else
-    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelNone];
-#endif
-    [GAI sharedInstance].dispatchInterval = 20;    
-    NSString *trackingId = [[[GGLContext sharedInstance] configuration] trackingID];
-    [[GAI sharedInstance] trackerWithTrackingId:trackingId];
-    
-/*
-    id<GAITracker> tracker =
-    NSString *userId = [PeppermintMessageSender sharedInstance].email;
-    userId = userId == nil ? @"unauthorizedUser" : userId;
-    [tracker set:kGAIUserId value:userId];
-*/
-}
-
 -(void) initWatchKitSession {
+#if (TARGET_OS_WATCH)
   if (NSClassFromString(@"WCSession")) {
     if ([WCSession isSupported]) {
       [WCSession defaultSession].delegate = self;
       [[WCSession defaultSession] activateSession];
     }
   }
+#endif
 }
 
 
@@ -215,8 +198,6 @@
     [self initMutableArray];
     [self initNavigationViewController];
     [self initFabric];
-    [self initFlurry];
-    [self initGoogleAnalytics];
     [self initInitialViewController];
     //[self logServiceCalls];
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
@@ -365,9 +346,9 @@ SUBSCRIBE(DetachSuccess) {
     return newMessagesArray;
 }
 
--(void) peppermintChatEntrySavedWithSuccess:(NSArray<PeppermintChatEntry*>*) savedPeppermintChatEnryArray {
+-(void) peppermintChatEntrySavedWithSuccess:(NSArray*) savedPeppermintChatEnryArray {
     [self hideAppCoverLoadingView];
-    NSArray<PeppermintChatEntry*> *newMessagesArray = [self filterNewIncomingMessagesInArray:savedPeppermintChatEnryArray];
+    NSArray *newMessagesArray = [self filterNewIncomingMessagesInArray:savedPeppermintChatEnryArray];
     [self refreshBadgeNumber];
     
     if(peppermintContactToNavigate
@@ -376,7 +357,7 @@ SUBSCRIBE(DetachSuccess) {
         [self navigateToChatEntriesPageForEmail:peppermintContactToNavigate.communicationChannelAddress
                                     nameSurname:peppermintContactToNavigate.nameSurname];
         peppermintContactToNavigate = nil;
-    } else if (newMessagesArray.count > 0 && !newMessagesArray.firstObject.isSentByMe) {
+    } else if (newMessagesArray.count > 0 && !((PeppermintChatEntry*)newMessagesArray.firstObject).isSentByMe) {
         [playingModel playPreparedAudiowithCompetitionBlock:nil];
     }
     
@@ -462,12 +443,15 @@ SUBSCRIBE(DetachSuccess) {
            return [application openURL:userActivity.webpageURL];
         }
         return YES;
-    } else if ([userActivity.activityType isEqualToString:CSSearchableItemActionType]) {
+    }
+#if (TARGET_OS_WATCH)
+    else if ([userActivity.activityType isEqualToString:CSSearchableItemActionType]) {
         NSString *uniqueIdentifier = userActivity.userInfo[CSSearchableItemActivityIdentifier];
         // Handle 'uniqueIdentifier'
         NSLog(@"searh item uniqueIdentifier: %@", uniqueIdentifier);
         return [SpotlightModel handleSearchItemUniqueIdentifier:uniqueIdentifier];
     }
+#endif
     return NO;
 }
 

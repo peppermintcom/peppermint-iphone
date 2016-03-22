@@ -55,7 +55,7 @@
     mandrillRequest.key = self.apiKey;
     mandrillRequest.message = message;
     if(!mandrillRequest.template_content) {
-        mandrillRequest.template_content = [NSMutableArray<MandrillNameContentPair> new];
+        mandrillRequest.template_content = [NSMutableArray new];
     }
     if(templateName) {
         mandrillRequest.template_name = templateName;
