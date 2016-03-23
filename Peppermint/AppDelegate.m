@@ -412,8 +412,6 @@ SUBSCRIBE(DetachSuccess) {
             cachedCompletionHandler(UIBackgroundFetchResultNoData);
             NSLog(@"UIBackgroundFetchResultNoData");
         }
-    } else {
-        NSLog(@"Background fetch değil!");
     }
 }
 

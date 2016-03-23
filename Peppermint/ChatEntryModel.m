@@ -20,9 +20,10 @@
     AWSService *awsService;
     __block int activeServerQueryCount;
     NSMutableSet *mergedPeppermintChatEntrySet;
-    NSMutableSet *mergedPeppermintContacts;
+    NSMutableArray *mergedPeppermintContacts;
     __block BOOL queryForIncoming;
     __block NSString *nextUrl;
+    RecentContactsModel *recentContactsModel;
 }
 
 -(id) init {
@@ -147,7 +148,8 @@
 -(void) makeSyncRequestForMessages {
     queryForIncoming = NO;
     mergedPeppermintChatEntrySet = [NSMutableSet new];
-    mergedPeppermintContacts = [NSMutableSet new];
+    mergedPeppermintContacts = [NSMutableArray new];
+    recentContactsModel = [RecentContactsModel new];
     nextUrl = nil;
     [self queryServerForIncomingMessages];
 }
@@ -205,10 +207,24 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
 }
 
 -(void) checkToUpdateLastSyncDate:(NSDate*)dateCreated forPeppermintMessageSender:(PeppermintMessageSender*)peppermintMessageSender isRecipient:(BOOL)isRecipient {
-    if(isRecipient && [dateCreated laterDate:peppermintMessageSender.lastMessageSyncDate]) {
+    
+    BOOL isDateLaterForRecipient = dateCreated.timeIntervalSince1970 > peppermintMessageSender.lastMessageSyncDate.timeIntervalSince1970;
+    BOOL isDateLaterForSender = dateCreated.timeIntervalSince1970 > peppermintMessageSender.lastMessageSyncDateForSentMessages.timeIntervalSince1970;
+    
+    if(isRecipient && isDateLaterForRecipient) {
         peppermintMessageSender.lastMessageSyncDate = dateCreated;
-    } else if (!isRecipient && [dateCreated laterDate:peppermintMessageSender.lastMessageSyncDateForSentMessages]) {
+    } else if (!isRecipient && isDateLaterForSender) {
         peppermintMessageSender.lastMessageSyncDateForSentMessages = dateCreated;
+    }
+}
+
+-(void) updateLastMessageDateForRecentContact:(PeppermintContact*)peppermintContact {
+    if([mergedPeppermintContacts containsObject:peppermintContact]) {
+        NSUInteger index = [mergedPeppermintContacts indexOfObject:peppermintContact];
+        PeppermintContact *peppermintContactInList = [mergedPeppermintContacts objectAtIndex:index];
+        peppermintContactInList.lastMessageDate = [peppermintContactInList.lastMessageDate laterDate:peppermintContact.lastMessageDate];
+    } else {
+        [mergedPeppermintContacts addObject:peppermintContact];
     }
 }
 
@@ -229,11 +245,8 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
         PeppermintContact *peppermintContact = [contactsModel matchingPeppermintContactForEmail:peppermintChatEntry.contactEmail
                                                                                     nameSurname:peppermintChatEntry.contactNameSurname];
         
-        if(!peppermintContact.lastMessageDate || [peppermintChatEntry.dateCreated laterDate:peppermintContact.lastMessageDate]) {
-            peppermintContact.lastMessageDate = peppermintChatEntry.dateCreated;
-        }
-        
-        [mergedPeppermintContacts addOrUpdateObject:peppermintContact];
+        peppermintContact.lastMessageDate = [peppermintChatEntry.dateCreated laterDate:peppermintContact.lastMessageDate];
+        [self updateLastMessageDateForRecentContact:peppermintContact];
         [customContactModel save:peppermintContact];
     }
     [peppermintMessageSender save];
@@ -244,8 +257,7 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
         queryForIncoming = YES;
         [self queryServerForIncomingMessages];
     } else {
-        RecentContactsModel *recentContactsModel = [RecentContactsModel new];
-        [recentContactsModel saveMultiple:[mergedPeppermintContacts allObjects]];
+        [recentContactsModel saveMultiple:mergedPeppermintContacts];
         [self savePeppermintChatEntryArray:[mergedPeppermintChatEntrySet allObjects]];
     }
 }

@@ -52,11 +52,11 @@
                 [weakSelf promtMultipleRecordsWithSameValueErrorForPeppermintContact:peppermintContact];
             }
             
-            recentContact.contactDate = peppermintContact.lastMessageDate;
+            recentContact.contactDate = [peppermintContact.lastMessageDate laterDate:recentContact.contactDate];
             recentContact.nameSurname = peppermintContact.nameSurname;
             recentContact.communicationChannelAddress = peppermintContact.communicationChannelAddress;
             recentContact.communicationChannel = [NSNumber numberWithInt:peppermintContact.communicationChannel];
-            recentContact.avatarImageData = UIImageJPEGRepresentation(peppermintContact.avatarImage, 1);
+            recentContact.avatarImageData = UIImageJPEGRepresentation(peppermintContact.avatarImage, 1);            
         }
         
         NSError *err = [repository endTransaction];

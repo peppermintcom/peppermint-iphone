@@ -923,6 +923,7 @@ SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
         NSLog(@"Received RefreshIncomingMessagesCompletedWithSuccess....");
         if(event.peppermintChatEntryAllMesssagesArray.count > 0) {
             if (self.recentContactsModel.contactList.count == 0 ) {
+                [self scrollToTop];
                 activeCellTag = CELL_TAG_RECENT_CONTACTS;
             }
             [self.recentContactsModel refreshRecentContactList];

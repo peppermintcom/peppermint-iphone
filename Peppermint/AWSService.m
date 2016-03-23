@@ -534,10 +534,6 @@
             getMessagesAreSuccessful.dataOfMessagesArray = messageGetResponse.data;
             getMessagesAreSuccessful.existsMoreMessages = (messageGetResponse.links.next != nil);
             getMessagesAreSuccessful.nextUrl = messageGetResponse.links.next;
-            
-            #warning "Watch logs&Decide to add next date in event to publish!"
-            NSLog(@"isForRecipient:%d,S:%@ --> next:%@",isForRecipient, sinceDate, messageGetResponse.links.next);
-            
             getMessagesAreSuccessful.isForRecipient = isForRecipient;
             PUBLISH(getMessagesAreSuccessful);
         }

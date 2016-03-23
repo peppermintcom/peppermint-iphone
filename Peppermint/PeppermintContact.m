@@ -70,16 +70,17 @@
     if (![object isKindOfClass:[PeppermintContact class]]) {
         return NO;
     }
+
     PeppermintContact * other = (PeppermintContact *)object;
-    return other.communicationChannel == self.communicationChannel
+    BOOL result = other.communicationChannel == self.communicationChannel
     && other.communicationChannelAddress
     && self.communicationChannelAddress
     && ([other.communicationChannelAddress caseInsensitiveCompare:self.communicationChannelAddress]== NSOrderedSame);
+    return result;
 }
 
 - (NSUInteger)hash {
-    NSAssert( self.nameSurname && self.communicationChannelAddress, @"User must have name&email for calculating the hash value!" );
-    
+    NSAssert( self.nameSurname && self.communicationChannelAddress, @"User must have name&email for calculating the hash value!");
     NSMutableString *uniqueString = [NSMutableString stringWithFormat:@"%lu%@", (unsigned long)self.communicationChannel, self.communicationChannelAddress];
     NSUInteger hashValue = [uniqueString hash];
     return hashValue;
