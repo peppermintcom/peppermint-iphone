@@ -24,6 +24,8 @@
     __block BOOL queryForIncoming;
     __block NSString *nextUrl;
     RecentContactsModel *recentContactsModel;
+    NSDate *_lastMessageSyncDateForRecipient;
+    NSDate *_lastMessageSyncDateForSender;
 }
 
 -(id) init {
@@ -137,6 +139,7 @@
             if(error) {
                 [weakSelf.delegate operationFailure:error];
             } else {
+                [weakSelf updateLastSyncDatesInPeppermintMessageSender];
                 [weakSelf.delegate peppermintChatEntrySavedWithSuccess:peppermintChatEntryArray];
             }
         });
@@ -171,13 +174,13 @@
             [awsService getMessagesForAccountId:peppermintMessageSender.accountId
                                             jwt:peppermintMessageSender.exchangedJwt
                                         nextUrl:nextUrl
-                                          since:peppermintMessageSender.lastMessageSyncDate
+                                          since:[self lastMessageSyncDateForRecipient]
                                       recipient:YES];
         } else {
             [awsService getMessagesForAccountId:peppermintMessageSender.accountId
                                             jwt:peppermintMessageSender.exchangedJwt
                                         nextUrl:nextUrl
-                                          since:peppermintMessageSender.lastMessageSyncDateForSentMessages
+                                          since:[self lastMessageSyncDateForSender]
                                       recipient:NO];
         }
     }
@@ -206,17 +209,41 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
     }
 }
 
--(void) checkToUpdateLastSyncDate:(NSDate*)dateCreated forPeppermintMessageSender:(PeppermintMessageSender*)peppermintMessageSender isRecipient:(BOOL)isRecipient {
-    
-    BOOL isDateLaterForRecipient = dateCreated.timeIntervalSince1970 > peppermintMessageSender.lastMessageSyncDate.timeIntervalSince1970;
-    BOOL isDateLaterForSender = dateCreated.timeIntervalSince1970 > peppermintMessageSender.lastMessageSyncDateForSentMessages.timeIntervalSince1970;
+#pragma mark - SyncDate functions
+
+-(NSDate*) lastMessageSyncDateForRecipient {
+    if(!_lastMessageSyncDateForRecipient) {
+        _lastMessageSyncDateForRecipient = [PeppermintMessageSender sharedInstance].lastMessageSyncDate;
+    }
+    return _lastMessageSyncDateForRecipient;
+}
+
+-(NSDate*) lastMessageSyncDateForSender {
+    if(!_lastMessageSyncDateForSender) {
+        _lastMessageSyncDateForSender = [PeppermintMessageSender sharedInstance].lastMessageSyncDateForSentMessages;
+    }
+    return _lastMessageSyncDateForSender;
+}
+
+-(void) updateLastSyncDatesInPeppermintMessageSender {
+    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+    peppermintMessageSender.lastMessageSyncDate = [self lastMessageSyncDateForRecipient];
+    peppermintMessageSender.lastMessageSyncDateForSentMessages = [self lastMessageSyncDateForSender];
+    [peppermintMessageSender save];
+}
+
+-(void) checkToUpdateLastSyncDate:(NSDate*)dateCreated isRecipient:(BOOL)isRecipient {
+    BOOL isDateLaterForRecipient = dateCreated.timeIntervalSince1970 > [self lastMessageSyncDateForRecipient].timeIntervalSince1970;
+    BOOL isDateLaterForSender = dateCreated.timeIntervalSince1970 > [self lastMessageSyncDateForSender].timeIntervalSince1970;
     
     if(isRecipient && isDateLaterForRecipient) {
-        peppermintMessageSender.lastMessageSyncDate = dateCreated;
+        _lastMessageSyncDateForRecipient = dateCreated;
     } else if (!isRecipient && isDateLaterForSender) {
-        peppermintMessageSender.lastMessageSyncDateForSentMessages = dateCreated;
+        _lastMessageSyncDateForSender = dateCreated;
     }
 }
+
+#pragma mark - Last Message Date For Recent Contact
 
 -(void) updateLastMessageDateForRecentContact:(PeppermintContact*)peppermintContact {
     if([mergedPeppermintContacts containsObject:peppermintContact]) {
@@ -228,9 +255,10 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
     }
 }
 
+#pragma mark - Process Event
+
 -(void) processEvent:(GetMessagesAreSuccessful*) event {
     ContactsModel *contactsModel = [ContactsModel sharedInstance];
-    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
     CustomContactModel *customContactModel = [CustomContactModel new];
     for (Data *messageData in event.dataOfMessagesArray) {
         messageData.attributes.message_id = messageData.id;
@@ -239,7 +267,6 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
         [mergedPeppermintChatEntrySet addObject:peppermintChatEntry];
         
         [self checkToUpdateLastSyncDate:peppermintChatEntry.dateCreated
-             forPeppermintMessageSender:peppermintMessageSender
                             isRecipient:event.isForRecipient];
         
         PeppermintContact *peppermintContact = [contactsModel matchingPeppermintContactForEmail:peppermintChatEntry.contactEmail
@@ -249,7 +276,6 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
         [self updateLastMessageDateForRecentContact:peppermintContact];
         [customContactModel save:peppermintContact];
     }
-    [peppermintMessageSender save];
     
     if(event.existsMoreMessages) {
         [self queryServerForIncomingMessages];

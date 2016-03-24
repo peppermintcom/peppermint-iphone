@@ -206,9 +206,9 @@
 }
 
 -(NSDate*) defaultLastMessageSyncDate {
-    NSTimeInterval currentTimeInterval = [NSDate new].timeIntervalSince1970;
-    NSTimeInterval timeIntervalToUse = currentTimeInterval - (20 * YEAR);
-    return [NSDate dateWithTimeIntervalSince1970:timeIntervalToUse];
+    //NSTimeInterval currentTimeInterval = [NSDate new].timeIntervalSince1970;
+    //NSTimeInterval timeIntervalToUse = -currentTimeInterval - (20 * YEAR);
+    return [NSDate dateWithTimeIntervalSince1970:0];
 }
 
 -(void) clearSender {

@@ -342,7 +342,7 @@ SUBSCRIBE(DetachSuccess) {
     } else if(application.applicationState == UIApplicationStateInactive) {
         [self gotGCMNotificationForAutoPlay:userInfo];
     } else if (application.applicationState == UIApplicationStateBackground) {
-        NSAssert(false, @"Got not expected notification msg in UIApplicationStateBackground state");
+        NSLog(@"Got notification when the app is in background. Data payload will be handled, so not doing any handling.");
     }
 }
 
@@ -416,8 +416,12 @@ SUBSCRIBE(DetachSuccess) {
 }
 
 -(void) operationFailure:(NSError *)error {
-    cachedCompletionHandler(UIBackgroundFetchResultFailed);
+    if(cachedCompletionHandler) {
+        cachedCompletionHandler(UIBackgroundFetchResultFailed);
+    }
+#ifdef DEBUG
     [AppDelegate handleError:error];
+#endif
 }
 
 #pragma mark - Navigation
