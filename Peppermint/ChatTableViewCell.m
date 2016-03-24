@@ -105,9 +105,6 @@
         durationText = [NSString stringWithFormat:@"%.2ld:%.2ld", (long)minutes, (long)seconds];
     }
     
-    if(!self.peppermintChatEntry.isSeen) {
-        durationText = [NSString stringWithFormat:@"(new) %@", durationText];
-    }
     self.leftLabel.text = durationText;
 }
 

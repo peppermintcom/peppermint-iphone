@@ -518,6 +518,7 @@ SUBSCRIBE(DetachSuccess) {
     
     if([host isEqualToString:HOST_FASTREPLY]
        || [path containsString:HOST_FASTREPLY]) {
+        result = YES;
         NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
         NSString *nameSurname, *email = nil;
         for(NSURLQueryItem *queryItem in urlComponents.queryItems) {
@@ -760,6 +761,7 @@ SUBSCRIBE(DetachSuccess) {
 }
 
 +(void) handleError:(NSError*) error {
+    NSLog(@"An error occured:\n%@", error);
     [AnalyticsModel logError:error];
     NSString *title = LOC(@"An error occured", @"Error Title Message");
     NSString *message = [self messageForError:error];
