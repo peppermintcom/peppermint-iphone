@@ -19,4 +19,7 @@
 
 @interface RecordingGestureButton : UIButton
 @property (weak, nonatomic) id<RecordingGestureButtonDelegate> delegate;
+
+-(void) cancelOngoingInteractions;
+
 @end

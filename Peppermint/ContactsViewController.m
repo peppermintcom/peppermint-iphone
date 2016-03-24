@@ -351,20 +351,33 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     isScrolling = YES;
-    [self hideHoldToRecordInfoView];
+    [self hideHoldToRecordInfoView];    
+    [self cancelOngoingInteractionsInTableViewCells];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     isScrolling = NO;
+    [self cancelOngoingInteractionsInTableViewCells];
 }
 
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
     [self.searchContactsTextField resignFirstResponder];
     isScrolling = YES;
+    [self cancelOngoingInteractionsInTableViewCells];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     isScrolling = NO;
+    [self cancelOngoingInteractionsInTableViewCells];
+}
+
+-(void) cancelOngoingInteractionsInTableViewCells {
+    for(UITableViewCell *cell in self.tableView.visibleCells) {
+        if([cell isKindOfClass:[ContactTableViewCell class]]) {
+            ContactTableViewCell *contactTableViewCell = (ContactTableViewCell*)cell;
+            [contactTableViewCell.recordingGestureButton cancelOngoingInteractions];
+        }
+    }
 }
 
 #pragma mark - LoadingView

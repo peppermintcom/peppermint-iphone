@@ -108,4 +108,12 @@
     [self.delegate touchDownCancelledWithEvent:event location:endPoint];
 }
 
+-(void) cancelOngoingInteractions {
+    isCellAvailableToHaveUserInteraction = YES;
+    if(timer) {
+        [timer invalidate];
+        timer = nil;
+    }
+}
+
 @end
