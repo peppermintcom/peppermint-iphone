@@ -859,23 +859,25 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 -(void)cellSelectedWithTag:(NSUInteger) cellTag {
     activeCellTag = cellTag;
-    /*
-    [self.searchMenu close];
-    [self.searchContactsTextField resignFirstResponder];
-
-    NSPredicate *itemWithTagPredicate = [NSPredicate predicateWithFormat:@"self.tag == %d", cellTag];
-    NSArray *filteredArray = [self.searchMenu.items filteredArrayUsingPredicate:itemWithTagPredicate];
-    REMenuItem *activeMenuItem = filteredArray.count > 0 ? [filteredArray objectAtIndex:0] : nil;
-    SearchMenuTableViewCell *activeMenuTableViewCell = (SearchMenuTableViewCell*)activeMenuItem.customView;
-    self.searchSourceIconImageView.image = [UIImage imageNamed:activeMenuTableViewCell.iconImageName];
-    
-    [[self loadingHud] show:YES];
-    */
-    if(cellTag == CELL_TAG_RECENT_CONTACTS) {
-        [self.recentContactsModel refreshRecentContactList];
-    } else {
-        [self.contactsModel refreshContactList];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        /*
+         [self.searchMenu close];
+         [self.searchContactsTextField resignFirstResponder];
+         
+         NSPredicate *itemWithTagPredicate = [NSPredicate predicateWithFormat:@"self.tag == %d", cellTag];
+         NSArray *filteredArray = [self.searchMenu.items filteredArrayUsingPredicate:itemWithTagPredicate];
+         REMenuItem *activeMenuItem = filteredArray.count > 0 ? [filteredArray objectAtIndex:0] : nil;
+         SearchMenuTableViewCell *activeMenuTableViewCell = (SearchMenuTableViewCell*)activeMenuItem.customView;
+         self.searchSourceIconImageView.image = [UIImage imageNamed:activeMenuTableViewCell.iconImageName];
+         
+         [[self loadingHud] show:YES];
+         */
+        if(cellTag == CELL_TAG_RECENT_CONTACTS) {
+            [self.recentContactsModel refreshRecentContactList];
+        } else {
+            [self.contactsModel refreshContactList];
+        }
+    });
 }
 
 #pragma mark - AddContactViewControllerDelegate
@@ -936,10 +938,10 @@ SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
         NSLog(@"Received RefreshIncomingMessagesCompletedWithSuccess....");
         if(event.peppermintChatEntryAllMesssagesArray.count > 0) {
             if (self.recentContactsModel.contactList.count == 0 ) {
-                [self scrollToTop];
-                activeCellTag = CELL_TAG_RECENT_CONTACTS;
+                [self cellSelectedWithTag:CELL_TAG_RECENT_CONTACTS];
+            } else {
+                [self.recentContactsModel refreshRecentContactList];
             }
-            [self.recentContactsModel refreshRecentContactList];
         }
     });
 }

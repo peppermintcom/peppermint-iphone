@@ -97,8 +97,9 @@
         NSArray *recentContactsArray = [repository getResultsFromEntity:[RecentContact class] predicateOrNil:nil ascSortStringOrNil:nil descSortStringOrNil:[NSArray arrayWithObjects:@"contactDate", nil]];
         
         NSMutableArray *recentPeppermintContacts = [NSMutableArray new];
+#if (TARGET_OS_WATCH)
         NSMutableArray * recentPeppermintContactsData = [NSMutableArray new];
-
+#endif
         receivedMessagesEmailSet = [ChatModel receivedMessagesEmailSet];
         for(RecentContact *recentContact in recentContactsArray) {
             PeppermintContact * ppm_contact = [self peppermintContactWithRecentContact:recentContact];
@@ -108,11 +109,12 @@
             ppm_contact.unreadMessageCount = unreadMessages.count;
             
             [recentPeppermintContacts addObject:ppm_contact];
-#if !(TARGET_OS_WATCH)
+#if (TARGET_OS_WATCH)
             [recentPeppermintContactsData addObject:[ppm_contact archivedRootData]];
 #endif
         }
-        
+
+#if (TARGET_OS_WATCH)
         if (NSClassFromString(@"WCSession") && recentPeppermintContactsData.count > 0) {
             if ([WCSession isSupported]) {
                 NSError * err;
@@ -122,6 +124,7 @@
                 }
             }
         }
+#endif
         
         if(--activeServiceCallCount==0) {
             self.contactList = recentPeppermintContacts;
