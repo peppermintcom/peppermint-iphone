@@ -121,11 +121,11 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 -(void) resetUserInterfaceWithActiveCellTag:(int)newCellTag {
     self.searchContactsTextField.text = self.contactsModel.filterText = @"";
-    activeCellTag = newCellTag;;
+    activeCellTag = newCellTag;
     self.searchSourceIconImageView.image = [UIImage imageNamed:@"icon_recent"];
     [[self loadingHud] show:YES];
     [self.tableView reloadData];
-    [self.recentContactsModel refreshRecentContactList];
+    [self refreshContacts];
 }
 
 -(void) performTutorialViewProcess {
@@ -585,7 +585,6 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 -(void) newRecentContactisSaved {
     self.searchContactsTextField.text = self.contactsModel.filterText = @"";
-    [self cellSelectedWithTag:CELL_TAG_RECENT_CONTACTS];
 }
 
 -(void) message:(NSString*) messageId isUpdatedWithStatus:(SendingStatus)sendingStatus cancelAble:(BOOL)isCacnelAble {

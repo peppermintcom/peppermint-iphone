@@ -239,11 +239,12 @@
         NSString *second = [(PeppermintContact*)b nameSurname];
         BOOL firstReceived = [(PeppermintContact*)a hasReceivedMessageOverPeppermint];
         BOOL secondReceived = [(PeppermintContact*)b hasReceivedMessageOverPeppermint];
+        BOOL filterTextExists = self.filterText.length > 0;
         
         NSComparisonResult result = NSOrderedSame;
-        if(firstReceived && !secondReceived) {
+        if(filterTextExists && firstReceived && !secondReceived) {
             result = NSOrderedAscending;
-        } else if (!firstReceived && secondReceived) {
+        } else if (filterTextExists && !firstReceived && secondReceived) {
             result = NSOrderedDescending;
         } else {
             result = [first.lowercaseString compare:second.lowercaseString];
