@@ -53,7 +53,6 @@
     NSUInteger activeRecordingView;
     NSTimer *holdToRecordViewTimer;
     BOOL isContactsPermissionGranted;
-    UIImage *emptyProfileImage;
     NSDateFormatter *dateFormatter;
 }
 
@@ -82,7 +81,6 @@
     isNavigatedToChatEntries = NO;
     timer = nil;
     isScreenReady = NO;
-    emptyProfileImage = [UIImage imageNamed:@"avatar_empty"];
     [self.searchContactsTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     dateFormatter = [NSDateFormatter new];
@@ -257,7 +255,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
     if(indexPath.section == SECTION_FAST_REPLY_CONTACT) {
         ContactTableViewCell *cell = [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
         PeppermintContact *contact = [FastReplyModel sharedInstance].peppermintContact;
-        [cell setAvatarImage:contact.avatarImage ? contact.avatarImage : emptyProfileImage];
+        [cell setAvatarImage:contact.avatarImage ? contact.avatarImage : nil];
         [cell setInformationWithNameSurname:contact.nameSurname communicationChannelAddress:LOC(@"Peppermint", @"Peppermint") andIconImage:[UIImage imageNamed:@"icon_reply"]];
         preparedCell = cell;
     } else if (indexPath.section == SECTION_EMPTY_RESULT) {
@@ -274,7 +272,7 @@ SUBSCRIBE(ReplyContactIsAdded) {
                 peppermintContact = recentContact;
             }
             
-            [cell setAvatarImage:peppermintContact.avatarImage ? peppermintContact.avatarImage : emptyProfileImage];
+            [cell setAvatarImage:peppermintContact.avatarImage ? peppermintContact.avatarImage : nil];
             
             NSString *communicationChannelAddressToShow = peppermintContact.communicationChannelAddress;
             if(peppermintContact.hasReceivedMessageOverPeppermint) {

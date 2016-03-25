@@ -13,13 +13,9 @@
 #define SIZE_LARGE              17
 #define SIZE_SMALL              13
 
-#define INFORMATION_LABEL_RIGHT_CONSTANT        40
-#define INFORMATION_LABEL_RIGHT_CONSTANT_MIN    8
-
 @interface ContactTableViewCell ()
 @property (weak, nonatomic) IBOutlet UILabel *informationLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *rightIconImageView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *informationLabelRightConstraint;
 
 @end
 
@@ -84,10 +80,14 @@
     
     self.rightDateLabel.text = @"";
     self.rightMessageCounterLabel.text = @"";
-    self.rightMessageCounterLabel.hidden = YES;
+    self.rightMessageCounterLabel.hidden = YES;    
     self.rightIconImageView.hidden = image == nil;
     self.rightIconImageView.image = image;
-    self.informationLabelRightConstraint.constant = image == nil ? INFORMATION_LABEL_RIGHT_CONSTANT_MIN : INFORMATION_LABEL_RIGHT_CONSTANT;
+    if(image) {
+        CGRect frame = self.informationLabel.frame;
+        frame.size.width = self.rightIconImageView.frame.origin.x - frame.origin.x;
+        self.informationLabel.frame = frame;
+    }
     
     [self calculateCorrectSizeForFonts];
     [self applyNonSelectedStyle];
@@ -96,10 +96,14 @@
 #pragma mark - Set Avatar Image
 
 -(void) setAvatarImage:(UIImage*) image {
-    CGRect frame = self.avatarImageView.frame;
-    int width = frame.size.width;
-    int height = frame.size.height;
-    self.avatarImageView.image = [image resizedImageWithWidth:width height:height];
+    if(image) {
+        CGRect frame = self.avatarImageView.frame;
+        int width = frame.size.width;
+        int height = frame.size.height;
+        self.avatarImageView.image = [image resizedImageWithWidth:width height:height];
+    } else {
+        self.avatarImageView.image = [UIImage imageNamed:@"avatar_empty"];
+    }
 }
 
 -(void) applySelectedStyle {
