@@ -11,6 +11,7 @@
 #import "PlayingModel.h"
 #import "AutoPlayModel.h"
 #import "ChatEntryModel.h"
+#import "PlayingChatEntryModel.h"
 
 #define DISTANCE_TO_BORDER  5
 #define TIMER_UPDATE_PERIOD 0.05
@@ -25,7 +26,7 @@
     UIImage *imagePlay;
     UIImage *imagePause;
     NSTimer *timer;
-    NSInteger totalSeconds;
+    NSTimeInterval totalSeconds;
     __block BOOL stopMessageReceived;
 }
 
@@ -77,14 +78,12 @@
 }
 
 - (void) fillInformation:(PeppermintChatEntry*) chatEntry {
-    
     self.spinnerView.hidden = YES;
-    self.durationView.hidden = NO;
-    self.durationViewWidthConstraint.constant = 0;
-    self.durationCircleView.hidden = YES;
-    
-    [_playingModel.audioPlayer stop];
-    _playingModel = nil;
+    _playingModel = [[PlayingChatEntryModel sharedInstance] playModelForChatEntry:chatEntry];
+    self.durationCircleView.hidden = (_playingModel == nil);
+    if(self.durationCircleView.hidden) {
+        self.durationViewWidthConstraint.constant = 0;
+    }
     
     _peppermintChatEntry = chatEntry;
     self.playPauseImageView.image = imagePlay;
@@ -102,7 +101,7 @@
             totalSeconds = self.playingModel.audioPlayer.currentTime;
         }
         NSInteger minutes = totalSeconds / 60;
-        NSInteger seconds = totalSeconds % 60;
+        NSInteger seconds = totalSeconds - (60 * minutes);
         durationText = [NSString stringWithFormat:@"%.2ld:%.2ld", (long)minutes, (long)seconds];
     }
     
@@ -202,6 +201,10 @@
         result = [_playingModel playData:audioData playerCompletitionBlock:^{
             [self.delegate stoppedPlayingMessage:self];
         }];
+        
+        if(result) {
+            [[PlayingChatEntryModel sharedInstance] setCachedPlayingModel:_playingModel];
+        }        
     }
     return result;
 }
@@ -209,7 +212,9 @@
 -(void) updateDuration {
     if(_playingModel) {
         CGFloat percent = _playingModel.audioPlayer.currentTime / _playingModel.audioPlayer.duration;
-        if( _playingModel.audioPlayer.isPlaying) {
+        BOOL isPlayingOrPaused = !self.durationCircleView.hidden;
+        if( _playingModel.audioPlayer.isPlaying || isPlayingOrPaused) {
+            self.durationCircleView.hidden = NO;
             if((int)_playingModel.audioPlayer.currentTime != totalSeconds) {
                 [self setLeftLabel];
             }
@@ -225,8 +230,8 @@
             }
         } else {
             self.playPauseImageView.image = imagePlay;
-            if(percent < 0.00001) {
-                self.durationCircleView.hidden = YES;
+            self.durationCircleView.hidden = (percent < 0.00001);
+            if(self.durationCircleView.hidden) {
                 self.durationViewWidthConstraint.constant = 0;
             }
         }

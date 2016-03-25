@@ -135,6 +135,7 @@
 		B1D2A6DD1C20380D002BD6DF /* FoggyRecordingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1D2A6DC1C20380D002BD6DF /* FoggyRecordingView.xib */; };
 		B1D646541C99728F00600183 /* ProximitySensorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D646531C99728F00600183 /* ProximitySensorModel.m */; };
 		B1D646581C998FB300600183 /* ShakeGestureView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D646571C998FB300600183 /* ShakeGestureView.m */; };
+		B1DA4A1C1CA581350002F07A /* PlayingChatEntryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1DA4A1B1CA581350002F07A /* PlayingChatEntryModel.m */; };
 		B1DBEF431C537345007AAF4A /* RecordingGestureButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B1DBEF421C537345007AAF4A /* RecordingGestureButton.m */; };
 		B1E2DF9B1C76061F0037FFBF /* AutoPlayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E2DF9A1C76061F0037FFBF /* AutoPlayModel.m */; };
 		B1E5160E1C7D99E3002BD49C /* ChatEntryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E5160D1C7D99E3002BD49C /* ChatEntryModel.m */; };
@@ -503,6 +504,8 @@
 		B1D646531C99728F00600183 /* ProximitySensorModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProximitySensorModel.m; sourceTree = "<group>"; };
 		B1D646561C998FB300600183 /* ShakeGestureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShakeGestureView.h; sourceTree = "<group>"; };
 		B1D646571C998FB300600183 /* ShakeGestureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShakeGestureView.m; sourceTree = "<group>"; };
+		B1DA4A1A1CA581350002F07A /* PlayingChatEntryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayingChatEntryModel.h; sourceTree = "<group>"; };
+		B1DA4A1B1CA581350002F07A /* PlayingChatEntryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayingChatEntryModel.m; sourceTree = "<group>"; };
 		B1DBEF411C537345007AAF4A /* RecordingGestureButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingGestureButton.h; sourceTree = "<group>"; };
 		B1DBEF421C537345007AAF4A /* RecordingGestureButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordingGestureButton.m; sourceTree = "<group>"; };
 		B1E2DF991C76061F0037FFBF /* AutoPlayModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoPlayModel.h; sourceTree = "<group>"; };
@@ -924,6 +927,8 @@
 				B1E5160D1C7D99E3002BD49C /* ChatEntryModel.m */,
 				B1D646521C99728F00600183 /* ProximitySensorModel.h */,
 				B1D646531C99728F00600183 /* ProximitySensorModel.m */,
+				B1DA4A1A1CA581350002F07A /* PlayingChatEntryModel.h */,
+				B1DA4A1B1CA581350002F07A /* PlayingChatEntryModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1930,6 +1935,7 @@
 				B1D646581C998FB300600183 /* ShakeGestureView.m in Sources */,
 				B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */,
 				B15EEB9A1C6081F40083658A /* RecordersUpdateRequest.m in Sources */,
+				B1DA4A1C1CA581350002F07A /* PlayingChatEntryModel.m in Sources */,
 				B1BB605F1BDE36AF00C1140B /* SignUpWithEmailViewController.m in Sources */,
 				B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */,
 				D02D2D061C0C379E00092A23 /* BaseTableViewController.m in Sources */,

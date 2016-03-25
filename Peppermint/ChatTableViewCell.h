@@ -46,6 +46,4 @@
 - (void) fillInformation:(PeppermintChatEntry*) chatEntry;
 - (IBAction)playPauseButtonPressed:(id)sender;
 
--(void) setCancelButtonVisibilty:(BOOL)isCacnelAble;
-
 @end

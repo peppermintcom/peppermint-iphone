@@ -364,7 +364,6 @@
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     isScrolling = YES;
-    [self fireStopPlayingMessage];
     [self hideHoldToRecordInfoView];
 }
 
