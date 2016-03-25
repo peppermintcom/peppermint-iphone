@@ -39,6 +39,7 @@
     imagePlay = [UIImage imageNamed:@"icon_play"];
     imagePause = [UIImage imageNamed:@"icon_pause"];
     timer = [NSTimer scheduledTimerWithTimeInterval:TIMER_UPDATE_PERIOD target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
     totalSeconds = 0;
     stopMessageReceived = NO;
     _chatEntryModel = [ChatEntryModel new];
