@@ -14,7 +14,8 @@
 #import "RecentContactsModel.h"
 #import "ContactsModel.h"
 #import "CustomContactModel.h"
-#import "ChatModel.h"
+
+#define PREDICATE_UNREAD_MESSAGES [NSPredicate predicateWithFormat:@"self.isSeen = %@",@NO]
 
 @implementation ChatEntryModel {
     AWSService *awsService;
@@ -41,7 +42,7 @@
 
 -(void) refreshPeppermintChatEntriesForContactEmail:(NSString*) contactEmail {
     dispatch_async(LOW_PRIORITY_QUEUE, ^{
-        NSPredicate *chatPredicate = [ChatModel contactEmailPredicate:contactEmail];
+        NSPredicate *chatPredicate = [ChatEntryModel contactEmailPredicate:contactEmail];
         Repository *repository = [Repository beginTransaction];
         NSArray *chatEntryArray = [repository getResultsFromEntity:[ChatEntry class]
                                                     predicateOrNil:chatPredicate
@@ -329,6 +330,39 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
             }
         });
     });
+}
+
+#pragma mark - Chat Helper Functions
+
++(NSPredicate*) contactEmailPredicate:(NSString*) email {
+    NSPredicate *emailPredicate = [NSPredicate predicateWithFormat:@"self.contactEmail ==[cd] %@", email];
+    return emailPredicate;
+}
+
++(NSPredicate*) unreadMessagesPredicateForEmail:(NSString*) email {
+    NSPredicate *emailPredicate = [ChatEntryModel contactEmailPredicate:email];
+    return [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:
+                                                               emailPredicate,
+                                                               PREDICATE_UNREAD_MESSAGES,
+                                                               nil]];
+}
+
+-(NSUInteger) unreadMessageCountOfAllChats {
+    Repository *repository = [Repository beginTransaction];
+    NSArray *unreadChatEntries = [repository getResultsFromEntity:[ChatEntry class] predicateOrNil:PREDICATE_UNREAD_MESSAGES];
+    return  unreadChatEntries.count;
+}
+
++(NSSet*) receivedMessagesEmailSet {
+    Repository *repository = [Repository beginTransaction];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.isSentByMe == %@", @NO];
+    NSArray *chatEntries = [repository getResultsFromEntity:[ChatEntry class] predicateOrNil:predicate];
+    
+    NSMutableSet *mutableSet = [NSMutableSet new];
+    for(ChatEntry *chatEntry in chatEntries) {
+        [mutableSet addObject:chatEntry.contactEmail];
+    }
+    return mutableSet;
 }
 
 @end

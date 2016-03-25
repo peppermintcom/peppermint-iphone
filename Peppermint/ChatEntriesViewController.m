@@ -178,7 +178,7 @@
 
 -(IBAction) backButtonValidAction:(id)sender {
     [self backButtonTouchUp:sender];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - RecordingView Settings

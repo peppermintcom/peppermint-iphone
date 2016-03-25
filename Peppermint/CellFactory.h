@@ -16,7 +16,6 @@
 #import "LoginValidateEmailTableViewCell.h"
 #import "InformationTextTableViewCell.h"
 #import "ContactInformationTableViewCell.h"
-#import "ChatContactTableViewCell.h"
 #import "ChatTableViewCell.h"
 
 @interface CellFactory : NSObject
@@ -47,9 +46,6 @@
 
 #define CELL_HEIGHT_CONTACT_INFORMATION_TABLEVIEWCELL    70
 +(ContactInformationTableViewCell*) cellContactInformationTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath withDelegate:(id<ContactInformationTableViewCellDelegate>)delegate;
-
-#define CELL_HEIGHT_CHAT_CONTACT_TABLEVIEWCELL CELL_HEIGHT_CONTACT_TABLEVIEWCELL
-+(ChatContactTableViewCell*) cellChatContactTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath;
 
 #define CELL_HEIGHT_CHAT_TABLEVIEWCELL  60
 +(ChatTableViewCell*) cellChatTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath andDelegate:(id<ChatTableViewCellDelegate>) delegate;

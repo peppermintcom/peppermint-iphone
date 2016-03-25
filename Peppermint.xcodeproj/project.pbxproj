@@ -25,9 +25,6 @@
 		B116F3B11C008E570091994C /* FastReplyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B116F3B01C008E570091994C /* FastReplyModel.m */; };
 		B11B13541C0C5EAD00782FC4 /* ContactInformationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B11B13531C0C5EAD00782FC4 /* ContactInformationTableViewCell.m */; };
 		B11B13561C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B11B13551C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib */; };
-		B11B30FB1C4E505600966A48 /* ChatContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B11B30FA1C4E505600966A48 /* ChatContactTableViewCell.m */; };
-		B11B30FD1C4E507200966A48 /* ChatContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B11B30FC1C4E507200966A48 /* ChatContactTableViewCell.xib */; };
-		B11E02E41C49198400579122 /* ChatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B11E02E31C49198400579122 /* ChatsViewController.m */; };
 		B11F8A5C1BDCC45F000E79AA /* FinalizeUploadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5B1BDCC45F000E79AA /* FinalizeUploadRequest.m */; };
 		B11F8A5F1BDCC474000E79AA /* FinalizeUploadResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5E1BDCC474000E79AA /* FinalizeUploadResponse.m */; };
 		B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B12C03BA1BCFFC060085A55A /* FastRecordingView.m */; };
@@ -157,7 +154,6 @@
 		B1F93E901BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E8E1BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld */; };
 		B1F93E981BC8E328005F2128 /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E971BC8E328005F2128 /* Repository.m */; };
 		B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */; };
-		B1FC53841C520DDE00C0A472 /* ChatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FC53831C520DDE00C0A472 /* ChatModel.m */; };
 		B1FC538B1C52656800C0A472 /* ChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FC538A1C52656800C0A472 /* ChatTableViewCell.m */; };
 		B1FC538D1C52658400C0A472 /* ChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1FC538C1C52658400C0A472 /* ChatTableViewCell.xib */; };
 		B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FE184F1BE1676D002772B4 /* FeedBackModel.m */; };
@@ -296,12 +292,7 @@
 		B11B13521C0C5EAD00782FC4 /* ContactInformationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactInformationTableViewCell.h; sourceTree = "<group>"; };
 		B11B13531C0C5EAD00782FC4 /* ContactInformationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactInformationTableViewCell.m; sourceTree = "<group>"; };
 		B11B13551C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactInformationTableViewCell.xib; sourceTree = "<group>"; };
-		B11B30F91C4E505600966A48 /* ChatContactTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatContactTableViewCell.h; sourceTree = "<group>"; };
-		B11B30FA1C4E505600966A48 /* ChatContactTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatContactTableViewCell.m; sourceTree = "<group>"; };
-		B11B30FC1C4E507200966A48 /* ChatContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatContactTableViewCell.xib; sourceTree = "<group>"; };
 		B11E02D51C490DA900579122 /* PeppermintDataModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PeppermintDataModel 2.xcdatamodel"; sourceTree = "<group>"; };
-		B11E02E21C49198400579122 /* ChatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatsViewController.h; sourceTree = "<group>"; };
-		B11E02E31C49198400579122 /* ChatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatsViewController.m; sourceTree = "<group>"; };
 		B11F8A5A1BDCC45F000E79AA /* FinalizeUploadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinalizeUploadRequest.h; sourceTree = "<group>"; };
 		B11F8A5B1BDCC45F000E79AA /* FinalizeUploadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinalizeUploadRequest.m; sourceTree = "<group>"; };
 		B11F8A5D1BDCC474000E79AA /* FinalizeUploadResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinalizeUploadResponse.h; sourceTree = "<group>"; };
@@ -551,8 +542,6 @@
 		B1F93E971BC8E328005F2128 /* Repository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Repository.m; sourceTree = "<group>"; };
 		B1F93E991BC8E5E7005F2128 /* RecentContactsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentContactsModel.h; sourceTree = "<group>"; };
 		B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentContactsModel.m; sourceTree = "<group>"; };
-		B1FC53821C520DDE00C0A472 /* ChatModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatModel.h; sourceTree = "<group>"; };
-		B1FC53831C520DDE00C0A472 /* ChatModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatModel.m; sourceTree = "<group>"; };
 		B1FC53891C52656800C0A472 /* ChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableViewCell.h; sourceTree = "<group>"; };
 		B1FC538A1C52656800C0A472 /* ChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableViewCell.m; sourceTree = "<group>"; };
 		B1FC538C1C52658400C0A472 /* ChatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatTableViewCell.xib; sourceTree = "<group>"; };
@@ -758,16 +747,6 @@
 			name = ContactInformationTableViewCell;
 			sourceTree = "<group>";
 		};
-		B11B30F81C4E4FA900966A48 /* ChatContactTableViewCell */ = {
-			isa = PBXGroup;
-			children = (
-				B11B30F91C4E505600966A48 /* ChatContactTableViewCell.h */,
-				B11B30FA1C4E505600966A48 /* ChatContactTableViewCell.m */,
-				B11B30FC1C4E507200966A48 /* ChatContactTableViewCell.xib */,
-			);
-			name = ChatContactTableViewCell;
-			sourceTree = "<group>";
-		};
 		B12C03B81BCFFBDC0085A55A /* FastRecordingView */ = {
 			isa = PBXGroup;
 			children = (
@@ -937,8 +916,6 @@
 				B15FDE831C117CFE007100EC /* CustomContactModel.m */,
 				B1EF03731C2184F80054FA02 /* AnalyticsModel.h */,
 				B1EF03741C2184F80054FA02 /* AnalyticsModel.m */,
-				B1FC53821C520DDE00C0A472 /* ChatModel.h */,
-				B1FC53831C520DDE00C0A472 /* ChatModel.m */,
 				B12EA4031C4FB1F40006F51F /* GoogleCloudMessagingModel.h */,
 				B12EA4041C4FB1F40006F51F /* GoogleCloudMessagingModel.m */,
 				B1E2DF991C76061F0037FFBF /* AutoPlayModel.h */,
@@ -1149,7 +1126,6 @@
 			isa = PBXGroup;
 			children = (
 				B1FC53881C52655000C0A472 /* ChatTableViewCell */,
-				B11B30F81C4E4FA900966A48 /* ChatContactTableViewCell */,
 				B17B3D751BB6C8F4009B8BC5 /* BaseTableViewCell */,
 				B11B13511C0C5E8800782FC4 /* ContactInformationTableViewCell */,
 				B13B50231BF38D29009D3348 /* InformationTextTableViewCell */,
@@ -1213,8 +1189,6 @@
 		B17DCBFE1C5BB56E00F61AA1 /* Chats */ = {
 			isa = PBXGroup;
 			children = (
-				B11E02E21C49198400579122 /* ChatsViewController.h */,
-				B11E02E31C49198400579122 /* ChatsViewController.m */,
 				B1889FDF1C4EBA3E003552CE /* ChatEntriesViewController.h */,
 				B1889FE01C4EBA3E003552CE /* ChatEntriesViewController.m */,
 			);
@@ -1820,7 +1794,6 @@
 				B17B3D3C1BB6898C009B8BC5 /* Images.xcassets in Resources */,
 				B15B15B21BDBBAB200C0C171 /* Login.storyboard in Resources */,
 				B1BDD36C1C7A6FB300C8BDF4 /* water_drop.mp3 in Resources */,
-				B11B30FD1C4E507200966A48 /* ChatContactTableViewCell.xib in Resources */,
 				B1BB2A531BE6AA2000A4BFB4 /* GoogleService-Info.plist in Resources */,
 				B17801781C1EFEA700BA2436 /* TutorialView.xib in Resources */,
 				B1FC538D1C52658400C0A472 /* ChatTableViewCell.xib in Resources */,
@@ -1938,7 +1911,6 @@
 				B1B801911C3FF69B00958885 /* AboutViewController.m in Sources */,
 				B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */,
 				B15B15BB1BDBC29A00C0C171 /* RecorderRequest.m in Sources */,
-				B1FC53841C520DDE00C0A472 /* ChatModel.m in Sources */,
 				B16F01291C4E48350030BE65 /* ChatEntry.m in Sources */,
 				B1F045671BCFB36900A67942 /* BaseService.m in Sources */,
 				B11F8A5F1BDCC474000E79AA /* FinalizeUploadResponse.m in Sources */,
@@ -1971,7 +1943,6 @@
 				B13B50261BF38D48009D3348 /* InformationTextTableViewCell.m in Sources */,
 				B15FDE791C117CCE007100EC /* Contact.m in Sources */,
 				B17206DC1BE4E2D40021D855 /* PlayingModel.m in Sources */,
-				B11B30FB1C4E505600966A48 /* ChatContactTableViewCell.m in Sources */,
 				B1714CC81BE11EE6004F13A4 /* ReSideMenuContainerViewController.m in Sources */,
 				B190F5BA1BDD63400094B391 /* SendVoiceMessageSMSModel.m in Sources */,
 				B11F8A5C1BDCC45F000E79AA /* FinalizeUploadRequest.m in Sources */,
@@ -2072,7 +2043,6 @@
 				B1EF03751C2184F80054FA02 /* AnalyticsModel.m in Sources */,
 				D0BA6E8A1C070A1C00B8D85B /* AddContactViewController.m in Sources */,
 				B1EF40F21BB8579D00042E4B /* M13ProgressView.m in Sources */,
-				B11E02E41C49198400579122 /* ChatsViewController.m in Sources */,
 				B1BB601D1BDE16D400C1140B /* UIStoryboard_Addition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

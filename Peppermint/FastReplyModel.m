@@ -8,7 +8,7 @@
 
 #import "FastReplyModel.h"
 #import "ContactsModel.h"
-#import "ChatModel.h"
+#import "ChatEntryModel.h"
 #import "RecordingModel.h"
 
 @implementation FastReplyModel
@@ -38,7 +38,7 @@
                                                                                                  nameSurname:nameSurname];
     
     
-    contact.hasReceivedMessageOverPeppermint = [[ChatModel receivedMessagesEmailSet] containsObject:email];
+    contact.hasReceivedMessageOverPeppermint = [[ChatEntryModel receivedMessagesEmailSet] containsObject:email];
     [FastReplyModel sharedInstance].peppermintContact = contact;    
     ReplyContactIsAdded *replyContactIsAdded = [ReplyContactIsAdded new];
     replyContactIsAdded.sender = self;

@@ -8,7 +8,7 @@
 
 #import "RecentContactsModel.h"
 #import "ContactsModel.h"
-#import "ChatModel.h"
+#import "ChatEntryModel.h"
 
 @import WatchConnectivity;
 
@@ -100,12 +100,12 @@
 #if (TARGET_OS_WATCH)
         NSMutableArray * recentPeppermintContactsData = [NSMutableArray new];
 #endif
-        receivedMessagesEmailSet = [ChatModel receivedMessagesEmailSet];
+        receivedMessagesEmailSet = [ChatEntryModel receivedMessagesEmailSet];
         for(RecentContact *recentContact in recentContactsArray) {
             PeppermintContact * ppm_contact = [self peppermintContactWithRecentContact:recentContact];
             NSArray *unreadMessages = [repository getResultsFromEntity:[ChatEntry class]
                                                         predicateOrNil:
-                                       [ChatModel unreadMessagesPredicateForEmail:ppm_contact.communicationChannelAddress]];
+                                       [ChatEntryModel unreadMessagesPredicateForEmail:ppm_contact.communicationChannelAddress]];
             ppm_contact.unreadMessageCount = unreadMessages.count;
             
             [recentPeppermintContacts addObject:ppm_contact];

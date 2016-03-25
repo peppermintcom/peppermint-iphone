@@ -24,4 +24,9 @@
 -(void) makeSyncRequestForMessages;
 -(void) updateChatEntryWithAudio:(NSData*)audio toAudioUrl:(NSString*)audioUrl;
 
+#pragma mark - Chat Helper Functions
++(NSPredicate*) unreadMessagesPredicateForEmail:(NSString*) email;
+-(NSUInteger) unreadMessageCountOfAllChats;
++(NSSet*) receivedMessagesEmailSet;
+
 @end

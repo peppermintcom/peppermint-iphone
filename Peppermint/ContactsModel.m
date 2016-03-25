@@ -11,7 +11,7 @@
 #if !(TARGET_OS_WATCH)
 #import "GoogleContactsModel.h"
 #import "CustomContactModel.h"
-#import "ChatModel.h"
+#import "ChatEntryModel.h"
 #endif
 
 
@@ -287,7 +287,7 @@
 #pragma mark - Merge Contacts to show via Peppermint
 
 -(NSMutableArray*) mergeContactsConsideringViaPeppermint:(NSMutableArray*) currentPeppermintContactsArray {
-    NSSet *receivedMessagesEmailSet = [ChatModel receivedMessagesEmailSet];
+    NSSet *receivedMessagesEmailSet = [ChatEntryModel receivedMessagesEmailSet];
     
     for(PeppermintContact *peppermintContact in currentPeppermintContactsArray) {
         if([receivedMessagesEmailSet containsObject:peppermintContact.communicationChannelAddress]) {

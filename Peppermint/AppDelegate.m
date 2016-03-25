@@ -30,10 +30,8 @@
 #import "GAIFields.h"
 #import "GoogleCloudMessagingModel.h"
 #import "AWSModel.h"
-#import "ChatsViewController.h"
 #import "ChatEntriesViewController.h"
 #import "AutoPlayModel.h"
-#import "ChatModel.h"
 
 @import WatchConnectivity;
 @import Contacts;
@@ -810,7 +808,7 @@ SUBSCRIBE(AccountIdIsUpdated) {
 }
 
 -(void) refreshBadgeNumber {
-    NSUInteger unreadMessagesCount = [ChatModel unreadMessageCountOfAllChats];
+    NSUInteger unreadMessagesCount = [chatEntryModel unreadMessageCountOfAllChats];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:unreadMessagesCount];
 }

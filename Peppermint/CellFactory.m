@@ -110,18 +110,6 @@
     return cell;
 }
 
-+(ChatContactTableViewCell*) cellChatContactTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath {
-    NSString *cellKey = @"ChatContactTableViewCell";
-    ChatContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellKey];
-    if(!cell) {
-        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:cellKey owner:self options:nil];
-        cell = [topLevelObjects objectAtIndex:0];
-    }
-    cell.indexPath = indexPath;
-    cell.tableView = tableView;
-    return cell;
-}
-
 +(ChatTableViewCell*) cellChatTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath andDelegate:(id<ChatTableViewCellDelegate>) delegate {
     NSString *cellKey = @"ChatTableViewCell";
     ChatTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellKey];
