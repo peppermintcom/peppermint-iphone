@@ -15,6 +15,11 @@
 #import "ReSideMenuContainerViewController.h"
 #import "TutorialView.h"
 
+#define CELL_TAG_ALL_CONTACTS           1
+#define CELL_TAG_RECENT_CONTACTS        2
+#define CELL_TAG_EMAIL_CONTACTS         3
+#define CELL_TAG_SMS_CONTACTS           4
+
 @interface ContactsViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ContactsModelDelegate, RecentContactsModelDelegate, SearchMenuTableViewCellDelegate, UIAlertViewDelegate, ContactTableViewCellDelegate, RecordingViewDelegate, ContactInformationTableViewCellDelegate>
 @property (strong, nonatomic) ContactsModel *contactsModel;
 @property (strong, nonatomic) RecentContactsModel *recentContactsModel;
@@ -35,7 +40,7 @@
 @property (weak, nonatomic) ReSideMenuContainerViewController *reSideMenuContainerViewController;
 @property (strong, nonatomic) TutorialView *tutorialView;
 
--(void) resetUserInterface;
+-(void) resetUserInterfaceWithActiveCellTag:(int)newCellTag;
 -(IBAction)messageCancelButtonPressed:(id)sender;
 -(void) refreshContacts;
 -(void) scheduleNavigateToChatEntryWithEmail:(NSString*) email;

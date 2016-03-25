@@ -16,11 +16,12 @@
 #define INDEX_TUTORIAL      -1
 #define INDEX_CHATS         -2
 
-#define NUMBER_OF_OPTIONS   4
-#define INDEX_CONTACTS      0
-#define INDEX_FEEDBACK      1
-#define INDEX_ACCOUNT       2
-#define INDEX_ABOUT         3
+#define NUMBER_OF_OPTIONS   5
+#define INDEX_RECENT_CONTACTS      0
+#define INDEX_ALL_CONTACTS  1
+#define INDEX_FEEDBACK      2
+#define INDEX_ACCOUNT       3
+#define INDEX_ABOUT         4
 
 
 @interface SlideMenuViewController ()
@@ -55,8 +56,12 @@
     SlideMenuTableViewCell *cell = [CellFactory cellSlideMenuTableViewCellFromTable:tableView forIndexPath:indexPath];
     
     switch (indexPath.row) {
-        case INDEX_CONTACTS:
-            cell.titleLabel.text = LOC(@"Contacts",@"Contacts Label");
+        case INDEX_RECENT_CONTACTS:
+            cell.titleLabel.text = LOC(@"Recent Contacts", @"Title");
+            cell.iconImageView.image = [UIImage imageNamed:@"icon_recent"];
+            break;
+        case INDEX_ALL_CONTACTS:
+            cell.titleLabel.text = LOC(@"All Contacts", @"Title");
             cell.iconImageView.image = [UIImage imageNamed:@"icon_all"];
             break;
         case INDEX_TUTORIAL:
@@ -91,10 +96,15 @@
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.reSideMenuContainerViewController hideMenuViewController];
-    if(indexPath.row == INDEX_CONTACTS) {
+    if(indexPath.row == INDEX_RECENT_CONTACTS) {
         UINavigationController *navigationController = (UINavigationController*)self.reSideMenuContainerViewController.contentViewController;
         ContactsViewController *contactsViewController = navigationController.viewControllers.firstObject;
-        [contactsViewController resetUserInterface];
+        [contactsViewController resetUserInterfaceWithActiveCellTag:CELL_TAG_RECENT_CONTACTS];
+        [navigationController popToRootViewControllerAnimated:YES];
+    } else if (indexPath.row == INDEX_ALL_CONTACTS) {
+        UINavigationController *navigationController = (UINavigationController*)self.reSideMenuContainerViewController.contentViewController;
+        ContactsViewController *contactsViewController = navigationController.viewControllers.firstObject;
+        [contactsViewController resetUserInterfaceWithActiveCellTag:CELL_TAG_ALL_CONTACTS];
         [navigationController popToRootViewControllerAnimated:YES];
     } else if (indexPath.row == INDEX_FEEDBACK) {
         [self.reSideMenuContainerViewController sendFeedback];

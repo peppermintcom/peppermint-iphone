@@ -27,11 +27,6 @@
 #define ROW_COUNT_SHOW_ALL_CONTACTS     1
 #define ROW_COUNT_CONTACT_PERMISSION    1
 
-#define CELL_TAG_ALL_CONTACTS           1
-#define CELL_TAG_RECENT_CONTACTS        2
-#define CELL_TAG_EMAIL_CONTACTS         3
-#define CELL_TAG_SMS_CONTACTS           4
-
 #define MESSAGE_SHOW_DURATION           2
 
 #define SEGUE_CHAT_ENTRIES_VIEWCONTROLLER   @"ChatEntriesViewControllerSegue"
@@ -119,14 +114,14 @@ SUBSCRIBE(ReplyContactIsAdded) {
             isNavigatedToChatEntries = !isNavigatedToChatEntries;
             //Add if some more action will need to be taken?
         } else {
-            [self resetUserInterface];
+            [self resetUserInterfaceWithActiveCellTag:CELL_TAG_RECENT_CONTACTS];
         }
     }
 }
 
--(void) resetUserInterface {
+-(void) resetUserInterfaceWithActiveCellTag:(int)newCellTag {
     self.searchContactsTextField.text = self.contactsModel.filterText = @"";
-    activeCellTag = CELL_TAG_RECENT_CONTACTS;
+    activeCellTag = newCellTag;;
     self.searchSourceIconImageView.image = [UIImage imageNamed:@"icon_recent"];
     [[self loadingHud] show:YES];
     [self.tableView reloadData];
