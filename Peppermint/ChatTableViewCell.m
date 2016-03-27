@@ -218,8 +218,7 @@
 -(void) updateDuration {
     if(_playingModel) {
         CGFloat percent = _playingModel.audioPlayer.currentTime / _playingModel.audioPlayer.duration;
-        BOOL isPlayingOrPaused = !self.durationCircleView.hidden;
-        if( _playingModel.audioPlayer.isPlaying || isPlayingOrPaused) {
+        if( _playingModel.audioPlayer.isPlaying) {
             self.durationCircleView.hidden = NO;
             if((int)_playingModel.audioPlayer.currentTime != totalSeconds) {
                 [self setLeftLabel];
