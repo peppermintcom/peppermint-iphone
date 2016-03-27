@@ -149,6 +149,10 @@
 
 #pragma mark - Server Query
 
+-(BOOL) isSyncProcessActive {
+    return activeServerQueryCount > 0;
+}
+
 -(void) makeSyncRequestForMessages {
     queryForIncoming = NO;
     mergedPeppermintChatEntrySet = [NSMutableSet new];
@@ -189,11 +193,13 @@
 
 SUBSCRIBE(NetworkFailure) {
     if(event.sender == awsService) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         [self.delegate operationFailure:[event error]];
     }
 }
 
 SUBSCRIBE(GetMessagesAreSuccessful) {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     BOOL isUserStillLoggedIn = [PeppermintMessageSender sharedInstance].email.length > 0;
     if(!isUserStillLoggedIn) {
         NSLog(@" User has logged out during an existing service call. Ignoring the response from server.");
@@ -230,6 +236,7 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
     PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
     peppermintMessageSender.lastMessageSyncDate = [self lastMessageSyncDateForRecipient];
     peppermintMessageSender.lastMessageSyncDateForSentMessages = [self lastMessageSyncDateForSender];
+    _lastMessageSyncDateForRecipient = _lastMessageSyncDateForSender = nil;
     [peppermintMessageSender save];
 }
 
@@ -279,6 +286,7 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
     }
     
     if(event.existsMoreMessages) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         [self queryServerForIncomingMessages];
     } else if (!event.isForRecipient) {
         queryForIncoming = YES;

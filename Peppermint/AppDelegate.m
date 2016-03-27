@@ -45,7 +45,8 @@
 @end
 
 @implementation AppDelegate {
-    __block UIBackgroundTaskIdentifier bgTask;
+    __block UIBackgroundTaskIdentifier bgTaskForMessageSending;
+    __block UIBackgroundTaskIdentifier bgTaskForSync;
     AWSModel *awsModel;
     UIView *appLoadingView;
     PeppermintContact *peppermintContactToNavigate;
@@ -255,10 +256,16 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     [[GoogleCloudMessagingModel sharedInstance] disconnectGCM];
     if(self.mutableArray.count > 0) {
-        bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
+        bgTaskForMessageSending = [application beginBackgroundTaskWithExpirationHandler:^{
             [[CacheModel sharedInstance] cacheOngoingMessages];
-            [application endBackgroundTask:bgTask];
-             bgTask = UIBackgroundTaskInvalid;
+            [application endBackgroundTask:bgTaskForMessageSending];
+             bgTaskForMessageSending = UIBackgroundTaskInvalid;
+        }];
+    }
+    if([chatEntryModel isSyncProcessActive]) {
+        bgTaskForSync = [application beginBackgroundTaskWithExpirationHandler:^{
+            [application endBackgroundTask:bgTaskForSync];
+            bgTaskForSync = UIBackgroundTaskInvalid;
         }];
     }
 }
@@ -266,11 +273,16 @@
 SUBSCRIBE(DetachSuccess) {
     if(self.mutableArray.count == 0 ) {
         NSLog(@"All send message processes are completed!!!!Secure to exit the app...");
-        [[UIApplication sharedApplication] endBackgroundTask:bgTask];
-        bgTask = UIBackgroundTaskInvalid;
+        [[UIApplication sharedApplication] endBackgroundTask:bgTaskForMessageSending];
+        bgTaskForMessageSending = UIBackgroundTaskInvalid;
     } else {
         NSLog(@"A sendvoicemessageModel is detached but there are still %d items in the queue", (int)self.mutableArray.count);
     }
+}
+
+-(void) finishSyncBackgroundTask {
+    [[UIApplication sharedApplication] endBackgroundTask:bgTaskForSync];
+    bgTaskForSync = UIBackgroundTaskInvalid;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -379,6 +391,7 @@ SUBSCRIBE(DetachSuccess) {
 }
 
 -(void) peppermintChatEntrySavedWithSuccess:(NSArray<PeppermintChatEntry*>*) savedPeppermintChatEnryArray {
+    [self finishSyncBackgroundTask];
     [self hideAppCoverLoadingView];
     NSArray<PeppermintChatEntry*> *newMessagesArray = [self filterNewIncomingMessagesInArray:savedPeppermintChatEnryArray];
     [self refreshBadgeNumber];
@@ -417,8 +430,12 @@ SUBSCRIBE(DetachSuccess) {
     if(cachedCompletionHandler) {
         cachedCompletionHandler(UIBackgroundFetchResultFailed);
     }
+    
 #ifdef DEBUG
-    [AppDelegate handleError:error];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:error.userInfo];
+    [dict setObject:@"This happened in debug mode" forKey:@"error log time"];
+    error = [NSError errorWithDomain:error.domain code:error.code userInfo:dict];
+    [AnalyticsModel logError:error];
 #endif
 }
 
@@ -791,6 +808,7 @@ SUBSCRIBE(DetachSuccess) {
 #pragma mark - Inter App Messaging
 
 SUBSCRIBE(NewUserLoggedIn) {
+    chatEntryModel = nil;
     [self initRecorder];
     [self navigateToContactsWithFilterText:@""];
 }
