@@ -193,7 +193,6 @@
     
     if([self.recordingView isKindOfClass:[FoggyRecordingView class]]) {
         FoggyRecordingView *foggyRecordingView = (FoggyRecordingView *)_recordingView;
-        //foggyRecordingView.swipeInAnyDirectionView.hidden = YES;
         CGRect frame = foggyRecordingView.microphoneImageView.frame;
         foggyRecordingView.microphoneViewRightOffsetConstraint.constant =  -1 * (frame.size.width * 0.2);
         foggyRecordingView.microphoneViewCenterYConstraint.constant = -1 * (frame.size.height * 0.1);
@@ -486,8 +485,8 @@ SUBSCRIBE(ProximitySensorValueIsUpdated) {
 
 -(BOOL) doesExistUnheardMessage {
     BOOL result = NO;
-    for(PeppermintChatEntry *peppermintChatEntry in self.chatEntryModel.chatEntriesArray) {
-        if(!peppermintChatEntry.isSeen) {
+    for(ChatTableViewCell *chatTableViewCell in self.tableView.visibleCells) {
+        if(!chatTableViewCell.peppermintChatEntry.isSeen) {
             result = YES;
             break;
         }
