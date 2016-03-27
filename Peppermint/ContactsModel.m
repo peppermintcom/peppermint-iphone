@@ -287,7 +287,8 @@
 
 #pragma mark - Merge Contacts to show via Peppermint
 
--(NSMutableArray*) mergeContactsConsideringViaPeppermint:(NSMutableArray*) currentPeppermintContactsArray {
+-(NSMutableArray*) mergeContactsConsideringViaPeppermint:(NSMutableArray*) peppermintContactsArray {
+    NSArray *currentPeppermintContactsArray = [NSArray arrayWithArray:peppermintContactsArray];
     NSSet *receivedMessagesEmailSet = [ChatEntryModel receivedMessagesEmailSet];
     
     for(PeppermintContact *peppermintContact in currentPeppermintContactsArray) {
