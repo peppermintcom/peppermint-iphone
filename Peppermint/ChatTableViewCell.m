@@ -105,6 +105,12 @@
         durationText = [NSString stringWithFormat:@"%.2ld:%.2ld", (long)minutes, (long)seconds];
     }
     
+    if(!self.peppermintChatEntry.isSeen) {
+        self.leftLabel.textColor = [UIColor peppermintCancelOrange];
+    } else {
+        self.leftLabel.textColor = [UIColor textFieldTintGreen];
+    }
+    
     self.leftLabel.text = durationText;
 }
 
