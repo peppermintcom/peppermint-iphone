@@ -41,6 +41,7 @@
 }
 
 -(void) refreshPeppermintChatEntriesForContactEmail:(NSString*) contactEmail {
+    weakself_create();
     dispatch_async(LOW_PRIORITY_QUEUE, ^{
         NSPredicate *chatPredicate = [ChatEntryModel contactEmailPredicate:contactEmail];
         Repository *repository = [Repository beginTransaction];
@@ -51,14 +52,16 @@
         
         NSMutableArray *peppermintChatEntryArray = [NSMutableArray new];
         for(ChatEntry* chatEntry in chatEntryArray) {
-            PeppermintChatEntry *peppermintChatEntry = [self peppermintChatEntryWith:chatEntry];
-            [peppermintChatEntryArray addObject:peppermintChatEntry];
+            PeppermintChatEntry *peppermintChatEntry = [weakSelf peppermintChatEntryWith:chatEntry];
+            if(peppermintChatEntry) {
+                [peppermintChatEntryArray addObject:peppermintChatEntry];
+            }
         }
-        self.chatEntriesArray = peppermintChatEntryArray;
+        weakSelf.chatEntriesArray = peppermintChatEntryArray;
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            if([self.delegate respondsToSelector:@selector(peppermintChatEntriesArrayIsUpdated)]) {
-                [self.delegate peppermintChatEntriesArrayIsUpdated];
+            if(weakSelf && [weakSelf.delegate respondsToSelector:@selector(peppermintChatEntriesArrayIsUpdated)]) {
+                [weakSelf.delegate peppermintChatEntriesArrayIsUpdated];
             } else {
                 NSLog(@"Delegate did not implement function peppermintChatEntriesArrayIsUpdated");
             }

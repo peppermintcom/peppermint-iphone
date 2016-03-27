@@ -55,4 +55,22 @@
     return hashValue;
 }
 
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(nullable NSZone *)zone {
+    PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry new];
+    peppermintChatEntry.audio = self.audio.copy;
+    peppermintChatEntry.audioUrl = self.audioUrl.copy;
+    peppermintChatEntry.dateCreated = self.dateCreated.copy;
+    peppermintChatEntry.contactEmail = self.contactEmail.copy;
+    peppermintChatEntry.contactNameSurname = self.contactNameSurname.copy;
+    peppermintChatEntry.duration = self.duration;
+    peppermintChatEntry.isSeen = self.isSeen;
+    peppermintChatEntry.isSentByMe = self.isSentByMe;
+    peppermintChatEntry.messageId = self.messageId.copy;
+    peppermintChatEntry.performedOperation = self.performedOperation;
+    return peppermintChatEntry;
+}
+
+
 @end

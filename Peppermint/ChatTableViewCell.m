@@ -48,6 +48,11 @@
     REGISTER();
 }
 
+- (void) dealloc {
+    [timer invalidate];
+    timer = nil;
+}
+
 - (void) layoutSubviews {
     self.centerViewWidth.constant = self.frame.size.width * 0.60;
     self.durationCircleView.layer.cornerRadius = self.durationCircleView.frame.size.height/2;
@@ -85,7 +90,7 @@
         self.durationViewWidthConstraint.constant = 0;
     }
     
-    _peppermintChatEntry = chatEntry;
+    _peppermintChatEntry = [chatEntry copy];
     self.playPauseImageView.image = imagePlay;
     self.playPauseImageView.hidden = NO;
     [self setLeftLabel];
@@ -166,30 +171,40 @@
             dispatch_async(LOW_PRIORITY_QUEUE, ^{
                 NSError *error = nil;
                 if(!weakSelf.peppermintChatEntry.audio) {
-                    NSURL *url = [NSURL URLWithString:self.peppermintChatEntry.audioUrl];
-                    NSData *audioData = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
-                    if(!error) {
-                        weakSelf.peppermintChatEntry.audio = audioData;
-                    } else {
-                        [self.delegate playMessageInCell:self gotError:error];
+                    NSString *audioUrlToFetch = weakSelf.peppermintChatEntry.audioUrl;
+                    if(audioUrlToFetch) {
+                        NSURL *url = [NSURL URLWithString:audioUrlToFetch];
+                        NSData *audioData = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
+                        if(!error) {
+                            weakSelf.peppermintChatEntry.audio = audioData;
+                        } else {
+                            [weakSelf.delegate playMessageInCell:weakSelf gotError:error];
+                            return;
+                        }
                     }
                 }
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    weakSelf.spinnerView.hidden = YES;
-                    weakSelf.playPauseImageView.hidden = NO;
-                    [[AutoPlayModel sharedInstance] clearScheduledPeppermintContact];
-                    
-                    if([self playAudio:weakSelf.peppermintChatEntry.audio]) {
-                        [self stopPlayingCell];
-                        weakSelf.peppermintChatEntry.isSeen = YES;
-                        [weakSelf.chatEntryModel savePeppermintChatEntry:weakSelf.peppermintChatEntry];
-                        
-                        weakSelf.peppermintChatEntry.duration = _playingModel.audioPlayer.duration;
-                        [weakSelf setLeftLabel];
-                        weakSelf.durationCircleView.hidden = NO;
-                        weakSelf.playPauseImageView.image = imagePause;
-                    }
-                });
+                
+                if(weakSelf.peppermintChatEntry.audio) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        strongSelf_create();
+                        if(strongSelf) {
+                            strongSelf.spinnerView.hidden = YES;
+                            strongSelf.playPauseImageView.hidden = NO;
+                            [[AutoPlayModel sharedInstance] clearScheduledPeppermintContact];
+                            
+                            if([strongSelf playAudio:strongSelf.peppermintChatEntry.audio]) {
+                                [strongSelf stopPlayingCell];
+                                strongSelf.peppermintChatEntry.isSeen = YES;
+                                [strongSelf.chatEntryModel savePeppermintChatEntry:strongSelf.peppermintChatEntry];
+                                
+                                strongSelf.peppermintChatEntry.duration = _playingModel.audioPlayer.duration;
+                                [strongSelf setLeftLabel];
+                                strongSelf.durationCircleView.hidden = NO;
+                                strongSelf.playPauseImageView.image = imagePause;
+                            }
+                        }
+                    });
+                }
             });
         } else {
             [_playingModel play];
@@ -204,8 +219,9 @@
     if(stopMessageReceived) {
         stopMessageReceived = !stopMessageReceived;
     } else if(audioData) {
+        weakself_create();
         result = [_playingModel playData:audioData playerCompletitionBlock:^{
-            [self.delegate stoppedPlayingMessage:self];
+            [weakSelf.delegate stoppedPlayingMessage:weakSelf];
         }];
         
         if(result) {
@@ -228,9 +244,10 @@
             [self.messageView layoutIfNeeded];
             CGFloat destinationValue = totalWidth * percent;
             if(destinationValue > self.durationViewWidthConstraint.constant || destinationValue < 2) {
+                weakself_create();
                 [UIView animateWithDuration:TIMER_UPDATE_PERIOD animations:^{
-                    self.durationViewWidthConstraint.constant = destinationValue;
-                    [self.messageView layoutIfNeeded];
+                    weakSelf.durationViewWidthConstraint.constant = destinationValue;
+                    [weakSelf.messageView layoutIfNeeded];
                 }];
             }
         } else {

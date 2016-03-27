@@ -57,8 +57,6 @@ sharedObject;\
 
 #pragma mark - WeakSelf Definition
 #define weakself_create()   __weak __typeof__(self) weakSelf = self;
-
-#warning "Investigate the need of strongself macro"
 #define strongSelf_create() __strong typeof(weakSelf) strongSelf = weakSelf;
 
 #pragma mark - Low Priority Queue

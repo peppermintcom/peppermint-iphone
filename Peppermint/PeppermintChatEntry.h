@@ -15,7 +15,7 @@ typedef enum : NSUInteger {
     PerformedOperationUpdated,
 } PerformedOperation;
 
-@interface PeppermintChatEntry : NSObject
+@interface PeppermintChatEntry : NSObject <NSCopying>
 
 @property (strong, nonatomic) NSData *audio;
 @property (strong, nonatomic) NSString *audioUrl;
