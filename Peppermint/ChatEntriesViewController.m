@@ -515,8 +515,9 @@ SUBSCRIBE(ProximitySensorValueIsUpdated) {
 }
 
 -(void) completeRecordingPauseProcess {
+    weakself_create();
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.recordingView finishRecordingWithGestureIsValid:YES needsPause:NO];
+        [weakSelf.recordingView finishRecordingWithGestureIsValid:YES needsPause:NO];
     });
 }
 

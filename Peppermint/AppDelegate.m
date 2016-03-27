@@ -337,8 +337,9 @@ SUBSCRIBE(DetachSuccess) {
         if(userEmail && userNameSurname) {
             [[FastReplyModel sharedInstance] setFastReplyContactWithNameSurname:userNameSurname email:userEmail];
         }
+        weakself_create();
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self navigateToChatEntriesPageForEmail:userEmail nameSurname:userNameSurname];
+            [weakSelf navigateToChatEntriesPageForEmail:userEmail nameSurname:userNameSurname];
         });
     }
     completionHandler();
@@ -591,11 +592,12 @@ SUBSCRIBE(DetachSuccess) {
     BOOL result = jwtInformation != nil && [peppermintMessageSender.email isEqualToString:jwtInformation.sub];
     if(result) {
         [self showAppCoverLoading];
+        weakself_create();
         dispatch_async(LOW_PRIORITY_QUEUE, ^{
             [NSData dataWithContentsOfURL:url]; //--> Verify email on the server
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self navigateToVerifyEmail];
-                [self hideAppCoverLoadingView];
+                [weakSelf navigateToVerifyEmail];
+                [weakSelf hideAppCoverLoadingView];
             });
         });
     }

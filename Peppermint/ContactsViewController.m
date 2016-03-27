@@ -722,8 +722,9 @@ SUBSCRIBE(ReplyContactIsAdded) {
 }
 
 -(void) scrollToTop {
+    weakself_create();
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.tableView setContentOffset:CGPointZero animated:YES];
+        [weakSelf.tableView setContentOffset:CGPointZero animated:YES];
     });
 }
 
@@ -851,23 +852,24 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 -(void)cellSelectedWithTag:(NSUInteger) cellTag {
     activeCellTag = cellTag;
+    weakself_create();
     dispatch_async(dispatch_get_main_queue(), ^{
         /*
-         [self.searchMenu close];
-         [self.searchContactsTextField resignFirstResponder];
+         [weakSelf.searchMenu close];
+         [weakSelf.searchContactsTextField resignFirstResponder];
          
          NSPredicate *itemWithTagPredicate = [NSPredicate predicateWithFormat:@"self.tag == %d", cellTag];
-         NSArray *filteredArray = [self.searchMenu.items filteredArrayUsingPredicate:itemWithTagPredicate];
+         NSArray *filteredArray = [weakSelf.searchMenu.items filteredArrayUsingPredicate:itemWithTagPredicate];
          REMenuItem *activeMenuItem = filteredArray.count > 0 ? [filteredArray objectAtIndex:0] : nil;
          SearchMenuTableViewCell *activeMenuTableViewCell = (SearchMenuTableViewCell*)activeMenuItem.customView;
-         self.searchSourceIconImageView.image = [UIImage imageNamed:activeMenuTableViewCell.iconImageName];
+         weakSelf.searchSourceIconImageView.image = [UIImage imageNamed:activeMenuTableViewCell.iconImageName];
          
-         [[self loadingHud] show:YES];
-         */
+         [[weakSelf loadingHud] show:YES];
+        */
         if(cellTag == CELL_TAG_RECENT_CONTACTS) {
-            [self.recentContactsModel refreshRecentContactList];
+            [weakSelf.recentContactsModel refreshRecentContactList];
         } else {
-            [self.contactsModel refreshContactList];
+            [weakSelf.contactsModel refreshContactList];
         }
     });
 }
@@ -926,13 +928,14 @@ SUBSCRIBE(ReplyContactIsAdded) {
 }
 
 SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
+    weakself_create();
     dispatch_async(dispatch_get_main_queue(), ^{
         NSLog(@"Received RefreshIncomingMessagesCompletedWithSuccess....");
         if(event.peppermintChatEntryAllMesssagesArray.count > 0) {
-            if (self.recentContactsModel.contactList.count == 0 ) {
-                [self cellSelectedWithTag:CELL_TAG_RECENT_CONTACTS];
+            if (weakSelf.recentContactsModel.contactList.count == 0 ) {
+                [weakSelf cellSelectedWithTag:CELL_TAG_RECENT_CONTACTS];
             } else {
-                [self.recentContactsModel refreshRecentContactList];
+                [weakSelf.recentContactsModel refreshRecentContactList];
             }
         }
     });
