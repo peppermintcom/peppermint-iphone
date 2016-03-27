@@ -274,6 +274,7 @@ SUBSCRIBE(StopAllPlayingMessages) {
         stopMessageReceived = YES;
     } else {
         [_playingModel.audioPlayer stop];
+        [self.delegate stoppedPlayingMessage:self];
     }
 }
 
@@ -333,7 +334,7 @@ SUBSCRIBE(ProximitySensorValueIsUpdated) {
     BOOL isPlaying = (self.playingModel.audioPlayer.isPlaying);
     if(isPlaying) {
         if(!event.isDeviceCloseToUser) {
-            [self.playingModel.audioPlayer pause];
+            [self.playingModel pause];
             [self.delegate stoppedPlayingMessage:self];
         } else if (event.isDeviceOrientationCorrectOnEar) {
             [self rewindPlayer];
