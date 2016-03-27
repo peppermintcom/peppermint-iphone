@@ -29,18 +29,18 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="JcO-0x-7sn" userLabel="Information">
-                        <rect key="frame" x="54" y="4" width="307" height="47"/>
+                        <rect key="frame" x="54" y="4" width="293" height="47"/>
                         <string key="text">Okan Kurtulus
 via okankurtulus@gmail.com</string>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Oct 18" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LTB-nu-Tni">
-                        <rect key="frame" x="361" y="10" width="42" height="17"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Yesterday" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LTB-nu-Tni">
+                        <rect key="frame" x="347" y="10" width="56" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="oM6-Ul-7QY"/>
-                            <constraint firstAttribute="width" priority="250" constant="1" id="oqv-5p-lOZ"/>
+                            <constraint firstAttribute="width" priority="250" constant="60" id="oqv-5p-lOZ"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -85,7 +85,7 @@ via okankurtulus@gmail.com</string>
                     <constraint firstItem="1G5-fy-gLb" firstAttribute="leading" secondItem="ejf-Un-hy5" secondAttribute="leading" constant="11" id="VBf-Fn-1Qw"/>
                     <constraint firstItem="PXW-gj-hHd" firstAttribute="leading" secondItem="JcO-0x-7sn" secondAttribute="trailing" priority="750" id="VPx-uH-DzX"/>
                     <constraint firstAttribute="bottom" secondItem="EDQ-8r-4xP" secondAttribute="bottom" id="Wbm-24-OkM"/>
-                    <constraint firstItem="LTB-nu-Tni" firstAttribute="leading" secondItem="JcO-0x-7sn" secondAttribute="trailing" priority="750" id="b5b-GQ-PLM"/>
+                    <constraint firstItem="LTB-nu-Tni" firstAttribute="leading" secondItem="JcO-0x-7sn" secondAttribute="trailing" id="b5b-GQ-PLM"/>
                     <constraint firstItem="LTB-nu-Tni" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" constant="10" id="eGJ-rL-MUL"/>
                     <constraint firstItem="JcO-0x-7sn" firstAttribute="leading" secondItem="1G5-fy-gLb" secondAttribute="trailing" constant="8" id="efA-lM-KtN"/>
                     <constraint firstAttribute="bottom" secondItem="1G5-fy-gLb" secondAttribute="bottom" constant="10" id="fS7-fZ-cnL"/>
