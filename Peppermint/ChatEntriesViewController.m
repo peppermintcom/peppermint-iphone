@@ -27,7 +27,7 @@
     AutoPlayModel *autoPlayModel;
     __block BOOL scheduleRefresh;
     BOOL isScrolling;
-    BOOL isPlaying;
+    __block BOOL isPlaying;
     NSTimer *recordingPausedTimer;
 }
 

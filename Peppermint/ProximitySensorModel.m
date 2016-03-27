@@ -46,7 +46,10 @@
 }
 
 - (void)sensorStateMonitor:(NSNotificationCenter *)notification {
-    [self updateSensorState:[[UIDevice currentDevice] proximityState]];
+    weakself_create();
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [weakSelf updateSensorState:[[UIDevice currentDevice] proximityState]];
+    });
 }
 
 -(void) updateSensorState:(BOOL)state {

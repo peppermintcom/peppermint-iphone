@@ -34,6 +34,7 @@
 }
 
 -(NSMutableAttributedString*) addText:(NSString*)text ofSize:(NSUInteger)size ofColor:(UIColor*)color andFont:(UIFont*) font {
+    text = text ? text : @"";
     JPStringAttribute *infoAttr = [JPStringAttribute new];
     infoAttr.foregroundColor = color;
     infoAttr.font = font;

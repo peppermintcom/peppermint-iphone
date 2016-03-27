@@ -202,8 +202,8 @@
          BOOL processOperation = loadContactsTriggerCount == 0;
          loadContactsTriggerCount = 0;         
          if(gotNewRequestWhileOperating) {
-             dispatch_sync(dispatch_get_main_queue(), ^{
-                 [self refreshContactList];
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 [weakSelf refreshContactList];
              });
          } else if (processOperation) {
              [weakSelf callContactsDelegateWithArray:peppermintContactsArray];
