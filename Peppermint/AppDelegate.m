@@ -54,6 +54,7 @@
     ChatEntryModel *chatEntryModel;
     void (^cachedCompletionHandler)(UIBackgroundFetchResult);
     NSDate *fetchStart;
+    BOOL hasFinishedFirstSync;
 }
 
 -(void) initPlayingModel {
@@ -206,6 +207,7 @@
     if(!chatEntryModel) {
         chatEntryModel = [ChatEntryModel new];
         chatEntryModel.delegate = self;
+        hasFinishedFirstSync = NO;
     }
     [chatEntryModel makeSyncRequestForMessages];
 }
@@ -241,6 +243,7 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+    hasFinishedFirstSync = NO;
     [FBSDKAppEvents activateApp];
     [[GoogleCloudMessagingModel sharedInstance] connectGCM];
     [self refreshIncomingMessages];
@@ -406,9 +409,11 @@ SUBSCRIBE(DetachSuccess) {
         [self navigateToChatEntriesPageForEmail:peppermintContactToNavigate.communicationChannelAddress
                                     nameSurname:peppermintContactToNavigate.nameSurname];
         peppermintContactToNavigate = nil;
-    } else if (newMessagesArray.count > 0 && !newMessagesArray.firstObject.isSentByMe) {
+    } else if (newMessagesArray.count > 0 && !newMessagesArray.firstObject.isSentByMe && hasFinishedFirstSync) {
         [playingModel playPreparedAudiowithCompetitionBlock:nil];
     }
+    
+    hasFinishedFirstSync = YES;
     
     RefreshIncomingMessagesCompletedWithSuccess *refreshIncomingMessagesCompletedWithSuccess = [RefreshIncomingMessagesCompletedWithSuccess new];
     refreshIncomingMessagesCompletedWithSuccess.sender = self;
