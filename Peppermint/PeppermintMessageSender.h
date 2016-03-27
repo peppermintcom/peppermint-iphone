@@ -49,6 +49,7 @@ typedef enum : NSUInteger {
 -(void) clearSender;
 -(BOOL) isInMailVerificationProcess;
 -(void) verifyEmail;
+-(BOOL) isUserStillLoggedIn;
 
 -(NSString*) nameSurname;
 -(void) setNameSurname:(NSString*)nameSurname;

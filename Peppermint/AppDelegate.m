@@ -367,11 +367,14 @@ SUBSCRIBE(DetachSuccess) {
 #pragma mark - AutoPlay
 
 -(void) gotGCMNotificationForAutoPlay:(NSDictionary*)userInfo {
-    [self showAppCoverLoading];
-    peppermintContactToNavigate = [PeppermintContact new];
-    peppermintContactToNavigate.nameSurname = [userInfo valueForKey:PATH_FULL_NAME];
-    peppermintContactToNavigate.communicationChannelAddress = [userInfo valueForKey:PATH_EMAIL];
-    [[AutoPlayModel sharedInstance] scheduleAutoPlayForPeppermintContact:peppermintContactToNavigate];
+    BOOL isUserStillLoggedIn = [[PeppermintMessageSender sharedInstance] isUserStillLoggedIn];
+    if(isUserStillLoggedIn) {
+        [self showAppCoverLoading];
+        peppermintContactToNavigate = [PeppermintContact new];
+        peppermintContactToNavigate.nameSurname = [userInfo valueForKey:PATH_FULL_NAME];
+        peppermintContactToNavigate.communicationChannelAddress = [userInfo valueForKey:PATH_EMAIL];
+        [[AutoPlayModel sharedInstance] scheduleAutoPlayForPeppermintContact:peppermintContactToNavigate];
+    }
 }
 
 #pragma mark - ChatEntryModelDelegate

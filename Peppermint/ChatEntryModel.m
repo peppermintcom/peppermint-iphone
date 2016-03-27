@@ -200,7 +200,7 @@ SUBSCRIBE(NetworkFailure) {
 
 SUBSCRIBE(GetMessagesAreSuccessful) {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    BOOL isUserStillLoggedIn = [PeppermintMessageSender sharedInstance].email.length > 0;
+    BOOL isUserStillLoggedIn = [[PeppermintMessageSender sharedInstance] isUserStillLoggedIn];
     if(!isUserStillLoggedIn) {
         NSLog(@" User has logged out during an existing service call. Ignoring the response from server.");
     } else if(event.sender == awsService) {

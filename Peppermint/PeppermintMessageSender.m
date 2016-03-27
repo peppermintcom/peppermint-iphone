@@ -255,6 +255,11 @@
     [self save];
 }
 
+-(BOOL) isUserStillLoggedIn {
+    BOOL isUserStillLoggedIn = [PeppermintMessageSender sharedInstance].email.length > 0;
+    return isUserStillLoggedIn;
+}
+
 #endif
 
 @end
