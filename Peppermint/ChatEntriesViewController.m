@@ -28,14 +28,14 @@
     __block BOOL scheduleRefresh;
     BOOL isScrolling;
     BOOL isPlaying;
-    NSTimer *proximityTimer;
+    NSTimer *recordingPausedTimer;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     isScrolling = NO;
     isPlaying = NO;
-    proximityTimer = nil;
+    recordingPausedTimer = nil;
     self.tableView.rowHeight = CELL_HEIGHT_CHAT_TABLEVIEWCELL;
     
     [self resetBottomInformationLabel];
@@ -340,9 +340,9 @@
 #pragma makr - Cancel Message Sending
 
 -(IBAction)cancelSendingButtonPressed:(id)sender {
-    if(proximityTimer) {
-        [proximityTimer invalidate];
-        proximityTimer = nil;
+    if(recordingPausedTimer) {
+        [recordingPausedTimer invalidate];
+        recordingPausedTimer = nil;
         [self.recordingView finishRecordingWithGestureIsValid:NO needsPause:NO];
     }
     [self.recordingView cancelMessageSending];
@@ -468,22 +468,19 @@ SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
 }
 
 SUBSCRIBE(ProximitySensorValueIsUpdated) {
+    BOOL isDeviceTakenToEar = event.isDeviceCloseToUser && event.isDeviceOrientationCorrectOnEar;
+    BOOL isDeviceTakenOutOfEar = !event.isDeviceCloseToUser;
+    BOOL existsMessagesToRead = [self doesExistUnheardMessage];
+    BOOL isRecording = !self.recordingView.hidden;
+    
     if(isPlaying) {
         NSLog(@"exist active playing.Don't take action...");
-    } else if ([self doesExistUnheardMessage]) {
+    } else if (isDeviceTakenToEar && existsMessagesToRead) {
         [self checkAndPlayFirstUnheardMessage];
-    } else if (event.isDeviceOrientationCorrectOnEar) {
-        if (event.isDeviceCloseToUser) {
-            [self startAudioRecording];
-        } else {
-            [proximityTimer invalidate];
-            proximityTimer = [NSTimer scheduledTimerWithTimeInterval:WAIT_FOR_SHAKE_DURATION
-                                                              target:self
-                                                            selector:@selector(completeRecordingPauseProcess)
-                                                            userInfo:nil
-                                                             repeats:NO];
-            [self.recordingView finishRecordingWithGestureIsValid:YES needsPause:YES];
-        }
+    } else if (isDeviceTakenToEar && !existsMessagesToRead && !isRecording) {
+        [self startAudioRecording];
+    } else if (isDeviceTakenOutOfEar && isRecording) {
+        [self pauseRecordingAndTriggerTimer];
     }
 }
 
@@ -505,6 +502,16 @@ SUBSCRIBE(ProximitySensorValueIsUpdated) {
             break;
         }
     }
+}
+
+-(void) pauseRecordingAndTriggerTimer {
+    [recordingPausedTimer invalidate];
+    recordingPausedTimer = [NSTimer scheduledTimerWithTimeInterval:WAIT_FOR_SHAKE_DURATION
+                                                      target:self
+                                                    selector:@selector(completeRecordingPauseProcess)
+                                                    userInfo:nil
+                                                     repeats:NO];
+    [self.recordingView finishRecordingWithGestureIsValid:YES needsPause:YES];
 }
 
 -(void) completeRecordingPauseProcess {
