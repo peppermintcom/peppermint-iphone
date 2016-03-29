@@ -13,8 +13,11 @@
 #define SIZE_LARGE              17
 #define SIZE_SMALL              13
 
+#define MIN_WIDTH_FOR_RIGHT_DATE_LABEL  20
+
 @interface ContactTableViewCell ()
 @property (weak, nonatomic) IBOutlet UILabel *informationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *informationLabel2ndLine;
 @property (weak, nonatomic) IBOutlet UIImageView *rightIconImageView;
 
 @end
@@ -53,19 +56,17 @@
     self.rightMessageCounterLabel.layer.cornerRadius = 4;
 }
 
-#pragma mark - Arrange Font size and Place Text
+-(void) layoutSubviews {
+    [super layoutSubviews];
+    [self updateConstraintsManually];
+}
 
--(void) calculateCorrectSizeForFonts {
-    CGFloat width = self.informationLabel.frame.size.width;
-    CGFloat height = self.informationLabel.frame.size.height / 2;
-    while ([NSString widthOfText:nameSurname withSize:sizeLarge andHeight:height] > width) {
-        nameSurname = [nameSurname limitTo:nameSurname.length - 3];
-    }
-    
-    width = self.informationLabel.frame.size.width * 0.90;
-    while ([NSString widthOfText:cellCommunicationChannelAddress withSize:sizeSmall andHeight:height] > width) {
-        cellCommunicationChannelAddress = [cellCommunicationChannelAddress limitTo:cellCommunicationChannelAddress.length - 3];
-    }
+-(void) updateConstraintsManually {
+    NSString *text = [NSString stringWithFormat:@"%@__", self.rightDateLabel.text];
+    CGFloat expectedWidth = [NSString widthOfText:text
+                                         withSize:self.rightDateLabel.font.pointSize
+                                        andHeight:self.rightDateLabel.frame.size.height];
+    self.rightDateLabelWidthConstraint.constant = MAX(expectedWidth, MIN_WIDTH_FOR_RIGHT_DATE_LABEL);
 }
 
 -(void) setInformationWithNameSurname:(NSString*)contactNameSurname communicationChannelAddress:(NSString*)contactCommunicationChannelAddress
@@ -88,8 +89,6 @@
         frame.size.width = self.rightIconImageView.frame.origin.x - frame.origin.x;
         self.informationLabel.frame = frame;
     }
-    
-    [self calculateCorrectSizeForFonts];
     [self applyNonSelectedStyle];
 }
 
@@ -106,17 +105,29 @@
     }
 }
 
+-(void) setAttributedText:(NSMutableAttributedString*) attributedText forLabel:(UILabel*)label {
+    NSMutableParagraphStyle *paragraphStyleStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyleStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+    [attributedText addAttribute:NSParagraphStyleAttributeName
+                        value:paragraphStyleStyle
+                        range:NSMakeRange(0, attributedText.length)];
+    label.numberOfLines = 1;
+    label.attributedText = attributedText;
+}
+
 -(void) applySelectedStyle {
     self.backgroundColor = [UIColor peppermintGreen];
     self.avatarImageView.layer.borderWidth = 2;
     
     NSMutableAttributedString *information = [NSMutableAttributedString new];
     [information addText:nameSurname ofSize:sizeLarge ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:sizeLarge]];
-    [information addText:@"\n" ofSize:sizeLarge ofColor:[UIColor clearColor]];
+    [self setAttributedText:information forLabel:self.informationLabel];
+    
+    information = [NSMutableAttributedString new];
     [information addText:LOC(@"via", @"Localized value for the word via") ofSize:sizeSmall ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
     [information addText:@" " ofSize:sizeSmall ofColor:[UIColor clearColor]];
     [information addText:cellCommunicationChannelAddress ofSize:sizeSmall ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
-    [self.informationLabel setAttributedText:information];
+    [self setAttributedText:information forLabel:self.informationLabel2ndLine];
 }
 
 -(void) applyNonSelectedStyle {
@@ -125,12 +136,13 @@
     
     NSMutableAttributedString *information = [NSMutableAttributedString new];
     [information addText:nameSurname ofSize:sizeLarge ofColor:[UIColor blackColor] andFont:[UIFont openSansSemiBoldFontOfSize:sizeLarge]];
-    [information addText:@"\n" ofSize:sizeSmall ofColor:[UIColor clearColor]];
+    [self setAttributedText:information forLabel:self.informationLabel];
+    
+    information = [NSMutableAttributedString new];
     [information addText:LOC(@"via", @"Localized value for the word via") ofSize:sizeSmall ofColor:[UIColor textFieldTintGreen] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
     [information addText:@" " ofSize:sizeSmall ofColor:[UIColor clearColor]];
     [information addText:cellCommunicationChannelAddress ofSize:sizeSmall ofColor:[UIColor viaInformationLabelTextGreen] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
-    [self.informationLabel setAttributedText:information];
-    
+    [self setAttributedText:information forLabel:self.informationLabel2ndLine];
 }
 
 #pragma mark - Action Buttons

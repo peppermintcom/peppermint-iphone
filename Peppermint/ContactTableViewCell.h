@@ -23,10 +23,11 @@
 @property(weak, nonatomic) IBOutlet RecordingGestureButton *recordingGestureButton;
 @property(weak, nonatomic) IBOutlet UILabel *rightDateLabel;
 @property(weak, nonatomic) IBOutlet UILabel *rightMessageCounterLabel;
+@property(weak, nonatomic) IBOutlet NSLayoutConstraint *rightDateLabelWidthConstraint;
 @property(weak, nonatomic) id<ContactTableViewCellDelegate> delegate;
 @property(weak, nonatomic) UITableView *tableView;
 
 -(void) setInformationWithNameSurname:(NSString*)contactNameSurname communicationChannelAddress:(NSString*)contactCommunicationChannelAddress;
 -(void) setInformationWithNameSurname:(NSString*)contactNameSurname communicationChannelAddress:(NSString*)contactCommunicationChannelAddress andIconImage:(UIImage*) image;
--(void) setAvatarImage:(UIImage*) image ;
+-(void) setAvatarImage:(UIImage*) image;
 @end
