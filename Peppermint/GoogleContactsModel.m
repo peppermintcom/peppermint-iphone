@@ -161,8 +161,8 @@
     
     for(GoogleContact *matchedGoogleContact in matchingGoogleContacts) {
         PeppermintContact *peppermintContact = [PeppermintContact new];
-        peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%@",
-                                             CONTACT_GOOGLE, matchedGoogleContact.identifier];
+        peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%d",
+                                             CONTACT_GOOGLE, matchedGoogleContact.identifier.hash];
         peppermintContact.avatarImage = [UIImage imageWithData:matchedGoogleContact.avatarImageData];
         peppermintContact.nameSurname = matchedGoogleContact.nameSurname;
         peppermintContact.communicationChannel = matchedGoogleContact.communicationChannel.intValue;

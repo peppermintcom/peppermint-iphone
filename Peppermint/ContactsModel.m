@@ -163,8 +163,8 @@
                          } else {
                              [uniqueSet addObject:key];
                              PeppermintContact *peppermintContact = [PeppermintContact new];
-                             peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%@",
-                                                                  CONTACT_PHONEBOOK,contact.recordID];
+                             peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%d",
+                                                                  CONTACT_PHONEBOOK,contact.recordID.hash];
                              peppermintContact.communicationChannel = CommunicationChannelEmail;
                              peppermintContact.communicationChannelAddress = email;
                              peppermintContact.nameSurname = nameSurname;
@@ -185,8 +185,8 @@
                                  [uniqueSet addObject:key];
                              }
                              PeppermintContact *peppermintContact = [PeppermintContact new];
-                             peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%@",
-                                                                  CONTACT_PHONEBOOK,contact.recordID];
+                             peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%d",
+                                                                  CONTACT_PHONEBOOK,contact.recordID.hash];
                              peppermintContact.communicationChannel = CommunicationChannelSMS;
                              peppermintContact.communicationChannelAddress = phone;
                              peppermintContact.nameSurname = nameSurname;

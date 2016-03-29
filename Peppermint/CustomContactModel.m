@@ -121,8 +121,8 @@
         peppermintContact.nameSurname = matchedCustomContact.nameSurname;
         peppermintContact.communicationChannel = matchedCustomContact.communicationChannel.intValue;
         peppermintContact.communicationChannelAddress = matchedCustomContact.communicationChannelAddress;
-        peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%@",
-                                             CONTACT_CUSTOM, matchedCustomContact.identifier];
+        peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%d",
+                                             CONTACT_CUSTOM, matchedCustomContact.identifier.hash];
         [peppermintContactArray addObject:peppermintContact];
     }
     [repository endTransaction];
