@@ -78,9 +78,17 @@
     [self.imageData writeToURL:[self imageFileUrl] atomically:YES];
     
 #warning "Consider removing gcmToken check from below logic. Why are we waiting for the GCM token to be ready for registering recorder???"
+#if TARGET_OS_SIMULATOR
+    if(!self.isAccountSetUpWithRecorder) {
+        [[AppDelegate Instance] tryToSetUpAccountWithRecorder];
+    }
+#else
     if(!self.isAccountSetUpWithRecorder && self.gcmToken.length > 0) {
         [[AppDelegate Instance] tryToSetUpAccountWithRecorder];
     }
+#endif
+    
+    
 #endif
 
 }
