@@ -28,6 +28,7 @@
     NSTimer *timer;
     NSTimeInterval totalSeconds;
     __block BOOL stopMessageReceived;
+    PeppermintChatEntry *referencedChatEntry;
 }
 
 - (void)awakeFromNib {
@@ -90,6 +91,7 @@
         self.durationViewWidthConstraint.constant = 0;
     }
     
+    referencedChatEntry = chatEntry;
     _peppermintChatEntry = [chatEntry copy];
     self.playPauseImageView.image = imagePlay;
     self.playPauseImageView.hidden = NO;
@@ -234,12 +236,15 @@
 -(void) updateDuration {
     if(_playingModel) {
         CGFloat percent = _playingModel.audioPlayer.currentTime / _playingModel.audioPlayer.duration;
-        if( _playingModel.audioPlayer.isPlaying) {
-            self.durationCircleView.hidden = NO;
-            if((int)_playingModel.audioPlayer.currentTime != totalSeconds) {
+        self.durationCircleView.hidden = (percent < 0.00001);
+        self.playPauseImageView.image = _playingModel.audioPlayer.isPlaying ? imagePause : imagePlay;
+        if( _playingModel.audioPlayer.isPlaying && ((int)_playingModel.audioPlayer.currentTime != totalSeconds)) {
                 [self setLeftLabel];
-            }
-            
+        }
+        
+        if(self.durationCircleView.hidden) {
+            self.durationViewWidthConstraint.constant = 0;
+        } else {
             CGFloat totalWidth = self.timelineView.frame.size.width - self.durationCircleView.frame.size.width;
             [self.messageView layoutIfNeeded];
             CGFloat destinationValue = totalWidth * percent;
@@ -249,12 +254,6 @@
                     weakSelf.durationViewWidthConstraint.constant = destinationValue;
                     [weakSelf.messageView layoutIfNeeded];
                 }];
-            }
-        } else {
-            self.playPauseImageView.image = imagePlay;
-            self.durationCircleView.hidden = (percent < 0.00001);
-            if(self.durationCircleView.hidden) {
-                self.durationViewWidthConstraint.constant = 0;
             }
         }
     }
@@ -318,6 +317,8 @@ SUBSCRIBE(StopAllPlayingMessages) {
 }
 
 -(void) peppermintChatEntrySavedWithSuccess:(NSArray*) savedPeppermintChatEnryArray {
+    referencedChatEntry.isSeen = self.peppermintChatEntry.isSeen;
+    referencedChatEntry.audio = self.peppermintChatEntry.audio;
     NSLog(@"peppermintChatEntrySavedWithSuccess");
 }
 
