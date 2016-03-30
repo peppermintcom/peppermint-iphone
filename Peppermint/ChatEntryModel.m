@@ -96,11 +96,12 @@
             ChatEntry *chatEntry = nil;
             NSPredicate *predicate = [NSPredicate predicateWithFormat:
                                       @"((self.messageId == nil OR self.messageId == %@) \
-                                      AND (self.audioUrl == nil OR self.audioUrl == %@) \
+                                      AND (self.audioUrl == nil OR self.audioUrl == %@ OR (self.audio != nil AND self.audio == %@)) \
                                       AND (self.isSentByMe == %d) \
                                       AND (self.contactEmail == %@))"
                                       , peppermintChatEntry.messageId
                                       , peppermintChatEntry.audioUrl
+                                      , peppermintChatEntry.audio
                                       , peppermintChatEntry.isSentByMe
                                       , peppermintChatEntry.contactEmail
                                       ];
@@ -365,6 +366,7 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
 }
 
 +(NSSet*) receivedMessagesEmailSet {
+#warning "Add DB operations on background, even if they are quick as below. Probably to add block behaviour in function signature ;)"
     Repository *repository = [Repository beginTransaction];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.isSentByMe == %@", @NO];
     NSArray *chatEntries = [repository getResultsFromEntity:[ChatEntry class] predicateOrNil:predicate];
