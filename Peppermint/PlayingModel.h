@@ -7,7 +7,7 @@
 //
 
 #import "BaseModel.h"
-#import <AVFoundation/AVFoundation.h>
+#import "AudioSessionModel.h"
 
 typedef void(^PlayerCompletitionBlock)(void);
 

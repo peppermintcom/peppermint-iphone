@@ -7,7 +7,8 @@
 //
 
 #import "RecordingModel.h"
-#import <AudioToolbox/AudioServices.h>
+#import "AudioSessionModel.h"
+//#import <AudioToolbox/AudioServices.h>
 
 #define DEFAULT_GAIN    0.8 //Input Gain must be a value btw 0.0 - 1.0
 #define SAMPLE_RATE     16000.0   //44100 -> 44.1kHz = 44100, 16 kHz -> 16000
@@ -93,19 +94,21 @@
 
 -(void) initRecorder {
     if(!recorder) {
-        if([self setAudioSession:YES]) {
-            NSError *error;
-            NSDictionary *recordSetting = [NSDictionary dictionaryWithObjectsAndKeys:
-                                           [NSNumber numberWithInt:kAudioFormatMPEG4AAC], AVFormatIDKey,
-                                           [NSNumber numberWithInt:AVAudioQualityHigh], AVEncoderAudioQualityKey,
-                                           [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,
-                                           [NSNumber numberWithFloat:SAMPLE_RATE], AVSampleRateKey,
-                                           nil];
-            recorder = [[AVAudioRecorder alloc] initWithURL:self.fileUrl settings:recordSetting error:&error];
-            if(error) {
-                [self.delegate operationFailure:error];
-            }
+        NSError *error;
+        NSDictionary *recordSetting = [NSDictionary dictionaryWithObjectsAndKeys:
+                                       [NSNumber numberWithInt:kAudioFormatMPEG4AAC], AVFormatIDKey,
+                                       [NSNumber numberWithInt:AVAudioQualityHigh], AVEncoderAudioQualityKey,
+                                       [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,
+                                       [NSNumber numberWithFloat:SAMPLE_RATE], AVSampleRateKey,
+                                       nil];
+        
+        recorder = [[AVAudioRecorder alloc] initWithURL:self.fileUrl settings:recordSetting error:&error];
+        if(error) {
+            [self.delegate operationFailure:error];
+        } else {
             recorder.delegate = self;
+            [AudioSessionModel sharedInstance].activeAudioRecorder = recorder;
+            [self setAudioSession:YES];
         }
     } else {
         NSLog(@"Recorder was already active!!!");
@@ -128,29 +131,7 @@
 #pragma mark - Session Setting
 
 -(BOOL) setAudioSession:(BOOL) active {
-    BOOL result = NO;
-    NSError *error = nil;
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    [session setCategory:AVAudioSessionCategoryRecord error:&error];
-    if(error){
-        [self.delegate operationFailure:error];
-        result = NO;
-    } else {
-        [session setActive:active error:&error];
-        if(error) {
-            [self.delegate operationFailure:error];
-            result = NO;
-        } else {
-            if(active) {
-                [session setPreferredInputNumberOfChannels:1 error:&error];
-                if(error) {
-                    [self.delegate operationFailure:error];
-                }
-            }
-            result = YES;
-        }
-    }
-    return result;
+    return [[AudioSessionModel sharedInstance] updateSessionState:active isForRecording:YES];
 }
 
 -(void) record {

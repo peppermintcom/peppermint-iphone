@@ -7,7 +7,6 @@
 //
 
 #import "PlayingModel.h"
-#import "ProximitySensorModel.h"
 #import "AppDelegate.h"
 
 @interface PlayingModel() <AVAudioPlayerDelegate> {
@@ -49,6 +48,7 @@
             _audioPlayer.delegate = self;
             [_audioPlayer setNumberOfLoops:0];
             [_audioPlayer prepareToPlay];
+            [AudioSessionModel sharedInstance].activeAudioPlayer = _audioPlayer;
         } else {
             [AppDelegate handleError:error];
         }
@@ -87,15 +87,10 @@
 }
 
 -(BOOL) play {
-    BOOL result = NO;
-    NSError *error = [self updateCategory];
-    if(!error) {
-        result = [_audioPlayer play];
-        if(result) {
-            [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
-        }
-    } else {
-        [AppDelegate handleError:error];
+    BOOL result = [[AudioSessionModel sharedInstance] updateSessionState:YES isForRecording:NO] && [_audioPlayer play];
+    if(result) {
+        [[AudioSessionModel sharedInstance] checkAndUpdateRoutingIfNeeded];
+        [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     }
     return result;
 }
@@ -103,39 +98,17 @@
 #pragma mark - AVAudioPlayerDelegate
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
-    if(player == _audioPlayer && flag ) {
-        [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+    if(player == _audioPlayer && flag) {        
+        if(player.data) {
+            [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+            [[AudioSessionModel sharedInstance] updateSessionState:NO isForRecording:NO];
+        }
         if(cachedBlock) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 cachedBlock();
             });
         }
     }
-}
-
-#pragma mark - ProximitySensor
-
--(NSError*) updateCategory {
-    NSError *error;
-    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
-    if(!error) {
-        ProximitySensorModel *proximitySensorModel = [ProximitySensorModel sharedInstance];
-        BOOL isOnEar = proximitySensorModel.isDeviceOrientationCorrectOnEar && proximitySensorModel.isDeviceCloseToUser;
-        if(isOnEar) {
-            [audioSession overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:&error];
-        } else {
-            [audioSession overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
-        }
-        if(error) {
-            [AppDelegate handleError:error];
-        }
-    }
-    return error;
-}
-
-SUBSCRIBE(ProximitySensorValueIsUpdated) {
-    [self updateCategory];
 }
 
 #warning "Fade animation can be added to voice"
