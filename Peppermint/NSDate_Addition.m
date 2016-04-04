@@ -11,20 +11,26 @@
 @implementation NSDate (NSDate_Addition)
 
 -(NSDate*) today {
+    NSDate *now = [[NSDate new] localDateTime];
+    NSTimeInterval timeInterval = floor(now.timeIntervalSinceReferenceDate / DAY) * DAY;
+    NSDate *today = [NSDate dateWithTimeIntervalSinceReferenceDate:timeInterval];
+    return today;
+}
+
+-(NSDate*) localDateTime {
     NSTimeZone *timeZone = [NSTimeZone localTimeZone];
-    NSTimeInterval timeIntervalWithTimeZone =  [NSDate new].timeIntervalSinceReferenceDate + timeZone.secondsFromGMT;
-    NSTimeInterval timeInterval = floor(timeIntervalWithTimeZone / DAY) * DAY;
-    return [NSDate dateWithTimeIntervalSinceReferenceDate:timeInterval];
+    NSTimeInterval timeIntervalWithTimeZone =  self.timeIntervalSinceReferenceDate + timeZone.secondsFromGMT;
+    return [NSDate dateWithTimeIntervalSinceReferenceDate:timeIntervalWithTimeZone];
 }
 
 -(BOOL) isToday {
     NSDate *today = [self today];
-    return [self compare:today] != NSOrderedAscending;
+    return [[self localDateTime] compare:today] != NSOrderedAscending;
 }
 
 -(BOOL) isYesterday {
     NSDate *yesterday = [[self today] dateByAddingTimeInterval: -DAY];
-    return [self compare:yesterday] != NSOrderedAscending;
+    return [[self localDateTime] compare:yesterday] != NSOrderedAscending;
 }
 
 @end
