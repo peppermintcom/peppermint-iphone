@@ -11,11 +11,9 @@
 
 @interface AudioSessionModel : BaseModel
 
-@property (weak, nonatomic) AVAudioRecorder *activeAudioRecorder;
-@property (weak, nonatomic) AVAudioPlayer   *activeAudioPlayer;
-
 + (instancetype) sharedInstance;
--(BOOL) updateSessionState:(BOOL) destinationSessionState isForRecording:(BOOL) isForRecording;
--(void) checkAndUpdateRoutingIfNeeded;
+-(void) attachAVAudioProcessObject:(id)item;
+-(BOOL) updateSessionState:(BOOL) destinationSessionState;
+-(BOOL) isAudioSessionActive;
 
 @end

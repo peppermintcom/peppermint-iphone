@@ -10,7 +10,9 @@
 #import "PlayingModel.h"
 #import "PeppermintChatEntry.h"
 
-@implementation PlayingChatEntryModel
+@implementation PlayingChatEntryModel {
+    PeppermintChatEntry *cachedPeppermintChatEntry;
+}
 
 + (instancetype) sharedInstance {
     return SHARED_INSTANCE( [[self alloc] initShared] );
@@ -24,7 +26,8 @@
 -(id) initShared {
     self = [super init];
     if(self) {
-        self.cachedPlayingModel = nil;
+        _cachedPlayingModel = nil;
+        cachedPeppermintChatEntry = nil;
     }
     return self;
 }
@@ -32,17 +35,24 @@
 -(PlayingModel*) playModelForChatEntry:(PeppermintChatEntry*) peppermintChatEntry {
     PlayingModel *playingModel = nil;
     if(self.cachedPlayingModel
+       && [peppermintChatEntry isEqual:cachedPeppermintChatEntry]
        && peppermintChatEntry.audio
-       && self.cachedPlayingModel.audioPlayer.data == peppermintChatEntry.audio) {
+       && [self.cachedPlayingModel.audioPlayer.data isEqual:peppermintChatEntry.audio]) {
         playingModel = self.cachedPlayingModel;
     }
     return playingModel;
 }
 
+-(void) cachePlayingModel:(PlayingModel*)playingModel forChatEntry:(PeppermintChatEntry*) peppermintChatEntry {
+    [_cachedPlayingModel stop];
+    cachedPeppermintChatEntry = peppermintChatEntry;
+    _cachedPlayingModel = playingModel;
+}
+
 SUBSCRIBE(StopAllPlayingMessages) {
     if(self.cachedPlayingModel) {
         [self.cachedPlayingModel.audioPlayer stop];
-        self.cachedPlayingModel = nil;
+        _cachedPlayingModel = nil;
     }
 }
 

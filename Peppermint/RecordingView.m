@@ -381,11 +381,14 @@ SUBSCRIBE(MessageSendingStatusIsUpdated) {
 
 #pragma mark - App Interruption Actions
 
+SUBSCRIBE(AudioSessionInterruptionOccured) {
+    #warning "To activate interruption handling, we should prevent 'finishRecordingWithGestureIsValid:needsPause:' function to be triggered from RecordingGestureButton's touchDownCancelledWithEvent function."
+    //[self onApplicationWillResignActive:nil];
+}
+
 SUBSCRIBE(ApplicationWillResignActive) {
     if(!self.hidden) {
-        recordingViewStatus = RecordingViewStatusResignActive;
-        [self.recordingModel backUpRecording];
-        [[CacheModel sharedInstance] cacheOnDefaults:self.sendVoiceMessageModel];
+        [self backUpRecording];
     }
 }
 
@@ -393,6 +396,12 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
     if(!self.hidden) {
         [self handleAppIsActiveAgain];
     }
+}
+
+-(void) backUpRecording {
+    recordingViewStatus = RecordingViewStatusResignActive;
+    [self.recordingModel backUpRecording];
+    [[CacheModel sharedInstance] cacheOnDefaults:self.sendVoiceMessageModel];
 }
 
 -(void) handleAppIsActiveAgain {

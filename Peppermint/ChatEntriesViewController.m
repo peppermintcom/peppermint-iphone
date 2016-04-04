@@ -164,6 +164,13 @@
     return chatTableViewCell;
 }
 
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if([cell isKindOfClass:[ChatTableViewCell class]]) {
+        ChatTableViewCell *chatTableViewCell = (ChatTableViewCell*)cell;
+        [chatTableViewCell resetContent];
+    }
+}
+
 #pragma mark - Back button
 
 -(IBAction) backButtonTouchDown:(id)sender {

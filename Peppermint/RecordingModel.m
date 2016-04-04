@@ -18,6 +18,7 @@
     NSTimer *timer;
     TPAACAudioConverter *tPAACAudioConverter;
     NSDate *pauseStart, *previousFireDate;
+    __block NSTimeInterval previousMeasurement;
 }
 
 +(CGFloat) checkPreviousFileLength {
@@ -94,21 +95,22 @@
 
 -(void) initRecorder {
     if(!recorder) {
-        NSError *error;
-        NSDictionary *recordSetting = [NSDictionary dictionaryWithObjectsAndKeys:
-                                       [NSNumber numberWithInt:kAudioFormatMPEG4AAC], AVFormatIDKey,
-                                       [NSNumber numberWithInt:AVAudioQualityHigh], AVEncoderAudioQualityKey,
-                                       [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,
-                                       [NSNumber numberWithFloat:SAMPLE_RATE], AVSampleRateKey,
-                                       nil];
-        
-        recorder = [[AVAudioRecorder alloc] initWithURL:self.fileUrl settings:recordSetting error:&error];
-        if(error) {
-            [self.delegate operationFailure:error];
-        } else {
-            recorder.delegate = self;
-            [AudioSessionModel sharedInstance].activeAudioRecorder = recorder;
-            [self setAudioSession:YES];
+        if([self setAudioSession:YES]) {
+            NSError *error;
+            NSDictionary *recordSetting = [NSDictionary dictionaryWithObjectsAndKeys:
+                                           [NSNumber numberWithInt:kAudioFormatMPEG4AAC], AVFormatIDKey,
+                                           [NSNumber numberWithInt:AVAudioQualityHigh], AVEncoderAudioQualityKey,
+                                           [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,
+                                           [NSNumber numberWithFloat:SAMPLE_RATE], AVSampleRateKey,
+                                           nil];
+            
+            recorder = [[AVAudioRecorder alloc] initWithURL:self.fileUrl settings:recordSetting error:&error];
+            if(error) {
+                [self.delegate operationFailure:error];
+            } else {
+                recorder.delegate = self;
+                [[AudioSessionModel sharedInstance] attachAVAudioProcessObject:recorder];
+            }
         }
     } else {
         NSLog(@"Recorder was already active!!!");
@@ -131,13 +133,14 @@
 #pragma mark - Session Setting
 
 -(BOOL) setAudioSession:(BOOL) active {
-    return [[AudioSessionModel sharedInstance] updateSessionState:active isForRecording:YES];
+    return [[AudioSessionModel sharedInstance] updateSessionState:active];
 }
 
 -(void) record {
     if(!recorder.recording) {
-        if([recorder record]) {
+        if([recorder prepareToRecord] && [recorder record]) {
             recorder.meteringEnabled = [self.delegate respondsToSelector:@selector(meteringUpdatedWithAverage:andPeak:)];
+            previousMeasurement = 0;
             timer = [NSTimer scheduledTimerWithTimeInterval:PING_INTERVAL target:self selector:@selector(onTick:) userInfo:nil repeats:YES];
         } else {
             [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Could not start record", @"Error message") code:0 userInfo:nil]];
@@ -151,6 +154,7 @@
     if(recorder.recording) {
         [self pauseTimer];
         [recorder pause];
+        [self setAudioSession:NO];
     } else {
         [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Recording is not active", @"Error message") code:0 userInfo:nil]];
     }
@@ -168,6 +172,7 @@
     [timer invalidate];
     timer = nil;
     [recorder stop];
+    [self setAudioSession:NO];
 }
 
 -(void)updateMetering {    
@@ -183,7 +188,15 @@
 -(void)onTick:(NSTimer *)timer {
     [self updateMetering];
     CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
-    [self.delegate timerUpdated:recorder.currentTime + previousFileLength];
+    
+    NSTimeInterval diff = fabs(recorder.currentTime - previousMeasurement);
+    BOOL isDiffValid = (diff < PING_INTERVAL * 100 && recorder.currentTime >= -0.00001);
+    BOOL didGetReset = !isDiffValid && (recorder.currentTime > 0 && recorder.currentTime < PING_INTERVAL);
+    
+    if(isDiffValid || didGetReset) {
+        previousMeasurement = recorder.currentTime;
+        [self.delegate timerUpdated:recorder.currentTime + previousFileLength];
+    }
 }
 
 -(NSURL*) recordFileUrl {
@@ -240,7 +253,6 @@
         //    NSLog(@"Can not convert to aac for this device!");
             NSData *data = [[NSData alloc] initWithContentsOfURL:self.fileUrl];
             [self removeFileIfExistsAtUrl:[self fileUrl]];
-            [self setAudioSession:NO];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.delegate recordDataIsPrepared:data withExtension:[self.fileUrl pathExtension]];
             });

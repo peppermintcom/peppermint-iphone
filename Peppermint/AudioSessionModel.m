@@ -10,9 +10,12 @@
 #import "AppDelegate.h"
 #import "ProximitySensorModel.h"
 
+#define SESSION_DEACTIVATE_LATENCY     3
+
 @implementation AudioSessionModel {
+    NSMutableArray *activeAudioItemsArray;
+    NSTimer *sessionDeactivateTimer;
     __block BOOL currentSessionState;
-    __block BOOL isActiveForRecording;
 }
 
 + (instancetype) sharedInstance {
@@ -27,8 +30,9 @@
 -(id) initShared {
     self = [super init];
     if(self) {
+        activeAudioItemsArray = [NSMutableArray new];
+        sessionDeactivateTimer = nil;
         currentSessionState = NO;
-        isActiveForRecording = NO;
         [self registerInterruptionNotification];
         [self registerRouteChangeNotification];
     }
@@ -39,58 +43,112 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
--(BOOL) updateSessionState:(BOOL) destinationSessionState isForRecording:(BOOL) isForRecording {
-    if(destinationSessionState != currentSessionState) {
-        NSError *error = nil;
-        AVAudioSession *session = [AVAudioSession sharedInstance];
-        
-        if(destinationSessionState) {
-            isActiveForRecording = isForRecording;
-            [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
-            if(error) {
-                [AppDelegate handleError:error];
-            }
-        }
-        
-        if(!error) {
-            [session setActive:destinationSessionState
-                   withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation
-                         error:&error];
-            if(error) {
-                [AppDelegate handleError:error];
-            } else {
-                currentSessionState = destinationSessionState;
-                NSLog(@"Updated session state with success. Current State is %@", destinationSessionState ? @"Active" : @"Deactive");
-            }
-        }
-    } else {
-        NSLog(@"Not processing request. Current sesssion state is already %@", currentSessionState ? @"Active" : @"DeActive");
+-(void) attachAVAudioProcessObject:(id)item {
+    BOOL isClassValid = [item isKindOfClass:[AVAudioPlayer class]] || [item isKindOfClass:[AVAudioRecorder class]];
+    NSAssert(isClassValid, @"attachAVAudioProcessObject: must be called with an instance of AVAudioPlayer or AVAudioRecorder");
+    if(![activeAudioItemsArray containsObject:item]) {
+        [activeAudioItemsArray addObject:item];
     }
-    BOOL operationSuccess = (destinationSessionState == currentSessionState);
-    return operationSuccess;
 }
 
-#pragma mark - Interrupt Handling 
+-(BOOL) updateSessionState:(BOOL) destinationSessionState {
+    [sessionDeactivateTimer invalidate];
+    sessionDeactivateTimer = nil;
+    
+    BOOL result = YES;
+    BOOL toSetActive = (destinationSessionState && !currentSessionState);
+    BOOL toSetDeActive = (!destinationSessionState && currentSessionState);
+
+    if(toSetActive && [self checkAndUpdateCategory]) {
+         result = [self setSessionState:YES];
+    } else if (toSetDeActive && [self canDeactivateAudioSession]) {
+        sessionDeactivateTimer = [NSTimer scheduledTimerWithTimeInterval:SESSION_DEACTIVATE_LATENCY target:self selector:@selector(deactivateSessionState) userInfo:nil repeats:NO];
+    } else {
+        result = (currentSessionState == destinationSessionState);
+    }
+    return result;
+}
+
+-(BOOL) checkAndUpdateCategory {
+    NSError *error;
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    BOOL result = [session.category isEqualToString:AVAudioSessionCategoryPlayAndRecord];
+    if(!result) {
+        result = [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
+        if(error) {
+            [AppDelegate handleError:error];
+        }
+    }
+    return result;
+}
+
+-(BOOL) canDeactivateAudioSession {
+    BOOL canDeactivateSession = YES;
+    for(NSObject *item in activeAudioItemsArray) {
+        if(item && [item isKindOfClass:[AVAudioPlayer class]]) {
+            AVAudioPlayer *player = (AVAudioPlayer*)item;
+            canDeactivateSession = !player.isPlaying;
+        } else if (item && [item isKindOfClass:[AVAudioRecorder class]]) {
+            AVAudioRecorder *recorder = (AVAudioRecorder*)item;
+            canDeactivateSession = !recorder.isRecording;
+        }
+    }
+    return canDeactivateSession;
+}
+
+-(void) deactivateSessionState {
+    if([self canDeactivateAudioSession]) {
+        [activeAudioItemsArray removeAllObjects];
+        [self setSessionState:NO];
+    }
+}
+
+-(BOOL) setSessionState:(BOOL) destinationSessionState {
+    BOOL result = NO;
+    @try {
+        NSError *error;
+        AVAudioSession *session = [AVAudioSession sharedInstance];
+        result = [session setActive:destinationSessionState
+                        withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation
+                              error:&error];
+        if(error) {
+            [AppDelegate handleError:error];
+        } else {
+            currentSessionState = destinationSessionState;
+        }
+    }
+    @catch ( NSException *e ) {
+        NSLog(@"Got Exception:%@", e.description);
+    }
+    return result;
+}
+
+#pragma mark - Interrupt Handling
 
 -(void) registerInterruptionNotification {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(audioSessionInterrupted:)
                                                  name:AVAudioSessionInterruptionNotification
-                                               object:nil];
+                                               object:[AVAudioSession sharedInstance]];
 }
 
 - (void)audioSessionInterrupted:(NSNotification*)notification {
-#warning "Investigate behaviout"
     AVAudioSessionInterruptionType type = [notification.userInfo[AVAudioSessionInterruptionTypeKey] integerValue];
-    NSLog(@"Got audio interruption: %@",
-          (type == AVAudioSessionInterruptionTypeBegan) ? @"AVAudioSessionInterruptionTypeBegan" : @"AVAudioSessionInterruptionTypeEnded");
-    if ( type == AVAudioSessionInterruptionTypeBegan ) {
-        [self.activeAudioPlayer stop];
-        [self.activeAudioRecorder stop];
-        //[self updateSessionState:NO];
+    if (type == AVAudioSessionInterruptionTypeBegan ) {
+        for(NSObject *item in activeAudioItemsArray) {
+            if([item isKindOfClass:[AVAudioPlayer class]]) {
+                AVAudioPlayer *player = (AVAudioPlayer*)item;
+                [player pause];
+            }
+        }
     } else if ( type == AVAudioSessionInterruptionTypeEnded) {
-        //[self updateSessionState:YES];
+        NSLog(@"AVAudioSessionInterruptionTypeEnded");
     }
+    
+    AudioSessionInterruptionOccured *audioSessionInterruptionOccured = [AudioSessionInterruptionOccured new];
+    audioSessionInterruptionOccured.sender = self;
+    audioSessionInterruptionOccured.hasInterruptionBegan = (type == AVAudioSessionInterruptionTypeBegan);
+    PUBLISH(audioSessionInterruptionOccured);
 }
 
 #pragma mark - Route Change Handling
@@ -105,16 +163,33 @@
 - (void)audioSessionRouteChanged:(NSNotification*) notification {
     NSDictionary *interuptionDict = notification.userInfo;
     NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
-    NSError *error;
     switch (routeChangeReason) {
         case AVAudioSessionRouteChangeReasonNewDeviceAvailable:
-            NSLog(@"---AVAudioSessionRouteChangeReasonNewDeviceAvailable");
-            break;
         case AVAudioSessionRouteChangeReasonOldDeviceUnavailable:
-            NSLog(@"---AVAudioSessionRouteChangeReasonOldDeviceUnavailable");
+        case AVAudioSessionRouteChangeReasonCategoryChange:
+            [self checkAndUpdateRoutingIfNeeded];
+            [self resetActiveAudioItems];
             break;
         default:
             break;
+    }
+}
+
+-(void) resetActiveAudioItems {
+    for(NSObject *item in activeAudioItemsArray) {
+        if (item && [item isKindOfClass:[AVAudioRecorder class]]) {
+            AVAudioRecorder *recorder = (AVAudioRecorder*)item;
+            if(recorder.isRecording) {
+                [recorder stop];
+                [recorder record];
+            }
+        } else if (item && [item isKindOfClass:[AVAudioPlayer class]]) {
+            AVAudioPlayer *player = (AVAudioPlayer*)item;
+            if(player.isPlaying) {
+                [player stop];
+                [player play];
+            }
+        }
     }
 }
 
@@ -123,19 +198,10 @@
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     ProximitySensorModel *proximitySensorModel = [ProximitySensorModel sharedInstance];
     BOOL isOnEar = proximitySensorModel.isDeviceOrientationCorrectOnEar && proximitySensorModel.isDeviceCloseToUser;
+    AVAudioSessionPortDescription *portDescription = [AVAudioSession sharedInstance].currentRoute.outputs.lastObject;
+    BOOL isCurrentRouteToReceiver = [portDescription.portType isEqualToString:AVAudioSessionPortBuiltInReceiver];
     
-    /*
-    AVAudioSessionPortDescription *portDescription = audioSession.currentRoute.outputs.lastObject;
-    NSString *portType = portDescription.portType;
-    NSString *portExplanation = portDescription.portName;
-    NSString *uid = portDescription.UID;
-    
-    NSLog(@"%@, %@, %@", portType, portExplanation, uid);
-    BOOL isCurrentRouteToReceiver = [portType isEqualToString:AVAudioSessionPortBuiltInReceiver];
-     // && isCurrentRouteToReceiver
-    */
-    
-    if(!isActiveForRecording && !isOnEar) {
+    if(!isOnEar && isCurrentRouteToReceiver) {
         [audioSession overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
     } else {
         [audioSession overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:&error];
@@ -151,6 +217,8 @@ SUBSCRIBE(ProximitySensorValueIsUpdated) {
     [self checkAndUpdateRoutingIfNeeded];
 }
 
-
+-(BOOL) isAudioSessionActive {
+    return currentSessionState;
+}
 
 @end

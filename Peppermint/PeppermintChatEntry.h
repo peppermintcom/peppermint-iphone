@@ -20,7 +20,9 @@ typedef enum : NSUInteger {
 @property (strong, nonatomic) NSData *audio;
 @property (strong, nonatomic) NSString *audioUrl;
 @property (strong, nonatomic) NSDate *dateCreated;
-@property (strong, nonatomic) NSString *contactEmail;
+//@property (strong, nonatomic) NSString *contactEmail;
+-(void) setContactEmail:(NSString*)email;
+-(NSString*) contactEmail;
 @property (strong, nonatomic) NSString *contactNameSurname;
 @property (assign, nonatomic) NSInteger duration;
 @property (assign, nonatomic) BOOL isSeen;
@@ -29,4 +31,5 @@ typedef enum : NSUInteger {
 @property (assign, nonatomic) PerformedOperation performedOperation;
 
 +(PeppermintChatEntry*) createFromAttribute:(Attribute*) attribute isIncomingMessage:(BOOL)isIncoming;
+
 @end

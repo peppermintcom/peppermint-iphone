@@ -106,3 +106,6 @@
 
 @implementation ShakeGestureOccured
 @end
+
+@implementation AudioSessionInterruptionOccured
+@end

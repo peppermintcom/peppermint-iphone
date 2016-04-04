@@ -47,8 +47,6 @@
         if(!error) {
             _audioPlayer.delegate = self;
             [_audioPlayer setNumberOfLoops:0];
-            [_audioPlayer prepareToPlay];
-            [AudioSessionModel sharedInstance].activeAudioPlayer = _audioPlayer;
         } else {
             [AppDelegate handleError:error];
         }
@@ -73,7 +71,6 @@
     _audioPlayer.delegate = self;
     if(!error) {
         cachedBlock = playerCompletitionBlock;
-        [_audioPlayer prepareToPlay];
     } else {
         [AppDelegate handleError:error];
     }
@@ -82,27 +79,35 @@
     return result;
 }
 
--(void) pause {
+-(void) pause {    
     [_audioPlayer pause];
+    [[AudioSessionModel sharedInstance] updateSessionState:NO];
 }
 
 -(BOOL) play {
-    BOOL result = [[AudioSessionModel sharedInstance] updateSessionState:YES isForRecording:NO] && [_audioPlayer play];
+    BOOL setSessionActive = [[AudioSessionModel sharedInstance] updateSessionState:YES];
+    BOOL play = [_audioPlayer prepareToPlay] && [_audioPlayer play];
+    BOOL result =  setSessionActive && play ;
     if(result) {
-        [[AudioSessionModel sharedInstance] checkAndUpdateRoutingIfNeeded];
+        [[AudioSessionModel sharedInstance] attachAVAudioProcessObject:_audioPlayer];
         [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+    } else {
+        NSLog(@"Play call failed!!! setSessionActive:%d && play:%d", setSessionActive, play);
     }
     return result;
+}
+
+-(void) stop {
+    [_audioPlayer stop];
+    [[AudioSessionModel sharedInstance] updateSessionState:NO];
 }
 
 #pragma mark - AVAudioPlayerDelegate
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
-    if(player == _audioPlayer && flag) {        
-        if(player.data) {
-            [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
-            [[AudioSessionModel sharedInstance] updateSessionState:NO isForRecording:NO];
-        }
+    if(player == _audioPlayer && flag) {
+        [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+        [[AudioSessionModel sharedInstance] updateSessionState:NO];
         if(cachedBlock) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 cachedBlock();

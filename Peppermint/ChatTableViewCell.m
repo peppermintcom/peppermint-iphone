@@ -13,9 +13,11 @@
 #import "ChatEntryModel.h"
 #import "PlayingChatEntryModel.h"
 
-#define DISTANCE_TO_BORDER  5
-#define TIMER_UPDATE_PERIOD 0.05
+#define DISTANCE_TO_BORDER                  5
+#define TIMER_UPDATE_PERIOD                 0.05
 #define REWIND_TIME_DURING_SPEAKER_UPDATE   2
+
+#define MAX_SEEK_RATIO                      0.97
 
 @interface ChatTableViewCell () <ChatEntryModelDelegate>
 @end
@@ -29,6 +31,7 @@
     NSTimeInterval totalSeconds;
     __block BOOL stopMessageReceived;
     PeppermintChatEntry *referencedChatEntry;
+    __block BOOL isSeeking;
 }
 
 - (void)awakeFromNib {
@@ -46,6 +49,7 @@
     stopMessageReceived = NO;
     _chatEntryModel = [ChatEntryModel new];
     _chatEntryModel.delegate = self;
+    isSeeking = NO;
     REGISTER();
 }
 
@@ -156,15 +160,17 @@
 }
 
 - (IBAction)playPauseButtonPressed:(id)sender {
-    [self stopPlayingCell];
+    isSeeking = NO;
     if(_playingModel.audioPlayer.isPlaying) {
+        [self stopPlayingCell];
         self.playPauseImageView.image = imagePlay;
         [_playingModel pause];
         [self.delegate stoppedPlayingMessage:self];
     } else {
         [self.delegate startedPlayingMessage:sender ? self : nil];
         if(!_playingModel || !_playingModel.audioPlayer.data ) {
-            _playingModel = [PlayingModel alloc];
+            _playingModel = [PlayingModel new];
+            
             self.spinnerView.hidden = NO;
             [self.spinnerView startAnimating];
             
@@ -196,6 +202,7 @@
                             
                             if([strongSelf playAudio:strongSelf.peppermintChatEntry.audio]) {
                                 [strongSelf stopPlayingCell];
+                                [[PlayingChatEntryModel sharedInstance] cachePlayingModel:_playingModel forChatEntry:strongSelf.peppermintChatEntry];
                                 strongSelf.peppermintChatEntry.isSeen = YES;
                                 [strongSelf.chatEntryModel savePeppermintChatEntry:strongSelf.peppermintChatEntry];
                                 
@@ -209,6 +216,7 @@
                 }
             });
         } else {
+            [self stopPlayingCell];
             [_playingModel play];
             self.durationCircleView.hidden = NO;
             self.playPauseImageView.image = imagePause;
@@ -223,19 +231,16 @@
     } else if(audioData) {
         weakself_create();
         result = [_playingModel playData:audioData playerCompletitionBlock:^{
+            [[PlayingChatEntryModel sharedInstance] cachePlayingModel:nil forChatEntry:nil];
             [weakSelf.delegate stoppedPlayingMessage:weakSelf];
         }];
-        
-        if(result) {
-            [[PlayingChatEntryModel sharedInstance] setCachedPlayingModel:_playingModel];
-        }        
     }
     return result;
 }
 
 -(void) updateDuration {
-    if(_playingModel) {
-        CGFloat percent = _playingModel.audioPlayer.currentTime / _playingModel.audioPlayer.duration;
+    if(_playingModel && !isSeeking) {
+        double percent = _playingModel.audioPlayer.currentTime / _playingModel.audioPlayer.duration;
         self.durationCircleView.hidden = (percent < 0.00001);
         self.playPauseImageView.image = _playingModel.audioPlayer.isPlaying ? imagePause : imagePlay;
         if( _playingModel.audioPlayer.isPlaying && ((int)_playingModel.audioPlayer.currentTime != totalSeconds)) {
@@ -244,25 +249,26 @@
         
         if(self.durationCircleView.hidden) {
             self.durationViewWidthConstraint.constant = 0;
-        } else {
+        } else if (_playingModel.audioPlayer.isPlaying || _playingModel.audioPlayer.currentTime > 0.5) {
             CGFloat totalWidth = self.timelineView.frame.size.width - self.durationCircleView.frame.size.width;
             [self.messageView layoutIfNeeded];
-            CGFloat destinationValue = totalWidth * percent;
-            if(destinationValue > self.durationViewWidthConstraint.constant || destinationValue < 2) {
-                weakself_create();
-                [UIView animateWithDuration:TIMER_UPDATE_PERIOD animations:^{
-                    weakSelf.durationViewWidthConstraint.constant = destinationValue;
-                    [weakSelf.messageView layoutIfNeeded];
-                }];
-            }
+            double destinationValue = totalWidth * percent;
+            weakself_create();
+            [UIView animateWithDuration:TIMER_UPDATE_PERIOD animations:^{
+                weakSelf.durationViewWidthConstraint.constant = destinationValue;
+                [weakSelf.messageView layoutIfNeeded];
+            }];
         }
     }
 }
 
 -(void) stopPlayingCell {
+    if([PlayingChatEntryModel sharedInstance].cachedPlayingModel != self.playingModel) {
+        [[PlayingChatEntryModel sharedInstance] cachePlayingModel:nil forChatEntry:nil];
+    }
     for(ChatTableViewCell *cell in [self.tableView visibleCells]) {
         if(cell != self && cell.playingModel.audioPlayer.isPlaying) {
-            [cell.playingModel.audioPlayer stop];
+            [cell.playingModel stop];
             cell.playPauseImageView.image = imagePlay;
         }
     }
@@ -272,31 +278,38 @@ SUBSCRIBE(StopAllPlayingMessages) {
     if(!self.spinnerView.hidden) {
         stopMessageReceived = YES;
     } else {
-        [_playingModel.audioPlayer stop];
+        [_playingModel stop];
         [self.delegate stoppedPlayingMessage:self];
     }
 }
 
 -(IBAction)touchMoved:(id)sender withEvent:(UIEvent *)event {
+    isSeeking = YES;
     UITouch *touch = [[event allTouches] anyObject];
-    CGPoint currentPoint = [touch locationInView:self];
-    CGFloat totalWidth = self.timelineView.frame.size.width ;
+    CGPoint currentPoint = [touch locationInView:self.timelineView];
+    double totalWidth = self.timelineView.frame.size.width ;
+    #warning "Current Version seems to work nice. However consider to refactor for cleaner code"
+    CGFloat minValue = 0.5;
+    CGFloat maxValue = totalWidth * MAX_SEEK_RATIO;
     
-    CGFloat newConstant = currentPoint.x
-    - self.leftDistanceConstraint.constant
-    - self.timelineView.frame.origin.x
-    - self.leftImageView.frame.size.width;
-    BOOL isValidGesture = (newConstant > 0 && newConstant < totalWidth) && _playingModel;
-    
+    __block double newConstant = currentPoint.x;
+    if(newConstant <= minValue) {
+        newConstant = minValue;
+    } else if (newConstant >= maxValue) {
+        newConstant = maxValue;
+    }
+    BOOL isValidGesture = (newConstant >= minValue && newConstant <= maxValue) && _playingModel;
     if(isValidGesture) {
-        [self stopPlayingCell];
-        [_playingModel.audioPlayer pause];
-        self.durationCircleView.hidden = NO;
-        self.durationViewWidthConstraint.constant = newConstant;
-        CGFloat currentWidth = self.durationView.frame.size.width;
-        NSTimeInterval totalTime = _playingModel.audioPlayer.duration;
-        _playingModel.audioPlayer.currentTime = (currentWidth/totalWidth) * totalTime;
-        [self setLeftLabel];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self stopPlayingCell];
+            [_playingModel.audioPlayer pause];
+            self.durationCircleView.hidden = NO;
+            NSTimeInterval totalTime = _playingModel.audioPlayer.duration;
+            newConstant *= MAX_SEEK_RATIO;
+            self.durationViewWidthConstraint.constant = newConstant;
+            _playingModel.audioPlayer.currentTime = (newConstant/maxValue) * totalTime;
+            [self setLeftLabel];
+        });
     }
 }
 
@@ -337,10 +350,14 @@ SUBSCRIBE(ProximitySensorValueIsUpdated) {
         if(!event.isDeviceCloseToUser) {
             [self.playingModel pause];
             [self.delegate stoppedPlayingMessage:self];
-        } else if (event.isDeviceOrientationCorrectOnEar) {
+        } else if (event.isDeviceCloseToUser && event.isDeviceOrientationCorrectOnEar) {
             [self rewindPlayer];
         }
     }
+}
+
+- (void) resetContent {
+    _playingModel = nil;
 }
 
 @end
