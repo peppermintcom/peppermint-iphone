@@ -26,6 +26,7 @@
 @property(weak, nonatomic) IBOutlet NSLayoutConstraint *rightDateLabelWidthConstraint;
 @property(weak, nonatomic) id<ContactTableViewCellDelegate> delegate;
 @property(weak, nonatomic) UITableView *tableView;
+@property(assign, nonatomic) BOOL showViaLabel;
 
 -(void) setInformationWithNameSurname:(NSString*)contactNameSurname communicationChannelAddress:(NSString*)contactCommunicationChannelAddress;
 -(void) setInformationWithNameSurname:(NSString*)contactNameSurname communicationChannelAddress:(NSString*)contactCommunicationChannelAddress andIconImage:(UIImage*) image;

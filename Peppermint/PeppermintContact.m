@@ -14,6 +14,7 @@
 
 @implementation PeppermintContact {
     NSString *_communicationChannelAddress;
+    NSString *_explanation;
 }
 
 -(id) init {
@@ -22,6 +23,7 @@
         _communicationChannelAddress = nil;
         self.hasReceivedMessageOverPeppermint = NO;
         self.uniqueContactId = nil;
+        self.isRestrictedForRecentContact = NO;
     }
     return self;
 }
@@ -98,7 +100,20 @@
 }
 
 -(void) setCommunicationChannelAddress:(NSString*)communicationChannelAddress {
-    _communicationChannelAddress = communicationChannelAddress;
+    _communicationChannelAddress = communicationChannelAddress.lowercaseString;
+}
+
+#pragma mark - Explanation
+
+-(NSString*) explanation {
+    if(!_explanation) {
+        _explanation = self.communicationChannelAddress;
+    }
+    return _explanation;
+}
+
+-(void) setExplanation:(NSString *)explanation {
+    _explanation = explanation;
 }
 
 @end

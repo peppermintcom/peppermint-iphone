@@ -42,6 +42,7 @@
     sizeSmall = SIZE_SMALL;
     
     [self initRecentContactViews];
+    self.showViaLabel = YES;
 }
 
 -(void) initRecentContactViews {
@@ -124,8 +125,10 @@
     [self setAttributedText:information forLabel:self.informationLabel];
     
     information = [NSMutableAttributedString new];
-    [information addText:LOC(@"via", @"Localized value for the word via") ofSize:sizeSmall ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
-    [information addText:@" " ofSize:sizeSmall ofColor:[UIColor clearColor]];
+    if(self.showViaLabel) {
+        [information addText:LOC(@"via", @"Localized value for the word via") ofSize:sizeSmall ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
+        [information addText:@" " ofSize:sizeSmall ofColor:[UIColor clearColor]];
+    }
     [information addText:cellCommunicationChannelAddress ofSize:sizeSmall ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
     [self setAttributedText:information forLabel:self.informationLabel2ndLine];
 }
@@ -139,8 +142,10 @@
     [self setAttributedText:information forLabel:self.informationLabel];
     
     information = [NSMutableAttributedString new];
-    [information addText:LOC(@"via", @"Localized value for the word via") ofSize:sizeSmall ofColor:[UIColor textFieldTintGreen] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
-    [information addText:@" " ofSize:sizeSmall ofColor:[UIColor clearColor]];
+    if(self.showViaLabel) {
+        [information addText:LOC(@"via", @"Localized value for the word via") ofSize:sizeSmall ofColor:[UIColor textFieldTintGreen] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
+        [information addText:@" " ofSize:sizeSmall ofColor:[UIColor clearColor]];
+    }
     [information addText:cellCommunicationChannelAddress ofSize:sizeSmall ofColor:[UIColor viaInformationLabelTextGreen] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
     [self setAttributedText:information forLabel:self.informationLabel2ndLine];
 }
@@ -174,8 +179,17 @@
     }
 }
 
+-(BOOL) isTableViewBouncing {
+    //Recognising bouncing up, bouncing down can be added..
+    return self.tableView.contentOffset.y < 0;
+}
+
 -(void) touchHoldSuccessOnLocation:(CGPoint) touchBeginPoint {
-    [self.delegate didBeginItemSelectionOnIndexpath:self.indexPath location:touchBeginPoint];
+    if(![self isTableViewBouncing]) {
+        [self.delegate didBeginItemSelectionOnIndexpath:self.indexPath location:touchBeginPoint];
+    } else {
+        NSLog(@"TableView is bouncing...");
+    }
 }
 
 -(void) touchSwipeActionOccuredOnLocation:(CGPoint) location {

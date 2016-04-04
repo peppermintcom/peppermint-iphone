@@ -343,7 +343,7 @@
     [self refreshContent];
 }
 
-#pragma makr - Cancel Message Sending
+#pragma mark - Cancel Message Sending
 
 -(IBAction)cancelSendingButtonPressed:(id)sender {
     if(recordingPausedTimer) {

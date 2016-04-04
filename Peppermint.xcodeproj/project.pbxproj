@@ -107,6 +107,9 @@
 		B1879A181C5810EE0036A660 /* StaticDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1879A171C5810EE0036A660 /* StaticDataTableViewController.m */; };
 		B1889FE11C4EBA3E003552CE /* ChatEntriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1889FE01C4EBA3E003552CE /* ChatEntriesViewController.m */; };
 		B18BF95E1BD674CD009B665E /* PeppermintMessageSender.m in Sources */ = {isa = PBXBuildFile; fileRef = B18BF95D1BD674CD009B665E /* PeppermintMessageSender.m */; };
+		B18EEB991CB3B36600F9491F /* FeedBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B18EEB981CB3B36600F9491F /* FeedBackViewController.m */; };
+		B18EEB9D1CB3F4EA00F9491F /* BaseRecordingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B18EEB9C1CB3F4EA00F9491F /* BaseRecordingViewController.m */; };
+		B18EEBA01CB3F88B00F9491F /* BaseRecordingGestureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B18EEB9F1CB3F88B00F9491F /* BaseRecordingGestureViewController.m */; };
 		B190F5BA1BDD63400094B391 /* SendVoiceMessageSMSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B190F5B91BDD63400094B391 /* SendVoiceMessageSMSModel.m */; };
 		B190F5BC1BDD7F040094B391 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190F5BB1BDD7F040094B391 /* AudioToolbox.framework */; };
 		B19B6B591C16F415001895BF /* CheckEmailResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B19B6B581C16F415001895BF /* CheckEmailResponse.m */; };
@@ -455,6 +458,12 @@
 		B1889FE01C4EBA3E003552CE /* ChatEntriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatEntriesViewController.m; sourceTree = "<group>"; };
 		B18BF95C1BD674CD009B665E /* PeppermintMessageSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeppermintMessageSender.h; sourceTree = "<group>"; };
 		B18BF95D1BD674CD009B665E /* PeppermintMessageSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeppermintMessageSender.m; sourceTree = "<group>"; };
+		B18EEB971CB3B36600F9491F /* FeedBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedBackViewController.h; sourceTree = "<group>"; };
+		B18EEB981CB3B36600F9491F /* FeedBackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedBackViewController.m; sourceTree = "<group>"; };
+		B18EEB9B1CB3F4EA00F9491F /* BaseRecordingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseRecordingViewController.h; sourceTree = "<group>"; };
+		B18EEB9C1CB3F4EA00F9491F /* BaseRecordingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseRecordingViewController.m; sourceTree = "<group>"; };
+		B18EEB9E1CB3F88B00F9491F /* BaseRecordingGestureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseRecordingGestureViewController.h; sourceTree = "<group>"; };
+		B18EEB9F1CB3F88B00F9491F /* BaseRecordingGestureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseRecordingGestureViewController.m; sourceTree = "<group>"; };
 		B190F5B81BDD63400094B391 /* SendVoiceMessageSMSModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVoiceMessageSMSModel.h; sourceTree = "<group>"; };
 		B190F5B91BDD63400094B391 /* SendVoiceMessageSMSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SendVoiceMessageSMSModel.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B190F5BB1BDD7F040094B391 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -987,6 +996,10 @@
 				B17B3D5A1BB6A49E009B8BC5 /* BaseViewController.m */,
 				D02D2D041C0C379E00092A23 /* BaseTableViewController.h */,
 				D02D2D051C0C379E00092A23 /* BaseTableViewController.m */,
+				B18EEB9B1CB3F4EA00F9491F /* BaseRecordingViewController.h */,
+				B18EEB9C1CB3F4EA00F9491F /* BaseRecordingViewController.m */,
+				B18EEB9E1CB3F88B00F9491F /* BaseRecordingGestureViewController.h */,
+				B18EEB9F1CB3F88B00F9491F /* BaseRecordingGestureViewController.m */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -1214,6 +1227,15 @@
 			name = StaticTableView;
 			sourceTree = "<group>";
 		};
+		B18EEB9A1CB3B37400F9491F /* FeedBack */ = {
+			isa = PBXGroup;
+			children = (
+				B18EEB971CB3B36600F9491F /* FeedBackViewController.h */,
+				B18EEB981CB3B36600F9491F /* FeedBackViewController.m */,
+			);
+			name = FeedBack;
+			sourceTree = "<group>";
+		};
 		B1BB1E601BD364EC00A1CE45 /* Logger */ = {
 			isa = PBXGroup;
 			children = (
@@ -1294,6 +1316,7 @@
 		B1EF40E11BB7CE5600042E4B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				B18EEB9A1CB3B37400F9491F /* FeedBack */,
 				B1122BD61C94762E00B35BB0 /* Tutorial */,
 				B1122BD51C94760C00B35BB0 /* Navigation */,
 				B16DA2111BE0F1CA00EBF043 /* Base */,
@@ -1940,6 +1963,7 @@
 				B1D646581C998FB300600183 /* ShakeGestureView.m in Sources */,
 				B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */,
 				B15EEB9A1C6081F40083658A /* RecordersUpdateRequest.m in Sources */,
+				B18EEBA01CB3F88B00F9491F /* BaseRecordingGestureViewController.m in Sources */,
 				B1DA4A1C1CA581350002F07A /* PlayingChatEntryModel.m in Sources */,
 				B1BB605F1BDE36AF00C1140B /* SignUpWithEmailViewController.m in Sources */,
 				B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */,
@@ -2009,8 +2033,10 @@
 				B15B15AC1BD9D8B800C0C171 /* ExplodingView.m in Sources */,
 				B10C39311BF6FB150070B49F /* User.m in Sources */,
 				D0AC07CD1C48223100F9CF6F /* NSArray+JSONModel.m in Sources */,
+				B18EEB9D1CB3F4EA00F9491F /* BaseRecordingViewController.m in Sources */,
 				B1EB69B31C9828E20031F37E /* NSmutableSet_Addition.m in Sources */,
 				B1FFFF2A1C18241E0049347D /* RecoverPasswordRequest.m in Sources */,
+				B18EEB991CB3B36600F9491F /* FeedBackViewController.m in Sources */,
 				D0AC07DA1C48227600F9CF6F /* A0SimpleKeychain+KeyPair.m in Sources */,
 				D0A7C0F31BFC5BC200ACD33E /* SpotlightModel.m in Sources */,
 				B1EF40EB1BB7E78C00042E4B /* SendVoiceMessageModel.m in Sources */,

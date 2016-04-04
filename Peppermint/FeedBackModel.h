@@ -7,6 +7,7 @@
 //
 
 #import "BaseModel.h"
+@class PeppermintContact;
 
 @protocol FeedBackModelDelegate <BaseModelDelegate>
 -(void) feedBackSentWithSuccess;
@@ -14,5 +15,6 @@
 
 @interface FeedBackModel : BaseModel
 @property (weak, nonatomic) id<FeedBackModelDelegate> delegate;
+@property (strong, nonatomic) NSArray<PeppermintContact*> *supportContactsArray;
 -(void) sendFeedBackMail;
 @end

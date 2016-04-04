@@ -10,6 +10,7 @@
 #import "LoginModel.h"
 #import "AccountViewController.h"
 #import "ContactsViewController.h"
+#import "FeedBackViewController.h"
 #import "AboutViewController.h"
 
 #define INDEX_TUTORIAL      -1
@@ -100,8 +101,10 @@
         ContactsViewController *contactsViewController = navigationController.viewControllers.firstObject;
         [contactsViewController resetUserInterfaceWithActiveCellTag:CELL_TAG_ALL_CONTACTS];
         [navigationController popToRootViewControllerAnimated:YES];
-    } else if (indexPath.row == INDEX_FEEDBACK) {
-        [self.reSideMenuContainerViewController sendFeedback];
+    } else if (indexPath.row == INDEX_FEEDBACK) {        
+        UINavigationController *navigationController = (UINavigationController*)self.reSideMenuContainerViewController.contentViewController;
+        FeedBackViewController *feedBackViewController = [FeedBackViewController createInstance];
+        [navigationController pushViewController:feedBackViewController animated:YES];
     } else if (indexPath.row == INDEX_TUTORIAL) {
         //UINavigationController *nvc = (UINavigationController*)self.reSideMenuContainerViewController.contentViewController;
         //ContactsViewController *cvc = [nvc.viewControllers firstObject];

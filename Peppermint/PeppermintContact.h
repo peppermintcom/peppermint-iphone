@@ -25,7 +25,7 @@ typedef enum : NSUInteger {
 @property (strong, nonatomic) NSString *uniqueContactId;
 @property (strong, nonatomic) NSDate *lastMessageDate;
 @property (assign, nonatomic) NSUInteger unreadMessageCount;
-
+@property (assign, nonatomic) BOOL isRestrictedForRecentContact;
 
 - (void)addToCoreSpotlightSearch;
 - (BOOL) equals:(PeppermintContact*)peppermintContact;
@@ -35,9 +35,11 @@ typedef enum : NSUInteger {
 - (NSData *)archivedRootData;
 
 #pragma mark - CommunicationChannelAddress
-//Added setter&getter instead of -> @property (strong, nonatomic) NSString* communicationChannelAddress;
-
 -(NSString*) communicationChannelAddress;
 -(void) setCommunicationChannelAddress:(NSString*)communicationChannelAddress;
+
+#pragma mark - Explanation
+-(NSString*) explanation;
+-(void) setExplanation:(NSString*)explanation;
 
 @end

@@ -10,14 +10,11 @@
 #import "SlideMenuViewController.h"
 #import "ContactsViewController.h"
 
-
 @interface ReSideMenuContainerViewController ()
 
 @end
 
-@implementation ReSideMenuContainerViewController {
-    FeedBackModel *feedBackModel;
-}
+@implementation ReSideMenuContainerViewController
 
 -(id) initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
@@ -68,27 +65,6 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
         NSLog(@"Contacts model already exists");
     }
     contactsViewController.contactsModel.delegate = contactsViewController;
-}
-
--(void) sendFeedback {
-    if(!feedBackModel) {
-        feedBackModel = [FeedBackModel new];
-        feedBackModel.delegate = self;
-    }
-    [feedBackModel sendFeedBackMail];
-}
-
-#pragma mark - FeedBackModelDelegate
-
--(void) operationFailure:(NSError*) error {
-    [AppDelegate handleError:error];
-}
-
--(void) feedBackSentWithSuccess {
-    NSString *title = LOC(@"Information", @"Information");
-    NSString *message = LOC(@"Feedback sent with success", @"Feedback sent with success");
-    NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
-    [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
 }
 
 @end
