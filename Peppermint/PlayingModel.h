@@ -7,7 +7,7 @@
 //
 
 #import "BaseModel.h"
-#import <AVFoundation/AVFoundation.h>
+#import "AudioSessionModel.h"
 
 typedef void(^PlayerCompletitionBlock)(void);
 
@@ -21,4 +21,5 @@ typedef void(^PlayerCompletitionBlock)(void);
 -(BOOL) playData:(NSData*) audioData playerCompletitionBlock:(PlayerCompletitionBlock) playerCompletitionBlock;
 -(void) pause;
 -(BOOL) play;
+-(void) stop;
 @end

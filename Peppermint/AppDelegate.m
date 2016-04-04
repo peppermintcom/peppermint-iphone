@@ -32,6 +32,7 @@
 #import "AWSModel.h"
 #import "ChatEntriesViewController.h"
 #import "AutoPlayModel.h"
+#import "AudioSessionModel.h"
 
 @import WatchConnectivity;
 @import Contacts;
@@ -289,7 +290,8 @@ SUBSCRIBE(DetachSuccess) {
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.    
+    [[AudioSessionModel sharedInstance] updateSessionState:NO];
     [[CacheModel sharedInstance] cacheOngoingMessages];
     [self saveContext];
 }

@@ -145,3 +145,7 @@
 
 @interface ShakeGestureOccured : BaseEvent
 @end
+
+@interface AudioSessionInterruptionOccured : BaseEvent
+@property (nonatomic, assign) BOOL hasInterruptionBegan;
+@end

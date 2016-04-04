@@ -45,5 +45,6 @@
 
 - (void) fillInformation:(PeppermintChatEntry*) chatEntry;
 - (IBAction)playPauseButtonPressed:(id)sender;
+- (void) resetContent;
 
 @end

@@ -9,8 +9,9 @@
 #import "PeppermintChatEntry.h"
 #import "Attribute.h"
 
-@implementation PeppermintChatEntry
-
+@implementation PeppermintChatEntry {
+    NSString *_contactEmail;
+}
 
 +(PeppermintChatEntry*) createFromAttribute:(Attribute*) attribute isIncomingMessage:(BOOL)isIncoming {
     
@@ -72,5 +73,14 @@
     return peppermintChatEntry;
 }
 
+#pragma mark - Contact Email Getter / Setter
+
+-(void) setContactEmail:(NSString*)email {
+    _contactEmail = email;
+}
+
+-(NSString*) contactEmail {
+    return _contactEmail.lowercaseString;
+}
 
 @end
