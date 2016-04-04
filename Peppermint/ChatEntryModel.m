@@ -96,15 +96,19 @@
             ChatEntry *chatEntry = nil;
             NSPredicate *predicate = [NSPredicate predicateWithFormat:
                                       @"((self.messageId == nil OR self.messageId == %@) \
-                                      AND (self.audioUrl == nil OR self.audioUrl == %@ OR (self.audio != nil AND self.audio == %@)) \
-                                      AND (self.isSentByMe == %d) \
-                                      AND (self.contactEmail == %@))"
+                                      AND (self.audioUrl == nil OR self.audioUrl == %@) \
+                                      AND (self.isSentByMe == %d))"
                                       , peppermintChatEntry.messageId
                                       , peppermintChatEntry.audioUrl
-                                      , peppermintChatEntry.audio
                                       , peppermintChatEntry.isSentByMe
-                                      , peppermintChatEntry.contactEmail
                                       ];
+            
+            NSPredicate *emailPredicate = [ChatEntryModel contactEmailPredicate:peppermintChatEntry.contactEmail];
+            predicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:
+                                                                            predicate,
+                                                                            emailPredicate,
+                                                                            nil]];
+            
             NSArray *existingChatEntriesArray = [repository getResultsFromEntity:[ChatEntry class] predicateOrNil:predicate];
             
             if(!existingChatEntriesArray || existingChatEntriesArray.count == 0) {
@@ -118,7 +122,7 @@
                 chatEntry = [existingChatEntriesArray objectAtIndex:0];
                 int i=0;
                 for(ChatEntry *chatEntry in existingChatEntriesArray) {
-                    NSLog(@"%d.M:%@, A:%@, s:%@", ++i, chatEntry.messageId, chatEntry.audioUrl, chatEntry.isSentByMe);
+                    NSLog(@"%d.M:%@, A:%@, s:%@, c:%@", ++i, chatEntry.messageId, chatEntry.audioUrl, chatEntry.isSentByMe, chatEntry.contactEmail);
                 }
                 NSLog(@"More than 1 unique chatEntry record is active as seen above...");
             } else {
