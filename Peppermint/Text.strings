@@ -22,7 +22,7 @@
 "Information" = "Information";
 "Could not resume" = "Could not resume the recording";
 "Could not start record" = "Could not start recording";
-"Mail Subject" = "I sent you a voice message";
+"Mail Subject" = "I sent you an audio message";
 "Mail Body Format" = "Custom mail content...";
 
 "Mail Text Format" = "Here's my message (%@). Touch %@ for a fast reply\n%@";
@@ -50,7 +50,7 @@
 "Swipe anywhere to cancel" = "Swipe anywhere\nto cancel";
 "Tap to cancel" = "Tap to cancel";
 "Service is not available" = "Your device does not support this message service";
-"SMS Body Format" = "I sent you a voice message %@ ";
+"SMS Body Format" = "I sent you an audio message %@ ";
 "Log In with Facebook" = "Log In With Facebook";
 "Log In with Google" = "Log In With Google";
 "Log In with Email" = "Log In With Email";
