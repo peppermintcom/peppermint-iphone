@@ -87,10 +87,13 @@
     for(NSObject *item in activeAudioItemsArray) {
         if(item && [item isKindOfClass:[AVAudioPlayer class]]) {
             AVAudioPlayer *player = (AVAudioPlayer*)item;
-            canDeactivateSession = !player.isPlaying;
+            canDeactivateSession &= !player.isPlaying;
         } else if (item && [item isKindOfClass:[AVAudioRecorder class]]) {
             AVAudioRecorder *recorder = (AVAudioRecorder*)item;
-            canDeactivateSession = !recorder.isRecording;
+            canDeactivateSession &= !recorder.isRecording;
+        }
+        if(!canDeactivateSession) {
+            break;
         }
     }
     return canDeactivateSession;
