@@ -59,15 +59,18 @@
 }
 
 -(void) resetBottomInformationLabel {
-    self.bottomInformationView.backgroundColor = [UIColor peppermintGray248];
-    self.bottomInformationView.layer.borderWidth = 1;
-    self.bottomInformationView.layer.borderColor = [UIColor cellSeperatorGray].CGColor;
+    self.bottomInformationFullLabel.backgroundColor = [UIColor peppermintGray248];
+    self.bottomInformationFullLabel.layer.borderWidth = 1;
+    self.bottomInformationFullLabel.layer.borderColor = [UIColor cellSeperatorGray].CGColor;
+    self.bottomInformationFullLabel.font = [UIFont openSansSemiBoldFontOfSize:18];
+    self.bottomInformationFullLabel.textColor = [UIColor textFieldTintGreen];
+    self.bottomInformationFullLabel.text = @"";
     
     self.tableView.backgroundColor = [UIColor slideMenuTableViewColor];
     self.bottomInformationLabel.font = [UIFont openSansSemiBoldFontOfSize:18];
     self.bottomInformationLabel.textColor = [UIColor textFieldTintGreen];
     self.bottomInformationLabel.text = LOC(@"Record a Message", @"Record a Message");
-    self.microphoneView.hidden = NO;
+    self.microphoneView.hidden = self.bottomInformationLabel.hidden = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -280,7 +283,7 @@
     
     NSMutableAttributedString *infoAttrText = [NSMutableAttributedString new];
     UIColor *textColor = [UIColor textFieldTintGreen];
-    self.microphoneView.hidden = YES;
+    self.microphoneView.hidden = self.bottomInformationLabel.hidden = YES;
     if(sendingStatus == SendingStatusUploading) {
         [infoAttrText addText:LOC(@"Uploading", @"Info") ofSize:13 ofColor:textColor];
     } else if (sendingStatus == SendingStatusStarting) {
@@ -311,7 +314,7 @@
     } else {
         self.cancelSendingButton.hidden = YES;
     }
-    self.bottomInformationLabel.attributedText = [infoAttrText centerText];
+    self.bottomInformationFullLabel.attributedText = [infoAttrText centerText];
     
     weakself_create();
     switch (sendingStatus) {
