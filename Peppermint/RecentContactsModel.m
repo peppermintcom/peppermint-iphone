@@ -40,23 +40,25 @@
         Repository *repository = [Repository beginTransaction];
         
         for(PeppermintContact *peppermintContact in peppermintContactArray) {
-            NSPredicate *predicate = [self recentContactPredicate:peppermintContact];
-            NSArray *matchedRecentContacts = [repository getResultsFromEntity:[RecentContact class] predicateOrNil:predicate];
-            
-            RecentContact *recentContact = nil;
-            if (matchedRecentContacts.count == 0) {
-                recentContact = (RecentContact*)[repository createEntity:[RecentContact class]];
-            } else if (matchedRecentContacts.count == 1) {
-                recentContact = [matchedRecentContacts firstObject];
-            } else {
-                [weakSelf promtMultipleRecordsWithSameValueErrorForPeppermintContact:peppermintContact];
+            if(!peppermintContact.isRestrictedForRecentContact) {
+                NSPredicate *predicate = [self recentContactPredicate:peppermintContact];
+                NSArray *matchedRecentContacts = [repository getResultsFromEntity:[RecentContact class] predicateOrNil:predicate];
+                
+                RecentContact *recentContact = nil;
+                if (matchedRecentContacts.count == 0) {
+                    recentContact = (RecentContact*)[repository createEntity:[RecentContact class]];
+                } else if (matchedRecentContacts.count == 1) {
+                    recentContact = [matchedRecentContacts firstObject];
+                } else {
+                    [weakSelf promtMultipleRecordsWithSameValueErrorForPeppermintContact:peppermintContact];
+                }
+                
+                recentContact.contactDate = [peppermintContact.lastMessageDate laterDate:recentContact.contactDate];
+                recentContact.nameSurname = peppermintContact.nameSurname;
+                recentContact.communicationChannelAddress = peppermintContact.communicationChannelAddress;
+                recentContact.communicationChannel = [NSNumber numberWithInt:peppermintContact.communicationChannel];
+                recentContact.avatarImageData = UIImageJPEGRepresentation(peppermintContact.avatarImage, 1);
             }
-            
-            recentContact.contactDate = [peppermintContact.lastMessageDate laterDate:recentContact.contactDate];
-            recentContact.nameSurname = peppermintContact.nameSurname;
-            recentContact.communicationChannelAddress = peppermintContact.communicationChannelAddress;
-            recentContact.communicationChannel = [NSNumber numberWithInt:peppermintContact.communicationChannel];
-            recentContact.avatarImageData = UIImageJPEGRepresentation(peppermintContact.avatarImage, 1);            
         }
         
         NSError *err = [repository endTransaction];

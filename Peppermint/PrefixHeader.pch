@@ -154,6 +154,7 @@ sharedObject;\
 #define VIEWCONTROLLER_ACCOUNT  @"AccountViewController"
 #define VIEWCONTROLLER_ABOUT    @"AboutViewController"
 #define VIEWCONTROLLER_CHATS    @"ChatsViewController"
+#define VIEWCONTROLLER_FEEDBACK @"FeedBackViewController"
 
 #define VIEWCONTROLLER_CONTACTS                     @"ContactsViewController"
 #define VIEWCONTROLLER_SLIDEMENU                    @"SlideMenuViewController"

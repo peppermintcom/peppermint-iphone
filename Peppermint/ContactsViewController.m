@@ -268,12 +268,10 @@ SUBSCRIBE(ReplyContactIsAdded) {
             }
             
             [cell setAvatarImage:peppermintContact.avatarImage ? peppermintContact.avatarImage : nil];
-            
-            NSString *communicationChannelAddressToShow = peppermintContact.communicationChannelAddress;
             if(peppermintContact.hasReceivedMessageOverPeppermint) {
-                communicationChannelAddressToShow = LOC(@"Peppermint", @"Peppermint");
+                peppermintContact.explanation = LOC(@"Peppermint", @"Peppermint");
             }
-            [cell setInformationWithNameSurname:peppermintContact.nameSurname communicationChannelAddress:communicationChannelAddressToShow];
+            [cell setInformationWithNameSurname:peppermintContact.nameSurname communicationChannelAddress:peppermintContact.explanation];
             [self markReadFieldsIfNecessaryForPeppermintContact:peppermintContact inTableViewCell:cell];
         }
         preparedCell = cell;

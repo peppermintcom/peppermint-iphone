@@ -63,7 +63,7 @@
 "Feedback" = "Feedback";
 "support@peppermint.com" = "support@peppermint.com";
 "Feedback account error" = "Please add and configure at least one mail account on this device to be able to send feedbacks";
-"Feedback sent with success" = "Your feedback was sent";
+"Feedback sent with success" = "Your message was sent";
 "Feedback Subject" = "Peppermint Feedback";
 "Starting" = "Preparing";
 "Uploading" = "Uploading";
@@ -154,3 +154,7 @@
 "You should have internet connection to login" = "You should have internet connection to login";
 "Today" = "Today";
 "Yesterday" = "Yesterday";
+"Or email us for support" = "or email us for support";
+"Peppermint Support" = "Peppermint Support";
+"Peppermint Support Explanation" = "Send us audio feedback on the app";
+

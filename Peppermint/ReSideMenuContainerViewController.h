@@ -8,9 +8,7 @@
 
 #import "RESideMenu.h"
 #import "ContactsModel.h"
-#import "FeedBackModel.h"
 
-@interface ReSideMenuContainerViewController : RESideMenu <FeedBackModelDelegate>
+@interface ReSideMenuContainerViewController : RESideMenu
 -(void) initContactsViewControllerWithContactsModel:(ContactsModel*) contactsModel;
--(void) sendFeedback;
 @end

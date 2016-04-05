@@ -225,6 +225,7 @@
     }
 }
 
+#warning "ReFactor and implement attach/Detach system with different approach, maybe an operation queue"
 -(void) checkToDetach {
     switch (self.sendingStatus) {
         case SendingStatusIniting:
