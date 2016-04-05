@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIView *bottomInformationView;
 @property (weak, nonatomic) IBOutlet UILabel *bottomInformationLabel;
 @property (weak, nonatomic) IBOutlet UIView *microphoneView;
 @property (weak, nonatomic) IBOutlet RecordingGestureButton *recordingButton;

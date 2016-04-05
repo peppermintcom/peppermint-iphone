@@ -59,12 +59,13 @@
 }
 
 -(void) resetBottomInformationLabel {
+    self.bottomInformationView.backgroundColor = [UIColor peppermintGray248];
+    self.bottomInformationView.layer.borderWidth = 1;
+    self.bottomInformationView.layer.borderColor = [UIColor cellSeperatorGray].CGColor;
+    
     self.tableView.backgroundColor = [UIColor slideMenuTableViewColor];
     self.bottomInformationLabel.font = [UIFont openSansSemiBoldFontOfSize:18];
     self.bottomInformationLabel.textColor = [UIColor textFieldTintGreen];
-    self.bottomInformationLabel.backgroundColor = [UIColor peppermintGray248];
-    self.bottomInformationLabel.layer.borderWidth = 1;
-    self.bottomInformationLabel.layer.borderColor = [UIColor cellSeperatorGray].CGColor;
     self.bottomInformationLabel.text = LOC(@"Record a Message", @"Record a Message");
     self.microphoneView.hidden = NO;
 }
