@@ -67,6 +67,10 @@
     
     NSString *fromName = [NSString stringWithFormat:@"%@ [%@]", nameSurname, self.peppermintMessageSender.email];
     //[NSString stringWithFormat:@"%@ <%@>", nameSurname, self.peppermintMessageSender.email];
+    NSMutableString *stringToModify = [fromName mutableCopy];
+    if(CFStringTransform((__bridge CFMutableStringRef)stringToModify, NULL, kCFStringTransformStripCombiningMarks, NO)) {
+        fromName = stringToModify;
+    }
     
     mandrillMessage.from_name = fromName;
     mandrillMessage.subject = subject;
