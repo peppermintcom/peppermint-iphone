@@ -10,19 +10,8 @@
 #import "PeppermintContact.h"
 #import "Repository.h"
 #import "ContactsModel.h"
-#import "RecentContactsModel.h"
 
-@implementation CustomContactModel {
-    __block RecentContactsModel *recentContactsModel;
-}
-
--(id) init {
-    self = [super init];
-    if(self) {
-        recentContactsModel = [RecentContactsModel new];
-    }
-    return self;
-}
+@implementation CustomContactModel
 
 -(NSPredicate*) peppermintContactPredicateWithNameSurname:(NSString*) nameSurname communicationChanneldAddress:(NSString*)communicationChannelAddress communicationChannel:(CommunicationChannel) communicationChannel {
     
@@ -104,8 +93,6 @@
         if(err) {
             [self.delegate operationFailure:err];
         } else {
-            NSDate *now = [NSDate new];
-            [recentContactsModel save:peppermintContact forContactDate:now];
             [self.delegate customPeppermintContactSavedSucessfully:peppermintContact];
         }
     });
@@ -134,7 +121,7 @@
         peppermintContact.nameSurname = matchedCustomContact.nameSurname;
         peppermintContact.communicationChannel = matchedCustomContact.communicationChannel.intValue;
         peppermintContact.communicationChannelAddress = matchedCustomContact.communicationChannelAddress;
-        peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%d",
+        peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%lu",
                                              CONTACT_CUSTOM, matchedCustomContact.identifier.hash];
         [peppermintContactArray addObject:peppermintContact];
     }

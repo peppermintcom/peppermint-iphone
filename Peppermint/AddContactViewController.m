@@ -12,6 +12,7 @@
 #import "PeppermintContact.h"
 #import "AppDelegate.h"
 #import "CellFactory.h"
+#import "RecentContactsModel.h"
 
 #define HEIGHT_FOR_wARNING_CELLS    20
 
@@ -45,6 +46,7 @@
     NSArray *textFieldsArray;
 
     BOOL validateFirstNameLastName;
+    RecentContactsModel *recentContactsModel;
 }
 
 #pragma mark- Class Methods
@@ -159,6 +161,15 @@
     [super viewDidAppear:animated];
 }
 
+#pragma mark - Recent Contacts
+
+-(RecentContactsModel*) recentContactsModel {
+    if(!recentContactsModel) {
+        recentContactsModel = [RecentContactsModel new];
+    }
+    return recentContactsModel;
+}
+
 #pragma mark - CountriesArray
 
 -(NSArray*) countriesArray {
@@ -204,6 +215,7 @@
         peppermintContact.communicationChannel = CommunicationChannelEmail;
         peppermintContact.uniqueContactId = uniqueId;
         [customContactModel save:peppermintContact];
+        [[self recentContactsModel] save:peppermintContact forContactDate:[NSDate new]];
     }
     if(self.phoneImageView.highlighted) {
         PeppermintContact *peppermintContact = [self createdContact];
@@ -211,6 +223,7 @@
         peppermintContact.communicationChannel = CommunicationChannelSMS;
         peppermintContact.uniqueContactId = uniqueId;
         [customContactModel save:peppermintContact];
+        [[self recentContactsModel] save:peppermintContact forContactDate:[NSDate new]];
     }
 }
 
