@@ -166,6 +166,7 @@
 -(RecentContactsModel*) recentContactsModel {
     if(!recentContactsModel) {
         recentContactsModel = [RecentContactsModel new];
+        recentContactsModel.delegate = nil;
     }
     return recentContactsModel;
 }
