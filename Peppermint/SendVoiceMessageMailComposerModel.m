@@ -25,7 +25,7 @@
                 signature = peppermintMessageSender.signature;
             }
             
-            [controller setSubject:[PeppermintMessageSender sharedInstance].subject];
+            [controller setSubject:self.subject ? self.subject : [PeppermintMessageSender sharedInstance].subject];
             NSString *textBody = [NSString stringWithFormat:LOC(@"Mail Text Format",@"Default Mail Text Format"), @"", [self fastReplyUrlForSender], signature];
             [controller setMessageBody:textBody isHTML:NO];
             NSString *body = [self mailBodyHTMLForUrlPath:nil extension:nil signature:signature duration:duration];

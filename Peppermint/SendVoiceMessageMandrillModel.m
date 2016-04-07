@@ -51,19 +51,19 @@
     }
   
     NSString * signature = @"";
+    if (self.peppermintMessageSender.signature.length > 0) {
+        signature = self.peppermintMessageSender.signature;
+    }
   
-  if (self.peppermintMessageSender.signature.length > 0) {
-    signature = self.peppermintMessageSender.signature;
-  }
-  
-  NSString * subject = @"";
-  
-  if (self.peppermintMessageSender.subject.length > 0) {
-    subject = self.peppermintMessageSender.subject;
-  }
+    NSString * subject = @"";
+    if(self.subject) {
+        subject = self.subject;
+    } else if (self.peppermintMessageSender.subject.length > 0) {
+        subject = self.peppermintMessageSender.subject;
+    }
     
     mandrillMessage = [MandrillMessage new];
-    mandrillMessage.from_email = @"support@peppermint.com"; //self.peppermintMessageSender.email;
+    mandrillMessage.from_email = LOC(@"support@peppermint.com", @"Support Email"); //self.peppermintMessageSender.email;
     
     NSString *fromName = [NSString stringWithFormat:@"%@ [%@]", nameSurname, self.peppermintMessageSender.email];
     //[NSString stringWithFormat:@"%@ <%@>", nameSurname, self.peppermintMessageSender.email];

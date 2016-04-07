@@ -24,16 +24,21 @@
     return self;
 }
 
+-(NSString*) supportEmail {
+    NSString *supportEmail = LOC(@"support@peppermint.com", @"Support Email");
+#ifdef DEBUG
+    supportEmail = @"okankurtulus@gmail.com";
+#endif
+    return supportEmail;
+}
+
 -(void) initSupportEmailsArray {
     NSMutableArray *supportContactsArray = [NSMutableArray new];
     
     PeppermintContact *peppermintContact = [PeppermintContact new];
     peppermintContact.nameSurname = LOC(@"Peppermint Support", @"Peppermint Support");
     peppermintContact.communicationChannel = CommunicationChannelEmail;
-    peppermintContact.communicationChannelAddress = LOC(@"support@peppermint.com", @"Support Email");
-#ifdef DEBUG
-    peppermintContact.communicationChannelAddress = @"okancm@yopmail.com";
-#endif
+    peppermintContact.communicationChannelAddress = [self supportEmail];
     peppermintContact.explanation = LOC(@"Peppermint Support Explanation", @"Peppermint Support Explanation");
     peppermintContact.isRestrictedForRecentContact = YES;
     [supportContactsArray addObject:peppermintContact];
@@ -64,7 +69,7 @@
 -(void) presentMailModalView {
     __block NSString *body;
     EasyMailAlertSender *mailSender = [EasyMailAlertSender easyMail:^(MFMailComposeViewController *controller) {
-        NSString *supportEmail = LOC(@"support@peppermint.com", @"Support Email");
+        NSString *supportEmail = [self supportEmail];
         [controller setToRecipients:[NSArray arrayWithObject:supportEmail]];
         [controller setSubject:LOC(@"Feedback Subject",@"Feedback Subject")];
         body = [DeviceModel summary];

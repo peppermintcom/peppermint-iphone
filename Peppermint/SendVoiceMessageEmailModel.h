@@ -9,6 +9,9 @@
 #import "SendVoiceMessageModel.h"
 #import "CacheModel.h"
 
-@interface SendVoiceMessageEmailModel : SendVoiceMessageModel 
+@interface SendVoiceMessageEmailModel : SendVoiceMessageModel
+
+@property (strong, nonatomic) NSString *subject;
+
 -(NSString*) mailBodyHTMLForUrlPath:(NSString*)urlPath extension:(NSString*)extension signature:(NSString*) signature duration:(NSTimeInterval) duration;
 @end

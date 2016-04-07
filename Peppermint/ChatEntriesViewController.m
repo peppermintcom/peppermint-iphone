@@ -277,7 +277,7 @@
     NSLog(@"recordingViewDissappeared");
 }
 
--(void) message:(NSString*) message isUpdatedWithStatus:(SendingStatus) sendingStatus cancelAble:(BOOL)isCacnelAble {
+-(void) messageModel:(SendVoiceMessageModel*)messageModel isUpdatedWithStatus:(SendingStatus) sendingStatus cancelAble:(BOOL)isCacnelAble {
     
 #warning "Refactor code & merge below code with the one in 'ContactsViewController.m' "
     

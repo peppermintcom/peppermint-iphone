@@ -48,6 +48,12 @@
     cachedMessage.extension = extension;
     cachedMessage.senderEmail = sendVoiceMessageModel.peppermintMessageSender.email;
     cachedMessage.senderNameSurname = sendVoiceMessageModel.peppermintMessageSender.nameSurname;
+    if([sendVoiceMessageModel isKindOfClass:[SendVoiceMessageEmailModel class]]) {
+        SendVoiceMessageEmailModel *sendVoiceMessageEmailModel = (SendVoiceMessageEmailModel*)sendVoiceMessageModel;
+        cachedMessage.subject = sendVoiceMessageEmailModel.subject;
+    } else {
+        cachedMessage.subject = nil;
+    }
     
     cachedMessage.receiverCommunicationChannel = [NSNumber numberWithInt:sendVoiceMessageModel.selectedPeppermintContact.communicationChannel];
     cachedMessage.receiverCommunicationChannelAddress = sendVoiceMessageModel.selectedPeppermintContact.communicationChannelAddress;
@@ -96,6 +102,7 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
                     selectedContact.communicationChannelAddress = cachedMessage.receiverCommunicationChannelAddress;
                     mailSenderModel.peppermintMessageSender = peppermintMessageSender;
                     mailSenderModel.selectedPeppermintContact = selectedContact;
+                    mailSenderModel.subject = cachedMessage.subject;
                     
                     [mailSenderModel sendVoiceMessageWithData:cachedMessage.data withExtension:cachedMessage.extension  andDuration:cachedMessage.duration.doubleValue];
                     [repository deleteEntity:cachedMessage];

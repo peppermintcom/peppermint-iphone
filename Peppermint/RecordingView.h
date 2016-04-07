@@ -14,7 +14,7 @@
 
 @protocol RecordingViewDelegate <SendVoiceMessageDelegate >
 -(void) recordingViewDissappeared;
--(void) message:(NSString*) message isUpdatedWithStatus:(SendingStatus) sendingStatus cancelAble:(BOOL)isCacnelAble;
+-(void) messageModel:(SendVoiceMessageModel*)sendVoiceMessageModel isUpdatedWithStatus:(SendingStatus) sendingStatus cancelAble:(BOOL)isCacnelAble;
 @end
 
 @interface RecordingView : BaseCustomView <RecordingModelDelegate, SendVoiceMessageDelegate, UIAlertViewDelegate>

@@ -249,6 +249,9 @@ typedef enum : NSUInteger {
         NSAssert(cachedSeconds >= MIN_VOICE_MESSAGE_LENGTH
                  && audioData && audioDataExtension , @"Audio data is not ready to send!");
         self.sendVoiceMessageModel.sendingStatus = SendingStatusInited;
+        
+#warning "Consider updating below line as commented line"
+        //[self recordDataIsPrepared:audioData withExtension:audioDataExtension];
         [self.sendVoiceMessageModel sendVoiceMessageWithData:audioData withExtension:audioDataExtension  andDuration:cachedSeconds];
     }
 }
@@ -348,7 +351,7 @@ SUBSCRIBE(MessageSendingStatusIsUpdated) {
     SendVoiceMessageModel *model = event.sender;
     BOOL isCacnelAble = model.delegate != nil && model.isCancelAble;
     if([self shouldInformDelegateAboutStatusUpdateInModel:model]) {
-        [self.delegate message:event.sender isUpdatedWithStatus:model.sendingStatus cancelAble:isCacnelAble];
+        [self.delegate messageModel:event.sender isUpdatedWithStatus:model.sendingStatus cancelAble:isCacnelAble];
     }
 }
 

@@ -292,6 +292,7 @@
 		B10C39331BF6FC840070B49F /* AccountResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountResponse.m; sourceTree = "<group>"; };
 		B10C39351BF718960070B49F /* AccountModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountModel.h; sourceTree = "<group>"; };
 		B10C39361BF718960070B49F /* AccountModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountModel.m; sourceTree = "<group>"; };
+		B113680F1CB67DDD0075CF58 /* PeppermintDataModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PeppermintDataModel 3.xcdatamodel"; sourceTree = "<group>"; };
 		B116F3AF1C008E570091994C /* FastReplyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastReplyModel.h; sourceTree = "<group>"; };
 		B116F3B01C008E570091994C /* FastReplyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FastReplyModel.m; sourceTree = "<group>"; };
 		B11B13521C0C5EAD00782FC4 /* ContactInformationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactInformationTableViewCell.h; sourceTree = "<group>"; };
@@ -2476,10 +2477,11 @@
 		B1F93E8E1BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				B113680F1CB67DDD0075CF58 /* PeppermintDataModel 3.xcdatamodel */,
 				B11E02D51C490DA900579122 /* PeppermintDataModel 2.xcdatamodel */,
 				B1F93E8F1BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodel */,
 			);
-			currentVersion = B11E02D51C490DA900579122 /* PeppermintDataModel 2.xcdatamodel */;
+			currentVersion = B113680F1CB67DDD0075CF58 /* PeppermintDataModel 3.xcdatamodel */;
 			path = PeppermintDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -95,12 +95,13 @@
     if(peppermintContact.communicationChannel == CommunicationChannelEmail) {
         CGRect cellRect = [self.tableView rectForRowAtIndexPath:indexPath];
         cellRect = [self.tableView convertRect:cellRect toView:self.view];
-        SendVoiceMessageModel *sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
+        SendVoiceMessageEmailModel *sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
+        sendVoiceMessageModel.subject = LOC(@"Feedback Subject", @"Feedback Subject");
         sendVoiceMessageModel.selectedPeppermintContact = peppermintContact;
         self.recordingView.sendVoiceMessageModel = sendVoiceMessageModel;
         [self.recordingView presentWithAnimationInRect:cellRect onPoint:location];
     } else {
-        NSLog(@"Not supported communication channel:%ld", peppermintContact.communicationChannel);
+        NSLog(@"Not supported communication channel:%ld", (unsigned long)peppermintContact.communicationChannel);
     }
 }
 
@@ -138,10 +139,12 @@
     NSLog(@"recordingViewDissappeared");
 }
 
--(void) message:(NSString*) message isUpdatedWithStatus:(SendingStatus) sendingStatus cancelAble:(BOOL)isCacnelAble {
-    NSLog(@"message:isUpdatedWithStatus:%ld", sendingStatus);
-    if(sendingStatus == SendingStatusSent) {
-        [self feedBackSentWithSuccess];
+-(void) messageModel:(SendVoiceMessageModel*) messageModel isUpdatedWithStatus:(SendingStatus) sendingStatus cancelAble:(BOOL)isCacnelAble {
+    if(messageModel == [self recordingView].sendVoiceMessageModel) {
+        NSLog(@"message:isUpdatedWithStatus:%ld", (unsigned long)sendingStatus);
+        if(sendingStatus == SendingStatusSent) {
+            [self feedBackSentWithSuccess];
+        }
     }
 }
 
