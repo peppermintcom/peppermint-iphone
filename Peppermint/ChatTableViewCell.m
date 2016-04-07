@@ -167,6 +167,12 @@
         [_playingModel pause];
         [self.delegate stoppedPlayingMessage:self];
     } else {
+        
+        
+        if(!sender) {
+            NSLog(@"Sender is nil, please investigate..");
+        }
+        
         [self.delegate startedPlayingMessage:sender ? self : nil];
         if(!_playingModel || !_playingModel.audioPlayer.data ) {
             _playingModel = [PlayingModel new];

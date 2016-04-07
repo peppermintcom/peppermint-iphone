@@ -31,6 +31,11 @@
     return self;
 }
 
+-(void) dealloc {
+    self.audioPlayer.delegate = nil;
+    NSLog(@"PlayingModel is dealoced!!!");
+}
+
 -(void) initBeginRecordingSound {
     audioPath = [[NSBundle mainBundle]pathForResource:@"begin_record" ofType:@"mp3"];
 }
