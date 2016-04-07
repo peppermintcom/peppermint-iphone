@@ -28,6 +28,16 @@
     && isValidForExtraControls;
 }
 
+-(BOOL) isValidPhoneNumber {
+    NSCharacterSet* nonNumbers = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+    NSRange r = [self rangeOfCharacterFromSet: nonNumbers];
+    BOOL isAllDigits = r.location == NSNotFound;
+    
+    return isAllDigits
+    && self.length > MIN_LENGTH_FOR_PHONE_NUMBER
+    && self.length <= MAX_LENGTH_FOR_PHONE_NUMBER;
+}
+
 -(BOOL)isPasswordLengthValid
 {
     NSString *filteredString = [self stringByReplacingOccurrencesOfString:@" " withString:@""];

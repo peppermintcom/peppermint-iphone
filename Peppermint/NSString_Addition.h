@@ -8,9 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+#define MIN_LENGTH_FOR_PHONE_NUMBER     4
+#define MAX_LENGTH_FOR_PHONE_NUMBER     15
+
 @interface NSString (NSString_Addition)
 
-- (BOOL)isValidEmail;
+-(BOOL)isValidEmail;
+-(BOOL)isValidPhoneNumber;
 -(BOOL)isPasswordLengthValid;
 -(NSString *) randomStringWithLength: (NSUInteger) length;
 -(NSString*) trimmedText;

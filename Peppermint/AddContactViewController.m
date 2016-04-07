@@ -66,6 +66,8 @@
         for(NSString* suppliedWord in suppliedWordsArray) {
             if([suppliedWord isValidEmail]) {
                 addContactViewController.emailTextField.text = suppliedWord;
+            } else if ([suppliedWord isValidPhoneNumber]) {
+                addContactViewController.phoneNumberTextField.text = suppliedWord;
             } else {
                 [nameComponents addObject:suppliedWord.capitalizedString];
             }
@@ -290,7 +292,7 @@
 #pragma mark - Update Screen
 
 -(void) updateScreen {
-    self.phoneImageView.highlighted = self.phoneNumberTextField.text.length > 4;
+    self.phoneImageView.highlighted = self.phoneNumberTextField.text.length > MIN_LENGTH_FOR_PHONE_NUMBER;
     self.emailImageView.highlighted = self.emailTextField.text.length > 0 && [self.emailTextField.text isValidEmail];
     
     self.firstNameTextField.text = [self.firstNameTextField.text capitalizedString];
@@ -305,8 +307,7 @@
     [[self.phoneNumberTextField.text componentsSeparatedByCharactersInSet:[phoneNumberCharSet invertedSet]] componentsJoinedByString:@""];
     
     self.saveContactBarButtonItem.enabled =
-    self.firstNameTextField.text.trimmedText.length > 0
-    && self.lastNameTextField.text.trimmedText.length > 0
+    (self.firstNameTextField.text.trimmedText.length > 0 || self.lastNameTextField.text.trimmedText.length > 0)
     && ((self.phoneImageView.highlighted && self.emailTextField.text.length == 0)
         || self.emailImageView.highlighted
     );
@@ -320,7 +321,7 @@
 
 -(void) updateValidationRows {
     BOOL isNameSurnameSupplied = !validateFirstNameLastName
-    || (self.firstNameTextField.text.trimmedText.length > 0 && self.lastNameTextField.text.trimmedText.length > 0);
+    || (self.firstNameTextField.text.trimmedText.length > 0 || self.lastNameTextField.text.trimmedText.length > 0);
     [self cell:self.nameSurnameWarningCell setHeight:isNameSurnameSupplied ? 0 : HEIGHT_FOR_wARNING_CELLS];
     
     BOOL isEmailSupplied = self.emailTextField.text.length == 0 || self.emailImageView.highlighted;

@@ -126,7 +126,6 @@ sharedObject;\
 #define CONTINUE_BUTTON_CORNER_RADIUS   10
 
 #define MIN_PASSWORD_LENGTH             6
-#define MAX_LENGTH_FOR_PHONE_NUMBER     15
 #define INTERNATIONAL_PHONE_SIGN        @"+"
 #define DONE_STRING                     @"\n"
 
