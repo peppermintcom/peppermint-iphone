@@ -116,13 +116,13 @@
 -(void) initGoogleAnalytics {
     [GAI sharedInstance].trackUncaughtExceptions = YES;
 #ifdef DEBUG
-    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelNone];
+    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
 #else
     [[GAI sharedInstance].logger setLogLevel:kGAILogLevelNone];
 #endif
     [GAI sharedInstance].dispatchInterval = 20;    
-    NSString *trackingId = [[[GGLContext sharedInstance] configuration] trackingID];
-    [[GAI sharedInstance] trackerWithTrackingId:trackingId];
+    //NSString *trackingId = [[[GGLContext sharedInstance] configuration] trackingID];
+    //[[GAI sharedInstance] trackerWithTrackingId:trackingId];
     
 /*
     id<GAITracker> tracker =
@@ -200,6 +200,7 @@
     if(error) {
         NSLog(@"Error configuring Google services: %@", error);
     } else {
+        [self initGoogleAnalytics];
         [self initGCM];
     }
 }
@@ -224,7 +225,6 @@
     [self initNavigationViewController];
     [self initFabric];
     [self initFlurry];
-    [self initGoogleAnalytics];
     [self initInitialViewController];
     //[self logServiceCalls];
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];

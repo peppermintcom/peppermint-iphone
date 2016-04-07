@@ -60,6 +60,9 @@ PODS:
     - GoogleNetworkingUtilities (~> 1.0)
     - GoogleSymbolUtilities (~> 1.0)
     - GoogleUtilities (~> 1.0)
+  - Google/Analytics (1.1.1):
+    - Google/Core
+    - GoogleAnalytics (~> 3.12)
   - Google/CloudMessaging (1.1.1):
     - GGLInstanceID (~> 1.0)
     - Google/Core
@@ -122,9 +125,9 @@ DEPENDENCIES:
   - FBSDKLoginKit
   - Flurry-iOS-SDK/FlurrySDK
   - GData (from `GData.podspec.json`)
+  - Google/Analytics
   - Google/CloudMessaging
   - Google/SignIn
-  - GoogleAnalytics
   - JPAttributedString
   - MBProgressHUD (~> 0.9.1)
   - OpenSans

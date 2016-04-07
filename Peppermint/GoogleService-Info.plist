@@ -17,7 +17,7 @@
 	<key>IS_ADS_ENABLED</key>
 	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<true/>
 	<key>IS_APPINVITE_ENABLED</key>
 	<false/>
 	<key>IS_GCM_ENABLED</key>
@@ -26,5 +26,7 @@
 	<true/>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:621894935907:ios:d6f053b719e67e12</string>
+    <key>PROJECT_ID</key>
+    <string>peppermint-1077</string>
 </dict>
 </plist>
