@@ -116,6 +116,9 @@
 @interface NewUserLoggedIn : BaseEvent
 @end
 
+@interface UserLoggedOut : BaseEvent
+@end
+
 @interface StopAllPlayingMessages : BaseEvent
 @end
 
