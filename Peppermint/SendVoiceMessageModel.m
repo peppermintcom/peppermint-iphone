@@ -85,7 +85,6 @@
         } else {
             [self setChatConversation:cachedCanonicalUrl];
         }
-        [self sendMessageOverAWS:cachedCanonicalUrl];
     }
 }
 
@@ -330,21 +329,6 @@
     peppermintChatEntry.isSeen = YES;
     peppermintChatEntry.contactEmail = self.selectedPeppermintContact.communicationChannelAddress;
     [chatEntryModel savePeppermintChatEntry:peppermintChatEntry];
-}
-
-#pragma mark - SendGCMMessage
-
--(void) sendMessageOverAWS:(NSString*)publicUrl {
-    #warning "What if contact is overSMS channel. Clearify&update below after speaking with Nuno&Andrew"
-    if( self.selectedPeppermintContact.communicationChannel != CommunicationChannelEmail ) {
-        NSLog(@"App does not send message over SMS address yet");
-    } else {
-        [[AWSService new] sendMessageToRecepientEmail:self.selectedPeppermintContact.communicationChannelAddress
-                                          senderEmail:self.peppermintMessageSender.email
-                                     transcriptionUrl:nil
-                                             audioUrl:publicUrl
-                                                  jwt:self.peppermintMessageSender.exchangedJwt];
-    }
 }
 
 #pragma mark - ChatEntryModelDelegate

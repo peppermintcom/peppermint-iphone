@@ -149,3 +149,7 @@
 @interface AudioSessionInterruptionOccured : BaseEvent
 @property (nonatomic, assign) BOOL hasInterruptionBegan;
 @end
+
+@interface InterAppMessageProcessCompleted : BaseEvent
+@property (strong, nonatomic) NSError *error;
+@end

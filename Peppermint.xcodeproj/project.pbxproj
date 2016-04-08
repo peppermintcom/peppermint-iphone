@@ -140,6 +140,7 @@
 		B1D646581C998FB300600183 /* ShakeGestureView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D646571C998FB300600183 /* ShakeGestureView.m */; };
 		B1DA4A1C1CA581350002F07A /* PlayingChatEntryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1DA4A1B1CA581350002F07A /* PlayingChatEntryModel.m */; };
 		B1DBEF431C537345007AAF4A /* RecordingGestureButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B1DBEF421C537345007AAF4A /* RecordingGestureButton.m */; };
+		B1DF98A41CB77170005ED222 /* SendVoiceMessageModelAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = B1DF98A31CB77170005ED222 /* SendVoiceMessageModelAddition.m */; };
 		B1E02AE21CAE6120008D7C15 /* AudioSessionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E02AE11CAE6120008D7C15 /* AudioSessionModel.m */; };
 		B1E2DF9B1C76061F0037FFBF /* AutoPlayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E2DF9A1C76061F0037FFBF /* AutoPlayModel.m */; };
 		B1E5160E1C7D99E3002BD49C /* ChatEntryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E5160D1C7D99E3002BD49C /* ChatEntryModel.m */; };
@@ -519,6 +520,8 @@
 		B1DA4A1B1CA581350002F07A /* PlayingChatEntryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayingChatEntryModel.m; sourceTree = "<group>"; };
 		B1DBEF411C537345007AAF4A /* RecordingGestureButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingGestureButton.h; sourceTree = "<group>"; };
 		B1DBEF421C537345007AAF4A /* RecordingGestureButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordingGestureButton.m; sourceTree = "<group>"; };
+		B1DF98A21CB77170005ED222 /* SendVoiceMessageModelAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVoiceMessageModelAddition.h; sourceTree = "<group>"; };
+		B1DF98A31CB77170005ED222 /* SendVoiceMessageModelAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendVoiceMessageModelAddition.m; sourceTree = "<group>"; };
 		B1E02AE01CAE6120008D7C15 /* AudioSessionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioSessionModel.h; sourceTree = "<group>"; };
 		B1E02AE11CAE6120008D7C15 /* AudioSessionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioSessionModel.m; sourceTree = "<group>"; };
 		B1E2DF991C76061F0037FFBF /* AutoPlayModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoPlayModel.h; sourceTree = "<group>"; };
@@ -890,16 +893,7 @@
 				B165EF141BB71A99008C6F71 /* ContactsModel.m */,
 				B1EF40E31BB7D58C00042E4B /* RecordingModel.h */,
 				B1EF40E41BB7D58C00042E4B /* RecordingModel.m */,
-				B1EF40E91BB7E78C00042E4B /* SendVoiceMessageModel.h */,
-				B1EF40EA1BB7E78C00042E4B /* SendVoiceMessageModel.m */,
-				B108F85E1BECAA5300267DEC /* SendVoiceMessageEmailModel.h */,
-				B108F85F1BECAA5300267DEC /* SendVoiceMessageEmailModel.m */,
-				B1EF40EC1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.h */,
-				B1EF40ED1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.m */,
-				B13B076B1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.h */,
-				B13B076C1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m */,
-				B190F5B81BDD63400094B391 /* SendVoiceMessageSMSModel.h */,
-				B190F5B91BDD63400094B391 /* SendVoiceMessageSMSModel.m */,
+				B1DF989E1CB7710B005ED222 /* SendVoiceMessage */,
 				B1F93E991BC8E5E7005F2128 /* RecentContactsModel.h */,
 				B1F93E9A1BC8E5E7005F2128 /* RecentContactsModel.m */,
 				B15B15BF1BDBC55A00C0C171 /* AWSModel.h */,
@@ -1312,6 +1306,49 @@
 				B1DBEF421C537345007AAF4A /* RecordingGestureButton.m */,
 			);
 			name = RecordingGestureButton;
+			sourceTree = "<group>";
+		};
+		B1DF989E1CB7710B005ED222 /* SendVoiceMessage */ = {
+			isa = PBXGroup;
+			children = (
+				B1EF40E91BB7E78C00042E4B /* SendVoiceMessageModel.h */,
+				B1EF40EA1BB7E78C00042E4B /* SendVoiceMessageModel.m */,
+				B1DF98A21CB77170005ED222 /* SendVoiceMessageModelAddition.h */,
+				B1DF98A31CB77170005ED222 /* SendVoiceMessageModelAddition.m */,
+				B1DF98A01CB77128005ED222 /* Email */,
+				B1DF989F1CB7711C005ED222 /* SMS */,
+			);
+			name = SendVoiceMessage;
+			sourceTree = "<group>";
+		};
+		B1DF989F1CB7711C005ED222 /* SMS */ = {
+			isa = PBXGroup;
+			children = (
+				B190F5B81BDD63400094B391 /* SendVoiceMessageSMSModel.h */,
+				B190F5B91BDD63400094B391 /* SendVoiceMessageSMSModel.m */,
+			);
+			name = SMS;
+			sourceTree = "<group>";
+		};
+		B1DF98A01CB77128005ED222 /* Email */ = {
+			isa = PBXGroup;
+			children = (
+				B1DF98A11CB7713A005ED222 /* Base */,
+				B1EF40EC1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.h */,
+				B1EF40ED1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.m */,
+				B13B076B1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.h */,
+				B13B076C1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m */,
+			);
+			name = Email;
+			sourceTree = "<group>";
+		};
+		B1DF98A11CB7713A005ED222 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				B108F85E1BECAA5300267DEC /* SendVoiceMessageEmailModel.h */,
+				B108F85F1BECAA5300267DEC /* SendVoiceMessageEmailModel.m */,
+			);
+			name = Base;
 			sourceTree = "<group>";
 		};
 		B1EF40E11BB7CE5600042E4B /* Controller */ = {
@@ -1986,6 +2023,7 @@
 				D0AC07CC1C48222200F9CF6F /* JSONModelError.m in Sources */,
 				B1C4A7761BF73E4900272AD7 /* LoginResponse.m in Sources */,
 				B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */,
+				B1DF98A41CB77170005ED222 /* SendVoiceMessageModelAddition.m in Sources */,
 				B1A366921BDC92DB00852B52 /* UploadsRequest.m in Sources */,
 				B13B075A1BD3686500974AC3 /* MandrillInformationResponse.m in Sources */,
 				B15B15C41BDBC8CB00C0C171 /* RecorderResponse.m in Sources */,

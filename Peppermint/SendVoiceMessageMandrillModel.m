@@ -11,10 +11,11 @@
 @implementation SendVoiceMessageMandrillModel {
     MandrillService *mandrillService;
     MandrillMessage *mandrillMessage;
+    NSString* _publicFileUrl;
+    NSString* _canonicalUrl;
 }
 
 -(void) sendVoiceMessageWithData:(NSData *)data withExtension:(NSString *)extension andDuration:(NSTimeInterval)duration {
-    
     [super sendVoiceMessageWithData:data withExtension:extension andDuration:duration];
     if([self isConnectionActive]) {
         _data = data;
@@ -32,11 +33,19 @@
 -(void) fileUploadCompletedWithPublicUrl:(NSString*) url canonicalUrl:(NSString*)canonicalUrl{
     [super fileUploadCompletedWithPublicUrl:url canonicalUrl:canonicalUrl];
     if(![self isCancelled]) {
+        _publicFileUrl = url;
+        _canonicalUrl = canonicalUrl;
         self.sendingStatus = SendingStatusSending;
-        [self fireMandrillMessageWithUrl:url canonicalUrl:canonicalUrl];
+        self.sendingStatus = SendingStatusSendingWithNoCancelOption;
+        [self tryInterAppMessage:canonicalUrl];
     } else {
         NSLog(@"Mandrill message sending is not fired, cos message is cancelled");
     }
+}
+
+-(void) sendInterAppMessageIsCompletedWithError:(NSError*)error {
+    [super sendInterAppMessageIsCompletedWithError:error];
+    [self fireMandrillMessageWithUrl:_publicFileUrl canonicalUrl:_canonicalUrl];
 }
 
 -(void) fireMandrillMessageWithUrl:(NSString*) url canonicalUrl:(NSString*)canonicalUrl {

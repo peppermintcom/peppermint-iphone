@@ -216,4 +216,26 @@ SUBSCRIBE(SetUpAccountWithRecorderCompleted) {
     }
 }
 
+#pragma mark - Send Inter App Message
+
+-(void) sendInterAppMessageTo:(NSString*)toEmail from:(NSString*)fromEmail withTranscriptionUrl:(NSString*)transcriptionUrl audioUrl:(NSString*)audioUrl {
+    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+    [awsService sendMessageToRecepientEmail:toEmail
+                                senderEmail:fromEmail
+                           transcriptionUrl:transcriptionUrl
+                                   audioUrl:audioUrl
+                                        jwt:peppermintMessageSender.exchangedJwt];
+}
+
+SUBSCRIBE(InterAppMessageProcessCompleted) {
+    if(event.sender == awsService ) {
+        NSError *error = event.error;
+        if(!error && [self.delegate respondsToSelector:@selector(sendInterAppMessageIsCompletedWithSuccess)]) {
+            [self.delegate sendInterAppMessageIsCompletedWithSuccess];
+        } else if ([self.delegate respondsToSelector:@selector(sendInterAppMessageIsCompletedWithError:)]) {
+            [self.delegate sendInterAppMessageIsCompletedWithError:error];
+        }
+    }
+}
+
 @end

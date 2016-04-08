@@ -491,11 +491,15 @@
     NSDictionary *parameterDictionary = [messageRequest toDictionary];
     
     [requestOperationManager POST:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Message is sent!!");
+        InterAppMessageProcessCompleted *interAppMessageProcessCompleted = [InterAppMessageProcessCompleted new];
+        interAppMessageProcessCompleted.sender = self;
+        interAppMessageProcessCompleted.error = nil;
+        PUBLISH(interAppMessageProcessCompleted);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-#warning "Handle un-delivered in-app messages"
-        [self failureWithOperation:operation andError:error];
-        NSLog(@"Message could not be sent!!");
+        InterAppMessageProcessCompleted *interAppMessageProcessCompleted = [InterAppMessageProcessCompleted new];
+        interAppMessageProcessCompleted.sender = self;
+        interAppMessageProcessCompleted.error = error;
+        PUBLISH(interAppMessageProcessCompleted);        
     }];
 }
 

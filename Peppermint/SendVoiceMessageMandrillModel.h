@@ -8,6 +8,7 @@
 
 #import "SendVoiceMessageEmailModel.h"
 #import "MandrillService.h"
+#import "SendVoiceMessageModelAddition.h"
 
 @interface SendVoiceMessageMandrillModel : SendVoiceMessageEmailModel
 

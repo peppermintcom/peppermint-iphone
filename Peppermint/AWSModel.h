@@ -13,6 +13,9 @@
 @required
 -(void) recorderInitIsSuccessful;
 -(void) fileUploadCompletedWithPublicUrl:(NSString*) url canonicalUrl:(NSString*)canonicalUrl;
+@optional
+-(void) sendInterAppMessageIsCompletedWithSuccess;
+-(void) sendInterAppMessageIsCompletedWithError:(NSError*)error;
 @end
 
 @interface AWSModel : BaseModel
@@ -21,7 +24,10 @@
 -(void) initRecorder;
 -(void) startToUploadData:(NSData*) data ofType:(NSString*) contentType;
 
+#pragma mark - Update GCM Registration Token
 - (void) tryToUpdateGCMRegistrationToken;
+#pragma mark - Set Up Recorder With Account
 - (void) tryToSetUpAccountWithRecorder;
-
+#pragma mark - Send Inter App Message
+-(void) sendInterAppMessageTo:(NSString*)toEmail from:(NSString*)fromEmail withTranscriptionUrl:(NSString*)transcriptionUrl audioUrl:(NSString*)audioUrl;
 @end

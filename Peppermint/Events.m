@@ -109,3 +109,6 @@
 
 @implementation AudioSessionInterruptionOccured
 @end
+
+@implementation InterAppMessageProcessCompleted
+@end
