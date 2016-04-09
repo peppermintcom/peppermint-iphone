@@ -15,6 +15,7 @@
 -(void) didBeginItemSelectionOnIndexpath:(NSIndexPath*) indexPath location:(CGPoint) location;
 -(void) didCancelItemSelectionOnIndexpath:(NSIndexPath*) indexPath location:(CGPoint) location;
 -(void) didFinishItemSelectionOnIndexPath:(NSIndexPath*) indexPath location:(CGPoint) location;
+-(void) didFinishItemSelectionWithSwipeActionOccuredOnLocation:(NSIndexPath*) indexPath location:(CGPoint) location;
 @end
 
 @interface ContactTableViewCell : BaseTableViewCell <RecordingGestureButtonDelegate>

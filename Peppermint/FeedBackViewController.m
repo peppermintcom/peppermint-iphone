@@ -106,11 +106,15 @@
 }
 
 -(void) didCancelItemSelectionOnIndexpath:(NSIndexPath*) indexPath location:(CGPoint) location {
-    [self.recordingView finishRecordingWithGestureIsValid:NO needsPause:NO];
+    [self.recordingView finishedRecordingWithSystemCancel];
 }
 
 -(void) didFinishItemSelectionOnIndexPath:(NSIndexPath*) indexPath location:(CGPoint) location {
     [self.recordingView finishRecordingWithGestureIsValid:YES needsPause:NO];
+}
+
+-(void) didFinishItemSelectionWithSwipeActionOccuredOnLocation:(NSIndexPath *)indexPath location:(CGPoint)location {
+    [self.recordingView finishRecordingWithGestureIsValid:NO needsPause:NO];
 }
 
 #pragma mark - RecordingView

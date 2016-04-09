@@ -143,6 +143,10 @@
                 AVAudioPlayer *player = (AVAudioPlayer*)item;
                 [player pause];
             }
+            if([item isKindOfClass:[AVAudioRecorder class]]) {
+                AVAudioRecorder *recorder = (AVAudioRecorder*)item;
+                [recorder pause];
+            }
         }
     } else if ( type == AVAudioSessionInterruptionTypeEnded) {
         NSLog(@"AVAudioSessionInterruptionTypeEnded");
