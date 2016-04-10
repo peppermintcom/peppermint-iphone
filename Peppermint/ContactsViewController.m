@@ -55,7 +55,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     isContactsPermissionGranted = YES;
-    isFirstOpen = YES;
     self.searchContactsTextField.font = [UIFont openSansFontOfSize:14];
     self.searchContactsTextField.text = self.contactsModel.filterText;
     self.searchContactsTextField.placeholder = LOC(@"Search for Contacts", @"Placeholder text");
@@ -63,8 +62,12 @@
     self.searchContactsTextField.delegate = self;
     self.searchContactsTextField.autocorrectionType = UITextAutocorrectionTypeNo;
     
-    activeCellTag =  CELL_TAG_RECENT_CONTACTS;
-    cachedActiveCellTag = CELL_TAG_ALL_CONTACTS;
+    isScreenReady = NO;
+    isFirstOpen = YES;
+    [self recentContactsModel];
+    [self contactsModel];
+    
+    [self resetUserInterfaceWithActiveCellTag:CELL_TAG_RECENT_CONTACTS];
     self.sendingIndicatorView.hidden = YES;
     self.sendingInformationLabel.text = @"";
     self.seperatorView.backgroundColor = [UIColor cellSeperatorGray];
@@ -76,7 +79,6 @@
     isAddNewContactModalisUp = NO;
     isNavigatedToChatEntries = NO;
     timer = nil;
-    isScreenReady = NO;
     [self.searchContactsTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     dateFormatter = [NSDateFormatter new];
@@ -104,15 +106,13 @@ SUBSCRIBE(ReplyContactIsAdded) {
 }
 
 SUBSCRIBE(NewUserLoggedIn) {
-    isFirstOpen = YES;
-    [self cellSelectedWithTag:activeCellTag];
+    _loadingHud = nil;
+    [self resetUserInterfaceWithActiveCellTag:CELL_TAG_ALL_CONTACTS];
 }
 
 SUBSCRIBE(UserLoggedOut) {
     [self.recentContactsModel refreshRecentContactList];
-    _loadingHud = nil;
-    activeCellTag = CELL_TAG_ALL_CONTACTS;
-    [self.tableView reloadData];
+    [self resetUserInterfaceWithActiveCellTag:CELL_TAG_ALL_CONTACTS];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -126,18 +126,22 @@ SUBSCRIBE(UserLoggedOut) {
         } else if (isNavigatedToChatEntries) {
             isNavigatedToChatEntries = !isNavigatedToChatEntries;
             //Add if some more action will need to be taken?
-        } else {
-            [self refreshContacts];
         }
     }
 }
 
 -(void) resetUserInterfaceWithActiveCellTag:(int)newCellTag {
-    self.searchContactsTextField.text = self.contactsModel.filterText = @"";
-    activeCellTag = newCellTag;
-    [self scrollToTop];
-    [[self loadingHud] show:YES];
+    //Clear Content
+    isScreenReady = NO;
+    activeCellTag = -1;
     [self.tableView reloadData];
+    
+    self.searchContactsTextField.text = self.contactsModel.filterText = @"";
+    //Set new parameters
+    cachedActiveCellTag = CELL_TAG_ALL_CONTACTS;
+    activeCellTag = newCellTag;
+    //Refresh with new parameters
+    [[self loadingHud] show:YES];
     [self refreshContacts];
 }
 
@@ -772,22 +776,19 @@ SUBSCRIBE(UserLoggedOut) {
 }
 
 -(void) recentPeppermintContactsRefreshed {
-    [self hideLoading];
-    if(![self shouldUpdateActiveCellTag]) {
+    if([self shouldUpdateActiveCellTag]) {
+        [self resetUserInterfaceWithActiveCellTag:CELL_TAG_ALL_CONTACTS];
+    } else {
+        [self hideLoading];
         [self.tableView reloadData];
     }
 }
 
 -(BOOL) shouldUpdateActiveCellTag {
-    BOOL result = NO;
-    if(isFirstOpen) {
-        isFirstOpen = !isFirstOpen;
-        [[self loadingHud] show:YES];
-        if(self.recentContactsModel.contactList.count == 0 && activeCellTag == CELL_TAG_RECENT_CONTACTS) {
-            [self cellSelectedWithTag:CELL_TAG_ALL_CONTACTS];
-            result = YES;
-        }
-    }
+    BOOL isRecentContactsListEmpty = (self.recentContactsModel.contactList.count == 0);
+    BOOL isActiveCelTagRecentContacts = (activeCellTag == CELL_TAG_RECENT_CONTACTS);
+    BOOL result = isFirstOpen && isRecentContactsListEmpty && isActiveCelTagRecentContacts;
+    isFirstOpen = NO;
     return result;
 }
 
@@ -859,7 +860,7 @@ SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
     weakself_create();
     dispatch_async(dispatch_get_main_queue(), ^{
         NSLog(@"Received RefreshIncomingMessagesCompletedWithSuccess....");
-        if(event.peppermintChatEntryAllMesssagesArray.count > 0) {
+        if(isScreenReady && event.peppermintChatEntryAllMesssagesArray.count > 0) {
             [weakSelf.recentContactsModel refreshRecentContactList];
         }
     });
@@ -876,7 +877,9 @@ SUBSCRIBE(MessageIsMarkedAsRead) {
         _contactsModel = [ContactsModel sharedInstance];
         _contactsModel.delegate = self;
         [_contactsModel setup];
-        [_contactsModel refreshContactList];
+        if(isScreenReady) {
+            [_contactsModel refreshContactList];
+        }
     }
     return _contactsModel;
 }
@@ -885,7 +888,9 @@ SUBSCRIBE(MessageIsMarkedAsRead) {
     if(_recentContactsModel == nil) {
         _recentContactsModel = [RecentContactsModel new];
         _recentContactsModel.delegate = self;
-        [_recentContactsModel refreshRecentContactList];
+        if(isScreenReady) {
+            [_recentContactsModel refreshRecentContactList];
+        }
     }
     return _recentContactsModel;
 }
