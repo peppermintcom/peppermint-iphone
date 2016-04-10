@@ -363,7 +363,9 @@ SUBSCRIBE(ProximitySensorValueIsUpdated) {
 }
 
 - (void) resetContent {
-    _playingModel = nil;
+    if(_playingModel != [PlayingChatEntryModel sharedInstance].cachedPlayingModel) {
+        [_playingModel stop];
+    }
 }
 
 @end
