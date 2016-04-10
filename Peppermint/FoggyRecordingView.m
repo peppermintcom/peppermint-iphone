@@ -245,10 +245,6 @@ SUBSCRIBE(MessageSendingStatusIsUpdated) {
     [super onMessageSendingStatusIsUpdated:event];
 }
 
-SUBSCRIBE(AudioSessionInterruptionOccured) {
-    [super onAudioSessionInterruptionOccured:event];
-}
-
 SUBSCRIBE(ApplicationWillResignActive) {
     [super onApplicationWillResignActive:event];
 }

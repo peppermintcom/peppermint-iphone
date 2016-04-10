@@ -11,7 +11,7 @@
 #import "SMSChargeWarningView.h"
 #import "SendVoiceMessageMandrillModel.h"
 
-#define SYSTEM_CANCEL_PAUSE     5
+#define LATENCY_TO_RECOVER     1.5
 
 typedef enum : NSUInteger {
     RecordingViewStatusResignActive,
@@ -32,7 +32,6 @@ typedef enum : NSUInteger {
     NSInteger cachedSeconds;
     SMSChargeWarningView *smsChargeWarningView;
     UIButton *sendCachedMessageButton;
-    NSTimer *finishedRecordingWithSystemCancelTimer;
 }
 
 #pragma mark - Must to override Functions
@@ -56,7 +55,6 @@ typedef enum : NSUInteger {
 - (void)awakeFromNib {
     self.hidden = YES;
     sendCachedMessageButton = nil;
-    finishedRecordingWithSystemCancelTimer = nil;
     recordingViewStatus = RecordingViewStatusInit;
     defaults_set_object(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH, 0);
     [self initSMSChargeView];
@@ -70,7 +68,6 @@ typedef enum : NSUInteger {
         [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
         recordingViewStatus = RecordingViewStatusPresented;
         assert(self.sendVoiceMessageModel != nil);
-        [finishedRecordingWithSystemCancelTimer invalidate];
         self.sendVoiceMessageModel.delegate = self;
         self.recordingModel = [RecordingModel new];
         self.recordingModel.delegate = self;
@@ -82,7 +79,6 @@ typedef enum : NSUInteger {
 -(BOOL) finishRecordingWithGestureIsValid:(BOOL) isGestureValid needsPause:(BOOL)needsPause {
     BOOL result = NO;
     if(recordingViewStatus == RecordingViewStatusPresented) {
-        [finishedRecordingWithSystemCancelTimer invalidate];
         recordingViewStatus = RecordingViewStatusFinishing;
         [self.recordingModel stop];
         
@@ -394,42 +390,6 @@ SUBSCRIBE(MessageSendingStatusIsUpdated) {
 
 -(void) finishedRecordingWithSystemCancel {
     NSLog(@"finishedRecordingWithSystemCancel");
-    //We have to set a timer for AudioSessionInterruptionOccured, cos it can take a while to be triggered by the system!
-    [finishedRecordingWithSystemCancelTimer invalidate];
-    finishedRecordingWithSystemCancelTimer = [NSTimer scheduledTimerWithTimeInterval:SYSTEM_CANCEL_PAUSE target:self selector:@selector(finishedRecordingWithSystemCancelTimeOver) userInfo:nil repeats:NO];
-}
-
--(void) finishedRecordingWithSystemCancelTimeOver {
-    NSLog(@"finishedRecordingWithSystemTimeOver");
-    [self finishRecordingWithGestureIsValid:NO needsPause:NO];
-}
-
-SUBSCRIBE(AudioSessionInterruptionOccured) {
-    if(event.hasInterruptionBegan) {
-        if(finishedRecordingWithSystemCancelTimer) {
-            [finishedRecordingWithSystemCancelTimer invalidate];
-            [self onApplicationWillResignActive:nil];
-            
-#warning "Consider necesseratiy of sendCachedMessageButton!"
-            
-            //[self activateSendCachedMessageButton];
-        } else {
-            NSLog(@"eventCancelledBySystemTimer is not set, audio is not backed up.");
-        }
-    }
-}
-
--(void) activateSendCachedMessageButton {
-    sendCachedMessageButton = [[UIButton alloc] initWithFrame:self.superview.frame];
-    [sendCachedMessageButton addTarget:self action:@selector(sendCachedMessageButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self.superview addSubview:sendCachedMessageButton];
-    [self.superview bringSubviewToFront:sendCachedMessageButton];
-}
-
--(void) sendCachedMessageButtonPressed {
-    [sendCachedMessageButton removeFromSuperview];
-    sendCachedMessageButton = nil;
-    [self onApplicationDidBecomeActive:nil];
 }
 
 SUBSCRIBE(ApplicationWillResignActive) {
@@ -440,7 +400,10 @@ SUBSCRIBE(ApplicationWillResignActive) {
 
 SUBSCRIBE(ApplicationDidBecomeActive) {
     if(!self.hidden) {
-        [self handleAppIsActiveAgain];
+        weakself_create();
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(LATENCY_TO_RECOVER * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakSelf handleAppIsActiveAgain];
+        });
     }
 }
 

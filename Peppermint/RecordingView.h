@@ -37,7 +37,6 @@
 -(void) stop;
 
 SUBSCRIBE(MessageSendingStatusIsUpdated);
-SUBSCRIBE(AudioSessionInterruptionOccured);
 SUBSCRIBE(ApplicationWillResignActive);
 SUBSCRIBE(ApplicationDidBecomeActive);
 
