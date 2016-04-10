@@ -15,9 +15,8 @@
 #import "RecentContactsModel.h"
 #import "CustomContactModel.h"
 #import "Attribute.h"
-#import "ChatEntryModel.h"
 
-@interface GoogleCloudMessagingModel() <ChatEntryModelDelegate>
+@interface GoogleCloudMessagingModel()
 @end
 
 @implementation GoogleCloudMessagingModel

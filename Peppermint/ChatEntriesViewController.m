@@ -268,7 +268,7 @@
 }
 
 -(void) touchDownCancelledWithEvent:(UIEvent *)event location:(CGPoint)location {
-    [self.recordingView finishRecordingWithGestureIsValid:NO needsPause:NO];
+    [self.recordingView finishedRecordingWithSystemCancel];
 }
 
 #pragma mark - RecordingViewDelegate

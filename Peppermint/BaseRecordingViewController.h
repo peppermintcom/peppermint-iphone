@@ -9,6 +9,6 @@
 #import "BaseViewController.h"
 #import "RecordingView.h"
 
-@interface BaseRecordingViewController : BaseViewController <RecordingViewDelegate>
+@interface BaseRecordingViewController : BaseViewController
 @property (strong, nonatomic) RecordingView *_recordingView;
 @end

@@ -175,6 +175,10 @@
 
 #pragma mark - SendVoiceMessage Delegate
 
+-(void) chatHistoryCreatedWithSuccess {
+    NSLog(@"chatHistoryCreatedWithSuccess");
+}
+
 -(void) newRecentContactisSaved {
     NSLog(@"New recent contact is saved");
 }

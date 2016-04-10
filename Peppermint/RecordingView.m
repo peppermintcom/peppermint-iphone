@@ -11,6 +11,8 @@
 #import "SMSChargeWarningView.h"
 #import "SendVoiceMessageMandrillModel.h"
 
+#define LATENCY_TO_RECOVER     3
+
 typedef enum : NSUInteger {
     RecordingViewStatusResignActive,
     RecordingViewStatusRecoverFromBackUp,
@@ -29,6 +31,7 @@ typedef enum : NSUInteger {
     NSString *audioDataExtension;
     NSInteger cachedSeconds;
     SMSChargeWarningView *smsChargeWarningView;
+    UIButton *sendCachedMessageButton;
 }
 
 #pragma mark - Must to override Functions
@@ -51,6 +54,7 @@ typedef enum : NSUInteger {
 
 - (void)awakeFromNib {
     self.hidden = YES;
+    sendCachedMessageButton = nil;
     recordingViewStatus = RecordingViewStatusInit;
     defaults_set_object(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH, 0);
     [self initSMSChargeView];
@@ -213,7 +217,7 @@ typedef enum : NSUInteger {
             [self showAlertForRecordIsCut];
         }
     } else {
-        NSLog(@"Fastrecording view is not in presented state! Will not show!");
+        NSLog(@"Recording view is not in presented state! Will not show!");
     }
 }
 
@@ -393,9 +397,8 @@ SUBSCRIBE(MessageSendingStatusIsUpdated) {
 
 #pragma mark - App Interruption Actions
 
-SUBSCRIBE(AudioSessionInterruptionOccured) {
-    #warning "To activate interruption handling, we should prevent 'finishRecordingWithGestureIsValid:needsPause:' function to be triggered from RecordingGestureButton's touchDownCancelledWithEvent function."
-    //[self onApplicationWillResignActive:nil];
+-(void) finishedRecordingWithSystemCancel {
+    NSLog(@"finishedRecordingWithSystemCancel");
 }
 
 SUBSCRIBE(ApplicationWillResignActive) {
@@ -406,7 +409,10 @@ SUBSCRIBE(ApplicationWillResignActive) {
 
 SUBSCRIBE(ApplicationDidBecomeActive) {
     if(!self.hidden) {
-        [self handleAppIsActiveAgain];
+        weakself_create();
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(LATENCY_TO_RECOVER * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakSelf handleAppIsActiveAgain];
+        });
     }
 }
 

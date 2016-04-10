@@ -194,7 +194,7 @@
 
 -(void) touchSwipeActionOccuredOnLocation:(CGPoint) location {
     [self applyNonSelectedStyle];
-    [self.delegate didCancelItemSelectionOnIndexpath:self.indexPath location:location];
+    [self.delegate didFinishItemSelectionWithSwipeActionOccuredOnLocation:self.indexPath location:location];
 }
 
 -(void) touchShortTapActionOccuredOnLocation:(CGPoint) location {

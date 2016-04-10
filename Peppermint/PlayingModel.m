@@ -32,8 +32,10 @@
 }
 
 -(void) dealloc {
+    if(self.audioPlayer.isPlaying) {
+        NSLog(@"Here is a problem man!! Audio should be stopped before dealloc.. ;)");
+    }
     self.audioPlayer.delegate = nil;
-    NSLog(@"PlayingModel is dealoced!!!");
 }
 
 -(void) initBeginRecordingSound {

@@ -30,13 +30,13 @@
 
 -(BOOL) presentWithAnimationInRect:(CGRect)rect onPoint:(CGPoint) point;
 -(BOOL) finishRecordingWithGestureIsValid:(BOOL) isGestureValid needsPause:(BOOL)needsPause;
+-(void) finishedRecordingWithSystemCancel;
 -(void) cancelMessageSending;
 -(void) recordingViewIsHidden;
 -(void) pause;
 -(void) stop;
 
 SUBSCRIBE(MessageSendingStatusIsUpdated);
-SUBSCRIBE(AudioSessionInterruptionOccured);
 SUBSCRIBE(ApplicationWillResignActive);
 SUBSCRIBE(ApplicationDidBecomeActive);
 

@@ -143,6 +143,11 @@
                 AVAudioPlayer *player = (AVAudioPlayer*)item;
                 [player pause];
             }
+            if([item isKindOfClass:[AVAudioRecorder class]]) {
+                AVAudioRecorder *recorder = (AVAudioRecorder*)item;
+                //We don't stop recorder. Ifwe stop it will cause backup not to work!
+                [recorder pause];
+            }
         }
     } else if ( type == AVAudioSessionInterruptionTypeEnded) {
         NSLog(@"AVAudioSessionInterruptionTypeEnded");
