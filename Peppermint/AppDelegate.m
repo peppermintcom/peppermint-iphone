@@ -116,7 +116,7 @@
 -(void) initGoogleAnalytics {
     [GAI sharedInstance].trackUncaughtExceptions = YES;
 #ifdef DEBUG
-    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
+    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelWarning];
 #else
     [[GAI sharedInstance].logger setLogLevel:kGAILogLevelNone];
 #endif

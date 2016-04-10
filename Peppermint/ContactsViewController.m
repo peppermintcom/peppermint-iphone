@@ -36,7 +36,7 @@
 @end
 
 @implementation ContactsViewController {
-    NSUInteger activeCellTag;
+    __block NSUInteger activeCellTag;
     NSUInteger cachedActiveCellTag;
     BOOL isScrolling;
     MBProgressHUD *_loadingHud;
@@ -49,12 +49,12 @@
     NSTimer *holdToRecordViewTimer;
     BOOL isContactsPermissionGranted;
     NSDateFormatter *dateFormatter;
+    BOOL isFirstOpen;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     isContactsPermissionGranted = YES;
-    
     self.searchContactsTextField.font = [UIFont openSansFontOfSize:14];
     self.searchContactsTextField.text = self.contactsModel.filterText;
     self.searchContactsTextField.placeholder = LOC(@"Search for Contacts", @"Placeholder text");
@@ -62,8 +62,12 @@
     self.searchContactsTextField.delegate = self;
     self.searchContactsTextField.autocorrectionType = UITextAutocorrectionTypeNo;
     
-    activeCellTag = CELL_TAG_ALL_CONTACTS;
-    cachedActiveCellTag = CELL_TAG_ALL_CONTACTS;
+    isScreenReady = NO;
+    isFirstOpen = YES;
+    [self recentContactsModel];
+    [self contactsModel];
+    
+    [self resetUserInterfaceWithActiveCellTag:CELL_TAG_RECENT_CONTACTS];
     self.sendingIndicatorView.hidden = YES;
     self.sendingInformationLabel.text = @"";
     self.seperatorView.backgroundColor = [UIColor cellSeperatorGray];
@@ -75,7 +79,6 @@
     isAddNewContactModalisUp = NO;
     isNavigatedToChatEntries = NO;
     timer = nil;
-    isScreenReady = NO;
     [self.searchContactsTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     dateFormatter = [NSDateFormatter new];
@@ -88,18 +91,28 @@
     [_contactsModel.contactList removeAllObjects];
     _contactsModel = nil;
     _recentContactsModel = nil;
-    _searchMenu = nil;
     [_recordingView removeFromSuperview];
     _recordingView = nil;
     self.tutorialView = nil;
 }
 
 SUBSCRIBE(SyncGoogleContactsSuccess) {
+    [self hideLoading];
     [self cellSelectedWithTag:activeCellTag];
 }
 
 SUBSCRIBE(ReplyContactIsAdded) {
     [self cellSelectedWithTag:activeCellTag];
+}
+
+SUBSCRIBE(NewUserLoggedIn) {
+    _loadingHud = nil;
+    [self resetUserInterfaceWithActiveCellTag:CELL_TAG_ALL_CONTACTS];
+}
+
+SUBSCRIBE(UserLoggedOut) {
+    [self.recentContactsModel refreshRecentContactList];
+    [self resetUserInterfaceWithActiveCellTag:CELL_TAG_ALL_CONTACTS];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -113,18 +126,22 @@ SUBSCRIBE(ReplyContactIsAdded) {
         } else if (isNavigatedToChatEntries) {
             isNavigatedToChatEntries = !isNavigatedToChatEntries;
             //Add if some more action will need to be taken?
-        } else {
-            [self resetUserInterfaceWithActiveCellTag:CELL_TAG_RECENT_CONTACTS];
         }
     }
 }
 
 -(void) resetUserInterfaceWithActiveCellTag:(int)newCellTag {
-    self.searchContactsTextField.text = self.contactsModel.filterText = @"";
-    activeCellTag = newCellTag;
-    self.searchSourceIconImageView.image = [UIImage imageNamed:@"icon_recent"];
-    [[self loadingHud] show:YES];
+    //Clear Content
+    isScreenReady = NO;
+    activeCellTag = -1;
     [self.tableView reloadData];
+    
+    self.searchContactsTextField.text = self.contactsModel.filterText = @"";
+    //Set new parameters
+    cachedActiveCellTag = CELL_TAG_ALL_CONTACTS;
+    activeCellTag = newCellTag;
+    //Refresh with new parameters
+    [[self loadingHud] show:YES];
     [self refreshContacts];
 }
 
@@ -175,12 +192,8 @@ SUBSCRIBE(ReplyContactIsAdded) {
 
 -(IBAction)slideMenuValidAction:(id)sender {
     [self slideMenuTouchUp:sender];
-    if(self.searchMenu.isOpen) {
-        [self.searchMenu close];
-    } else {
-        [self hideHoldToRecordInfoView];
-        [self.reSideMenuContainerViewController presentLeftMenuViewController];
-    }
+    [self hideHoldToRecordInfoView];
+    [self.reSideMenuContainerViewController presentLeftMenuViewController];
 }
 
 #pragma mark - ContactList Logic
@@ -256,6 +269,11 @@ SUBSCRIBE(ReplyContactIsAdded) {
     } else if (indexPath.section == SECTION_EMPTY_RESULT) {
         EmptyResultTableViewCell *cell = [CellFactory cellEmptyResultTableViewCellFromTable:tableView forIndexPath:indexPath];
         [cell setVisibiltyOfExplanationLabels:YES];
+        if(activeCellTag == CELL_TAG_RECENT_CONTACTS) {
+            cell.headerLabel.text = LOC(@"There are no recent contacts", @"Empty cell header text");
+        } else {
+            cell.headerLabel.text = LOC(@"No contacts have been found", @"Empty cell header text");
+        }
         preparedCell = cell;
     } else  if (indexPath.section == SECTION_CONTACTS) {
         ContactTableViewCell *cell = [CellFactory cellContactTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
@@ -692,7 +710,6 @@ SUBSCRIBE(ReplyContactIsAdded) {
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     BOOL result = NO;
     if(![string isEqual:DONE_STRING]) {
-        [self.searchMenu close];
         result = YES;
     } else {
         [textField resignFirstResponder];
@@ -727,7 +744,6 @@ SUBSCRIBE(ReplyContactIsAdded) {
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    [self.searchMenu close];
     [self scrollToTop];
     return YES;
 }
@@ -760,116 +776,31 @@ SUBSCRIBE(ReplyContactIsAdded) {
 }
 
 -(void) recentPeppermintContactsRefreshed {
-    [self hideLoading];
-    if(self.recentContactsModel.contactList.count == 0) {
-        [self cellSelectedWithTag:CELL_TAG_ALL_CONTACTS];
+    if([self shouldUpdateActiveCellTag]) {
+        [self resetUserInterfaceWithActiveCellTag:CELL_TAG_ALL_CONTACTS];
     } else {
+        [self hideLoading];
         [self.tableView reloadData];
     }
 }
 
-#pragma mark - SearchButton
-
--(IBAction)searchButtonPressed:(id)sender {
-    if(!self.searchMenu.isOpen) {
-        [self hideHoldToRecordInfoView];
-        self.searchMenuViewContainer.hidden = NO;
-        [self.searchContactsTextField resignFirstResponder];
-        [self.searchMenu showInView:self.searchMenuView];
-    } else {        
-        [self.searchMenu close];
-    }
-}
-
-#pragma mark - SearchMenu
-
--(REMenuItem*) createMenuItemWithTitle:(NSString*)title icon:(NSString*)icon iconHighlighted:(NSString*)iconHightlighted cellTag:(NSUInteger)cellTag {
-    SearchMenuTableViewCell *cellView = [CellFactory cellSearchMenuTableViewCellFromTable:nil forIndexPath:nil];
-    cellView.titleLabel.text = title;
-    cellView.iconImageName = icon;
-    cellView.iconHighlightedImageName = iconHightlighted;
-    cellView.cellTag = cellTag;
-    cellView.delegate = self;
-    [cellView setSelected:NO];
-    REMenuItem *reMenuItem = [[REMenuItem alloc] initWithCustomView:cellView];
-    reMenuItem.tag = cellTag;
-    return reMenuItem;
-}
-
--(void) initSearchMenu {
-    
-    REMenuItem *allContactsMenuItem = [self createMenuItemWithTitle:LOC(@"All Contacts", @"Title")
-                                                               icon:@"icon_all"
-                                                    iconHighlighted:@"icon_all_touch"
-                                                                cellTag:CELL_TAG_ALL_CONTACTS];
-    
-    REMenuItem *recentContactsMenuItem = [self createMenuItemWithTitle:LOC(@"Recent Contacts", @"Title")
-                                                                 icon:@"icon_recent"
-                                                      iconHighlighted:@"icon_recent_touch"
-                                                                  cellTag:CELL_TAG_RECENT_CONTACTS];
-    
-    REMenuItem *emailContactsMenuItem = [self createMenuItemWithTitle:LOC(@"Email Contacts", @"Title")
-                                                               icon:@"icon_mail"
-                                                    iconHighlighted:@"icon_mail_touch"
-                                                                cellTag:CELL_TAG_EMAIL_CONTACTS];
-    
-    REMenuItem *smsContactsMenuItem = [self createMenuItemWithTitle:LOC(@"Phone Contacts", @"Title")
-                                                                 icon:@"icon_phone"
-                                                      iconHighlighted:@"icon_phone_touch"
-                                                                  cellTag:CELL_TAG_SMS_CONTACTS];
-    
-    allContactsMenuItem.font    = [UIFont openSansSemiBoldFontOfSize:allContactsMenuItem.font.pointSize];
-    recentContactsMenuItem.font = [UIFont openSansSemiBoldFontOfSize:recentContactsMenuItem.font.pointSize];
-    emailContactsMenuItem.font    = [UIFont openSansSemiBoldFontOfSize:emailContactsMenuItem.font.pointSize];
-    smsContactsMenuItem.font    = [UIFont openSansSemiBoldFontOfSize:smsContactsMenuItem.font.pointSize];
-    
-    self.searchMenu = [[REMenu alloc] initWithItems:@[allContactsMenuItem, recentContactsMenuItem, emailContactsMenuItem, smsContactsMenuItem]];
-    
-    self.searchMenu.bounce = NO;
-    self.searchMenu.cornerRadius = 5;
-    self.searchMenu.borderWidth = 0;
-    self.searchMenu.separatorHeight = 0;
-    self.searchMenu.separatorColor = [UIColor cellSeperatorGray];
-    self.searchMenu.closeOnSelection = YES;
-    
-    self.searchMenu.shadowOffset = CGSizeMake(1, 2);
-    self.searchMenu.shadowColor = [UIColor peppermintGreen];
-    self.searchMenu.shadowOpacity = 1;
-    self.searchMenu.shadowRadius = 1;
-    
-    [self.searchMenuViewContainer addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(searchButtonPressed:)]];
-    
-    
-    weakself_create();
-    self.searchMenu.closeCompletionHandler = ^{
-        weakSelf.searchMenuViewContainer.hidden = YES;
-    };
+-(BOOL) shouldUpdateActiveCellTag {
+    BOOL isRecentContactsListEmpty = (self.recentContactsModel.contactList.count == 0);
+    BOOL isActiveCelTagRecentContacts = (activeCellTag == CELL_TAG_RECENT_CONTACTS);
+    BOOL result = isFirstOpen && isRecentContactsListEmpty && isActiveCelTagRecentContacts;
+    isFirstOpen = NO;
+    return result;
 }
 
 #pragma mark - SearchMenuTableViewCellDelegate
 
--(void)cellSelectedWithTag:(NSUInteger) cellTag {
+-(void) cellSelectedWithTag:(NSUInteger) cellTag {
     activeCellTag = cellTag;
-    weakself_create();
-    dispatch_async(dispatch_get_main_queue(), ^{
-        /*
-         [weakSelf.searchMenu close];
-         [weakSelf.searchContactsTextField resignFirstResponder];
-         
-         NSPredicate *itemWithTagPredicate = [NSPredicate predicateWithFormat:@"self.tag == %d", cellTag];
-         NSArray *filteredArray = [weakSelf.searchMenu.items filteredArrayUsingPredicate:itemWithTagPredicate];
-         REMenuItem *activeMenuItem = filteredArray.count > 0 ? [filteredArray objectAtIndex:0] : nil;
-         SearchMenuTableViewCell *activeMenuTableViewCell = (SearchMenuTableViewCell*)activeMenuItem.customView;
-         weakSelf.searchSourceIconImageView.image = [UIImage imageNamed:activeMenuTableViewCell.iconImageName];
-         
-         [[weakSelf loadingHud] show:YES];
-        */
-        if(cellTag == CELL_TAG_RECENT_CONTACTS) {
-            [weakSelf.recentContactsModel refreshRecentContactList];
-        } else {
-            [weakSelf.contactsModel refreshContactList];
-        }
-    });
+    if(cellTag == CELL_TAG_RECENT_CONTACTS) {
+        [self.recentContactsModel refreshRecentContactList];
+    } else {
+        [self.contactsModel refreshContactList];
+    }
 }
 
 #pragma mark - AddContactViewControllerDelegate
@@ -929,12 +860,8 @@ SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
     weakself_create();
     dispatch_async(dispatch_get_main_queue(), ^{
         NSLog(@"Received RefreshIncomingMessagesCompletedWithSuccess....");
-        if(event.peppermintChatEntryAllMesssagesArray.count > 0) {
-            if (weakSelf.recentContactsModel.contactList.count == 0 ) {
-                [weakSelf cellSelectedWithTag:CELL_TAG_RECENT_CONTACTS];
-            } else {
-                [weakSelf.recentContactsModel refreshRecentContactList];
-            }
+        if(isScreenReady && event.peppermintChatEntryAllMesssagesArray.count > 0) {
+            [weakSelf.recentContactsModel refreshRecentContactList];
         }
     });
 }
@@ -950,7 +877,9 @@ SUBSCRIBE(MessageIsMarkedAsRead) {
         _contactsModel = [ContactsModel sharedInstance];
         _contactsModel.delegate = self;
         [_contactsModel setup];
-        [_contactsModel refreshContactList];
+        if(isScreenReady) {
+            [_contactsModel refreshContactList];
+        }
     }
     return _contactsModel;
 }
@@ -959,16 +888,11 @@ SUBSCRIBE(MessageIsMarkedAsRead) {
     if(_recentContactsModel == nil) {
         _recentContactsModel = [RecentContactsModel new];
         _recentContactsModel.delegate = self;
-        [_recentContactsModel refreshRecentContactList];
+        if(isScreenReady) {
+            [_recentContactsModel refreshRecentContactList];
+        }
     }
     return _recentContactsModel;
-}
-
--(REMenu*) searchMenu {
-    if(_searchMenu == nil) {
-        [self initSearchMenu];
-    }
-    return _searchMenu;
 }
 
 -(RecordingView*) recordingView {

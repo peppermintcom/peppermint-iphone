@@ -9,7 +9,6 @@
 #import "BaseViewController.h"
 #import "ContactsModel.h"
 #import "RecentContactsModel.h"
-#import <REMenu/REMenu.h>
 #import "FastRecordingView.h"
 #import "FoggyRecordingView.h"
 #import "ReSideMenuContainerViewController.h"
@@ -23,7 +22,6 @@
 @interface ContactsViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ContactsModelDelegate, RecentContactsModelDelegate, SearchMenuTableViewCellDelegate, UIAlertViewDelegate, ContactTableViewCellDelegate, RecordingViewDelegate, ContactInformationTableViewCellDelegate>
 @property (strong, nonatomic) ContactsModel *contactsModel;
 @property (strong, nonatomic) RecentContactsModel *recentContactsModel;
-@property (strong, nonatomic) REMenu *searchMenu;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *searchContactsTextField;
@@ -44,14 +42,5 @@
 -(IBAction)messageCancelButtonPressed:(id)sender;
 -(void) refreshContacts;
 -(void) scheduleNavigateToChatEntryWithEmail:(NSString*) email;
-
-//Search Button Components
-
-@property (weak, nonatomic) IBOutlet UIView *searchMenuViewContainer;
-@property (weak, nonatomic) IBOutlet UIView *searchMenuView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sendingImageHeightConstraint;
-@property (weak, nonatomic) IBOutlet UIImageView *searchSourceIconImageView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cancelMessageButtonWidthConstraint;
--(IBAction)searchButtonPressed:(id)sender;
 
 @end

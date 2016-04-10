@@ -86,6 +86,9 @@
 @implementation NewUserLoggedIn
 @end
 
+@implementation UserLoggedOut
+@end
+
 @implementation StopAllPlayingMessages
 @end
 

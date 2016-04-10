@@ -145,6 +145,10 @@ SUBSCRIBE(AccountPasswordRecovered) {
                    fromAccount:peppermintMessageSender.accountId
                        withJwt:peppermintMessageSender.recorderJwt];
     [[PeppermintMessageSender sharedInstance] clearSender];
+    
+    UserLoggedOut *userLoggedOut = [UserLoggedOut new];
+    userLoggedOut.sender = self;
+    PUBLISH(userLoggedOut);
 }
 
 @end
