@@ -60,7 +60,10 @@ typedef enum : NSUInteger {
 #pragma mark - Record Methods
 
 -(BOOL) presentWithAnimationInRect:(CGRect)rect onPoint:(CGPoint) point {
-    if(recordingViewStatus == RecordingViewStatusInit) {
+    BOOL isRecordingViewStateValid = (recordingViewStatus == RecordingViewStatusInit);
+    BOOL isSMSChargeViewVisible = (smsChargeWarningView && !smsChargeWarningView.hidden);
+    
+    if(isRecordingViewStateValid && !isSMSChargeViewVisible) {
         [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
         recordingViewStatus = RecordingViewStatusPresented;
         assert(self.sendVoiceMessageModel != nil);
