@@ -11,7 +11,7 @@
 #import "SMSChargeWarningView.h"
 #import "SendVoiceMessageMandrillModel.h"
 
-#define LATENCY_TO_RECOVER     1.5
+#define LATENCY_TO_RECOVER     3
 
 typedef enum : NSUInteger {
     RecordingViewStatusResignActive,
