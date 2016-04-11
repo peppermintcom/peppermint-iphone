@@ -74,12 +74,9 @@
     mandrillMessage = [MandrillMessage new];
     mandrillMessage.from_email = LOC(@"support@peppermint.com", @"Support Email"); //self.peppermintMessageSender.email;
     
-    NSString *fromName = [NSString stringWithFormat:@"%@ [%@]", nameSurname, self.peppermintMessageSender.email];
-    //[NSString stringWithFormat:@"%@ <%@>", nameSurname, self.peppermintMessageSender.email];
-    NSMutableString *stringToModify = [fromName mutableCopy];
-    if(CFStringTransform((__bridge CFMutableStringRef)stringToModify, NULL, kCFStringTransformStripCombiningMarks, NO)) {
-        fromName = stringToModify;
-    }
+    NSString *fromName = [NSString stringWithFormat:@"%@ [%@]",
+                          [nameSurname normalizeText],
+                          [self.peppermintMessageSender.email normalizeText]];
     
     mandrillMessage.from_name = fromName;
     mandrillMessage.subject = subject;

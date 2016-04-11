@@ -86,4 +86,17 @@
     return trimmedText;
 }
 
+-(NSString*) normalizeText {
+    //Fix locale
+    NSString *nonLocaleString = [self stringByFoldingWithOptions:NSDiacriticInsensitiveSearch locale:[NSLocale currentLocale]];
+    //Decompose text
+    NSMutableString *stringToModify = [[nonLocaleString decomposedStringWithCanonicalMapping] mutableCopy];
+    //Transform
+    CFStringTransform((__bridge CFMutableStringRef)stringToModify, NULL, kCFStringTransformStripCombiningMarks, NO);
+    //Check to contain just letters
+    NSString *resultText = [[stringToModify componentsSeparatedByCharactersInSet:
+                         [[NSCharacterSet alphanumericCharacterSet] invertedSet]] componentsJoinedByString:@""];
+    return resultText;
+}
+
 @end
