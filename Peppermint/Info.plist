@@ -60,7 +60,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>3</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -96,8 +96,8 @@
 		<string>fbauth</string>
 		<string>fbauth2</string>
 		<string>fb-messenger-api20140430</string>
-        <string>fb-messenger-api</string>
-        <string>fbshareextension</string>
+		<string>fb-messenger-api</string>
+		<string>fbshareextension</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
