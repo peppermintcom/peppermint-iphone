@@ -87,7 +87,6 @@
         NSString *name = [[contactEntry name] fullName].stringValue;
         name = name ? name : contactEntry.title.stringValue;
 
-        __block UIImage *image = nil;
         GDataLink *link = [contactEntry photoLink];
         if(link != nil) {
             NSURL *photoUrl = [NSURL URLWithString:link.href];
@@ -98,23 +97,22 @@
                 } else {
                     NSURLResponse *response = nil;
                     NSData *photoData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-                    image = [UIImage imageWithData:photoData];
-                    if(image != nil) {
+                    if(photoData != nil) {
                         for(GDataEmail* gDataEmail in contactEntry.emailAddresses) {
-                            [self saveContactWithName:name email:gDataEmail.address image:image identifier:contactEntry.identifier];
+                            [self saveContactWithName:name email:gDataEmail.address imageData:photoData identifier:contactEntry.identifier];
                         }
                     }
                 }
             }];
         } else {
             for(GDataEmail* gDataEmail in contactEntry.emailAddresses) {
-                [self saveContactWithName:name email:gDataEmail.address image:nil identifier:contactEntry.identifier];
+                [self saveContactWithName:name email:gDataEmail.address imageData:nil identifier:contactEntry.identifier];
             }
         }
     }
 }
 
--(void) saveContactWithName:(NSString*) name email:(NSString*) email image:(UIImage*) image identifier:(NSString*) identifier {
+-(void) saveContactWithName:(NSString*) name email:(NSString*) email imageData:(NSData*)imageData identifier:(NSString*) identifier {
     if([email isValidEmail]) {
         name = name && name.length > 0 ? name : email;
         Repository *repository = [Repository beginTransaction];
@@ -128,7 +126,7 @@
             googleContact.nameSurname = name;
             googleContact.communicationChannelAddress = email;
             googleContact.communicationChannel = [NSNumber numberWithInt:CommunicationChannelEmail];
-            googleContact.avatarImageData = UIImageJPEGRepresentation(image, 1);
+            googleContact.avatarImageData = imageData;
             googleContact.accountEmail = [_fetcherAuthorizer userEmail];
             googleContact.identifier = identifier;
             NSError *err = [repository endTransaction];
