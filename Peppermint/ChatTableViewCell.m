@@ -167,13 +167,7 @@
         [_playingModel pause];
         [self.delegate stoppedPlayingMessage:self];
     } else {
-        
-        
-        if(!sender) {
-            NSLog(@"Sender is nil, please investigate..");
-        }
-        
-        [self.delegate startedPlayingMessage:sender ? self : nil];
+        [self.delegate startedPlayingMessage:self];
         if(!_playingModel || !_playingModel.audioPlayer.data ) {
             _playingModel = [PlayingModel new];
             
@@ -183,6 +177,7 @@
             self.playPauseImageView.hidden = YES;
             weakself_create();
             dispatch_async(LOW_PRIORITY_QUEUE, ^{
+                [weakSelf.chatEntryModel markAllPreviousMessagesAsRead:weakSelf.peppermintChatEntry];
                 NSError *error = nil;
                 if(!weakSelf.peppermintChatEntry.audio) {
                     NSString *audioUrlToFetch = weakSelf.peppermintChatEntry.audioUrl;

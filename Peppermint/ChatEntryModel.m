@@ -348,6 +348,31 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
     });
 }
 
+-(void) markAllPreviousMessagesAsRead:(PeppermintChatEntry*)peppermintChatEntry {
+    weakself_create();
+    dispatch_async(LOW_PRIORITY_QUEUE, ^{
+        Repository *repository = [Repository beginTransaction];
+        NSPredicate *emailPredicate = [ChatEntryModel contactEmailPredicate:peppermintChatEntry.contactEmail];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.dateCreated <= %@", peppermintChatEntry.dateCreated];
+        predicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:
+                                                                        predicate,
+                                                                        PREDICATE_UNREAD_MESSAGES,
+                                                                        emailPredicate,
+                                                                        nil]];
+        
+        NSDictionary *propertiesToUpdateDictionary = @{ @"isSeen" : @(YES) };
+        NSInteger numberOfUpdatedEntities = [repository executeBatchUpdate:[ChatEntry class]
+                                                            predicateOrNil:predicate
+                                                       propertiesToConnect:propertiesToUpdateDictionary];
+        NSError *error = [repository endTransaction];
+        if(error) {
+            [weakSelf.delegate operationFailure:error];
+        } else {
+            NSLog(@"%ld chatEntry Objects are marked as read.", numberOfUpdatedEntities);
+        }
+    });
+}
+
 #pragma mark - Chat Helper Functions
 
 +(NSPredicate*) contactEmailPredicate:(NSString*) email {

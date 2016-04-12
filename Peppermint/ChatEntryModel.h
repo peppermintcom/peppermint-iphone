@@ -24,10 +24,12 @@
 -(BOOL) isSyncProcessActive;
 -(void) makeSyncRequestForMessages;
 -(void) updateChatEntryWithAudio:(NSData*)audio toAudioUrl:(NSString*)audioUrl;
+-(void) markAllPreviousMessagesAsRead:(PeppermintChatEntry*)peppermintChatEntry;
 
 #pragma mark - Chat Helper Functions
 +(NSPredicate*) unreadMessagesPredicateForEmail:(NSString*) email;
 -(NSUInteger) unreadMessageCountOfAllChats;
 +(NSSet*) receivedMessagesEmailSet;
+
 
 @end

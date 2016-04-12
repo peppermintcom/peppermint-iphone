@@ -31,4 +31,7 @@
 - (NSArray *) getResultsFromEntity:(Class)entityClass predicateOrNil:(NSPredicate *)predicateOrNil ascSortStringOrNil:(NSArray *)ascSortStringOrNil descSortStringOrNil:(NSArray *)descSortStringOrNil;
 - (NSManagedObject *)objectWithURI:(NSURL *)uri;
 
+//Batch update
+-(NSInteger) executeBatchUpdate:(Class)entityClass predicateOrNil:(NSPredicate *)predicateOrNil propertiesToConnect:(NSDictionary*)propertiesToConnect;
+
 @end

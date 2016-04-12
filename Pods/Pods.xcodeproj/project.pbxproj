@@ -6224,6 +6224,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 09C81F22F880F6DE64AF27DC84B4D016 /* GData.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/GData/GData-prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -6550,6 +6551,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 09C81F22F880F6DE64AF27DC84B4D016 /* GData.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/GData/GData-prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

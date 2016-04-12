@@ -125,6 +125,7 @@ SUBSCRIBE(UserLoggedOut) {
             [self textFieldDidChange:self.searchContactsTextField];
         } else if (isNavigatedToChatEntries) {
             isNavigatedToChatEntries = !isNavigatedToChatEntries;
+            [self.recentContactsModel refreshRecentContactList];
             //Add if some more action will need to be taken?
         }
     }
