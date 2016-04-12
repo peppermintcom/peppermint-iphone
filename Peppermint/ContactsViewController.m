@@ -659,6 +659,29 @@ SUBSCRIBE(UserLoggedOut) {
     }
     self.sendingInformationLabel.attributedText = [infoAttrText centerText];
     [self showMessageWithDuration:durationToHideMessage];
+    
+    [self checkShouldNavigateWithModel:messageModel];
+}
+
+-(void) checkShouldNavigateWithModel:(SendVoiceMessageModel*)sendVoiceMessageModel {
+    BOOL isInCorrectState = sendVoiceMessageModel.sendingStatus == SendingStatusSendingWithNoCancelOption;
+    if(isInCorrectState) {
+        CGFloat latency = MESSAGE_SHOW_DURATION / 4;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(latency * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            BOOL isScreenStillActive = self.navigationController.viewControllers.lastObject == self;
+            BOOL isNotRecording = self.recordingView.isHidden;
+            BOOL isKeyboardHidden = self.tableViewBottomConstraint.constant == 0;
+            BOOL noUserInterraction = isNotRecording && isKeyboardHidden;
+            if(isScreenStillActive && noUserInterraction) {
+                [self performSegueWithIdentifier:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER sender:sendVoiceMessageModel.selectedPeppermintContact];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(latency * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    MessageSendingStatusIsUpdated *messageSendingStatusIsUpdated = [MessageSendingStatusIsUpdated new];
+                    messageSendingStatusIsUpdated.sender = sendVoiceMessageModel;
+                    PUBLISH(messageSendingStatusIsUpdated);
+                });
+            }
+        });
+    }
 }
 
 #pragma mark - MessageSending status indicators

@@ -109,8 +109,8 @@ typedef enum : NSUInteger {
 }
 
 -(void) cancelMessageSending {
-    if(recordingViewStatus != RecordingViewStatusFinishing) {
-        NSLog(@"RecordingView is not in a state that is cancellable");
+    if(recordingViewStatus != RecordingViewStatusInit && recordingViewStatus != RecordingViewStatusFinishing) {
+        NSLog(@"RecordingView is not in a state that is cancellable. Status: %lu", (unsigned long)recordingViewStatus);
     } else if (!self.sendVoiceMessageModel.isCancelAble) {
         NSLog(@"sendVoiceMessageModel is not cancelable");
     } else {

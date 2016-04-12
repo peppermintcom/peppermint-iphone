@@ -53,7 +53,7 @@
     [self.holdToRecordView addGestureRecognizer:
      [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
     autoPlayModel =[AutoPlayModel sharedInstance];
-    
+    [self recordingView]; // init recording view to be able to handle status change events
     self.recordingButton.delegate = self;
     REGISTER();
 }
@@ -278,63 +278,68 @@
 }
 
 -(void) messageModel:(SendVoiceMessageModel*)messageModel isUpdatedWithStatus:(SendingStatus) sendingStatus cancelAble:(BOOL)isCacnelAble {
-    
+    BOOL shouldProcessDelegateMessage = [messageModel.selectedPeppermintContact isEqual:self.peppermintContact];
+    if(shouldProcessDelegateMessage) {
 #warning "Refactor code & merge below code with the one in 'ContactsViewController.m' "
-    
-    NSMutableAttributedString *infoAttrText = [NSMutableAttributedString new];
-    UIColor *textColor = [UIColor textFieldTintGreen];
-    self.microphoneView.hidden = self.bottomInformationLabel.hidden = YES;
-    if(sendingStatus == SendingStatusUploading) {
-        [infoAttrText addText:LOC(@"Uploading", @"Info") ofSize:13 ofColor:textColor];
-    } else if (sendingStatus == SendingStatusStarting) {
-        [infoAttrText addText:LOC(@"Starting", @"Info") ofSize:13 ofColor:textColor];
-    } else if (sendingStatus == SendingStatusSending) {
-        [infoAttrText addText:LOC(@"Sending", @"Info") ofSize:13 ofColor:textColor];
-    } else if ( sendingStatus == SendingStatusSendingWithNoCancelOption) {
-        [infoAttrText addText:LOC(@"Sending", @"Info") ofSize:15 ofColor:textColor];
-    }  else if (sendingStatus == SendingStatusSent) {
-        [infoAttrText addImageNamed:@"icon_tick" ofSize:14];
-        [infoAttrText addText:@"  " ofSize:14 ofColor:textColor];
-        [infoAttrText addText:LOC(@"Sent", @"Info") ofSize:21 ofColor:textColor];
-    }  else if (sendingStatus == SendingStatusCancelled) {
-        [infoAttrText addText:LOC(@"Cancelled", @"Info") ofSize:13 ofColor:textColor];
-    } else if (sendingStatus == SendingStatusCached) {
-        [infoAttrText addImageNamed:@"icon_warning" ofSize:10];
-        [infoAttrText addText:@" " ofSize:13 ofColor:textColor];
-        [infoAttrText addText:LOC(@"Your message will be sent later", @"Cached Info") ofSize:10 ofColor:textColor];
-    } else if (sendingStatus == SendingStatusError) {
-        [infoAttrText addImageNamed:@"icon_warning" ofSize:13];
-        [infoAttrText addText:@" " ofSize:13 ofColor:textColor];
-        [infoAttrText addText:LOC(@"An error occured", @"Info") ofSize:13 ofColor:textColor];
-    }
-    
-    if(isCacnelAble && infoAttrText.length > 0) {
-        self.cancelSendingButton.hidden = NO;
-        [infoAttrText addText:LOC(@"Tap to cancel", @"Info") ofSize:13 ofColor:[UIColor peppermintCancelOrange]];
+        
+        NSMutableAttributedString *infoAttrText = [NSMutableAttributedString new];
+        UIColor *textColor = [UIColor textFieldTintGreen];
+        self.microphoneView.hidden = self.bottomInformationLabel.hidden = YES;
+        if(sendingStatus == SendingStatusUploading) {
+            [infoAttrText addText:LOC(@"Uploading", @"Info") ofSize:13 ofColor:textColor];
+        } else if (sendingStatus == SendingStatusStarting) {
+            [infoAttrText addText:LOC(@"Starting", @"Info") ofSize:13 ofColor:textColor];
+        } else if (sendingStatus == SendingStatusSending) {
+            [infoAttrText addText:LOC(@"Sending", @"Info") ofSize:13 ofColor:textColor];
+        } else if ( sendingStatus == SendingStatusSendingWithNoCancelOption) {
+            [infoAttrText addText:LOC(@"Sending", @"Info") ofSize:15 ofColor:textColor];
+        }  else if (sendingStatus == SendingStatusSent) {
+            [infoAttrText addImageNamed:@"icon_tick" ofSize:14];
+            [infoAttrText addText:@"  " ofSize:14 ofColor:textColor];
+            [infoAttrText addText:LOC(@"Sent", @"Info") ofSize:21 ofColor:textColor];
+        }  else if (sendingStatus == SendingStatusCancelled) {
+            [infoAttrText addText:LOC(@"Cancelled", @"Info") ofSize:13 ofColor:textColor];
+        } else if (sendingStatus == SendingStatusCached) {
+            [infoAttrText addImageNamed:@"icon_warning" ofSize:10];
+            [infoAttrText addText:@" " ofSize:13 ofColor:textColor];
+            [infoAttrText addText:LOC(@"Your message will be sent later", @"Cached Info") ofSize:10 ofColor:textColor];
+        } else if (sendingStatus == SendingStatusError) {
+            [infoAttrText addImageNamed:@"icon_warning" ofSize:13];
+            [infoAttrText addText:@" " ofSize:13 ofColor:textColor];
+            [infoAttrText addText:LOC(@"An error occured", @"Info") ofSize:13 ofColor:textColor];
+        }
+        
+        if(isCacnelAble && infoAttrText.length > 0) {
+            self.cancelSendingButton.hidden = NO;
+            [infoAttrText addText:LOC(@"Tap to cancel", @"Info") ofSize:13 ofColor:[UIColor peppermintCancelOrange]];
+        } else {
+            self.cancelSendingButton.hidden = YES;
+        }
+        self.bottomInformationFullLabel.attributedText = [infoAttrText centerText];
+        
+        weakself_create();
+        switch (sendingStatus) {
+            case  SendingStatusIniting:
+            case  SendingStatusInited:
+            case  SendingStatusStarting:
+            case  SendingStatusUploading:
+            case  SendingStatusSending:
+                break;
+            case  SendingStatusSendingWithNoCancelOption:
+                [self refreshContent];
+                break;
+            case  SendingStatusError:
+            case  SendingStatusCancelled:
+            case  SendingStatusCached:
+            case  SendingStatusSent:
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(BOTTOM_RESET_IME * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [weakSelf resetBottomInformationLabel];
+                });
+                break;
+        }
     } else {
-        self.cancelSendingButton.hidden = YES;
-    }
-    self.bottomInformationFullLabel.attributedText = [infoAttrText centerText];
-    
-    weakself_create();
-    switch (sendingStatus) {
-        case  SendingStatusIniting:
-        case  SendingStatusInited:
-        case  SendingStatusStarting:
-        case  SendingStatusUploading:
-        case  SendingStatusSending:
-            break;
-        case  SendingStatusSendingWithNoCancelOption:
-            [self refreshContent];
-            break;
-        case  SendingStatusError:
-        case  SendingStatusCancelled:
-        case  SendingStatusCached:
-        case  SendingStatusSent:
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(BOTTOM_RESET_IME * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [weakSelf resetBottomInformationLabel];
-            });
-            break;
+        NSLog(@"Didn't handle RecordingView delegate call for %@ cos screen is for %@",
+              messageModel.selectedPeppermintContact.communicationChannelAddress, self.peppermintContact.communicationChannelAddress);
     }
 }
 

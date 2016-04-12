@@ -53,7 +53,7 @@
 
 - (BOOL) equals:(PeppermintContact*)peppermintContact {
     return (self.communicationChannel == peppermintContact.communicationChannel
-            && [self.communicationChannelAddress isEqualToString:peppermintContact.communicationChannelAddress]);
+            && [self.communicationChannelAddress caseInsensitiveCompare:peppermintContact.communicationChannelAddress] == NSOrderedSame);
 }
 
 -(BOOL) isIdenticalForImage:(PeppermintContact*) contactToCompare {
