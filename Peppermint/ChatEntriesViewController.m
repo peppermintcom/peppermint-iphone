@@ -105,7 +105,6 @@
 -(void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self startListeningProximitySensor];
-    [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
     [self refreshContent];
 }
 
@@ -403,8 +402,9 @@
 }
 
 -(void) stoppedPlayingMessage:(ChatTableViewCell*)chatTableViewCell {
+    BOOL isPaused = chatTableViewCell.playingModel.audioPlayer.currentTime > 0.3;
     isPlaying = NO;
-    if(scheduleRefresh) {
+    if(scheduleRefresh && !isPaused) {
         scheduleRefresh = NO;
         [self refreshContent];
     }
@@ -425,6 +425,7 @@ SUBSCRIBE(ApplicationWillResignActive) {
     if(isPlaying) {
         scheduleRefresh = YES;
     } else {
+        [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
         [self.chatEntryModel refreshPeppermintChatEntriesForContactEmail:self.peppermintContact.communicationChannelAddress];
     }
 }
