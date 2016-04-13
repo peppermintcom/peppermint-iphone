@@ -94,8 +94,11 @@
     //Transform
     CFStringTransform((__bridge CFMutableStringRef)stringToModify, NULL, kCFStringTransformStripCombiningMarks, NO);
     //Check to contain just letters
+    NSMutableCharacterSet *availableCharSet = [NSMutableCharacterSet new];
+    [availableCharSet formUnionWithCharacterSet:[NSCharacterSet alphanumericCharacterSet]];
+    [availableCharSet formUnionWithCharacterSet:[NSCharacterSet punctuationCharacterSet]];    
     NSString *resultText = [[stringToModify componentsSeparatedByCharactersInSet:
-                         [[NSCharacterSet alphanumericCharacterSet] invertedSet]] componentsJoinedByString:@""];
+                         [availableCharSet invertedSet]] componentsJoinedByString:@""];
     return resultText;
 }
 
