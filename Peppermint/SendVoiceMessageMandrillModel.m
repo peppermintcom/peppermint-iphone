@@ -53,10 +53,12 @@
     NSString* nameSurname = @"";
     if(self.peppermintMessageSender.nameSurname.length > 0) {
         nameSurname = self.peppermintMessageSender.nameSurname;
+        nameSurname = [nameSurname normalizeText];
     }
     NSString *email = @"";
     if(self.peppermintMessageSender.email.length > 0) {
         email = self.peppermintMessageSender.email;
+        email = [email normalizeText];
     }
   
     NSString * signature = @"";
@@ -74,10 +76,7 @@
     mandrillMessage = [MandrillMessage new];
     mandrillMessage.from_email = LOC(@"support@peppermint.com", @"Support Email"); //self.peppermintMessageSender.email;
     
-    NSString *fromName = [NSString stringWithFormat:@"%@ [%@]",
-                          [nameSurname normalizeText],
-                          [self.peppermintMessageSender.email normalizeText]];
-    
+    NSString *fromName = [NSString stringWithFormat:@"%@ [%@]", nameSurname, email];
     mandrillMessage.from_name = fromName;
     mandrillMessage.subject = subject;
     
@@ -86,8 +85,8 @@
     mandrillMessage.global_merge_vars = [self mandrillNameContentPairForUrlPath:url extension:_extension signature:signature duration:_duration canonicalUrl:canonicalUrl];
     
     MandrillToObject *recipient = [MandrillToObject new];
-    recipient.email = self.selectedPeppermintContact.communicationChannelAddress;
-    recipient.name = self.selectedPeppermintContact.nameSurname;
+    recipient.email = [self.selectedPeppermintContact.communicationChannelAddress normalizeText];
+    recipient.name = [self.selectedPeppermintContact.nameSurname normalizeText];
     recipient.type = TYPE_TO;
     [mandrillMessage.to addObject:recipient];
     

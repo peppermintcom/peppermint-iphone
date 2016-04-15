@@ -89,17 +89,27 @@
 -(NSString*) normalizeText {
     //Fix locale
     NSString *nonLocaleString = [self stringByFoldingWithOptions:NSDiacriticInsensitiveSearch locale:[NSLocale currentLocale]];
+    
     //Decompose text
     NSMutableString *stringToModify = [[nonLocaleString decomposedStringWithCanonicalMapping] mutableCopy];
     //Transform
     CFStringTransform((__bridge CFMutableStringRef)stringToModify, NULL, kCFStringTransformStripCombiningMarks, NO);
     //Check to contain just letters
     NSMutableCharacterSet *availableCharSet = [NSMutableCharacterSet new];
-    [availableCharSet formUnionWithCharacterSet:[NSCharacterSet alphanumericCharacterSet]];
-    [availableCharSet formUnionWithCharacterSet:[NSCharacterSet punctuationCharacterSet]];    
+    //[availableCharSet formUnionWithCharacterSet:[NSCharacterSet alphanumericCharacterSet]];
+    [availableCharSet formUnionWithCharacterSet:[self asciiCharacterSet]];
+    [availableCharSet formUnionWithCharacterSet:[NSCharacterSet punctuationCharacterSet]];
     NSString *resultText = [[stringToModify componentsSeparatedByCharactersInSet:
-                         [availableCharSet invertedSet]] componentsJoinedByString:@""];
+                         [availableCharSet invertedSet]] componentsJoinedByString:@"_"];
     return resultText;
+}
+
+-(NSCharacterSet*) asciiCharacterSet {
+    NSMutableString *asciiCharacters = [NSMutableString string];
+    for (NSInteger i = 32; i < 127; i++)  {
+        [asciiCharacters appendFormat:@"%c", (char)i];
+    }
+    return [NSCharacterSet characterSetWithCharactersInString:asciiCharacters];
 }
 
 @end
