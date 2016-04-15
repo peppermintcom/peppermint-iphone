@@ -462,10 +462,7 @@ SUBSCRIBE(DetachSuccess) {
         BOOL isInCorrectScreen = [vc isKindOfClass:[ChatEntriesViewController class]]
         && [((ChatEntriesViewController*)vc).peppermintContact.communicationChannelAddress isEqualToString:email];
         
-        if(isInCorrectScreen) {
-            ChatEntriesViewController *chatEntriesViewController = (ChatEntriesViewController*)vc;
-            [chatEntriesViewController refreshContent];
-        } else {
+        if(!isInCorrectScreen) {
             [nvc popToRootViewControllerAnimated:NO];
             ContactsViewController *contactsViewController = (ContactsViewController*)[nvc.viewControllers objectAtIndex:0];
             if(contactsViewController) {
