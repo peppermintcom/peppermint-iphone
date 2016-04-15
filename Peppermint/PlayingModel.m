@@ -9,10 +9,7 @@
 #import "PlayingModel.h"
 #import "AppDelegate.h"
 
-@interface PlayingModel() <AVAudioPlayerDelegate> {
-    NSString *audioPath;
-}
-
+@interface PlayingModel() <AVAudioPlayerDelegate>
 @end
 
 @implementation PlayingModel {
@@ -39,11 +36,11 @@
 }
 
 -(void) initBeginRecordingSound {
-    audioPath = [[NSBundle mainBundle]pathForResource:@"begin_record" ofType:@"mp3"];
+    _audioPath = [[NSBundle mainBundle]pathForResource:@"begin_record" ofType:@"mp3"];
 }
 
 -(void) initReceivedMessageSound {
-    audioPath = [[NSBundle mainBundle]pathForResource:@"water_drop" ofType:@"mp3"];
+    _audioPath = [[NSBundle mainBundle]pathForResource:@"water_drop" ofType:@"mp3"];
 }
 
 -(void) prepareAudioForPath:(NSString*) myAudioPath {
@@ -63,7 +60,7 @@
 }
 
 -(BOOL) playPreparedAudiowithCompetitionBlock:(PlayerCompletitionBlock) playerCompletitionBlock {
-    [self prepareAudioForPath:audioPath];
+    [self prepareAudioForPath:self.audioPath];
     cachedBlock = playerCompletitionBlock;
     [_audioPlayer stop];
     _audioPlayer.currentTime = 0;
@@ -121,6 +118,18 @@
             });
         }
     }
+}
+
+-(BOOL) isEqual:(id)object {
+    if (![object isKindOfClass:[PlayingModel class]]) {
+        return NO;
+    }
+    
+    PlayingModel * other = (PlayingModel *)object;
+    BOOL result = [other.audioPath isEqual:self.audioPath]
+    || other.audioPlayer == self.audioPlayer
+    || [other.audioPlayer.data isEqual:self.audioPlayer.data];
+    return result;
 }
 
 #warning "Fade animation can be added to voice"

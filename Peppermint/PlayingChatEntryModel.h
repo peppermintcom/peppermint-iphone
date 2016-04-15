@@ -11,7 +11,6 @@
 @class PeppermintChatEntry;
 
 @interface PlayingChatEntryModel : BaseModel
-@property (nonatomic, strong, readonly) PlayingModel *cachedPlayingModel;
 
 + (instancetype) sharedInstance;
 -(PlayingModel*) playModelForChatEntry:(PeppermintChatEntry*) peppermintChatEntry;

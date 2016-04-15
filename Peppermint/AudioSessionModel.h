@@ -15,5 +15,6 @@
 -(void) attachAVAudioProcessObject:(id)item;
 -(BOOL) updateSessionState:(BOOL) destinationSessionState;
 -(BOOL) isAudioSessionActive;
+-(void) shutSessionDown;
 
 @end

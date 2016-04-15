@@ -12,6 +12,7 @@
 
 @implementation PlayingChatEntryModel {
     PeppermintChatEntry *cachedPeppermintChatEntry;
+    PlayingModel *cachedPlayingModel;
 }
 
 + (instancetype) sharedInstance {
@@ -26,7 +27,7 @@
 -(id) initShared {
     self = [super init];
     if(self) {
-        _cachedPlayingModel = nil;
+        cachedPlayingModel = nil;
         cachedPeppermintChatEntry = nil;
     }
     return self;
@@ -34,25 +35,25 @@
 
 -(PlayingModel*) playModelForChatEntry:(PeppermintChatEntry*) peppermintChatEntry {
     PlayingModel *playingModel = nil;
-    if(self.cachedPlayingModel
+    if(cachedPlayingModel
        && [peppermintChatEntry isEqual:cachedPeppermintChatEntry]
        && peppermintChatEntry.audio
-       && [self.cachedPlayingModel.audioPlayer.data isEqual:peppermintChatEntry.audio]) {
-        playingModel = self.cachedPlayingModel;
+       && [cachedPlayingModel.audioPlayer.data isEqual:peppermintChatEntry.audio]) {
+        playingModel = cachedPlayingModel;
     }
     return playingModel;
 }
 
 -(void) cachePlayingModel:(PlayingModel*)playingModel forChatEntry:(PeppermintChatEntry*) peppermintChatEntry {
-    [_cachedPlayingModel stop];
+    [cachedPlayingModel stop];
     cachedPeppermintChatEntry = peppermintChatEntry;
-    _cachedPlayingModel = playingModel;
+    cachedPlayingModel = playingModel;
 }
 
 SUBSCRIBE(StopAllPlayingMessages) {
-    if(self.cachedPlayingModel) {
-        [self.cachedPlayingModel.audioPlayer stop];
-        _cachedPlayingModel = nil;
+    if(cachedPlayingModel) {
+        [cachedPlayingModel.audioPlayer stop];
+        cachedPlayingModel = nil;
     }
 }
 

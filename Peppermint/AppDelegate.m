@@ -272,6 +272,8 @@
             bgTaskForSync = UIBackgroundTaskInvalid;
         }];
     }
+    
+    [[AudioSessionModel sharedInstance] shutSessionDown];
 }
 
 SUBSCRIBE(DetachSuccess) {
@@ -290,8 +292,7 @@ SUBSCRIBE(DetachSuccess) {
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.    
-    [[AudioSessionModel sharedInstance] updateSessionState:NO];
+    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [[CacheModel sharedInstance] cacheOngoingMessages];
     [self saveContext];
 }

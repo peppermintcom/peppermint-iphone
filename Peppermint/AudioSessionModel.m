@@ -138,17 +138,7 @@
 - (void)audioSessionInterrupted:(NSNotification*)notification {
     AVAudioSessionInterruptionType type = [notification.userInfo[AVAudioSessionInterruptionTypeKey] integerValue];
     if (type == AVAudioSessionInterruptionTypeBegan ) {
-        for(NSObject *item in activeAudioItemsArray) {
-            if([item isKindOfClass:[AVAudioPlayer class]]) {
-                AVAudioPlayer *player = (AVAudioPlayer*)item;
-                [player pause];
-            }
-            if([item isKindOfClass:[AVAudioRecorder class]]) {
-                AVAudioRecorder *recorder = (AVAudioRecorder*)item;
-                //We don't stop recorder. Ifwe stop it will cause backup not to work!
-                [recorder pause];
-            }
-        }
+        [self pauseActiveAudioItems];
     } else if ( type == AVAudioSessionInterruptionTypeEnded) {
         NSLog(@"AVAudioSessionInterruptionTypeEnded");
     }
@@ -201,6 +191,23 @@
     }
 }
 
+-(void) pauseActiveAudioItems {
+    for(NSObject *item in activeAudioItemsArray) {
+        if (item && [item isKindOfClass:[AVAudioRecorder class]]) {
+            AVAudioRecorder *recorder = (AVAudioRecorder*)item;
+            if(recorder.isRecording) {
+                //We don't stop recorder. If we stop it will cause backup not to work!
+                [recorder pause];
+            }
+        } else if (item && [item isKindOfClass:[AVAudioPlayer class]]) {
+            AVAudioPlayer *player = (AVAudioPlayer*)item;
+            if(player.isPlaying) {
+                [player pause];
+            }
+        }
+    }
+}
+
 -(void) checkAndUpdateRoutingIfNeeded {
     NSError *error;
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
@@ -227,6 +234,18 @@ SUBSCRIBE(ProximitySensorValueIsUpdated) {
 
 -(BOOL) isAudioSessionActive {
     return currentSessionState;
+}
+
+#pragma mark - App is in background
+
+SUBSCRIBE(ApplicationWillResignActive) {
+    [self pauseActiveAudioItems];
+}
+
+-(void) shutSessionDown {
+    [sessionDeactivateTimer invalidate];
+    sessionDeactivateTimer = nil;
+    [self deactivateSessionState];
 }
 
 @end

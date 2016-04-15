@@ -174,7 +174,6 @@
     if(error) {
         NSLog(@"error is:%@", error.localizedDescription);
     } else {
-        NSLog(@"%@ objects updated", batchUpdateResult.result);
         numberOfUpdatedEntities = batchUpdateResult.result;
     }
     return numberOfUpdatedEntities.integerValue;

@@ -12,6 +12,7 @@
 typedef void(^PlayerCompletitionBlock)(void);
 
 @interface PlayingModel : BaseModel
+@property (strong, nonnull, readonly) NSString *audioPath;
 @property (strong, nonatomic, readonly) AVAudioPlayer *audioPlayer;
 
 -(void) initBeginRecordingSound;

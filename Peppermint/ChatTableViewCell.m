@@ -232,7 +232,10 @@
     } else if(audioData) {
         weakself_create();
         result = [_playingModel playData:audioData playerCompletitionBlock:^{
-            [[PlayingChatEntryModel sharedInstance] cachePlayingModel:nil forChatEntry:nil];
+            PlayingModel *cachedPlayingModel = [[PlayingChatEntryModel sharedInstance] playModelForChatEntry:weakSelf.peppermintChatEntry];
+            if([cachedPlayingModel isEqual:weakSelf.playingModel]) {
+                [[PlayingChatEntryModel sharedInstance] cachePlayingModel:nil forChatEntry:nil];
+            }
             [weakSelf.delegate stoppedPlayingMessage:weakSelf];
         }];
     }
@@ -264,14 +267,22 @@
 }
 
 -(void) stopPlayingCell {
-    if([PlayingChatEntryModel sharedInstance].cachedPlayingModel != self.playingModel) {
-        [[PlayingChatEntryModel sharedInstance] cachePlayingModel:nil forChatEntry:nil];
+    PlayingModel *cachedPlayingModel = [[PlayingChatEntryModel sharedInstance] playModelForChatEntry:self.peppermintChatEntry];
+    if(![self.playingModel isEqual:cachedPlayingModel]) {
+        [cachedPlayingModel stop];
     }
     for(ChatTableViewCell *cell in [self.tableView visibleCells]) {
         if(cell != self && cell.playingModel.audioPlayer.isPlaying) {
             [cell.playingModel stop];
             cell.playPauseImageView.image = imagePlay;
         }
+    }
+}
+
+SUBSCRIBE(ApplicationDidBecomeActive) {
+    PlayingModel *cachedPlayingModel = [[PlayingChatEntryModel sharedInstance] playModelForChatEntry:self.peppermintChatEntry];
+    if(cachedPlayingModel.audioPlayer.isPlaying) {
+        [cachedPlayingModel.audioPlayer stop];
     }
 }
 
@@ -358,7 +369,8 @@ SUBSCRIBE(ProximitySensorValueIsUpdated) {
 }
 
 - (void) resetContent {
-    if(_playingModel != [PlayingChatEntryModel sharedInstance].cachedPlayingModel) {
+    PlayingModel *cachedPlayingModel = [[PlayingChatEntryModel sharedInstance] playModelForChatEntry:self.peppermintChatEntry];
+    if(![_playingModel isEqual:cachedPlayingModel]) {
         [_playingModel stop];
     }
 }
