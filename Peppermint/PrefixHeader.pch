@@ -109,6 +109,7 @@ sharedObject;\
 #define DEFAULTS_KEY_TUTORIAL_TOOLTIP_IS_SHOWED @"isTutorialTooltipShowed"
 #define DEFAULTS_KEY_IS_FIRST_RUN               @"isFirstRun"
 #define DEFAULTS_KEY_DONT_SHOW_SMS_WARNING      @"DontShowSMSWarning"
+#define DEFAULTS_KEY_QUICK_SYNC_LEVEL        @"QuickSyncFinished"
 
 #define DEFAULTS_KEY_CACHED_SENDVOCIEMESSAGE_MODEL @"CachedSendVoiceMessageModel"
 
@@ -117,7 +118,7 @@ sharedObject;\
 
 #pragma mark - Record Constraint Definition
 #define MAX_RECORD_TIME             300           //Seconds
-#define MIN_VOICE_MESSAGE_LENGTH    2            //Seconds
+#define MIN_VOICE_MESSAGE_LENGTH    1            //Seconds
 #define ANIM_TIME                   0.3
 #define WARN_TIME                   1.5
 
