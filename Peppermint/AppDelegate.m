@@ -416,7 +416,10 @@ SUBSCRIBE(DetachSuccess) {
         [playingModel playPreparedAudiowithCompetitionBlock:nil];
     }
     
-    hasFinishedFirstSync = YES;
+    BOOL didFinishAllSyncLevels = ([[PeppermintMessageSender sharedInstance] defaultLastMessageSyncDate] == nil);
+    if(didFinishAllSyncLevels) {
+        hasFinishedFirstSync = YES;
+    }
     
     RefreshIncomingMessagesCompletedWithSuccess *refreshIncomingMessagesCompletedWithSuccess = [RefreshIncomingMessagesCompletedWithSuccess new];
     refreshIncomingMessagesCompletedWithSuccess.sender = self;

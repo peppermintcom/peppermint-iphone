@@ -46,6 +46,7 @@ typedef enum : NSUInteger {
 -(BOOL) isValidToUseApp;
 -(BOOL) isValidToSendMessage;
 -(NSString*) loginMethod;
+-(NSDate*) defaultLastMessageSyncDate;
 -(void) clearSender;
 -(BOOL) isInMailVerificationProcess;
 -(void) verifyEmail;

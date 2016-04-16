@@ -242,9 +242,21 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
 
 -(void) updateLastSyncDatesInPeppermintMessageSender {
     PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
-    peppermintMessageSender.lastMessageSyncDate = [self lastMessageSyncDateForRecipient];
-    peppermintMessageSender.lastMessageSyncDateForSentMessages = [self lastMessageSyncDateForSender];
-    _lastMessageSyncDateForRecipient = _lastMessageSyncDateForSender = nil;
+    BOOL shouldManipulateSyncDate = ([peppermintMessageSender defaultLastMessageSyncDate] != nil);
+    if(shouldManipulateSyncDate) {
+        NSNumber *currentQuickSyncLevel = defaults_object(DEFAULTS_KEY_QUICK_SYNC_LEVEL);
+        NSNumber *nextQuickSyncLevel = [NSNumber numberWithInt:(currentQuickSyncLevel.intValue + 1)];
+        defaults_set_object(DEFAULTS_KEY_QUICK_SYNC_LEVEL, nextQuickSyncLevel);
+        
+        peppermintMessageSender.lastMessageSyncDate = [peppermintMessageSender defaultLastMessageSyncDate];
+        peppermintMessageSender.lastMessageSyncDateForSentMessages = [peppermintMessageSender defaultLastMessageSyncDate];
+        _lastMessageSyncDateForRecipient = _lastMessageSyncDateForSender = nil;
+        [self makeSyncRequestForMessages];
+    } else {
+        peppermintMessageSender.lastMessageSyncDate = [self lastMessageSyncDateForRecipient];
+        peppermintMessageSender.lastMessageSyncDateForSentMessages = [self lastMessageSyncDateForSender];
+        _lastMessageSyncDateForRecipient = _lastMessageSyncDateForSender = nil;
+    }
     [peppermintMessageSender save];
 }
 
