@@ -202,17 +202,6 @@ SUBSCRIBE(SetUpAccountWithRecorderCompleted) {
         [PeppermintMessageSender sharedInstance].isAccountSetUpWithRecorder = YES;
         [[PeppermintMessageSender sharedInstance] save];
         NSLog(@"SetUpAccountWithRecorderCompleted");
-        
-#ifdef DEBUG
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[[UIAlertView alloc] initWithTitle:@"Success"
-                                        message:@"SetUpAccountWithRecorderCompleted, now you can receive remote notifications!"
-                                       delegate:nil
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles:nil] show];
-        });
-#endif
-        
     }
 }
 

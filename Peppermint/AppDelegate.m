@@ -401,7 +401,6 @@ SUBSCRIBE(DetachSuccess) {
 }
 
 -(void) peppermintChatEntrySavedWithSuccess:(NSArray<PeppermintChatEntry*>*) savedPeppermintChatEnryArray {
-    [self finishSyncBackgroundTask];
     [self hideAppCoverLoadingView];
     NSArray<PeppermintChatEntry*> *newMessagesArray = [self filterNewIncomingMessagesInArray:savedPeppermintChatEnryArray];
     [self refreshBadgeNumber];
@@ -439,6 +438,7 @@ SUBSCRIBE(DetachSuccess) {
             NSLog(@"UIBackgroundFetchResultNoData");
         }
     }
+    [self finishSyncBackgroundTask];
 }
 
 -(void) operationFailure:(NSError *)error {
