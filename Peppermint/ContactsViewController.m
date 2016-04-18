@@ -8,7 +8,7 @@
 
 #import "ContactsViewController.h"
 #import "RecordingViewController.h"
-#import "SendVoiceMessageMandrillModel.h"
+#import "SendVoiceMessageSparkPostModel.h"
 #import "SendVoiceMessageSMSModel.h"
 #import "SlideMenuViewController.h"
 #import "FastReplyModel.h"
@@ -537,7 +537,7 @@ SUBSCRIBE(UserLoggedOut) {
         
         SendVoiceMessageModel *sendVoiceMessageModel = nil;
         if(selectedContact.communicationChannel == CommunicationChannelEmail) {
-            sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
+            sendVoiceMessageModel = [SendVoiceMessageSparkPostModel new];
         } else if (selectedContact.communicationChannel == CommunicationChannelSMS) {
             sendVoiceMessageModel = [SendVoiceMessageSMSModel new];
         }

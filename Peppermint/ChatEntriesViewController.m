@@ -7,7 +7,7 @@
 //
 
 #import "ChatEntriesViewController.h"
-#import "SendVoiceMessageMandrillModel.h"
+#import "SendVoiceMessageSparkPostModel.h"
 #import "RecordingGestureButton.h"
 #import "FoggyRecordingView.h"
 #import "SendVoiceMessageSMSModel.h"
@@ -216,7 +216,7 @@
     } else {
         SendVoiceMessageModel *sendVoiceMessageModel = nil;
         if(self.peppermintContact.communicationChannel == CommunicationChannelEmail) {
-            sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
+            sendVoiceMessageModel = [SendVoiceMessageSparkPostModel new];
         } else if (self.peppermintContact.communicationChannel == CommunicationChannelSMS) {
             sendVoiceMessageModel = [SendVoiceMessageSMSModel new];
         }

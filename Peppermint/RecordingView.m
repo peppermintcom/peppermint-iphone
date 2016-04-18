@@ -9,7 +9,7 @@
 #import "RecordingView.h"
 #import "LoginNavigationViewController.h"
 #import "SMSChargeWarningView.h"
-#import "SendVoiceMessageMandrillModel.h"
+#import "SendVoiceMessageSparkPostModel.h"
 
 #define LATENCY_TO_RECOVER     3
 
@@ -159,17 +159,17 @@ typedef enum : NSUInteger {
     if(![email isValidEmail]) {
         NSLog(@"%@ is not a valid email", email);
     } else {
-        SendVoiceMessageMandrillModel *sendVoiceMessageMandrillModel = [SendVoiceMessageMandrillModel new];
-        sendVoiceMessageMandrillModel.selectedPeppermintContact = self.sendVoiceMessageModel.selectedPeppermintContact;
-        sendVoiceMessageMandrillModel.selectedPeppermintContact.communicationChannel = CommunicationChannelEmail;
-        sendVoiceMessageMandrillModel.selectedPeppermintContact.communicationChannelAddress = email;
-        sendVoiceMessageMandrillModel.peppermintMessageSender = self.sendVoiceMessageModel.peppermintMessageSender;
-        self.sendVoiceMessageModel = sendVoiceMessageMandrillModel;
+        SendVoiceMessageMailClientModel *sendVoiceMessageMailClientModel = [SendVoiceMessageSparkPostModel new];
+        sendVoiceMessageMailClientModel.selectedPeppermintContact = self.sendVoiceMessageModel.selectedPeppermintContact;
+        sendVoiceMessageMailClientModel.selectedPeppermintContact.communicationChannel = CommunicationChannelEmail;
+        sendVoiceMessageMailClientModel.selectedPeppermintContact.communicationChannelAddress = email;
+        sendVoiceMessageMailClientModel.peppermintMessageSender = self.sendVoiceMessageModel.peppermintMessageSender;
+        self.sendVoiceMessageModel = sendVoiceMessageMailClientModel;
         self.sendVoiceMessageModel.delegate = self;
         [self triggerMessageSendProcess];
         
         CustomContactModel *customContactModel = [CustomContactModel new];
-        [customContactModel save:sendVoiceMessageMandrillModel.selectedPeppermintContact];
+        [customContactModel save:sendVoiceMessageMailClientModel.selectedPeppermintContact];
     };
 }
 

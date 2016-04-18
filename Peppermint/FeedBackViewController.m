@@ -8,7 +8,7 @@
 
 #import "FeedBackViewController.h"
 #import "PeppermintContact.h"
-#import "SendVoiceMessageMandrillModel.h"
+#import "SendVoiceMessageSparkPostModel.h"
 #import "ProximitySensorModel.h"
 
 #define TITLE_TEXT_SIZE                     20
@@ -95,7 +95,7 @@
     if(peppermintContact.communicationChannel == CommunicationChannelEmail) {
         CGRect cellRect = [self.tableView rectForRowAtIndexPath:indexPath];
         cellRect = [self.tableView convertRect:cellRect toView:self.view];
-        SendVoiceMessageEmailModel *sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
+        SendVoiceMessageEmailModel *sendVoiceMessageModel = [SendVoiceMessageSparkPostModel new];
         sendVoiceMessageModel.subject = LOC(@"Feedback Subject", @"Feedback Subject");
         sendVoiceMessageModel.selectedPeppermintContact = peppermintContact;
         self.recordingView.sendVoiceMessageModel = sendVoiceMessageModel;

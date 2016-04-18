@@ -7,7 +7,7 @@
 //
 
 #import "RecordingViewController.h"
-#import "SendVoiceMessageMandrillModel.h"
+#import "SendVoiceMessageSparkPostModel.h"
 #import "AppDelegate.h"
 #import "LoginNavigationViewController.h"
 
@@ -242,7 +242,7 @@ SUBSCRIBE(MessageSendingStatusIsUpdated) {
     RecordingViewController *recordingViewController = [storyboard instantiateViewControllerWithIdentifier:VIEWCONTROLLER_RECORDINGVIEWCONTROLLER];
     
     [recordingViewController.recordingModel cleanCache];
-    recordingViewController.sendVoiceMessageModel = [SendVoiceMessageMandrillModel new];
+    recordingViewController.sendVoiceMessageModel = [SendVoiceMessageSparkPostModel new];
     recordingViewController.sendVoiceMessageModel.delegate = recordingViewController;
     recordingViewController.sendVoiceMessageModel.selectedPeppermintContact = peppermintContact;
     

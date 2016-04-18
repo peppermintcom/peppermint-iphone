@@ -117,6 +117,13 @@
 		B1A366951BDC92FF00852B52 /* UploadsResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A366941BDC92FF00852B52 /* UploadsResponse.m */; };
 		B1A4AA511BF4DA9D005D55CB /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A4AA501BF4DA9D005D55CB /* AccountViewController.m */; };
 		B1B2F47D1C73273A003A4220 /* notification.aiff in Resources */ = {isa = PBXBuildFile; fileRef = B1B2F47C1C73273A003A4220 /* notification.aiff */; };
+		B1B4BF7B1CC4E61D004D4A6E /* SparkPostService.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B4BF7A1CC4E61D004D4A6E /* SparkPostService.m */; };
+		B1B4BF7F1CC507E3004D4A6E /* SparkPostRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B4BF7E1CC507E3004D4A6E /* SparkPostRequest.m */; };
+		B1B4BF821CC5093A004D4A6E /* SparkPostSubstitutionData.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B4BF811CC5093A004D4A6E /* SparkPostSubstitutionData.m */; };
+		B1B4BF851CC5209D004D4A6E /* SparkPostRecipient.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B4BF841CC5209D004D4A6E /* SparkPostRecipient.m */; };
+		B1B4BF881CC520FA004D4A6E /* SparkPostContent.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B4BF871CC520FA004D4A6E /* SparkPostContent.m */; };
+		B1B4BF8B1CC52328004D4A6E /* SendVoiceMessageSparkPostModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B4BF8A1CC52328004D4A6E /* SendVoiceMessageSparkPostModel.m */; };
+		B1B4BF8E1CC524B8004D4A6E /* SendVoiceMessageMailClientModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B4BF8D1CC524B8004D4A6E /* SendVoiceMessageMailClientModel.m */; };
 		B1B801911C3FF69B00958885 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B801901C3FF69B00958885 /* AboutViewController.m */; };
 		B1BB1E5F1BD35CD300A1CE45 /* MandrillService.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB1E5E1BD35CD300A1CE45 /* MandrillService.m */; };
 		B1BB1E631BD364FB00A1CE45 /* AFNetworkActivityLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB1E621BD364FB00A1CE45 /* AFNetworkActivityLogger.m */; };
@@ -479,6 +486,20 @@
 		B1A4AA501BF4DA9D005D55CB /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
 		B1A792451C6D9F8300254528 /* PushKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PushKit.framework; path = System/Library/Frameworks/PushKit.framework; sourceTree = SDKROOT; };
 		B1B2F47C1C73273A003A4220 /* notification.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = notification.aiff; sourceTree = "<group>"; };
+		B1B4BF791CC4E61D004D4A6E /* SparkPostService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SparkPostService.h; sourceTree = "<group>"; };
+		B1B4BF7A1CC4E61D004D4A6E /* SparkPostService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SparkPostService.m; sourceTree = "<group>"; };
+		B1B4BF7D1CC507E3004D4A6E /* SparkPostRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SparkPostRequest.h; sourceTree = "<group>"; };
+		B1B4BF7E1CC507E3004D4A6E /* SparkPostRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SparkPostRequest.m; sourceTree = "<group>"; };
+		B1B4BF801CC5093A004D4A6E /* SparkPostSubstitutionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SparkPostSubstitutionData.h; sourceTree = "<group>"; };
+		B1B4BF811CC5093A004D4A6E /* SparkPostSubstitutionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SparkPostSubstitutionData.m; sourceTree = "<group>"; };
+		B1B4BF831CC5209D004D4A6E /* SparkPostRecipient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SparkPostRecipient.h; sourceTree = "<group>"; };
+		B1B4BF841CC5209D004D4A6E /* SparkPostRecipient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SparkPostRecipient.m; sourceTree = "<group>"; };
+		B1B4BF861CC520FA004D4A6E /* SparkPostContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SparkPostContent.h; sourceTree = "<group>"; };
+		B1B4BF871CC520FA004D4A6E /* SparkPostContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SparkPostContent.m; sourceTree = "<group>"; };
+		B1B4BF891CC52328004D4A6E /* SendVoiceMessageSparkPostModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVoiceMessageSparkPostModel.h; sourceTree = "<group>"; };
+		B1B4BF8A1CC52328004D4A6E /* SendVoiceMessageSparkPostModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendVoiceMessageSparkPostModel.m; sourceTree = "<group>"; };
+		B1B4BF8C1CC524B8004D4A6E /* SendVoiceMessageMailClientModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVoiceMessageMailClientModel.h; sourceTree = "<group>"; };
+		B1B4BF8D1CC524B8004D4A6E /* SendVoiceMessageMailClientModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendVoiceMessageMailClientModel.m; sourceTree = "<group>"; };
 		B1B8018F1C3FF69B00958885 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		B1B801901C3FF69B00958885 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		B1BB1E5D1BD35CD300A1CE45 /* MandrillService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrillService.h; sourceTree = "<group>"; };
@@ -1231,6 +1252,42 @@
 			name = FeedBack;
 			sourceTree = "<group>";
 		};
+		B1B4BF7C1CC507B3004D4A6E /* SparkPost */ = {
+			isa = PBXGroup;
+			children = (
+				B1B4BF7D1CC507E3004D4A6E /* SparkPostRequest.h */,
+				B1B4BF7E1CC507E3004D4A6E /* SparkPostRequest.m */,
+				B1B4BF801CC5093A004D4A6E /* SparkPostSubstitutionData.h */,
+				B1B4BF811CC5093A004D4A6E /* SparkPostSubstitutionData.m */,
+				B1B4BF831CC5209D004D4A6E /* SparkPostRecipient.h */,
+				B1B4BF841CC5209D004D4A6E /* SparkPostRecipient.m */,
+				B1B4BF861CC520FA004D4A6E /* SparkPostContent.h */,
+				B1B4BF871CC520FA004D4A6E /* SparkPostContent.m */,
+			);
+			name = SparkPost;
+			sourceTree = "<group>";
+		};
+		B1B4BF8F1CC524BF004D4A6E /* MailClient */ = {
+			isa = PBXGroup;
+			children = (
+				B1B4BF901CC524DB004D4A6E /* Base */,
+				B13B076B1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.h */,
+				B13B076C1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m */,
+				B1B4BF891CC52328004D4A6E /* SendVoiceMessageSparkPostModel.h */,
+				B1B4BF8A1CC52328004D4A6E /* SendVoiceMessageSparkPostModel.m */,
+			);
+			name = MailClient;
+			sourceTree = "<group>";
+		};
+		B1B4BF901CC524DB004D4A6E /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				B1B4BF8C1CC524B8004D4A6E /* SendVoiceMessageMailClientModel.h */,
+				B1B4BF8D1CC524B8004D4A6E /* SendVoiceMessageMailClientModel.m */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
 		B1BB1E601BD364EC00A1CE45 /* Logger */ = {
 			isa = PBXGroup;
 			children = (
@@ -1245,6 +1302,7 @@
 			children = (
 				B15B15B51BDBC15900C0C171 /* AWS */,
 				B15B15B41BDBC14000C0C171 /* Mandrill */,
+				B1B4BF7C1CC507B3004D4A6E /* SparkPost */,
 			);
 			name = Entity;
 			sourceTree = "<group>";
@@ -1336,8 +1394,7 @@
 				B1DF98A11CB7713A005ED222 /* Base */,
 				B1EF40EC1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.h */,
 				B1EF40ED1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.m */,
-				B13B076B1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.h */,
-				B13B076C1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m */,
+				B1B4BF8F1CC524BF004D4A6E /* MailClient */,
 			);
 			name = Email;
 			sourceTree = "<group>";
@@ -1413,6 +1470,8 @@
 				B1BB1E5E1BD35CD300A1CE45 /* MandrillService.m */,
 				B15B15BC1BDBC31F00C0C171 /* AWSService.h */,
 				B15B15BD1BDBC31F00C0C171 /* AWSService.m */,
+				B1B4BF791CC4E61D004D4A6E /* SparkPostService.h */,
+				B1B4BF7A1CC4E61D004D4A6E /* SparkPostService.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -1971,6 +2030,7 @@
 				D0AC07CF1C48223800F9CF6F /* JSONValueTransformer.m in Sources */,
 				B17B9A2A1C60CCDD00B081F7 /* SetUpRecorderRequest.m in Sources */,
 				D0D70D451C0495680068AB20 /* LoginWithEmailViewController.m in Sources */,
+				B1B4BF7B1CC4E61D004D4A6E /* SparkPostService.m in Sources */,
 				B184A0A71C1B0CF20087BB9C /* JwtInformation.m in Sources */,
 				B1D1E2C31CA04149008CFCB7 /* NSDate_Addition.m in Sources */,
 				B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */,
@@ -2029,6 +2089,7 @@
 				B15B15C41BDBC8CB00C0C171 /* RecorderResponse.m in Sources */,
 				B15FDE7F1C117CCE007100EC /* GoogleContact.m in Sources */,
 				B1D2A6DB1C2037FB002BD6DF /* FoggyRecordingView.m in Sources */,
+				B1B4BF8E1CC524B8004D4A6E /* SendVoiceMessageMailClientModel.m in Sources */,
 				B17B3D641BB6AE8B009B8BC5 /* RecordingViewController.m in Sources */,
 				D0AC07DB1C48227900F9CF6F /* A0SimpleKeychain.m in Sources */,
 				B15B15B81BDBC17300C0C171 /* Recorder.m in Sources */,
@@ -2048,12 +2109,14 @@
 				B1BB1E5F1BD35CD300A1CE45 /* MandrillService.m in Sources */,
 				D0AC07CE1C48223500F9CF6F /* JSONKeyMapper.m in Sources */,
 				B1F93E981BC8E328005F2128 /* Repository.m in Sources */,
+				B1B4BF881CC520FA004D4A6E /* SparkPostContent.m in Sources */,
 				B17B9A2D1C60F34000B081F7 /* MessageRequest.m in Sources */,
 				D0AC07D81C48225100F9CF6F /* JSONHTTPClient.m in Sources */,
 				B17B3D6E1BB6BD13009B8BC5 /* ContactTableViewCell.m in Sources */,
 				B17B3D691BB6BCE5009B8BC5 /* CellFactory.m in Sources */,
 				D0AC07CB1C48221F00F9CF6F /* JSONModelClassProperty.m in Sources */,
 				B15B15C11BDBC55A00C0C171 /* AWSModel.m in Sources */,
+				B1B4BF821CC5093A004D4A6E /* SparkPostSubstitutionData.m in Sources */,
 				B15FDE7E1C117CCE007100EC /* GoogleContact+CoreDataProperties.m in Sources */,
 				D074A6721C07275B0017EAC3 /* CountryRow.m in Sources */,
 				B13B076D1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m in Sources */,
@@ -2076,6 +2139,8 @@
 				B1EB69B31C9828E20031F37E /* NSmutableSet_Addition.m in Sources */,
 				B1FFFF2A1C18241E0049347D /* RecoverPasswordRequest.m in Sources */,
 				B18EEB991CB3B36600F9491F /* FeedBackViewController.m in Sources */,
+				B1B4BF8B1CC52328004D4A6E /* SendVoiceMessageSparkPostModel.m in Sources */,
+				B1B4BF851CC5209D004D4A6E /* SparkPostRecipient.m in Sources */,
 				D0AC07DA1C48227600F9CF6F /* A0SimpleKeychain+KeyPair.m in Sources */,
 				D0A7C0F31BFC5BC200ACD33E /* SpotlightModel.m in Sources */,
 				B1EF40EB1BB7E78C00042E4B /* SendVoiceMessageModel.m in Sources */,
@@ -2111,6 +2176,7 @@
 				B1E5160E1C7D99E3002BD49C /* ChatEntryModel.m in Sources */,
 				B1879A181C5810EE0036A660 /* StaticDataTableViewController.m in Sources */,
 				B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */,
+				B1B4BF7F1CC507E3004D4A6E /* SparkPostRequest.m in Sources */,
 				B1F93E901BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld in Sources */,
 				B17933151BE0C19C0016F158 /* LoginModel.m in Sources */,
 				B100A54A1BEDD6F800EEB573 /* CacheModel.m in Sources */,

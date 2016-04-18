@@ -71,9 +71,8 @@
             if (error) {
                 [self failureWithOperation:nil andError:error];
             } else {
-                MandrillMesssageSent *mandrillMesssageSent = [MandrillMesssageSent new];
+                MailClientMesssageSent *mandrillMesssageSent = [MailClientMesssageSent new];
                 mandrillMesssageSent.sender = self;
-                mandrillMesssageSent.mandrillMessage = message;
                 PUBLISH(mandrillMesssageSent);
             }
         }];

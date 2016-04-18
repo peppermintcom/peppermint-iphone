@@ -14,7 +14,7 @@
 @implementation NetworkFailure
 @end
 
-@implementation MandrillMesssageSent
+@implementation MailClientMesssageSent
 @end
 
 @implementation ApplicationWillResignActive

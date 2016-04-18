@@ -19,8 +19,7 @@
 @end
 
 //Needs a unique handler
-@interface MandrillMesssageSent : BaseEvent
-@property (strong, nonatomic) MandrillMessage *mandrillMessage;
+@interface MailClientMesssageSent : BaseEvent
 @end
 
 @interface ApplicationWillResignActive : BaseEvent
