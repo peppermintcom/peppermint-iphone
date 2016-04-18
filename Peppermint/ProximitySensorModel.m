@@ -9,7 +9,8 @@
 #import "ProximitySensorModel.h"
 #import "DeviceMotionMager.h"
 
-#define SENSITIVITY     0.75
+#define SENSITIVITY                     0.75
+#define ACCELERATION_SENSITIVITY        1.25
 
 @implementation ProximitySensorModel {
     DeviceMotionMager *_deviceMotionMager;
@@ -69,6 +70,17 @@
 
 -(void) startListeningDeviceMotionMager {
     [[self deviceMotionMager] initWithAccelerometerUpdatesWithHandler:^(CMAcceleration acceleration) {
+        
+        BOOL raisingY = (acceleration.y < -ACCELERATION_SENSITIVITY);
+        BOOL raisingZ = (acceleration.z < -ACCELERATION_SENSITIVITY);
+        BOOL raisingLeftZ = (acceleration.z > ACCELERATION_SENSITIVITY);
+
+        BOOL isDeviceRaising = raisingY || raisingZ || raisingLeftZ;
+        
+        if(isDeviceRaising) {
+            NSLog(@"Device raising!     %d - %d - %d", raisingZ, raisingY, raisingLeftZ);
+        }
+        
         if (acceleration.x >= SENSITIVITY) {
             _currentDeviceOrientation = UIDeviceOrientationLandscapeLeft;
             _isDeviceOrientationCorrectOnEar = YES;
