@@ -105,8 +105,14 @@
 }
 
 -(NSCharacterSet*) asciiCharacterSet {
-    NSMutableString *asciiCharacters = [NSMutableString string];
+    NSMutableString *asciiCharacters = [NSMutableString string];    
+    //http://www.ascii-codes.com/cp855.html
+    //Standard Characters
     for (NSInteger i = 32; i < 127; i++)  {
+        [asciiCharacters appendFormat:@"%c", (char)i];
+    }
+    //Extended Characters
+    for (NSInteger i = 128; i < 255; i++)  {
         [asciiCharacters appendFormat:@"%c", (char)i];
     }
     return [NSCharacterSet characterSetWithCharactersInString:asciiCharacters];
