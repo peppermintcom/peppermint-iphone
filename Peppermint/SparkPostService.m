@@ -30,11 +30,7 @@
                                                               initWithBaseURL:[NSURL URLWithString:url]];
     requestOperationManager.requestSerializer = [AFJSONRequestSerializer serializer];
     [requestOperationManager.requestSerializer setValue:self.apiKey forHTTPHeaderField:AUTHORIZATION];
-    [requestOperationManager.requestSerializer setValue:@"okan2@yopmail.com" forHTTPHeaderField:@"ReplyTo"];
-    [requestOperationManager.requestSerializer setValue:@"okan3@yopmail.com" forHTTPHeaderField:@"Reply"];
-    
     NSDictionary *parameterDictionary = [message toDictionary];
-    NSLog(@"Parameter Dict: \n\n%@\n\n", parameterDictionary);
     
     [requestOperationManager POST:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         MailClientMesssageSent *sparkPostMesssageSent = [MailClientMesssageSent new];
