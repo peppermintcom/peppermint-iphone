@@ -45,17 +45,17 @@
     [sparkPostMessage.recipients addObject:recipient];
     
     SparkPostContent *sparkPostContent = [SparkPostContent new];
-    sparkPostContent.template_id = @"ios-voice-message";
-    sparkPostContent.use_draft_template = NO;
+    sparkPostContent.reply_to = email;
+    sparkPostContent.from = [SparkPostFrom new];
+    sparkPostContent.from.name = [NSString stringWithFormat:@"%@ [%@]", nameSurname, email];
+    sparkPostContent.from.email = LOC(@"support@peppermint.com", @"Support Email");
+    sparkPostContent.subject = subject;
     sparkPostMessage.content = sparkPostContent;
     
     SparkPostSubstitutionData *substitution_data = [SparkPostSubstitutionData new];
-    substitution_data.subject = subject;
-    substitution_data.from_name = [NSString stringWithFormat:@"%@ [%@]", nameSurname, email];
     substitution_data.canonical_url = canonicalUrl;
     substitution_data.url = url;
     substitution_data.replyLink = [self fastReplyUrlForSender];
-    substitution_data.reply_to = email;
     sparkPostMessage.substitution_data = substitution_data;
     
     if(![self isCancelled]) {
