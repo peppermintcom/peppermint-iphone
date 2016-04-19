@@ -7,8 +7,12 @@
 //
 
 #import "JSONModel.h"
+#import "SparkPostFrom.h"
 
 @interface SparkPostContent : JSONModel
-@property (strong, nonatomic) NSString * template_id;
-@property (nonatomic, assign) BOOL use_draft_template;
+@property (strong, nonatomic) NSString<Optional> *html;
+@property (strong, nonatomic) NSString<Optional> *text;
+@property (strong, nonatomic) NSString<Optional> *subject;
+@property (strong, nonatomic) NSString<Optional> *reply_to;
+@property (strong, nonatomic) SparkPostFrom<Optional> *from;
 @end

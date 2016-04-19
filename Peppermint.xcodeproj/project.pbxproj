@@ -100,6 +100,9 @@
 		B17B3D701BB6BD2E009B8BC5 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B17B3D6F1BB6BD2E009B8BC5 /* ContactTableViewCell.xib */; };
 		B17B3D741BB6C4B0009B8BC5 /* UIColor_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D731BB6C4B0009B8BC5 /* UIColor_Addition.m */; };
 		B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B3D771BB6C90A009B8BC5 /* BaseTableViewCell.m */; };
+		B17B64B71CC63A1C00600A55 /* SparkPostTemplatesResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B64B61CC63A1C00600A55 /* SparkPostTemplatesResponse.m */; };
+		B17B64BA1CC63BFF00600A55 /* SparkPostTemplateResults.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B64B91CC63BFE00600A55 /* SparkPostTemplateResults.m */; };
+		B17B64BD1CC63F5E00600A55 /* SparkPostFrom.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B64BC1CC63F5E00600A55 /* SparkPostFrom.m */; };
 		B17B9A271C60C6AC00B081F7 /* JwtsResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B9A261C60C6AC00B081F7 /* JwtsResponse.m */; };
 		B17B9A2A1C60CCDD00B081F7 /* SetUpRecorderRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B9A291C60CCDD00B081F7 /* SetUpRecorderRequest.m */; };
 		B17B9A2D1C60F34000B081F7 /* MessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B9A2C1C60F34000B081F7 /* MessageRequest.m */; };
@@ -453,6 +456,12 @@
 		B17B3D731BB6C4B0009B8BC5 /* UIColor_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = UIColor_Addition.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B17B3D761BB6C90A009B8BC5 /* BaseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableViewCell.h; sourceTree = "<group>"; };
 		B17B3D771BB6C90A009B8BC5 /* BaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewCell.m; sourceTree = "<group>"; };
+		B17B64B51CC63A1C00600A55 /* SparkPostTemplatesResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SparkPostTemplatesResponse.h; sourceTree = "<group>"; };
+		B17B64B61CC63A1C00600A55 /* SparkPostTemplatesResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SparkPostTemplatesResponse.m; sourceTree = "<group>"; };
+		B17B64B81CC63BFE00600A55 /* SparkPostTemplateResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SparkPostTemplateResults.h; sourceTree = "<group>"; };
+		B17B64B91CC63BFE00600A55 /* SparkPostTemplateResults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SparkPostTemplateResults.m; sourceTree = "<group>"; };
+		B17B64BB1CC63F5E00600A55 /* SparkPostFrom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SparkPostFrom.h; sourceTree = "<group>"; };
+		B17B64BC1CC63F5E00600A55 /* SparkPostFrom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SparkPostFrom.m; sourceTree = "<group>"; };
 		B17B9A251C60C6AC00B081F7 /* JwtsResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JwtsResponse.h; sourceTree = "<group>"; };
 		B17B9A261C60C6AC00B081F7 /* JwtsResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JwtsResponse.m; sourceTree = "<group>"; };
 		B17B9A281C60CCDD00B081F7 /* SetUpRecorderRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetUpRecorderRequest.h; sourceTree = "<group>"; };
@@ -1263,6 +1272,12 @@
 				B1B4BF841CC5209D004D4A6E /* SparkPostRecipient.m */,
 				B1B4BF861CC520FA004D4A6E /* SparkPostContent.h */,
 				B1B4BF871CC520FA004D4A6E /* SparkPostContent.m */,
+				B17B64B51CC63A1C00600A55 /* SparkPostTemplatesResponse.h */,
+				B17B64B61CC63A1C00600A55 /* SparkPostTemplatesResponse.m */,
+				B17B64B81CC63BFE00600A55 /* SparkPostTemplateResults.h */,
+				B17B64B91CC63BFE00600A55 /* SparkPostTemplateResults.m */,
+				B17B64BB1CC63F5E00600A55 /* SparkPostFrom.h */,
+				B17B64BC1CC63F5E00600A55 /* SparkPostFrom.m */,
 			);
 			name = SparkPost;
 			sourceTree = "<group>";
@@ -2067,6 +2082,7 @@
 				B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */,
 				D02D2D061C0C379E00092A23 /* BaseTableViewController.m in Sources */,
 				B15FDE841C117CFE007100EC /* CustomContactModel.m in Sources */,
+				B17B64BA1CC63BFF00600A55 /* SparkPostTemplateResults.m in Sources */,
 				B1A4AA511BF4DA9D005D55CB /* AccountViewController.m in Sources */,
 				B15FDE871C119D60007100EC /* UIImage_Addition.m in Sources */,
 				B101633E1C6379AF008CC8D0 /* SMSChargeWarningView.m in Sources */,
@@ -2106,6 +2122,7 @@
 				B13AE4361C8420570046AF6E /* MessageGetRequest.m in Sources */,
 				B16F01281C4E48350030BE65 /* ChatEntry+CoreDataProperties.m in Sources */,
 				B15FDE7B1C117CCE007100EC /* CustomContact.m in Sources */,
+				B17B64BD1CC63F5E00600A55 /* SparkPostFrom.m in Sources */,
 				B1BB1E5F1BD35CD300A1CE45 /* MandrillService.m in Sources */,
 				D0AC07CE1C48223500F9CF6F /* JSONKeyMapper.m in Sources */,
 				B1F93E981BC8E328005F2128 /* Repository.m in Sources */,
@@ -2122,6 +2139,7 @@
 				B13B076D1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m in Sources */,
 				D0AC07711C4815AE00F9CF6F /* AppDelegate.m in Sources */,
 				D0A7C0DA1BFA0C7900ACD33E /* DeviceModel.m in Sources */,
+				B17B64B71CC63A1C00600A55 /* SparkPostTemplatesResponse.m in Sources */,
 				B16DA2171BE0F2C100EBF043 /* SlideMenuViewController.m in Sources */,
 				B1BB601A1BDE127500C1140B /* LoginViewController.m in Sources */,
 				B14EF8321C4D16570041FD24 /* MandrillNameContentPair.m in Sources */,
