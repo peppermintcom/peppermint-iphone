@@ -202,7 +202,8 @@
         } else if (item && [item isKindOfClass:[AVAudioPlayer class]]) {
             AVAudioPlayer *player = (AVAudioPlayer*)item;
             if(player.isPlaying) {
-                [player pause];
+                //We don't pause player. If we pause it will leave player ready to play and it plays when screen unlocks!
+                [player stop];
             }
         }
     }
