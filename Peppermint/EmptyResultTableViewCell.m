@@ -7,8 +7,11 @@
 //
 
 #import "EmptyResultTableViewCell.h"
+#import "MBProgressHUD.h"
 
-@implementation EmptyResultTableViewCell
+@implementation EmptyResultTableViewCell {
+    MBProgressHUD *progressHud;
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -25,6 +28,17 @@
 
 -(void) setVisibiltyOfExplanationLabels:(BOOL) visibility {
     self.headerLabel.hidden = !visibility;
+}
+
+-(void) showLoading {
+    progressHud = [MBProgressHUD showHUDAddedTo:self animated:YES];
+    progressHud.color = [UIColor clearColor];
+    progressHud.activityIndicatorColor = [UIColor emptyResultTableViewCellHeaderLabelTextcolorGray];
+    [progressHud show:YES];
+}
+
+-(void) hideLoading {
+    [progressHud hide:YES];
 }
 
 @end

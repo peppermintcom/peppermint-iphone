@@ -246,6 +246,7 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
     if(shouldManipulateSyncDate) {
         NSNumber *currentQuickSyncLevel = defaults_object(DEFAULTS_KEY_QUICK_SYNC_LEVEL);
         NSNumber *nextQuickSyncLevel = [NSNumber numberWithInt:(currentQuickSyncLevel.intValue + 1)];
+#warning "Saving the Quick Sync Level may cause some messages not to be synced if the connection is cut. However, it will be synced in next sync level"
         defaults_set_object(DEFAULTS_KEY_QUICK_SYNC_LEVEL, nextQuickSyncLevel);
         
         peppermintMessageSender.lastMessageSyncDate = [peppermintMessageSender defaultLastMessageSyncDate];

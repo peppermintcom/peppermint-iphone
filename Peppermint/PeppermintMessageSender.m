@@ -243,7 +243,7 @@
             defaultLastMessageSyncDate = [NSDate dateWithTimeIntervalSinceNow:- (24 * DAY)];
             break;
         case 8:
-            defaultLastMessageSyncDate = [NSDate dateWithTimeIntervalSinceNow:0];
+            defaultLastMessageSyncDate = [NSDate dateWithTimeIntervalSince1970:0];
             break;
         default:
             break;

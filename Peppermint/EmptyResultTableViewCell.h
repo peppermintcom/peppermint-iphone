@@ -14,4 +14,6 @@
 
 -(void) setVisibiltyOfExplanationLabels:(BOOL) visibility;
 
+-(void) showLoading;
+-(void) hideLoading;
 @end

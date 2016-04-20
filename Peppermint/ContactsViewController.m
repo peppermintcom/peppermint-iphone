@@ -272,9 +272,14 @@ SUBSCRIBE(UserLoggedOut) {
     } else if (indexPath.section == SECTION_EMPTY_RESULT) {
         EmptyResultTableViewCell *cell = [CellFactory cellEmptyResultTableViewCellFromTable:tableView forIndexPath:indexPath];
         [cell setVisibiltyOfExplanationLabels:YES];
-        if(activeCellTag == CELL_TAG_RECENT_CONTACTS) {
+        if(![self.recentContactsModel isSyncWithAPIProcessed]) {
+            [cell showLoading];
+            cell.headerLabel.text = @"";
+        } else if(activeCellTag == CELL_TAG_RECENT_CONTACTS) {
+            [cell hideLoading];
             cell.headerLabel.text = LOC(@"There are no recent contacts", @"Empty cell header text");
         } else {
+            [cell hideLoading];
             cell.headerLabel.text = LOC(@"No contacts have been found", @"Empty cell header text");
         }
         preparedCell = cell;

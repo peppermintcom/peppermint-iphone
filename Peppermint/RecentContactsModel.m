@@ -150,4 +150,10 @@
     return peppermintContact;
 }
 
+-(BOOL) isSyncWithAPIProcessed {
+    NSNumber *currentQuickSyncLevel = defaults_object(DEFAULTS_KEY_QUICK_SYNC_LEVEL);
+#warning "Update the below number (current value is 7) according to the levels in PeppermintMessageSender"
+    return currentQuickSyncLevel.intValue > 7;
+}
+
 @end

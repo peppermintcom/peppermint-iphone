@@ -24,4 +24,5 @@
 -(void) refreshRecentContactList;
 
 -(NSPredicate*) recentContactPredicate:(PeppermintContact*) peppermintContact;
+-(BOOL) isSyncWithAPIProcessed;
 @end
