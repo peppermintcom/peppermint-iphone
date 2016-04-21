@@ -25,6 +25,7 @@
 		B116F3B11C008E570091994C /* FastReplyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B116F3B01C008E570091994C /* FastReplyModel.m */; };
 		B11B13541C0C5EAD00782FC4 /* ContactInformationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B11B13531C0C5EAD00782FC4 /* ContactInformationTableViewCell.m */; };
 		B11B13561C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B11B13551C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib */; };
+		B11EF4A41CC95CE70020EA7B /* SparkPostOption.m in Sources */ = {isa = PBXBuildFile; fileRef = B11EF4A31CC95CE70020EA7B /* SparkPostOption.m */; };
 		B11F8A5C1BDCC45F000E79AA /* FinalizeUploadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5B1BDCC45F000E79AA /* FinalizeUploadRequest.m */; };
 		B11F8A5F1BDCC474000E79AA /* FinalizeUploadResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5E1BDCC474000E79AA /* FinalizeUploadResponse.m */; };
 		B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B12C03BA1BCFFC060085A55A /* FastRecordingView.m */; };
@@ -310,6 +311,8 @@
 		B11B13531C0C5EAD00782FC4 /* ContactInformationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactInformationTableViewCell.m; sourceTree = "<group>"; };
 		B11B13551C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactInformationTableViewCell.xib; sourceTree = "<group>"; };
 		B11E02D51C490DA900579122 /* PeppermintDataModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PeppermintDataModel 2.xcdatamodel"; sourceTree = "<group>"; };
+		B11EF4A21CC95CE70020EA7B /* SparkPostOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SparkPostOption.h; sourceTree = "<group>"; };
+		B11EF4A31CC95CE70020EA7B /* SparkPostOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SparkPostOption.m; sourceTree = "<group>"; };
 		B11F8A5A1BDCC45F000E79AA /* FinalizeUploadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinalizeUploadRequest.h; sourceTree = "<group>"; };
 		B11F8A5B1BDCC45F000E79AA /* FinalizeUploadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinalizeUploadRequest.m; sourceTree = "<group>"; };
 		B11F8A5D1BDCC474000E79AA /* FinalizeUploadResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinalizeUploadResponse.h; sourceTree = "<group>"; };
@@ -1278,6 +1281,8 @@
 				B17B64B91CC63BFE00600A55 /* SparkPostTemplateResults.m */,
 				B17B64BB1CC63F5E00600A55 /* SparkPostFrom.h */,
 				B17B64BC1CC63F5E00600A55 /* SparkPostFrom.m */,
+				B11EF4A21CC95CE70020EA7B /* SparkPostOption.h */,
+				B11EF4A31CC95CE70020EA7B /* SparkPostOption.m */,
 			);
 			name = SparkPost;
 			sourceTree = "<group>";
@@ -2080,6 +2085,7 @@
 				B1DA4A1C1CA581350002F07A /* PlayingChatEntryModel.m in Sources */,
 				B1BB605F1BDE36AF00C1140B /* SignUpWithEmailViewController.m in Sources */,
 				B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */,
+				B11EF4A41CC95CE70020EA7B /* SparkPostOption.m in Sources */,
 				D02D2D061C0C379E00092A23 /* BaseTableViewController.m in Sources */,
 				B15FDE841C117CFE007100EC /* CustomContactModel.m in Sources */,
 				B17B64BA1CC63BFF00600A55 /* SparkPostTemplateResults.m in Sources */,

@@ -10,6 +10,7 @@
 #import "SparkPostRecipient.h"
 #import "SparkPostContent.h"
 #import "SparkPostSubstitutionData.h"
+#import "SparkPostOption.h"
 
 @interface SparkPostRequest : JSONModel
 
@@ -17,5 +18,6 @@
 @property (strong, nonatomic) NSMutableArray<SparkPostRecipient*> *recipients;
 @property (strong, nonatomic) SparkPostContent *content;
 @property (strong, nonatomic) SparkPostSubstitutionData *substitution_data;
+@property (strong, nonatomic) SparkPostOption *options;
 
 @end

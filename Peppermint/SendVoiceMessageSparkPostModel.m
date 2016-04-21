@@ -40,6 +40,12 @@
     SparkPostRequest *sparkPostMessage = [SparkPostRequest new];
     sparkPostMessage.campaign_id = @"iOS audio message";
     
+    SparkPostOption *sparkPostOption = [SparkPostOption new];
+    sparkPostOption.open_tracking = NO;
+    sparkPostOption.click_tracking = NO;
+    sparkPostOption.transactional = NO;
+    sparkPostMessage.options = sparkPostOption;
+    
     SparkPostRecipient *recipient = [SparkPostRecipient new];
     recipient.address = [self.selectedPeppermintContact.communicationChannelAddress normalizeText];
     [sparkPostMessage.recipients addObject:recipient];
