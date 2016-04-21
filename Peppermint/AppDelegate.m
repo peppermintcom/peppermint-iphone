@@ -248,6 +248,7 @@
     [FBSDKAppEvents activateApp];
     [[GoogleCloudMessagingModel sharedInstance] connectGCM];
     [self refreshIncomingMessages];
+    [self resetBadgeNumber];
     [self refreshBadgeNumber];
     PUBLISH([ApplicationDidBecomeActive new]);
 }
@@ -838,9 +839,13 @@ SUBSCRIBE(AccountIdIsUpdated) {
     [awsModel tryToUpdateGCMRegistrationToken];
 }
 
+-(void) resetBadgeNumber {
+    //Reset will clean all entries in notification tray
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+}
+
 -(void) refreshBadgeNumber {
     NSUInteger unreadMessagesCount = [chatEntryModel unreadMessageCountOfAllChats];
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:unreadMessagesCount];
 }
 
