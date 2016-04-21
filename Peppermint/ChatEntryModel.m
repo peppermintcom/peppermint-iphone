@@ -337,6 +337,7 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
         NSArray *matchingChatEntries = [repository getResultsFromEntity:[ChatEntry class] predicateOrNil:predicate];
         if(matchingChatEntries.count == 1) {
             ChatEntry *chatEntry = matchingChatEntries.firstObject;
+            chatEntry.audioUrl = nil;
             chatEntry.audioUrl = audioUrl;
         } else {
             NSLog(@"Found chatEntries: %ld ", matchingChatEntries.count);
