@@ -106,6 +106,7 @@
     [super viewDidAppear:animated];
     [self startListeningProximitySensor];
     [self refreshContent];
+    [self checkToTakeOverSendingMessageEvents];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -125,6 +126,16 @@
     StopAllPlayingMessages *stopAllPlayingMessages = [StopAllPlayingMessages new];
     stopAllPlayingMessages.sender = self;
     PUBLISH(stopAllPlayingMessages);
+}
+
+-(void) checkToTakeOverSendingMessageEvents {
+    SendVoiceMessageModel *sendVoiceMessageModel = [SendVoiceMessageModel activeSendVoiceMessageModel];
+    if(sendVoiceMessageModel
+       && [sendVoiceMessageModel.selectedPeppermintContact isEqual:self.peppermintContact]) {
+        [self messageModel:sendVoiceMessageModel isUpdatedWithStatus:sendVoiceMessageModel.sendingStatus cancelAble:sendVoiceMessageModel.isCancelAble];
+    } else {
+        NSLog(@"SendVoiceMessageModel is not active to take over sending process.");
+    }
 }
 
 #pragma mark - ChatEntryModelDelegate

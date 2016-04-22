@@ -170,9 +170,6 @@
 #pragma mark - LoginTableViewCellDelegate
 
 -(void) selectedLoginTableViewCell:(UITableViewCell*) cell atIndexPath:(NSIndexPath*) indexPath {
-    
-    NSLog(@"selectedLoginTableViewCell:atIndexPath:");
-    
     BOOL isConnectionValid = [[ConnectionModel sharedInstance] isInternetReachable];
     if(isConnectionValid) {
         NSDate *nowDate = [NSDate new];

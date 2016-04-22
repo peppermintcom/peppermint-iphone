@@ -50,12 +50,11 @@
     BOOL isContactsPermissionGranted;
     NSDateFormatter *dateFormatter;
     BOOL isFirstOpen;
-    NSTimer *timerToNavigateChatEntriesViewController;
+    PeppermintContact *lastRecordedPeppermintContact;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    timerToNavigateChatEntriesViewController = nil;
     isContactsPermissionGranted = YES;
     self.searchContactsTextField.font = [UIFont openSansFontOfSize:14];
     self.searchContactsTextField.text = self.contactsModel.filterText;
@@ -83,6 +82,7 @@
     timer = nil;
     [self.searchContactsTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
+    lastRecordedPeppermintContact = nil;
     dateFormatter = [NSDateFormatter new];
     [dateFormatter setDateFormat:@"MMM dd"];
     REGISTER();
@@ -120,6 +120,7 @@ SUBSCRIBE(UserLoggedOut) {
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if([self checkIfuserIsLoggedIn]) {
+        lastRecordedPeppermintContact = nil;
         [self performTutorialViewProcess];
         [self hideHoldToRecordInfoView];
         if(isAddNewContactModalisUp) {
@@ -160,6 +161,16 @@ SUBSCRIBE(UserLoggedOut) {
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     self.whiteEllipseView.layer.cornerRadius = self.whiteEllipseView.frame.size.height / 3.4;
+    [self checkToTakeOverSendingMessageEvents];
+}
+
+-(void) checkToTakeOverSendingMessageEvents {
+    SendVoiceMessageModel *activeSendVoiceMessageModel = [SendVoiceMessageModel activeSendVoiceMessageModel];
+    if(activeSendVoiceMessageModel) {
+        [self messageModel:activeSendVoiceMessageModel
+       isUpdatedWithStatus:activeSendVoiceMessageModel.sendingStatus
+                cancelAble:activeSendVoiceMessageModel.isCancelAble];
+    }
 }
 
 -(void) initRecordingView {
@@ -583,6 +594,7 @@ SUBSCRIBE(UserLoggedOut) {
 
 -(void) didFinishItemSelectionOnIndexPath:(NSIndexPath*) indexPath location:(CGPoint) location {
     self.tableView.bounces = YES;
+    lastRecordedPeppermintContact = self.recordingView.sendVoiceMessageModel.selectedPeppermintContact;
     [self.recordingView finishRecordingWithGestureIsValid:YES needsPause:NO];
 }
 
@@ -672,40 +684,22 @@ SUBSCRIBE(UserLoggedOut) {
 }
 
 -(void) checkShouldNavigateWithModel:(SendVoiceMessageModel*)sendVoiceMessageModel {
-    [timerToNavigateChatEntriesViewController invalidate];
     BOOL isInCorrectState = sendVoiceMessageModel.sendingStatus == SendingStatusSendingWithNoCancelOption;
     BOOL isCacheMessage = (sendVoiceMessageModel.delegate == nil);
     BOOL isScreenActive = self.navigationController.viewControllers.lastObject == self;
+    BOOL isForCorrectRecording = lastRecordedPeppermintContact
+    && [sendVoiceMessageModel.selectedPeppermintContact isEqual:lastRecordedPeppermintContact];
+    BOOL isNotRecording = self.recordingView.isHidden;
+    BOOL isKeyboardHidden = self.tableViewBottomConstraint.constant == 0;
+    BOOL noUserInterraction = isNotRecording && isKeyboardHidden;
     
-    if(isInCorrectState && !isCacheMessage && isScreenActive) {
-        CGFloat latency = MESSAGE_SHOW_DURATION / 4;
-        timerToNavigateChatEntriesViewController = [NSTimer scheduledTimerWithTimeInterval:latency target:self selector:@selector(navigateToChatEntryWithModel:) userInfo:sendVoiceMessageModel repeats:NO];
-    }
-}
-
--(void) navigateToChatEntryWithModel:(NSTimer*) timerParameter {
-    SendVoiceMessageModel *sendVoiceMessageModel = timerParameter.userInfo;
-    timerToNavigateChatEntriesViewController = nil;
-    if(sendVoiceMessageModel) {
-        BOOL isScreenStillActive = self.navigationController.viewControllers.lastObject == self;
-        BOOL isNotRecording = self.recordingView.isHidden;
-        BOOL isKeyboardHidden = self.tableViewBottomConstraint.constant == 0;
-        BOOL noUserInterraction = isNotRecording && isKeyboardHidden;
-        
-        if(isScreenStillActive && noUserInterraction) {
-            [CATransaction begin];
-            ChatEntriesViewController *chatEntriesViewController =
-            [self.storyboard instantiateViewControllerWithIdentifier:VIEWCONTROLLER_CHATENTRIES];
-            chatEntriesViewController.peppermintContact = sendVoiceMessageModel.selectedPeppermintContact;
-            isNavigatedToChatEntries = YES;
-            [[self navigationController] pushViewController:chatEntriesViewController animated:YES];
-            [CATransaction setCompletionBlock:^{
-                MessageSendingStatusIsUpdated *messageSendingStatusIsUpdated = [MessageSendingStatusIsUpdated new];
-                messageSendingStatusIsUpdated.sender = sendVoiceMessageModel;
-                PUBLISH(messageSendingStatusIsUpdated);
-            }];
-            [CATransaction commit];
-        }
+    if(isInCorrectState
+       && !isCacheMessage
+       && isScreenActive
+       && isForCorrectRecording
+       && noUserInterraction) {
+        lastRecordedPeppermintContact = nil;
+        [self performSegueWithIdentifier:SEGUE_CHAT_ENTRIES_VIEWCONTROLLER sender:sendVoiceMessageModel.selectedPeppermintContact];
     }
 }
 
