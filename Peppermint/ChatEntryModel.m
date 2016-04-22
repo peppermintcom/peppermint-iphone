@@ -365,6 +365,7 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
 -(void) markAllPreviousMessagesAsRead:(PeppermintChatEntry*)peppermintChatEntry {
     weakself_create();
     dispatch_async(LOW_PRIORITY_QUEUE, ^{
+        NSInteger numberOfUpdatedRecords;
         Repository *repository = [Repository beginTransaction];
         NSPredicate *emailPredicate = [ChatEntryModel contactEmailPredicate:peppermintChatEntry.contactEmail];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.dateCreated <= %@", peppermintChatEntry.dateCreated];
@@ -375,14 +376,35 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
                                                                         nil]];
         
         NSDictionary *propertiesToUpdateDictionary = @{ @"isSeen" : @(YES) };
-        NSInteger numberOfUpdatedEntities = [repository executeBatchUpdate:[ChatEntry class]
+        NSBatchUpdateResult *batchUpdateResult = [repository executeBatchUpdate:[ChatEntry class]
                                                             predicateOrNil:predicate
                                                        propertiesToConnect:propertiesToUpdateDictionary];
+        
+        if(batchUpdateResult.resultType == NSUpdatedObjectsCountResultType) {
+            NSNumber *updatedObjectsCount = (NSNumber*)batchUpdateResult.result;
+            numberOfUpdatedRecords = updatedObjectsCount.integerValue;
+        } else if(batchUpdateResult.resultType == NSUpdatedObjectIDsResultType) {
+            __block NSArray *objectIDs = batchUpdateResult.result;
+            numberOfUpdatedRecords = objectIDs.count;
+            dispatch_async(LOW_PRIORITY_QUEUE, ^{
+                for (NSManagedObjectID *objectID in objectIDs) {
+                    NSManagedObject *managedObject = [repository.managedObjectContext objectWithID:objectID];
+                    if (managedObject && [managedObject isKindOfClass:[ChatEntry class]]) {
+                        ChatEntry *chatEntry = (ChatEntry*) managedObject;
+                        if(chatEntry.messageId.length > 0) {
+                            PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+                            [awsService markMessageAsReadWithJwt:peppermintMessageSender.exchangedJwt messageId:chatEntry.messageId];
+                        }                        
+                    }
+                }
+            });
+        }
+                
         NSError *error = [repository endTransaction];
         if(error) {
             [weakSelf.delegate operationFailure:error];
         } else {
-            NSLog(@"%ld chatEntry Objects are marked as read.", numberOfUpdatedEntities);
+            NSLog(@"%ld chatEntry Objects are marked as read.", numberOfUpdatedRecords);
         }
     });
 }

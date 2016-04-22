@@ -160,23 +160,20 @@
     return nil;
 }
 
--(NSInteger) executeBatchUpdate:(Class)entityClass predicateOrNil:(NSPredicate *)predicateOrNil propertiesToConnect:(NSDictionary*)propertiesToConnect {
-    NSNumber *numberOfUpdatedEntities = @0;
+-(NSBatchUpdateResult*) executeBatchUpdate:(Class)entityClass predicateOrNil:(NSPredicate *)predicateOrNil propertiesToConnect:(NSDictionary*)propertiesToConnect {
     NSString *entityName = NSStringFromClass(entityClass);
     NSBatchUpdateRequest *batchRequest = [[NSBatchUpdateRequest alloc] initWithEntityName:entityName];
     batchRequest.predicate = predicateOrNil;
     batchRequest.propertiesToUpdate = propertiesToConnect;
-    batchRequest.resultType = NSUpdatedObjectsCountResultType;
+    batchRequest.resultType = NSUpdatedObjectIDsResultType;
     
     NSError *error;
     NSBatchUpdateResult *batchUpdateResult = (NSBatchUpdateResult *)[self.managedObjectContext executeRequest:batchRequest error:&error];
     
     if(error) {
         NSLog(@"error is:%@", error.localizedDescription);
-    } else {
-        numberOfUpdatedEntities = batchUpdateResult.result;
     }
-    return numberOfUpdatedEntities.integerValue;
+    return batchUpdateResult;
 }
 
 @end

@@ -32,6 +32,6 @@
 - (NSManagedObject *)objectWithURI:(NSURL *)uri;
 
 //Batch update
--(NSInteger) executeBatchUpdate:(Class)entityClass predicateOrNil:(NSPredicate *)predicateOrNil propertiesToConnect:(NSDictionary*)propertiesToConnect;
+-(NSBatchUpdateResult*) executeBatchUpdate:(Class)entityClass predicateOrNil:(NSPredicate *)predicateOrNil propertiesToConnect:(NSDictionary*)propertiesToConnect;
 
 @end
