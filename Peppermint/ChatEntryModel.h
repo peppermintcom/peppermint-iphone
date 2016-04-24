@@ -21,6 +21,7 @@
 -(void) refreshPeppermintChatEntriesForContactEmail:(NSString*) contactEmail;
 -(void) savePeppermintChatEntry:(PeppermintChatEntry*)peppermintChatEntry;
 -(void) savePeppermintChatEntryArray:(NSArray*)peppermintChatEntryArray;
+-(void) deletePeppermintChatEntry:(PeppermintChatEntry*)peppermintChatEntry;
 -(BOOL) isSyncProcessActive;
 -(void) makeSyncRequestForMessages;
 -(void) updateChatEntryWithAudio:(NSData*)audio toAudioUrl:(NSString*)audioUrl;

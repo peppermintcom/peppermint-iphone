@@ -155,6 +155,48 @@
     });
 }
 
+#pragma mark - Delete
+
+-(void) deletePeppermintChatEntry:(PeppermintChatEntry*)peppermintChatEntry {
+    weakself_create();
+    dispatch_async(LOW_PRIORITY_QUEUE, ^{
+        Repository *repository = [Repository beginTransaction];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                                  @"((self.messageId == %@) \
+                                  AND (self.audioUrl == %@) \
+                                  AND (self.isSentByMe == %d))"
+                                  , peppermintChatEntry.messageId
+                                  , peppermintChatEntry.audioUrl
+                                  , peppermintChatEntry.isSentByMe
+                                  ];
+        
+        NSPredicate *emailPredicate = [ChatEntryModel contactEmailPredicate:peppermintChatEntry.contactEmail];
+        predicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:
+                                                                        predicate,
+                                                                        emailPredicate,
+                                                                        nil]];
+        
+        NSArray *existingChatEntriesArray = [repository getResultsFromEntity:[ChatEntry class] predicateOrNil:predicate];
+        if(existingChatEntriesArray.count == 0) {
+            NSLog(@"Could not find any matching chatEntries. Will not delete any record.");
+        } else {
+            NSLog(@"Deleting %ld matching chatEntry(ies)", existingChatEntriesArray.count);
+            for(ChatEntry *chatEntry in existingChatEntriesArray) {
+                [repository deleteEntity:chatEntry];
+            }
+        }
+        
+        NSError *error = [repository endTransaction];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(error) {
+                [weakSelf.delegate operationFailure:error];
+            } else {
+                NSLog(@"Delete process is completed without errors.");
+            }
+        });
+    });
+}
+
 #pragma mark - Server Query
 
 -(BOOL) isSyncProcessActive {
@@ -337,7 +379,6 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
         NSArray *matchingChatEntries = [repository getResultsFromEntity:[ChatEntry class] predicateOrNil:predicate];
         if(matchingChatEntries.count == 1) {
             ChatEntry *chatEntry = matchingChatEntries.firstObject;
-            chatEntry.audioUrl = nil;
             chatEntry.audioUrl = audioUrl;
         } else {
             NSLog(@"Found chatEntries: %ld ", matchingChatEntries.count);
