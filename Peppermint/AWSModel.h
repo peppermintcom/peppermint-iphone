@@ -16,6 +16,7 @@
 @optional
 -(void) sendInterAppMessageIsCompletedWithSuccess;
 -(void) sendInterAppMessageIsCompletedWithError:(NSError*)error;
+-(void) sendInterAppMessageWasUnauthorised;
 @end
 
 @interface AWSModel : BaseModel

@@ -56,6 +56,8 @@
 #define AWS_ENDPOINT_READS              @"/reads"
 
 #define RESPONSE_CODE_CONFLICT      409
+#define RESPONSE_CODE_NOT_FOUND     404
+#define RESPONSE_CODE_UNAUTHORIZED  401
 
 @interface AWSService : BaseService
 @property(strong, nonatomic) NSString *apiKey;
