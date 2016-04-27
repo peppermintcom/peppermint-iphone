@@ -15,7 +15,7 @@
 #define DBQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
 
 @implementation RecentContactsModel {
-    NSSet *receivedMessagesEmailSet;
+    __block NSSet *receivedMessagesEmailSet;
     __block int activeServiceCallCount;
 }
 
@@ -94,47 +94,51 @@
 
 -(void) refreshRecentContactList {
     activeServiceCallCount ++;
+    weakself_create();
     dispatch_async(DBQueue, ^{
-        Repository *repository = [Repository beginTransaction];
-        NSArray *recentContactsArray = [repository getResultsFromEntity:[RecentContact class] predicateOrNil:nil ascSortStringOrNil:nil descSortStringOrNil:[NSArray arrayWithObjects:@"contactDate", nil]];
-        
-        NSMutableArray *recentPeppermintContacts = [NSMutableArray new];
-#if (TARGET_OS_WATCH)
-        NSMutableArray * recentPeppermintContactsData = [NSMutableArray new];
-#endif
-        receivedMessagesEmailSet = [ChatEntryModel receivedMessagesEmailSet];
-        for(RecentContact *recentContact in recentContactsArray) {
-            PeppermintContact * ppm_contact = [self peppermintContactWithRecentContact:recentContact];
-            NSArray *unreadMessages = [repository getResultsFromEntity:[ChatEntry class]
-                                                        predicateOrNil:
-                                       [ChatEntryModel unreadMessagesPredicateForEmail:ppm_contact.communicationChannelAddress]];
-            ppm_contact.unreadMessageCount = unreadMessages.count;
+        strongSelf_create();
+        if(strongSelf) {
+            Repository *repository = [Repository beginTransaction];
+            NSArray *recentContactsArray = [repository getResultsFromEntity:[RecentContact class] predicateOrNil:nil ascSortStringOrNil:nil descSortStringOrNil:[NSArray arrayWithObjects:@"contactDate", nil]];
             
-            [recentPeppermintContacts addObject:ppm_contact];
+            NSMutableArray *recentPeppermintContacts = [NSMutableArray new];
 #if (TARGET_OS_WATCH)
-            [recentPeppermintContactsData addObject:[ppm_contact archivedRootData]];
+            NSMutableArray * recentPeppermintContactsData = [NSMutableArray new];
 #endif
-        }
-
+            receivedMessagesEmailSet = [ChatEntryModel receivedMessagesEmailSet];
+            for(RecentContact *recentContact in recentContactsArray) {
+                PeppermintContact * ppm_contact = [strongSelf peppermintContactWithRecentContact:recentContact];
+                NSArray *unreadMessages = [repository getResultsFromEntity:[ChatEntry class]
+                                                            predicateOrNil:
+                                           [ChatEntryModel unreadMessagesPredicateForEmail:ppm_contact.communicationChannelAddress]];
+                ppm_contact.unreadMessageCount = unreadMessages.count;
+                
+                [recentPeppermintContacts addObject:ppm_contact];
 #if (TARGET_OS_WATCH)
-        if (NSClassFromString(@"WCSession") && recentPeppermintContactsData.count > 0) {
-            if ([WCSession isSupported]) {
-                NSError * err;
-                [[WCSession defaultSession] updateApplicationContext:@{@"contact":recentPeppermintContactsData} error:&err];
-                if (err) {
-                    NSLog(@"%s: %@", __PRETTY_FUNCTION__, err);
+                [recentPeppermintContactsData addObject:[ppm_contact archivedRootData]];
+#endif
+            }
+            
+#if (TARGET_OS_WATCH)
+            if (NSClassFromString(@"WCSession") && recentPeppermintContactsData.count > 0) {
+                if ([WCSession isSupported]) {
+                    NSError * err;
+                    [[WCSession defaultSession] updateApplicationContext:@{@"contact":recentPeppermintContactsData} error:&err];
+                    if (err) {
+                        NSLog(@"%s: %@", __PRETTY_FUNCTION__, err);
+                    }
                 }
             }
-        }
 #endif
-        
-        if(--activeServiceCallCount==0) {
-            self.contactList = recentPeppermintContacts;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.delegate recentPeppermintContactsRefreshed];
-            });
-        } else {
-            NSLog(@"Did not complete refresh, cos another refresh call is active!");
+            
+            if(--activeServiceCallCount==0) {
+                strongSelf.contactList = recentPeppermintContacts;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [strongSelf.delegate recentPeppermintContactsRefreshed];
+                });
+            } else {
+                NSLog(@"Did not complete refresh, cos another refresh call is active!");
+            }
         }
     });
 }
