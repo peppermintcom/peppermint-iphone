@@ -77,12 +77,15 @@
 
 -(void) checkAndPerformOperationsConnectedWithMessageSending {
     if(self.sendingStatus == SendingStatusCached) {
-        BOOL isChatEntryAlreadyCreated = (peppermintChatEntryForCurrentMessageModel != nil);
-        if(isChatEntryAlreadyCreated) {
-            [chatEntryModel deletePeppermintChatEntry:peppermintChatEntryForCurrentMessageModel];
+        BOOL isPreviousCachedMessage = (self.delegate == nil);
+        if(!isPreviousCachedMessage) {
+            BOOL isChatEntryAlreadyCreated = (peppermintChatEntryForCurrentMessageModel != nil);
+            if(isChatEntryAlreadyCreated) {
+                [chatEntryModel deletePeppermintChatEntry:peppermintChatEntryForCurrentMessageModel];
+            }
+            NSString *tempUrl = [NSString stringWithFormat:@"%f", [NSDate new].timeIntervalSince1970];
+            [self setChatConversation:tempUrl];
         }
-        NSString *tempUrl = [NSString stringWithFormat:@"%f", [NSDate new].timeIntervalSince1970];
-        [self setChatConversation:tempUrl];
     } else if(self.sendingStatus == SendingStatusSendingWithNoCancelOption) {
         BOOL isPreviousCachedMessage = (self.delegate == nil);
         if(isPreviousCachedMessage) {
