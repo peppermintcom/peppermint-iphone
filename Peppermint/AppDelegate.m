@@ -33,6 +33,8 @@
 #import "ChatEntriesViewController.h"
 #import "AutoPlayModel.h"
 #import "AudioSessionModel.h"
+#import "EmailClientModel.h"
+#import "RecentContactsModel.h"
 
 @import WatchConnectivity;
 @import Contacts;
@@ -56,11 +58,14 @@
     void (^cachedCompletionHandler)(UIBackgroundFetchResult);
     NSDate *fetchStart;
     BOOL hasFinishedFirstSync;
+    EmailClientModel *emailClientModel;
+    NSDate *lastAudioPlayedDate;
 }
 
 -(void) initPlayingModel {
     playingModel = [PlayingModel new];
     [playingModel initReceivedMessageSound];
+    lastAudioPlayedDate = nil;
 }
 
 -(void) initMutableArray {
@@ -205,10 +210,21 @@
     }
 }
 
+-(void) initEmailClient {
+    if(!emailClientModel) {
+        emailClientModel = [EmailClientModel new];
+    }
+    [emailClientModel startEmailClients];
+}
+
+-(void) refreshChatEntryModel {
+    chatEntryModel = [ChatEntryModel new];
+    chatEntryModel.delegate = self;
+}
+
 -(void) refreshIncomingMessages {
     if(!chatEntryModel) {
-        chatEntryModel = [ChatEntryModel new];
-        chatEntryModel.delegate = self;
+        [self refreshChatEntryModel];
         hasFinishedFirstSync = NO;
     }
     [chatEntryModel makeSyncRequestForMessages];
@@ -234,6 +250,7 @@
     [self checkForFirstRun];
     [self initRecorder];
     [self setBackgrounFetchInterval];
+    [self initEmailClient];
     REGISTER();
     return YES;
 }
@@ -401,6 +418,16 @@ SUBSCRIBE(DetachSuccess) {
     return newMessagesArray;
 }
 
+-(void) checkAndPlayIncomingAudioAlert {
+    NSDate *now = [NSDate new];
+    BOOL isAppActive = [UIApplication sharedApplication].applicationState == UIApplicationStateActive;
+    BOOL isAvailableToPlay = (!lastAudioPlayedDate || [now timeIntervalSinceDate:lastAudioPlayedDate] > MIN_INTERVAL_FOR_INCOMING_AUDIO);    
+    if(isAppActive && isAvailableToPlay) {
+        [playingModel playPreparedAudiowithCompetitionBlock:nil];
+    }
+    lastAudioPlayedDate = now;
+}
+
 -(void) peppermintChatEntrySavedWithSuccess:(NSArray<PeppermintChatEntry*>*) savedPeppermintChatEnryArray {
     [self hideAppCoverLoadingView];
     NSArray<PeppermintChatEntry*> *newMessagesArray = [self filterNewIncomingMessagesInArray:savedPeppermintChatEnryArray];
@@ -413,7 +440,7 @@ SUBSCRIBE(DetachSuccess) {
                                     nameSurname:peppermintContactToNavigate.nameSurname];
         peppermintContactToNavigate = nil;
     } else if (newMessagesArray.count > 0 && !newMessagesArray.firstObject.isSentByMe && hasFinishedFirstSync) {
-        [playingModel playPreparedAudiowithCompetitionBlock:nil];
+        [self checkAndPlayIncomingAudioAlert];
     }
     
     BOOL didFinishAllSyncLevels = ([[PeppermintMessageSender sharedInstance] defaultLastMessageSyncDate] == nil);
@@ -821,9 +848,45 @@ SUBSCRIBE(DetachSuccess) {
 
 #pragma mark - Inter App Messaging
 
+SUBSCRIBE(NewEmailMessageReceived) {
+    if([emailClientModel.emailSessionsArray containsObject:event.sender]) {
+        weakself_create();
+        dispatch_async(LOW_PRIORITY_QUEUE, ^{
+            strongSelf_create();
+            if(strongSelf) {
+                RecentContactsModel *recentContactsModel = [RecentContactsModel new];
+                recentContactsModel.delegate = nil;
+                PeppermintContact *peppermintContact = [[ContactsModel sharedInstance] matchingPeppermintContactForEmail:event.contactEmail
+                                                                                                             nameSurname:event.contactNameSurname];
+                
+                if(chatEntryModel && recentContactsModel) {
+                    [recentContactsModel save:peppermintContact forLastPeppermintContactDate:nil lastMailClientContactDate:event.dateReceived];
+                    
+                    PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry new];
+                    peppermintChatEntry.audio = nil;
+                    peppermintChatEntry.audioUrl = nil;
+                    peppermintChatEntry.duration = 0;
+                    peppermintChatEntry.dateCreated = event.dateReceived;
+                    peppermintChatEntry.contactEmail = event.contactEmail;
+                    peppermintChatEntry.contactNameSurname = event.contactNameSurname;
+                    peppermintChatEntry.messageId = event.uid.stringValue;
+                    peppermintChatEntry.subject = event.subject;
+                    peppermintChatEntry.mailContent = event.message;
+                    peppermintChatEntry.isSentByMe = event.isSent;
+                    peppermintChatEntry.isSeen = event.isSeen;
+                    [chatEntryModel savePeppermintChatEntry:peppermintChatEntry];
+                } else {
+                    NSLog(@"A model was not inited properly. This may cause a message not to be shown properly.");
+                }
+            }
+        });
+    }
+}
+
 SUBSCRIBE(NewUserLoggedIn) {
-    chatEntryModel = nil;
+    [self refreshChatEntryModel];
     [self initRecorder];
+    [self initEmailClient];
     [self navigateToContactsWithFilterText:@""];
 }
 

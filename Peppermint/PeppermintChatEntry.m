@@ -34,6 +34,8 @@
     
     peppermintChatEntry.duration = attribute.duration.integerValue;
     peppermintChatEntry.messageId = attribute.message_id;
+    peppermintChatEntry.subject = @"";
+    peppermintChatEntry.mailContent = @"";
     
     return peppermintChatEntry;
 }
@@ -70,6 +72,8 @@
     peppermintChatEntry.isSentByMe = self.isSentByMe;
     peppermintChatEntry.messageId = self.messageId.copy;
     peppermintChatEntry.performedOperation = self.performedOperation;
+    peppermintChatEntry.subject = self.subject;
+    peppermintChatEntry.mailContent = self.mailContent;
     return peppermintChatEntry;
 }
 
@@ -81,6 +85,18 @@
 
 -(NSString*) contactEmail {
     return _contactEmail.lowercaseString;
+}
+
+#pragma mark - Is Audio Entry
+
+-(ChatEntryType) type {
+    ChatEntryType type = ChatEntryTypeNone;
+    if(self.subject.length > 0 || self.mailContent.length > 0) {
+        type = ChatEntryTypeEmail;
+    } else if (self.duration > 0 || self.audio) {
+        type = ChatEntryTypeAudio;
+    }
+    return type;
 }
 
 @end

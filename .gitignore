@@ -6,3 +6,4 @@
 *.xcbkptlist
 
 Peppermint.xcodeproj/xcuserdata/aidapedersen.xcuserdatad/xcschemes/xcschememanagement.plist
+Pods/mailcore2-ios/lib

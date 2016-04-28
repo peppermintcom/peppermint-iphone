@@ -319,7 +319,9 @@
         peppermintContact.communicationChannel = CommunicationChannelEmail;
         peppermintContact.nameSurname = nameSurname;
         peppermintContact.communicationChannelAddress = email;
-    }    
+        peppermintContact.lastPeppermintContactDate = nil;
+        peppermintContact.lastMailClientContactDate = nil;
+    }
     return peppermintContact;
 }
 

@@ -34,4 +34,9 @@
     NSLog(@"InterApp Message error: %@", error);
 }
 
+-(void) sendInterAppMessageWasUnauthorised {
+    NSLog(@"sendInterAppMessageWasUnauthorised");
+    [self cacheMessage];
+}
+
 @end

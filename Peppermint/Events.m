@@ -115,3 +115,9 @@
 
 @implementation InterAppMessageProcessCompleted
 @end
+
+@implementation NewEmailMessageReceived
+@end
+
+@implementation UnauthorizedResponse
+@end

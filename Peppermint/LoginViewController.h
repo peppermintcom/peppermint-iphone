@@ -6,10 +6,9 @@
 //  Copyright © 2015 Okan Kurtulus. All rights reserved.
 //
 
-#import "BaseViewController.h"
-#import "LoginModel.h"
+#import "BaseLoginViewController.h"
 
-@interface LoginViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, LoginTableViewCellDelegate>
+@interface LoginViewController : BaseLoginViewController <UITableViewDataSource, UITableViewDelegate, LoginTableViewCellDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *loginLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *withoutLoginLabel;

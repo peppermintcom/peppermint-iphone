@@ -9,7 +9,11 @@
 #import "LoginModel.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import "PeppermintGIdSignIn.h"
 #import "GoogleContactsModel.h"
+
+@interface LoginModel() <GIDSignInDelegate, GIDSignInUIDelegate>
+@end
 
 @implementation LoginModel {
     AccountModel *accountModel;
@@ -27,13 +31,10 @@
 #pragma mark - Google Login
 
 -(void) performGoogleLogin {
-    GIDSignIn *gIDSignIn = [GIDSignIn sharedInstance];
+    GIDSignIn *gIDSignIn = [PeppermintGIdSignIn GIdSignInInstance];
     gIDSignIn.delegate = self;
     gIDSignIn.uiDelegate = self;
     
-    NSMutableArray *scopesArray = [NSMutableArray new];
-    [scopesArray addObject:[GoogleContactsModel scopeForGoogleContacts]];
-    gIDSignIn.scopes = scopesArray;
     [self.delegate loginLoading];
     [gIDSignIn signOut];
     [gIDSignIn signIn];

@@ -79,6 +79,8 @@
     peppermintChatEntry.isSeen = chatEntry.isSeen.boolValue;
     peppermintChatEntry.isSentByMe = chatEntry.isSentByMe.boolValue;
     peppermintChatEntry.messageId = chatEntry.messageId;
+    peppermintChatEntry.subject = chatEntry.subject;
+    peppermintChatEntry.mailContent = chatEntry.mailContent;
     return peppermintChatEntry;
 }
 
@@ -141,6 +143,8 @@
                                 || peppermintChatEntry.isSeen
                                 || (peppermintChatEntry.audio && peppermintChatEntry.isSentByMe)];
             chatEntry.duration = [NSNumber numberWithDouble:peppermintChatEntry.duration];
+            chatEntry.subject = peppermintChatEntry.subject;
+            chatEntry.mailContent = peppermintChatEntry.mailContent;
         }
         
         NSError *error = [repository endTransaction];
@@ -150,6 +154,48 @@
             } else {
                 [weakSelf updateLastSyncDatesInPeppermintMessageSender];
                 [weakSelf.delegate peppermintChatEntrySavedWithSuccess:peppermintChatEntryArray];
+            }
+        });
+    });
+}
+
+#pragma mark - Delete
+
+-(void) deletePeppermintChatEntry:(PeppermintChatEntry*)peppermintChatEntry {
+    weakself_create();
+    dispatch_async(LOW_PRIORITY_QUEUE, ^{
+        Repository *repository = [Repository beginTransaction];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                                  @"((self.messageId == %@) \
+                                  AND (self.audioUrl == %@) \
+                                  AND (self.isSentByMe == %d))"
+                                  , peppermintChatEntry.messageId
+                                  , peppermintChatEntry.audioUrl
+                                  , peppermintChatEntry.isSentByMe
+                                  ];
+        
+        NSPredicate *emailPredicate = [ChatEntryModel contactEmailPredicate:peppermintChatEntry.contactEmail];
+        predicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:
+                                                                        predicate,
+                                                                        emailPredicate,
+                                                                        nil]];
+        
+        NSArray *existingChatEntriesArray = [repository getResultsFromEntity:[ChatEntry class] predicateOrNil:predicate];
+        if(existingChatEntriesArray.count == 0) {
+            NSLog(@"Could not find any matching chatEntries. Will not delete any record.");
+        } else {
+            NSLog(@"Deleting %ld matching chatEntry(ies)", existingChatEntriesArray.count);
+            for(ChatEntry *chatEntry in existingChatEntriesArray) {
+                [repository deleteEntity:chatEntry];
+            }
+        }
+        
+        NSError *error = [repository endTransaction];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(error) {
+                [weakSelf.delegate operationFailure:error];
+            } else {
+                NSLog(@"Delete process is completed without errors.");
             }
         });
     });
@@ -278,7 +324,8 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
     if([mergedPeppermintContacts containsObject:peppermintContact]) {
         NSUInteger index = [mergedPeppermintContacts indexOfObject:peppermintContact];
         PeppermintContact *peppermintContactInList = [mergedPeppermintContacts objectAtIndex:index];
-        peppermintContactInList.lastMessageDate = [peppermintContactInList.lastMessageDate laterDate:peppermintContact.lastMessageDate];
+        peppermintContactInList.lastPeppermintContactDate = [NSDate maxOfDate1:peppermintContactInList.lastPeppermintContactDate
+                                                                         date2:peppermintContact.lastPeppermintContactDate];
     } else {
         [mergedPeppermintContacts addObject:peppermintContact];
     }
@@ -301,7 +348,8 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
         PeppermintContact *peppermintContact = [contactsModel matchingPeppermintContactForEmail:peppermintChatEntry.contactEmail
                                                                                     nameSurname:peppermintChatEntry.contactNameSurname];
         
-        peppermintContact.lastMessageDate = [peppermintChatEntry.dateCreated laterDate:peppermintContact.lastMessageDate];
+        peppermintContact.lastPeppermintContactDate = [NSDate maxOfDate1:peppermintChatEntry.dateCreated
+                                                                   date2:peppermintContact.lastPeppermintContactDate];
         [self updateLastMessageDateForRecentContact:peppermintContact];
         [customContactModel save:peppermintContact];
     }
@@ -337,7 +385,6 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
         NSArray *matchingChatEntries = [repository getResultsFromEntity:[ChatEntry class] predicateOrNil:predicate];
         if(matchingChatEntries.count == 1) {
             ChatEntry *chatEntry = matchingChatEntries.firstObject;
-            chatEntry.audioUrl = nil;
             chatEntry.audioUrl = audioUrl;
         } else {
             NSLog(@"Found chatEntries: %ld ", matchingChatEntries.count);

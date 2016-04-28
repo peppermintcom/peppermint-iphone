@@ -155,3 +155,17 @@
 @interface InterAppMessageProcessCompleted : BaseEvent
 @property (strong, nonatomic) NSError *error;
 @end
+
+@interface NewEmailMessageReceived : BaseEvent
+@property (strong, nonatomic) NSNumber *uid;
+@property (strong, nonatomic) NSString *contactEmail;
+@property (strong, nonatomic) NSString *contactNameSurname;
+@property (strong, nonatomic) NSString *subject;
+@property (strong, nonatomic) NSString *message;
+@property (assign, nonatomic) BOOL isSent;
+@property (strong, nonatomic) NSDate *dateReceived;
+@property (assign, nonatomic) BOOL isSeen;
+@end
+
+@interface UnauthorizedResponse : BaseEvent
+@end

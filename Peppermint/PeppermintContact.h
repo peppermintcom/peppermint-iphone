@@ -23,7 +23,9 @@ typedef enum : NSUInteger {
 
 @property (assign, nonatomic) BOOL hasReceivedMessageOverPeppermint;
 @property (strong, nonatomic) NSString *uniqueContactId;
-@property (strong, nonatomic) NSDate *lastMessageDate;
+@property (strong, nonatomic) NSDate *lastPeppermintContactDate;
+@property (strong, nonatomic) NSDate *lastMailClientContactDate;
+
 @property (assign, nonatomic) NSUInteger unreadMessageCount;
 @property (assign, nonatomic) BOOL isRestrictedForRecentContact;
 

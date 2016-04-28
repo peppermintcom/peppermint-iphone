@@ -24,6 +24,8 @@ pod 'Google/Analytics'
 pod 'Google/CloudMessaging'
 pod 'UIView+Shake'
 pod 'DeviceMotion'
+pod 'mailcore2-ios'
+pod 'KTCenterFlowLayout'
 end
 
 target 'PeppermintTests' do

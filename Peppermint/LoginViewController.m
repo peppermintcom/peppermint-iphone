@@ -7,9 +7,7 @@
 //
 
 #import "LoginViewController.h"
-#import "LoginNavigationViewController.h"
 #import "LoginWithEmailViewController.h"
-#import "ConnectionModel.h"
 
 #define NUMBER_OF_SECTIONS                  4
 #define SECTION_LOGIN_WITH_FACEBOOK         0
@@ -30,7 +28,6 @@
 
 @implementation LoginViewController {
     PeppermintMessageSender *peppermintMessageSender;
-    NSDate *referanceDate;
 }
 
 - (void)viewDidLoad {
@@ -53,7 +50,6 @@
     self.loginLabel.attributedText = titleText;
     
     peppermintMessageSender = [PeppermintMessageSender sharedInstance];
-    referanceDate = nil;
     
     NSMutableAttributedString *informationString = [NSMutableAttributedString new];
     [informationString addText:LOC(@"Don't want to create an account yet? click here", @"Message First part") ofSize:FONT_SIZE ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:FONT_SIZE]];
@@ -173,8 +169,8 @@
     BOOL isConnectionValid = [[ConnectionModel sharedInstance] isInternetReachable];
     if(isConnectionValid) {
         NSDate *nowDate = [NSDate new];
-        if(!referanceDate || [nowDate timeIntervalSinceDate:referanceDate] > 1) {
-            referanceDate = nowDate; //Prevent multiple touch!
+        if(!self.referanceDate || [nowDate timeIntervalSinceDate:self.referanceDate] > 1) {
+            self.referanceDate = nowDate; //Prevent multiple touch!
             
             NSInteger index = indexPath.section;
             LoginNavigationViewController *loginNavigationViewController = (LoginNavigationViewController*)self.navigationController;
@@ -198,21 +194,7 @@
     }
 }
 
--(void) showInternetIsNotReachableError {
-    NSString *title = LOC(@"Information", @"Information");
-    NSString *message = LOC(@"You should have internet connection to login", @"Message");
-    NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
-    [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
-}
 
-#pragma mark - WithoutLoginLabelPressed
-
--(void) withoutLoginLabelPressed:(id) sender {
-    NSLog(@"withoutLoginLabelPressed");
-    LoginNavigationViewController *loginNavigationViewController = (LoginNavigationViewController*)self.navigationController;
-    peppermintMessageSender.loginSource = LOGINSOURCE_WITHOUTLOGIN;
-    [loginNavigationViewController.loginModel performWithoutLoginAuthentication];    
-}
 
 #pragma mark - Navigation
 

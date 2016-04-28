@@ -19,7 +19,7 @@
 @property (weak, nonatomic) id<RecentContactsModelDelegate> delegate;
 @property (strong, nonatomic) NSMutableArray *contactList;
 
--(void) save:(PeppermintContact*) peppermintContact forContactDate:(NSDate*) contactDate;
+-(void) save:(PeppermintContact*) peppermintContact forLastPeppermintContactDate:(NSDate*)lastPeppermintContactDate lastMailClientContactDate:(NSDate*) lastMailClientContactDate;
 -(void) saveMultiple:(NSArray<PeppermintContact*>*) peppermintContactArray;
 -(void) refreshRecentContactList;
 

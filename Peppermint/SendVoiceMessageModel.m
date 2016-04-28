@@ -24,6 +24,7 @@
     dispatch_semaphore_t dispatch_semaphore;
     ChatEntryModel *chatEntryModel;
     NSString *cachedCanonicalUrl;
+    PeppermintChatEntry *peppermintChatEntryForCurrentMessageModel;
 }
 
 -(id) init {
@@ -60,7 +61,10 @@
     
     BOOL isPreviousCachedMessage = (self.delegate == nil);
     if(!isPreviousCachedMessage) {
-        [recentContactsModel save:self.selectedPeppermintContact forContactDate:[NSDate new]];
+        [recentContactsModel save:self.selectedPeppermintContact
+    forLastPeppermintContactDate:[NSDate new]
+        lastMailClientContactDate:nil];        
+        
         [self checkAndCleanFastReplyModel];
     }
     
@@ -76,8 +80,15 @@
 
 -(void) checkAndPerformOperationsConnectedWithMessageSending {
     if(self.sendingStatus == SendingStatusCached) {
-        NSString *tempUrl = [NSString stringWithFormat:@"%f", [NSDate new].timeIntervalSince1970];
-        [self setChatConversation:tempUrl];
+        BOOL isPreviousCachedMessage = (self.delegate == nil);
+        if(!isPreviousCachedMessage) {
+            BOOL isChatEntryAlreadyCreated = (peppermintChatEntryForCurrentMessageModel != nil);
+            if(isChatEntryAlreadyCreated) {
+                [chatEntryModel deletePeppermintChatEntry:peppermintChatEntryForCurrentMessageModel];
+            }
+            NSString *tempUrl = [NSString stringWithFormat:@"%f", [NSDate new].timeIntervalSince1970];
+            [self setChatConversation:tempUrl];
+        }
     } else if(self.sendingStatus == SendingStatusSendingWithNoCancelOption) {
         BOOL isPreviousCachedMessage = (self.delegate == nil);
         if(isPreviousCachedMessage) {
@@ -150,7 +161,7 @@
 -(void) cacheMessage {
     BOOL isValidToCache = _data && _extension && _duration > 0;
     if(isValidToCache) {
-        _sendingStatus = SendingStatusCancelled; //Cancel to stop ongoing processes
+        _sendingStatus = SendingStatusCancelled; //Cancel to stop ongoing processes. All taken actions are rolled-back!
         [[CacheModel sharedInstance] cache:self WithData:_data extension:_extension duration:_duration];
     } else {
         NSLog(@"Message could not be cached. There is no sufficient information to cacheq   ""!!!");
@@ -317,18 +328,18 @@
 #pragma mark - Chat
 
 -(void) setChatConversation:(NSString*) publicAudioUrl {
-#warning "Set transcription text"
+#warning "Set transcription text"    
     NSDate *createDate = [NSDate new];
-    PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry new];
-    peppermintChatEntry.audio = _data;
-    peppermintChatEntry.audioUrl = publicAudioUrl;
-    peppermintChatEntry.duration = _duration;
-    peppermintChatEntry.isSentByMe = YES;
-    peppermintChatEntry.dateCreated = createDate;
-    peppermintChatEntry.messageId = nil; //We leave message Id as nil, cos we would like it to be merged when it sync with server!
-    peppermintChatEntry.isSeen = YES;
-    peppermintChatEntry.contactEmail = self.selectedPeppermintContact.communicationChannelAddress;
-    [chatEntryModel savePeppermintChatEntry:peppermintChatEntry];
+    peppermintChatEntryForCurrentMessageModel = [PeppermintChatEntry new];
+    peppermintChatEntryForCurrentMessageModel.audio = _data;
+    peppermintChatEntryForCurrentMessageModel.audioUrl = publicAudioUrl;
+    peppermintChatEntryForCurrentMessageModel.duration = _duration;
+    peppermintChatEntryForCurrentMessageModel.dateCreated = createDate;
+    peppermintChatEntryForCurrentMessageModel.isSentByMe = YES;
+    peppermintChatEntryForCurrentMessageModel.messageId = nil; //We leave message Id as nil, cos we would like it to be merged when it sync with server!
+    peppermintChatEntryForCurrentMessageModel.isSeen = YES;
+    peppermintChatEntryForCurrentMessageModel.contactEmail = self.selectedPeppermintContact.communicationChannelAddress;
+    [chatEntryModel savePeppermintChatEntry:peppermintChatEntryForCurrentMessageModel];
 }
 
 #pragma mark - ChatEntryModelDelegate

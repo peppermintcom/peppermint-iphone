@@ -496,10 +496,21 @@
         interAppMessageProcessCompleted.error = nil;
         PUBLISH(interAppMessageProcessCompleted);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        InterAppMessageProcessCompleted *interAppMessageProcessCompleted = [InterAppMessageProcessCompleted new];
-        interAppMessageProcessCompleted.sender = self;
-        interAppMessageProcessCompleted.error = error;
-        PUBLISH(interAppMessageProcessCompleted);        
+        if(operation.response.statusCode == RESPONSE_CODE_NOT_FOUND) {
+            //User is not available to get inter-app messaging
+            InterAppMessageProcessCompleted *interAppMessageProcessCompleted = [InterAppMessageProcessCompleted new];
+            interAppMessageProcessCompleted.sender = self;
+            interAppMessageProcessCompleted.error = error;
+            PUBLISH(interAppMessageProcessCompleted);
+        } else if (operation.response.statusCode == RESPONSE_CODE_UNAUTHORIZED) {
+            UnauthorizedResponse *unauthorizedResponse = [UnauthorizedResponse new];
+            unauthorizedResponse.sender = self;
+            PUBLISH(unauthorizedResponse);
+        } else if (error) {
+            [self failureWithOperation:operation andError:error];
+        } else {
+            NSLog(@"The situation is not handleable!");
+        }
     }];
 }
 

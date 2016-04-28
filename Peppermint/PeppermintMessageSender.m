@@ -279,6 +279,7 @@
     defaults_remove(DEFAULTS_KEY_CACHED_SENDVOCIEMESSAGE_MODEL);
     defaults_remove(DEFAULTS_KEY_DONT_SHOW_SMS_WARNING);
     defaults_remove(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH);
+    defaults_remove(DEFAULTS_EMAIL_UID_HOLDER);
     
     [[AppDelegate Instance] cleanDatabase];
     [self save];

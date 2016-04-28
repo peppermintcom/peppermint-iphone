@@ -216,6 +216,18 @@ SUBSCRIBE(SetUpAccountWithRecorderCompleted) {
                                         jwt:peppermintMessageSender.exchangedJwt];
 }
 
+SUBSCRIBE(UnauthorizedResponse) {
+    if(event.sender == awsService) {
+        PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+        peppermintMessageSender.recorderJwt = @"";
+        [peppermintMessageSender save];
+        [self initRecorder];
+        if([self.delegate respondsToSelector:@selector(sendInterAppMessageWasUnauthorised)]) {
+            [self.delegate sendInterAppMessageWasUnauthorised];
+        }
+    }
+}
+
 SUBSCRIBE(InterAppMessageProcessCompleted) {
     if(event.sender == awsService ) {
         NSError *error = event.error;

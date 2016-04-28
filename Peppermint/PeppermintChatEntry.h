@@ -15,21 +15,34 @@ typedef enum : NSUInteger {
     PerformedOperationUpdated,
 } PerformedOperation;
 
+typedef enum : NSUInteger {
+    ChatEntryTypeNone,
+    ChatEntryTypeAudio,
+    ChatEntryTypeEmail,
+} ChatEntryType;
+
 @interface PeppermintChatEntry : NSObject <NSCopying>
 
-@property (strong, nonatomic) NSData *audio;
-@property (strong, nonatomic) NSString *audioUrl;
+#pragma mark - Base Content
 @property (strong, nonatomic) NSDate *dateCreated;
-//@property (strong, nonatomic) NSString *contactEmail;
--(void) setContactEmail:(NSString*)email;
--(NSString*) contactEmail;
 @property (strong, nonatomic) NSString *contactNameSurname;
-@property (assign, nonatomic) NSInteger duration;
 @property (assign, nonatomic) BOOL isSeen;
 @property (assign, nonatomic) BOOL isSentByMe;
 @property (strong, nonatomic) NSString *messageId;
 @property (assign, nonatomic) PerformedOperation performedOperation;
 
+#pragma mark - Audio Content
+@property (strong, nonatomic) NSData *audio;
+@property (strong, nonatomic) NSString *audioUrl;
+@property (assign, nonatomic) NSInteger duration;
+
+#pragma mark - Email Content
+@property (strong, nonatomic) NSString *subject;
+@property (strong, nonatomic) NSString *mailContent;
+
 +(PeppermintChatEntry*) createFromAttribute:(Attribute*) attribute isIncomingMessage:(BOOL)isIncoming;
+-(void) setContactEmail:(NSString*)email;
+-(NSString*) contactEmail;
+-(ChatEntryType) type;
 
 @end

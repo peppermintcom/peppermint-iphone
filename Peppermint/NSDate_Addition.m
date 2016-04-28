@@ -33,4 +33,14 @@
     return [[self localDateTime] compare:yesterday] != NSOrderedAscending;
 }
 
++(NSDate*) maxOfDate1:(NSDate*) date1 date2:(NSDate*) date2 {
+    NSDate *laterDate = date1 ? date1 : date2; // nil control
+    if ([date1 compare:date2] == NSOrderedDescending) {
+        laterDate = date1;
+    } else if ([date1 compare:date2] == NSOrderedAscending) {
+        laterDate = date2;
+    }
+    return laterDate;
+}
+
 @end

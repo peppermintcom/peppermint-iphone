@@ -2,7 +2,7 @@
 //  RecentContact+CoreDataProperties.h
 //  Peppermint
 //
-//  Created by Okan Kurtulus on 29/02/16.
+//  Created by Okan Kurtulus on 28/04/16.
 //  Copyright © 2016 Okan Kurtulus. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -15,7 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RecentContact (CoreDataProperties)
 
-@property (nullable, nonatomic, retain) NSDate *contactDate;
+@property (nullable, nonatomic, retain) NSDate *peppermintContactDate;
+@property (nullable, nonatomic, retain) NSDate *mailClientContactDate;
 
 @end
 

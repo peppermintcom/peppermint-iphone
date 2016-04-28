@@ -123,4 +123,27 @@
     return cell;
 }
 
++(ChatTableViewMailCell*) cellChatTableViewMailCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath {
+    NSString *cellKey = @"ChatTableViewMailCell";
+    ChatTableViewMailCell *cell = [tableView dequeueReusableCellWithIdentifier:cellKey];
+    if(!cell) {
+        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:cellKey owner:self options:nil];
+        cell = [topLevelObjects objectAtIndex:0];
+    }
+    cell.tableView = tableView;
+    cell.indexPath = indexPath;
+    return cell;
+}
+
+#pragma mark - CollectionViewCell
+
++(EmailLoginCollectionViewCell*) cellEmailLoginCollectionViewCellFromCollectionView:(UICollectionView*)collectionView forIndexPath:(NSIndexPath*)indexPath {
+    NSString *cellKey = @"EmailLoginCollectionViewCell";
+    
+    UINib *cellNib = [UINib nibWithNibName:cellKey bundle:[NSBundle mainBundle]];
+    [collectionView registerNib:cellNib forCellWithReuseIdentifier:cellKey];
+    EmailLoginCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellKey forIndexPath:indexPath];    
+    return cell;
+}
+
 @end

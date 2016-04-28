@@ -360,7 +360,8 @@ SUBSCRIBE(UserLoggedOut) {
 -(void) markReadFieldsIfNecessaryForPeppermintContact:(PeppermintContact*) peppermintContact inTableViewCell:(ContactTableViewCell*)cell {
     PeppermintContact *recentContact = [self recentContactForPeppermintContact:peppermintContact];
     if(recentContact) {
-        NSDate *lastMessageDate = recentContact.lastMessageDate;
+        NSDate *lastMessageDate = [NSDate maxOfDate1:recentContact.lastPeppermintContactDate date2:recentContact.lastMailClientContactDate];
+        
         if([lastMessageDate isToday]) {
             cell.rightDateLabel.text = LOC(@"Today", @"Today");
         } else if ([lastMessageDate isYesterday]) {
