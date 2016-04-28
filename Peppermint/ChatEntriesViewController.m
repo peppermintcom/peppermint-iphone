@@ -16,7 +16,6 @@
 #import "ProximitySensorModel.h"
 
 #define BOTTOM_RESET_IME            2
-
 #define WAIT_FOR_SHAKE_DURATION     2
 
 @interface ChatEntriesViewController () <RecordingGestureButtonDelegate, RecordingViewDelegate>
@@ -29,6 +28,7 @@
     BOOL isScrolling;
     __block BOOL isPlaying;
     NSTimer *recordingPausedTimer;
+    NSMutableDictionary *calculatedHeightsDictionary;
 }
 
 - (void)viewDidLoad {
@@ -54,6 +54,7 @@
     autoPlayModel =[AutoPlayModel sharedInstance];
     [self recordingView]; // init recording view to be able to handle status change events
     self.recordingButton.delegate = self;
+    calculatedHeightsDictionary = [NSMutableDictionary new];
     REGISTER();
 }
 
@@ -188,6 +189,22 @@
     return cell;
 }
 
+-(CGFloat) calculatedHeight:(PeppermintChatEntry*)peppermintChatEntry indexPath:(NSIndexPath *)indexPath {
+    NSString *key = [NSString stringWithFormat:@"%ld-%ld", indexPath.section, indexPath.row];
+    NSNumber *cachedHeight = [calculatedHeightsDictionary objectForKey:key];
+    if(!cachedHeight) {
+        CGFloat calculatedHeight = 0;
+        CGSize textSize = [peppermintChatEntry.mailContent sizeWithAttributes:@{NSFontAttributeName:[UIFont openSansFontOfSize:15]}];
+        CGFloat estimatedHeigth = textSize.height * textSize.width / (SCREEN_WIDTH * 0.85);
+        calculatedHeight = CELL_HEIGHT_CHAT_TABLEVIEWCELL + estimatedHeigth;
+        calculatedHeight = MIN(calculatedHeight, CELL_HEIGHT_CHAT_TABLEVIEWMAILCELL_IDLE_MAX);
+        cachedHeight = [NSNumber numberWithFloat:calculatedHeight];
+        [calculatedHeightsDictionary setObject:cachedHeight forKey:key];
+    }
+    return cachedHeight.floatValue;
+}
+
+
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {    
     CGFloat height = 0;
     if(self.chatEntryModel.chatEntriesArray.count > indexPath.row) {
@@ -195,10 +212,8 @@
         if(peppermintChatEntry.type == ChatEntryTypeAudio) {
             height = CELL_HEIGHT_CHAT_TABLEVIEWCELL;
         } else if (peppermintChatEntry.type == ChatEntryTypeEmail) {
-            CGSize textSize = [peppermintChatEntry.mailContent sizeWithAttributes:@{NSFontAttributeName:[UIFont openSansFontOfSize:15]}];
-            CGFloat estimatedHeigth = textSize.height * textSize.width / (SCREEN_WIDTH * 0.85);
-            height = CELL_HEIGHT_CHAT_TABLEVIEWCELL + estimatedHeigth;
-            height = MIN(height, CELL_HEIGHT_CHAT_TABLEVIEWMAILCELL_IDLE_MAX);
+            height = [self calculatedHeight:peppermintChatEntry indexPath:indexPath];
+            height = 0;
         }
     }
     return height;

@@ -17,14 +17,19 @@
 @implementation RecentContactsModel {
     __block NSSet *receivedMessagesEmailSet;
     __block int activeServiceCallCount;
+    __block NSMutableArray *contactList;
+    NSMutableArray *peppermintMessageRecentContactsArray;
+    NSMutableArray *mailClientMessageRecentContactsArray;
 }
 
 -(id) init {
     self = [super init];
     if(self) {
-        self.contactList = [NSMutableArray new];
+        contactList = [NSMutableArray new];
         receivedMessagesEmailSet = nil;
         activeServiceCallCount = 0;
+        peppermintMessageRecentContactsArray = nil;
+        mailClientMessageRecentContactsArray = nil;
     }
     return self;
 }
@@ -147,7 +152,9 @@
 #endif
             
             if(--activeServiceCallCount==0) {
-                strongSelf.contactList = recentPeppermintContacts;
+                peppermintMessageRecentContactsArray = nil;
+                mailClientMessageRecentContactsArray = nil;
+                contactList = recentPeppermintContacts;
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [strongSelf.delegate recentPeppermintContactsRefreshed];
                 });
@@ -174,6 +181,32 @@
     NSNumber *currentQuickSyncLevel = defaults_object(DEFAULTS_KEY_QUICK_SYNC_LEVEL);
 #warning "Update the below number (current value is 7) according to the levels in PeppermintMessageSender"
     return currentQuickSyncLevel.intValue > 7;
+}
+
+#pragma mark - Contact List Functions
+
+-(NSMutableArray*) allMessageRecentContactsArray {
+    return contactList;
+}
+
+-(NSMutableArray*) peppermintMessageRecentContactsArray {
+    if(!peppermintMessageRecentContactsArray) {
+        NSPredicate *havingPeppermintMessagePredicate = [NSPredicate predicateWithFormat:@"self.lastPeppermintContactDate != nil"];
+        NSArray *unsortedArray = [contactList filteredArrayUsingPredicate:havingPeppermintMessagePredicate];
+        NSArray *sortedArray = [unsortedArray sortedArrayUsingDescriptors: @[[NSSortDescriptor sortDescriptorWithKey:@"lastPeppermintContactDate" ascending:NO]]];
+        peppermintMessageRecentContactsArray = [NSMutableArray arrayWithArray:sortedArray];
+    }
+    return peppermintMessageRecentContactsArray;
+}
+
+-(NSMutableArray*) mailClientMessageRecentContactsArray {
+    if(!mailClientMessageRecentContactsArray) {
+        NSPredicate *havingMailClientMessagePredicate = [NSPredicate predicateWithFormat:@"self.lastMailClientContactDate != nil"];
+        NSArray *unsortedArray = [contactList filteredArrayUsingPredicate:havingMailClientMessagePredicate];
+        NSArray *sortedArray = [unsortedArray sortedArrayUsingDescriptors: @[[NSSortDescriptor sortDescriptorWithKey:@"lastMailClientContactDate" ascending:NO]]];
+        mailClientMessageRecentContactsArray = [NSMutableArray arrayWithArray:sortedArray];
+    }
+    return mailClientMessageRecentContactsArray;
 }
 
 @end

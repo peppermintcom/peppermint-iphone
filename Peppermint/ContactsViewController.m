@@ -216,7 +216,7 @@ SUBSCRIBE(UserLoggedOut) {
     NSArray *activeContactList = nil;
     
     if(activeCellTag == CELL_TAG_RECENT_CONTACTS) {
-        activeContactList = self.recentContactsModel.contactList;
+        activeContactList = self.recentContactsModel.peppermintMessageRecentContactsArray;
     } else if (activeCellTag == CELL_TAG_ALL_CONTACTS)   {
         activeContactList = self.contactsModel.contactList;
     } else if (activeCellTag == CELL_TAG_EMAIL_CONTACTS) {
@@ -353,15 +353,14 @@ SUBSCRIBE(UserLoggedOut) {
 
 -(PeppermintContact*) recentContactForPeppermintContact:(PeppermintContact*)peppermintContact {
     NSPredicate *predicate = [self.recentContactsModel recentContactPredicate:peppermintContact];
-    NSArray *filteredArray = [self.recentContactsModel.contactList filteredArrayUsingPredicate:predicate];
+    NSArray *filteredArray = [self.recentContactsModel.peppermintMessageRecentContactsArray filteredArrayUsingPredicate:predicate];
     return filteredArray.count > 0 ? filteredArray.firstObject : nil;
 }
 
 -(void) markReadFieldsIfNecessaryForPeppermintContact:(PeppermintContact*) peppermintContact inTableViewCell:(ContactTableViewCell*)cell {
     PeppermintContact *recentContact = [self recentContactForPeppermintContact:peppermintContact];
     if(recentContact) {
-        NSDate *lastMessageDate = [NSDate maxOfDate1:recentContact.lastPeppermintContactDate date2:recentContact.lastMailClientContactDate];
-        
+        NSDate *lastMessageDate = recentContact.lastPeppermintContactDate;
         if([lastMessageDate isToday]) {
             cell.rightDateLabel.text = LOC(@"Today", @"Today");
         } else if ([lastMessageDate isYesterday]) {
@@ -833,7 +832,7 @@ SUBSCRIBE(UserLoggedOut) {
 }
 
 -(BOOL) shouldUpdateActiveCellTag {
-    BOOL isRecentContactsListEmpty = (self.recentContactsModel.contactList.count == 0);
+    BOOL isRecentContactsListEmpty = (self.recentContactsModel.peppermintMessageRecentContactsArray.count == 0);
     BOOL isActiveCelTagRecentContacts = (activeCellTag == CELL_TAG_RECENT_CONTACTS);
     BOOL result = isFirstOpen && isRecentContactsListEmpty && isActiveCelTagRecentContacts;
     isFirstOpen = NO;
@@ -969,7 +968,7 @@ SUBSCRIBE(MessageIsMarkedAsRead) {
 #warning "What if the searched email is not in active list but it is existing in the DB?"
     if([email isValidEmail]) {
         NSPredicate *predicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:email];
-        NSArray *matchingChatsArray = [self.recentContactsModel.contactList filteredArrayUsingPredicate:predicate];
+        NSArray *matchingChatsArray = [self.recentContactsModel.peppermintMessageRecentContactsArray filteredArrayUsingPredicate:predicate];
         if(matchingChatsArray.count > 0) {
             PeppermintContact *peppermintContact = matchingChatsArray.firstObject;
             
