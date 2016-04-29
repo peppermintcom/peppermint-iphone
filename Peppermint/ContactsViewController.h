@@ -6,12 +6,11 @@
 //  Copyright (c) 2015 Okan Kurtulus. All rights reserved.
 //
 
-#import "BaseViewController.h"
+#import "BaseReSideMenuContentViewController.h"
 #import "ContactsModel.h"
 #import "RecentContactsModel.h"
 #import "FastRecordingView.h"
 #import "FoggyRecordingView.h"
-#import "ReSideMenuContainerViewController.h"
 #import "TutorialView.h"
 
 #define CELL_TAG_ALL_CONTACTS           1
@@ -19,7 +18,7 @@
 #define CELL_TAG_EMAIL_CONTACTS         3
 #define CELL_TAG_SMS_CONTACTS           4
 
-@interface ContactsViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ContactsModelDelegate, RecentContactsModelDelegate, SearchMenuTableViewCellDelegate, UIAlertViewDelegate, ContactTableViewCellDelegate, RecordingViewDelegate, ContactInformationTableViewCellDelegate>
+@interface ContactsViewController : BaseReSideMenuContentViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ContactsModelDelegate, RecentContactsModelDelegate, SearchMenuTableViewCellDelegate, UIAlertViewDelegate, ContactTableViewCellDelegate, RecordingViewDelegate, ContactInformationTableViewCellDelegate>
 @property (strong, nonatomic) ContactsModel *contactsModel;
 @property (strong, nonatomic) RecentContactsModel *recentContactsModel;
 
@@ -35,7 +34,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *cancelMessageSendingButton;
 @property (weak, nonatomic) IBOutlet UIView *whiteEllipseView;
 @property (strong, nonatomic) RecordingView *recordingView;
-@property (weak, nonatomic) ReSideMenuContainerViewController *reSideMenuContainerViewController;
 @property (strong, nonatomic) TutorialView *tutorialView;
 
 -(void) resetUserInterfaceWithActiveCellTag:(int)newCellTag;

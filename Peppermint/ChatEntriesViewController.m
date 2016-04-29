@@ -107,6 +107,9 @@
     [self startListeningProximitySensor];
     [self refreshContent];
     [self checkToTakeOverSendingMessageEvents];
+    if(self.chatEntryTypesToShow == ChatEntryTypeNone) {
+        NSLog(@"No ChatEntryTypes are set to be shown. View content will be empty!!");
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -190,7 +193,7 @@
 }
 
 -(CGFloat) calculatedHeight:(PeppermintChatEntry*)peppermintChatEntry indexPath:(NSIndexPath *)indexPath {
-    NSString *key = [NSString stringWithFormat:@"%ld-%ld", indexPath.section, indexPath.row];
+    NSString *key = [NSString stringWithFormat:@"%ld-%ld", (long)indexPath.section, (long)indexPath.row];
     NSNumber *cachedHeight = [calculatedHeightsDictionary objectForKey:key];
     if(!cachedHeight) {
         CGFloat calculatedHeight = 0;
@@ -209,11 +212,10 @@
     CGFloat height = 0;
     if(self.chatEntryModel.chatEntriesArray.count > indexPath.row) {
         PeppermintChatEntry *peppermintChatEntry = (PeppermintChatEntry*)[self.chatEntryModel.chatEntriesArray objectAtIndex:indexPath.row];
-        if(peppermintChatEntry.type == ChatEntryTypeAudio) {
+        if(peppermintChatEntry.type == ChatEntryTypeAudio && self.chatEntryTypesToShow & ChatEntryTypeAudio) {
             height = CELL_HEIGHT_CHAT_TABLEVIEWCELL;
-        } else if (peppermintChatEntry.type == ChatEntryTypeEmail) {
+        } else if (peppermintChatEntry.type == ChatEntryTypeEmail && self.chatEntryTypesToShow & ChatEntryTypeEmail) {
             height = [self calculatedHeight:peppermintChatEntry indexPath:indexPath];
-            height = 0;
         }
     }
     return height;

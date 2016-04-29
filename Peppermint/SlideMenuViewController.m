@@ -10,17 +10,20 @@
 #import "LoginModel.h"
 #import "AccountViewController.h"
 #import "ContactsViewController.h"
+#import "MailClientContactsViewController.h"
 #import "FeedBackViewController.h"
 #import "AboutViewController.h"
 
+
 #define INDEX_TUTORIAL      -1
 
-#define NUMBER_OF_OPTIONS   5
+#define NUMBER_OF_OPTIONS   6
 #define INDEX_RECENT_CONTACTS      0
 #define INDEX_ALL_CONTACTS  1
-#define INDEX_FEEDBACK      2
-#define INDEX_ACCOUNT       3
-#define INDEX_ABOUT         4
+#define INDEX_MAIL_CLIENT   2
+#define INDEX_FEEDBACK      3
+#define INDEX_ACCOUNT       4
+#define INDEX_ABOUT         5
 
 
 @interface SlideMenuViewController ()
@@ -63,6 +66,10 @@
             cell.titleLabel.text = LOC(@"All Contacts", @"Title");
             cell.iconImageView.image = [UIImage imageNamed:@"icon_all"];
             break;
+        case INDEX_MAIL_CLIENT:
+            cell.titleLabel.text = LOC(@"Emails", @"Title");
+            cell.iconImageView.image = [UIImage imageNamed:@"email_active"];
+            break;
         case INDEX_TUTORIAL:
             cell.titleLabel.text = LOC(@"Tutorial",@"Tutorial Label");
             cell.iconImageView.image = [UIImage imageNamed:@"icon_tutorial"];
@@ -101,7 +108,12 @@
         ContactsViewController *contactsViewController = navigationController.viewControllers.firstObject;
         [contactsViewController resetUserInterfaceWithActiveCellTag:CELL_TAG_ALL_CONTACTS];
         [navigationController popToRootViewControllerAnimated:YES];
-    } else if (indexPath.row == INDEX_FEEDBACK) {        
+    } else if (indexPath.row == INDEX_MAIL_CLIENT) {
+        UINavigationController *navigationController = (UINavigationController*)self.reSideMenuContainerViewController.contentViewController;
+        MailClientContactsViewController *mailClientContactsViewController = [MailClientContactsViewController createInstance];
+        mailClientContactsViewController.reSideMenuContainerViewController = self.reSideMenuContainerViewController;
+        [navigationController pushViewController:mailClientContactsViewController animated:YES];
+    } else if (indexPath.row == INDEX_FEEDBACK) {
         UINavigationController *navigationController = (UINavigationController*)self.reSideMenuContainerViewController.contentViewController;
         FeedBackViewController *feedBackViewController = [FeedBackViewController createInstance];
         [navigationController pushViewController:feedBackViewController animated:YES];

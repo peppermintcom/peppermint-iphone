@@ -194,20 +194,9 @@ SUBSCRIBE(UserLoggedOut) {
 
 #pragma mark - Slide Menu
 
--(IBAction)slideMenuTouchDown:(id)sender {
-    UIButton *menuButton = (UIButton*)sender;
-    menuButton.alpha = 0.7;
-}
-
--(IBAction)slideMenuTouchUp:(id)sender {
-    UIButton *menuButton = (UIButton*)sender;
-    menuButton.alpha = 1;
-}
-
 -(IBAction)slideMenuValidAction:(id)sender {
-    [self slideMenuTouchUp:sender];
     [self hideHoldToRecordInfoView];
-    [self.reSideMenuContainerViewController presentLeftMenuViewController];
+    [super slideMenuValidAction:sender];    
 }
 
 #pragma mark - ContactList Logic
@@ -957,6 +946,7 @@ SUBSCRIBE(MessageIsMarkedAsRead) {
             PeppermintContact *peppermintContact = (PeppermintContact*)sender;
             ChatEntriesViewController *chatEntriesViewController = (ChatEntriesViewController*)segue.destinationViewController;
             chatEntriesViewController.peppermintContact = peppermintContact;
+            chatEntriesViewController.chatEntryTypesToShow = ChatEntryTypeAudio;
             isNavigatedToChatEntries = YES;
         } else {
             NSLog(@"sender must be an instance of 'PeppermintContact' to navigate!");

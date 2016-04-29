@@ -25,6 +25,7 @@
 		B116F3B11C008E570091994C /* FastReplyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B116F3B01C008E570091994C /* FastReplyModel.m */; };
 		B11B13541C0C5EAD00782FC4 /* ContactInformationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B11B13531C0C5EAD00782FC4 /* ContactInformationTableViewCell.m */; };
 		B11B13561C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B11B13551C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib */; };
+		B11BA7F21CD35167005D02E0 /* BaseReSideMenuContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B11BA7F11CD35167005D02E0 /* BaseReSideMenuContentViewController.m */; };
 		B11EF4A41CC95CE70020EA7B /* SparkPostOption.m in Sources */ = {isa = PBXBuildFile; fileRef = B11EF4A31CC95CE70020EA7B /* SparkPostOption.m */; };
 		B11F8A5C1BDCC45F000E79AA /* FinalizeUploadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5B1BDCC45F000E79AA /* FinalizeUploadRequest.m */; };
 		B11F8A5F1BDCC474000E79AA /* FinalizeUploadResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5E1BDCC474000E79AA /* FinalizeUploadResponse.m */; };
@@ -153,6 +154,7 @@
 		B1BB601D1BDE16D400C1140B /* UIStoryboard_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB601C1BDE16D400C1140B /* UIStoryboard_Addition.m */; };
 		B1BB605F1BDE36AF00C1140B /* SignUpWithEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB605E1BDE36AF00C1140B /* SignUpWithEmailViewController.m */; };
 		B1BDD36C1C7A6FB300C8BDF4 /* water_drop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B1BDD36B1C7A6FB300C8BDF4 /* water_drop.mp3 */; };
+		B1C3928A1CD2A9770022ACB5 /* MailClientContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C392891CD2A9770022ACB5 /* MailClientContactsViewController.m */; };
 		B1C4A7731BF73E3B00272AD7 /* LoginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C4A7721BF73E3B00272AD7 /* LoginRequest.m */; };
 		B1C4A7761BF73E4900272AD7 /* LoginResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C4A7751BF73E4900272AD7 /* LoginResponse.m */; };
 		B1C83A191BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C83A181BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m */; };
@@ -325,6 +327,8 @@
 		B11B13521C0C5EAD00782FC4 /* ContactInformationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactInformationTableViewCell.h; sourceTree = "<group>"; };
 		B11B13531C0C5EAD00782FC4 /* ContactInformationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactInformationTableViewCell.m; sourceTree = "<group>"; };
 		B11B13551C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactInformationTableViewCell.xib; sourceTree = "<group>"; };
+		B11BA7F01CD35167005D02E0 /* BaseReSideMenuContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseReSideMenuContentViewController.h; sourceTree = "<group>"; };
+		B11BA7F11CD35167005D02E0 /* BaseReSideMenuContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseReSideMenuContentViewController.m; sourceTree = "<group>"; };
 		B11E02D51C490DA900579122 /* PeppermintDataModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PeppermintDataModel 2.xcdatamodel"; sourceTree = "<group>"; };
 		B11EF4A21CC95CE70020EA7B /* SparkPostOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SparkPostOption.h; sourceTree = "<group>"; };
 		B11EF4A31CC95CE70020EA7B /* SparkPostOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SparkPostOption.m; sourceTree = "<group>"; };
@@ -573,6 +577,8 @@
 		B1BB605D1BDE36AF00C1140B /* SignUpWithEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpWithEmailViewController.h; sourceTree = "<group>"; };
 		B1BB605E1BDE36AF00C1140B /* SignUpWithEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpWithEmailViewController.m; sourceTree = "<group>"; };
 		B1BDD36B1C7A6FB300C8BDF4 /* water_drop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = water_drop.mp3; sourceTree = "<group>"; };
+		B1C392881CD2A9770022ACB5 /* MailClientContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailClientContactsViewController.h; sourceTree = "<group>"; };
+		B1C392891CD2A9770022ACB5 /* MailClientContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailClientContactsViewController.m; sourceTree = "<group>"; };
 		B1C4A7711BF73E3B00272AD7 /* LoginRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRequest.h; sourceTree = "<group>"; };
 		B1C4A7721BF73E3B00272AD7 /* LoginRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginRequest.m; sourceTree = "<group>"; };
 		B1C4A7741BF73E4900272AD7 /* LoginResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginResponse.h; sourceTree = "<group>"; };
@@ -841,6 +847,51 @@
 				B11B13551C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib */,
 			);
 			name = ContactInformationTableViewCell;
+			sourceTree = "<group>";
+		};
+		B11BA7F31CD3778C005D02E0 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				B1B8018F1C3FF69B00958885 /* AboutViewController.h */,
+				B1B801901C3FF69B00958885 /* AboutViewController.m */,
+			);
+			name = About;
+			sourceTree = "<group>";
+		};
+		B11BA7F41CD37797005D02E0 /* AddContact */ = {
+			isa = PBXGroup;
+			children = (
+				D0BA6E881C070A1C00B8D85B /* AddContactViewController.h */,
+				D0BA6E891C070A1C00B8D85B /* AddContactViewController.m */,
+			);
+			name = AddContact;
+			sourceTree = "<group>";
+		};
+		B11BA7F51CD377A1005D02E0 /* RecordingViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B17B3D621BB6AE8B009B8BC5 /* RecordingViewController.h */,
+				B17B3D631BB6AE8B009B8BC5 /* RecordingViewController.m */,
+			);
+			name = RecordingViewController;
+			sourceTree = "<group>";
+		};
+		B11BA7F61CD377AB005D02E0 /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				B17B3D5C1BB6A504009B8BC5 /* ContactsViewController.h */,
+				B17B3D5D1BB6A504009B8BC5 /* ContactsViewController.m */,
+			);
+			name = Contacts;
+			sourceTree = "<group>";
+		};
+		B11BA7F71CD377B5005D02E0 /* MailClient */ = {
+			isa = PBXGroup;
+			children = (
+				B1C392881CD2A9770022ACB5 /* MailClientContactsViewController.h */,
+				B1C392891CD2A9770022ACB5 /* MailClientContactsViewController.m */,
+			);
+			name = MailClient;
 			sourceTree = "<group>";
 		};
 		B12C03B81BCFFBDC0085A55A /* FastRecordingView */ = {
@@ -1178,6 +1229,8 @@
 			children = (
 				B17B3D591BB6A49E009B8BC5 /* BaseViewController.h */,
 				B17B3D5A1BB6A49E009B8BC5 /* BaseViewController.m */,
+				B11BA7F01CD35167005D02E0 /* BaseReSideMenuContentViewController.h */,
+				B11BA7F11CD35167005D02E0 /* BaseReSideMenuContentViewController.m */,
 				D02D2D041C0C379E00092A23 /* BaseTableViewController.h */,
 				D02D2D051C0C379E00092A23 /* BaseTableViewController.m */,
 				B18EEB9B1CB3F4EA00F9491F /* BaseRecordingViewController.h */,
@@ -1628,14 +1681,11 @@
 				B1122BD51C94760C00B35BB0 /* Navigation */,
 				B16DA2111BE0F1CA00EBF043 /* Base */,
 				B16DA2101BE0F1BE00EBF043 /* User */,
-				B17B3D5C1BB6A504009B8BC5 /* ContactsViewController.h */,
-				B17B3D5D1BB6A504009B8BC5 /* ContactsViewController.m */,
-				B17B3D621BB6AE8B009B8BC5 /* RecordingViewController.h */,
-				B17B3D631BB6AE8B009B8BC5 /* RecordingViewController.m */,
-				D0BA6E881C070A1C00B8D85B /* AddContactViewController.h */,
-				D0BA6E891C070A1C00B8D85B /* AddContactViewController.m */,
-				B1B8018F1C3FF69B00958885 /* AboutViewController.h */,
-				B1B801901C3FF69B00958885 /* AboutViewController.m */,
+				B11BA7F61CD377AB005D02E0 /* Contacts */,
+				B11BA7F71CD377B5005D02E0 /* MailClient */,
+				B11BA7F51CD377A1005D02E0 /* RecordingViewController */,
+				B11BA7F41CD37797005D02E0 /* AddContact */,
+				B11BA7F31CD3778C005D02E0 /* About */,
 				B17DCBFE1C5BB56E00F61AA1 /* Chats */,
 			);
 			name = Controller;
@@ -2299,6 +2349,7 @@
 				B17206DC1BE4E2D40021D855 /* PlayingModel.m in Sources */,
 				B1714CC81BE11EE6004F13A4 /* ReSideMenuContainerViewController.m in Sources */,
 				B190F5BA1BDD63400094B391 /* SendVoiceMessageSMSModel.m in Sources */,
+				B11BA7F21CD35167005D02E0 /* BaseReSideMenuContentViewController.m in Sources */,
 				B19877B71CCCBB370004FF67 /* BaseEmailSessionModel.m in Sources */,
 				B11F8A5C1BDCC45F000E79AA /* FinalizeUploadRequest.m in Sources */,
 				D0AC07D91C48225100F9CF6F /* JSONModel+networking.m in Sources */,
@@ -2414,6 +2465,7 @@
 				B10C39371BF718960070B49F /* AccountModel.m in Sources */,
 				B1C4A7731BF73E3B00272AD7 /* LoginRequest.m in Sources */,
 				B1C978771C02EB6A00F402C2 /* GoogleContactsModel.m in Sources */,
+				B1C3928A1CD2A9770022ACB5 /* MailClientContactsViewController.m in Sources */,
 				B1EF03751C2184F80054FA02 /* AnalyticsModel.m in Sources */,
 				D0BA6E8A1C070A1C00B8D85B /* AddContactViewController.m in Sources */,
 				B1EF40F21BB8579D00042E4B /* M13ProgressView.m in Sources */,

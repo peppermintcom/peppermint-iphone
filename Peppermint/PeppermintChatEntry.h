@@ -16,9 +16,9 @@ typedef enum : NSUInteger {
 } PerformedOperation;
 
 typedef enum : NSUInteger {
-    ChatEntryTypeNone,
-    ChatEntryTypeAudio,
-    ChatEntryTypeEmail,
+    ChatEntryTypeNone       = 0,
+    ChatEntryTypeAudio      = 1 << 0,
+    ChatEntryTypeEmail      = 1 << 1,
 } ChatEntryType;
 
 @interface PeppermintChatEntry : NSObject <NSCopying>
