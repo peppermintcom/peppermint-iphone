@@ -121,15 +121,10 @@
                 if(error) {
                     [weakSelf.delegate operationFailure:error];
                 } else {
-                    NSUInteger lastUdid = 0;
                     for (MCOIMAPMessage * message in messages) {
-                        lastUdid = MAX(lastUdid, message.uid);
                         [weakSelf processMessage:message inFolder:folderToDownload];
                     }
-                    [[UidManager sharedInstance] save:[NSNumber numberWithInteger:(lastUdid)]
-                                          forUsername:weakSelf.session.username
-                                               folder:processingFolder];
-                    
+
                     if([processingFolder isEqualToString:weakSelf.folderSent]) {
                         [weakSelf downloadLastMessagesInFolder:weakSelf.folderInbox];
                     } else if ([processingFolder isEqualToString:weakSelf.folderInbox]) {
@@ -184,17 +179,8 @@
         if(error) {
             [weakSelf.delegate operationFailure:error];
         } else {
-            BOOL hasNewMessage = messages.count > 0;
-            if(hasNewMessage) {
-                NSUInteger nextQueryUid = 0;
-                for(MCOIMAPMessage *message in messages) {
-                    [weakSelf processMessage:message inFolder:folder];
-                    nextQueryUid = message.uid;
-                }
-                
-                [[UidManager sharedInstance] save:[NSNumber numberWithInteger:(nextQueryUid)]
-                                      forUsername:self.session.username
-                                           folder:folder];
+            for(MCOIMAPMessage *message in messages) {
+                [weakSelf processMessage:message inFolder:folder];
             }
             
             if([folder isEqualToString:weakSelf.folderSent]) {
@@ -246,6 +232,9 @@
            && newEmailMessageReceived.subject.length > 0
            && newEmailMessageReceived.message.length > 0) {
             PUBLISH(newEmailMessageReceived);
+            [[UidManager sharedInstance] save:newEmailMessageReceived.uid
+                                  forUsername:weakSelf.session.username
+                                       folder:folder];
         } else {
             NSLog(@"Can't save email\nContact address:%@\nSubject:%@\nContent:%@\nAll fields must be set to save!\n",
                   newEmailMessageReceived.contactEmail,
