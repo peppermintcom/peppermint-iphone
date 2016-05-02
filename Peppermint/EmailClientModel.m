@@ -61,6 +61,7 @@ SUBSCRIBE(NewEmailMessageReceived) {
     BOOL isUserStillLoggedIn = [[PeppermintMessageSender sharedInstance] isUserStillLoggedIn];
     if(!isUserStillLoggedIn) {
         NSLog(@" User has logged out during an existing service call. Ignoring the response from server.");
+        [self stopExistingSessions];
     } else if([self.emailSessionsArray containsObject:event.sender]) {
         [bufferArrayTimer invalidate];
         bufferArrayTimer = nil;

@@ -161,7 +161,8 @@
 -(MCOIMAPMessagesRequestKind) kindToFetch {
     MCOIMAPMessagesRequestKind kind =
     MCOIMAPMessagesRequestKindUid
-    | MCOIMAPMessagesRequestKindFlags;
+    | MCOIMAPMessagesRequestKindFlags
+    | MCOIMAPMessagesRequestKindHeaders;
     return  kind;
 }
 
@@ -206,7 +207,7 @@
         newEmailMessageReceived.uid = [NSNumber numberWithInt:imapMessage.uid];
         newEmailMessageReceived.subject = messageParser.header.partialExtractedSubject;
         newEmailMessageReceived.message = processedMessage;
-        newEmailMessageReceived.dateReceived = messageParser.header.receivedDate;
+        newEmailMessageReceived.dateReceived = imapMessage.header.receivedDate;
         
         newEmailMessageReceived.isRepliedAnswered = (imapMessage.flags & MCOMessageFlagAnswered);
         newEmailMessageReceived.isStarredFlagged = (imapMessage.flags & MCOMessageFlagFlagged);
