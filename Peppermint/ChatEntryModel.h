@@ -24,8 +24,6 @@
 -(void) savePeppermintChatEntry:(PeppermintChatEntry*)peppermintChatEntry;
 -(void) savePeppermintChatEntryArray:(NSArray*)peppermintChatEntryArray;
 -(void) deletePeppermintChatEntry:(PeppermintChatEntry*)peppermintChatEntry;
--(BOOL) isSyncProcessActive;
--(void) makeSyncRequestForMessages;
 -(void) updateChatEntryWithAudio:(NSData*)audio toAudioUrl:(NSString*)audioUrl;
 -(void) markAllPreviousMessagesAsRead:(PeppermintChatEntry*)peppermintChatEntry;
 -(void) getLastMessagesForPeppermintContacts:(NSArray<PeppermintContact*>*)peppermintContactArray;

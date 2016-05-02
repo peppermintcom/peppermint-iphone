@@ -112,7 +112,7 @@ SUBSCRIBE(NewEmailMessageReceived) {
     [recentContactsModel saveMultiple:recentPeppermintContactsToSave];
     
     NSArray *messagesToBeSaved = [NSArray arrayWithArray:mailClientMessageBufferArray];
-    NSLog(@"%ld mail messages are triggered to be saved!", messagesToBeSaved.count);
+    NSLog(@"%ld mail messages are triggered to be saved!", (unsigned long)messagesToBeSaved.count);
     [chatEntryModel savePeppermintChatEntryArray:messagesToBeSaved];
     
     recentContactsBufferSet = [NSMutableSet new];
