@@ -516,6 +516,8 @@
 
 -(void) getMessagesForAccountId:(NSString*) accountId jwt:(NSString*)jwt nextUrl:(NSString*)url since:(NSDate*)sinceDate recipient:(BOOL)isForRecipient  {
     
+    NSLog(@"Querying for %@ from %@", (isForRecipient ? @"Recipient" : @"Sender"), sinceDate );
+    
     NSDictionary *parameterDictionary = [NSDictionary new];
     if(!url) {
         url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_MESSAGES];
@@ -534,6 +536,7 @@
                                                               initWithBaseURL:[NSURL URLWithString:url]];
     
     requestOperationManager.requestSerializer = [AFJSONRequestSerializer new];
+    [requestOperationManager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [requestOperationManager.requestSerializer setValue:self.apiKey forHTTPHeaderField:X_API_KEY];
     [requestOperationManager.requestSerializer setValue:tokenText forHTTPHeaderField:AUTHORIZATION];
     requestOperationManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/vnd.api+json"];
