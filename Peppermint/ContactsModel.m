@@ -12,6 +12,7 @@
 #import "GoogleContactsModel.h"
 #import "CustomContactModel.h"
 #import "ChatEntryModel.h"
+#import "Repository.h"
 #endif
 
 
@@ -25,7 +26,6 @@
     NSArray *emailContactList;
     NSArray *smsContactList;
     NSMutableSet *uniqueContactIdsToRemoveMutableSet;
-    NSArray *nonFilteredContactsArray;
 }
 
 + (instancetype) sharedInstance {
@@ -45,7 +45,6 @@
         loadContactsTriggerCount = 0;
         unwantedCharsSet = [[NSCharacterSet characterSetWithCharactersInString:CHARS_FOR_PHONE] invertedSet];
         uniqueContactIdsToRemoveMutableSet = [NSMutableSet new];
-        nonFilteredContactsArray = [NSArray new];
     }
     return self;
 }
@@ -255,8 +254,8 @@
     
     emailContactList = smsContactList = nil;
     if(self.filterText.trimmedText.length == 0) {
-        nonFilteredContactsArray = [NSArray arrayWithArray:self.contactList];
         dispatch_async(LOW_PRIORITY_QUEUE, ^{
+            NSArray *nonFilteredContactsArray = [NSArray arrayWithArray:self.contactList];
             for(PeppermintContact *peppermintContact in nonFilteredContactsArray) {
                 [peppermintContact addToCoreSpotlightSearch];
             }
@@ -309,17 +308,25 @@
 
 -(PeppermintContact*) matchingPeppermintContactForEmail:(NSString*) email nameSurname:(NSString*) nameSurname {
     PeppermintContact *peppermintContact = nil;
-    NSPredicate *contactPredicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:email];
-    NSArray *filteredContactsArray = [nonFilteredContactsArray filteredArrayUsingPredicate:contactPredicate];
-    if(filteredContactsArray.count > 0) {
-        peppermintContact = filteredContactsArray.firstObject;
-    } else {
+    
+    #warning "Consider to move repository operation to background."
+    Repository *repository = [Repository beginTransaction];
+    NSPredicate *predicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:email];
+    NSArray *contactsArray = [repository getResultsFromEntity:[Contact class] predicateOrNil:predicate];
+    if(contactsArray.count > 0) {
+        Contact *contact = contactsArray.firstObject;
+        peppermintContact = [[PeppermintContact alloc] initWithContact:contact];
+    }
+    
+    if(!peppermintContact) {
         nameSurname = (nameSurname.trimmedText.length == 0) ? email : nameSurname;
         peppermintContact = [PeppermintContact new];
         peppermintContact.communicationChannel = CommunicationChannelEmail;
         peppermintContact.nameSurname = nameSurname;
         peppermintContact.communicationChannelAddress = email;
-    }    
+        peppermintContact.lastPeppermintContactDate = nil;
+        peppermintContact.lastMailClientContactDate = nil;
+    }
     return peppermintContact;
 }
 

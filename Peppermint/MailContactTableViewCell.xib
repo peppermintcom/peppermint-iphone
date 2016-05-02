@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MailContactTableViewCell" rowHeight="135" id="CCu-fK-cFZ" customClass="MailContactTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="385" height="119"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CCu-fK-cFZ" id="3uY-tM-1LM">
+                <rect key="frame" x="0.0" y="0.0" width="385" height="118"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AZ9-30-97c" userLabel="SeparatorView">
+                        <rect key="frame" x="0.0" y="117" width="385" height="1"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="2Ma-YF-wsN"/>
+                            <constraint firstAttribute="height" constant="1" id="hbH-Nc-VaW"/>
+                        </constraints>
+                    </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_empty" translatesAutoresizingMaskIntoConstraints="NO" id="U5w-2U-IE0">
+                        <rect key="frame" x="11" y="10" width="35" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="U5w-2U-IE0" secondAttribute="height" multiplier="1:1" id="LUN-n2-eaT"/>
+                            <constraint firstAttribute="width" constant="35" id="hO0-8V-cc4"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v0i-4r-Pt6">
+                        <rect key="frame" x="57" y="5" width="328" height="113"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_reply" translatesAutoresizingMaskIntoConstraints="NO" id="fRi-Rd-BRD">
+                                <rect key="frame" x="0.0" y="0.0" width="15" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="15" id="23t-tP-jhG"/>
+                                    <constraint firstAttribute="height" constant="15" id="oZU-gS-Lb9"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_NEW" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DJJ-Zi-UYg" userLabel="AlertNewMessageLabel">
+                                <rect key="frame" x="20" y="0.0" width="30" height="15"/>
+                                <color key="backgroundColor" red="0.0078431372549019607" green="0.74117647058823533" blue="0.69803921568627447" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="m1H-Kc-4px"/>
+                                    <constraint firstAttribute="width" constant="30" id="o4Y-34-AhD"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Sender Name Surname" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vGp-Eh-Ui6" userLabel="SenderNameLabel">
+                                <rect key="frame" x="55" y="0.0" width="218" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="17" id="0Wh-1U-1GD"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_May 26" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5fb-R0-kb1" userLabel="MailDateLabel">
+                                <rect key="frame" x="273" y="0.0" width="50" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="HWy-3K-Zzk"/>
+                                    <constraint firstAttribute="width" priority="250" constant="50" id="ndA-0K-vdT"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Mail Subject" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ub1-E2-edS">
+                                <rect key="frame" x="0.0" y="15" width="328" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="foT-Yp-ube"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="999" text="_Example mail content and mail information here we can add and continue the message" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gyn-Si-bWY">
+                                <rect key="frame" x="0.0" y="37" width="328" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.90823108460000002" green="0.081871332150000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="5fb-R0-kb1" secondAttribute="trailing" constant="5" id="04B-9D-dcX"/>
+                            <constraint firstItem="ub1-E2-edS" firstAttribute="top" secondItem="vGp-Eh-Ui6" secondAttribute="bottom" constant="-2" id="A5F-QU-756"/>
+                            <constraint firstItem="vGp-Eh-Ui6" firstAttribute="top" secondItem="v0i-4r-Pt6" secondAttribute="top" id="Acw-u0-j01"/>
+                            <constraint firstItem="ub1-E2-edS" firstAttribute="leading" secondItem="v0i-4r-Pt6" secondAttribute="leading" id="AkB-L8-23z"/>
+                            <constraint firstItem="vGp-Eh-Ui6" firstAttribute="top" secondItem="v0i-4r-Pt6" secondAttribute="top" id="Cp4-1w-OdT"/>
+                            <constraint firstItem="DJJ-Zi-UYg" firstAttribute="leading" secondItem="fRi-Rd-BRD" secondAttribute="trailing" constant="5" id="Efb-5b-Fya"/>
+                            <constraint firstItem="vGp-Eh-Ui6" firstAttribute="leading" secondItem="DJJ-Zi-UYg" secondAttribute="trailing" constant="5" id="F73-px-vM2"/>
+                            <constraint firstItem="5fb-R0-kb1" firstAttribute="top" secondItem="v0i-4r-Pt6" secondAttribute="top" id="L58-La-kjH"/>
+                            <constraint firstItem="DJJ-Zi-UYg" firstAttribute="top" secondItem="v0i-4r-Pt6" secondAttribute="top" id="O7S-r4-QeZ"/>
+                            <constraint firstAttribute="trailing" secondItem="Gyn-Si-bWY" secondAttribute="trailing" id="PXt-Nn-4Dh"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Gyn-Si-bWY" secondAttribute="bottom" priority="500" constant="4" id="SJP-Ys-Vv4"/>
+                            <constraint firstItem="Gyn-Si-bWY" firstAttribute="top" secondItem="ub1-E2-edS" secondAttribute="bottom" id="bj2-AQ-Pp0"/>
+                            <constraint firstItem="fRi-Rd-BRD" firstAttribute="top" secondItem="v0i-4r-Pt6" secondAttribute="top" id="cUr-b4-7GL"/>
+                            <constraint firstItem="fRi-Rd-BRD" firstAttribute="leading" secondItem="v0i-4r-Pt6" secondAttribute="leading" id="cxS-tK-TCK"/>
+                            <constraint firstAttribute="trailing" secondItem="ub1-E2-edS" secondAttribute="trailing" id="dAJ-mt-8fk"/>
+                            <constraint firstItem="ub1-E2-edS" firstAttribute="top" secondItem="5fb-R0-kb1" secondAttribute="bottom" id="hoe-cB-w8l"/>
+                            <constraint firstItem="Gyn-Si-bWY" firstAttribute="leading" secondItem="v0i-4r-Pt6" secondAttribute="leading" id="qTQ-5N-Svt"/>
+                            <constraint firstItem="Gyn-Si-bWY" firstAttribute="top" secondItem="ub1-E2-edS" secondAttribute="bottom" id="sRi-sC-fZz"/>
+                            <constraint firstAttribute="bottom" secondItem="Gyn-Si-bWY" secondAttribute="bottom" id="szP-eX-piK"/>
+                            <constraint firstItem="5fb-R0-kb1" firstAttribute="leading" secondItem="vGp-Eh-Ui6" secondAttribute="trailing" id="vgH-YN-orT"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="hoe-cB-w8l"/>
+                                <exclude reference="sRi-sC-fZz"/>
+                                <exclude reference="szP-eX-piK"/>
+                                <exclude reference="Cp4-1w-OdT"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="v0i-4r-Pt6" firstAttribute="leading" secondItem="U5w-2U-IE0" secondAttribute="trailing" constant="11" id="1IE-e1-U2M"/>
+                    <constraint firstAttribute="trailing" secondItem="v0i-4r-Pt6" secondAttribute="trailing" id="23B-4H-kK4"/>
+                    <constraint firstAttribute="bottom" secondItem="v0i-4r-Pt6" secondAttribute="bottom" id="4nU-sn-nYj"/>
+                    <constraint firstItem="AZ9-30-97c" firstAttribute="leading" secondItem="3uY-tM-1LM" secondAttribute="leading" id="JT1-co-qlG"/>
+                    <constraint firstItem="U5w-2U-IE0" firstAttribute="leading" secondItem="3uY-tM-1LM" secondAttribute="leading" constant="11" id="Jcx-8C-SoO"/>
+                    <constraint firstItem="AZ9-30-97c" firstAttribute="leading" secondItem="3uY-tM-1LM" secondAttribute="leading" id="Mh6-Nl-VkN"/>
+                    <constraint firstAttribute="trailing" secondItem="AZ9-30-97c" secondAttribute="trailing" id="Wqy-6d-U5i"/>
+                    <constraint firstItem="v0i-4r-Pt6" firstAttribute="top" secondItem="3uY-tM-1LM" secondAttribute="top" constant="5" id="ZxC-Dc-cdj"/>
+                    <constraint firstAttribute="bottom" secondItem="AZ9-30-97c" secondAttribute="bottom" id="ZxI-yo-dr3"/>
+                    <constraint firstItem="v0i-4r-Pt6" firstAttribute="leading" secondItem="U5w-2U-IE0" secondAttribute="trailing" constant="11" id="aEX-Qc-RtZ"/>
+                    <constraint firstAttribute="bottom" secondItem="AZ9-30-97c" secondAttribute="bottom" id="hwX-bD-8Ww"/>
+                    <constraint firstItem="U5w-2U-IE0" firstAttribute="top" secondItem="3uY-tM-1LM" secondAttribute="top" constant="10" id="juK-gh-jQB"/>
+                    <constraint firstAttribute="trailing" secondItem="AZ9-30-97c" secondAttribute="trailing" id="lAS-EM-4oB"/>
+                    <constraint firstItem="U5w-2U-IE0" firstAttribute="centerX" secondItem="3uY-tM-1LM" secondAttribute="centerX" id="rZ2-dw-70C"/>
+                    <constraint firstItem="v0i-4r-Pt6" firstAttribute="leading" secondItem="U5w-2U-IE0" secondAttribute="trailing" constant="11" id="uLN-0d-E8d"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="rZ2-dw-70C"/>
+                        <exclude reference="aEX-Qc-RtZ"/>
+                        <exclude reference="uLN-0d-E8d"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="alertNewMessageLabel" destination="DJJ-Zi-UYg" id="3jQ-Zy-gkH"/>
+                <outlet property="alertNewMessageLabelRightPaddingConstraint" destination="F73-px-vM2" id="Uf5-RT-nBF"/>
+                <outlet property="alertNewMessageLabelWidthConstraint" destination="o4Y-34-AhD" id="v0I-IZ-Yr4"/>
+                <outlet property="avatarImageView" destination="U5w-2U-IE0" id="naW-Z3-6EU"/>
+                <outlet property="cellSeperatorView" destination="AZ9-30-97c" id="4b0-cL-LAH"/>
+                <outlet property="informationView" destination="v0i-4r-Pt6" id="3ql-2i-3xC"/>
+                <outlet property="mailContentLabel" destination="Gyn-Si-bWY" id="8oo-Qp-XIq"/>
+                <outlet property="mailDateLabel" destination="5fb-R0-kb1" id="tAG-kI-44A"/>
+                <outlet property="mailDateLabelWidthConstraint" destination="ndA-0K-vdT" id="ABE-zg-ozu"/>
+                <outlet property="mailSubjectLabel" destination="ub1-E2-edS" id="Qy7-ng-l8i"/>
+                <outlet property="replyIconView" destination="fRi-Rd-BRD" id="1jJ-qg-DOc"/>
+                <outlet property="replyIconViewRightPaddingConstraint" destination="Efb-5b-Fya" id="PaV-S7-T4E"/>
+                <outlet property="replyIconViewWidthConstraint" destination="23t-tP-jhG" id="riP-Hk-iTF"/>
+                <outlet property="senderNameLabel" destination="vGp-Eh-Ui6" id="T0Y-5N-Ta5"/>
+            </connections>
+            <point key="canvasLocation" x="265.5" y="186.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="avatar_empty" width="35" height="35"/>
+        <image name="icon_reply" width="18" height="18"/>
+    </resources>
+</document>

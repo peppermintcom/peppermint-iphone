@@ -194,9 +194,21 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:SEGUE_CONTACTS_VIEW_CONTROLLER]) {
-        ReSideMenuContainerViewController *reSideMenuContainerViewController = (ReSideMenuContainerViewController*) segue.destinationViewController;
-        [reSideMenuContainerViewController initContactsViewControllerWithContactsModel:contactsModel];
+        [self initContactsViewControllerWithContactsModel:contactsModel];
     }
+}
+
+#pragma mark - InitContactsViewController
+
+-(void) initContactsViewControllerWithContactsModel:(ContactsModel*) contactsModelToInit {
+    UINavigationController *navigationController = (UINavigationController*) self.navigationController;
+    ContactsViewController *contactsViewController = (ContactsViewController*) [navigationController.viewControllers objectAtIndex:0];
+    if(!contactsViewController.contactsModel) {
+        contactsViewController.contactsModel = contactsModelToInit;
+    } else {
+        NSLog(@"Contacts model already exists");
+    }
+    contactsViewController.contactsModel.delegate = contactsViewController;
 }
 
 @end

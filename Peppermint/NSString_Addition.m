@@ -99,23 +99,38 @@
     //[availableCharSet formUnionWithCharacterSet:[NSCharacterSet alphanumericCharacterSet]];
     [availableCharSet formUnionWithCharacterSet:[self asciiCharacterSet]];
     [availableCharSet formUnionWithCharacterSet:[NSCharacterSet punctuationCharacterSet]];
-    NSString *resultText = [[stringToModify componentsSeparatedByCharactersInSet:
+    
+    NSData * utf8Data = [stringToModify dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *utf8String = [[NSString alloc] initWithData:utf8Data encoding:NSUTF8StringEncoding];
+    
+    return utf8String;
+    /*
+     NSString *resultText = [[utf8String componentsSeparatedByCharactersInSet:
                          [availableCharSet invertedSet]] componentsJoinedByString:@"_"];
-    return resultText;
+     return resultText;
+     */    
 }
 
 -(NSCharacterSet*) asciiCharacterSet {
     NSMutableString *asciiCharacters = [NSMutableString string];    
     //http://www.ascii-codes.com/cp855.html
     //Standard Characters
-    for (NSInteger i = 32; i < 127; i++)  {
+    for (NSInteger i = 32; i <= 127; i++)  {
         [asciiCharacters appendFormat:@"%c", (char)i];
     }
     //Extended Characters
-    for (NSInteger i = 128; i < 255; i++)  {
+    for (NSInteger i = 128; i <= 255; i++)  {
         [asciiCharacters appendFormat:@"%c", (char)i];
     }
     return [NSCharacterSet characterSetWithCharactersInString:asciiCharacters];
+}
+
+-(NSString*) trimMultipleNewLines {
+    //http://stackoverflow.com/a/11360977/5171866
+    NSArray *split = [self componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    split = [split filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"length > 0"]];
+    NSString *result = [split componentsJoinedByString:@"\n"];
+    return result;
 }
 
 @end

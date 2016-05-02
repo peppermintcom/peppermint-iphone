@@ -33,6 +33,8 @@
 #import "ChatEntriesViewController.h"
 #import "AutoPlayModel.h"
 #import "AudioSessionModel.h"
+#import "EmailClientModel.h"
+#import "RecentContactsModel.h"
 
 @import WatchConnectivity;
 @import Contacts;
@@ -42,7 +44,7 @@
 #define PATH_EMAIL          @"gcm.notification.sender_email"
 #define PATH_FULL_NAME      @"gcm.notification.sender_name"
 
-@interface AppDelegate () <WCSessionDelegate, GGLInstanceIDDelegate, ChatEntryModelDelegate>
+@interface AppDelegate () <WCSessionDelegate, GGLInstanceIDDelegate, ChatEntryModelDelegate, EmailClientModelDelegate>
 @end
 
 @implementation AppDelegate {
@@ -56,11 +58,14 @@
     void (^cachedCompletionHandler)(UIBackgroundFetchResult);
     NSDate *fetchStart;
     BOOL hasFinishedFirstSync;
+    EmailClientModel *emailClientModel;
+    NSDate *lastAudioPlayedDate;
 }
 
 -(void) initPlayingModel {
     playingModel = [PlayingModel new];
     [playingModel initReceivedMessageSound];
+    lastAudioPlayedDate = nil;
 }
 
 -(void) initMutableArray {
@@ -205,10 +210,22 @@
     }
 }
 
+-(void) initEmailClient {
+    if(!emailClientModel) {
+        emailClientModel = [EmailClientModel new];
+        emailClientModel.delegate = self;
+    }
+    [emailClientModel startEmailClients];
+}
+
+-(void) refreshChatEntryModel {
+    chatEntryModel = [ChatEntryModel new];
+    chatEntryModel.delegate = self;
+}
+
 -(void) refreshIncomingMessages {
     if(!chatEntryModel) {
-        chatEntryModel = [ChatEntryModel new];
-        chatEntryModel.delegate = self;
+        [self refreshChatEntryModel];
         hasFinishedFirstSync = NO;
     }
     [chatEntryModel makeSyncRequestForMessages];
@@ -250,6 +267,7 @@
     [self refreshIncomingMessages];
     [self resetBadgeNumber];
     [self refreshBadgeNumber];
+    [self initEmailClient];
     PUBLISH([ApplicationDidBecomeActive new]);
 }
 
@@ -370,6 +388,7 @@ SUBSCRIBE(DetachSuccess) {
     fetchStart = [NSDate new];
     cachedCompletionHandler = completionHandler;
     [self refreshIncomingMessages];
+    [self initEmailClient];
 }
 
 #pragma mark - AutoPlay
@@ -386,6 +405,11 @@ SUBSCRIBE(DetachSuccess) {
 }
 
 #pragma mark - ChatEntryModelDelegate
+
+-(void) lastMessagesAreUpdated:(NSArray<PeppermintContactWithChatEntry*>*) peppermintContactWithChatEntryArray {
+    NSLog(@"lastMessagesAreUpdated:");
+}
+
 -(void) peppermintChatEntriesArrayIsUpdated {
     NSLog(@"peppermintChatEntriesArrayIsUpdated");
 }
@@ -401,6 +425,16 @@ SUBSCRIBE(DetachSuccess) {
     return newMessagesArray;
 }
 
+-(void) checkAndPlayIncomingAudioAlert {
+    NSDate *now = [NSDate new];
+    BOOL isAppActive = [UIApplication sharedApplication].applicationState == UIApplicationStateActive;
+    BOOL isAvailableToPlay = (!lastAudioPlayedDate || [now timeIntervalSinceDate:lastAudioPlayedDate] > MIN_INTERVAL_FOR_INCOMING_AUDIO);    
+    if(isAppActive && isAvailableToPlay) {
+        [playingModel playPreparedAudiowithCompetitionBlock:nil];
+    }
+    lastAudioPlayedDate = now;
+}
+
 -(void) peppermintChatEntrySavedWithSuccess:(NSArray<PeppermintChatEntry*>*) savedPeppermintChatEnryArray {
     [self hideAppCoverLoadingView];
     NSArray<PeppermintChatEntry*> *newMessagesArray = [self filterNewIncomingMessagesInArray:savedPeppermintChatEnryArray];
@@ -413,13 +447,10 @@ SUBSCRIBE(DetachSuccess) {
                                     nameSurname:peppermintContactToNavigate.nameSurname];
         peppermintContactToNavigate = nil;
     } else if (newMessagesArray.count > 0 && !newMessagesArray.firstObject.isSentByMe && hasFinishedFirstSync) {
-        [playingModel playPreparedAudiowithCompetitionBlock:nil];
+        [self checkAndPlayIncomingAudioAlert];
     }
     
-    BOOL didFinishAllSyncLevels = ([[PeppermintMessageSender sharedInstance] defaultLastMessageSyncDate] == nil);
-    if(didFinishAllSyncLevels) {
-        hasFinishedFirstSync = YES;
-    }
+    hasFinishedFirstSync = hasFinishedFirstSync || [[PeppermintMessageSender sharedInstance] isSyncWithAPIProcessed];
     
     RefreshIncomingMessagesCompletedWithSuccess *refreshIncomingMessagesCompletedWithSuccess = [RefreshIncomingMessagesCompletedWithSuccess new];
     refreshIncomingMessagesCompletedWithSuccess.sender = self;
@@ -822,8 +853,9 @@ SUBSCRIBE(DetachSuccess) {
 #pragma mark - Inter App Messaging
 
 SUBSCRIBE(NewUserLoggedIn) {
-    chatEntryModel = nil;
+    [self refreshChatEntryModel];
     [self initRecorder];
+    [self initEmailClient];
     [self navigateToContactsWithFilterText:@""];
 }
 

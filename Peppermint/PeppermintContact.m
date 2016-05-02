@@ -10,6 +10,7 @@
 
 #if !(TARGET_OS_WATCH)
 #import "SpotlightModel.h"
+#import "Contact.h"
 #endif
 
 @implementation PeppermintContact {
@@ -114,6 +115,19 @@
 
 -(void) setExplanation:(NSString *)explanation {
     _explanation = explanation;
+}
+
+#pragma mark - Init With Contact
+
+-(instancetype) initWithContact:(Contact*) contact {
+    self = [super init];
+    if(self) {
+        self.avatarImage = [UIImage imageWithData:contact.avatarImageData];
+        self.nameSurname = contact.nameSurname;
+        self.communicationChannelAddress = contact.communicationChannelAddress;
+        self.communicationChannel = !contact.communicationChannel ? -1 : contact.communicationChannel.intValue;
+    }
+    return self;
 }
 
 @end

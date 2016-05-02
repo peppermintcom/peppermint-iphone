@@ -48,7 +48,7 @@
     NSUInteger activeRecordingView;
     NSTimer *holdToRecordViewTimer;
     BOOL isContactsPermissionGranted;
-    NSDateFormatter *dateFormatter;
+    
     BOOL isFirstOpen;
     PeppermintContact *lastRecordedPeppermintContact;
 }
@@ -83,8 +83,6 @@
     [self.searchContactsTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     lastRecordedPeppermintContact = nil;
-    dateFormatter = [NSDateFormatter new];
-    [dateFormatter setDateFormat:@"MMM dd"];
     REGISTER();
 }
 
@@ -194,20 +192,9 @@ SUBSCRIBE(UserLoggedOut) {
 
 #pragma mark - Slide Menu
 
--(IBAction)slideMenuTouchDown:(id)sender {
-    UIButton *menuButton = (UIButton*)sender;
-    menuButton.alpha = 0.7;
-}
-
--(IBAction)slideMenuTouchUp:(id)sender {
-    UIButton *menuButton = (UIButton*)sender;
-    menuButton.alpha = 1;
-}
-
 -(IBAction)slideMenuValidAction:(id)sender {
-    [self slideMenuTouchUp:sender];
     [self hideHoldToRecordInfoView];
-    [self.reSideMenuContainerViewController presentLeftMenuViewController];
+    [super slideMenuValidAction:sender];    
 }
 
 #pragma mark - ContactList Logic
@@ -216,7 +203,7 @@ SUBSCRIBE(UserLoggedOut) {
     NSArray *activeContactList = nil;
     
     if(activeCellTag == CELL_TAG_RECENT_CONTACTS) {
-        activeContactList = self.recentContactsModel.contactList;
+        activeContactList = self.recentContactsModel.peppermintMessageRecentContactsArray;
     } else if (activeCellTag == CELL_TAG_ALL_CONTACTS)   {
         activeContactList = self.contactsModel.contactList;
     } else if (activeCellTag == CELL_TAG_EMAIL_CONTACTS) {
@@ -283,7 +270,7 @@ SUBSCRIBE(UserLoggedOut) {
     } else if (indexPath.section == SECTION_EMPTY_RESULT) {
         EmptyResultTableViewCell *cell = [CellFactory cellEmptyResultTableViewCellFromTable:tableView forIndexPath:indexPath];
         [cell setVisibiltyOfExplanationLabels:YES];
-        if(![self.recentContactsModel isSyncWithAPIProcessed]) {
+        if(![[PeppermintMessageSender sharedInstance] isSyncWithAPIProcessed]) {
             [cell showLoading];
             cell.headerLabel.text = @"";
         } else if(activeCellTag == CELL_TAG_RECENT_CONTACTS) {
@@ -353,25 +340,19 @@ SUBSCRIBE(UserLoggedOut) {
 
 -(PeppermintContact*) recentContactForPeppermintContact:(PeppermintContact*)peppermintContact {
     NSPredicate *predicate = [self.recentContactsModel recentContactPredicate:peppermintContact];
-    NSArray *filteredArray = [self.recentContactsModel.contactList filteredArrayUsingPredicate:predicate];
+    NSArray *filteredArray = [self.recentContactsModel.peppermintMessageRecentContactsArray filteredArrayUsingPredicate:predicate];
     return filteredArray.count > 0 ? filteredArray.firstObject : nil;
 }
 
 -(void) markReadFieldsIfNecessaryForPeppermintContact:(PeppermintContact*) peppermintContact inTableViewCell:(ContactTableViewCell*)cell {
     PeppermintContact *recentContact = [self recentContactForPeppermintContact:peppermintContact];
     if(recentContact) {
-        NSDate *lastMessageDate = recentContact.lastMessageDate;
-        if([lastMessageDate isToday]) {
-            cell.rightDateLabel.text = LOC(@"Today", @"Today");
-        } else if ([lastMessageDate isYesterday]) {
-            cell.rightDateLabel.text = LOC(@"Yesterday", @"Yesterday");
-        } else {
-            cell.rightDateLabel.text = [dateFormatter stringFromDate:lastMessageDate];
-        }
+        NSDate *lastMessageDate = recentContact.lastPeppermintContactDate;
+        cell.rightDateLabel.text = [lastMessageDate monthDayStringWithTodayYesterday];
         
-        NSUInteger unreadMessageCount = recentContact.unreadMessageCount;
-        cell.rightMessageCounterLabel.hidden = unreadMessageCount <= 0;
-        cell.rightMessageCounterLabel.text = [NSString stringWithFormat:@"%ld",(unsigned long)unreadMessageCount];
+        NSUInteger unreadAudioMessageCount = recentContact.unreadAudioMessageCount;
+        cell.rightMessageCounterLabel.hidden = unreadAudioMessageCount <= 0;
+        cell.rightMessageCounterLabel.text = [NSString stringWithFormat:@"%ld",(unsigned long)unreadAudioMessageCount];
     }
 }
 
@@ -832,7 +813,7 @@ SUBSCRIBE(UserLoggedOut) {
 }
 
 -(BOOL) shouldUpdateActiveCellTag {
-    BOOL isRecentContactsListEmpty = (self.recentContactsModel.contactList.count == 0);
+    BOOL isRecentContactsListEmpty = (self.recentContactsModel.peppermintMessageRecentContactsArray.count == 0);
     BOOL isActiveCelTagRecentContacts = (activeCellTag == CELL_TAG_RECENT_CONTACTS);
     BOOL result = isFirstOpen && isRecentContactsListEmpty && isActiveCelTagRecentContacts;
     isFirstOpen = NO;
@@ -906,8 +887,9 @@ SUBSCRIBE(UserLoggedOut) {
 SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
     weakself_create();
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"Received RefreshIncomingMessagesCompletedWithSuccess....");
-        if(isScreenReady && event.peppermintChatEntryAllMesssagesArray.count > 0) {
+        if(isScreenReady
+           && event.peppermintChatEntryAllMesssagesArray.count > 0
+           && [[PeppermintMessageSender sharedInstance] isSyncWithAPIProcessed]) {
             [weakSelf.recentContactsModel refreshRecentContactList];
         }
     });
@@ -957,6 +939,7 @@ SUBSCRIBE(MessageIsMarkedAsRead) {
             PeppermintContact *peppermintContact = (PeppermintContact*)sender;
             ChatEntriesViewController *chatEntriesViewController = (ChatEntriesViewController*)segue.destinationViewController;
             chatEntriesViewController.peppermintContact = peppermintContact;
+            chatEntriesViewController.chatEntryTypesToShow = ChatEntryTypeAudio;
             isNavigatedToChatEntries = YES;
         } else {
             NSLog(@"sender must be an instance of 'PeppermintContact' to navigate!");
@@ -968,7 +951,7 @@ SUBSCRIBE(MessageIsMarkedAsRead) {
 #warning "What if the searched email is not in active list but it is existing in the DB?"
     if([email isValidEmail]) {
         NSPredicate *predicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:email];
-        NSArray *matchingChatsArray = [self.recentContactsModel.contactList filteredArrayUsingPredicate:predicate];
+        NSArray *matchingChatsArray = [self.recentContactsModel.peppermintMessageRecentContactsArray filteredArrayUsingPredicate:predicate];
         if(matchingChatsArray.count > 0) {
             PeppermintContact *peppermintContact = matchingChatsArray.firstObject;
             

@@ -17,12 +17,16 @@
 
 @interface RecentContactsModel : BaseModel
 @property (weak, nonatomic) id<RecentContactsModelDelegate> delegate;
-@property (strong, nonatomic) NSMutableArray *contactList;
 
--(void) save:(PeppermintContact*) peppermintContact forContactDate:(NSDate*) contactDate;
+-(void) save:(PeppermintContact*) peppermintContact forLastPeppermintContactDate:(NSDate*)lastPeppermintContactDate lastMailClientContactDate:(NSDate*) lastMailClientContactDate;
 -(void) saveMultiple:(NSArray<PeppermintContact*>*) peppermintContactArray;
 -(void) refreshRecentContactList;
 
 -(NSPredicate*) recentContactPredicate:(PeppermintContact*) peppermintContact;
--(BOOL) isSyncWithAPIProcessed;
+
+#pragma mark - Contact List Functions
+-(NSMutableArray*) allMessageRecentContactsArray;
+-(NSMutableArray*) peppermintMessageRecentContactsArray;
+-(NSMutableArray*) mailClientMessageRecentContactsArray;
+
 @end

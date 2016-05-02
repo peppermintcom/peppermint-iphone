@@ -27,7 +27,7 @@
 -(NSString*) supportEmail {
     NSString *supportEmail = LOC(@"support@peppermint.com", @"Support Email");
 #ifdef DEBUG
-    supportEmail = @"okankurtulus@gmail.com";
+    supportEmail = @"testpeppermintsupport@yopmail.com";
 #endif
     return supportEmail;
 }

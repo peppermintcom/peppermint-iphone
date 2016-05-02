@@ -109,7 +109,8 @@ sharedObject;\
 #define DEFAULTS_KEY_TUTORIAL_TOOLTIP_IS_SHOWED @"isTutorialTooltipShowed"
 #define DEFAULTS_KEY_IS_FIRST_RUN               @"isFirstRun"
 #define DEFAULTS_KEY_DONT_SHOW_SMS_WARNING      @"DontShowSMSWarning"
-#define DEFAULTS_KEY_QUICK_SYNC_LEVEL        @"QuickSyncFinished"
+#define DEFAULTS_KEY_QUICK_SYNC_LEVEL           @"QuickSyncFinished"
+#define DEFAULTS_EMAIL_UID_HOLDER               @"EmailUidHolder"
 
 #define DEFAULTS_KEY_CACHED_SENDVOCIEMESSAGE_MODEL @"CachedSendVoiceMessageModel"
 
@@ -121,6 +122,8 @@ sharedObject;\
 #define MIN_VOICE_MESSAGE_LENGTH    1            //Seconds
 #define ANIM_TIME                   0.3
 #define WARN_TIME                   1.5
+
+#define MIN_INTERVAL_FOR_INCOMING_AUDIO 4
 
 #define SHOW_ALL_CONTACRS_CORNER_RADIUS 10
 #define LOGIN_CORNER_RADIUS             9
@@ -155,6 +158,7 @@ sharedObject;\
 #define VIEWCONTROLLER_ABOUT    @"AboutViewController"
 #define VIEWCONTROLLER_CHATS    @"ChatsViewController"
 #define VIEWCONTROLLER_FEEDBACK @"FeedBackViewController"
+#define VIEWCONTROLLER_MAILCLIENT_CONTACTS   @"MailClientContactsViewController"
 
 #define VIEWCONTROLLER_CONTACTS                     @"ContactsViewController"
 #define VIEWCONTROLLER_SLIDEMENU                    @"SlideMenuViewController"

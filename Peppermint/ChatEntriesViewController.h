@@ -29,6 +29,8 @@
 @property (strong, nonatomic) RecordingView *recordingView;
 @property (strong, nonatomic) PeppermintContact *peppermintContact;
 
+@property (assign, nonatomic) ChatEntryType chatEntryTypesToShow;
+
 -(void) refreshContent;
 
 @end

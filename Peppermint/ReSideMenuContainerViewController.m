@@ -7,8 +7,8 @@
 //
 
 #import "ReSideMenuContainerViewController.h"
+#import "BaseReSideMenuContentViewController.h"
 #import "SlideMenuViewController.h"
-#import "ContactsViewController.h"
 
 @interface ReSideMenuContainerViewController ()
 
@@ -33,15 +33,15 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
 
 -(void) initSlideMenu {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:STORYBOARD_MAIN bundle:nil];
-    ContactsViewController *contactsVC = (ContactsViewController*)[storyboard instantiateViewControllerWithIdentifier:VIEWCONTROLLER_CONTACTS];
+    BaseReSideMenuContentViewController *contentVC = (BaseReSideMenuContentViewController*)[storyboard instantiateViewControllerWithIdentifier:VIEWCONTROLLER_CONTACTS];
     SlideMenuViewController *slideMenuVC = (SlideMenuViewController*)[storyboard instantiateViewControllerWithIdentifier: VIEWCONTROLLER_SLIDEMENU];
     
-    contactsVC.reSideMenuContainerViewController = self;
+    contentVC.reSideMenuContainerViewController = self;
     slideMenuVC.reSideMenuContainerViewController = self;
     self.delegate = slideMenuVC;
     [self setLeftMenuViewController:slideMenuVC];
     
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:contactsVC];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:contentVC];
     [self setContentViewController:navigationController];
     
     
@@ -52,19 +52,6 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
     self.scaleMenuView = NO;
     self.contentViewShadowEnabled = YES;
     
-}
-
-#pragma mark - InitContactsViewController
-
--(void) initContactsViewControllerWithContactsModel:(ContactsModel*) contactsModel {    
-    UINavigationController *navigationController = (UINavigationController*) self.contentViewController;
-    ContactsViewController *contactsViewController = (ContactsViewController*) [navigationController.viewControllers objectAtIndex:0];
-    if(!contactsViewController.contactsModel) {
-        contactsViewController.contactsModel = contactsModel;
-    } else {
-        NSLog(@"Contacts model already exists");
-    }
-    contactsViewController.contactsModel.delegate = contactsViewController;
 }
 
 @end

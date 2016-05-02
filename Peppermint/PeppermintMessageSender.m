@@ -242,13 +242,16 @@
         case 7:
             defaultLastMessageSyncDate = [NSDate dateWithTimeIntervalSinceNow:- (24 * DAY)];
             break;
-        case 8:
-            defaultLastMessageSyncDate = [NSDate dateWithTimeIntervalSince1970:0];
-            break;
         default:
             break;
     }
     return defaultLastMessageSyncDate;
+}
+
+-(BOOL) isSyncWithAPIProcessed {
+    NSNumber *currentQuickSyncLevel = defaults_object(DEFAULTS_KEY_QUICK_SYNC_LEVEL);
+#warning "Update the below number (current value is 7) according to the levels in PeppermintMessageSender"
+    return currentQuickSyncLevel.intValue > 8;
 }
 
 -(void) clearSender {
@@ -279,6 +282,7 @@
     defaults_remove(DEFAULTS_KEY_CACHED_SENDVOCIEMESSAGE_MODEL);
     defaults_remove(DEFAULTS_KEY_DONT_SHOW_SMS_WARNING);
     defaults_remove(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH);
+    defaults_remove(DEFAULTS_EMAIL_UID_HOLDER);
     
     [[AppDelegate Instance] cleanDatabase];
     [self save];

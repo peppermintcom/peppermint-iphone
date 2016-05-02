@@ -10,5 +10,5 @@
 #import "ContactsModel.h"
 
 @interface ReSideMenuContainerViewController : RESideMenu
--(void) initContactsViewControllerWithContactsModel:(ContactsModel*) contactsModel;
+
 @end

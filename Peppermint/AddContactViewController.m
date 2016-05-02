@@ -219,6 +219,7 @@
     }
     
     NSString *uniqueId = [NSString stringWithFormat:@"%f", [NSDate new].timeIntervalSince1970];
+    NSDate *now = [NSDate new];
     
     if(self.emailImageView.highlighted) {
         PeppermintContact *peppermintContact = [self createdContact];
@@ -226,7 +227,7 @@
         peppermintContact.communicationChannel = CommunicationChannelEmail;
         peppermintContact.uniqueContactId = uniqueId;
         [customContactModel save:peppermintContact];
-        [[self recentContactsModel] save:peppermintContact forContactDate:[NSDate new]];
+        [self.recentContactsModel save:peppermintContact forLastPeppermintContactDate:now lastMailClientContactDate:nil];
     }
     if(self.phoneImageView.highlighted) {
         PeppermintContact *peppermintContact = [self createdContact];
@@ -234,7 +235,7 @@
         peppermintContact.communicationChannel = CommunicationChannelSMS;
         peppermintContact.uniqueContactId = uniqueId;
         [customContactModel save:peppermintContact];
-        [[self recentContactsModel] save:peppermintContact forContactDate:[NSDate new]];
+        [self.recentContactsModel save:peppermintContact forLastPeppermintContactDate:now lastMailClientContactDate:nil];
     }
 }
 

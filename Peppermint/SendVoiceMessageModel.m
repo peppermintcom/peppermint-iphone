@@ -61,7 +61,10 @@
     
     BOOL isPreviousCachedMessage = (self.delegate == nil);
     if(!isPreviousCachedMessage) {
-        [recentContactsModel save:self.selectedPeppermintContact forContactDate:[NSDate new]];
+        [recentContactsModel save:self.selectedPeppermintContact
+    forLastPeppermintContactDate:[NSDate new]
+        lastMailClientContactDate:nil];        
+        
         [self checkAndCleanFastReplyModel];
     }
     

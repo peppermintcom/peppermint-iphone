@@ -158,13 +158,9 @@
     NSArray *matchingGoogleContacts = [repository getResultsFromEntity:[GoogleContact class] predicateOrNil:googlePredicate];
     
     for(GoogleContact *matchedGoogleContact in matchingGoogleContacts) {
-        PeppermintContact *peppermintContact = [PeppermintContact new];
+        PeppermintContact *peppermintContact = [[PeppermintContact alloc] initWithContact:matchedGoogleContact];
         peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%d",
                                              CONTACT_GOOGLE, matchedGoogleContact.identifier.hash];
-        peppermintContact.avatarImage = [UIImage imageWithData:matchedGoogleContact.avatarImageData];
-        peppermintContact.nameSurname = matchedGoogleContact.nameSurname;
-        peppermintContact.communicationChannel = matchedGoogleContact.communicationChannel.intValue;
-        peppermintContact.communicationChannelAddress = matchedGoogleContact.communicationChannelAddress;
         [peppermintContactArray addObject:peppermintContact];
     }
     [repository endTransaction];

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KGz-9S-dSJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KGz-9S-dSJ">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -604,7 +604,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hsp-tK-r5C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-483" y="2018"/>
+            <point key="canvasLocation" x="-980" y="2018"/>
         </scene>
         <!--Re Side Menu Container View Controller-->
         <scene sceneID="fBF-d0-pHc">
@@ -1492,6 +1492,94 @@ Version 1.0.0</string>
             </objects>
             <point key="canvasLocation" x="625" y="-674"/>
         </scene>
+        <!--Mail Client Contacts View Controller-->
+        <scene sceneID="eo2-fo-0M7">
+            <objects>
+                <viewController storyboardIdentifier="MailClientContactsViewController" id="beM-1Y-ha9" customClass="MailClientContactsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BfA-Ae-jXh"/>
+                        <viewControllerLayoutGuide type="bottom" id="Na0-nV-9IN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Fql-MT-9l3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QDJ-V3-F9v" userLabel="NavigationView">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qpT-W9-TOk">
+                                        <rect key="frame" x="48" y="27" width="356" height="30"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="_Placeholder" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="8az-mf-dOs">
+                                        <rect key="frame" x="63" y="27" width="331" height="30"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="done"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="arb-XP-VCV">
+                                        <rect key="frame" x="0.0" y="24" width="40" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="34" id="JG0-xX-1lP"/>
+                                            <constraint firstAttribute="width" constant="40" id="VK7-TL-oEl"/>
+                                        </constraints>
+                                        <state key="normal" image="icon_menu"/>
+                                        <connections>
+                                            <action selector="slideMenuTouchDown:" destination="beM-1Y-ha9" eventType="touchDown" id="XaB-Hc-A2R"/>
+                                            <action selector="slideMenuTouchUp:" destination="beM-1Y-ha9" eventType="touchUpOutside" id="dCx-vF-6WB"/>
+                                            <action selector="slideMenuValidAction:" destination="beM-1Y-ha9" eventType="touchUpInside" id="7sg-Bx-iOp"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.3411764706" green="0.72941176470000002" blue="0.57254901960000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="8az-mf-dOs" secondAttribute="trailing" constant="20" id="3en-LJ-Zco"/>
+                                    <constraint firstItem="arb-XP-VCV" firstAttribute="leading" secondItem="QDJ-V3-F9v" secondAttribute="leading" id="57B-J3-mTf"/>
+                                    <constraint firstItem="arb-XP-VCV" firstAttribute="top" secondItem="QDJ-V3-F9v" secondAttribute="top" constant="24" id="B84-mh-pqQ"/>
+                                    <constraint firstAttribute="height" constant="64" id="CNR-ql-33L"/>
+                                    <constraint firstItem="qpT-W9-TOk" firstAttribute="top" secondItem="QDJ-V3-F9v" secondAttribute="top" constant="27" id="Dsw-q9-mO3"/>
+                                    <constraint firstAttribute="bottom" secondItem="qpT-W9-TOk" secondAttribute="bottom" constant="7" id="OmA-FS-l75"/>
+                                    <constraint firstItem="qpT-W9-TOk" firstAttribute="leading" secondItem="arb-XP-VCV" secondAttribute="trailing" constant="8" id="T5a-ms-zcP"/>
+                                    <constraint firstAttribute="trailing" secondItem="qpT-W9-TOk" secondAttribute="trailing" constant="10" id="fTn-nt-RKp"/>
+                                    <constraint firstAttribute="bottom" secondItem="8az-mf-dOs" secondAttribute="bottom" constant="7" id="hi9-FV-rAl"/>
+                                    <constraint firstItem="8az-mf-dOs" firstAttribute="leading" secondItem="arb-XP-VCV" secondAttribute="trailing" constant="23" id="q8U-xc-c5l"/>
+                                    <constraint firstItem="8az-mf-dOs" firstAttribute="top" secondItem="QDJ-V3-F9v" secondAttribute="top" constant="27" id="ypD-P8-BCj"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="fd9-Lo-1vf">
+                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="beM-1Y-ha9" id="ttK-PR-lXA"/>
+                                    <outlet property="delegate" destination="beM-1Y-ha9" id="R6J-54-tYh"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="QDJ-V3-F9v" firstAttribute="leading" secondItem="Fql-MT-9l3" secondAttribute="leading" id="F67-Lh-WVD"/>
+                            <constraint firstItem="QDJ-V3-F9v" firstAttribute="top" secondItem="Fql-MT-9l3" secondAttribute="top" id="KRq-8u-HaE"/>
+                            <constraint firstAttribute="bottom" secondItem="fd9-Lo-1vf" secondAttribute="bottom" priority="250" id="OHE-uH-SJ6"/>
+                            <constraint firstItem="fd9-Lo-1vf" firstAttribute="leading" secondItem="Fql-MT-9l3" secondAttribute="leading" id="WN2-yi-BMx"/>
+                            <constraint firstAttribute="trailing" secondItem="fd9-Lo-1vf" secondAttribute="trailing" id="apr-6z-9dM"/>
+                            <constraint firstAttribute="trailing" secondItem="QDJ-V3-F9v" secondAttribute="trailing" id="iTC-5v-9l1"/>
+                            <constraint firstItem="fd9-Lo-1vf" firstAttribute="top" secondItem="QDJ-V3-F9v" secondAttribute="bottom" id="mNP-XR-8Bl"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="cIn-Fh-VBU"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <connections>
+                        <outlet property="searchContactsTextField" destination="8az-mf-dOs" id="tyf-R3-4Xz"/>
+                        <outlet property="tableView" destination="fd9-Lo-1vf" id="fw9-J2-Jhz"/>
+                        <outlet property="tableViewBottomConstraint" destination="OHE-uH-SJ6" id="a8t-R0-ldr"/>
+                        <outlet property="whiteEllipseView" destination="qpT-W9-TOk" id="NFA-ci-5yD"/>
+                        <segue destination="NAA-3N-hVr" kind="show" identifier="ChatEntriesViewControllerSegue" id="wBS-s4-slH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Fe-cG-Qv0" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-483" y="2018"/>
+        </scene>
     </scenes>
     <resources>
         <image name="avatar" width="70" height="70"/>
@@ -1522,6 +1610,7 @@ Version 1.0.0</string>
         <image name="tap_to_send" width="139" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="wBS-s4-slH"/>
         <segue reference="6Da-5y-Gif"/>
     </inferredMetricsTieBreakers>
 </document>

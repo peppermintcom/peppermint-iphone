@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ceq-N7-4vt">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ceq-N7-4vt">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -34,7 +34,7 @@
                         </textAttributes>
                     </navigationBar>
                     <connections>
-                        <segue destination="wIt-at-jqR" kind="relationship" relationship="rootViewController" id="nUx-2p-6iO"/>
+                        <segue destination="KE5-OB-nJZ" kind="relationship" relationship="rootViewController" id="Brg-Hl-I6a"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aoW-zV-MWX" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -121,6 +121,7 @@ an account yet? click here</string>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="4dr-MV-9lj"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="loginLabel" destination="wYy-9O-gAW" id="YMu-fp-ETn"/>
                         <outlet property="tableView" destination="gq1-X6-YJB" id="E1j-xQ-y0G"/>
@@ -130,7 +131,7 @@ an account yet? click here</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZFI-6m-Swu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1064" y="154"/>
+            <point key="canvasLocation" x="-574" y="146"/>
         </scene>
         <!--Sign Up With Email View Controller-->
         <scene sceneID="avR-io-JGn">
@@ -735,22 +736,90 @@ using Facebook/Peppemirnt/Google</string>
             </objects>
             <point key="canvasLocation" x="-1728" y="1004"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="rtU-ag-wh2">
+        <!--Email Login View Controller-->
+        <scene sceneID="svM-tc-x01">
             <objects>
-                <viewController id="QlV-bZ-ONE" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EmailLoginViewController" id="KE5-OB-nJZ" customClass="EmailLoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="huk-m3-svG"/>
-                        <viewControllerLayoutGuide type="bottom" id="Gl1-hc-s9A"/>
+                        <viewControllerLayoutGuide type="top" id="HBQ-qI-we3"/>
+                        <viewControllerLayoutGuide type="bottom" id="v2K-ry-rvx"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="5zk-Pe-gwy">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <view key="view" contentMode="scaleToFill" id="ZM7-z4-mwM">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_gradient" translatesAutoresizingMaskIntoConstraints="NO" id="EiX-3L-fhp">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                            </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="bordered_logo" translatesAutoresizingMaskIntoConstraints="NO" id="6lp-Jm-t43">
+                                <rect key="frame" x="180" y="35" width="54" height="54"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="clip" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0KT-Bp-vMa">
+                                <rect key="frame" x="10" y="104" width="394" height="95"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="95" id="duC-X5-7rx"/>
+                                </constraints>
+                                <string key="text">_To send a message with PepPlease Loginpermint,
+you need to create an account.
+
+Please select how to login:</string>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4cq-mv-IVB">
+                                <rect key="frame" x="20" y="676" width="374" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="L8l-Uc-QDq"/>
+                                </constraints>
+                                <string key="text">_Don't want to create
+an account yet? click here</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="oGJ-bj-NVv">
+                                <rect key="frame" x="20" y="210" width="374" height="466"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <collectionViewLayout key="collectionViewLayout" id="vhm-E7-hZ6" customClass="KTCenterFlowLayout"/>
+                                <cells/>
+                                <connections>
+                                    <outlet property="dataSource" destination="KE5-OB-nJZ" id="ff6-a6-fJc"/>
+                                    <outlet property="delegate" destination="KE5-OB-nJZ" id="Et4-tx-7fH"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="v2K-ry-rvx" firstAttribute="top" secondItem="EiX-3L-fhp" secondAttribute="bottom" id="3aD-gx-R2a"/>
+                            <constraint firstItem="6lp-Jm-t43" firstAttribute="top" secondItem="HBQ-qI-we3" secondAttribute="bottom" constant="15" id="AvG-uc-EiJ"/>
+                            <constraint firstItem="EiX-3L-fhp" firstAttribute="top" secondItem="ZM7-z4-mwM" secondAttribute="top" id="C8r-py-jRy"/>
+                            <constraint firstItem="4cq-mv-IVB" firstAttribute="top" secondItem="oGJ-bj-NVv" secondAttribute="bottom" id="Ec5-X6-cfU"/>
+                            <constraint firstItem="oGJ-bj-NVv" firstAttribute="leading" secondItem="ZM7-z4-mwM" secondAttribute="leading" constant="20" id="GI8-fq-69o"/>
+                            <constraint firstAttribute="trailing" secondItem="oGJ-bj-NVv" secondAttribute="trailing" constant="20" id="PKv-r9-mtO"/>
+                            <constraint firstItem="4cq-mv-IVB" firstAttribute="leading" secondItem="ZM7-z4-mwM" secondAttribute="leading" constant="20" id="PiW-h5-voJ"/>
+                            <constraint firstItem="EiX-3L-fhp" firstAttribute="leading" secondItem="ZM7-z4-mwM" secondAttribute="leading" id="Te8-hO-P59"/>
+                            <constraint firstItem="0KT-Bp-vMa" firstAttribute="leading" secondItem="ZM7-z4-mwM" secondAttribute="leading" constant="10" id="UX3-VB-92Q"/>
+                            <constraint firstAttribute="trailing" secondItem="EiX-3L-fhp" secondAttribute="trailing" id="VOl-FI-Izc"/>
+                            <constraint firstItem="0KT-Bp-vMa" firstAttribute="top" secondItem="6lp-Jm-t43" secondAttribute="bottom" constant="15" id="VsB-JK-tuX"/>
+                            <constraint firstItem="oGJ-bj-NVv" firstAttribute="top" secondItem="0KT-Bp-vMa" secondAttribute="bottom" constant="11" id="c8X-tv-bBs"/>
+                            <constraint firstItem="6lp-Jm-t43" firstAttribute="centerX" secondItem="ZM7-z4-mwM" secondAttribute="centerX" id="gDI-Re-sg4"/>
+                            <constraint firstAttribute="trailing" secondItem="0KT-Bp-vMa" secondAttribute="trailing" constant="10" id="lIm-Bg-3gb"/>
+                            <constraint firstItem="v2K-ry-rvx" firstAttribute="top" secondItem="4cq-mv-IVB" secondAttribute="bottom" constant="10" id="mPF-Ck-5dX"/>
+                            <constraint firstAttribute="trailing" secondItem="4cq-mv-IVB" secondAttribute="trailing" constant="20" id="nNc-4m-00h"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="Eez-MW-3LZ"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <connections>
+                        <outlet property="collectionView" destination="oGJ-bj-NVv" id="Bv4-hh-VEP"/>
+                        <outlet property="loginLabel" destination="0KT-Bp-vMa" id="RNQ-E3-AFZ"/>
+                        <outlet property="withoutLoginLabel" destination="4cq-mv-IVB" id="L6g-6o-JEb"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="H3x-Fk-rqw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pdy-Yx-aqv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-1176" y="154"/>
         </scene>
     </scenes>
     <resources>

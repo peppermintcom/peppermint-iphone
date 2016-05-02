@@ -16,7 +16,6 @@
 #import "ProximitySensorModel.h"
 
 #define BOTTOM_RESET_IME            2
-
 #define WAIT_FOR_SHAKE_DURATION     2
 
 @interface ChatEntriesViewController () <RecordingGestureButtonDelegate, RecordingViewDelegate>
@@ -29,6 +28,7 @@
     BOOL isScrolling;
     __block BOOL isPlaying;
     NSTimer *recordingPausedTimer;
+    NSMutableDictionary *calculatedHeightsDictionary;
 }
 
 - (void)viewDidLoad {
@@ -36,7 +36,6 @@
     isScrolling = NO;
     isPlaying = NO;
     recordingPausedTimer = nil;
-    self.tableView.rowHeight = CELL_HEIGHT_CHAT_TABLEVIEWCELL;
     
     [self resetBottomInformationLabel];
     
@@ -55,6 +54,7 @@
     autoPlayModel =[AutoPlayModel sharedInstance];
     [self recordingView]; // init recording view to be able to handle status change events
     self.recordingButton.delegate = self;
+    calculatedHeightsDictionary = [NSMutableDictionary new];
     REGISTER();
 }
 
@@ -107,12 +107,17 @@
     [self startListeningProximitySensor];
     [self refreshContent];
     [self checkToTakeOverSendingMessageEvents];
+    if(self.chatEntryTypesToShow == ChatEntryTypeNone) {
+        NSLog(@"No ChatEntryTypes are set to be shown. View content will be empty!!");
+    }
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     _chatEntryModel = nil;
-    _recordingView = nil;    
+    if(_recordingView.hidden) {
+        _recordingView = nil;
+    }
 }
 
 -(void) viewWillDisappear:(BOOL)animated {
@@ -169,13 +174,53 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ChatTableViewCell *chatTableViewCell = [CellFactory cellChatTableViewCellFromTable:tableView forIndexPath:indexPath andDelegate:self];    
+    UITableViewCell *cell = nil;
     if(self.chatEntryModel.chatEntriesArray.count > indexPath.row) {
         PeppermintChatEntry *peppermintChatEntry = (PeppermintChatEntry*)[self.chatEntryModel.chatEntriesArray objectAtIndex:indexPath.row];
-        [chatTableViewCell fillInformation:peppermintChatEntry];
-        chatTableViewCell.contentView.backgroundColor = self.tableView.backgroundColor;
+        
+        if(peppermintChatEntry.type == ChatEntryTypeAudio) {
+            ChatTableViewCell *chatTableViewCell = [CellFactory cellChatTableViewCellFromTable:tableView forIndexPath:indexPath andDelegate:self];
+            [chatTableViewCell fillInformation:peppermintChatEntry];
+            chatTableViewCell.contentView.backgroundColor = self.tableView.backgroundColor;
+            cell = chatTableViewCell;
+        } else if (peppermintChatEntry.type == ChatEntryTypeEmail) {
+            ChatTableViewMailCell *chatTableViewMailCell = [CellFactory cellChatTableViewMailCellFromTable:tableView forIndexPath:indexPath];
+            [chatTableViewMailCell fillInformation:peppermintChatEntry];
+            cell = chatTableViewMailCell;
+        }
+    } else {
+        cell = [CellFactory cellChatTableViewCellFromTable:tableView forIndexPath:indexPath andDelegate:nil];
     }
-    return chatTableViewCell;
+    return cell;
+}
+
+-(CGFloat) calculatedHeight:(PeppermintChatEntry*)peppermintChatEntry indexPath:(NSIndexPath *)indexPath {
+    NSString *key = [NSString stringWithFormat:@"%ld-%ld", (long)indexPath.section, (long)indexPath.row];
+    NSNumber *cachedHeight = [calculatedHeightsDictionary objectForKey:key];
+    if(!cachedHeight) {
+        CGFloat calculatedHeight = 0;
+        CGSize textSize = [peppermintChatEntry.mailContent sizeWithAttributes:@{NSFontAttributeName:[UIFont openSansFontOfSize:13]}];
+        CGFloat estimatedHeigth = textSize.height * textSize.width / (SCREEN_WIDTH * 0.70);
+        calculatedHeight = CELL_HEIGHT_CHAT_TABLEVIEWCELL + estimatedHeigth;
+        calculatedHeight = MIN(calculatedHeight, CELL_HEIGHT_CHAT_TABLEVIEWMAILCELL_IDLE_MAX);
+        cachedHeight = [NSNumber numberWithFloat:calculatedHeight];
+        [calculatedHeightsDictionary setObject:cachedHeight forKey:key];
+    }
+    return cachedHeight.floatValue;
+}
+
+
+-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {    
+    CGFloat height = 0;
+    if(self.chatEntryModel.chatEntriesArray.count > indexPath.row) {
+        PeppermintChatEntry *peppermintChatEntry = (PeppermintChatEntry*)[self.chatEntryModel.chatEntriesArray objectAtIndex:indexPath.row];
+        if(peppermintChatEntry.type == ChatEntryTypeAudio && self.chatEntryTypesToShow & ChatEntryTypeAudio) {
+            height = CELL_HEIGHT_CHAT_TABLEVIEWCELL;
+        } else if (peppermintChatEntry.type == ChatEntryTypeEmail && self.chatEntryTypesToShow & ChatEntryTypeEmail) {
+            height = [self calculatedHeight:peppermintChatEntry indexPath:indexPath];
+        }
+    }
+    return height;
 }
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -295,7 +340,9 @@
         NSMutableAttributedString *infoAttrText = [NSMutableAttributedString new];
         UIColor *textColor = [UIColor textFieldTintGreen];
         self.microphoneView.hidden = self.bottomInformationLabel.hidden = YES;
-        if(sendingStatus == SendingStatusUploading) {
+        if(sendingStatus == SendingStatusInited) {
+            [self resetBottomInformationLabel];
+        } else if(sendingStatus == SendingStatusUploading) {
             [infoAttrText addText:LOC(@"Uploading", @"Info") ofSize:13 ofColor:textColor];
         } else if (sendingStatus == SendingStatusStarting) {
             [infoAttrText addText:LOC(@"Starting", @"Info") ofSize:13 ofColor:textColor];

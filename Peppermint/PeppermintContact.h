@@ -15,6 +15,7 @@ typedef enum : NSUInteger {
 } CommunicationChannel;
 
 @import UIKit;
+@class Contact;
 
 @interface PeppermintContact : NSObject
 @property (strong, nonatomic) UIImage *avatarImage;
@@ -23,8 +24,10 @@ typedef enum : NSUInteger {
 
 @property (assign, nonatomic) BOOL hasReceivedMessageOverPeppermint;
 @property (strong, nonatomic) NSString *uniqueContactId;
-@property (strong, nonatomic) NSDate *lastMessageDate;
-@property (assign, nonatomic) NSUInteger unreadMessageCount;
+@property (strong, nonatomic) NSDate *lastPeppermintContactDate;
+@property (strong, nonatomic) NSDate *lastMailClientContactDate;
+
+@property (assign, nonatomic) NSUInteger unreadAudioMessageCount;
 @property (assign, nonatomic) BOOL isRestrictedForRecentContact;
 
 - (void)addToCoreSpotlightSearch;
@@ -41,5 +44,8 @@ typedef enum : NSUInteger {
 #pragma mark - Explanation
 -(NSString*) explanation;
 -(void) setExplanation:(NSString*)explanation;
+
+#pragma mark - Init With Contact
+-(instancetype) initWithContact:(Contact*) contact;
 
 @end

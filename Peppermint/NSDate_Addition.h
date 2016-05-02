@@ -11,5 +11,7 @@
 @interface NSDate (NSDate_Addition)
 -(BOOL) isToday;
 -(BOOL) isYesterday;
++(NSDate*) maxOfDate1:(NSDate*) date1 date2:(NSDate*) date2;
+-(NSString*) monthDayStringWithTodayYesterday;
 
 @end

@@ -152,14 +152,13 @@ typedef NS_ENUM(NSUInteger, GCMServiceErrorCode) {
 
 /**
  *  Call this to let GCM know that the app received a downstream message. Used
- *  to track message delivery for messages with different routes.
+ *  to detect duplicate messages and to track message delivery for messages
+ *  with different routes.
  *
  *  @param message The downstream message received by the app.
  *
- *  @return Only sync messages i.e. with `content-available : true` are sent
- *          both via APNS and GCM. For normal APNS messages this always returns
- *          YES. For sync messages return YES if the message was never delivered
- *          before else NO if the message was delivered before via MCS.
+ *  @return For APNs messages this always returns FALSE. For other messages,
+ *          this returns FALSE for new, non-duplicated messages.
  */
 - (BOOL)appDidReceiveMessage:(NSDictionary *)message;
 

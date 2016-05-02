@@ -271,10 +271,13 @@
     if(![self.playingModel isEqual:cachedPlayingModel]) {
         [cachedPlayingModel stop];
     }
-    for(ChatTableViewCell *cell in [self.tableView visibleCells]) {
-        if(cell != self && cell.playingModel.audioPlayer.isPlaying) {
-            [cell.playingModel stop];
-            cell.playPauseImageView.image = imagePlay;
+    for(UITableViewCell *cell in [self.tableView visibleCells]) {
+        if([cell isKindOfClass:[ChatTableViewCell class]]) {
+            ChatTableViewCell *chatTableViewCell = (ChatTableViewCell*)cell;
+            if(chatTableViewCell != self && chatTableViewCell.playingModel.audioPlayer.isPlaying) {
+                [chatTableViewCell.playingModel stop];
+                chatTableViewCell.playPauseImageView.image = imagePlay;
+            }
         }
     }
 }
