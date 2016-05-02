@@ -115,7 +115,9 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     _chatEntryModel = nil;
-    _recordingView = nil;    
+    if(_recordingView.hidden) {
+        _recordingView = nil;
+    }
 }
 
 -(void) viewWillDisappear:(BOOL)animated {
@@ -197,8 +199,8 @@
     NSNumber *cachedHeight = [calculatedHeightsDictionary objectForKey:key];
     if(!cachedHeight) {
         CGFloat calculatedHeight = 0;
-        CGSize textSize = [peppermintChatEntry.mailContent sizeWithAttributes:@{NSFontAttributeName:[UIFont openSansFontOfSize:15]}];
-        CGFloat estimatedHeigth = textSize.height * textSize.width / (SCREEN_WIDTH * 0.85);
+        CGSize textSize = [peppermintChatEntry.mailContent sizeWithAttributes:@{NSFontAttributeName:[UIFont openSansFontOfSize:13]}];
+        CGFloat estimatedHeigth = textSize.height * textSize.width / (SCREEN_WIDTH * 0.70);
         calculatedHeight = CELL_HEIGHT_CHAT_TABLEVIEWCELL + estimatedHeigth;
         calculatedHeight = MIN(calculatedHeight, CELL_HEIGHT_CHAT_TABLEVIEWMAILCELL_IDLE_MAX);
         cachedHeight = [NSNumber numberWithFloat:calculatedHeight];

@@ -7,9 +7,15 @@
 //
 
 #import "BaseModel.h"
+#import "ChatEntryModel.h"
 @class BaseEmailSessionModel;
 
-@interface EmailClientModel : BaseModel
+@protocol EmailClientModelDelegate <ChatEntryModelDelegate>
+@end
+
+@interface EmailClientModel : BaseModel <ChatEntryModelDelegate>
+@property (weak, nonatomic) id<EmailClientModelDelegate> delegate;
+
 @property (strong, nonatomic) NSMutableArray<BaseEmailSessionModel*> *emailSessionsArray;
 
 -(void) startEmailClients;

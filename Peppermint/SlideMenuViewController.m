@@ -67,8 +67,8 @@
             cell.iconImageView.image = [UIImage imageNamed:@"icon_all"];
             break;
         case INDEX_MAIL_CLIENT:
-            cell.titleLabel.text = LOC(@"Emails", @"Title");
-            cell.iconImageView.image = [UIImage imageNamed:@"email_active"];
+            cell.titleLabel.text = LOC(@"Mail Contacts", @"Title");
+            cell.iconImageView.image = [UIImage imageNamed:@"icon_mail_client"];
             break;
         case INDEX_TUTORIAL:
             cell.titleLabel.text = LOC(@"Tutorial",@"Tutorial Label");

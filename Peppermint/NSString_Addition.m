@@ -125,4 +125,12 @@
     return [NSCharacterSet characterSetWithCharactersInString:asciiCharacters];
 }
 
+-(NSString*) trimMultipleNewLines {
+    //http://stackoverflow.com/a/11360977/5171866
+    NSArray *split = [self componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    split = [split filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"length > 0"]];
+    NSString *result = [split componentsJoinedByString:@"\n"];
+    return result;
+}
+
 @end

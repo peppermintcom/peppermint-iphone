@@ -44,7 +44,7 @@
 #define PATH_EMAIL          @"gcm.notification.sender_email"
 #define PATH_FULL_NAME      @"gcm.notification.sender_name"
 
-@interface AppDelegate () <WCSessionDelegate, GGLInstanceIDDelegate, ChatEntryModelDelegate>
+@interface AppDelegate () <WCSessionDelegate, GGLInstanceIDDelegate, ChatEntryModelDelegate, EmailClientModelDelegate>
 @end
 
 @implementation AppDelegate {
@@ -213,6 +213,7 @@
 -(void) initEmailClient {
     if(!emailClientModel) {
         emailClientModel = [EmailClientModel new];
+        emailClientModel.delegate = self;
     }
     [emailClientModel startEmailClients];
 }
@@ -250,7 +251,6 @@
     [self checkForFirstRun];
     [self initRecorder];
     [self setBackgrounFetchInterval];
-    [self initEmailClient];
     REGISTER();
     return YES;
 }
@@ -267,6 +267,7 @@
     [self refreshIncomingMessages];
     [self resetBadgeNumber];
     [self refreshBadgeNumber];
+    [self initEmailClient];
     PUBLISH([ApplicationDidBecomeActive new]);
 }
 
@@ -387,6 +388,7 @@ SUBSCRIBE(DetachSuccess) {
     fetchStart = [NSDate new];
     cachedCompletionHandler = completionHandler;
     [self refreshIncomingMessages];
+    [self initEmailClient];
 }
 
 #pragma mark - AutoPlay
@@ -403,6 +405,11 @@ SUBSCRIBE(DetachSuccess) {
 }
 
 #pragma mark - ChatEntryModelDelegate
+
+-(void) lastMessagesAreUpdated:(NSArray<PeppermintContactWithChatEntry*>*) peppermintContactWithChatEntryArray {
+    NSLog(@"lastMessagesAreUpdated:");
+}
+
 -(void) peppermintChatEntriesArrayIsUpdated {
     NSLog(@"peppermintChatEntriesArrayIsUpdated");
 }
@@ -443,10 +450,7 @@ SUBSCRIBE(DetachSuccess) {
         [self checkAndPlayIncomingAudioAlert];
     }
     
-    BOOL didFinishAllSyncLevels = ([[PeppermintMessageSender sharedInstance] defaultLastMessageSyncDate] == nil);
-    if(didFinishAllSyncLevels) {
-        hasFinishedFirstSync = YES;
-    }
+    hasFinishedFirstSync = hasFinishedFirstSync || [[PeppermintMessageSender sharedInstance] isSyncWithAPIProcessed];
     
     RefreshIncomingMessagesCompletedWithSuccess *refreshIncomingMessagesCompletedWithSuccess = [RefreshIncomingMessagesCompletedWithSuccess new];
     refreshIncomingMessagesCompletedWithSuccess.sender = self;
@@ -847,41 +851,6 @@ SUBSCRIBE(DetachSuccess) {
 }
 
 #pragma mark - Inter App Messaging
-
-SUBSCRIBE(NewEmailMessageReceived) {
-    if([emailClientModel.emailSessionsArray containsObject:event.sender]) {
-        weakself_create();
-        dispatch_async(LOW_PRIORITY_QUEUE, ^{
-            strongSelf_create();
-            if(strongSelf) {
-                RecentContactsModel *recentContactsModel = [RecentContactsModel new];
-                recentContactsModel.delegate = nil;
-                PeppermintContact *peppermintContact = [[ContactsModel sharedInstance] matchingPeppermintContactForEmail:event.contactEmail
-                                                                                                             nameSurname:event.contactNameSurname];
-                
-                if(chatEntryModel && recentContactsModel) {
-                    [recentContactsModel save:peppermintContact forLastPeppermintContactDate:nil lastMailClientContactDate:event.dateReceived];
-                    
-                    PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry new];
-                    peppermintChatEntry.audio = nil;
-                    peppermintChatEntry.audioUrl = nil;
-                    peppermintChatEntry.duration = 0;
-                    peppermintChatEntry.dateCreated = event.dateReceived;
-                    peppermintChatEntry.contactEmail = event.contactEmail;
-                    peppermintChatEntry.contactNameSurname = event.contactNameSurname;
-                    peppermintChatEntry.messageId = event.uid.stringValue;
-                    peppermintChatEntry.subject = event.subject;
-                    peppermintChatEntry.mailContent = event.message;
-                    peppermintChatEntry.isSentByMe = event.isSent;
-                    peppermintChatEntry.isSeen = event.isSeen;
-                    [chatEntryModel savePeppermintChatEntry:peppermintChatEntry];
-                } else {
-                    NSLog(@"A model was not inited properly. This may cause a message not to be shown properly.");
-                }
-            }
-        });
-    }
-}
 
 SUBSCRIBE(NewUserLoggedIn) {
     [self refreshChatEntryModel];

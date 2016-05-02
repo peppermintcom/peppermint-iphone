@@ -23,7 +23,6 @@
 -(void) refreshRecentContactList;
 
 -(NSPredicate*) recentContactPredicate:(PeppermintContact*) peppermintContact;
--(BOOL) isSyncWithAPIProcessed;
 
 #pragma mark - Contact List Functions
 -(NSMutableArray*) allMessageRecentContactsArray;

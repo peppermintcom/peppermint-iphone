@@ -14,6 +14,7 @@
 #import "RecentContactsModel.h"
 #import "ContactsModel.h"
 #import "CustomContactModel.h"
+#import "ConnectionModel.h"
 
 #define PREDICATE_UNREAD_MESSAGES [NSPredicate predicateWithFormat:@"self.isSeen = %@",@NO]
 
@@ -81,6 +82,9 @@
     peppermintChatEntry.messageId = chatEntry.messageId;
     peppermintChatEntry.subject = chatEntry.subject;
     peppermintChatEntry.mailContent = chatEntry.mailContent;
+    peppermintChatEntry.isRepliedAnswered = chatEntry.isRepliedAnswered.boolValue;
+    peppermintChatEntry.isStarredFlagged = chatEntry.isStarredFlagged.boolValue;
+    peppermintChatEntry.isForwarded = chatEntry.isForwarded.boolValue;
     return peppermintChatEntry;
 }
 
@@ -145,6 +149,9 @@
             chatEntry.duration = [NSNumber numberWithDouble:peppermintChatEntry.duration];
             chatEntry.subject = peppermintChatEntry.subject;
             chatEntry.mailContent = peppermintChatEntry.mailContent;
+            chatEntry.isRepliedAnswered = [NSNumber numberWithBool:peppermintChatEntry.isRepliedAnswered];
+            chatEntry.isStarredFlagged = [NSNumber numberWithBool:peppermintChatEntry.isStarredFlagged];
+            chatEntry.isForwarded = [NSNumber numberWithBool:peppermintChatEntry.isForwarded];
         }
         
         NSError *error = [repository endTransaction];
@@ -152,7 +159,6 @@
             if(error) {
                 [weakSelf.delegate operationFailure:error];
             } else {
-                [weakSelf updateLastSyncDatesInPeppermintMessageSender];
                 [weakSelf.delegate peppermintChatEntrySavedWithSuccess:peppermintChatEntryArray];
             }
         });
@@ -229,6 +235,7 @@
         [self notifyDelegateToFinishBackgroundFetchInCase];
     } else {
         ++activeServerQueryCount;
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         if(queryForIncoming) {
             [awsService getMessagesForAccountId:peppermintMessageSender.accountId
                                             jwt:peppermintMessageSender.exchangedJwt
@@ -248,12 +255,28 @@
 SUBSCRIBE(NetworkFailure) {
     if(event.sender == awsService) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        [self.delegate operationFailure:[event error]];
+        [self resetSyncDatesForCurrentLevel];        
+        if([ConnectionModel sharedInstance].isInternetReachable) {
+            [self makeSyncRequestForMessages];
+        } else {
+            [self.delegate operationFailure:[event error]];
+        }
     }
 }
 
+-(void) resetSyncDatesForCurrentLevel {
+    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+    BOOL isSynced = [peppermintMessageSender isSyncWithAPIProcessed];
+    NSDate *recentDate = [NSDate dateWithTimeIntervalSinceNow:(-3 * HOUR)];
+    NSDate *resetDate = [peppermintMessageSender defaultLastMessageSyncDate];
+    
+    _lastMessageSyncDateForRecipient = _lastMessageSyncDateForSender = nil;
+    peppermintMessageSender.lastMessageSyncDate = isSynced ? recentDate : resetDate;
+    peppermintMessageSender.lastMessageSyncDateForSentMessages = isSynced ? recentDate : resetDate;
+    [peppermintMessageSender save];
+}
+
 SUBSCRIBE(GetMessagesAreSuccessful) {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     BOOL isUserStillLoggedIn = [[PeppermintMessageSender sharedInstance] isUserStillLoggedIn];
     if(!isUserStillLoggedIn) {
         NSLog(@" User has logged out during an existing service call. Ignoring the response from server.");
@@ -288,33 +311,29 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
 
 -(void) updateLastSyncDatesInPeppermintMessageSender {
     PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
-    BOOL shouldManipulateSyncDate = ([peppermintMessageSender defaultLastMessageSyncDate] != nil);
+    BOOL shouldManipulateSyncDate = ![peppermintMessageSender isSyncWithAPIProcessed];
+    
     if(shouldManipulateSyncDate) {
         NSNumber *currentQuickSyncLevel = defaults_object(DEFAULTS_KEY_QUICK_SYNC_LEVEL);
         NSNumber *nextQuickSyncLevel = [NSNumber numberWithInt:(currentQuickSyncLevel.intValue + 1)];
-#warning "Saving the Quick Sync Level may cause some messages not to be synced if the connection is cut. However, it will be synced in next sync level"
+        NSLog(@"QUICKSYNCLEVEL -> %@", nextQuickSyncLevel);
         defaults_set_object(DEFAULTS_KEY_QUICK_SYNC_LEVEL, nextQuickSyncLevel);
-        
-        peppermintMessageSender.lastMessageSyncDate = [peppermintMessageSender defaultLastMessageSyncDate];
-        peppermintMessageSender.lastMessageSyncDateForSentMessages = [peppermintMessageSender defaultLastMessageSyncDate];
-        _lastMessageSyncDateForRecipient = _lastMessageSyncDateForSender = nil;
+        [self resetSyncDatesForCurrentLevel];
         [self makeSyncRequestForMessages];
     } else {
+        PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
         peppermintMessageSender.lastMessageSyncDate = [self lastMessageSyncDateForRecipient];
         peppermintMessageSender.lastMessageSyncDateForSentMessages = [self lastMessageSyncDateForSender];
         _lastMessageSyncDateForRecipient = _lastMessageSyncDateForSender = nil;
+        [peppermintMessageSender save];
     }
-    [peppermintMessageSender save];
 }
 
 -(void) checkToUpdateLastSyncDate:(NSDate*)dateCreated isRecipient:(BOOL)isRecipient {
-    BOOL isDateLaterForRecipient = dateCreated.timeIntervalSince1970 > [self lastMessageSyncDateForRecipient].timeIntervalSince1970;
-    BOOL isDateLaterForSender = dateCreated.timeIntervalSince1970 > [self lastMessageSyncDateForSender].timeIntervalSince1970;
-    
-    if(isRecipient && isDateLaterForRecipient) {
-        _lastMessageSyncDateForRecipient = dateCreated;
-    } else if (!isRecipient && isDateLaterForSender) {
-        _lastMessageSyncDateForSender = dateCreated;
+    if(isRecipient) {
+        _lastMessageSyncDateForRecipient = [NSDate maxOfDate1:dateCreated date2:self.lastMessageSyncDateForRecipient];
+    } else {
+        _lastMessageSyncDateForSender = [NSDate maxOfDate1:dateCreated date2:self.lastMessageSyncDateForSender];
     }
 }
 
@@ -355,21 +374,26 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
     }
     
     if(event.existsMoreMessages) {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         [self queryServerForIncomingMessages];
     } else if (!event.isForRecipient) {
         queryForIncoming = YES;
         [self queryServerForIncomingMessages];
     } else {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         [recentContactsModel saveMultiple:mergedPeppermintContacts];
         [self savePeppermintChatEntryArray:[mergedPeppermintChatEntrySet allObjects]];
+#warning "We by-pass the check if savePeppermintChatEntryArray: was processed successfully. However, sync method will soon be changed to reverse form."
+        [self updateLastSyncDatesInPeppermintMessageSender];
     }
 }
 
 #pragma mark - Mark As Read
 
 -(void) checkChatEntry:(ChatEntry*)chatEntry andMarkAsReadIfNeededWithPeppermintChatEntry:(PeppermintChatEntry*)peppermintChatEntry {
-    if(!chatEntry.isSeen.boolValue && peppermintChatEntry.isSeen && peppermintChatEntry.messageId.length > 0) {
+    if(!chatEntry.isSeen.boolValue
+       && peppermintChatEntry.isSeen
+       && peppermintChatEntry.messageId.length > 0
+       && peppermintChatEntry.type == ChatEntryTypeAudio) {
         PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
         [awsService markMessageAsReadWithJwt:peppermintMessageSender.exchangedJwt messageId:peppermintChatEntry.messageId];
     }
@@ -412,7 +436,7 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
 -(void) markAllPreviousMessagesAsRead:(PeppermintChatEntry*)peppermintChatEntry {
     weakself_create();
     dispatch_async(LOW_PRIORITY_QUEUE, ^{
-        NSInteger numberOfUpdatedRecords;
+        NSInteger numberOfUpdatedRecords = 0;
         Repository *repository = [Repository beginTransaction];
         NSPredicate *emailPredicate = [ChatEntryModel contactEmailPredicate:peppermintChatEntry.contactEmail];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.dateCreated <= %@", peppermintChatEntry.dateCreated];
@@ -463,11 +487,14 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
     return emailPredicate;
 }
 
-+(NSPredicate*) unreadMessagesPredicateForEmail:(NSString*) email {
++(NSPredicate*) unreadAudioMessagesPredicateForEmail:(NSString*) email {
     NSPredicate *emailPredicate = [ChatEntryModel contactEmailPredicate:email];
+    NSPredicate *audioPredicate = [NSPredicate predicateWithFormat:@"self.duration > 0 OR self.audio != nil"];
+    
     return [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:
                                                                emailPredicate,
                                                                PREDICATE_UNREAD_MESSAGES,
+                                                               audioPredicate,
                                                                nil]];
 }
 
@@ -488,6 +515,105 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
         [mutableSet addObject:chatEntry.contactEmail];
     }
     return mutableSet;
+}
+
+-(void) getLastMessagesForPeppermintContacts:(NSArray<PeppermintContact*>*)unSortedpeppermintContactArray {
+    weakself_create();
+    dispatch_async(LOW_PRIORITY_QUEUE, ^{
+        
+        NSMutableArray *contactPredicatesArray = [NSMutableArray new];
+        
+        NSArray *peppermintContactArray = unSortedpeppermintContactArray;
+        
+        
+        for(PeppermintContact *peppermintContact in peppermintContactArray) {
+            NSDate *lastMessageDate = [NSDate maxOfDate1:peppermintContact.lastPeppermintContactDate
+                                                   date2:peppermintContact.lastMailClientContactDate];
+            
+            NSPredicate *timePredicate = [NSPredicate predicateWithFormat:@"self.dateCreated >= %@",
+                                          [lastMessageDate dateByAddingTimeInterval:-1]];
+            NSPredicate *emailPredicate = [ChatEntryModel contactEmailPredicate:peppermintContact.communicationChannelAddress];
+            
+            NSPredicate *predicateForContact = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:
+                                                                                                   emailPredicate,
+                                                                                                   timePredicate,
+                                                                                                   nil]];
+            [contactPredicatesArray addObject:predicateForContact];
+        }
+        
+        NSPredicate *compoundPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:contactPredicatesArray];
+        
+        Repository *repository = [Repository beginTransaction];
+        NSArray *chatEntryArray = [repository getResultsFromEntity:[ChatEntry class]
+                                                    predicateOrNil:compoundPredicate
+                                                ascSortStringOrNil:nil
+                                               descSortStringOrNil:[NSArray arrayWithObject:@"dateCreated"]];
+        
+        NSMutableArray<PeppermintContactWithChatEntry*> *resultArray = [NSMutableArray new];
+        for(PeppermintContact *peppermintContact in peppermintContactArray) {
+            NSPredicate *emailPredicate = [ChatEntryModel contactEmailPredicate:peppermintContact.communicationChannelAddress];
+            
+            NSArray *filteredArray = [chatEntryArray filteredArrayUsingPredicate:emailPredicate];
+            if(filteredArray.count == 0 || filteredArray.count > 1) {
+                NSLog(@"Result should not be empty nor having more than one record. Please update predicates here around.");
+                for(PeppermintChatEntry *peppermintChatEntry in filteredArray) {
+                    NSLog(@"%@ -> Date:%f |Subj:%@", peppermintChatEntry.contactEmail, peppermintChatEntry.dateCreated.timeIntervalSince1970, peppermintChatEntry.subject);
+                }
+            }
+            if(filteredArray.count > 0) {
+                PeppermintChatEntry *peppermintChatEntry = [self peppermintChatEntryWith:filteredArray.firstObject];
+                PeppermintContactWithChatEntry *peppermintContactWithChatEntry = [PeppermintContactWithChatEntry new];
+                
+                peppermintContact.lastMailClientContactDate = peppermintChatEntry.dateCreated;
+                peppermintContactWithChatEntry.peppermintContact = peppermintContact;
+                peppermintContactWithChatEntry.peppermintChatEntry = peppermintChatEntry;
+                [resultArray addObject:peppermintContactWithChatEntry];
+            }
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(weakSelf && [weakSelf.delegate respondsToSelector:@selector(lastMessagesAreUpdated:)]) {
+                [weakSelf.delegate lastMessagesAreUpdated:resultArray];
+            } else {
+                NSLog(@"Delegate did not implement function lastMessagesAreUpdated:");
+            }
+        });
+    });
+}
+
+-(NSArray<PeppermintContactWithChatEntry*>*) filter:(NSArray<PeppermintContactWithChatEntry*>*)peppermintContactWithChatEntryArray withFilter:(NSString*) filterText {
+    
+    NSArray *resultArray = (!peppermintContactWithChatEntryArray) ? [NSArray new] : peppermintContactWithChatEntryArray;
+    filterText = [filterText trimmedText];
+    if(peppermintContactWithChatEntryArray.count > 0 && filterText.length > 0) {
+        NSPredicate *namePredicate = [NSPredicate predicateWithFormat:@"peppermintContact.nameSurname CONTAINS[cd] %@", filterText];
+        NSPredicate *mailPredicate = [NSPredicate predicateWithFormat:@"peppermintContact.communicationChannelAddress CONTAINS[cd] %@", filterText];
+        NSPredicate *subjectPredicate = [NSPredicate predicateWithFormat:@"peppermintChatEntry.subject CONTAINS[cd] %@", filterText];
+        NSPredicate *contentPredicate = [NSPredicate predicateWithFormat:@"peppermintChatEntry.mailContent CONTAINS[cd] %@", filterText];
+        
+        NSPredicate *predicate =
+        [NSCompoundPredicate orPredicateWithSubpredicates: [NSArray arrayWithObjects:
+                                                            namePredicate,
+                                                            mailPredicate,
+                                                            subjectPredicate,
+                                                            contentPredicate,
+                                                            nil]];
+        resultArray = [peppermintContactWithChatEntryArray filteredArrayUsingPredicate:predicate];
+    }
+    
+    //Sort Descending
+    resultArray = [resultArray sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        PeppermintContactWithChatEntry *first = (PeppermintContactWithChatEntry*)a;
+        PeppermintContactWithChatEntry *second = (PeppermintContactWithChatEntry*)b;
+         
+        NSDate *firstMaxDate = [NSDate maxOfDate1:first.peppermintContact.lastPeppermintContactDate
+                                             date2:first.peppermintContact.lastMailClientContactDate];
+        NSDate *secondMaxDate = [NSDate maxOfDate1:second.peppermintContact.lastPeppermintContactDate
+                                              date2:second.peppermintContact.lastMailClientContactDate];
+        return [secondMaxDate compare:firstMaxDate];
+    }];
+    
+    return resultArray;
 }
 
 @end

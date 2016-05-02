@@ -116,11 +116,7 @@
     NSArray *matchingCustomContacts = [repository getResultsFromEntity:[CustomContact class] predicateOrNil:communicationPredicate];
     
     for(CustomContact *matchedCustomContact in matchingCustomContacts) {
-        PeppermintContact *peppermintContact = [PeppermintContact new];
-        peppermintContact.avatarImage = [UIImage imageWithData:matchedCustomContact.avatarImageData];
-        peppermintContact.nameSurname = matchedCustomContact.nameSurname;
-        peppermintContact.communicationChannel = matchedCustomContact.communicationChannel.intValue;
-        peppermintContact.communicationChannelAddress = matchedCustomContact.communicationChannelAddress;
+        PeppermintContact *peppermintContact = [[PeppermintContact alloc] initWithContact:matchedCustomContact];
         peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%lu",
                                              CONTACT_CUSTOM, matchedCustomContact.identifier.hash];
         [peppermintContactArray addObject:peppermintContact];

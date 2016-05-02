@@ -31,7 +31,7 @@
 }
 
 -(void) sendInterAppMessageIsCompletedWithError:(NSError*)error {
-    NSLog(@"InterApp Message error: %@", error);
+    NSLog(@"InterApp Message error, trying to send email");
 }
 
 -(void) sendInterAppMessageWasUnauthorised {

@@ -165,6 +165,9 @@
 @property (assign, nonatomic) BOOL isSent;
 @property (strong, nonatomic) NSDate *dateReceived;
 @property (assign, nonatomic) BOOL isSeen;
+@property (assign, nonatomic) BOOL isRepliedAnswered;
+@property (assign, nonatomic) BOOL isStarredFlagged;
+@property (assign, nonatomic) BOOL isForwarded;
 @end
 
 @interface UnauthorizedResponse : BaseEvent

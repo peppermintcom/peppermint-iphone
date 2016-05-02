@@ -22,10 +22,13 @@
 		B10C39311BF6FB150070B49F /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = B10C39301BF6FB150070B49F /* User.m */; };
 		B10C39341BF6FC840070B49F /* AccountResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B10C39331BF6FC840070B49F /* AccountResponse.m */; };
 		B10C39371BF718960070B49F /* AccountModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B10C39361BF718960070B49F /* AccountModel.m */; };
+		B1104D201CD4697D002BA01B /* PeppermintContactWithChatEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = B1104D1F1CD4697D002BA01B /* PeppermintContactWithChatEntry.m */; };
 		B116F3B11C008E570091994C /* FastReplyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B116F3B01C008E570091994C /* FastReplyModel.m */; };
 		B11B13541C0C5EAD00782FC4 /* ContactInformationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B11B13531C0C5EAD00782FC4 /* ContactInformationTableViewCell.m */; };
 		B11B13561C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B11B13551C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib */; };
 		B11BA7F21CD35167005D02E0 /* BaseReSideMenuContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B11BA7F11CD35167005D02E0 /* BaseReSideMenuContentViewController.m */; };
+		B11BA7FB1CD3FD55005D02E0 /* MailContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B11BA7FA1CD3FD55005D02E0 /* MailContactTableViewCell.m */; };
+		B11BA7FD1CD3FD66005D02E0 /* MailContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B11BA7FC1CD3FD66005D02E0 /* MailContactTableViewCell.xib */; };
 		B11EF4A41CC95CE70020EA7B /* SparkPostOption.m in Sources */ = {isa = PBXBuildFile; fileRef = B11EF4A31CC95CE70020EA7B /* SparkPostOption.m */; };
 		B11F8A5C1BDCC45F000E79AA /* FinalizeUploadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5B1BDCC45F000E79AA /* FinalizeUploadRequest.m */; };
 		B11F8A5F1BDCC474000E79AA /* FinalizeUploadResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B11F8A5E1BDCC474000E79AA /* FinalizeUploadResponse.m */; };
@@ -321,6 +324,8 @@
 		B10C39331BF6FC840070B49F /* AccountResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountResponse.m; sourceTree = "<group>"; };
 		B10C39351BF718960070B49F /* AccountModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountModel.h; sourceTree = "<group>"; };
 		B10C39361BF718960070B49F /* AccountModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountModel.m; sourceTree = "<group>"; };
+		B1104D1E1CD4697D002BA01B /* PeppermintContactWithChatEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeppermintContactWithChatEntry.h; sourceTree = "<group>"; };
+		B1104D1F1CD4697D002BA01B /* PeppermintContactWithChatEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeppermintContactWithChatEntry.m; sourceTree = "<group>"; };
 		B113680F1CB67DDD0075CF58 /* PeppermintDataModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PeppermintDataModel 3.xcdatamodel"; sourceTree = "<group>"; };
 		B116F3AF1C008E570091994C /* FastReplyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastReplyModel.h; sourceTree = "<group>"; };
 		B116F3B01C008E570091994C /* FastReplyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FastReplyModel.m; sourceTree = "<group>"; };
@@ -329,6 +334,9 @@
 		B11B13551C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactInformationTableViewCell.xib; sourceTree = "<group>"; };
 		B11BA7F01CD35167005D02E0 /* BaseReSideMenuContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseReSideMenuContentViewController.h; sourceTree = "<group>"; };
 		B11BA7F11CD35167005D02E0 /* BaseReSideMenuContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseReSideMenuContentViewController.m; sourceTree = "<group>"; };
+		B11BA7F91CD3FD55005D02E0 /* MailContactTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailContactTableViewCell.h; sourceTree = "<group>"; };
+		B11BA7FA1CD3FD55005D02E0 /* MailContactTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailContactTableViewCell.m; sourceTree = "<group>"; };
+		B11BA7FC1CD3FD66005D02E0 /* MailContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MailContactTableViewCell.xib; sourceTree = "<group>"; };
 		B11E02D51C490DA900579122 /* PeppermintDataModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PeppermintDataModel 2.xcdatamodel"; sourceTree = "<group>"; };
 		B11EF4A21CC95CE70020EA7B /* SparkPostOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SparkPostOption.h; sourceTree = "<group>"; };
 		B11EF4A31CC95CE70020EA7B /* SparkPostOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SparkPostOption.m; sourceTree = "<group>"; };
@@ -894,6 +902,16 @@
 			name = MailClient;
 			sourceTree = "<group>";
 		};
+		B11BA7F81CD3FD38005D02E0 /* MailContactTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				B11BA7F91CD3FD55005D02E0 /* MailContactTableViewCell.h */,
+				B11BA7FA1CD3FD55005D02E0 /* MailContactTableViewCell.m */,
+				B11BA7FC1CD3FD66005D02E0 /* MailContactTableViewCell.xib */,
+			);
+			name = MailContactTableViewCell;
+			sourceTree = "<group>";
+		};
 		B12C03B81BCFFBDC0085A55A /* FastRecordingView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1092,6 +1110,7 @@
 		B16145E51CCE4E6000F7FE0C /* TableView */ = {
 			isa = PBXGroup;
 			children = (
+				B11BA7F81CD3FD38005D02E0 /* MailContactTableViewCell */,
 				B17B3D751BB6C8F4009B8BC5 /* BaseTableViewCell */,
 				B19877C21CCCD7010004FF67 /* Chat */,
 				B11B13511C0C5E8800782FC4 /* ContactInformationTableViewCell */,
@@ -1201,6 +1220,8 @@
 				B18BF95D1BD674CD009B665E /* PeppermintMessageSender.m */,
 				B1E5160F1C7D9A69002BD49C /* PeppermintChatEntry.h */,
 				B1E516101C7D9A69002BD49C /* PeppermintChatEntry.m */,
+				B1104D1E1CD4697D002BA01B /* PeppermintContactWithChatEntry.h */,
+				B1104D1F1CD4697D002BA01B /* PeppermintContactWithChatEntry.m */,
 			);
 			name = Entity;
 			sourceTree = "<group>";
@@ -2184,6 +2205,7 @@
 				B13B50281BF38D57009D3348 /* InformationTextTableViewCell.xib in Resources */,
 				B16145F01CCE4F1300F7FE0C /* EmailLoginCollectionViewCell.xib in Resources */,
 				B101633B1C637983008CC8D0 /* SMSChargeWarningView.xib in Resources */,
+				B11BA7FD1CD3FD66005D02E0 /* MailContactTableViewCell.xib in Resources */,
 				B1BB60171BDE0E3200C1140B /* LoginTableViewCell.xib in Resources */,
 				B17B3D3C1BB6898C009B8BC5 /* Images.xcassets in Resources */,
 				B15B15B21BDBBAB200C0C171 /* Login.storyboard in Resources */,
@@ -2305,6 +2327,7 @@
 				D0D70D421C0464800068AB20 /* UIView+Addition.m in Sources */,
 				B15FDE781C117CCE007100EC /* Contact+CoreDataProperties.m in Sources */,
 				B1B801911C3FF69B00958885 /* AboutViewController.m in Sources */,
+				B11BA7FB1CD3FD55005D02E0 /* MailContactTableViewCell.m in Sources */,
 				B17B3D781BB6C90A009B8BC5 /* BaseTableViewCell.m in Sources */,
 				B15B15BB1BDBC29A00C0C171 /* RecorderRequest.m in Sources */,
 				B16F01291C4E48350030BE65 /* ChatEntry.m in Sources */,
@@ -2381,6 +2404,7 @@
 				B165EF181BB71EC0008C6F71 /* PeppermintContact.m in Sources */,
 				B13AE4361C8420570046AF6E /* MessageGetRequest.m in Sources */,
 				B16F01281C4E48350030BE65 /* ChatEntry+CoreDataProperties.m in Sources */,
+				B1104D201CD4697D002BA01B /* PeppermintContactWithChatEntry.m in Sources */,
 				B15FDE7B1C117CCE007100EC /* CustomContact.m in Sources */,
 				B17B64BD1CC63F5E00600A55 /* SparkPostFrom.m in Sources */,
 				B1BB1E5F1BD35CD300A1CE45 /* MandrillService.m in Sources */,
@@ -2686,7 +2710,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.peppermint.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "abd2e537-6ea2-4a5c-93f2-8f0ac00dd955";
+				PROVISIONING_PROFILE = "5f9084a2-93a5-44f5-8459-15789188ba71";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

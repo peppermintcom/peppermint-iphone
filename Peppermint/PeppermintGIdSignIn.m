@@ -14,11 +14,9 @@
 
 +(GIDSignIn*) GIdSignInInstance {
     GIDSignIn *gIDSignIn = [GIDSignIn sharedInstance];
-    gIDSignIn.delegate = nil;
-    gIDSignIn.uiDelegate = nil;
-    
-    //gIDSignIn.allowsSignInWithBrowser = YES;
-    //gIDSignIn.allowsSignInWithWebView = YES;
+    //Don't set delegates, cos it must be handled in source of function call
+    //gIDSignIn.delegate = nil;
+    //gIDSignIn.uiDelegate = nil;
     
     NSMutableArray *scopesArray = [NSMutableArray new];
     [scopesArray addObject:[GoogleContactsModel scopeForGoogleContacts]];

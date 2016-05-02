@@ -39,6 +39,9 @@ typedef enum : NSUInteger {
 #pragma mark - Email Content
 @property (strong, nonatomic) NSString *subject;
 @property (strong, nonatomic) NSString *mailContent;
+@property (assign, nonatomic) BOOL isRepliedAnswered;
+@property (assign, nonatomic) BOOL isStarredFlagged;
+@property (assign, nonatomic) BOOL isForwarded;
 
 +(PeppermintChatEntry*) createFromAttribute:(Attribute*) attribute isIncomingMessage:(BOOL)isIncoming;
 -(void) setContactEmail:(NSString*)email;

@@ -48,7 +48,7 @@
     NSUInteger activeRecordingView;
     NSTimer *holdToRecordViewTimer;
     BOOL isContactsPermissionGranted;
-    NSDateFormatter *dateFormatter;
+    
     BOOL isFirstOpen;
     PeppermintContact *lastRecordedPeppermintContact;
 }
@@ -83,8 +83,6 @@
     [self.searchContactsTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     lastRecordedPeppermintContact = nil;
-    dateFormatter = [NSDateFormatter new];
-    [dateFormatter setDateFormat:@"MMM dd"];
     REGISTER();
 }
 
@@ -272,7 +270,7 @@ SUBSCRIBE(UserLoggedOut) {
     } else if (indexPath.section == SECTION_EMPTY_RESULT) {
         EmptyResultTableViewCell *cell = [CellFactory cellEmptyResultTableViewCellFromTable:tableView forIndexPath:indexPath];
         [cell setVisibiltyOfExplanationLabels:YES];
-        if(![self.recentContactsModel isSyncWithAPIProcessed]) {
+        if(![[PeppermintMessageSender sharedInstance] isSyncWithAPIProcessed]) {
             [cell showLoading];
             cell.headerLabel.text = @"";
         } else if(activeCellTag == CELL_TAG_RECENT_CONTACTS) {
@@ -350,17 +348,11 @@ SUBSCRIBE(UserLoggedOut) {
     PeppermintContact *recentContact = [self recentContactForPeppermintContact:peppermintContact];
     if(recentContact) {
         NSDate *lastMessageDate = recentContact.lastPeppermintContactDate;
-        if([lastMessageDate isToday]) {
-            cell.rightDateLabel.text = LOC(@"Today", @"Today");
-        } else if ([lastMessageDate isYesterday]) {
-            cell.rightDateLabel.text = LOC(@"Yesterday", @"Yesterday");
-        } else {
-            cell.rightDateLabel.text = [dateFormatter stringFromDate:lastMessageDate];
-        }
+        cell.rightDateLabel.text = [lastMessageDate monthDayStringWithTodayYesterday];
         
-        NSUInteger unreadMessageCount = recentContact.unreadMessageCount;
-        cell.rightMessageCounterLabel.hidden = unreadMessageCount <= 0;
-        cell.rightMessageCounterLabel.text = [NSString stringWithFormat:@"%ld",(unsigned long)unreadMessageCount];
+        NSUInteger unreadAudioMessageCount = recentContact.unreadAudioMessageCount;
+        cell.rightMessageCounterLabel.hidden = unreadAudioMessageCount <= 0;
+        cell.rightMessageCounterLabel.text = [NSString stringWithFormat:@"%ld",(unsigned long)unreadAudioMessageCount];
     }
 }
 
@@ -895,8 +887,9 @@ SUBSCRIBE(UserLoggedOut) {
 SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
     weakself_create();
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"Received RefreshIncomingMessagesCompletedWithSuccess....");
-        if(isScreenReady && event.peppermintChatEntryAllMesssagesArray.count > 0) {
+        if(isScreenReady
+           && event.peppermintChatEntryAllMesssagesArray.count > 0
+           && [[PeppermintMessageSender sharedInstance] isSyncWithAPIProcessed]) {
             [weakSelf.recentContactsModel refreshRecentContactList];
         }
     });

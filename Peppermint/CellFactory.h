@@ -20,6 +20,7 @@
 #import "ContactInformationTableViewCell.h"
 #import "ChatTableViewCell.h"
 #import "ChatTableViewMailCell.h"
+#import "MailContactTableViewCell.h"
 
 #pragma mark - CollectionViewCell
 #import "EmailLoginCollectionViewCell.h"
@@ -58,6 +59,9 @@
 
 #define CELL_HEIGHT_CHAT_TABLEVIEWMAILCELL_IDLE_MAX  300
 +(ChatTableViewMailCell*) cellChatTableViewMailCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath;
+
+#define CELL_HEIGHT_MAILCONTACT_TABLEVIEWCELL   85
++(MailContactTableViewCell*) cellMailContactTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath;
 
 #define CELL_SIZE_EMAILLOGIN_COLLECTIONVIEWCELL CGSizeMake(SCREEN_WIDTH/3.75, SCREEN_WIDTH/3.75)
 +(EmailLoginCollectionViewCell*) cellEmailLoginCollectionViewCellFromCollectionView:(UICollectionView*)collectionView forIndexPath:(NSIndexPath*)indexPath;

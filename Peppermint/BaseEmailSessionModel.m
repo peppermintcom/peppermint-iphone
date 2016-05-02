@@ -8,6 +8,10 @@
 
 #import "BaseEmailSessionModel.h"
 #import "UidManager.h"
+#import "ConnectionModel.h"
+
+#define NUMBER_OF_MESSAGES_TO_SYNC      200
+#define FIRST_SYNC                      @"First_Sync"
 
 @implementation BaseEmailSessionModel
 
@@ -50,6 +54,7 @@
         if(error) {
             [self.delegate operationFailure:error];
         } else {
+            _session = nil;
             NSLog(@"%@ session is closed.", self);
         }
     }];
@@ -79,7 +84,7 @@
     [capabilityOperation start:^(NSError * error, MCOIndexSet * capabilities) {
         if ([capabilities containsIndex:MCOIMAPCapabilityIdle]) {
             canIdle = YES;
-            [weakSelf startListeningFolder:self.folderInbox];
+            [weakSelf startListeningFolder:self.folderSent];
         } else {
             #warning "Implement Polling"
             NSLog(@"Session %@ does not support idle. Will/Should do polling.", self.session.username);
@@ -90,11 +95,11 @@
 #pragma mark - Idle Process
 
 -(void) startListeningFolder:(NSString*) folder {
-    NSNumber *lastUid = [[UidManager sharedInstance] getUidForUsername:self.session.username folder:folder];
-    if(lastUid && lastUid.intValue > 0) {
-        [self idleForInboxFromUid:lastUid];
+    NSNumber *firstSyncCompleted = [[UidManager sharedInstance] getUidForUsername:FIRST_SYNC folder:FIRST_SYNC];
+    if(firstSyncCompleted.boolValue) {
+        [self checkFolderForUpdates:folder];
     } else {
-        [self downloadLastMessagesInFolder:self.folderInbox];
+        [self downloadLastMessagesInFolder:folder];
     }
 }
 
@@ -104,11 +109,11 @@
     [folderInfo start:^(NSError *error, MCOIMAPFolderInfo *info) {
         strongSelf_create();
         if(strongSelf) {
-            int numberOfMessages = 100;
+            int numberOfMessages = NUMBER_OF_MESSAGES_TO_SYNC;
             numberOfMessages -= 1;
             MCOIndexSet *numbers = [MCOIndexSet indexSetWithRange:MCORangeMake([info messageCount] - numberOfMessages, numberOfMessages)];
             MCOIMAPFetchMessagesOperation *fetchOperation = [self.session fetchMessagesByNumberOperationWithFolder:folderToDownload
-                                                                                                       requestKind:MCOIMAPMessagesRequestKindHeaders | MCOIMAPMessagesRequestKindStructure | MCOIMAPMessagesRequestKindFlags
+                                                                                                       requestKind:[self kindToFetch]
                                                                                                            numbers:numbers];
             weakself_create();
             __block NSString *processingFolder = folderToDownload;
@@ -121,14 +126,15 @@
                         lastUdid = MAX(lastUdid, message.uid);
                         [weakSelf processMessage:message inFolder:folderToDownload];
                     }
-                    [[UidManager sharedInstance] save:[NSNumber numberWithInteger:lastUdid]
-                                          forUsername:self.session.username
+                    [[UidManager sharedInstance] save:[NSNumber numberWithInteger:(lastUdid)]
+                                          forUsername:weakSelf.session.username
                                                folder:processingFolder];
                     
-                    if(![processingFolder isEqualToString:self.folderSent]) {
-                        [self downloadLastMessagesInFolder:self.folderSent];
-                    } else {
-                        [self startListeningFolder:self.folderInbox];
+                    if([processingFolder isEqualToString:weakSelf.folderSent]) {
+                        [weakSelf downloadLastMessagesInFolder:weakSelf.folderInbox];
+                    } else if ([processingFolder isEqualToString:weakSelf.folderInbox]) {
+                        [[UidManager sharedInstance] save:@1 forUsername:FIRST_SYNC folder:FIRST_SYNC];
+                        [weakSelf startListeningFolder:weakSelf.folderInbox];
                     }
                 }
             }];
@@ -136,58 +142,73 @@
     }];
 }
 
--(void) idleForInboxFromUid:(NSNumber*)uid {
+-(void) idleForInbox {
     NSString *inboxFolder = self.folderInbox;
-    [[UidManager sharedInstance] save:uid forUsername:self.session.username folder:inboxFolder];
-    MCOIMAPIdleOperation * idleOperation = [self.session idleOperationWithFolder:inboxFolder lastKnownUID:abs(uid.intValue)];
+    MCOIMAPIdleOperation * idleOperation = [self.session idleOperationWithFolder:inboxFolder lastKnownUID:0];
     weakself_create();
+    NSLog(@"Starting idling for folder:%@", inboxFolder);
     [idleOperation start:^(NSError * error) {
         if (error) {
-            [weakSelf.delegate operationFailure:error];
-            NSLog(@"Restarting idle...");
-            [weakSelf idleForInboxFromUid:uid];
+            if([[ConnectionModel sharedInstance] isInternetReachable]) {
+                [weakSelf startListeningFolder:self.folderSent];
+            } else {
+                NSLog(@"Idle had error. No connection. Not restarting..");
+                [weakSelf.delegate operationFailure:error];
+            }
         } else {
-            [weakSelf readFolder:inboxFolder fromUid:uid];
+            //There is an update, refresh emails.
+            NSLog(@"Idling got message response...");
+            [weakSelf startListeningFolder:self.folderSent];
         }
     }];
 }
 
-/*
--(void) checkFolderForUnreadMessages:(NSString*)folder {
-    weakself_create();
-    MCOIMAPFolderInfoOperation *folderInfoOperation = [self.session folderInfoOperation:folder];
-    [folderInfoOperation start:^(NSError *error, MCOIMAPFolderInfo *info) {
-        if(error) {
-            [weakSelf.delegate operationFailure:error];
-        } else {
-            [weakSelf readFolder:folder fromUid:[NSNumber numberWithInt:info.uidNext]];
-        }
-    }];
-}*/
+-(MCOIMAPMessagesRequestKind) kindToFetch {
+    MCOIMAPMessagesRequestKind kind =
+    MCOIMAPMessagesRequestKindUid
+    | MCOIMAPMessagesRequestKindFlags;
+    return  kind;
+}
 
--(void) readFolder:(NSString*)folder fromUid:(NSNumber*) uid {
+-(void) checkFolderForUpdates:(NSString*)folder {
     weakself_create();
-    MCOIndexSet *uids = [MCOIndexSet indexSetWithRange:MCORangeMake(uid.integerValue-1, UINT64_MAX)];
+    NSNumber *lastUid = [[UidManager sharedInstance] getUidForUsername:self.session.username folder:folder];
+    MCORange range = MCORangeMake(lastUid.integerValue - 10, NUMBER_OF_MESSAGES_TO_SYNC);
+    MCOIndexSet *uids = [MCOIndexSet indexSetWithRange:range];
+    NSLog(@"checkFolderForUpdates:%@ -> lastUid:%@, uids to Query:%@", folder, lastUid, uids);
+    
     MCOIMAPFetchMessagesOperation *fetchMessagesOperation = [self.session fetchMessagesOperationWithFolder:folder
-                                                                       requestKind:MCOIMAPMessagesRequestKindHeaders | MCOIMAPMessagesRequestKindStructure | MCOIMAPMessagesRequestKindFlags
+                                                                       requestKind:[self kindToFetch]
                                                                               uids:uids];
     [fetchMessagesOperation start:^(NSError * error, NSArray * messages, MCOIndexSet * vanishedMessages) {
         if(error) {
             [weakSelf.delegate operationFailure:error];
         } else {
-            NSUInteger nextQueryUid = uid.integerValue;
-            for(MCOIMAPMessage *message in messages) {
-                [weakSelf processMessage:message inFolder:folder];
-                nextQueryUid = MAX(nextQueryUid, message.uid);
+            BOOL hasNewMessage = messages.count > 0;
+            if(hasNewMessage) {
+                NSUInteger nextQueryUid = 0;
+                for(MCOIMAPMessage *message in messages) {
+                    [weakSelf processMessage:message inFolder:folder];
+                    nextQueryUid = message.uid;
+                }
+                
+                [[UidManager sharedInstance] save:[NSNumber numberWithInteger:(nextQueryUid)]
+                                      forUsername:self.session.username
+                                           folder:folder];
             }
-            [weakSelf idleForInboxFromUid:[NSNumber numberWithInteger:nextQueryUid]];
+            
+            if([folder isEqualToString:weakSelf.folderSent]) {
+                [weakSelf checkFolderForUpdates:weakSelf.folderInbox];
+            } else if ([folder isEqualToString:weakSelf.folderInbox]) {
+                [weakSelf idleForInbox];
+            }
         }
     }];
 }
 
--(void) processMessage:(MCOIMAPMessage*)message inFolder:(NSString*) folder {
-    
-    MCOIMAPFetchContentOperation *fetchContentOperation = [self.session fetchMessageOperationWithFolder:folder uid:message.uid];
+-(void) processMessage:(MCOIMAPMessage*)imapMessage inFolder:(NSString*) folder {
+    NSLog(@"Processing %@ - uid:%d", folder, imapMessage.uid);
+    MCOIMAPFetchContentOperation *fetchContentOperation = [self.session fetchMessageOperationWithFolder:folder uid:imapMessage.uid];
     weakself_create();
     [fetchContentOperation start:^(NSError *error, NSData *data) {
         MCOMessageParser *messageParser = [[MCOMessageParser alloc] initWithData:data];
@@ -196,13 +217,18 @@
         
         NewEmailMessageReceived *newEmailMessageReceived = [NewEmailMessageReceived new];
         newEmailMessageReceived.sender = weakSelf;
-        newEmailMessageReceived.uid = [NSNumber numberWithInt:message.uid];
-        newEmailMessageReceived.subject = message.header.subject;
+        newEmailMessageReceived.uid = [NSNumber numberWithInt:imapMessage.uid];
+        newEmailMessageReceived.subject = messageParser.header.partialExtractedSubject;
         newEmailMessageReceived.message = processedMessage;
-        newEmailMessageReceived.dateReceived = message.header.receivedDate;
+        newEmailMessageReceived.dateReceived = messageParser.header.receivedDate;
+        
+        newEmailMessageReceived.isRepliedAnswered = (imapMessage.flags & MCOMessageFlagAnswered);
+        newEmailMessageReceived.isStarredFlagged = (imapMessage.flags & MCOMessageFlagFlagged);
+        newEmailMessageReceived.isForwarded = (imapMessage.flags & MCOMessageFlagForwarded);
+        
         newEmailMessageReceived.isSent = [folder isEqualToString:self.folderSent];
         if(newEmailMessageReceived.isSent) {
-            MCOAddress *toAddress = message.header.to.firstObject;
+            MCOAddress *toAddress = messageParser.header.to.firstObject;
             if(!toAddress) {
                 NSLog(@"'To' address can not be empty in an email message! Please check the logic here.");
             } else {
@@ -211,17 +237,21 @@
                 newEmailMessageReceived.isSeen = YES;
             }
         } else {
-            newEmailMessageReceived.contactEmail = message.header.from.mailbox;
-            newEmailMessageReceived.contactNameSurname = message.header.from.displayName;
-            newEmailMessageReceived.isSeen = (message.flags & MCOMessageFlagSeen);
+            newEmailMessageReceived.contactEmail = messageParser.header.from.mailbox;
+            newEmailMessageReceived.contactNameSurname = messageParser.header.from.displayName;
+            newEmailMessageReceived.isSeen = (imapMessage.flags & MCOMessageFlagSeen);
         }
         
-        if(newEmailMessageReceived.contactEmail && newEmailMessageReceived.subject && newEmailMessageReceived.message) {
+        if(newEmailMessageReceived.contactEmail.length > 0
+           && newEmailMessageReceived.subject.length > 0
+           && newEmailMessageReceived.message.length > 0) {
             PUBLISH(newEmailMessageReceived);
         } else {
-            NSLog(@"New Email fields are not supplied.");
+            NSLog(@"Can't save email\nContact address:%@\nSubject:%@\nContent:%@\nAll fields must be set to save!\n",
+                  newEmailMessageReceived.contactEmail,
+                  newEmailMessageReceived.subject,
+                  newEmailMessageReceived.message);
         }
-        
 
         /*
 #ifdef DEBUG
@@ -278,16 +308,17 @@
 
 -(NSString*) trimEmailQuoteFromMessage:(NSString*) messageText {
     NSArray *textToSplitArray = [NSArray arrayWithObjects:
-                                @"---------- Forwarded message ----------",
-                                @"--",
-                                @"> ",
-                                @"On Monday,",     //On Monday, March...
-                                @"On Tuesday,",    //On Tuesday, March...
-                                @"On Wednesday,",  //On Wednesday, March...
-                                @"On Thursday,",   //On Thursday, March...
-                                @"On Friday,",     //On Friday, March...
-                                @"On Saturday,",   //On Saturday, March...
-                                @"On Sunday,",     //On Sunday, March...
+                                 @"---------- Forwarded message ----------",
+                                 @"Begin forwarded message",
+                                 @"--",
+                                 @"> ",
+                                 @"On Monday,",     //On Monday, March...
+                                 @"On Tuesday,",    //On Tuesday, March...
+                                 @"On Wednesday,",  //On Wednesday, March...
+                                 @"On Thursday,",   //On Thursday, March...
+                                 @"On Friday,",     //On Friday, March...
+                                 @"On Saturday,",   //On Saturday, March...
+                                 @"On Sunday,",     //On Sunday, March...
                                  @"On Mon,",     //On Monday, March...
                                  @"On Tue,",    //On Tuesday, March...
                                  @"On Wed,",  //On Wednesday, March...
@@ -295,15 +326,25 @@
                                  @"On Fri,",     //On Friday, March...
                                  @"On Sat,",   //On Saturday, March...
                                  @"On Sun,",     //On Sunday, March...
-                                @"From:",
-                                @"To:",
-                                nil];
+                                 @"On 1",
+                                 @"On 2",
+                                 @"On 3",
+                                 @"On 4",
+                                 @"On 5",
+                                 @"On 6",
+                                 @"On 7",
+                                 @"On 8",
+                                 @"On 9",
+                                 @"On 0",
+                                 @"From:",
+                                 @"To:",
+                                 nil];
     
     for(NSString *textToSplit in textToSplitArray) {
         messageText = [messageText componentsSeparatedByString:textToSplit].firstObject;
     }
     
-    messageText = [messageText stringByReplacingOccurrencesOfString:@"\n\n" withString:@"\n"];
+    messageText = [messageText trimMultipleNewLines];
     messageText = [messageText trimmedText];
     
     return messageText;

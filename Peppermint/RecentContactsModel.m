@@ -128,10 +128,10 @@
             receivedMessagesEmailSet = [ChatEntryModel receivedMessagesEmailSet];
             for(RecentContact *recentContact in recentContactsArray) {
                 PeppermintContact * ppm_contact = [strongSelf peppermintContactWithRecentContact:recentContact];
-                NSArray *unreadMessages = [repository getResultsFromEntity:[ChatEntry class]
+                NSArray *unreadAudioMessages = [repository getResultsFromEntity:[ChatEntry class]
                                                             predicateOrNil:
-                                           [ChatEntryModel unreadMessagesPredicateForEmail:ppm_contact.communicationChannelAddress]];
-                ppm_contact.unreadMessageCount = unreadMessages.count;
+                                           [ChatEntryModel unreadAudioMessagesPredicateForEmail:ppm_contact.communicationChannelAddress]];
+                ppm_contact.unreadAudioMessageCount = unreadAudioMessages.count;
                 
                 [recentPeppermintContacts addObject:ppm_contact];
 #if (TARGET_OS_WATCH)
@@ -166,21 +166,11 @@
 }
 
 - (PeppermintContact*) peppermintContactWithRecentContact:(RecentContact*) recentContact {
-    PeppermintContact *peppermintContact = [PeppermintContact new];
-    peppermintContact.avatarImage = [UIImage imageWithData:recentContact.avatarImageData];
-    peppermintContact.nameSurname = recentContact.nameSurname;
-    peppermintContact.communicationChannelAddress = recentContact.communicationChannelAddress;
-    peppermintContact.communicationChannel = !recentContact.communicationChannel ? -1 : recentContact.communicationChannel.intValue;
+    PeppermintContact *peppermintContact = [[PeppermintContact alloc] initWithContact:recentContact];
     peppermintContact.hasReceivedMessageOverPeppermint = [receivedMessagesEmailSet containsObject:peppermintContact.communicationChannelAddress];
     peppermintContact.lastMailClientContactDate = recentContact.mailClientContactDate;
     peppermintContact.lastPeppermintContactDate = recentContact.peppermintContactDate;
     return peppermintContact;
-}
-
--(BOOL) isSyncWithAPIProcessed {
-    NSNumber *currentQuickSyncLevel = defaults_object(DEFAULTS_KEY_QUICK_SYNC_LEVEL);
-#warning "Update the below number (current value is 7) according to the levels in PeppermintMessageSender"
-    return currentQuickSyncLevel.intValue > 7;
 }
 
 #pragma mark - Contact List Functions

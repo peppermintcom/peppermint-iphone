@@ -8,10 +8,12 @@
 
 #import "BaseModel.h"
 #import "PeppermintChatEntry.h"
+#import "PeppermintContactWithChatEntry.h"
 
 @protocol ChatEntryModelDelegate <BaseModelDelegate>
 -(void) peppermintChatEntriesArrayIsUpdated;
 -(void) peppermintChatEntrySavedWithSuccess:(NSArray*) savedPeppermintChatEnryArray;
+-(void) lastMessagesAreUpdated:(NSArray<PeppermintContactWithChatEntry*>*) peppermintContactWithChatEntryArray;
 @end
 
 @interface ChatEntryModel : BaseModel
@@ -26,9 +28,11 @@
 -(void) makeSyncRequestForMessages;
 -(void) updateChatEntryWithAudio:(NSData*)audio toAudioUrl:(NSString*)audioUrl;
 -(void) markAllPreviousMessagesAsRead:(PeppermintChatEntry*)peppermintChatEntry;
+-(void) getLastMessagesForPeppermintContacts:(NSArray<PeppermintContact*>*)peppermintContactArray;
+-(NSArray<PeppermintContactWithChatEntry*>*) filter:(NSArray<PeppermintContactWithChatEntry*>*)peppermintContactWithChatEntryArray withFilter:(NSString*) filterText;
 
 #pragma mark - Chat Helper Functions
-+(NSPredicate*) unreadMessagesPredicateForEmail:(NSString*) email;
++(NSPredicate*) unreadAudioMessagesPredicateForEmail:(NSString*) email;
 -(NSUInteger) unreadMessageCountOfAllChats;
 +(NSSet*) receivedMessagesEmailSet;
 

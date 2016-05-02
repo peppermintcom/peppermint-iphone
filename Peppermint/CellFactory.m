@@ -135,6 +135,17 @@
     return cell;
 }
 
++(MailContactTableViewCell*) cellMailContactTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath {
+    NSString *cellKey = @"MailContactTableViewCell";
+    MailContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellKey];
+    if(!cell) {
+        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:cellKey owner:self options:nil];
+        cell = [topLevelObjects objectAtIndex:0];
+    }
+    cell.indexPath = indexPath;
+    return cell;
+}
+
 #pragma mark - CollectionViewCell
 
 +(EmailLoginCollectionViewCell*) cellEmailLoginCollectionViewCellFromCollectionView:(UICollectionView*)collectionView forIndexPath:(NSIndexPath*)indexPath {

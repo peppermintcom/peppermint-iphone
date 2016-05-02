@@ -22,4 +22,5 @@
 +(CGFloat) widthOfText:(NSString*)text withSize:(NSUInteger)size andHeight:(CGFloat) height;
 -(NSString*) limitToFitInWidth:(CGFloat)width height:(CGFloat)height andFonttSize:(NSUInteger)size;
 -(NSString*) normalizeText;
+-(NSString*) trimMultipleNewLines;
 @end

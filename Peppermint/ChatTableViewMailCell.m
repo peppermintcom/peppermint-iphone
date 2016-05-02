@@ -25,7 +25,8 @@
 - (void) fillInformation:(PeppermintChatEntry*) chatEntry {
     _peppermintChatEntry = chatEntry;
     self.subjectLabel.text = chatEntry.subject;
-    self.mailContentLabel.text = chatEntry.mailContent;
+    self.mailContentLabel.text = chatEntry.mailContent.length > 0 ? chatEntry.mailContent : @" ";
+    
     chatEntry.isSeen = YES;
     [self.chatEntryModel savePeppermintChatEntry:chatEntry];
 }

@@ -43,4 +43,18 @@
     return laterDate;
 }
 
+-(NSString*) monthDayStringWithTodayYesterday {
+    NSString *resultText;
+    if([self isToday]) {
+        resultText = LOC(@"Today", @"Today");
+    } else if ([self isYesterday]) {
+        resultText = LOC(@"Yesterday", @"Yesterday");
+    } else {
+        NSDateFormatter *dateFormatter = [NSDateFormatter new];
+        [dateFormatter setDateFormat:@"MMM dd"];
+        resultText = [dateFormatter stringFromDate:self];
+    }
+    return resultText;
+}
+
 @end

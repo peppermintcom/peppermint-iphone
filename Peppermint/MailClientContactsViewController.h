@@ -8,9 +8,12 @@
 
 #import "BaseReSideMenuContentViewController.h"
 #import "RecentContactsModel.h"
+#import "ChatEntryModel.h"
 
-@interface MailClientContactsViewController : BaseReSideMenuContentViewController <UITableViewDelegate, UITableViewDataSource, RecentContactsModelDelegate>
+@interface MailClientContactsViewController : BaseReSideMenuContentViewController <UITableViewDelegate, UITableViewDataSource, RecentContactsModelDelegate, ChatEntryModelDelegate, UITextFieldDelegate>
 @property (strong, nonatomic) RecentContactsModel *recentContactsModel;
+@property (strong, nonatomic) ChatEntryModel *chatEntryModel;
+@property (strong, nonatomic) NSArray<PeppermintContactWithChatEntry*> *peppermintContactWithChatEntryArray;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *searchContactsTextField;

@@ -242,13 +242,16 @@
         case 7:
             defaultLastMessageSyncDate = [NSDate dateWithTimeIntervalSinceNow:- (24 * DAY)];
             break;
-        case 8:
-            defaultLastMessageSyncDate = [NSDate dateWithTimeIntervalSince1970:0];
-            break;
         default:
             break;
     }
     return defaultLastMessageSyncDate;
+}
+
+-(BOOL) isSyncWithAPIProcessed {
+    NSNumber *currentQuickSyncLevel = defaults_object(DEFAULTS_KEY_QUICK_SYNC_LEVEL);
+#warning "Update the below number (current value is 7) according to the levels in PeppermintMessageSender"
+    return currentQuickSyncLevel.intValue > 8;
 }
 
 -(void) clearSender {

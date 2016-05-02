@@ -49,15 +49,13 @@
 }
 
 -(void) tryGoogleSilentSignIn {
-    
     GIDSignIn *gIDSignIn = [PeppermintGIdSignIn GIdSignInInstance];
-    gIDSignIn.delegate = self;
     BOOL hasAuth = gIDSignIn.hasAuthInKeychain;
     if(hasAuth) {
+        gIDSignIn.delegate = self;
         [gIDSignIn signInSilently];
     } else {
-        NSLog(@"Houston, we have a problem???");
-        [gIDSignIn signInSilently];
+        NSLog(@"Account is not signed in yet.");
     }
 }
 
