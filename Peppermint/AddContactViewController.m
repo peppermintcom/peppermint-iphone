@@ -36,6 +36,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *emailWarningLabel;
 @property (weak, nonatomic) IBOutlet UILabel *phoneNumberWarningLabel;
 
+@property (strong, nonnull) NSString *originalInitText;
+
 @end
 
 @implementation AddContactViewController {
@@ -61,6 +63,7 @@
         AddContactViewController *addContactViewController = (AddContactViewController*)nvc.viewControllers.firstObject;
         addContactViewController.delegate = delegate;
         
+        addContactViewController.originalInitText = text;
         NSArray *suppliedWordsArray = [text.trimmedText componentsSeparatedByString:@" "];
         NSMutableArray *nameComponents = [NSMutableArray new];
         for(NSString* suppliedWord in suppliedWordsArray) {
@@ -188,12 +191,17 @@
   [self.countryCodeTextField becomeFirstResponder];
 }
 
-- (IBAction)cancelPressed:(id)sender {
+-(void) closeViewController {
     [self.firstNameTextField resignFirstResponder];
     [self.lastNameTextField resignFirstResponder];
     [self.phoneNumberTextField resignFirstResponder];
     [self.emailTextField resignFirstResponder];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)cancelPressed:(id)sender {
+    [self.delegate nameFieldUpdated:self.originalInitText];
+    [self closeViewController];
 }
 
 - (IBAction)saveContactBarButtonItemPressed:(id)sender {
@@ -438,7 +446,7 @@
     NSLog(@"%@ for %d is saved successFully", peppermintContact.nameSurname, (int)peppermintContact.communicationChannel );
     if(--activeServiceCall == 0) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [self cancelPressed:nil];
+        [self closeViewController];
     }
 }
 
