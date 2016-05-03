@@ -35,6 +35,7 @@
     [self.supportEmailLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(supportEmailLabelPressed)]];
     
     self.tableView.rowHeight = CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
+    self.tableView.bounces = NO;
     
     self.feedBackModel = [FeedBackModel new];
     self.feedBackModel.delegate = self;

@@ -46,6 +46,7 @@ int OPTION_LOG_OUT              = 0;
     [super viewDidLoad];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.tableView.bounces = NO;
     
     self.iconCloseImageView.image = [UIImage imageNamed:@"icon_back"];
     
