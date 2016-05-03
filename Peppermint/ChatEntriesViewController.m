@@ -470,7 +470,7 @@
 
 -(void) playMessageInCell:(ChatTableViewCell *)chatTableViewCell gotError:(NSError *)error {
     isPlaying = NO;
-    NSLog(@"Error in playing, %@", error);
+    [AppDelegate handleError:error];
 }
 
 #pragma mark - Refresh Content

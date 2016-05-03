@@ -816,6 +816,14 @@ SUBSCRIBE(DetachSuccess) {
         message = LOC(@"Microphone is in use", @"message");
     } else if ([error.domain isEqualToString:DOMAIN_MANDRILL]) {
         message = LOC(@"Mandrill message can not be delivered", @"Mandrill message can not be delivered");
+    } else if ([error.domain isEqualToString:NSCocoaErrorDomain]) {
+        switch (error.code) {
+            case NSFileReadUnknownError:
+                message = LOC(@"Audio message could not be played. Please check your connection and try again.", @"message");
+                break;
+            default:
+                break;
+        }
     }
     return message;
 }

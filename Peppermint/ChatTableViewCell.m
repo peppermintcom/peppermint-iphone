@@ -187,7 +187,13 @@
                         if(!error) {
                             weakSelf.peppermintChatEntry.audio = audioData;
                         } else {
-                            [weakSelf.delegate playMessageInCell:weakSelf gotError:error];
+                            _playingModel = nil;
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                weakSelf.spinnerView.hidden = YES;
+                                weakSelf.playPauseImageView.hidden = NO;
+                                [weakSelf.delegate stoppedPlayingMessage:weakSelf];
+                                [weakSelf.delegate playMessageInCell:weakSelf gotError:error];
+                            });
                             return;
                         }
                     }
@@ -243,7 +249,9 @@
 }
 
 -(void) updateDuration {
-    if(_playingModel && !isSeeking) {
+    if(!_playingModel) {
+        self.durationCircleView.hidden = YES;
+    } else if(_playingModel && !isSeeking) {
         double percent = _playingModel.audioPlayer.currentTime / _playingModel.audioPlayer.duration;
         self.durationCircleView.hidden = (percent < 0.00001);
         self.playPauseImageView.image = _playingModel.audioPlayer.isPlaying ? imagePause : imagePlay;
