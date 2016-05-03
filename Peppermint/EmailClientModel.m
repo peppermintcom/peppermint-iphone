@@ -42,7 +42,7 @@
     for(BaseEmailSessionModel *baseEmailSessionModel in self.emailSessionsArray) {
         [baseEmailSessionModel stopSession];
     }
-    #warning Check for a possible memory leak if the session has errro on stop. Will it be released?
+    #warning Check for a possible memory leak if the session has error on stop. Will it be released?
     [self.emailSessionsArray removeAllObjects];
 }
 
@@ -51,58 +51,43 @@
     
     //Start Logged in Gmail Account
     GmailEmailSessionModel *gmailEmailSessionModel = [GmailEmailSessionModel new];
+    gmailEmailSessionModel.delegate = self;
     [self.emailSessionsArray addObject:gmailEmailSessionModel];
     [gmailEmailSessionModel initSession];
 }
 
-#pragma mark - Process Messages
+#pragma mark - BaseEmailSessionModelDelegate
 
-SUBSCRIBE(NewEmailMessageReceived) {
+-(void) receivedMessage:(PeppermintChatEntry*) peppermintChatEntry {
     BOOL isUserStillLoggedIn = [[PeppermintMessageSender sharedInstance] isUserStillLoggedIn];
     if(!isUserStillLoggedIn) {
         NSLog(@" User has logged out during an existing service call. Ignoring the response from server.");
         [self stopExistingSessions];
-    } else if([self.emailSessionsArray containsObject:event.sender]) {
+    } else {
         [bufferArrayTimer invalidate];
         bufferArrayTimer = nil;
         
-        PeppermintContact *peppermintContact = [[ContactsModel sharedInstance] matchingPeppermintContactForEmail:event.contactEmail
-                                                                                                     nameSurname:event.contactNameSurname];
+        PeppermintContact *peppermintContact = [[ContactsModel sharedInstance]
+                                                matchingPeppermintContactForEmail:peppermintChatEntry.contactEmail
+                                                nameSurname:peppermintChatEntry.contactNameSurname];
         
         if(chatEntryModel && recentContactsModel) {
-            PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry new];
-            peppermintChatEntry.audio = nil;
-            peppermintChatEntry.audioUrl = nil;
-            peppermintChatEntry.duration = 0;
-            peppermintChatEntry.dateCreated = event.dateReceived;
-            peppermintChatEntry.contactEmail = event.contactEmail;
-            peppermintChatEntry.contactNameSurname = event.contactNameSurname;
-            peppermintChatEntry.messageId = event.uid.stringValue;
-            peppermintChatEntry.subject = event.subject;
-            peppermintChatEntry.mailContent = event.message;
-            peppermintChatEntry.isSentByMe = event.isSent;
-            peppermintChatEntry.isSeen = event.isSeen;
-            peppermintChatEntry.isRepliedAnswered = event.isRepliedAnswered;
-            peppermintChatEntry.isStarredFlagged = event.isStarredFlagged;
-            peppermintChatEntry.isForwarded = event.isForwarded;
             [mailClientMessageBufferArray addObject:peppermintChatEntry];
-            
-            peppermintContact.lastMailClientContactDate = event.dateReceived;
+            peppermintContact.lastMailClientContactDate = peppermintChatEntry.dateCreated;
             [recentContactsBufferSet addOrUpdateObject:peppermintContact];
             
             if(mailClientMessageBufferArray.count >= MAIL_SAVE_BUFFER_LIMIT) {
                 [self bufferArrayTimerTriggered];
             } else {
                 bufferArrayTimer = [NSTimer scheduledTimerWithTimeInterval:MAIL_SAVE_LATENCY
-                                                                        target:self
-                                                                      selector:@selector(bufferArrayTimerTriggered)
-                                                                      userInfo:nil
-                                                                       repeats:NO];
+                                                                    target:self
+                                                                  selector:@selector(bufferArrayTimerTriggered)
+                                                                  userInfo:nil
+                                                                   repeats:NO];
             }
         } else {
             NSLog(@"A model was not inited properly. This may cause a message not to be shown properly.");
         }
-        
     }
 }
 
@@ -113,7 +98,7 @@ SUBSCRIBE(NewEmailMessageReceived) {
     [recentContactsModel saveMultiple:recentPeppermintContactsToSave];
     
     NSArray *messagesToBeSaved = [NSArray arrayWithArray:mailClientMessageBufferArray];
-    NSLog(@"%ld mail messages are triggered to be saved!", messagesToBeSaved.count);
+    NSLog(@"%ld mail messages are triggered to be saved!", (unsigned long)messagesToBeSaved.count);
     [chatEntryModel savePeppermintChatEntryArray:messagesToBeSaved];
     
     recentContactsBufferSet = [NSMutableSet new];
