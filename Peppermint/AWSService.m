@@ -514,12 +514,11 @@
     }];
 }
 
--(void) getMessagesForAccountId:(NSString*) accountId jwt:(NSString*)jwt nextUrl:(NSString*)url since:(NSDate*)sinceDate recipient:(BOOL)isForRecipient  {
-    
-    NSLog(@"Querying for %@ from %@", (isForRecipient ? @"Recipient" : @"Sender"), sinceDate );
-    
+-(void) getMessagesForAccountId:(NSString*) accountId jwt:(NSString*)jwt nextUrl:(NSString*)url order:(NSString*)orderText sinceDate:(NSDate*)sinceDate untilDate:(NSDate*)untilDate recipient:(BOOL)isForRecipient  {
+
     NSDictionary *parameterDictionary = [NSDictionary new];
     if(!url) {
+        NSLog(@"Querying for %@ from %@ - %@", (isForRecipient ? @"Recipient" : @"Sender"), sinceDate, untilDate);
         url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_MESSAGES];
         MessageGetRequest *messageGetRequest = [MessageGetRequest new];
         if(isForRecipient) {
@@ -527,8 +526,12 @@
         } else {
             messageGetRequest.sender = accountId;
         }
+        messageGetRequest.order = orderText;
         [messageGetRequest setSinceDate:sinceDate];
+        [messageGetRequest setUntilDate:untilDate];
         parameterDictionary = [messageGetRequest toDictionary];
+    } else {
+        NSLog(@"Making a next qury.");
     }
     
     NSString *tokenText = [self toketTextForJwt:jwt];
@@ -553,6 +556,7 @@
             getMessagesAreSuccessful.existsMoreMessages = (messageGetResponse.links.next != nil);
             getMessagesAreSuccessful.nextUrl = messageGetResponse.links.next;
             getMessagesAreSuccessful.isForRecipient = isForRecipient;
+            NSLog(@"Received %d messages from API", messageGetResponse.data.count);
             PUBLISH(getMessagesAreSuccessful);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

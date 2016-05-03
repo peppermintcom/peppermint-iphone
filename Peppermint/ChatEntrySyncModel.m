@@ -13,18 +13,25 @@
 #import "ContactsModel.h"
 #import "CustomContactModel.h"
 
+#define FAR_FUTURE_DATE     [NSDate dateWithTimeIntervalSinceNow: 5 * YEAR];
+#define SOME_RECENT_DATE    [NSDate dateWithTimeIntervalSinceNow: -1 * HOUR];
+
+@interface SyncDateHolder : JSONModel
+@property (strong, nonatomic) NSDate<Optional> *recipientSinceDate;
+@property (strong, nonatomic) NSDate<Optional> *recipientUntilDate;
+@property (strong, nonatomic) NSDate<Optional> *senderSinceDate;
+@property (strong, nonatomic) NSDate<Optional> *senderUntilDate;
+@end
+
+@implementation SyncDateHolder
+@end
+
 @implementation ChatEntrySyncModel {
     AWSService *awsService;
-    
     __block int activeServerQueryCount;
     __block BOOL queryForIncoming;
-    
-    NSMutableSet *mergedPeppermintChatEntrySet;
-    NSMutableArray *mergedPeppermintContacts;
-    
     __block NSString *nextUrl;
-    NSDate *_lastMessageSyncDateForRecipient;
-    NSDate *_lastMessageSyncDateForSender;
+    SyncDateHolder *syncDateHolder;
 }
 
 -(id) init {
@@ -41,16 +48,39 @@
     return self;
 }
 
+#pragma mark - SyncDateHolder
+
+-(SyncDateHolder*) syncDateHolder {
+    if(!syncDateHolder) {
+        NSString *syncDateHolderJson = defaults_object(DEFAULTS_SYNC_DATE_HOLDER);
+        NSError *error;
+        syncDateHolder = [[SyncDateHolder alloc] initWithString:syncDateHolderJson error:&error];
+        if(error) {
+            syncDateHolder = [SyncDateHolder new];
+            syncDateHolder.recipientSinceDate = nil;
+            syncDateHolder.recipientUntilDate = FAR_FUTURE_DATE;
+            syncDateHolder.senderSinceDate = nil;
+            syncDateHolder.senderUntilDate = FAR_FUTURE_DATE;
+        }
+    }
+    return syncDateHolder;
+}
+
+#pragma mark - SyncStatus
+
+-(BOOL) isSyncWithAPIProcessedOneFullCycle {
+    return !self.syncDateHolder.recipientUntilDate && !self.syncDateHolder.recipientUntilDate;
+}
+
 #pragma mark - Server Query
 
 -(BOOL) isSyncProcessActive {
-    return activeServerQueryCount > 0;
+    return activeServerQueryCount > 0
+    && [PeppermintMessageSender sharedInstance].isUserStillLoggedIn;
 }
 
 -(void) makeSyncRequestForMessages {
     queryForIncoming = NO;
-    mergedPeppermintChatEntrySet = [NSMutableSet new];
-    mergedPeppermintContacts = [NSMutableArray new];
     nextUrl = nil;
     [self queryServerForIncomingMessages];
 }
@@ -69,26 +99,23 @@
     } else {
         ++activeServerQueryCount;
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-        if(queryForIncoming) {
-            [awsService getMessagesForAccountId:peppermintMessageSender.accountId
-                                            jwt:peppermintMessageSender.exchangedJwt
-                                        nextUrl:nextUrl
-                                          since:[self lastMessageSyncDateForRecipient]
-                                      recipient:YES];
-        } else {
-            [awsService getMessagesForAccountId:peppermintMessageSender.accountId
-                                            jwt:peppermintMessageSender.exchangedJwt
-                                        nextUrl:nextUrl
-                                          since:[self lastMessageSyncDateForSender]
-                                      recipient:NO];
-        }
+        
+        NSDate *sinceDate = queryForIncoming ? syncDateHolder.recipientSinceDate : syncDateHolder.senderSinceDate;
+        NSDate *untilDate = queryForIncoming ? syncDateHolder.recipientUntilDate : syncDateHolder.senderUntilDate;
+        [awsService getMessagesForAccountId:peppermintMessageSender.accountId
+                                        jwt:peppermintMessageSender.exchangedJwt
+                                    nextUrl:nextUrl
+                                      order:ORDER_REVERSE
+                                  sinceDate:sinceDate
+                                  untilDate:untilDate
+                                  recipient:queryForIncoming];
     }
 }
 
 SUBSCRIBE(NetworkFailure) {
     if(event.sender == awsService) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        [self resetSyncDatesForCurrentLevel];
+        [self resetSyncDate];
         if([ConnectionModel sharedInstance].isInternetReachable) {
             [self makeSyncRequestForMessages];
         } else {
@@ -97,16 +124,10 @@ SUBSCRIBE(NetworkFailure) {
     }
 }
 
--(void) resetSyncDatesForCurrentLevel {
-    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
-    BOOL isSynced = [peppermintMessageSender isSyncWithAPIProcessed];
-    NSDate *recentDate = [NSDate dateWithTimeIntervalSinceNow:(-3 * HOUR)];
-    NSDate *resetDate = [peppermintMessageSender defaultLastMessageSyncDate];
-    
-    _lastMessageSyncDateForRecipient = _lastMessageSyncDateForSender = nil;
-    peppermintMessageSender.lastMessageSyncDate = isSynced ? recentDate : resetDate;
-    peppermintMessageSender.lastMessageSyncDateForSentMessages = isSynced ? recentDate : resetDate;
-    [peppermintMessageSender save];
+-(void) resetSyncDate {
+    self.syncDateHolder.recipientUntilDate = FAR_FUTURE_DATE;
+    self.syncDateHolder.senderUntilDate = FAR_FUTURE_DATE;
+    defaults_set_object(DEFAULTS_SYNC_DATE_HOLDER, [self syncDateHolder].toJSONString);
 }
 
 SUBSCRIBE(GetMessagesAreSuccessful) {
@@ -118,6 +139,7 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
         BOOL shouldProcessData = (activeServerQueryCount == 0);
         activeServerQueryCount = 0;
         if(gotNewQueryRequestWhileServiceCallWasActive) {
+            NSLog(@"gotNewQueryRequestWhileServiceCallWasActive, so calling again...");
             [self makeSyncRequestForMessages];
         } else if(shouldProcessData) {
             nextUrl = event.nextUrl;
@@ -126,96 +148,40 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
     }
 }
 
-#pragma mark - SyncDate functions
-
--(NSDate*) lastMessageSyncDateForRecipient {
-    if(!_lastMessageSyncDateForRecipient) {
-        _lastMessageSyncDateForRecipient = [PeppermintMessageSender sharedInstance].lastMessageSyncDate;
-    }
-    return _lastMessageSyncDateForRecipient;
-}
-
--(NSDate*) lastMessageSyncDateForSender {
-    if(!_lastMessageSyncDateForSender) {
-        _lastMessageSyncDateForSender = [PeppermintMessageSender sharedInstance].lastMessageSyncDateForSentMessages;
-    }
-    return _lastMessageSyncDateForSender;
-}
-
--(void) updateLastSyncDatesInPeppermintMessageSender {
-    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
-    BOOL shouldManipulateSyncDate = ![peppermintMessageSender isSyncWithAPIProcessed];
-    
-    if(shouldManipulateSyncDate) {
-        NSNumber *currentQuickSyncLevel = defaults_object(DEFAULTS_KEY_QUICK_SYNC_LEVEL);
-        NSNumber *nextQuickSyncLevel = [NSNumber numberWithInt:(currentQuickSyncLevel.intValue + 1)];
-        NSLog(@"QUICKSYNCLEVEL -> %@", nextQuickSyncLevel);
-        defaults_set_object(DEFAULTS_KEY_QUICK_SYNC_LEVEL, nextQuickSyncLevel);
-        [self resetSyncDatesForCurrentLevel];
-        [self makeSyncRequestForMessages];
-    } else {
-        PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
-        peppermintMessageSender.lastMessageSyncDate = [self lastMessageSyncDateForRecipient];
-        peppermintMessageSender.lastMessageSyncDateForSentMessages = [self lastMessageSyncDateForSender];
-        _lastMessageSyncDateForRecipient = _lastMessageSyncDateForSender = nil;
-        [peppermintMessageSender save];
-    }
-}
-
--(void) checkToUpdateLastSyncDate:(NSDate*)dateCreated isRecipient:(BOOL)isRecipient {
-    if(isRecipient) {
-        _lastMessageSyncDateForRecipient = [NSDate maxOfDate1:dateCreated date2:self.lastMessageSyncDateForRecipient];
-    } else {
-        _lastMessageSyncDateForSender = [NSDate maxOfDate1:dateCreated date2:self.lastMessageSyncDateForSender];
-    }
-}
-
-#pragma mark - Last Message Date For Recent Contact
-
--(void) updateLastMessageDateForRecentContact:(PeppermintContact*)peppermintContact {
-    if([mergedPeppermintContacts containsObject:peppermintContact]) {
-        NSUInteger index = [mergedPeppermintContacts indexOfObject:peppermintContact];
-        PeppermintContact *peppermintContactInList = [mergedPeppermintContacts objectAtIndex:index];
-        peppermintContactInList.lastPeppermintContactDate = [NSDate maxOfDate1:peppermintContactInList.lastPeppermintContactDate
-                                                                         date2:peppermintContact.lastPeppermintContactDate];
-    } else {
-        [mergedPeppermintContacts addObject:peppermintContact];
-    }
-}
-
 #pragma mark - Process Event
 
 -(void) processEvent:(GetMessagesAreSuccessful*) event {
+    NSMutableSet *mergedPeppermintChatEntrySet = [NSMutableSet new];
+    NSMutableSet *mergedPeppermintContactSet = [NSMutableSet new];
     
     CustomContactModel *customContactModel = [CustomContactModel new];
     for (Data *messageData in event.dataOfMessagesArray) {
+        //Peppermint Chat Entry
         messageData.attributes.message_id = messageData.id;
         PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry createFromAttribute:messageData.attributes isIncomingMessage:event.isForRecipient];
-        
         [mergedPeppermintChatEntrySet addObject:peppermintChatEntry];
         
-        [self checkToUpdateLastSyncDate:peppermintChatEntry.dateCreated
-                            isRecipient:event.isForRecipient];
-        
+        //Peppermint Contact
         PeppermintContact *peppermintContact = [[ContactsModel sharedInstance] matchingPeppermintContactForEmail:peppermintChatEntry.contactEmail
                                                                                     nameSurname:peppermintChatEntry.contactNameSurname];
-        
         peppermintContact.lastPeppermintContactDate = [NSDate maxOfDate1:peppermintChatEntry.dateCreated
                                                                    date2:peppermintContact.lastPeppermintContactDate];
-        [self updateLastMessageDateForRecentContact:peppermintContact];
+        [mergedPeppermintContactSet addObject:peppermintContact];
+        
+        //Custom Contact
         [customContactModel save:peppermintContact];
+        
+        //Min Until Date
+        if(event.isForRecipient) {
+            self.syncDateHolder.recipientUntilDate = [peppermintChatEntry.dateCreated earlierDate:self.syncDateHolder.recipientUntilDate];
+        } else {
+            self.syncDateHolder.senderUntilDate = [peppermintChatEntry.dateCreated earlierDate:self.syncDateHolder.senderUntilDate];
+        }
     }
     
-    if(event.existsMoreMessages) {
-        [self queryServerForIncomingMessages];
-    } else if (!event.isForRecipient) {
-        queryForIncoming = YES;
-        [self queryServerForIncomingMessages];
-    } else {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        [self.recentContactsModel saveMultiple:mergedPeppermintContacts];
-        [self.chatEntryModel savePeppermintChatEntryArray:[mergedPeppermintChatEntrySet allObjects]];
-    }
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [self.recentContactsModel saveMultiple:mergedPeppermintContactSet.allObjects];
+    [self.chatEntryModel savePeppermintChatEntryArray:[mergedPeppermintChatEntrySet allObjects]];
 }
 
 #pragma mark - BaseModelDelegate
@@ -231,8 +197,8 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
 }
 
 -(void) peppermintChatEntrySavedWithSuccess:(NSArray*) savedPeppermintChatEnryArray {
-    [self updateLastSyncDatesInPeppermintMessageSender];
     [self.delegate syncStepCompleted:savedPeppermintChatEnryArray];
+    [self updateLastSyncDatesInPeppermintMessageSender];
 }
 
 -(void) lastMessagesAreUpdated:(NSArray<PeppermintContactWithChatEntry*>*) peppermintContactWithChatEntryArray {
@@ -247,6 +213,37 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
 
 -(void) recentPeppermintContactsSavedSucessfully:(NSArray<PeppermintContact*>*) recentContactsArray {
     NSLog(@"%d recentPeppermintContactsSavedSucessfully in ChatEntrySyncModel", recentContactsArray.count);
+}
+
+#pragma mark - Next Sync Step Operations
+
+-(void) updateLastSyncDatesInPeppermintMessageSender {
+    [self checkAndMarkFullSyncCycleCompletedIfNeeded];
+    if(nextUrl) {
+        [self queryServerForIncomingMessages];
+    } else if (!queryForIncoming) {
+        queryForIncoming = YES;
+        [self queryServerForIncomingMessages];
+    } else {
+        NSLog(@"Sync cycle completed.");
+    }
+}
+
+-(void) checkAndMarkFullSyncCycleCompletedIfNeeded {
+    BOOL isFirstSyncCycleFinishedForRecipient = !nextUrl && queryForIncoming && self.syncDateHolder.recipientUntilDate;
+    
+    if(isFirstSyncCycleFinishedForRecipient) {
+        self.syncDateHolder.recipientUntilDate = nil;
+        self.syncDateHolder.recipientSinceDate = SOME_RECENT_DATE;
+    }
+    
+    BOOL isFirstSyncCycleFinishedForSender = !nextUrl && !queryForIncoming && self.syncDateHolder.senderUntilDate;
+    if(isFirstSyncCycleFinishedForSender) {
+        self.syncDateHolder.senderUntilDate = nil;
+        self.syncDateHolder.senderSinceDate = SOME_RECENT_DATE;
+    }
+    
+    defaults_set_object(DEFAULTS_SYNC_DATE_HOLDER, [self syncDateHolder].toJSONString);
 }
 
 @end

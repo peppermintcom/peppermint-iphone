@@ -14,6 +14,7 @@
 #import "AutoPlayModel.h"
 #import "PeppermintContact.h"
 #import "ProximitySensorModel.h"
+#import "ChatEntrySyncModel.h"
 
 #define BOTTOM_RESET_IME            2
 #define WAIT_FOR_SHAKE_DURATION     2
@@ -503,7 +504,10 @@ SUBSCRIBE(ApplicationWillResignActive) {
 }
 
 SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
-    for(PeppermintChatEntry *peppermintChatEntry in event.peppermintChatEntryNewMesssagesArray) {
+    NSArray *arrayToIterate =
+    [ChatEntrySyncModel new].isSyncWithAPIProcessedOneFullCycle
+    ? event.peppermintChatEntryNewMesssagesArray : event.peppermintChatEntryAllMesssagesArray;
+    for(PeppermintChatEntry *peppermintChatEntry in arrayToIterate) {
         if([peppermintChatEntry.contactEmail caseInsensitiveCompare:self.peppermintContact.communicationChannelAddress] == NSOrderedSame) {
             [self refreshContent];
             break;

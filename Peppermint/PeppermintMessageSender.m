@@ -214,46 +214,6 @@
     return loginMethodString;
 }
 
--(NSDate*) defaultLastMessageSyncDate {
-    NSDate *defaultLastMessageSyncDate = nil;
-    NSNumber *quickSyncLevel = defaults_object(DEFAULTS_KEY_QUICK_SYNC_LEVEL);
-    switch (quickSyncLevel.intValue) {
-        case 0:
-            defaultLastMessageSyncDate = [NSDate dateWithTimeIntervalSinceNow:- (1 * DAY)];
-            break;
-        case 1:
-            defaultLastMessageSyncDate = [NSDate dateWithTimeIntervalSinceNow:- (3 * DAY)];
-            break;
-        case 2:
-            defaultLastMessageSyncDate = [NSDate dateWithTimeIntervalSinceNow:- (7 * DAY)];
-            break;
-        case 3:
-            defaultLastMessageSyncDate = [NSDate dateWithTimeIntervalSinceNow:- (12 * DAY)];
-            break;
-        case 4:
-            defaultLastMessageSyncDate = [NSDate dateWithTimeIntervalSinceNow:- (15 * DAY)];
-            break;
-        case 5:
-            defaultLastMessageSyncDate = [NSDate dateWithTimeIntervalSinceNow:- (18 * DAY)];
-            break;
-        case 6:
-            defaultLastMessageSyncDate = [NSDate dateWithTimeIntervalSinceNow:- (21 * DAY)];
-            break;
-        case 7:
-            defaultLastMessageSyncDate = [NSDate dateWithTimeIntervalSinceNow:- (24 * DAY)];
-            break;
-        default:
-            break;
-    }
-    return defaultLastMessageSyncDate;
-}
-
--(BOOL) isSyncWithAPIProcessed {
-    NSNumber *currentQuickSyncLevel = defaults_object(DEFAULTS_KEY_QUICK_SYNC_LEVEL);
-#warning "Update the below number (current value is 7) according to the levels in PeppermintMessageSender"
-    return currentQuickSyncLevel.intValue > 8;
-}
-
 -(void) clearSender {
 
 #warning "Implement a better approach to clean all properties"
@@ -275,14 +235,12 @@
     self.exchangedJwt = NIL_TEXT;
     //self.gcmToken = nil; -> Do not clear GCM token, cos maybe the app will not be restarted& [recorder init] will need gcmToken
     self.isAccountSetUpWithRecorder = NO;
-    defaults_set_object(DEFAULTS_KEY_QUICK_SYNC_LEVEL, [NSNumber numberWithInt:0]);
-    self.lastMessageSyncDate = [self defaultLastMessageSyncDate];
-    self.lastMessageSyncDateForSentMessages = [self defaultLastMessageSyncDate];
     
     defaults_remove(DEFAULTS_KEY_CACHED_SENDVOCIEMESSAGE_MODEL);
     defaults_remove(DEFAULTS_KEY_DONT_SHOW_SMS_WARNING);
     defaults_remove(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH);
     defaults_remove(DEFAULTS_EMAIL_UID_HOLDER);
+    defaults_remove(DEFAULTS_SYNC_DATE_HOLDER);
     
     [[AppDelegate Instance] cleanDatabase];
     [self save];

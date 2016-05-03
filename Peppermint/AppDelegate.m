@@ -465,9 +465,8 @@ SUBSCRIBE(DetachSuccess) {
         peppermintContactToNavigate = nil;
     } else if (newMessagesArray.count > 0 && !newMessagesArray.firstObject.isSentByMe && hasFinishedFirstSync) {
         [self checkAndPlayIncomingAudioAlert];
-    }
-    
-    hasFinishedFirstSync = hasFinishedFirstSync || [[PeppermintMessageSender sharedInstance] isSyncWithAPIProcessed];
+    }    
+    hasFinishedFirstSync = hasFinishedFirstSync || [self.chatEntrySyncModel isSyncWithAPIProcessedOneFullCycle];
     
     RefreshIncomingMessagesCompletedWithSuccess *refreshIncomingMessagesCompletedWithSuccess = [RefreshIncomingMessagesCompletedWithSuccess new];
     refreshIncomingMessagesCompletedWithSuccess.sender = self;

@@ -38,16 +38,12 @@ typedef enum : NSUInteger {
 
 @property (strong, nonatomic) NSString <Optional> * exchangedJwt;
 @property (strong, nonatomic) NSString <Optional> * gcmToken;
-@property (strong, nonatomic) NSDate <Optional> *lastMessageSyncDate;
-@property (strong, nonatomic) NSDate <Optional> *lastMessageSyncDateForSentMessages;
 
 + (instancetype) sharedInstance;
 -(void) save;
 -(BOOL) isValidToUseApp;
 -(BOOL) isValidToSendMessage;
 -(NSString*) loginMethod;
--(NSDate*) defaultLastMessageSyncDate;
--(BOOL) isSyncWithAPIProcessed;
 -(void) clearSender;
 -(BOOL) isInMailVerificationProcess;
 -(void) verifyEmail;

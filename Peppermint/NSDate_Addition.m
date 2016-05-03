@@ -34,13 +34,16 @@
 }
 
 +(NSDate*) maxOfDate1:(NSDate*) date1 date2:(NSDate*) date2 {
+    if(!date1 && !date2) {
+        return nil;
+    }
     NSDate *laterDate = date1 ? date1 : date2; // nil control
     if ([date1 compare:date2] == NSOrderedDescending) {
         laterDate = date1;
     } else if ([date1 compare:date2] == NSOrderedAscending) {
         laterDate = date2;
     }
-    return [NSDate dateWithTimeIntervalSince1970:laterDate.timeIntervalSince1970];
+    return laterDate;
 }
 
 -(NSString*) monthDayStringWithTodayYesterday {

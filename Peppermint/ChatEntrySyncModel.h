@@ -21,6 +21,7 @@
 @property (strong, nonatomic) ChatEntryModel *chatEntryModel;
 
 -(BOOL) isSyncProcessActive;
+-(BOOL) isSyncWithAPIProcessedOneFullCycle;
 -(void) makeSyncRequestForMessages;
 
 @end

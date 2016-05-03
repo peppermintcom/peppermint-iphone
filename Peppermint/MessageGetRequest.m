@@ -8,23 +8,42 @@
 
 #import "MessageGetRequest.h"
 
-@implementation MessageGetRequest
+@implementation MessageGetRequest {
+    NSDateFormatter *dateFormatter;
+}
 
 -(id) init {
     self = [super init];
     if(self) {
         self.since = nil;
+        self.order = ORDER_REVERSE;
     }
     return self;
 }
 
--(void) setSinceDate:(NSDate*) sinceDate {
-    if(sinceDate) {
-        NSDateFormatter *dateFormatter = [NSDateFormatter new];
+-(NSDateFormatter*) dateFormatter {
+    if(!dateFormatter) {
+        dateFormatter = [NSDateFormatter new];
         [dateFormatter setDateFormat:DATE_TIME_FORMAT];
         NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:GMT];
         [dateFormatter setTimeZone:gmt];
-        self.since = [dateFormatter stringFromDate:sinceDate];
+    }
+    return dateFormatter;
+}
+
+-(void) setSinceDate:(NSDate*) sinceDate {
+    if(sinceDate) {
+        self.since = [self.dateFormatter stringFromDate:sinceDate];
+    } else {
+        self.since = nil;
+    }
+}
+
+-(void) setUntilDate:(NSDate*) untilDate {
+    if(untilDate) {
+        self.until = [self.dateFormatter stringFromDate:untilDate];
+    } else {
+        self.until = nil;
     }
 }
 
