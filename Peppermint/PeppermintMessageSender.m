@@ -14,7 +14,7 @@
 #import "AppDelegate.h"
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
-#import <Google/SignIn.h>
+#import "PeppermintGIdSignIn.h"
 #endif
 
 #define KEY                     @"PeppermintMessageSenderJson"
@@ -257,6 +257,9 @@
 -(void) clearSender {
 
 #warning "Implement a better approach to clean all properties"
+    if(self.loginSource == LOGINSOURCE_GOOGLE) {
+        [[PeppermintGIdSignIn GIdSignInInstance] disconnect];
+    }
     
     self.name = NIL_TEXT;
     self.surname = NIL_TEXT;

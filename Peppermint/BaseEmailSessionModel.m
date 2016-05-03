@@ -9,6 +9,7 @@
 #import "BaseEmailSessionModel.h"
 #import "UidManager.h"
 #import "ConnectionModel.h"
+#import "PeppermintMessageSender.h"
 
 #define NUMBER_OF_MESSAGES_TO_SYNC      200
 #define FIRST_SYNC                      @"First_Sync"
@@ -49,6 +50,7 @@
 #pragma mark - Stop Session
 
 -(void) stopSession {
+    [self.session cancelAllOperations];
     MCOIMAPOperation * op = [self.session disconnectOperation];
     [op start:^(NSError * error) {
         if(error) {
@@ -121,15 +123,10 @@
                 if(error) {
                     [weakSelf.delegate operationFailure:error];
                 } else {
-                    NSUInteger lastUdid = 0;
                     for (MCOIMAPMessage * message in messages) {
-                        lastUdid = MAX(lastUdid, message.uid);
                         [weakSelf processMessage:message inFolder:folderToDownload];
                     }
-                    [[UidManager sharedInstance] save:[NSNumber numberWithInteger:(lastUdid)]
-                                          forUsername:weakSelf.session.username
-                                               folder:processingFolder];
-                    
+
                     if([processingFolder isEqualToString:weakSelf.folderSent]) {
                         [weakSelf downloadLastMessagesInFolder:weakSelf.folderInbox];
                     } else if ([processingFolder isEqualToString:weakSelf.folderInbox]) {
@@ -166,7 +163,8 @@
 -(MCOIMAPMessagesRequestKind) kindToFetch {
     MCOIMAPMessagesRequestKind kind =
     MCOIMAPMessagesRequestKindUid
-    | MCOIMAPMessagesRequestKindFlags;
+    | MCOIMAPMessagesRequestKindFlags
+    | MCOIMAPMessagesRequestKindHeaders;
     return  kind;
 }
 
@@ -184,17 +182,8 @@
         if(error) {
             [weakSelf.delegate operationFailure:error];
         } else {
-            BOOL hasNewMessage = messages.count > 0;
-            if(hasNewMessage) {
-                NSUInteger nextQueryUid = 0;
-                for(MCOIMAPMessage *message in messages) {
-                    [weakSelf processMessage:message inFolder:folder];
-                    nextQueryUid = message.uid;
-                }
-                
-                [[UidManager sharedInstance] save:[NSNumber numberWithInteger:(nextQueryUid)]
-                                      forUsername:self.session.username
-                                           folder:folder];
+            for(MCOIMAPMessage *message in messages) {
+                [weakSelf processMessage:message inFolder:folder];
             }
             
             if([folder isEqualToString:weakSelf.folderSent]) {
@@ -215,42 +204,51 @@
         NSString *rawMessage = [messageParser plainTextBodyRenderingAndStripWhitespace:NO];
         NSString *processedMessage = [self trimEmailQuoteFromMessage:rawMessage];
         
-        NewEmailMessageReceived *newEmailMessageReceived = [NewEmailMessageReceived new];
-        newEmailMessageReceived.sender = weakSelf;
-        newEmailMessageReceived.uid = [NSNumber numberWithInt:imapMessage.uid];
-        newEmailMessageReceived.subject = messageParser.header.partialExtractedSubject;
-        newEmailMessageReceived.message = processedMessage;
-        newEmailMessageReceived.dateReceived = messageParser.header.receivedDate;
         
-        newEmailMessageReceived.isRepliedAnswered = (imapMessage.flags & MCOMessageFlagAnswered);
-        newEmailMessageReceived.isStarredFlagged = (imapMessage.flags & MCOMessageFlagFlagged);
-        newEmailMessageReceived.isForwarded = (imapMessage.flags & MCOMessageFlagForwarded);
+        PeppermintChatEntry *peppermintChatEntry = [PeppermintChatEntry new];
+        peppermintChatEntry.audio = nil;
+        peppermintChatEntry.audioUrl = nil;
+        peppermintChatEntry.duration = 0;
+        peppermintChatEntry.messageId = [NSNumber numberWithInt:imapMessage.uid].stringValue;
+        peppermintChatEntry.subject = messageParser.header.partialExtractedSubject;
+        peppermintChatEntry.mailContent = processedMessage;
         
-        newEmailMessageReceived.isSent = [folder isEqualToString:self.folderSent];
-        if(newEmailMessageReceived.isSent) {
+        peppermintChatEntry.dateCreated = imapMessage.header.receivedDate;
+        peppermintChatEntry.isRepliedAnswered = (imapMessage.flags & MCOMessageFlagAnswered);
+        peppermintChatEntry.isStarredFlagged = (imapMessage.flags & MCOMessageFlagFlagged);
+        peppermintChatEntry.isForwarded = (imapMessage.flags & MCOMessageFlagForwarded);
+        
+        peppermintChatEntry.isSentByMe = [folder isEqualToString:self.folderSent];
+        if(peppermintChatEntry.isSentByMe) {
             MCOAddress *toAddress = messageParser.header.to.firstObject;
             if(!toAddress) {
                 NSLog(@"'To' address can not be empty in an email message! Please check the logic here.");
             } else {
-                newEmailMessageReceived.contactEmail = toAddress.mailbox;
-                newEmailMessageReceived.contactNameSurname = toAddress.displayName;
-                newEmailMessageReceived.isSeen = YES;
+                peppermintChatEntry.contactEmail = toAddress.mailbox;
+                peppermintChatEntry.contactNameSurname = toAddress.displayName;
+                peppermintChatEntry.isSeen = YES;
             }
         } else {
-            newEmailMessageReceived.contactEmail = messageParser.header.from.mailbox;
-            newEmailMessageReceived.contactNameSurname = messageParser.header.from.displayName;
-            newEmailMessageReceived.isSeen = (imapMessage.flags & MCOMessageFlagSeen);
+            peppermintChatEntry.contactEmail = messageParser.header.from.mailbox;
+            peppermintChatEntry.contactNameSurname = messageParser.header.from.displayName;
+            peppermintChatEntry.isSeen = (imapMessage.flags & MCOMessageFlagSeen);
         }
         
-        if(newEmailMessageReceived.contactEmail.length > 0
-           && newEmailMessageReceived.subject.length > 0
-           && newEmailMessageReceived.message.length > 0) {
-            PUBLISH(newEmailMessageReceived);
+        BOOL isUserStillLoggedIn = [[PeppermintMessageSender sharedInstance] isUserStillLoggedIn];
+        if(!isUserStillLoggedIn) {
+            NSLog(@"User logged out while fetching email body. Received body is not processed.");
+        } else if(peppermintChatEntry.contactEmail.length > 0
+           && peppermintChatEntry.subject.length > 0
+           && peppermintChatEntry.mailContent.length > 0) {
+            [self.delegate receivedMessage:peppermintChatEntry];
+            [[UidManager sharedInstance] save:[NSNumber numberWithInt:imapMessage.uid]
+                                  forUsername:weakSelf.session.username
+                                       folder:folder];
         } else {
             NSLog(@"Can't save email\nContact address:%@\nSubject:%@\nContent:%@\nAll fields must be set to save!\n",
-                  newEmailMessageReceived.contactEmail,
-                  newEmailMessageReceived.subject,
-                  newEmailMessageReceived.message);
+                  peppermintChatEntry.contactEmail,
+                  peppermintChatEntry.subject,
+                  peppermintChatEntry.mailContent);
         }
 
         /*

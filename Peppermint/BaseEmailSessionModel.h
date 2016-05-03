@@ -8,13 +8,18 @@
 
 #import "BaseModel.h"
 #import <MailCore/MailCore.h>
+#import "PeppermintChatEntry.h"
+
+@protocol BaseEmailSessionModelDelegate <BaseModelDelegate>
+-(void) receivedMessage:(PeppermintChatEntry*)peppermintChatEntry;
+@end
 
 @interface BaseEmailSessionModel : BaseModel {
     __block BOOL canIdle;
     MCOIMAPSession *_session;
 }
 
-@property (weak, nonatomic) id<BaseModelDelegate> delegate;
+@property (weak, nonatomic) id<BaseEmailSessionModelDelegate> delegate;
 @property (strong, nonatomic) NSString *folderInbox;
 @property (strong, nonatomic) NSString *folderSent;
 

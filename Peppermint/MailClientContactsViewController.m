@@ -85,6 +85,10 @@ SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
     });
 }
 
+SUBSCRIBE(UserLoggedOut) {
+    [self.recentContactsModel refreshRecentContactList];
+}
+
 #pragma mark - TableView
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
