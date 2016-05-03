@@ -35,6 +35,7 @@
 #import "AudioSessionModel.h"
 #import "EmailClientModel.h"
 #import "RecentContactsModel.h"
+#import "ChatEntrySyncModel.h"
 
 @import WatchConnectivity;
 @import Contacts;
@@ -44,7 +45,7 @@
 #define PATH_EMAIL          @"gcm.notification.sender_email"
 #define PATH_FULL_NAME      @"gcm.notification.sender_name"
 
-@interface AppDelegate () <WCSessionDelegate, GGLInstanceIDDelegate, ChatEntryModelDelegate, EmailClientModelDelegate>
+@interface AppDelegate () <WCSessionDelegate, GGLInstanceIDDelegate, ChatEntryModelDelegate, EmailClientModelDelegate, ChatEntrySyncModelDelegate>
 @end
 
 @implementation AppDelegate {
@@ -60,6 +61,7 @@
     BOOL hasFinishedFirstSync;
     EmailClientModel *emailClientModel;
     NSDate *lastAudioPlayedDate;
+    ChatEntrySyncModel *chatEntrySyncModel;
 }
 
 -(void) initPlayingModel {
@@ -223,12 +225,20 @@
     chatEntryModel.delegate = self;
 }
 
+-(ChatEntrySyncModel*) chatEntrySyncModel {
+    if(!chatEntrySyncModel) {
+        chatEntrySyncModel = [ChatEntrySyncModel new];
+        chatEntrySyncModel.delegate = self;
+    }
+    return chatEntrySyncModel;
+}
+
 -(void) refreshIncomingMessages {
     if(!chatEntryModel) {
         [self refreshChatEntryModel];
         hasFinishedFirstSync = NO;
     }
-    [chatEntryModel makeSyncRequestForMessages];
+    [[self chatEntrySyncModel] makeSyncRequestForMessages];
 }
 
 -(void) setBackgrounFetchInterval {
@@ -285,7 +295,8 @@
              bgTaskForMessageSending = UIBackgroundTaskInvalid;
         }];
     }
-    if([chatEntryModel isSyncProcessActive]) {
+    
+    if([[self chatEntrySyncModel] isSyncProcessActive]) {
         bgTaskForSync = [application beginBackgroundTaskWithExpirationHandler:^{
             [application endBackgroundTask:bgTaskForSync];
             bgTaskForSync = UIBackgroundTaskInvalid;
@@ -404,6 +415,12 @@ SUBSCRIBE(DetachSuccess) {
     }
 }
 
+#pragma mark - ChatEntrySyncModelDelegate
+
+-(void) syncStepCompleted:(NSArray<PeppermintChatEntry*>*) syncedPeppermintChatEnryArray {
+    [self peppermintChatEntrySavedWithSuccess:syncedPeppermintChatEnryArray];
+}
+
 #pragma mark - ChatEntryModelDelegate
 
 -(void) lastMessagesAreUpdated:(NSArray<PeppermintContactWithChatEntry*>*) peppermintContactWithChatEntryArray {
@@ -448,9 +465,8 @@ SUBSCRIBE(DetachSuccess) {
         peppermintContactToNavigate = nil;
     } else if (newMessagesArray.count > 0 && !newMessagesArray.firstObject.isSentByMe && hasFinishedFirstSync) {
         [self checkAndPlayIncomingAudioAlert];
-    }
-    
-    hasFinishedFirstSync = hasFinishedFirstSync || [[PeppermintMessageSender sharedInstance] isSyncWithAPIProcessed];
+    }    
+    hasFinishedFirstSync = hasFinishedFirstSync || [self.chatEntrySyncModel isSyncWithAPIProcessedOneFullCycle];
     
     RefreshIncomingMessagesCompletedWithSuccess *refreshIncomingMessagesCompletedWithSuccess = [RefreshIncomingMessagesCompletedWithSuccess new];
     refreshIncomingMessagesCompletedWithSuccess.sender = self;

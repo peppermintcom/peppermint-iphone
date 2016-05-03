@@ -43,7 +43,7 @@
     } else if ([date1 compare:date2] == NSOrderedAscending) {
         laterDate = date2;
     }
-    return [NSDate dateWithTimeIntervalSince1970:laterDate.timeIntervalSince1970];
+    return laterDate;
 }
 
 -(NSString*) monthDayStringWithTodayYesterday {
