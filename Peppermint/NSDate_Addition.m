@@ -52,6 +52,8 @@
     } else {
         NSDateFormatter *dateFormatter = [NSDateFormatter new];
         [dateFormatter setDateFormat:@"MMM dd"];
+        NSLocale *englishUsLocale = [[NSLocale alloc] initWithLocaleIdentifier:LOCALE_EN_US];
+        [dateFormatter setLocale:englishUsLocale];
         resultText = [dateFormatter stringFromDate:self];
     }
     return resultText;

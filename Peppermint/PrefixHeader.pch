@@ -211,5 +211,6 @@ sharedObject;\
 #define DATE_TIME_FORMAT_WITH_SECONDS   @"yyyy-MM-dd HH:mm:ss"
 #define DATE_TIME_FORMAT                @"yyyy-MM-dd HH:mm:ss"
 #define GMT                             @"GMT"
+#define LOCALE_EN_US                    @"en_US"
 
 #endif
