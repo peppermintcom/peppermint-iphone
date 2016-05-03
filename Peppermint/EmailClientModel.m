@@ -10,7 +10,6 @@
 #import "GmailEmailSessionModel.h"
 #import "RecentContactsModel.h"
 #import "ContactsModel.h"
-#import "PeppermintMessageSender.h"
 
 #define MAIL_SAVE_BUFFER_LIMIT      50
 #define MAIL_SAVE_LATENCY           3
@@ -56,38 +55,36 @@
     [gmailEmailSessionModel initSession];
 }
 
+SUBSCRIBE(UserLoggedOut) {
+    [self stopExistingSessions];
+    [bufferArrayTimer invalidate];
+}
+
 #pragma mark - BaseEmailSessionModelDelegate
 
 -(void) receivedMessage:(PeppermintChatEntry*) peppermintChatEntry {
-    BOOL isUserStillLoggedIn = [[PeppermintMessageSender sharedInstance] isUserStillLoggedIn];
-    if(!isUserStillLoggedIn) {
-        NSLog(@" User has logged out during an existing service call. Ignoring the response from server.");
-        [self stopExistingSessions];
-    } else {
-        [bufferArrayTimer invalidate];
-        bufferArrayTimer = nil;
+    [bufferArrayTimer invalidate];
+    bufferArrayTimer = nil;
+    PeppermintContact *peppermintContact = [[ContactsModel sharedInstance]
+                                            matchingPeppermintContactForEmail:peppermintChatEntry.contactEmail
+                                            nameSurname:peppermintChatEntry.contactNameSurname];
+    
+    if(chatEntryModel && recentContactsModel) {
+        [mailClientMessageBufferArray addObject:peppermintChatEntry];
+        peppermintContact.lastMailClientContactDate = peppermintChatEntry.dateCreated;
+        [recentContactsBufferSet addOrUpdateObject:peppermintContact];
         
-        PeppermintContact *peppermintContact = [[ContactsModel sharedInstance]
-                                                matchingPeppermintContactForEmail:peppermintChatEntry.contactEmail
-                                                nameSurname:peppermintChatEntry.contactNameSurname];
-        
-        if(chatEntryModel && recentContactsModel) {
-            [mailClientMessageBufferArray addObject:peppermintChatEntry];
-            peppermintContact.lastMailClientContactDate = peppermintChatEntry.dateCreated;
-            [recentContactsBufferSet addOrUpdateObject:peppermintContact];
-            
-            if(mailClientMessageBufferArray.count >= MAIL_SAVE_BUFFER_LIMIT) {
-                [self bufferArrayTimerTriggered];
-            } else {
-                bufferArrayTimer = [NSTimer scheduledTimerWithTimeInterval:MAIL_SAVE_LATENCY
-                                                                    target:self
-                                                                  selector:@selector(bufferArrayTimerTriggered)
-                                                                  userInfo:nil
-                                                                   repeats:NO];
-            }
+        if(mailClientMessageBufferArray.count >= MAIL_SAVE_BUFFER_LIMIT) {
+            [self bufferArrayTimerTriggered];
         } else {
-            NSLog(@"A model was not inited properly. This may cause a message not to be shown properly.");
+            bufferArrayTimer = [NSTimer scheduledTimerWithTimeInterval:MAIL_SAVE_LATENCY
+                                                                target:self
+                                                              selector:@selector(bufferArrayTimerTriggered)
+                                                              userInfo:nil
+                                                               repeats:NO];
         }
+    } else {
+        NSLog(@"A model was not inited properly. This may cause a message not to be shown properly.");
     }
 }
 

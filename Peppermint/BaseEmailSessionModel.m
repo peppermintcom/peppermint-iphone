@@ -9,6 +9,7 @@
 #import "BaseEmailSessionModel.h"
 #import "UidManager.h"
 #import "ConnectionModel.h"
+#import "PeppermintMessageSender.h"
 
 #define NUMBER_OF_MESSAGES_TO_SYNC      200
 #define FIRST_SYNC                      @"First_Sync"
@@ -49,6 +50,7 @@
 #pragma mark - Stop Session
 
 -(void) stopSession {
+    [self.session cancelAllOperations];
     MCOIMAPOperation * op = [self.session disconnectOperation];
     [op start:^(NSError * error) {
         if(error) {
@@ -232,7 +234,10 @@
             peppermintChatEntry.isSeen = (imapMessage.flags & MCOMessageFlagSeen);
         }
         
-        if(peppermintChatEntry.contactEmail.length > 0
+        BOOL isUserStillLoggedIn = [[PeppermintMessageSender sharedInstance] isUserStillLoggedIn];
+        if(!isUserStillLoggedIn) {
+            NSLog(@"User logged out while fetching email body. Received body is not processed.");
+        } else if(peppermintChatEntry.contactEmail.length > 0
            && peppermintChatEntry.subject.length > 0
            && peppermintChatEntry.mailContent.length > 0) {
             [self.delegate receivedMessage:peppermintChatEntry];
