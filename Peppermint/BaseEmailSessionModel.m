@@ -196,7 +196,7 @@
 }
 
 -(void) processMessage:(MCOIMAPMessage*)imapMessage inFolder:(NSString*) folder {
-    NSLog(@"Processing %@ - uid:%d", folder, imapMessage.uid);
+    //NSLog(@"Processing %@ - uid:%d", folder, imapMessage.uid);
     MCOIMAPFetchContentOperation *fetchContentOperation = [self.session fetchMessageOperationWithFolder:folder uid:imapMessage.uid];
     weakself_create();
     [fetchContentOperation start:^(NSError *error, NSData *data) {
@@ -235,20 +235,16 @@
         }
         
         BOOL isUserStillLoggedIn = [[PeppermintMessageSender sharedInstance] isUserStillLoggedIn];
+        BOOL allFieldsAreSupplied = (peppermintChatEntry.contactEmail.length > 0
+                                     && peppermintChatEntry.subject.length > 0
+                                     && peppermintChatEntry.mailContent.length > 0);
         if(!isUserStillLoggedIn) {
             NSLog(@"User logged out while fetching email body. Received body is not processed.");
-        } else if(peppermintChatEntry.contactEmail.length > 0
-           && peppermintChatEntry.subject.length > 0
-           && peppermintChatEntry.mailContent.length > 0) {
+        } else if(allFieldsAreSupplied) {
             [self.delegate receivedMessage:peppermintChatEntry];
             [[UidManager sharedInstance] save:[NSNumber numberWithInt:imapMessage.uid]
                                   forUsername:weakSelf.session.username
                                        folder:folder];
-        } else {
-            NSLog(@"Can't save email\nContact address:%@\nSubject:%@\nContent:%@\nAll fields must be set to save!\n",
-                  peppermintChatEntry.contactEmail,
-                  peppermintChatEntry.subject,
-                  peppermintChatEntry.mailContent);
         }
 
         /*
