@@ -505,7 +505,7 @@ SUBSCRIBE(ApplicationWillResignActive) {
 
 SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
     NSArray *arrayToIterate =
-    [ChatEntrySyncModel new].isSyncWithAPIProcessedOneFullCycle
+    [ChatEntrySyncModel sharedInstance].isAllMessagesAreInSyncOfFirstCycle
     ? event.peppermintChatEntryNewMesssagesArray : event.peppermintChatEntryAllMesssagesArray;
     for(PeppermintChatEntry *peppermintChatEntry in arrayToIterate) {
         if([peppermintChatEntry.contactEmail caseInsensitiveCompare:self.peppermintContact.communicationChannelAddress] == NSOrderedSame) {

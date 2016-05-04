@@ -94,7 +94,6 @@
     [_recordingView removeFromSuperview];
     _recordingView = nil;
     self.tutorialView = nil;
-    _chatEntrySyncModel = nil;
 }
 
 SUBSCRIBE(SyncGoogleContactsSuccess) {
@@ -271,7 +270,10 @@ SUBSCRIBE(UserLoggedOut) {
     } else if (indexPath.section == SECTION_EMPTY_RESULT) {
         EmptyResultTableViewCell *cell = [CellFactory cellEmptyResultTableViewCellFromTable:tableView forIndexPath:indexPath];
         [cell setVisibiltyOfExplanationLabels:YES];
-        if(!self.chatEntrySyncModel.isSyncWithAPIProcessedOneFullCycle) {
+        
+        BOOL isOneCycleCompleted = [ChatEntrySyncModel sharedInstance].issentMessagesAreInSyncOfFirstCycle
+        || [ChatEntrySyncModel sharedInstance].isReciviedMessagesAreInSyncOfFirstCycle;
+        if(!isOneCycleCompleted) {
             [cell showLoading];
             cell.headerLabel.text = @"";
         } else if(activeCellTag == CELL_TAG_RECENT_CONTACTS) {
@@ -888,8 +890,10 @@ SUBSCRIBE(UserLoggedOut) {
 SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
     weakself_create();
     dispatch_async(dispatch_get_main_queue(), ^{
-        BOOL partialUpdate = !self.chatEntrySyncModel.isSyncWithAPIProcessedOneFullCycle && event.peppermintChatEntryAllMesssagesArray.count > 0;
-        BOOL newMessage = self.chatEntrySyncModel.isSyncWithAPIProcessedOneFullCycle && event.peppermintChatEntryNewMesssagesArray.count > 0;
+        BOOL partialUpdate = ![ChatEntrySyncModel sharedInstance].isAllMessagesAreInSyncOfFirstCycle
+        && event.peppermintChatEntryAllMesssagesArray.count > 0;
+        BOOL newMessage = [ChatEntrySyncModel sharedInstance].isAllMessagesAreInSyncOfFirstCycle
+        && event.peppermintChatEntryNewMesssagesArray.count > 0;
         if(isScreenReady && (partialUpdate || newMessage)) {
             [weakSelf.recentContactsModel refreshRecentContactList];
         }
@@ -930,13 +934,6 @@ SUBSCRIBE(MessageIsMarkedAsRead) {
         [self initRecordingView];
     }
     return _recordingView;
-}
-
--(ChatEntrySyncModel*) chatEntrySyncModel {
-    if(_chatEntrySyncModel == nil) {
-        _chatEntrySyncModel = [ChatEntrySyncModel new];
-    }
-    return _chatEntrySyncModel;
 }
 
 #pragma mark - Navigation

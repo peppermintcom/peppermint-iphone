@@ -518,7 +518,7 @@
 
     NSDictionary *parameterDictionary = [NSDictionary new];
     if(!url) {
-        NSLog(@"Querying for %@ from %@ - %@", (isForRecipient ? @"Recipient" : @"Sender"), sinceDate, untilDate);
+        NSLog(@"Querying for %@ | until:%@ <-> since:%@", (isForRecipient ? @"Recipient" : @"Sender"), untilDate, sinceDate );
         url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_MESSAGES];
         MessageGetRequest *messageGetRequest = [MessageGetRequest new];
         if(isForRecipient) {
@@ -531,7 +531,7 @@
         [messageGetRequest setUntilDate:untilDate];
         parameterDictionary = [messageGetRequest toDictionary];
     } else {
-        NSLog(@"Making a next qury.");
+        NSLog(@"Making a next %@ qury.|updated until:%@ <-> since:%@", (isForRecipient ? @"Recipient" : @"Sender"), untilDate, sinceDate );
     }
     
     NSString *tokenText = [self toketTextForJwt:jwt];

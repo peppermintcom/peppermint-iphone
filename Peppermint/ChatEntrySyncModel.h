@@ -20,8 +20,12 @@
 @property (strong, nonatomic) RecentContactsModel *recentContactsModel;
 @property (strong, nonatomic) ChatEntryModel *chatEntryModel;
 
++ (instancetype) sharedInstance;
 -(BOOL) isSyncProcessActive;
--(BOOL) isSyncWithAPIProcessedOneFullCycle;
 -(void) makeSyncRequestForMessages;
+
+-(BOOL) isReciviedMessagesAreInSyncOfFirstCycle;
+-(BOOL) issentMessagesAreInSyncOfFirstCycle;
+-(BOOL) isAllMessagesAreInSyncOfFirstCycle;
 
 @end

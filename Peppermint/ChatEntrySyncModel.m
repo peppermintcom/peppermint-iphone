@@ -31,10 +31,19 @@
     __block int activeServerQueryCount;
     __block BOOL queryForIncoming;
     __block NSString *nextUrl;
-    SyncDateHolder *syncDateHolder;
+    SyncDateHolder *_syncDateHolder;
+}
+
++ (instancetype) sharedInstance {
+    return SHARED_INSTANCE( [[self alloc] initShared] );
 }
 
 -(id) init {
+    NSAssert(false, @"This model instance is singleton so should not be inited - %@", self);
+    return nil;
+}
+
+-(id) initShared {
     self = [super init];
     if(self) {
         awsService = [AWSService new];
@@ -44,32 +53,47 @@
         self.recentContactsModel.delegate = self;
         activeServerQueryCount = 0;
         queryForIncoming = NO;
+        [self syncDateHolder];
     }
     return self;
+}
+
+SUBSCRIBE(UserLoggedOut) {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    _syncDateHolder = nil;
 }
 
 #pragma mark - SyncDateHolder
 
 -(SyncDateHolder*) syncDateHolder {
-    if(!syncDateHolder) {
+    if(!_syncDateHolder) {
         NSString *syncDateHolderJson = defaults_object(DEFAULTS_SYNC_DATE_HOLDER);
         NSError *error;
-        syncDateHolder = [[SyncDateHolder alloc] initWithString:syncDateHolderJson error:&error];
+        _syncDateHolder = [[SyncDateHolder alloc] initWithString:syncDateHolderJson error:&error];
         if(error) {
-            syncDateHolder = [SyncDateHolder new];
-            syncDateHolder.recipientSinceDate = nil;
-            syncDateHolder.recipientUntilDate = FAR_FUTURE_DATE;
-            syncDateHolder.senderSinceDate = nil;
-            syncDateHolder.senderUntilDate = FAR_FUTURE_DATE;
+            _syncDateHolder = [SyncDateHolder new];
+            _syncDateHolder.recipientSinceDate = nil;
+            _syncDateHolder.recipientUntilDate = FAR_FUTURE_DATE;
+            _syncDateHolder.senderSinceDate = nil;
+            _syncDateHolder.senderUntilDate = FAR_FUTURE_DATE;
         }
     }
-    return syncDateHolder;
+    return _syncDateHolder;
 }
 
 #pragma mark - SyncStatus
 
--(BOOL) isSyncWithAPIProcessedOneFullCycle {
-    return !self.syncDateHolder.recipientUntilDate && !self.syncDateHolder.recipientUntilDate;
+-(BOOL) isReciviedMessagesAreInSyncOfFirstCycle {
+    return !self.syncDateHolder.recipientUntilDate;
+}
+
+-(BOOL) issentMessagesAreInSyncOfFirstCycle {
+    return !self.syncDateHolder.senderUntilDate;
+}
+
+-(BOOL) isAllMessagesAreInSyncOfFirstCycle {
+    return self.isReciviedMessagesAreInSyncOfFirstCycle
+    && self.issentMessagesAreInSyncOfFirstCycle;
 }
 
 #pragma mark - Server Query
@@ -89,19 +113,22 @@
     [self.delegate syncStepCompleted:[NSArray new]];
 }
 
--(void) queryServerForIncomingMessages {
+-(BOOL) userLoggedInAndReadyForQuery {
     PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
-    BOOL canQueryServer = peppermintMessageSender.accountId.length > 0 && peppermintMessageSender.exchangedJwt.length > 0;
-    
-    if(!canQueryServer) {
+    return peppermintMessageSender.accountId.length > 0 && peppermintMessageSender.exchangedJwt.length > 0;
+}
+
+-(void) queryServerForIncomingMessages {
+    if(!self.userLoggedInAndReadyForQuery) {
         NSLog(@"Could not query Server, please complete login process first.");
         [self notifyDelegateToFinishBackgroundFetchInCase];
     } else {
         ++activeServerQueryCount;
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
         
-        NSDate *sinceDate = queryForIncoming ? syncDateHolder.recipientSinceDate : syncDateHolder.senderSinceDate;
-        NSDate *untilDate = queryForIncoming ? syncDateHolder.recipientUntilDate : syncDateHolder.senderUntilDate;
+        NSDate *sinceDate = queryForIncoming ? self.syncDateHolder.recipientSinceDate : self.syncDateHolder.senderSinceDate;
+        NSDate *untilDate = queryForIncoming ? self.syncDateHolder.recipientUntilDate : self.syncDateHolder.senderUntilDate;
         [awsService getMessagesForAccountId:peppermintMessageSender.accountId
                                         jwt:peppermintMessageSender.exchangedJwt
                                     nextUrl:nextUrl
@@ -197,8 +224,10 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
 }
 
 -(void) peppermintChatEntrySavedWithSuccess:(NSArray*) savedPeppermintChatEnryArray {
-    [self.delegate syncStepCompleted:savedPeppermintChatEnryArray];
-    [self updateLastSyncDatesInPeppermintMessageSender];
+    if(self.userLoggedInAndReadyForQuery) {
+        [self updateLastSyncDatesInPeppermintMessageSender];
+        [self.delegate syncStepCompleted:savedPeppermintChatEnryArray];
+    }
 }
 
 -(void) lastMessagesAreUpdated:(NSArray<PeppermintContactWithChatEntry*>*) peppermintContactWithChatEntryArray {
@@ -231,7 +260,6 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
 
 -(void) checkAndMarkFullSyncCycleCompletedIfNeeded {
     BOOL isFirstSyncCycleFinishedForRecipient = !nextUrl && queryForIncoming && self.syncDateHolder.recipientUntilDate;
-    
     if(isFirstSyncCycleFinishedForRecipient) {
         self.syncDateHolder.recipientUntilDate = nil;
         self.syncDateHolder.recipientSinceDate = SOME_RECENT_DATE;

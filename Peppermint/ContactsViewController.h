@@ -22,7 +22,6 @@
 @interface ContactsViewController : BaseReSideMenuContentViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ContactsModelDelegate, RecentContactsModelDelegate, SearchMenuTableViewCellDelegate, UIAlertViewDelegate, ContactTableViewCellDelegate, RecordingViewDelegate, ContactInformationTableViewCellDelegate>
 @property (strong, nonatomic) ContactsModel *contactsModel;
 @property (strong, nonatomic) RecentContactsModel *recentContactsModel;
-@property (strong, nonatomic) ChatEntrySyncModel *chatEntrySyncModel;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *searchContactsTextField;

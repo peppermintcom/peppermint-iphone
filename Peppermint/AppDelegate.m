@@ -61,7 +61,6 @@
     BOOL hasFinishedFirstSync;
     EmailClientModel *emailClientModel;
     NSDate *lastAudioPlayedDate;
-    ChatEntrySyncModel *chatEntrySyncModel;
 }
 
 -(void) initPlayingModel {
@@ -226,10 +225,8 @@
 }
 
 -(ChatEntrySyncModel*) chatEntrySyncModel {
-    if(!chatEntrySyncModel) {
-        chatEntrySyncModel = [ChatEntrySyncModel new];
-        chatEntrySyncModel.delegate = self;
-    }
+    ChatEntrySyncModel *chatEntrySyncModel = [ChatEntrySyncModel sharedInstance];
+    chatEntrySyncModel.delegate = self;
     return chatEntrySyncModel;
 }
 
@@ -466,7 +463,7 @@ SUBSCRIBE(DetachSuccess) {
     } else if (newMessagesArray.count > 0 && !newMessagesArray.firstObject.isSentByMe && hasFinishedFirstSync) {
         [self checkAndPlayIncomingAudioAlert];
     }    
-    hasFinishedFirstSync = hasFinishedFirstSync || [self.chatEntrySyncModel isSyncWithAPIProcessedOneFullCycle];
+    hasFinishedFirstSync = hasFinishedFirstSync || [self.chatEntrySyncModel isAllMessagesAreInSyncOfFirstCycle];
     
     RefreshIncomingMessagesCompletedWithSuccess *refreshIncomingMessagesCompletedWithSuccess = [RefreshIncomingMessagesCompletedWithSuccess new];
     refreshIncomingMessagesCompletedWithSuccess.sender = self;
