@@ -45,6 +45,7 @@ NSLocalizedStringFromTable(\
 (__key),@"Text",(__comment))
 
 #pragma mark - Shared Instance Macro Definition
+#warning "!!Check all implementation of 'SHARED_INSTANCE' and be sure that they release the sources and reset content when user logs out"
 
 #define SHARED_INSTANCE(...) ({\
 static dispatch_once_t pred;\
