@@ -44,7 +44,7 @@
 -(void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.recentContactsModel refreshRecentContactList];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
     self.whiteEllipseView.layer.cornerRadius = self.whiteEllipseView.frame.size.height / 3.4;
 }
 
@@ -166,7 +166,9 @@ SUBSCRIBE(UserLoggedOut) {
 
 -(void) lastMessagesAreUpdated:(NSArray<PeppermintContactWithChatEntry*>*) peppermintContactWithChatEntryArray {
     nonFilteredPeppermintContactWithChatEntryArray = peppermintContactWithChatEntryArray;
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    if(nonFilteredPeppermintContactWithChatEntryArray.count > 0) {
+        [MBProgressHUD hideHUDForView:self.tableView animated:YES];
+    }
     [self refreshContacts];
 }
 
