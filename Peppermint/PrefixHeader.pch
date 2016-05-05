@@ -105,6 +105,9 @@ sharedObject;\
 #pragma mark - NSUserDefaults Helper
 #import "nsuserdefaults-helper.h"
 
+#pragma mark - AVAudioPlayer Addition
+#import "AVAudioPlayer_Addition.h"
+
 #define DEFAULTS_KEY_ISTUTORIALSHOWED               @"isTutorialShowed"
 #define DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH      @"previousRecordingLength"
 #define DEFAULTS_KEY_TUTORIAL_TOOLTIP_IS_SHOWED     @"isTutorialTooltipShowed"

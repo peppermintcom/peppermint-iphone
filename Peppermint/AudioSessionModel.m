@@ -184,8 +184,11 @@
         } else if (item && [item isKindOfClass:[AVAudioPlayer class]]) {
             AVAudioPlayer *player = (AVAudioPlayer*)item;
             if(player.isPlaying) {
+                CGFloat cachedVolume = player.volume;
+                player.volume = 0;
                 [player stop];
                 [player play];
+                [player fadeVolumeInToLevel:[NSNumber numberWithFloat:cachedVolume]];
             }
         }
     }
