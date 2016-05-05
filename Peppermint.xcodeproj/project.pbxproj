@@ -116,6 +116,7 @@
 		B1A366921BDC92DB00852B52 /* UploadsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A366911BDC92DB00852B52 /* UploadsRequest.m */; };
 		B1A366951BDC92FF00852B52 /* UploadsResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A366941BDC92FF00852B52 /* UploadsResponse.m */; };
 		B1A4AA511BF4DA9D005D55CB /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A4AA501BF4DA9D005D55CB /* AccountViewController.m */; };
+		B1AC47821CDB738500693C47 /* AVAudioPlayer_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B1AC47811CDB738500693C47 /* AVAudioPlayer_Addition.m */; };
 		B1B2F47D1C73273A003A4220 /* notification.aiff in Resources */ = {isa = PBXBuildFile; fileRef = B1B2F47C1C73273A003A4220 /* notification.aiff */; };
 		B1B801911C3FF69B00958885 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B801901C3FF69B00958885 /* AboutViewController.m */; };
 		B1BB1E5F1BD35CD300A1CE45 /* MandrillService.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BB1E5E1BD35CD300A1CE45 /* MandrillService.m */; };
@@ -478,6 +479,8 @@
 		B1A4AA4F1BF4DA9D005D55CB /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
 		B1A4AA501BF4DA9D005D55CB /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
 		B1A792451C6D9F8300254528 /* PushKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PushKit.framework; path = System/Library/Frameworks/PushKit.framework; sourceTree = SDKROOT; };
+		B1AC47801CDB738500693C47 /* AVAudioPlayer_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVAudioPlayer_Addition.h; sourceTree = "<group>"; };
+		B1AC47811CDB738500693C47 /* AVAudioPlayer_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVAudioPlayer_Addition.m; sourceTree = "<group>"; };
 		B1B2F47C1C73273A003A4220 /* notification.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = notification.aiff; sourceTree = "<group>"; };
 		B1B8018F1C3FF69B00958885 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		B1B801901C3FF69B00958885 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
@@ -1191,6 +1194,8 @@
 				B1EB69B21C9828E20031F37E /* NSmutableSet_Addition.m */,
 				B1D1E2C11CA04149008CFCB7 /* NSDate_Addition.h */,
 				B1D1E2C21CA04149008CFCB7 /* NSDate_Addition.m */,
+				B1AC47801CDB738500693C47 /* AVAudioPlayer_Addition.h */,
+				B1AC47811CDB738500693C47 /* AVAudioPlayer_Addition.m */,
 			);
 			name = Addition;
 			sourceTree = "<group>";
@@ -2105,6 +2110,7 @@
 				B1BB60151BDE0E0200C1140B /* LoginTableViewCell.m in Sources */,
 				B15FDE801C117CCE007100EC /* CachedMessage+CoreDataProperties.m in Sources */,
 				B13B07671BD3736400974AC3 /* MandrillMailAttachment.m in Sources */,
+				B1AC47821CDB738500693C47 /* AVAudioPlayer_Addition.m in Sources */,
 				B1D2A6D71C200706002BD6DF /* RecordingView.m in Sources */,
 				B1C83A191BDEB0EC00EB14C2 /* LoginTextFieldTableViewCell.m in Sources */,
 				B17933121BE0B7B00016F158 /* LoginNavigationViewController.m in Sources */,

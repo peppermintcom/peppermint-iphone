@@ -83,16 +83,19 @@
     return result;
 }
 
--(void) pause {    
+-(void) pause {
     [_audioPlayer pause];
     [[AudioSessionModel sharedInstance] updateSessionState:NO];
 }
 
 -(BOOL) play {
+    CGFloat cachedVolume = _audioPlayer.volume;
+    _audioPlayer.volume = 0;
     BOOL setSessionActive = [[AudioSessionModel sharedInstance] updateSessionState:YES];
     BOOL play = [_audioPlayer prepareToPlay] && [_audioPlayer play];
     BOOL result =  setSessionActive && play ;
     if(result) {
+        [_audioPlayer fadeVolumeInToLevel:[NSNumber numberWithFloat:cachedVolume]];
         [[AudioSessionModel sharedInstance] attachAVAudioProcessObject:_audioPlayer];
         [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     } else {

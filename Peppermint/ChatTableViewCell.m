@@ -19,6 +19,8 @@
 
 #define MAX_SEEK_RATIO                      0.97
 
+#define PAUSE_TIME_TO_STOP    1
+
 @interface ChatTableViewCell () <ChatEntryModelDelegate>
 @end
 
@@ -32,6 +34,7 @@
     __block BOOL stopMessageReceived;
     PeppermintChatEntry *referencedChatEntry;
     __block BOOL isSeeking;
+    NSTimer *deviceIsRemovedFromEarTimer;
 }
 
 - (void)awakeFromNib {
@@ -357,15 +360,36 @@ SUBSCRIBE(StopAllPlayingMessages) {
 
 
 SUBSCRIBE(ProximitySensorValueIsUpdated) {
-    BOOL isPlaying = (self.playingModel.audioPlayer.isPlaying);
-    if(isPlaying) {
-        if(!event.isDeviceCloseToUser) {
-            [self.playingModel pause];
-            [self.delegate stoppedPlayingMessage:self];
-        } else if (event.isDeviceCloseToUser && event.isDeviceOrientationCorrectOnEar) {
-            [self rewindPlayer];
+    
+    BOOL isDeviceOnEarAgain = deviceIsRemovedFromEarTimer
+    && self.playingModel.audioPlayer.duration > 0
+    && event.isDeviceCloseToUser;
+    
+    if(isDeviceOnEarAgain) {
+        [deviceIsRemovedFromEarTimer invalidate];
+        [self.playingModel play];
+    } else {
+        BOOL isPlaying = (self.playingModel.audioPlayer.isPlaying);
+        if(isPlaying) {
+            if(!event.isDeviceCloseToUser) {
+                [self.playingModel pause];
+                deviceIsRemovedFromEarTimer = [NSTimer scheduledTimerWithTimeInterval:PAUSE_TIME_TO_STOP
+                                                                               target:self
+                                                                             selector:@selector(deviceIsRemovedFromEarTimerFired)
+                                                                             userInfo:nil
+                                                                              repeats:NO];
+            } else if (event.isDeviceCloseToUser && event.isDeviceOrientationCorrectOnEar) {
+                [self rewindPlayer];
+            }
         }
     }
+}
+
+-(void) deviceIsRemovedFromEarTimerFired {
+    deviceIsRemovedFromEarTimer = nil;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.delegate stoppedPlayingMessage:self];
+    });
 }
 
 - (void) resetContent {

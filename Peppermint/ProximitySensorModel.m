@@ -9,11 +9,18 @@
 #import "ProximitySensorModel.h"
 #import "DeviceMotionMager.h"
 
-#define SENSITIVITY                     0.75
-#define ACCELERATION_SENSITIVITY        1.25
+
+#define SENSITIVITY                     0.60     //SENSITIVITY TRESHOLD FOR DEVICE ORIENTATION
+#define DEVICE_MOVEMENT_TRESHOLD        0.80      //TRESHOLD TO DECIDE DEVICE IS RAISING
+#define ON_EAR_GRAVITIY_LIMIT_X         -0.35    //GRAVITY IS -0.95 - FLAT VALUE IS 0
+#define ON_EAR_GRAVITIY_LIMIT_Y         -0.20    //GRAVITY IS -0.95 - FLAT VALUE IS 0
+#define ON_EAR_GRAVITIY_LIMIT_Z         -9.00    //GRAVITY IS -0.95 - FLAT VALUE IS 0
+#define PROXIMITY_IDLE_TIME             2.0
 
 @implementation ProximitySensorModel {
     DeviceMotionMager *_deviceMotionMager;
+    __block CMAcceleration previousMeasurement;
+    NSTimer *proximityCancellationTimer;
 }
 
 + (instancetype) sharedInstance {
@@ -37,13 +44,38 @@
     return self;
 }
 
+#pragma mark - ProximityCancellationTimer
+
+-(void) startProximityTimer {
+    proximityCancellationTimer = [NSTimer scheduledTimerWithTimeInterval:PROXIMITY_IDLE_TIME
+                                                                  target:self
+                                                                selector:@selector(proximitySensorIsNotActivatedInTime)
+                                                                userInfo:nil
+                                                                 repeats:NO];
+}
+
+-(void) stopProximityTimer {
+    [proximityCancellationTimer invalidate];
+    proximityCancellationTimer = nil;
+}
+
+-(void) proximitySensorIsNotActivatedInTime {
+    [self stopProximityTimer];
+    [self stopProximitySensor];
+}
+
+#pragma mark - Monitoring
+
 -(void) startMonitoring {
+    previousMeasurement.x = previousMeasurement.y = previousMeasurement.z = 0;
+    [self stopProximityTimer];
     [self startListeningDeviceMotionMager];
 }
 
 -(void) stopMonitoring {
     [self stopListeningDeviceMotionMager];
-    [[UIDevice currentDevice] setProximityMonitoringEnabled:NO];
+    [self stopProximityTimer];
+    [self stopProximitySensor];
 }
 
 - (void)sensorStateMonitor:(NSNotificationCenter *)notification {
@@ -53,13 +85,35 @@
     });
 }
 
+-(void) startProximitySensor {
+    NSLog(@"Activate proximity sensor.");
+    [[UIDevice currentDevice] setProximityMonitoringEnabled:YES];
+}
+
+-(void) stopProximitySensor {
+    _isDeviceCloseToUser = NO;
+    [[UIDevice currentDevice] setProximityMonitoringEnabled:NO];
+}
+
 -(void) updateSensorState:(BOOL)state {
-    _isDeviceCloseToUser = state;
-    ProximitySensorValueIsUpdated *proximitySensorValueIsUpdated = [ProximitySensorValueIsUpdated new];
-    proximitySensorValueIsUpdated.isDeviceCloseToUser = self.isDeviceCloseToUser;
-    proximitySensorValueIsUpdated.deviceOrientation = self.currentDeviceOrientation;
-    proximitySensorValueIsUpdated.isDeviceOrientationCorrectOnEar = self.isDeviceOrientationCorrectOnEar;
-    PUBLISH(proximitySensorValueIsUpdated);
+    BOOL isDeviceOrientationStillCorrect = self.isDeviceOrientationCorrectOnEar;
+    if(!isDeviceOrientationStillCorrect && state) {
+        NSLog(@"Cancelling proximity sensor, cos the device orientation is not correct anymore.");
+        [self stopProximitySensor];
+    } else {
+        [self stopProximityTimer];
+        _isDeviceCloseToUser = state;
+        ProximitySensorValueIsUpdated *proximitySensorValueIsUpdated = [ProximitySensorValueIsUpdated new];
+        proximitySensorValueIsUpdated.isDeviceCloseToUser = self.isDeviceCloseToUser;
+        proximitySensorValueIsUpdated.deviceOrientation = self.currentDeviceOrientation;
+        proximitySensorValueIsUpdated.isDeviceOrientationCorrectOnEar = self.isDeviceOrientationCorrectOnEar;
+        PUBLISH(proximitySensorValueIsUpdated);
+        
+        BOOL shouldStopProximitySensorWithLatency = (state == NO);
+        if (shouldStopProximitySensorWithLatency) {
+            [self startProximityTimer];
+        }
+    }
 }
 
 #pragma mark - Device Motion Manager
@@ -71,41 +125,37 @@
 -(void) startListeningDeviceMotionMager {
     [[self deviceMotionMager] initWithAccelerometerUpdatesWithHandler:^(CMAcceleration acceleration) {
         
-        BOOL raisingY = (acceleration.y < -ACCELERATION_SENSITIVITY);
-        BOOL raisingZ = (acceleration.z < -ACCELERATION_SENSITIVITY);
-        BOOL raisingLeftZ = (acceleration.z > ACCELERATION_SENSITIVITY);
-
-        BOOL isDeviceRaising = raisingY || raisingZ || raisingLeftZ;
-        
-        if(isDeviceRaising) {
-            NSLog(@"Device raising!     %d - %d - %d", raisingZ, raisingY, raisingLeftZ);
-        }
-        
+        CGFloat tresholdForOnEar = -CGFLOAT_MAX;
         if (acceleration.x >= SENSITIVITY) {
             _currentDeviceOrientation = UIDeviceOrientationLandscapeLeft;
-            _isDeviceOrientationCorrectOnEar = YES;
+            tresholdForOnEar = ON_EAR_GRAVITIY_LIMIT_X;
         } else if (acceleration.x <= -SENSITIVITY) {
             _currentDeviceOrientation = UIDeviceOrientationLandscapeRight;
-            _isDeviceOrientationCorrectOnEar = YES;
+            tresholdForOnEar = ON_EAR_GRAVITIY_LIMIT_X;
         } else if (acceleration.y <= -SENSITIVITY) {
             _currentDeviceOrientation = UIDeviceOrientationPortrait;
-            _isDeviceOrientationCorrectOnEar = YES;
+            tresholdForOnEar = ON_EAR_GRAVITIY_LIMIT_Y;
         } else if (acceleration.y >= SENSITIVITY) {
             _currentDeviceOrientation = UIDeviceOrientationPortraitUpsideDown;
-            _isDeviceOrientationCorrectOnEar = NO;
+            tresholdForOnEar = ON_EAR_GRAVITIY_LIMIT_Y;
         } else if (acceleration.z >= SENSITIVITY) {
             _currentDeviceOrientation = UIDeviceOrientationFaceDown;
-            _isDeviceOrientationCorrectOnEar = NO;
+            tresholdForOnEar = ON_EAR_GRAVITIY_LIMIT_Z;
         } else if (acceleration.z <= -SENSITIVITY) {
             _currentDeviceOrientation = UIDeviceOrientationFaceUp;
-            _isDeviceOrientationCorrectOnEar = NO;
+            tresholdForOnEar = ON_EAR_GRAVITIY_LIMIT_Z;
         } else {
             _currentDeviceOrientation = UIDeviceOrientationUnknown;
-            _isDeviceOrientationCorrectOnEar = YES;
         }
         
-        if(_isDeviceOrientationCorrectOnEar && ![UIDevice currentDevice].proximityMonitoringEnabled) {
-            [[UIDevice currentDevice] setProximityMonitoringEnabled:YES];
+        _isDeviceOrientationCorrectOnEar = acceleration.y < tresholdForOnEar;
+        BOOL isDeviceRaised = [self checkIfDeviceIsRaisedWithNewMeasurement:acceleration];
+        
+        if(_isDeviceOrientationCorrectOnEar
+           && isDeviceRaised
+           && ![UIDevice currentDevice].proximityMonitoringEnabled) {
+            [self startProximitySensor];
+            [self startProximityTimer];
         }
     }];
     
@@ -124,6 +174,21 @@
         }
     }];
     */
+}
+
+-(BOOL) checkIfDeviceIsRaisedWithNewMeasurement:(CMAcceleration)acceleration {
+    BOOL isDeviceRaising = NO;
+    if ((fabs(previousMeasurement.z) < 0.0001) && (fabs(previousMeasurement.y) < 0.0001) && (fabs(previousMeasurement.x) < 0.0001)) {
+        previousMeasurement = acceleration;
+    } else {
+        CGFloat diffX = acceleration.x - previousMeasurement.x;
+        CGFloat diffY = acceleration.y - previousMeasurement.y;
+        CGFloat diffZ = acceleration.z - previousMeasurement.z;
+        previousMeasurement = acceleration;
+        CGFloat consolideAcc = fabs(diffX) + fabs(diffY) + fabs(diffZ);
+        isDeviceRaising = consolideAcc > DEVICE_MOVEMENT_TRESHOLD;
+    }
+    return isDeviceRaising;
 }
 
 -(DeviceMotionMager*) deviceMotionMager {
