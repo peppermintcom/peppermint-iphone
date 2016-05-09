@@ -40,6 +40,8 @@
 #define AWS_API_KEY                     @"AiaWKSSoYgNv5WdLFMqkh1j7TgKq7evmQlOiFNAQxkXL7GrIHVqQJw"
 #endif
 
+#define AWS_LOG_BASE_URL                    @"https://qdkkavugcd.execute-api.us-west-2.amazonaws.com/stage"
+
 #define AWS_BASE_URL                    @"https://qdkkavugcd.execute-api.us-west-2.amazonaws.com/prod/v1"
 #define AWS_ENDPOINT_RECORDER           @"/recorder"
 #define AWS_ENDPOINT_UPLOADS            @"/uploads"
