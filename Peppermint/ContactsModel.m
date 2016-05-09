@@ -26,6 +26,7 @@
     NSArray *emailContactList;
     NSArray *smsContactList;
     NSMutableSet *uniqueContactIdsToRemoveMutableSet;
+    BOOL isSportLightSearchRegistered;
 }
 
 + (instancetype) sharedInstance {
@@ -45,6 +46,7 @@
         loadContactsTriggerCount = 0;
         unwantedCharsSet = [[NSCharacterSet characterSetWithCharactersInString:CHARS_FOR_PHONE] invertedSet];
         uniqueContactIdsToRemoveMutableSet = [NSMutableSet new];
+        isSportLightSearchRegistered = YES;
     }
     return self;
 }
@@ -253,11 +255,13 @@
     self.contactList = [NSMutableArray arrayWithArray:sortedList];
     
     emailContactList = smsContactList = nil;
-    if(self.filterText.trimmedText.length == 0) {
+    if(self.filterText.trimmedText.length == 0 && !isSportLightSearchRegistered) {
+        isSportLightSearchRegistered = YES;
         dispatch_async(LOW_PRIORITY_QUEUE, ^{
             NSArray *nonFilteredContactsArray = [NSArray arrayWithArray:self.contactList];
             for(PeppermintContact *peppermintContact in nonFilteredContactsArray) {
                 [peppermintContact addToCoreSpotlightSearch];
+                NSLog(@"addToCoreSpotlightSearch");
             }
         });
     }
