@@ -189,7 +189,8 @@
                              peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%d",
                                                                   CONTACT_PHONEBOOK,contact.recordID.hash];
                              peppermintContact.communicationChannel = CommunicationChannelSMS;
-                             peppermintContact.communicationChannelAddress = phone;
+                             peppermintContact.communicationChannelAddress = nameSurname;
+                             peppermintContact.explanation = LOC(@"...", @"No SMS Number Text");
                              peppermintContact.nameSurname = nameSurname;
                              peppermintContact.avatarImage = contact.thumbnail;
                              [peppermintContactsArray addObject:peppermintContact];
