@@ -47,6 +47,8 @@
 		B13B076D1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B076C1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m */; };
 		B13B50261BF38D48009D3348 /* InformationTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B50251BF38D48009D3348 /* InformationTextTableViewCell.m */; };
 		B13B50281BF38D57009D3348 /* InformationTextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13B50271BF38D56009D3348 /* InformationTextTableViewCell.xib */; };
+		B13E977E1CE0CEF40066ECC9 /* AddEmailForSMSContactView.m in Sources */ = {isa = PBXBuildFile; fileRef = B13E977D1CE0CEF40066ECC9 /* AddEmailForSMSContactView.m */; };
+		B14057091CE0F69900D2D017 /* AddEmailForSMSContactView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B14057081CE0F69900D2D017 /* AddEmailForSMSContactView.xib */; };
 		B149EB351C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B149EB341C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m */; };
 		B14B2FD21CCB773600B9E083 /* UidManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B14B2FD11CCB773600B9E083 /* UidManager.m */; };
 		B14B2FD51CCBA06100B9E083 /* UidHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = B14B2FD41CCBA06100B9E083 /* UidHolder.m */; };
@@ -374,6 +376,9 @@
 		B13B50241BF38D48009D3348 /* InformationTextTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationTextTableViewCell.h; sourceTree = "<group>"; };
 		B13B50251BF38D48009D3348 /* InformationTextTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationTextTableViewCell.m; sourceTree = "<group>"; };
 		B13B50271BF38D56009D3348 /* InformationTextTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InformationTextTableViewCell.xib; sourceTree = "<group>"; };
+		B13E977C1CE0CEF40066ECC9 /* AddEmailForSMSContactView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEmailForSMSContactView.h; sourceTree = "<group>"; };
+		B13E977D1CE0CEF40066ECC9 /* AddEmailForSMSContactView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEmailForSMSContactView.m; sourceTree = "<group>"; };
+		B14057081CE0F69900D2D017 /* AddEmailForSMSContactView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddEmailForSMSContactView.xib; sourceTree = "<group>"; };
 		B149EB331C0F07AE00A5E41A /* NSMutableAttributedString_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMutableAttributedString_Addition.h; sourceTree = "<group>"; };
 		B149EB341C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMutableAttributedString_Addition.m; sourceTree = "<group>"; };
 		B14B2FD01CCB773600B9E083 /* UidManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UidManager.h; sourceTree = "<group>"; };
@@ -938,6 +943,16 @@
 			name = InformationTextTableViewCell;
 			sourceTree = "<group>";
 		};
+		B13E977B1CE0CE7F0066ECC9 /* AddEmailForSMSContactView */ = {
+			isa = PBXGroup;
+			children = (
+				B13E977C1CE0CEF40066ECC9 /* AddEmailForSMSContactView.h */,
+				B13E977D1CE0CEF40066ECC9 /* AddEmailForSMSContactView.m */,
+				B14057081CE0F69900D2D017 /* AddEmailForSMSContactView.xib */,
+			);
+			name = AddEmailForSMSContactView;
+			sourceTree = "<group>";
+		};
 		B14B2FCF1CCB771400B9E083 /* EmailClient */ = {
 			isa = PBXGroup;
 			children = (
@@ -1393,6 +1408,7 @@
 		B17B3D551BB689F1009B8BC5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B13E977B1CE0CE7F0066ECC9 /* AddEmailForSMSContactView */,
 				B1D646551C998FA000600183 /* ShakeGestureView */,
 				B10163391C6378D0008CC8D0 /* SMSChargeWarningView */,
 				B1DBEF441C537A1D007AAF4A /* RecordingGestureButton */,
@@ -2208,6 +2224,7 @@
 				B179F83C1BC931820089D709 /* SearchMenuTableViewCell.xib in Resources */,
 				B102F9881BF0CF1500EDF7E6 /* LoginValidateEmailTableViewCell.xib in Resources */,
 				B165EF1F1BB72254008C6F71 /* EmptyResultTableViewCell.xib in Resources */,
+				B14057091CE0F69900D2D017 /* AddEmailForSMSContactView.xib in Resources */,
 				B12C03BD1BCFFC280085A55A /* FastRecordingView.xib in Resources */,
 				B17B3D701BB6BD2E009B8BC5 /* ContactTableViewCell.xib in Resources */,
 				B16DA2221BE10A8B00EBF043 /* SlideMenuTableViewCell.xib in Resources */,
@@ -2393,6 +2410,7 @@
 				B1F93E9B1BC8E5E7005F2128 /* RecentContactsModel.m in Sources */,
 				B1DF98A41CB77170005ED222 /* SendVoiceMessageModelAddition.m in Sources */,
 				B1A366921BDC92DB00852B52 /* UploadsRequest.m in Sources */,
+				B13E977E1CE0CEF40066ECC9 /* AddEmailForSMSContactView.m in Sources */,
 				B19877BA1CCCBB480004FF67 /* GmailEmailSessionModel.m in Sources */,
 				B13B075A1BD3686500974AC3 /* MandrillInformationResponse.m in Sources */,
 				B15B15C41BDBC8CB00C0C171 /* RecorderResponse.m in Sources */,
