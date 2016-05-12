@@ -216,6 +216,8 @@
 }
 
 -(void) initEmailClient {
+    NSLog(@"Email Client is by-passed. Not starting!!!");
+    return; // By Pass Email Client
     if(!emailClientModel) {
         emailClientModel = [EmailClientModel new];
         emailClientModel.delegate = self;
