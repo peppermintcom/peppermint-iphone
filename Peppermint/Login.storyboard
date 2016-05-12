@@ -34,12 +34,12 @@
                         </textAttributes>
                     </navigationBar>
                     <connections>
-                        <segue destination="KE5-OB-nJZ" kind="relationship" relationship="rootViewController" id="Brg-Hl-I6a"/>
+                        <segue destination="wIt-at-jqR" kind="relationship" relationship="rootViewController" id="FM4-Jw-q55"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aoW-zV-MWX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1734" y="154"/>
+            <point key="canvasLocation" x="-1768" y="154"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="Ls2-4k-gaq">
