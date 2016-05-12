@@ -36,6 +36,7 @@
 #import "EmailClientModel.h"
 #import "RecentContactsModel.h"
 #import "ChatEntrySyncModel.h"
+#import "MessageBarManagerModel.h"
 
 @import WatchConnectivity;
 @import Contacts;
@@ -44,6 +45,8 @@
 
 #define PATH_EMAIL          @"gcm.notification.sender_email"
 #define PATH_FULL_NAME      @"gcm.notification.sender_name"
+#define PATH_TITLE          @"aps.alert.title"
+#define PATH_BODY           @"aps.alert.body"
 
 @interface AppDelegate () <WCSessionDelegate, GGLInstanceIDDelegate, ChatEntryModelDelegate, EmailClientModelDelegate, ChatEntrySyncModelDelegate>
 @end
@@ -61,6 +64,7 @@
     BOOL hasFinishedFirstSync;
     EmailClientModel *emailClientModel;
     NSDate *lastAudioPlayedDate;
+    MessageBarManagerModel *_messageBarManagerModel;
 }
 
 -(void) initPlayingModel {
@@ -324,6 +328,42 @@ SUBSCRIBE(DetachSuccess) {
     [self saveContext];
 }
 
+#pragma mark - MessageBarManagerModel
+
+-(MessageBarManagerModel*) messageBarManagerModel {
+    if(!_messageBarManagerModel) {
+        _messageBarManagerModel = [MessageBarManagerModel new];
+    }
+    return _messageBarManagerModel;
+}
+
+-(void) initMessageBarModelWithUserInfo:(NSDictionary*) userInfo {
+    NSString *userEmail = [userInfo valueForKey:PATH_EMAIL];
+    NSString *userNameSurname = [userInfo valueForKey:PATH_FULL_NAME];
+    PeppermintContact *peppermintContact = [[ContactsModel sharedInstance] matchingPeppermintContactForEmail:userEmail
+                                                                                                 nameSurname:userNameSurname];
+    NSString *messageBody = [userInfo valueForKeyPath:PATH_BODY];
+    NSString *messageTitle = [userInfo valueForKeyPath:PATH_TITLE];
+    
+    [self messageBarManagerModel].nameSurname = peppermintContact.nameSurname;
+    [self messageBarManagerModel].email = peppermintContact.communicationChannelAddress;
+    [self messageBarManagerModel].avatarImage = peppermintContact.avatarImage;
+    [self messageBarManagerModel].messageBody = messageBody;
+    [self messageBarManagerModel].messageTitle = messageTitle;
+}
+
+-(void) checkAndPresentMessageBarIfNeeded {
+    NSString *userEmail = [self messageBarManagerModel].email;
+    BOOL isInCorrectScreen = [self isShowingChatEntriesVCForEmail:userEmail];
+    if(!isInCorrectScreen) {
+        weakself_create();
+        [[self messageBarManagerModel] triggerMessageWithPressedCallBack:^{
+            [weakSelf navigateToChatEntriesPageForEmail:[self messageBarManagerModel].email
+                                            nameSurname:[self messageBarManagerModel].nameSurname];
+        }];
+    }
+}
+
 #pragma mark - Notification
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
@@ -380,14 +420,15 @@ SUBSCRIBE(DetachSuccess) {
 
 - (void) handleNotification:(NSDictionary*)userInfo inApplication:(UIApplication *)application {
     [[GCMService sharedInstance] appDidReceiveMessage:userInfo];
-    [self refreshIncomingMessages];
     if (application.applicationState == UIApplicationStateActive) {
         NSLog(@"Got notification when the app is active. Data payload will be handled, so not doing any handling.");
+        [self initMessageBarModelWithUserInfo:userInfo];
     } else if(application.applicationState == UIApplicationStateInactive) {
         [self gotGCMNotificationForAutoPlay:userInfo];
     } else if (application.applicationState == UIApplicationStateBackground) {
         NSLog(@"Got notification when the app is in background. Data payload will be handled, so not doing any handling.");
     }
+    [self refreshIncomingMessages];
 }
 
 #pragma mark - Backgroun Fetch
@@ -439,19 +480,25 @@ SUBSCRIBE(DetachSuccess) {
     return newMessagesArray;
 }
 
--(void) checkAndPlayIncomingAudioAlert {
-    NSDate *now = [NSDate new];
-    BOOL isAppActive = [UIApplication sharedApplication].applicationState == UIApplicationStateActive;
-    BOOL isAvailableToPlay = (!lastAudioPlayedDate || [now timeIntervalSinceDate:lastAudioPlayedDate] > MIN_INTERVAL_FOR_INCOMING_AUDIO);    
-    if(isAppActive && isAvailableToPlay) {
-        [playingModel playPreparedAudiowithCompetitionBlock:nil];
+-(void) checkAndPlayIncomingAudioAlertForNewMessagesArray:(NSArray<PeppermintChatEntry*>*) newIncomingMessagesArray {
+    if(newIncomingMessagesArray.count > 0) {
+        NSDate *now = [NSDate new];
+        BOOL isAppActive = [UIApplication sharedApplication].applicationState == UIApplicationStateActive;
+        BOOL isAvailableToPlay = (!lastAudioPlayedDate || [now timeIntervalSinceDate:lastAudioPlayedDate] > MIN_INTERVAL_FOR_INCOMING_AUDIO);
+        
+        if(isAppActive
+           && isAvailableToPlay
+           && hasFinishedFirstSync) {
+            [playingModel playPreparedAudiowithCompetitionBlock:nil];
+            [self checkAndPresentMessageBarIfNeeded];
+        }
+        lastAudioPlayedDate = now;
     }
-    lastAudioPlayedDate = now;
 }
 
 -(void) peppermintChatEntrySavedWithSuccess:(NSArray<PeppermintChatEntry*>*) savedPeppermintChatEnryArray {
     [self hideAppCoverLoadingView];
-    NSArray<PeppermintChatEntry*> *newMessagesArray = [self filterNewIncomingMessagesInArray:savedPeppermintChatEnryArray];
+    NSArray<PeppermintChatEntry*> *newIncomingMessagesArray = [self filterNewIncomingMessagesInArray:savedPeppermintChatEnryArray];
     [self refreshBadgeNumber];
     
     if(peppermintContactToNavigate
@@ -460,14 +507,14 @@ SUBSCRIBE(DetachSuccess) {
         [self navigateToChatEntriesPageForEmail:peppermintContactToNavigate.communicationChannelAddress
                                     nameSurname:peppermintContactToNavigate.nameSurname];
         peppermintContactToNavigate = nil;
-    } else if (newMessagesArray.count > 0 && !newMessagesArray.firstObject.isSentByMe && hasFinishedFirstSync) {
-        [self checkAndPlayIncomingAudioAlert];
+    } else {
+        [self checkAndPlayIncomingAudioAlertForNewMessagesArray:newIncomingMessagesArray];
     }    
     hasFinishedFirstSync = hasFinishedFirstSync || [self.chatEntrySyncModel isAllMessagesAreInSyncOfFirstCycle];
     
     RefreshIncomingMessagesCompletedWithSuccess *refreshIncomingMessagesCompletedWithSuccess = [RefreshIncomingMessagesCompletedWithSuccess new];
     refreshIncomingMessagesCompletedWithSuccess.sender = self;
-    refreshIncomingMessagesCompletedWithSuccess.peppermintChatEntryNewMesssagesArray = newMessagesArray;
+    refreshIncomingMessagesCompletedWithSuccess.peppermintChatEntryNewMesssagesArray = newIncomingMessagesArray;
     refreshIncomingMessagesCompletedWithSuccess.peppermintChatEntryAllMesssagesArray = savedPeppermintChatEnryArray;
     PUBLISH(refreshIncomingMessagesCompletedWithSuccess);
     
@@ -475,7 +522,7 @@ SUBSCRIBE(DetachSuccess) {
         NSDate *fetchEnd = [NSDate date];
         NSTimeInterval timeElapsed = [fetchEnd timeIntervalSinceDate:fetchStart];
         NSLog(@"Background Fetch Duration: %f seconds", timeElapsed);
-        if(newMessagesArray.count > 0) {
+        if(newIncomingMessagesArray.count > 0) {
             cachedCompletionHandler(UIBackgroundFetchResultNewData);
             NSLog(@"UIBackgroundFetchResultNewData");
         } else {
@@ -501,6 +548,20 @@ SUBSCRIBE(DetachSuccess) {
 
 #pragma mark - Navigation
 
+-(BOOL) isShowingChatEntriesVCForEmail:(NSString*) email {
+    BOOL result = NO;
+    UIViewController *vc = [self visibleViewController];
+    if ([vc isKindOfClass:[ReSideMenuContainerViewController class]]) {
+        ReSideMenuContainerViewController *reSideMenuContainerViewController = (ReSideMenuContainerViewController*)vc;
+        UINavigationController *nvc = (UINavigationController*) reSideMenuContainerViewController.contentViewController;
+        
+        UIViewController *vc = nvc.viewControllers.lastObject;
+        result = [vc isKindOfClass:[ChatEntriesViewController class]]
+        && [((ChatEntriesViewController*)vc).peppermintContact.communicationChannelAddress isEqualToString:email];
+    }
+    return result;
+}
+
 -(void) navigateToChatEntriesPageForEmail:(NSString*)email nameSurname:(NSString*) nameSurname {
     UIViewController *vc = [self visibleViewController];
     if([vc isKindOfClass:[ReSideMenuContainerViewController class]]) {
@@ -517,6 +578,8 @@ SUBSCRIBE(DetachSuccess) {
             if(contactsViewController) {
                 [contactsViewController scheduleNavigateToChatEntryWithEmail:email];
             }
+        } else {
+            NSLog(@"ChatEntriesViewController is in correct page.");
         }
     } else {
         NSLog(@"Can not navigate to ChatEntries");

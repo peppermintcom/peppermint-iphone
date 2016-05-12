@@ -26,6 +26,7 @@ pod 'UIView+Shake'
 pod 'DeviceMotion'
 pod 'mailcore2-ios'
 pod 'KTCenterFlowLayout'
+pod 'TWMessageBarManager'
 end
 
 target 'PeppermintTests' do
