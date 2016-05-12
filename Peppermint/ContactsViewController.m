@@ -31,7 +31,7 @@
 
 #define SEGUE_CHAT_ENTRIES_VIEWCONTROLLER   @"ChatEntriesViewControllerSegue"
 
-@interface ContactsViewController () <AddContactViewControllerDelegate>
+@interface ContactsViewController () <AddContactViewControllerDelegate, AddEmailForSMSContactViewDelegate>
 
 @end
 
@@ -94,6 +94,7 @@
     [_recordingView removeFromSuperview];
     _recordingView = nil;
     self.tutorialView = nil;
+    _addEmailForSMSContactView = nil;
 }
 
 SUBSCRIBE(SyncGoogleContactsSuccess) {
@@ -504,44 +505,49 @@ SUBSCRIBE(UserLoggedOut) {
     }
 }
 
+-(CGRect) fixTableScrollPositionForIndexPath:(NSIndexPath*)indexPath {
+    CGRect cellRect = [self.tableView rectForRowAtIndexPath:indexPath];
+    cellRect = CGRectOffset(cellRect, -self.tableView.contentOffset.x, -self.tableView.contentOffset.y);
+    CGPoint scrollPoint = self.tableView.contentOffset;
+    
+    if (cellRect.origin.y < 0) {
+        scrollPoint.y += cellRect.origin.y;
+        cellRect.origin.y = 0;
+        [self.tableView setContentOffset:scrollPoint animated:YES];
+    }
+    
+    CGRect tableViewFrame = self.tableView.frame;
+    CGFloat margin = 1.5 * CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
+    CGFloat maxPossibleYOffset = tableViewFrame.size.height - margin;
+    if (cellRect.origin.y > maxPossibleYOffset) {
+        scrollPoint.y += cellRect.origin.y - maxPossibleYOffset;
+        cellRect.origin.y = maxPossibleYOffset;
+        [self.tableView setContentOffset:scrollPoint animated:YES];
+    }
+    self.tableView.bounces = NO;
+    return cellRect;
+}
+
 -(void) didBeginItemSelectionOnIndexpath:(NSIndexPath*) indexPath location:(CGPoint) location {
     BOOL isActiveContactListStillValid = [self activeContactList].count > indexPath.row;
     if(!isScrolling
        && isActiveContactListStillValid) {
         [self.searchContactsTextField resignFirstResponder];
-        CGRect cellRect = [self.tableView rectForRowAtIndexPath:indexPath];
-        cellRect = CGRectOffset(cellRect, -self.tableView.contentOffset.x, -self.tableView.contentOffset.y);
-        CGPoint scrollPoint = self.tableView.contentOffset;
-        
-        if (cellRect.origin.y < 0) {
-            scrollPoint.y += cellRect.origin.y;
-            cellRect.origin.y = 0;
-            [self.tableView setContentOffset:scrollPoint animated:YES];
-        }
-        
-        CGRect tableViewFrame = self.tableView.frame;
-        CGFloat margin = 1.5 * CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
-        CGFloat maxPossibleYOffset = tableViewFrame.size.height - margin;
-        if (cellRect.origin.y > maxPossibleYOffset) {
-            scrollPoint.y += cellRect.origin.y - maxPossibleYOffset;
-            cellRect.origin.y = maxPossibleYOffset;
-            [self.tableView setContentOffset:scrollPoint animated:YES];
-        }
-        
-        self.tableView.bounces = NO;
+        CGRect cellRect = [self fixTableScrollPositionForIndexPath:indexPath];
         [self hideHoldToRecordInfoView];
         
         PeppermintContact *selectedContact = [FastReplyModel sharedInstance].peppermintContact;
         if(indexPath.section == SECTION_CONTACTS) {
                 selectedContact = [[self activeContactList] objectAtIndex:indexPath.row];
         }
-        [self.searchContactsTextField resignFirstResponder];
         
         SendVoiceMessageModel *sendVoiceMessageModel = nil;
         if(selectedContact.communicationChannel == CommunicationChannelEmail) {
             sendVoiceMessageModel = [SendVoiceMessageSparkPostModel new];
         } else if (selectedContact.communicationChannel == CommunicationChannelSMS) {
-            sendVoiceMessageModel = [SendVoiceMessageSMSModel new];
+            //sendVoiceMessageModel = [SendVoiceMessageSMSModel new];
+            [self.addEmailForSMSContactView presentOverView:self.view forPeppermintContact:selectedContact];
+            return;
         }
         
         if(!isNewRecordAvailable) {
@@ -823,6 +829,12 @@ SUBSCRIBE(UserLoggedOut) {
     return result;
 }
 
+#pragma mark - AddEmailForSMSContactViewDelegate
+
+-(void) addEmailIsSuccessfullWithEmailContact:(PeppermintContact*) peppermintContact {
+    [self refreshContacts];
+}
+
 #pragma mark - SearchMenuTableViewCellDelegate
 
 -(void) cellSelectedWithTag:(NSUInteger) cellTag {
@@ -934,6 +946,13 @@ SUBSCRIBE(MessageIsMarkedAsRead) {
         [self initRecordingView];
     }
     return _recordingView;
+}
+
+-(AddEmailForSMSContactView*) addEmailForSMSContactView {
+    if(!_addEmailForSMSContactView) {
+        _addEmailForSMSContactView = [AddEmailForSMSContactView createInstanceWithDelegate:self];
+    }
+    return _addEmailForSMSContactView;
 }
 
 #pragma mark - Navigation

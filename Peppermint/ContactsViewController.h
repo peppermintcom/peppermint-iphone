@@ -13,6 +13,7 @@
 #import "FoggyRecordingView.h"
 #import "TutorialView.h"
 #import "ChatEntrySyncModel.h"
+#import "AddEmailForSMSContactView.h"
 
 #define CELL_TAG_ALL_CONTACTS           1
 #define CELL_TAG_RECENT_CONTACTS        2
@@ -36,6 +37,7 @@
 @property (weak, nonatomic) IBOutlet UIView *whiteEllipseView;
 @property (strong, nonatomic) RecordingView *recordingView;
 @property (strong, nonatomic) TutorialView *tutorialView;
+@property (strong, nonatomic) AddEmailForSMSContactView *addEmailForSMSContactView;
 
 -(void) resetUserInterfaceWithActiveCellTag:(int)newCellTag;
 -(IBAction)messageCancelButtonPressed:(id)sender;

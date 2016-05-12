@@ -189,7 +189,8 @@
                              peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%d",
                                                                   CONTACT_PHONEBOOK,contact.recordID.hash];
                              peppermintContact.communicationChannel = CommunicationChannelSMS;
-                             peppermintContact.communicationChannelAddress = phone;
+                             peppermintContact.communicationChannelAddress = nameSurname; //To merge SMS contacts with same name surname
+                             peppermintContact.explanation = LOC(@"...", @"No SMS Number Text");
                              peppermintContact.nameSurname = nameSurname;
                              peppermintContact.avatarImage = contact.thumbnail;
                              [peppermintContactsArray addObject:peppermintContact];
@@ -274,16 +275,16 @@
 
 -(NSArray*) emailContactList {
     if(emailContactList == nil) {
-        emailContactList = [self.contactList filteredArrayUsingPredicate:
-                            [NSPredicate predicateWithFormat:
-                             @"self.communicationChannel == %d", CommunicationChannelEmail]];
+        NSPredicate *emailPredicate = [ContactsModel contactPredicateWithCommunicationChannel:CommunicationChannelEmail];
+        emailContactList = [self.contactList filteredArrayUsingPredicate:emailPredicate];
     }
     return emailContactList;
 }
 
 -(NSArray*) smsContactList {
     if(smsContactList == nil) {
-        smsContactList = [self.contactList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.communicationChannel == %d", CommunicationChannelSMS]];
+        NSPredicate *smsPredicate = [ContactsModel contactPredicateWithCommunicationChannel:CommunicationChannelSMS];
+        smsContactList = [self.contactList filteredArrayUsingPredicate:smsPredicate];
     }
     return smsContactList;
 }
@@ -294,9 +295,19 @@
     NSArray *currentPeppermintContactsArray = [NSArray arrayWithArray:peppermintContactsArray];
     NSSet *receivedMessagesEmailSet = [ChatEntryModel receivedMessagesEmailSet];
     
+    NSPredicate *emailPredicate = [ContactsModel contactPredicateWithCommunicationChannel:CommunicationChannelEmail];
+    NSArray *emailContactsArray = [peppermintContactsArray filteredArrayUsingPredicate:emailPredicate];
+    NSMutableSet *emailContactsNameSurnameSet = [NSMutableSet new];
+    for(PeppermintContact *peppermintContact in emailContactsArray) {
+        [emailContactsNameSurnameSet addObject:peppermintContact.nameSurname];
+    }
+    
     for(PeppermintContact *peppermintContact in currentPeppermintContactsArray) {
         if([receivedMessagesEmailSet containsObject:peppermintContact.communicationChannelAddress]) {
             peppermintContact.hasReceivedMessageOverPeppermint = YES;
+            [uniqueContactIdsToRemoveMutableSet addObject:peppermintContact.uniqueContactId];
+        } else if([emailContactsNameSurnameSet containsObject:peppermintContact.nameSurname]
+                  && peppermintContact.communicationChannel != CommunicationChannelEmail) {
             [uniqueContactIdsToRemoveMutableSet addObject:peppermintContact.uniqueContactId];
         }
     }
