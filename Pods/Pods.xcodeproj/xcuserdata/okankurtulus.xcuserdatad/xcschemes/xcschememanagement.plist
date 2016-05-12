@@ -104,6 +104,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>TWMessageBarManager.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>UIView+Shake.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -132,7 +137,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>27160F50F25CE2D55E10588386555465</key>
+		<key>36809F1737AD2AD6107D73DAB72ED57A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -152,12 +157,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>4BFD08ECB27F058196206B8A8EBA916B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>4E286D373D75563CE26E479A68203892</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>631F11E5B754221D46400553244B67C0</key>
+		<key>6223E136CC7D07A3C9BA619A9CC2848B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -168,6 +178,11 @@
 			<true/>
 		</dict>
 		<key>7E61C9A8C176278C6C99C2C59E9C152E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8671F4FAA3640B076E3D4554A47E3E02</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -187,17 +202,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BA9AC8EDF34420D0DEEC75E644EC2D88</key>
+		<key>B898032FD3F8DF2EC141088CB1E6D2C7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>C43DEF8E5BFEC36D943258BA3F21834D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C8A7CBA0BBAC54BBCF4E968970564625</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -217,17 +227,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>D97E3FBBE9C2057E891294E675BAD181</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>D9D445AAC29DB89731ACBF3AD432CA94</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>DB79F9B1434ED7C54AEBA792D598E37B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E015CF1D654FD95888AB972F2956AA40</key>
 		<dict>
 			<key>primary</key>
 			<true/>

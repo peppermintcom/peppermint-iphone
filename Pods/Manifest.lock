@@ -101,6 +101,7 @@ PODS:
   - REMenu (1.10)
   - RESideMenu (4.0.7)
   - tolo (1.0.2)
+  - TWMessageBarManager (1.8.1)
   - UIView+Shake (1.1.5)
 
 DEPENDENCIES:
@@ -126,6 +127,7 @@ DEPENDENCIES:
   - REMenu (~> 1.10)
   - RESideMenu (~> 4.0.7)
   - tolo
+  - TWMessageBarManager
   - UIView+Shake
 
 EXTERNAL SOURCES:
@@ -172,6 +174,7 @@ SPEC CHECKSUMS:
   REMenu: 30dad195930adf6c5eeb8041e3257aa60bf9fa49
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
   tolo: 5c250b8193b7cff366c6787a4ef264ec4d267e7a
+  TWMessageBarManager: fd84e7948ba7968a2b5d9454859135761214ec56
   UIView+Shake: 2d2185006d38ee5daed07f14c0989f703f86682f
 
 COCOAPODS: 0.39.0

@@ -59,6 +59,12 @@ install_resource()
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "GoogleSignIn/Resources/GoogleSignIn.bundle"
+  install_resource "TWMessageBarManager/Classes/Icons/icon-error.png"
+  install_resource "TWMessageBarManager/Classes/Icons/icon-error@2x.png"
+  install_resource "TWMessageBarManager/Classes/Icons/icon-info.png"
+  install_resource "TWMessageBarManager/Classes/Icons/icon-info@2x.png"
+  install_resource "TWMessageBarManager/Classes/Icons/icon-success.png"
+  install_resource "TWMessageBarManager/Classes/Icons/icon-success@2x.png"
   install_resource "gtm-oauth2/Source/Touch/GTMOAuth2ViewTouch.xib"
   install_resource "${BUILT_PRODUCTS_DIR}/DeviceMotion.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/EasyMailSender.bundle"
@@ -66,6 +72,12 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "GoogleSignIn/Resources/GoogleSignIn.bundle"
+  install_resource "TWMessageBarManager/Classes/Icons/icon-error.png"
+  install_resource "TWMessageBarManager/Classes/Icons/icon-error@2x.png"
+  install_resource "TWMessageBarManager/Classes/Icons/icon-info.png"
+  install_resource "TWMessageBarManager/Classes/Icons/icon-info@2x.png"
+  install_resource "TWMessageBarManager/Classes/Icons/icon-success.png"
+  install_resource "TWMessageBarManager/Classes/Icons/icon-success@2x.png"
   install_resource "gtm-oauth2/Source/Touch/GTMOAuth2ViewTouch.xib"
   install_resource "${BUILT_PRODUCTS_DIR}/DeviceMotion.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/EasyMailSender.bundle"
