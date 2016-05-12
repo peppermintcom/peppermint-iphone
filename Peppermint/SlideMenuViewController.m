@@ -16,14 +16,14 @@
 
 
 #define INDEX_TUTORIAL      -1
+#define INDEX_MAIL_CLIENT   -2
 
-#define NUMBER_OF_OPTIONS   6
+#define NUMBER_OF_OPTIONS   5
 #define INDEX_RECENT_CONTACTS      0
 #define INDEX_ALL_CONTACTS  1
-#define INDEX_MAIL_CLIENT   2
-#define INDEX_FEEDBACK      3
-#define INDEX_ACCOUNT       4
-#define INDEX_ABOUT         5
+#define INDEX_FEEDBACK      2
+#define INDEX_ACCOUNT       3
+#define INDEX_ABOUT         4
 
 
 @interface SlideMenuViewController ()

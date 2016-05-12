@@ -34,7 +34,7 @@
                         </textAttributes>
                     </navigationBar>
                     <connections>
-                        <segue destination="KE5-OB-nJZ" kind="relationship" relationship="rootViewController" id="Brg-Hl-I6a"/>
+                        <segue destination="wIt-at-jqR" kind="relationship" relationship="rootViewController" id="it8-NU-yPp"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aoW-zV-MWX" userLabel="First Responder" sceneMemberID="firstResponder"/>
