@@ -174,3 +174,6 @@
 "Search" = "Search";
 "Audio message could not be played. Please check your connection and try again." = "Audio message could not be played. Please check your connection and try again.";
 "..." = "...";
+"Sending via Email" = "Sending via Email";
+"No email address found. Please insert an email address for this contact." = "No email address found. Please insert an email address for this contact.";
+"Save email address" = "Save email address";
