@@ -12,14 +12,33 @@
 #import "GAI.h"
 #import "GAIDictionaryBuilder.h"
 
+#import "AFURLResponseSerialization.h"
+
+
 #define EVENT_ATTR_MAX_LENGTH_FOR_CRASHLYTICS  100
+#define RAW_SERVER_RESPONSE                     @"Raw Server Response"
 
 @implementation AnalyticsModel
 
 +(void) logError:(NSError*) error {
+    error = [self checkAndExpandMessages:error];
     [self logErrorToAnswers:error];
     [self logErrorToGoogleAnalytics:error];
     [self logErrorToFlurry:error];
+}
+
++(NSError*) checkAndExpandMessages:(NSError*)error {
+    NSError *expandedError = error;
+    
+    if ([error.domain isEqualToString:AFURLResponseSerializationErrorDomain]) {
+        NSString* rawResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey]
+                                                        encoding:NSUTF8StringEncoding];
+        NSLog(@"Server raw resposne:\n%@",rawResponse);
+        NSMutableDictionary *mutableUserInfo = [NSMutableDictionary dictionaryWithDictionary:error.userInfo];
+        [mutableUserInfo setValue:rawResponse forKey:RAW_SERVER_RESPONSE];
+        expandedError = [NSError errorWithDomain:error.domain code:error.code userInfo:error.userInfo];
+    }
+    return expandedError;
 }
 
 +(NSMutableDictionary*) truncateEventValuesOf:(NSMutableDictionary*)logDictionary toLimit:(int) limit {
