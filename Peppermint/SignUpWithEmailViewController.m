@@ -162,7 +162,7 @@
             LoginTextFieldTableViewCell *loginTextFieldCell = [CellFactory cellLoginTextFieldTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
             [loginTextFieldCell.textField setSecureTextEntry:YES];
             loginTextFieldCell.textField.placeholder = LOC(@"Password", @"Password");
-            loginTextFieldCell.textField.keyboardType = UIKeyboardTypeDefault;
+            loginTextFieldCell.textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
             loginTextFieldCell.textField.text = [PeppermintMessageSender sharedInstance].password;
             loginTextFieldCell.notAllowedCharactersArray = [NSArray arrayWithObject:@" "];
             cell = loginTextFieldCell;
@@ -243,13 +243,9 @@
 #pragma mark - LoginTextFieldTableViewCellDelegate
 
 -(void) updateKeyboardReturnKeyType {
-    UIReturnKeyType currentReturnKeyType = activeTextField.returnKeyType;
     BOOL isValid = [PeppermintMessageSender sharedInstance].isValidToSendMessage;
-    activeTextField.returnKeyType = isValid ? UIReturnKeyDone : UIReturnKeyNext;
-    if(activeTextField.returnKeyType != currentReturnKeyType) {
-        [activeTextField resignFirstResponder];
-        [activeTextField becomeFirstResponder];
-    }
+    UIReturnKeyType newReturnKeyType = isValid ? UIReturnKeyDone : UIReturnKeyNext;
+    [activeTextField updateKeyboardReturnType:newReturnKeyType];
 }
 
 -(void) textFieldDidBeginEdiging:(UITextField*)textField {
