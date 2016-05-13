@@ -108,8 +108,8 @@
     [login logInWithReadPermissions: @[@"public_profile",@"email"]
      fromViewController:self.delegate
      handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-         [self.delegate loginFinishedLoading];
          if (error) {
+             [self.delegate loginFinishedLoading];
              NSLog(@"Process error");
              [self.delegate operationFailure:error];
          } else if (result.isCancelled) {
@@ -126,8 +126,8 @@
         [self.delegate loginLoading];
         [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields": @"name, email, picture"}]
          startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-             [self.delegate loginFinishedLoading];
              if(error) {
+                 [self.delegate loginFinishedLoading];
                  [self.delegate operationFailure:error];
              } else {
                  NSDictionary *infoDictionary = (NSDictionary*)result;
@@ -151,6 +151,7 @@
                      [peppermintMessageSender save];
                      [self.delegate loginSucceed];
                  } else {
+                     [self.delegate loginFinishedLoading];
                      [self showErrorForInformationFromFacebook];
                  }
              }
