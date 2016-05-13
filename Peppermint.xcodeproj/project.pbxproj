@@ -62,8 +62,8 @@
 		B15B15BE1BDBC31F00C0C171 /* AWSService.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15BD1BDBC31F00C0C171 /* AWSService.m */; };
 		B15B15C11BDBC55A00C0C171 /* AWSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15C01BDBC55A00C0C171 /* AWSModel.m */; };
 		B15B15C41BDBC8CB00C0C171 /* RecorderResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15C31BDBC8CB00C0C171 /* RecorderResponse.m */; };
-		B15E05A41CE498D2008203C5 /* MessageBarManagerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B15E05A31CE498D2008203C5 /* MessageBarManagerModel.m */; };
 		B15E05A11CE4781D008203C5 /* UITextField_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B15E05A01CE4781D008203C5 /* UITextField_Addition.m */; };
+		B15E05A41CE498D2008203C5 /* MessageBarManagerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B15E05A31CE498D2008203C5 /* MessageBarManagerModel.m */; };
 		B15EEB971C607F350083658A /* Data.m in Sources */ = {isa = PBXBuildFile; fileRef = B15EEB961C607F350083658A /* Data.m */; };
 		B15EEB9A1C6081F40083658A /* RecordersUpdateRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B15EEB991C6081F40083658A /* RecordersUpdateRequest.m */; };
 		B15FDE781C117CCE007100EC /* Contact+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B15FDE651C117CCE007100EC /* Contact+CoreDataProperties.m */; };
@@ -408,10 +408,10 @@
 		B15B15C01BDBC55A00C0C171 /* AWSModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSModel.m; sourceTree = "<group>"; };
 		B15B15C21BDBC8CB00C0C171 /* RecorderResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecorderResponse.h; sourceTree = "<group>"; };
 		B15B15C31BDBC8CB00C0C171 /* RecorderResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecorderResponse.m; sourceTree = "<group>"; };
-		B15E05A21CE498D2008203C5 /* MessageBarManagerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageBarManagerModel.h; sourceTree = "<group>"; };
-		B15E05A31CE498D2008203C5 /* MessageBarManagerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageBarManagerModel.m; sourceTree = "<group>"; };
 		B15E059F1CE4781D008203C5 /* UITextField_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextField_Addition.h; sourceTree = "<group>"; };
 		B15E05A01CE4781D008203C5 /* UITextField_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITextField_Addition.m; sourceTree = "<group>"; };
+		B15E05A21CE498D2008203C5 /* MessageBarManagerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageBarManagerModel.h; sourceTree = "<group>"; };
+		B15E05A31CE498D2008203C5 /* MessageBarManagerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageBarManagerModel.m; sourceTree = "<group>"; };
 		B15EEB951C607F350083658A /* Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Data.h; sourceTree = "<group>"; };
 		B15EEB961C607F350083658A /* Data.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Data.m; sourceTree = "<group>"; };
 		B15EEB981C6081F40083658A /* RecordersUpdateRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordersUpdateRequest.h; sourceTree = "<group>"; };

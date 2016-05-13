@@ -33,12 +33,12 @@ _No email address found. Please insert an email address for this contact.</strin
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xNT-hm-IKD">
-                            <rect key="frame" x="16" y="123" width="228" height="25"/>
+                            <rect key="frame" x="16" y="123" width="220" height="25"/>
                             <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="16"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
                         </textField>
                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="email_inactive" translatesAutoresizingMaskIntoConstraints="NO" id="9Lo-QO-5bQ" userLabel="Email Image View">
-                            <rect key="frame" x="252" y="123" width="20" height="25"/>
+                            <rect key="frame" x="244" y="123" width="20" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="25" id="9gp-oZ-Btl"/>
                                 <constraint firstAttribute="width" constant="20" id="Czd-In-rjB"/>
@@ -74,7 +74,7 @@ _No email address found. Please insert an email address for this contact.</strin
                         <constraint firstAttribute="trailing" secondItem="Yc4-6g-lhj" secondAttribute="trailing" constant="8" id="HvF-BK-KDC"/>
                         <constraint firstAttribute="trailing" secondItem="uc3-48-vkY" secondAttribute="trailing" id="JuZ-J0-l6m"/>
                         <constraint firstItem="3Bg-jN-K2N" firstAttribute="leading" secondItem="yAc-xX-czb" secondAttribute="leading" id="K1z-MZ-8tw"/>
-                        <constraint firstAttribute="trailing" secondItem="9Lo-QO-5bQ" secondAttribute="trailing" constant="8" id="NbS-l9-XYh"/>
+                        <constraint firstAttribute="trailing" secondItem="9Lo-QO-5bQ" secondAttribute="trailing" constant="16" id="NbS-l9-XYh"/>
                         <constraint firstItem="9Lo-QO-5bQ" firstAttribute="leading" secondItem="xNT-hm-IKD" secondAttribute="trailing" constant="8" id="VQw-35-IdU"/>
                         <constraint firstItem="9Lo-QO-5bQ" firstAttribute="top" secondItem="Yc4-6g-lhj" secondAttribute="bottom" priority="750" constant="7" id="WUR-ZK-RYl"/>
                         <constraint firstAttribute="height" constant="200" id="WWz-nt-zKj"/>
