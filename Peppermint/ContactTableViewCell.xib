@@ -22,10 +22,11 @@
                             <constraint firstAttribute="height" constant="1" id="uEb-xs-9Np"/>
                         </constraints>
                     </view>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_empty" translatesAutoresizingMaskIntoConstraints="NO" id="1G5-fy-gLb" userLabel="Avatar Image View">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_empty" translatesAutoresizingMaskIntoConstraints="NO" id="1G5-fy-gLb" userLabel="Avatar Image View">
                         <rect key="frame" x="11" y="10" width="35" height="35"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="1G5-fy-gLb" secondAttribute="height" multiplier="1:1" id="Dpx-7U-g3y"/>
+                            <constraint firstAttribute="width" constant="35" id="VvB-ls-0Wy"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Okan Kurtulus" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JcO-0x-7sn" userLabel="Information">
@@ -97,7 +98,7 @@
                     <constraint firstItem="9ln-Rw-2VJ" firstAttribute="width" secondItem="JcO-0x-7sn" secondAttribute="width" id="e1j-PO-Et0"/>
                     <constraint firstItem="LTB-nu-Tni" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" priority="750" constant="10" id="eGJ-rL-MUL"/>
                     <constraint firstItem="JcO-0x-7sn" firstAttribute="leading" secondItem="1G5-fy-gLb" secondAttribute="trailing" constant="8" id="efA-lM-KtN"/>
-                    <constraint firstAttribute="bottom" secondItem="1G5-fy-gLb" secondAttribute="bottom" priority="750" constant="10" id="fS7-fZ-cnL"/>
+                    <constraint firstAttribute="bottom" secondItem="1G5-fy-gLb" secondAttribute="bottom" priority="749" constant="10" id="fS7-fZ-cnL"/>
                     <constraint firstItem="PXW-gj-hHd" firstAttribute="centerY" secondItem="ejf-Un-hy5" secondAttribute="centerY" id="fXj-b1-1HI"/>
                     <constraint firstAttribute="trailing" secondItem="AmQ-9E-NNX" secondAttribute="trailing" constant="11" id="h1j-Wt-CdH"/>
                     <constraint firstItem="EDQ-8r-4xP" firstAttribute="top" secondItem="ejf-Un-hy5" secondAttribute="top" id="zlg-3S-Jl4"/>
