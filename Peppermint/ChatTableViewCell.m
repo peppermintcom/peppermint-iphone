@@ -163,7 +163,10 @@
 }
 
 - (IBAction)playPauseButtonPressed:(id)sender {
-    isSeeking = NO;
+    if(isSeeking) {
+        isSeeking = NO;
+        return;
+    }
     if(_playingModel.audioPlayer.isPlaying) {
         [self stopPlayingCell];
         self.playPauseImageView.image = imagePlay;
