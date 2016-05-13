@@ -113,10 +113,10 @@
     return cropped;
 }
 
-
 -(UIImage*) resizedImageWithWidth:(int)width height:(int)height {
     CGSize destinationSize = CGSizeMake(width, height);
-    UIGraphicsBeginImageContext(destinationSize);
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    UIGraphicsBeginImageContextWithOptions(destinationSize, NO, scale);
     [self drawInRect:CGRectMake(0,0,destinationSize.width,destinationSize.height)];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
