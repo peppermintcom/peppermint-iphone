@@ -192,8 +192,8 @@
 }
 
 -(void) closeViewController {
-    [self.firstNameTextField resignFirstResponder];
-    [self.lastNameTextField resignFirstResponder];
+    //[self.firstNameTextField resignFirstResponder];
+    //[self.lastNameTextField resignFirstResponder];
     [self.phoneNumberTextField resignFirstResponder];
     [self.emailTextField resignFirstResponder];
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -346,11 +346,7 @@
     UIReturnKeyType returnKeyType = textField.returnKeyType;
     [self updateScreen];
     [self updateValidationRows];
-    if(returnKeyType != textField.returnKeyType) {
-        [textField resignFirstResponder];
-        [textField becomeFirstResponder];
-    }
-    
+    [textField updateKeyboardReturnType:textField.returnKeyType];
     if(textField == self.firstNameTextField || textField == self.lastNameTextField) {
         [self.delegate nameFieldUpdated:[NSString stringWithFormat:@"%@ %@", self.firstNameTextField.text, self.lastNameTextField.text]];
     }
