@@ -189,8 +189,7 @@
                              peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%d",
                                                                   CONTACT_PHONEBOOK,contact.recordID.hash];
                              peppermintContact.communicationChannel = CommunicationChannelSMS;
-                             peppermintContact.communicationChannelAddress = nameSurname; //To merge SMS contacts with same name surname
-                             peppermintContact.explanation = LOC(@"...", @"No SMS Number Text");
+                             peppermintContact.communicationChannelAddress = phone;
                              peppermintContact.nameSurname = nameSurname;
                              peppermintContact.avatarImage = contact.thumbnail;
                              [peppermintContactsArray addObject:peppermintContact];
@@ -229,6 +228,9 @@
     NSArray *customContactsArray =
     [CustomContactModel peppermintContactsArrayWithFilterText:self.filterText.trimmedText];
     [peppermintContactsArray addObjectsFromArray:customContactsArray];
+    
+    //Unify SMS Contacts
+    peppermintContactsArray = [self unifySMSContacts:peppermintContactsArray];
     
     //Unify for via Peppermint
     peppermintContactsArray = [self mergeContactsConsideringViaPeppermint:peppermintContactsArray];
@@ -287,6 +289,18 @@
         smsContactList = [self.contactList filteredArrayUsingPredicate:smsPredicate];
     }
     return smsContactList;
+}
+
+#pragma mark - Unify SMS Contacts
+
+-(NSMutableArray*) unifySMSContacts:(NSMutableArray*) peppermintContactsArray {
+    for(PeppermintContact *peppermintContact in peppermintContactsArray) {
+        if(peppermintContact.communicationChannel == CommunicationChannelSMS) {
+            peppermintContact.communicationChannelAddress = peppermintContact.nameSurname; //To merge SMS contacts with same name surname
+            peppermintContact.explanation = LOC(@"...", @"No SMS Number Text");
+        }
+    }
+    return peppermintContactsArray;
 }
 
 #pragma mark - Merge Contacts to show via Peppermint

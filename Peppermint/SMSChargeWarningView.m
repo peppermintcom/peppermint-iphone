@@ -115,27 +115,34 @@
     [self.noButton  setTitle:LOC(@"No", @"No") forState:UIControlStateNormal];
 }
 
--(void) presentOverView:(UIView*) view forNameSurname:(NSString*)nameSurname {
-    
-    NSNumber *savedValue = defaults_object(DEFAULTS_KEY_DONT_SHOW_SMS_WARNING);
-    isUserConfirming = savedValue && savedValue.boolValue;
-    alternateCommunicationChannelAddress = nil;
-    contactNameSurname = nameSurname;
-    
-    [self initMailText];
-    [self initDontAskAgainView];
-    
-    if(isUserConfirming) {
-        [self confirm:self.yesButton];
-    } else {
-        UIView *superView = view.superview;
-        if(self.superview != superView) {
-            [superView addSubview:self];
+-(void) presentOverView:(UIView*) view forNameSurname:(NSString*)nameSurname {    
+    BOOL isSMSSendingAvailable = IS_SMS_SENDING_AVAILABLE;
+    if(!isSMSSendingAvailable) {
+        NSLog(@"SMS Sending is not allowed.");
+        if([self.delegate respondsToSelector:@selector(userDeclinesToSendSMS)]) {
+            [self.delegate userDeclinesToSendSMS];
         }
-        [superView bringSubviewToFront:self];
-        self.frame = view.frame;
-        [self setNeedsDisplay];
-        self.hidden = NO;
+    } else {
+        NSNumber *savedValue = defaults_object(DEFAULTS_KEY_DONT_SHOW_SMS_WARNING);
+        isUserConfirming = savedValue && savedValue.boolValue;
+        alternateCommunicationChannelAddress = nil;
+        contactNameSurname = nameSurname;
+        
+        [self initMailText];
+        [self initDontAskAgainView];
+        
+        if(isUserConfirming) {
+            [self confirm:self.yesButton];
+        } else {
+            UIView *superView = view.superview;
+            if(self.superview != superView) {
+                [superView addSubview:self];
+            }
+            [superView bringSubviewToFront:self];
+            self.frame = view.frame;
+            [self setNeedsDisplay];
+            self.hidden = NO;
+        }
     }
 }
 

@@ -220,4 +220,6 @@ sharedObject;\
 #define GMT                             @"GMT"
 #define LOCALE_EN_US                    @"en_US"
 
+#define IS_SMS_SENDING_AVAILABLE        NO
+
 #endif

@@ -104,7 +104,7 @@
 "Invalid password" = "Invalid password";
 "Add Contact" = "Add Contact";
 "View All Contacts" = "View All Contacts";
-"You can add a phone contact, an email contact or both" = "You can add a phone contact, an\nemail contact or both";
+"You can add a contact" = "You can add a contact\nwith an email";
 "New Contact" = "New Contact";
 "Save" = "Save";
 "Contact exists format" = "%@ already exists";
