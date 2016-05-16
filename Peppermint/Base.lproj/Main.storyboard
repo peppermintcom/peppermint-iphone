@@ -970,6 +970,7 @@ email contact or both</string>
                         <outlet property="nameSurnameWarningCell" destination="Q3Z-lh-9XR" id="dWe-jB-5bX"/>
                         <outlet property="nameSurnameWarningLabel" destination="soB-Wv-3Sc" id="leT-iM-i8b"/>
                         <outlet property="phoneImageView" destination="6Ku-Oo-U2k" id="eqH-z2-Mhf"/>
+                        <outlet property="phoneNumberCell" destination="xcK-LX-zIX" id="XCL-mJ-Lsn"/>
                         <outlet property="phoneNumberTextField" destination="uHi-Kg-2Nv" id="fbp-cP-anD"/>
                         <outlet property="phoneNumberWarningCell" destination="ZFq-aK-nHX" id="MrI-UZ-hyN"/>
                         <outlet property="phoneNumberWarningLabel" destination="eUC-Vz-299" id="mXi-V1-gVX"/>

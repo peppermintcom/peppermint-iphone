@@ -20,8 +20,15 @@
     return self;
 }
 
--(void) sendVoiceMessageWithData:(NSData *)data withExtension:(NSString *)extension andDuration:(NSTimeInterval)duration {
-    if(![self isCancelled]) {
+-(void) sendVoiceMessageWithData:(NSData *)data withExtension:(NSString *)extension andDuration:(NSTimeInterval)duration {    
+    BOOL isSMSSendingAvailable = IS_SMS_SENDING_AVAILABLE;
+    if(!isSMSSendingAvailable) {
+        NSLog(@"\n\n\n");
+        NSLog(@"*******************************************");
+        NSLog(@"*********SMS SENDING IS BYPASSED***********");
+        NSLog(@"*******************************************\n\n\n");
+        return;
+    } else if(![self isCancelled]) {
         if([self isServiceAvailable]) {
             [super sendVoiceMessageWithData:data withExtension:extension andDuration:duration];
             self.sendingStatus = SendingStatusUploading;
@@ -32,6 +39,7 @@
     } else {
         NSLog(@"SMS message sending is not fired, cos message is cancelled");
     }
+    
 }
 
 #pragma mark - AWSModelDelegate

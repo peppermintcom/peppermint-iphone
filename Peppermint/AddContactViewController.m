@@ -15,6 +15,7 @@
 #import "RecentContactsModel.h"
 
 #define HEIGHT_FOR_wARNING_CELLS    20
+#define ROW_PHONE_NUMBER            4
 
 @import AssetsLibrary;
 @import MobileCoreServices;
@@ -30,6 +31,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *nameSurnameWarningCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *emailWarningCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *phoneNumberCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *phoneNumberWarningCell;
 
 @property (weak, nonatomic) IBOutlet UILabel *nameSurnameWarningLabel;
@@ -119,7 +121,7 @@
   
   self.countryFormatModel = [[CountryFormatModel alloc] init];
   
-  self.explanationLabel.text = LOC(@"You can add a phone contact, an email contact or both", @"Information");
+  self.explanationLabel.text = LOC(@"You can add a contact", @"Information");
   self.saveContactBarButtonItem.enabled = NO;
     self.saveContactBarButtonItem.title = LOC(@"Save", @"Save operation");
     
@@ -132,7 +134,6 @@
                        self.firstNameTextField,
                        self.lastNameTextField,
                        self.emailTextField,
-                       self.phoneNumberTextField,
                        nil];
     
     for(UITextField *tf in textFieldsArray) {
@@ -148,6 +149,7 @@
     self.animateSectionHeaders = YES;
     [self cell:self.nameSurnameWarningCell setHeight:0];
     [self cell:self.emailWarningCell setHeight:0];
+    [self disablePhoneCell];
     [self cell:self.phoneNumberWarningCell setHeight:0];
     [self reloadDataAnimated:NO];
     
@@ -156,6 +158,11 @@
     [UIColor peppermintCancelOrange];
     
     self.tableView.scrollEnabled = NO;
+}
+
+-(void) disablePhoneCell {
+    [self cell:self.phoneNumberCell setHeight:0];
+    self.phoneNumberTextField.enabled = NO;
 }
 
 -(void) viewWillAppear:(BOOL)animated {
