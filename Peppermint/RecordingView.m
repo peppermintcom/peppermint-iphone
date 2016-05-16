@@ -11,7 +11,8 @@
 #import "SMSChargeWarningView.h"
 #import "SendVoiceMessageSparkPostModel.h"
 
-#define LATENCY_TO_RECOVER     3
+#define LATENCY_TO_RECOVER          3
+#define LATENCY_TO_SYSTEM_CANCEL    2
 
 typedef enum : NSUInteger {
     RecordingViewStatusResignActive,
@@ -399,6 +400,15 @@ SUBSCRIBE(MessageSendingStatusIsUpdated) {
 
 -(void) finishedRecordingWithSystemCancel {
     NSLog(@"finishedRecordingWithSystemCancel");
+    [NSTimer scheduledTimerWithTimeInterval:LATENCY_TO_SYSTEM_CANCEL
+                                     target:self
+                                   selector:@selector(stopRecordingAccordingToSystemCancel)
+                                   userInfo:nil
+                                    repeats:NO];
+}
+
+-(void) stopRecordingAccordingToSystemCancel {
+    [self finishRecordingWithGestureIsValid:NO needsPause:NO];
 }
 
 SUBSCRIBE(ApplicationWillResignActive) {
