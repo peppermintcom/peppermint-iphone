@@ -25,6 +25,7 @@
 -(void) save:(PeppermintContact*) peppermintContact {
     dispatch_async(LOW_PRIORITY_QUEUE, ^() {
         Repository *repository = [Repository beginTransaction];
+        [peppermintContact addToCoreSpotlightSearch];
         NSPredicate *predicate = [self peppermintContactPredicateWithNameSurname:peppermintContact.nameSurname communicationChanneldAddress:peppermintContact.communicationChannelAddress communicationChannel:peppermintContact.communicationChannel];
         NSArray *matchedCustomContacts = [repository getResultsFromEntity:[CustomContact class]
                                                            predicateOrNil:predicate];

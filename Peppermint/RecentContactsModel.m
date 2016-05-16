@@ -47,6 +47,7 @@
         
         for(PeppermintContact *peppermintContact in peppermintContactArray) {
             if(!peppermintContact.isRestrictedForRecentContact) {
+                [peppermintContact addToCoreSpotlightSearch];
                 NSPredicate *predicate = [self recentContactPredicate:peppermintContact];
                 NSArray *matchedRecentContacts = [repository getResultsFromEntity:[RecentContact class] predicateOrNil:predicate];
                 

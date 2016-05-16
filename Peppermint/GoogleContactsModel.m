@@ -129,6 +129,10 @@
             googleContact.avatarImageData = imageData;
             googleContact.accountEmail = [_fetcherAuthorizer userEmail];
             googleContact.identifier = identifier;
+            //Add to spotlight
+            PeppermintContact *peppermintContact = [[PeppermintContact alloc] initWithContact:googleContact];
+            [peppermintContact addToCoreSpotlightSearch];
+            
             NSError *err = [repository endTransaction];
             dispatch_async(dispatch_get_main_queue(), ^{
                 if(err) {
