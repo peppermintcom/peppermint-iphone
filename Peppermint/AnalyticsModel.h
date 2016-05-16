@@ -10,5 +10,6 @@
 
 @interface AnalyticsModel : BaseModel
 +(void) logError:(NSError*) error;
++(NSError*) addCustomInfo:(NSString*)information toError:(NSError*)error;
 
 @end

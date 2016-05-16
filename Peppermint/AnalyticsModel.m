@@ -27,6 +27,16 @@
     [self logErrorToFlurry:error];
 }
 
++(NSError*) addCustomInfo:(NSString*)information toError:(NSError*)error {
+    NSError *modifiedError = error;
+    if(information.length > 0) {
+        NSMutableDictionary *mutableUserInfo = [NSMutableDictionary dictionaryWithDictionary:error.userInfo];
+        [mutableUserInfo setValue:@"CustomInfo" forKey:information];
+        modifiedError = [NSError errorWithDomain:error.domain code:error.code userInfo:error.userInfo];
+    }
+    return modifiedError;
+}
+
 +(NSError*) checkAndExpandMessages:(NSError*)error {
     NSError *expandedError = error;
     

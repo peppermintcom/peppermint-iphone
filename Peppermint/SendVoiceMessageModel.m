@@ -12,6 +12,7 @@
 #import "FastReplyModel.h"
 #import <Crashlytics/Crashlytics.h>
 #import "ChatEntryModel.h"
+#import "AnalyticsModel.h"
 
 #define DISPATCH_SEMAPHORE_PERIOD   15000000000 //15seconds in nanoseconds
 
@@ -102,6 +103,9 @@
 #pragma mark - BaseModelDelegate
 
 -(void) operationFailure:(NSError*) error {
+    NSString *customInfo = [NSString stringWithFormat:@"%@ Message Sending Error", self.class];
+    error = [AnalyticsModel addCustomInfo:customInfo toError:error];
+    [AnalyticsModel logError:error];
     self.sendingStatus = SendingStatusError;
 }
 
