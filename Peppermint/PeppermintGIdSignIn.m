@@ -20,7 +20,7 @@
     
     NSMutableArray *scopesArray = [NSMutableArray new];
     [scopesArray addObject:[GoogleContactsModel scopeForGoogleContacts]];
-    [scopesArray addObject:[GoogleEmailModel scopeForReadGoogleMails]];
+    //[scopesArray addObject:[GoogleEmailModel scopeForReadGoogleMails]];
     gIDSignIn.scopes = scopesArray;
     return gIDSignIn;
 }
