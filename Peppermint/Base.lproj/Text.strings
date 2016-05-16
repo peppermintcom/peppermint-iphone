@@ -15,11 +15,8 @@
 "An error occured" = "An error occured";
 "Contacts access rights explanation" = "To use Peppermint you need to give access to your contacts. You can change the access rights from the phone settings.";
 "Information" = "Information";
-"Recording is not active" = "Recording is not active";
-"Recording is already active" = "Recording is already active";
 "Record Message" = "Record Message";
 "for ContactNameSurname" = "for %@";
-"Information" = "Information";
 "Could not resume" = "Could not resume the recording";
 "Could not start record" = "Could not start recording";
 "Mail Subject" = "I sent you an audio message";
@@ -40,7 +37,6 @@
 "Restart record" = "Re-start recording";
 "Recording for contact format" = "Recording for %@\n%@";
 "Hold to record message" = "Hold to record, release to send";
-"Account details message" = "Please enter your account details.\n**********\nTEST NOTE:This popup is shown for user to login. Design will be changed\n**********";
 "Cancel" = "Cancel";
 "Email" = "Email";
 "Record More Than Limit Format" = "Please record at least %d seconds before\nsending";
@@ -177,3 +173,4 @@
 "Sending via Email" = "Sending via Email";
 "No email address found. Please insert an email address for this contact." = "No email address found. Please insert an email address for this contact.";
 "Save email address" = "Save email address";
+"Active Locale" = "en_US";
