@@ -214,6 +214,8 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
 #pragma mark - BaseModelDelegate
 
 -(void) operationFailure:(NSError*) error {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [self resetSyncDate];
     [self.delegate operationFailure:error];
 }
 
