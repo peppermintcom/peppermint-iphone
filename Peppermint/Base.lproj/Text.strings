@@ -9,7 +9,6 @@
 "via" = "via";
 "Search for Contacts" = "Search All Contacts";
 "No contacts have been found" = "No contacts have been found.";
-"No contacts explanation" = "Enter an email address to send your first message";
 "Peppermint" = "Peppermint";
 "Ok" = "Ok";
 "An error occured" = "An error occured";
@@ -29,19 +28,19 @@
 "Recent Contacts" = "Recent Contacts";
 "Email Contacts" = "Email Contacts";
 "Phone Contacts" = "Phone Contacts";
-"Enter a filter text" = "Your selection can only work with a filter text. Please type a filter text";
+
 "Mic Access rights explanation" = "You should enable microphone access for recording.";
 "Settings URL is not supported" = "Your iOS version does not support redirecting to the Settings Page. Please go to the Home Screen -> Settings -> Peppermint to change permissions";
 "Settings" = "Settings";
 "Recording is cut" = "Your voice recording was stopped. Would you like to send it?";
-"Restart record" = "Re-start recording";
+
 "Recording for contact format" = "Recording for %@\n%@";
 "Hold to record message" = "Hold to record, release to send";
 "Cancel" = "Cancel";
 "Email" = "Email";
 "Record More Than Limit Format" = "Please record at least %d seconds before\nsending";
 "Send" = "Send";
-"Re record" = "Re-record";
+
 "Swipe in any direction to cancel" = "Swipe in any direction\nto cancel";
 "Swipe anywhere to cancel" = "Swipe anywhere\nto cancel";
 "Tap to cancel" = "Tap to cancel";
@@ -66,7 +65,7 @@
 "Sending" = "Sending";
 "Sent" = "Sent";
 "Cancelled" = "Cancelled";
-"Tap to cancel" = "  Tap to cancel";
+
 "Account" = "Account";
 "Your Name" = "Your Name";
 "Could not get all needed information from facebook!" = "Could not get all needed information from facebook! Seems your facebook account does not contain needed details. Please update your profile or use other login method.";
@@ -88,6 +87,8 @@
 "Subject" = "Subject";
 "Subject Description" = "The email subject";
 "What is your name?" = "What's your name?";
+"Your Surname" = "Your Surname";
+"What is your surname?" = "What is your surname?";
 "Please enter at least 6 characters" = "Please enter at least 6 characters";
 "Please connect to the Internet then Log In" = "Please connect to the Internet then Log In";
 "Continue" = "Continue";
@@ -119,7 +120,7 @@
 "Privacy Policy & Terms of Use" = "Privacy Policy\n& Terms of Use";
 "Peppermint.com" = "Peppermint.com";
 "Version" = "Version";
-"Chats" = "Messages";
+
 "Record a Message" = "Press and Hold to Record";
 "Year" = "Year";
 "Month" = "Month";
@@ -133,8 +134,8 @@
 "Please enter a valid name." = "Please enter a valid name.";
 "Please enter a valid email." = "Please enter a valid email.";
 "Please enter a valid phone number." = "Please enter a valid phone number.";
-"You haven't sent any messages yet!" = "You haven't sent any messages yet!";
-"Go back and send a message" = "Go back and send a message";
+
+
 "Show results from iPhone contacts" = "Show results from iPhone contacts";
 "Sending via SMS" = "Sending via SMS";
 "Sending via SMS may cost you money. Continue?" = "Sending via SMS may cost you\nmoney. Continue?";
@@ -174,3 +175,11 @@
 "No email address found. Please insert an email address for this contact." = "No email address found. Please insert an email address for this contact.";
 "Save email address" = "Save email address";
 "Active Locale" = "en_US";
+"First Name" = "First Name";
+"Last Name" = "Last Name";
+"Phone Number" = "Phone Number";
+"Your Email" = "Your Email";
+"Welcome Back" = "Welcome Back";
+"Log in" = "Log in";
+"Forgot password?" = "Forgot password?";
+

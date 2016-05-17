@@ -9,7 +9,6 @@
 "via" = "via";
 "Search for Contacts" = "Pesquisar Todos os Contactos";
 "No contacts have been found" = "Nenhum contacto foi encontrado.";
-"No contacts explanation" = "Insira o endereço de email para enviar a sua primeira mensagem";
 "Peppermint" = "Peppermint";
 "Ok" = "Ok";
 "An error occured" = "Ocorreu um erro";
@@ -29,27 +28,27 @@
 "Recent Contacts" = "Contactos Recentes";
 "Email Contacts" = "Contactos de Email";
 "Phone Contacts" = "Contactos Telefónicos";
-"Enter a filter text" = "A pesquisa só irá funcionar após inserir o texto de pesquisa. Por favor insira o texto para continuar";
+
 "Mic Access rights explanation" = "Deverá permitir o acesso ao microfone antes de proceder com a gravação.";
 "Settings URL is not supported" = "A sua versão do iOS não suporta o redireccionamento para o ecrã de Definições. Por favor aceda a \"Ajustes\" -> \"Peppermint\" para alterar as permissões";
 "Settings" = "Ajustes";
 "Recording is cut" = "A sua gravação foi interrompida. Deseja enviar?";
-"Restart record" = "Reiniciar a gravação";
+
 "Recording for contact format" = "A gravar para %@\n%@";
 "Hold to record message" = "Pressione para gravar, solte para enviar";
 "Cancel" = "Cancelar";
 "Email" = "Email";
 "Record More Than Limit Format" = "Por favor grave durante pelo menos %d segundos\nantes de enviar";
 "Send" = "Enviar";
-"Re record" = "Gravar Novamente";
+
 "Swipe in any direction to cancel" = "Deslize em qualquer direção\npara cancelar";
 "Swipe anywhere to cancel" = "Deslize o dedo\npara cancelar";
 "Tap to cancel" = "Pressione para cancelar";
 "Service is not available" = "O seu dispositivo não suporta este serviço de mensagens";
 "SMS Body Format" = "I sent you an audio message %@ ";
-"Log In with Facebook" = "Iniciar Sessão com Facebook";
-"Log In with Google" = "Iniciar Sessão com Google";
-"Log In with Email" = "Iniciar Sessão com Email";
+"Log In with Facebook" = "Iniciar Sessão Facebook";
+"Log In with Google" = "Iniciar Sessão Google";
+"Log In with Email" = "Iniciar Sessão Email";
 "To send a message with Peppermint" = "Para enviar uma mensagem com o Peppermint,\nnecessita de criar uma conta.";
 "Please Login" = " Escolha como se autenticar:";
 "Done" = "Concluído";
@@ -66,7 +65,7 @@
 "Sending" = "A Enviar";
 "Sent" = "Enviado";
 "Cancelled" = "Cancelado";
-"Tap to cancel" = "  Pressione para cancelar";
+
 "Account" = "Conta";
 "Your Name" = "O seu Nome";
 "Could not get all needed information from facebook!" = "Não foi possível obter a informação necessário do Facebook! A sua conta Facebook poderá não conter os dados necessários. Por favor actualize o seu perfil ou utilize outro método de autenticação.";
@@ -88,6 +87,8 @@
 "Subject" = "Tópico";
 "Subject Description" = "O tópico dos emails";
 "What is your name?" = "Qual é o seu nome?";
+"Your Surname" = "Seu sobrenome";
+"What is your surname?" = "Qual é o seu sobrenome?";
 "Please enter at least 6 characters" = "Por favor insira pelo menos 6 caracteres";
 "Please connect to the Internet then Log In" = "Uma ligação à Internet é necessária para iniciar a sessão";
 "Continue" = "Continuar";
@@ -118,7 +119,7 @@
 "Privacy Policy & Terms of Use" = "Política de Privacidade\n& Condições de Serviço";
 "Peppermint.com" = "Peppermint.com";
 "Version" = "Versão";
-"Chats" = "Mensagens";
+
 "Record a Message" = "Pressione para Gravar";
 "Year" = "Ano";
 "Month" = "Mês";
@@ -132,8 +133,8 @@
 "Please enter a valid name." = "Por favor insira um nome válido.";
 "Please enter a valid email." = "Por favor insira um email válido.";
 "Please enter a valid phone number." = "Por favor insira um contacto telefónico válido.";
-"You haven't sent any messages yet!" = "Ainda não enviou nenhuma mensagem!";
-"Go back and send a message" = "Volte para enviar uma mensagem";
+
+
 "Show results from iPhone contacts" = "Apresentar contactos do iPhone";
 "Sending via SMS" = "A Enviar via SMS";
 "Sending via SMS may cost you money. Continue?" = "Enviar via SMS poderá ter custos\nmonetários. Continuar?";
@@ -173,3 +174,10 @@
 "No email address found. Please insert an email address for this contact." = "Nenhum email encontrado. Por favor adicione um email para este contacto.";
 "Save email address" = "Guardar endereço de email";
 "Active Locale" = "pt_PT";
+"First Name" = "Nome";
+"Last Name" = "Apelido";
+"Phone Number" = "Número de telefone";
+"Your Email" = "Seu email";
+"Welcome Back" = "Bem vindo de volta";
+"Log in" = "Entrar";
+"Forgot password?" = "Esqueceu a senha?";
