@@ -310,7 +310,7 @@ an account yet? click here</string>
                                         <constraint firstAttribute="width" constant="150" id="ze8-bc-1hr"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="17"/>
-                                    <state key="normal" title="Continue" backgroundImage="login_button">
+                                    <state key="normal" title="_Continue" backgroundImage="login_button">
                                         <color key="titleColor" red="0.38431372549999998" green="0.74509803919999995" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
                                     <connections>
@@ -352,7 +352,7 @@ an account yet? click here</string>
                                                         <constraint firstAttribute="height" constant="1" id="ZLT-NW-MN7"/>
                                                     </constraints>
                                                 </view>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Vz8-jL-G5d">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="_Your email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Vz8-jL-G5d">
                                                     <rect key="frame" x="18" y="7" width="378" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
@@ -393,6 +393,7 @@ an account yet? click here</string>
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
+                        <outlet property="continueButton" destination="D3P-Av-cDy" id="mOe-sG-DI6"/>
                         <outlet property="emailCell" destination="Zpn-nz-VW0" id="vcW-h6-YVQ"/>
                         <segue destination="gYd-Oo-fUs" kind="show" identifier="SignUpWithEmailSegue" id="gfe-oG-gBX"/>
                         <segue destination="ubE-6j-oGD" kind="show" identifier="WelcomeBackSegue" id="R5b-Yv-7q6"/>
@@ -435,8 +436,8 @@ an account yet? click here</string>
                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="bordered_logo" translatesAutoresizingMaskIntoConstraints="NO" id="2r6-sx-ucD">
                                     <rect key="frame" x="180" y="16" width="54" height="54"/>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome back!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ex-xP-dXR">
-                                    <rect key="frame" x="128" y="82" width="159" height="30"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Welcome back!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ex-xP-dXR">
+                                    <rect key="frame" x="123" y="82" width="169" height="30"/>
                                     <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="22"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -474,7 +475,7 @@ an account yet? click here</string>
                                         <constraint firstAttribute="height" constant="40" id="dBE-aq-tLe"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="17"/>
-                                    <state key="normal" title="Log in" backgroundImage="login_button">
+                                    <state key="normal" title="_Log in" backgroundImage="login_button">
                                         <color key="titleColor" red="0.38431372549999998" green="0.74509803919999995" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
                                     <connections>
@@ -484,7 +485,7 @@ an account yet? click here</string>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bGE-nL-qlH">
                                     <rect key="frame" x="132" y="70" width="150" height="40"/>
                                     <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="14"/>
-                                    <state key="normal" title="Forgot password?">
+                                    <state key="normal" title="_Forgot password?">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
@@ -530,7 +531,7 @@ an account yet? click here</string>
                                                         <constraint firstAttribute="height" constant="1" id="9lf-LT-O0m"/>
                                                     </constraints>
                                                 </view>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="QlB-uK-YI0">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="_Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="QlB-uK-YI0">
                                                     <rect key="frame" x="18" y="7" width="378" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
@@ -570,7 +571,10 @@ an account yet? click here</string>
                     </tableView>
                     <connections>
                         <outlet property="descriptionLabel" destination="9Xg-A2-WLc" id="4vY-G3-ywY"/>
+                        <outlet property="forgotButton" destination="bGE-nL-qlH" id="oMX-AF-Asa"/>
+                        <outlet property="loginButton" destination="y1q-bZ-Jby" id="2vE-j1-uAg"/>
                         <outlet property="passwordCell" destination="PJL-wR-lLm" id="Okc-Z2-ppD"/>
+                        <outlet property="titleLabel" destination="7Ex-xP-dXR" id="TBh-J3-wCq"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zlW-2F-vt6" userLabel="First Responder" sceneMemberID="firstResponder"/>

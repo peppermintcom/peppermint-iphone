@@ -567,6 +567,7 @@
 		B1AC47811CDB738500693C47 /* AVAudioPlayer_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVAudioPlayer_Addition.m; sourceTree = "<group>"; };
 		B1AE969C1CEA310D000A8E3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Text.strings; sourceTree = "<group>"; };
 		B1AE969F1CEA3133000A8E3D /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Text.strings"; sourceTree = "<group>"; };
+		B1AE96A01CEA36A7000A8E3D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Text.strings; sourceTree = "<group>"; };
 		B1B2F47C1C73273A003A4220 /* notification.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = notification.aiff; sourceTree = "<group>"; };
 		B1B4BF791CC4E61D004D4A6E /* SparkPostService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SparkPostService.h; sourceTree = "<group>"; };
 		B1B4BF7A1CC4E61D004D4A6E /* SparkPostService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SparkPostService.m; sourceTree = "<group>"; };
@@ -2207,6 +2208,7 @@
 				en,
 				Base,
 				"pt-PT",
+				tr,
 			);
 			mainGroup = B17B3D221BB6898C009B8BC5;
 			productRefGroup = B17B3D2C1BB6898C009B8BC5 /* Products */;
@@ -2615,6 +2617,7 @@
 			children = (
 				B1AE969C1CEA310D000A8E3D /* Base */,
 				B1AE969F1CEA3133000A8E3D /* pt-PT */,
+				B1AE96A01CEA36A7000A8E3D /* tr */,
 			);
 			name = Text.strings;
 			sourceTree = "<group>";

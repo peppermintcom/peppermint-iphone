@@ -35,6 +35,7 @@
                                        initWithTarget:self action:@selector(hide)];
     [self.backgroundView addGestureRecognizer:tapGesture];
     
+    self.emailTextField.placeholder = LOC(@"Email", @"Email");
     self.emailTextField.delegate = self;
     [self.emailTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
 }

@@ -140,6 +140,11 @@
         [tf addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     }
     
+    self.firstNameTextField.placeholder = LOC(@"First Name", @"First Name");
+    self.lastNameTextField.placeholder = LOC(@"Last Name", @"Last Name");
+    self.emailTextField.placeholder = LOC(@"Email", @"Email");
+    self.phoneNumberTextField.placeholder = LOC(@"Phone Number", @"Phone Number");
+    
     self.nameSurnameWarningLabel.textColor = self.emailWarningLabel.textColor = self.phoneNumberWarningLabel.textColor = [UIColor whiteColor];
     self.nameSurnameWarningLabel.font = self.emailWarningLabel.font = self.phoneNumberWarningLabel.font = [UIFont openSansSemiBoldFontOfSize:15];
     self.nameSurnameWarningLabel.text = LOC(@"Please enter a valid name.", @"Warning Message");

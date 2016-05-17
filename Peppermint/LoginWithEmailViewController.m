@@ -22,7 +22,11 @@
 @property (weak, nonatomic) IBOutlet LoginTextFieldTableViewCell * emailCell;
 @property (weak, nonatomic) IBOutlet LoginTextFieldTableViewCell * passwordCell;
 
+@property (weak, nonatomic) IBOutlet UILabel * titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel * descriptionLabel;
+@property (weak, nonatomic) IBOutlet UIButton *continueButton;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UIButton *forgotButton;
 
 @end
 
@@ -40,6 +44,17 @@
     isValidEmailEmptyValidation = isValidEmailFormatValidation = isValidPasswordValidation = NO;
     self.emailCell.notAllowedCharactersArray = [NSArray arrayWithObject:@" "];
     self.passwordCell.notAllowedCharactersArray = [NSArray arrayWithObject:@" "];
+    [self initViewComponents];
+}
+
+-(void) initViewComponents {
+    self.emailCell.textField.placeholder = LOC(@"Your Email", @"Placeholder");
+    [self.continueButton setTitle:LOC(@"Continue", @"Title") forState:UIControlStateNormal];
+    
+    self.titleLabel.text = LOC(@"Welcome Back", @"Welcome Back");
+    self.passwordCell.textField.placeholder = LOC(@"Password", @"Placeholder");
+    [self.loginButton setTitle:LOC(@"Log in", @"Login") forState:UIControlStateNormal];
+    [self.forgotButton setTitle:LOC(@"Forgot password?", @"Forgot") forState:UIControlStateNormal];
 }
 
 -(void) viewWillAppear:(BOOL)animated {
