@@ -499,7 +499,11 @@ SUBSCRIBE(ApplicationWillResignActive) {
         NSUInteger lastRowNumber = [self.tableView numberOfRowsInSection:lastSection] - 1;
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:lastRowNumber inSection:lastSection];
         ChatTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-        [cell playPauseButtonPressed:self];
+        if(!cell.peppermintChatEntry.isSeen) {
+            [cell playPauseButtonPressed:self];
+        } else {
+            NSLog(@"Last message is seen. Does not play automatically!");
+        }
     }
 }
 

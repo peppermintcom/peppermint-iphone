@@ -256,7 +256,7 @@
     [self initFabric];
     [self initFlurry];
     [self initInitialViewController];
-    //[self logServiceCalls];
+    [self logServiceCalls];
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
     [self initConnectionStatusChangeListening];
     [self initWatchKitSession];
@@ -499,26 +499,37 @@ SUBSCRIBE(DetachSuccess) {
 }
 
 -(void) peppermintChatEntrySavedWithSuccess:(NSArray<PeppermintChatEntry*>*) savedPeppermintChatEnryArray {
-    [self hideAppCoverLoadingView];
     NSArray<PeppermintChatEntry*> *newIncomingMessagesArray = [self filterNewIncomingMessagesInArray:savedPeppermintChatEnryArray];
     [self refreshBadgeNumber];
     
-    if(peppermintContactToNavigate
-       && peppermintContactToNavigate.nameSurname.length > 0
-       && peppermintContactToNavigate.communicationChannelAddress.length > 0) {
+    BOOL doesNewIncomingMessageExists = (newIncomingMessagesArray.count > 0);
+    BOOL isNavigationSet = (peppermintContactToNavigate
+                            && peppermintContactToNavigate.nameSurname.length > 0
+                            && peppermintContactToNavigate.communicationChannelAddress.length > 0
+                            && [[AutoPlayModel sharedInstance] isScheduledForPeppermintContactWithEmail:
+                                peppermintContactToNavigate.communicationChannelAddress]);
+    BOOL shouldPublishNotification = NO;
+    
+    if(isNavigationSet && doesNewIncomingMessageExists) {
+        [self hideAppCoverLoadingView];
         [self navigateToChatEntriesPageForEmail:peppermintContactToNavigate.communicationChannelAddress
                                     nameSurname:peppermintContactToNavigate.nameSurname];
         peppermintContactToNavigate = nil;
-    } else {
+        shouldPublishNotification = YES;
+    } else if (!isNavigationSet) {
+        [self hideAppCoverLoadingView];
         [self checkAndPlayIncomingAudioAlertForNewMessagesArray:newIncomingMessagesArray];
-    }    
-    hasFinishedFirstSync = hasFinishedFirstSync || [self.chatEntrySyncModel isAllMessagesAreInSyncOfFirstCycle];
+        hasFinishedFirstSync = hasFinishedFirstSync || [self.chatEntrySyncModel isAllMessagesAreInSyncOfFirstCycle];
+        shouldPublishNotification = YES;
+    }
     
-    RefreshIncomingMessagesCompletedWithSuccess *refreshIncomingMessagesCompletedWithSuccess = [RefreshIncomingMessagesCompletedWithSuccess new];
-    refreshIncomingMessagesCompletedWithSuccess.sender = self;
-    refreshIncomingMessagesCompletedWithSuccess.peppermintChatEntryNewMesssagesArray = newIncomingMessagesArray;
-    refreshIncomingMessagesCompletedWithSuccess.peppermintChatEntryAllMesssagesArray = savedPeppermintChatEnryArray;
-    PUBLISH(refreshIncomingMessagesCompletedWithSuccess);
+    if(shouldPublishNotification) {
+        RefreshIncomingMessagesCompletedWithSuccess *refreshIncomingMessagesCompletedWithSuccess = [RefreshIncomingMessagesCompletedWithSuccess new];
+        refreshIncomingMessagesCompletedWithSuccess.sender = self;
+        refreshIncomingMessagesCompletedWithSuccess.peppermintChatEntryNewMesssagesArray = newIncomingMessagesArray;
+        refreshIncomingMessagesCompletedWithSuccess.peppermintChatEntryAllMesssagesArray = savedPeppermintChatEnryArray;
+        PUBLISH(refreshIncomingMessagesCompletedWithSuccess);
+    }
     
     if(cachedCompletionHandler) {
         NSDate *fetchEnd = [NSDate date];

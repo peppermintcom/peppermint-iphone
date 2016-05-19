@@ -14,7 +14,7 @@
 #import "CustomContactModel.h"
 
 #define FAR_FUTURE_DATE     [NSDate dateWithTimeIntervalSinceNow: 5 * YEAR];
-#define SOME_RECENT_DATE    [NSDate dateWithTimeIntervalSinceNow: -1 * HOUR];
+#define SOME_RECENT_DATE    [NSDate dateWithTimeIntervalSinceNow: -20 * HOUR];
 
 @interface SyncDateHolder : JSONModel
 @property (strong, nonatomic) NSDate<Optional> *recipientSinceDate;
