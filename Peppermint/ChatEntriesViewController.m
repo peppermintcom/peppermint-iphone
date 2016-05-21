@@ -376,6 +376,7 @@
         
         if(isCacnelAble && infoAttrText.length > 0) {
             self.cancelSendingButton.hidden = NO;
+            [infoAttrText addText:@"  " ofSize:13 ofColor:[UIColor peppermintCancelOrange]];
             [infoAttrText addText:LOC(@"Tap to cancel", @"Info") ofSize:13 ofColor:[UIColor peppermintCancelOrange]];
         } else {
             self.cancelSendingButton.hidden = YES;

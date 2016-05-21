@@ -663,6 +663,7 @@ SUBSCRIBE(UserLoggedOut) {
     
     if(isCacnelAble && infoAttrText.length > 0) {
         self.cancelMessageSendingButton.hidden = NO;
+        [infoAttrText addText:@"  " ofSize:13 ofColor:[UIColor peppermintCancelOrange]];
         [infoAttrText addText:LOC(@"Tap to cancel", @"Info") ofSize:13 ofColor:[UIColor peppermintCancelOrange]];
     } else {
         self.cancelMessageSendingButton.hidden = YES;

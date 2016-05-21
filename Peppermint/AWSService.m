@@ -491,12 +491,17 @@
     NSDictionary *parameterDictionary = [messageRequest toDictionary];
     
     [requestOperationManager POST:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Send Message Response Code:%ld",operation.response.statusCode);
+        NSLog(@"Response:\n%@", responseObject);
+        
         InterAppMessageProcessCompleted *interAppMessageProcessCompleted = [InterAppMessageProcessCompleted new];
         interAppMessageProcessCompleted.sender = self;
         interAppMessageProcessCompleted.error = nil;
         PUBLISH(interAppMessageProcessCompleted);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        if(operation.response.statusCode == RESPONSE_CODE_NOT_FOUND) {
+        if(!error) {
+            NSLog(@"Error is nil, but operation response code is:%ld", operation.response.statusCode);
+        } else if(operation.response.statusCode == RESPONSE_CODE_NOT_FOUND) {
             //User is not available to get inter-app messaging
             InterAppMessageProcessCompleted *interAppMessageProcessCompleted = [InterAppMessageProcessCompleted new];
             interAppMessageProcessCompleted.sender = self;
@@ -528,7 +533,7 @@
         }
         messageGetRequest.order = orderText;
         [messageGetRequest setSinceDate:sinceDate];
-        [messageGetRequest setUntilDate:untilDate];
+        [messageGetRequest setUntilDate:untilDate ? untilDate : [NSDate dateWithTimeIntervalSinceNow:2*DAY]];
         parameterDictionary = [messageGetRequest toDictionary];
     } else {
         NSLog(@"Making a next %@ qury.|updated until:%@ <-> since:%@", (isForRecipient ? @"Recipient" : @"Sender"), untilDate, sinceDate );
