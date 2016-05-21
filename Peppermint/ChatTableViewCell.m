@@ -13,6 +13,8 @@
 #import "ChatEntryModel.h"
 #import "PlayingChatEntryModel.h"
 
+#define SIZE_TITLE                          11
+
 #define DISTANCE_TO_BORDER                  5
 #define TIMER_UPDATE_PERIOD                 0.05
 #define REWIND_TIME_DURING_SPEAKER_UPDATE   2
@@ -37,6 +39,7 @@
     NSTimer *deviceIsRemovedFromEarTimer;
 }
 
+#warning "Refactor content and view constraints"
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.contentView.backgroundColor = [UIColor clearColor];
@@ -46,6 +49,15 @@
     imageFlat = [UIImage imageNamed:@"icon_chat_left_flat"];
     imagePlay = [UIImage imageNamed:@"icon_play"];
     imagePause = [UIImage imageNamed:@"icon_pause"];
+    
+    self.transcriptionView.backgroundColor = [UIColor whiteColor];
+    self.transcriptionView.layer.cornerRadius = 8;
+    self.transctiptionTitleLabel.font = [UIFont openSansSemiBoldFontOfSize:SIZE_TITLE];
+    self.transctiptionTitleLabel.textColor = [UIColor textFieldTintGreen];
+    self.transctiptionTitleLabel.text = LOC(@"AUTOMATIC TRANSCTIPTION", @"Transctiption Title");
+    self.transctiptionContentLabel.font = [UIFont openSansFontOfSize:SIZE_TITLE];
+    self.transctiptionContentLabel.textColor = [UIColor blackColor];
+    
     timer = [NSTimer scheduledTimerWithTimeInterval:TIMER_UPDATE_PERIOD target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
     totalSeconds = 0;
@@ -104,6 +116,7 @@
     self.playPauseImageView.hidden = NO;
     [self setLeftLabel];
     [self setRightLabelWithDate:chatEntry.dateCreated];
+    [self setTranscriptionView];
 }
 
 -(void) setLeftLabel {
@@ -124,7 +137,6 @@
     } else {
         self.leftLabel.textColor = [UIColor textFieldTintGreen];
     }
-    
     self.leftLabel.text = durationText;
 }
 
@@ -160,6 +172,14 @@
         timeText = [NSString stringWithFormat:@"%@%@", timeText, LOC(@"Plural Suffix", @"Plural Suffix")];
     }
     self.rightLabel.text = [NSString stringWithFormat:@"%ld %@ ago", (long)timeVariable, timeText].lowercaseString;
+}
+
+-(void) setTranscriptionView {
+    BOOL isTransctiptionEmpty = self.peppermintChatEntry.transcription.length == 0;
+    self.transcriptionView.hidden = isTransctiptionEmpty;
+    if(!self.transcriptionView.hidden) {
+        self.transctiptionContentLabel.text = self.peppermintChatEntry.transcription;
+    }
 }
 
 - (IBAction)playPauseButtonPressed:(id)sender {
@@ -362,6 +382,10 @@ SUBSCRIBE(StopAllPlayingMessages) {
     referencedChatEntry.isSeen = self.peppermintChatEntry.isSeen;
     referencedChatEntry.audio = self.peppermintChatEntry.audio;
     NSLog(@"peppermintChatEntrySavedWithSuccess");
+}
+
+-(void) lastMessagesAreUpdated:(NSArray<PeppermintContactWithChatEntry*>*) peppermintContactWithChatEntryArray {
+    NSLog(@"lastMessagesAreUpdated:");
 }
 
 #pragma mark - Raise to listen on built-in headset

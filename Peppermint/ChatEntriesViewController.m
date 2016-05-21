@@ -216,7 +216,14 @@
     if(self.chatEntryModel.chatEntriesArray.count > indexPath.row) {
         PeppermintChatEntry *peppermintChatEntry = (PeppermintChatEntry*)[self.chatEntryModel.chatEntriesArray objectAtIndex:indexPath.row];
         if(peppermintChatEntry.type == ChatEntryTypeAudio && self.chatEntryTypesToShow & ChatEntryTypeAudio) {
-            height = CELL_HEIGHT_CHAT_TABLEVIEWCELL;
+            if(peppermintChatEntry.transcription.length == 0) {
+                height = CELL_HEIGHT_CHAT_TABLEVIEWCELL;
+            } else {
+                CGFloat rowHeight = CELL_HEIGHT_CHAT_TABLEVIEWCELL_TRANSCRIPTION_ROW;
+                int charsPerRow = 30;
+                int numberOfRows = 2 + (int)(peppermintChatEntry.transcription.length / charsPerRow);
+                height = CELL_HEIGHT_CHAT_TABLEVIEWCELL + (numberOfRows* rowHeight);
+            }
         } else if (peppermintChatEntry.type == ChatEntryTypeEmail && self.chatEntryTypesToShow & ChatEntryTypeEmail) {
             height = [self calculatedHeight:peppermintChatEntry indexPath:indexPath];
         }

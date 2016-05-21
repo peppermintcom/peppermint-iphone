@@ -35,6 +35,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *leftLabel;
 @property (weak, nonatomic) IBOutlet UIView *durationCircleView;
 
+@property (weak, nonatomic) IBOutlet UIView *transcriptionView;
+@property (weak, nonatomic) IBOutlet UILabel *transctiptionTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *transctiptionContentLabel;
+
 @property (weak, nonatomic) UITableView *tableView;
 
 @property (weak, nonatomic) id<ChatTableViewCellDelegate> delegate;
