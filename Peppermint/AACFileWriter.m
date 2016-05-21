@@ -11,6 +11,7 @@
 
 @implementation AACFileWriter {
     TPAACAudioConverter *tPAACAudioConverter;
+    BOOL isConverting;
 }
 
 -(id) init {
@@ -18,6 +19,7 @@
     if(self) {
         _audioData = [NSMutableData new];
         tPAACAudioConverter = nil;
+        isConverting = NO;
     }
     return self;
 }
@@ -28,17 +30,20 @@
     }
 }
 
--(void) convertToAACWithAudioStreamBasicDescription:(AudioStreamBasicDescription)asbd {
+-(void) convertToAACWithAudioStreamBasicDescription:(AudioStreamBasicDescription)asbd andFileUrl:(NSURL*)fileUrl {
     NSUInteger length = self.audioData.length;
     if(length == 0) {
         NSLog(@"AudioData is empty. Nothing to convert for AAC");
+    } else if (isConverting) {
+        NSLog(@"There is an ongoing conversion. Not handling this request.");
     } else {
-        [self performConversionWithAudioStreamBasicDescription:asbd];
+        isConverting = YES;
+        [self performConversionWithAudioStreamBasicDescription:asbd andFileUrl:fileUrl];
     }
 }
 
--(void) performConversionWithAudioStreamBasicDescription:(AudioStreamBasicDescription)asbd {
-    NSString *destination = [self recordFileUrl].path;
+-(void) performConversionWithAudioStreamBasicDescription:(AudioStreamBasicDescription)asbd andFileUrl:(NSURL*)fileUrl {
+    NSString *destination = fileUrl.path;
     NSLog(@"Converting total bytes %ld to path %@", self.audioData.length, destination);    
     
     // Register an Audio Session interruption listener, important for AAC conversion
@@ -53,26 +58,24 @@
     [tPAACAudioConverter start];
 }
 
--(NSURL*) recordFileUrl {
-    NSString *fileName = [NSString stringWithFormat:@"%ldaudio.m4a", (long)[NSDate new].timeIntervalSince1970];
-    NSArray *pathComponents = [NSArray arrayWithObjects: [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], fileName, nil];
-    return [NSURL fileURLWithPathComponents:pathComponents];
-}
-
 #pragma mark - TPAACAudioConverterDelegate
 
 - (void)AACAudioConverterDidFinishConversion:(TPAACAudioConverter*)converter {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVAudioSessionInterruptionNotification object: nil];
+    isConverting = NO;
     NSLog(@"AACAudioConverterDidFinishConversion:");
+    [self.delegate fileConversionIsFinished];
 }
 
 - (void)AACAudioConverter:(TPAACAudioConverter*)converter didFailWithError:(NSError*)error {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVAudioSessionInterruptionNotification object: nil];
+    isConverting = NO;
     NSLog(@"Error occured: %@", error);
+    [self.delegate operationFailure:error];
 }
 
-- (void)AACAudioConverter:(TPAACAudioConverter*)converter didMakeProgress:(NSNumber*)progress {
-    NSLog(@"DidMakeProgress:%.2ld / 100", progress.integerValue);
+- (void)AACAudioConverter:(TPAACAudioConverter*)converter didMakeProgress:(CGFloat)progress {
+    NSLog(@"DidMakeProgress:%.2f / 100", progress);
 }
 
 #pragma mark - Audio session interruption

@@ -75,6 +75,7 @@
     peppermintChatEntry.isRepliedAnswered = chatEntry.isRepliedAnswered.boolValue;
     peppermintChatEntry.isStarredFlagged = chatEntry.isStarredFlagged.boolValue;
     peppermintChatEntry.isForwarded = chatEntry.isForwarded.boolValue;
+    peppermintChatEntry.transcription = chatEntry.transcription;
     return peppermintChatEntry;
 }
 
@@ -129,7 +130,7 @@
             chatEntry.contactEmail = peppermintChatEntry.contactEmail;
             chatEntry.audio = peppermintChatEntry.audio ? peppermintChatEntry.audio : chatEntry.audio;
             chatEntry.audioUrl = peppermintChatEntry.audioUrl;
-            chatEntry.transcription = @"...Transcription should be added...";
+            chatEntry.transcription = peppermintChatEntry.transcription ? peppermintChatEntry.transcription : chatEntry.transcription;
             chatEntry.isSentByMe = [NSNumber numberWithBool:peppermintChatEntry.isSentByMe];
             chatEntry.dateCreated = peppermintChatEntry.dateCreated;
             chatEntry.isSeen = [NSNumber numberWithBool:

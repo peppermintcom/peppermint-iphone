@@ -19,6 +19,8 @@
     peppermintChatEntry.audio = nil;
     peppermintChatEntry.audioUrl = attribute.audio_url;
     peppermintChatEntry.dateCreated = attribute.createdDate;
+#warning "Get transcription from attribute"
+    peppermintChatEntry.transcription = nil;
     
     if(isIncoming) {
         peppermintChatEntry.contactNameSurname = attribute.sender_name;
@@ -74,6 +76,7 @@
     peppermintChatEntry.performedOperation = self.performedOperation;
     peppermintChatEntry.subject = self.subject;
     peppermintChatEntry.mailContent = self.mailContent;
+    peppermintChatEntry.transcription = self.transcription.copy;
     return peppermintChatEntry;
 }
 

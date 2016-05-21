@@ -342,6 +342,7 @@
     peppermintChatEntryForCurrentMessageModel.isSentByMe = YES;
     peppermintChatEntryForCurrentMessageModel.messageId = nil; //We leave message Id as nil, cos we would like it to be merged when it sync with server!
     peppermintChatEntryForCurrentMessageModel.isSeen = YES;
+    peppermintChatEntryForCurrentMessageModel.transcription = self.transcriptionToSet;
     peppermintChatEntryForCurrentMessageModel.contactEmail = self.selectedPeppermintContact.communicationChannelAddress;
     [chatEntryModel savePeppermintChatEntry:peppermintChatEntryForCurrentMessageModel];
 }

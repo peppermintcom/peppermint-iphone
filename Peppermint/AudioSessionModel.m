@@ -9,6 +9,7 @@
 #import "AudioSessionModel.h"
 #import "AppDelegate.h"
 #import "ProximitySensorModel.h"
+#import "GoogleSpeechRecordingModel.h"
 
 #define SESSION_DEACTIVATE_LATENCY     3
 
@@ -44,7 +45,9 @@
 }
 
 -(void) attachAVAudioProcessObject:(id)item {
-    BOOL isClassValid = [item isKindOfClass:[AVAudioPlayer class]] || [item isKindOfClass:[AVAudioRecorder class]];
+    BOOL isClassValid = [item isKindOfClass:[AVAudioPlayer class]]
+    || [item isKindOfClass:[AVAudioRecorder class]]
+    || [item isKindOfClass:[GoogleSpeechRecordingModel class]];
     NSAssert(isClassValid, @"attachAVAudioProcessObject: must be called with an instance of AVAudioPlayer or AVAudioRecorder");
     if(![activeAudioItemsArray containsObject:item]) {
         [activeAudioItemsArray addObject:item];
@@ -91,6 +94,9 @@
         } else if (item && [item isKindOfClass:[AVAudioRecorder class]]) {
             AVAudioRecorder *recorder = (AVAudioRecorder*)item;
             canDeactivateSession &= !recorder.isRecording;
+        } else if (item && [item isKindOfClass:[GoogleSpeechRecordingModel class]]) {
+            GoogleSpeechRecordingModel *model = (GoogleSpeechRecordingModel*)item;
+            canDeactivateSession &= !model.isActive;
         }
         if(!canDeactivateSession) {
             break;

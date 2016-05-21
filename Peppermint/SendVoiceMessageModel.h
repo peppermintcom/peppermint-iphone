@@ -48,6 +48,7 @@ typedef enum : NSUInteger {
 @property (strong, nonatomic) PeppermintMessageSender *peppermintMessageSender;
 @property (strong, nonatomic) PeppermintContact *selectedPeppermintContact;
 @property (weak, nonatomic) id<SendVoiceMessageDelegate> delegate;
+@property (strong, nonatomic) NSString *transcriptionToSet;
 
 -(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension andDuration:(NSTimeInterval) duration;
 -(NSString*) typeForExtension:(NSString*) extension;

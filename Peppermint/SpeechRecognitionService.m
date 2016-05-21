@@ -63,10 +63,11 @@
     initialRecognizeRequest.encoding = InitialRecognizeRequest_AudioEncoding_Linear16;
     initialRecognizeRequest.sampleRate = 16000;
     initialRecognizeRequest.languageCode = @"en-US";
-    initialRecognizeRequest.maxAlternatives = 30;
+    initialRecognizeRequest.maxAlternatives = 1;
+    initialRecognizeRequest.profanityFilter = YES;
     initialRecognizeRequest.continuous = NO;
     initialRecognizeRequest.interimResults = NO;
-    initialRecognizeRequest.enableEndpointerEvents = YES;
+    initialRecognizeRequest.enableEndpointerEvents = NO;
     request.initialRequest = initialRecognizeRequest;
   }
 
