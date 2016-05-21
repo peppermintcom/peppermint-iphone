@@ -8,17 +8,11 @@
 
 #import "AboutViewController.h"
 #import "DeviceModel.h"
-#import "GoogleSpeechModel.h"
 
 #define TITLE_TEXT_SIZE             20
 #define PEPPERMINT_TEXT_SIZE        27
 #define VERSION_TEXT_SIZE           13
 #define PRIVACY_TEXT_SIZE           15
-
-
-@interface AboutViewController ()
-@property (strong, nonatomic) GoogleSpeechModel *googleSpeechModel;
-@end
 
 @implementation AboutViewController
 
@@ -60,18 +54,6 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:STORYBOARD_MAIN bundle:[NSBundle mainBundle]];
     AboutViewController *aboutViewController = [storyboard instantiateViewControllerWithIdentifier:VIEWCONTROLLER_ABOUT];
     return aboutViewController;
-}
-
--(void) viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    self.googleSpeechModel = [GoogleSpeechModel new];
-    [self.googleSpeechModel recordAudio:nil];
-}
-
--(void) viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [self.googleSpeechModel stopAudio:nil];
 }
 
 #pragma mark - CloseButton
