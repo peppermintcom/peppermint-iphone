@@ -102,6 +102,7 @@
                                                                 if(result.alternativesArray.count > 0) {
                                                                     SpeechRecognitionAlternative *alternative = result.alternativesArray.firstObject;
                                                                     weakSelf.transcriptionText = alternative.transcript;
+                                                                    weakSelf.transcriptionConfidence = [NSNumber numberWithFloat:alternative.confidence];
                                                                 }
                                                                 if (result.isFinal) {
                                                                     weakSelf.isTranscriptionCompleted = YES;

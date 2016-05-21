@@ -25,6 +25,7 @@
 #import "MessageRequest.h"
 #import "MessageGetRequest.h"
 #import "MessageGetResponse.h"
+#import "TranscriptionsRequest.h"
 
 /*
  DEVELOPMENT:
@@ -56,6 +57,7 @@
 #define AWS_ENDPOINT_MESSAGES           @"/messages"
 #define AWS_ENDPOINT_ACCOUNTS_DELETE_RECORDER   @"/accounts/%@/relationships/receivers/%@"  //Delete recorder from account format
 #define AWS_ENDPOINT_READS              @"/reads"
+#define AWS_ENDPOINT_TRANSCRIPTIONS     @"/transcriptions"
 
 #define RESPONSE_CODE_CONFLICT      409
 #define RESPONSE_CODE_NOT_FOUND     404
@@ -82,5 +84,5 @@
 -(void) sendMessageToRecepientEmail:(NSString*)recepientEmail senderEmail:(NSString*)senderEmail transcriptionUrl:(NSString*) transcriptionUrl audioUrl:(NSString*)audioUrl jwt:(NSString*) jwt;
 -(void) getMessagesForAccountId:(NSString*) accountId jwt:(NSString*)jwt nextUrl:(NSString*)url order:(NSString*)orderText sinceDate:(NSDate*)sinceDate untilDate:(NSDate*)untilDate recipient:(BOOL)isForRecipient;
 -(void) markMessageAsReadWithJwt:(NSString*)jwt messageId:(NSString*)messageId;
-
+-(void) saveTranscriptionWithJwt:(NSString*)jwt audioUrl:(NSString*)audioUrl language:(NSString*)language transcriptionText:(NSString*)transcriptionText confidence:(NSNumber*) confidence;
 @end

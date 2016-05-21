@@ -596,4 +596,31 @@
     }];
 }
 
+-(void) saveTranscriptionWithJwt:(NSString*)jwt audioUrl:(NSString*)audioUrl language:(NSString*)language transcriptionText:(NSString*)transcriptionText confidence:(NSNumber*) confidence {
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_TRANSCRIPTIONS];
+    NSString *tokenText = [self toketTextForJwt:jwt];
+    AFHTTPRequestOperationManager *requestOperationManager = [[AFHTTPRequestOperationManager alloc]
+                                                              initWithBaseURL:[NSURL URLWithString:url]];
+    
+    requestOperationManager.requestSerializer = [AFJSONRequestSerializer new];
+    [requestOperationManager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [requestOperationManager.requestSerializer setValue:self.apiKey forHTTPHeaderField:X_API_KEY];
+    [requestOperationManager.requestSerializer setValue:tokenText forHTTPHeaderField:AUTHORIZATION];
+    requestOperationManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
+    
+    TranscriptionsRequest *transcriptionsRequest = [TranscriptionsRequest new];
+    transcriptionsRequest.audio_url = audioUrl;
+    transcriptionsRequest.language = language;
+    transcriptionsRequest.text = transcriptionText;
+    transcriptionsRequest.confidence = confidence;
+    NSDictionary *parameterDictionary = [transcriptionsRequest toDictionary];
+    
+    [requestOperationManager POST:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Transcription is saved");
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Transcription error");
+        [self failureWithOperation:operation andError:error];
+    }];
+}
+
 @end

@@ -31,4 +31,6 @@
 - (void) tryToSetUpAccountWithRecorder;
 #pragma mark - Send Inter App Message
 -(void) sendInterAppMessageTo:(NSString*)toEmail from:(NSString*)fromEmail withTranscriptionUrl:(NSString*)transcriptionUrl audioUrl:(NSString*)audioUrl;
+#pragma mark - Transcription
+-(void) saveTranscriptionWithAudioUrl:(NSString*)audioUrl transcriptionText:(NSString*)transcriptionText confidence:(NSNumber*) confidence;
 @end

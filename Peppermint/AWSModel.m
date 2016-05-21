@@ -239,4 +239,17 @@ SUBSCRIBE(InterAppMessageProcessCompleted) {
     }
 }
 
+#pragma mark - Transcription
+
+-(void) saveTranscriptionWithAudioUrl:(NSString*)audioUrl transcriptionText:(NSString*)transcriptionText confidence:(NSNumber*) confidence {
+    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+    NSString *language = LOC(@"Transcription Language", @"Transcription Language");
+    
+    [awsService saveTranscriptionWithJwt:peppermintMessageSender.exchangedJwt
+                                audioUrl:audioUrl
+                                language:language
+                       transcriptionText:transcriptionText
+                              confidence:confidence];
+}
+
 @end

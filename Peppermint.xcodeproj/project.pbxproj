@@ -148,6 +148,7 @@
 		B1A4AA511BF4DA9D005D55CB /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A4AA501BF4DA9D005D55CB /* AccountViewController.m */; };
 		B1AC47821CDB738500693C47 /* AVAudioPlayer_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B1AC47811CDB738500693C47 /* AVAudioPlayer_Addition.m */; };
 		B1ADABC01CF0F38600D2A458 /* GoogleSpeechRecordingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1ADABBF1CF0F38600D2A458 /* GoogleSpeechRecordingModel.m */; };
+		B1ADABC31CF10E1C00D2A458 /* TranscriptionsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B1ADABC21CF10E1C00D2A458 /* TranscriptionsRequest.m */; };
 		B1AE969B1CEA310D000A8E3D /* Text.strings in Resources */ = {isa = PBXBuildFile; fileRef = B1AE969D1CEA310D000A8E3D /* Text.strings */; };
 		B1B2F47D1C73273A003A4220 /* notification.aiff in Resources */ = {isa = PBXBuildFile; fileRef = B1B2F47C1C73273A003A4220 /* notification.aiff */; };
 		B1B4BF7B1CC4E61D004D4A6E /* SparkPostService.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B4BF7A1CC4E61D004D4A6E /* SparkPostService.m */; };
@@ -582,6 +583,8 @@
 		B1AC47811CDB738500693C47 /* AVAudioPlayer_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVAudioPlayer_Addition.m; sourceTree = "<group>"; };
 		B1ADABBE1CF0F38600D2A458 /* GoogleSpeechRecordingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleSpeechRecordingModel.h; sourceTree = "<group>"; };
 		B1ADABBF1CF0F38600D2A458 /* GoogleSpeechRecordingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleSpeechRecordingModel.m; sourceTree = "<group>"; };
+		B1ADABC11CF10E1C00D2A458 /* TranscriptionsRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranscriptionsRequest.h; sourceTree = "<group>"; };
+		B1ADABC21CF10E1C00D2A458 /* TranscriptionsRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranscriptionsRequest.m; sourceTree = "<group>"; };
 		B1AE969C1CEA310D000A8E3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Text.strings; sourceTree = "<group>"; };
 		B1AE969F1CEA3133000A8E3D /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Text.strings"; sourceTree = "<group>"; };
 		B1AE96A01CEA36A7000A8E3D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Text.strings; sourceTree = "<group>"; };
@@ -1142,6 +1145,8 @@
 				B13AE4381C8435A20046AF6E /* MessageGetResponse.m */,
 				B13AE43A1C8436410046AF6E /* Link.h */,
 				B13AE43B1C8436410046AF6E /* Link.m */,
+				B1ADABC11CF10E1C00D2A458 /* TranscriptionsRequest.h */,
+				B1ADABC21CF10E1C00D2A458 /* TranscriptionsRequest.m */,
 			);
 			name = AWS;
 			sourceTree = "<group>";
@@ -2438,6 +2443,7 @@
 				B165EF151BB71A99008C6F71 /* ContactsModel.m in Sources */,
 				B102F9861BF0CF0800EDF7E6 /* LoginValidateEmailTableViewCell.m in Sources */,
 				B179F83A1BC9316F0089D709 /* SearchMenuTableViewCell.m in Sources */,
+				B1ADABC31CF10E1C00D2A458 /* TranscriptionsRequest.m in Sources */,
 				B16145DD1CCE094D00F7FE0C /* PeppermintGIdSignIn.m in Sources */,
 				B15B15B01BDA44E200C0C171 /* TPAACAudioConverter.m in Sources */,
 				B1FC538B1C52656800C0A472 /* ChatTableViewCell.m in Sources */,

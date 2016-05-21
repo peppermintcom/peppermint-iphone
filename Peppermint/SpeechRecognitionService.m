@@ -62,10 +62,10 @@
     InitialRecognizeRequest *initialRecognizeRequest = [InitialRecognizeRequest message];
     initialRecognizeRequest.encoding = InitialRecognizeRequest_AudioEncoding_Linear16;
     initialRecognizeRequest.sampleRate = 16000;
-    initialRecognizeRequest.languageCode = @"en-US";
+    initialRecognizeRequest.languageCode = LOC(@"Transcription Language", @"Transcription Language");
     initialRecognizeRequest.maxAlternatives = 1;
     initialRecognizeRequest.profanityFilter = YES;
-    initialRecognizeRequest.continuous = NO;
+    initialRecognizeRequest.continuous = YES;
     initialRecognizeRequest.interimResults = NO;
     initialRecognizeRequest.enableEndpointerEvents = NO;
     request.initialRequest = initialRecognizeRequest;

@@ -266,7 +266,11 @@
         if(batchUpdateResult.resultType == NSUpdatedObjectsCountResultType) {
             NSNumber *updatedObjectsCount = (NSNumber*)batchUpdateResult.result;
             numberOfUpdatedRecords = updatedObjectsCount.integerValue;
-        } else if(batchUpdateResult.resultType == NSUpdatedObjectIDsResultType) {
+        }
+        
+        #warning "No need for below code, because previous messages are marked in server side."
+        /*
+        else if(batchUpdateResult.resultType == NSUpdatedObjectIDsResultType) {
             __block NSArray *objectIDs = batchUpdateResult.result;
             numberOfUpdatedRecords = objectIDs.count;
             dispatch_async(LOW_PRIORITY_QUEUE, ^{
@@ -281,7 +285,7 @@
                     }
                 }
             });
-        }
+        }*/
                 
         NSError *error = [repository endTransaction];
         if(error) {

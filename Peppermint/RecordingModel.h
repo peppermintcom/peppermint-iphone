@@ -25,6 +25,7 @@
 @property (weak, nonatomic) id<RecordingModelDelegate> delegate;
 @property (strong, nonatomic) NSURL *fileUrl;
 @property (nonatomic, strong) NSString *transcriptionText;
+@property (nonatomic, strong) NSNumber *transcriptionConfidence;
 
 +(CGFloat) checkPreviousFileLength;
 +(void) setPreviousFileLength:(CGFloat) previousFileLength;

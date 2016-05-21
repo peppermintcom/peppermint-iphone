@@ -128,6 +128,15 @@
 
 -(void) fileUploadCompletedWithPublicUrl:(NSString*) url canonicalUrl:(NSString*)canonicalUrl {
     cachedCanonicalUrl = canonicalUrl;
+    [self checkToSaveTranscriptionWithUrl:canonicalUrl];
+}
+
+-(void) checkToSaveTranscriptionWithUrl:(NSString*)url {
+    if(self.transcriptionToSet.length > 0) {
+        [awsModel saveTranscriptionWithAudioUrl:url
+                              transcriptionText:self.transcriptionToSet
+                                     confidence:self.confidenceToSet];
+    }
 }
 
 #pragma mark - CustomContactModelDelegate

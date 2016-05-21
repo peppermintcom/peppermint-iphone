@@ -22,6 +22,7 @@
 @property (strong, nonatomic) NSNumber<Optional> *duration;
 @property (strong, nonatomic) NSString<Optional> *message_id;
 @property (strong, nonatomic) NSString<Optional> *read;
+@property (strong, nonatomic) NSString<Optional> *transcription;
 
 -(NSDate*) createdDate;
 
