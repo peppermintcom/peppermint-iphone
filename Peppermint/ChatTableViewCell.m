@@ -14,6 +14,7 @@
 #import "PlayingChatEntryModel.h"
 
 #define SIZE_TITLE                          11
+#define BASE_HEIGHT_FOR_TRANSCRIPTION_VIEW  35
 
 #define DISTANCE_TO_BORDER                  5
 #define TIMER_UPDATE_PERIOD                 0.05
@@ -54,7 +55,7 @@
     self.transcriptionView.layer.cornerRadius = 8;
     self.transctiptionTitleLabel.font = [UIFont openSansSemiBoldFontOfSize:SIZE_TITLE];
     self.transctiptionTitleLabel.textColor = [UIColor textFieldTintGreen];
-    self.transctiptionTitleLabel.text = LOC(@"AUTOMATIC TRANSCTIPTION", @"Transctiption Title");
+    self.transctiptionTitleLabel.text = LOC(@"AUTOMATIC TRANSCRIPTION", @"Transctiption Title");
     self.transctiptionContentLabel.font = [UIFont openSansFontOfSize:SIZE_TITLE];
     self.transctiptionContentLabel.textColor = [UIColor blackColor];
     
@@ -74,7 +75,7 @@
 }
 
 - (void) layoutSubviews {
-    self.centerViewWidth.constant = self.frame.size.width * 0.60;
+    self.centerViewWidth.constant = [ChatTableViewCell contentWidthForFrameWidth:self.frame.size.width];
     self.durationCircleView.layer.cornerRadius = self.durationCircleView.frame.size.height/2;
     
     if(!self.peppermintChatEntry) {
@@ -117,6 +118,7 @@
     [self setLeftLabel];
     [self setRightLabelWithDate:chatEntry.dateCreated];
     [self setTranscriptionView];
+    [self setSeparatorView];
 }
 
 -(void) setLeftLabel {
@@ -172,6 +174,15 @@
         timeText = [NSString stringWithFormat:@"%@%@", timeText, LOC(@"Plural Suffix", @"Plural Suffix")];
     }
     self.rightLabel.text = [NSString stringWithFormat:@"%ld %@ ago", (long)timeVariable, timeText].lowercaseString;
+}
+
+-(void) setSeparatorView {
+    self.separatorView.hidden = self.transcriptionView.hidden;
+    self.separatorView.backgroundColor = self.tableView.backgroundColor;
+    self.separatorViewTopContent.backgroundColor = self.messageView.backgroundColor;
+    self.separatorViewTopContent.layer.cornerRadius = 2;
+    self.separatorViewBottomContent.backgroundColor = self.messageView.backgroundColor;
+    self.separatorViewBottomContent.layer.cornerRadius = 2;
 }
 
 -(void) setTranscriptionView {
@@ -435,6 +446,21 @@ SUBSCRIBE(ProximitySensorValueIsUpdated) {
     if(![_playingModel isEqual:cachedPlayingModel]) {
         [_playingModel stop];
     }
+}
+
++ (CGFloat) contentWidthForFrameWidth:(CGFloat)frameWidth {
+    return frameWidth * 0.60;
+}
+
++ (CGFloat)heightOfTranscriptionViewWithText:(NSString *)transcriptionText withFrameWidth:(CGFloat)frameWidth {
+    CGFloat labelWidth                  = [self contentWidthForFrameWidth:frameWidth];
+    CGSize labelContraints              = CGSizeMake(labelWidth, CGFLOAT_MAX);
+    NSStringDrawingContext *context     = [[NSStringDrawingContext alloc] init];
+    CGRect labelRect                    = [transcriptionText boundingRectWithSize:labelContraints
+                                                                       options:NSStringDrawingUsesLineFragmentOrigin
+                                                                    attributes:nil
+                                                                       context:context];
+    return labelRect.size.height + BASE_HEIGHT_FOR_TRANSCRIPTION_VIEW;
 }
 
 @end

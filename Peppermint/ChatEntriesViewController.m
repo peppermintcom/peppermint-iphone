@@ -219,10 +219,9 @@
             if(peppermintChatEntry.transcription.length == 0) {
                 height = CELL_HEIGHT_CHAT_TABLEVIEWCELL;
             } else {
-                CGFloat rowHeight = CELL_HEIGHT_CHAT_TABLEVIEWCELL_TRANSCRIPTION_ROW;
-                int charsPerRow = 30;
-                int numberOfRows = 2 + (int)(peppermintChatEntry.transcription.length / charsPerRow);
-                height = CELL_HEIGHT_CHAT_TABLEVIEWCELL + (numberOfRows* rowHeight);
+                CGFloat transcriptionHeight = [ChatTableViewCell heightOfTranscriptionViewWithText:peppermintChatEntry.transcription
+                                                                                    withFrameWidth:self.tableView.frame.size.width];
+                height = CELL_HEIGHT_CHAT_TABLEVIEWCELL + transcriptionHeight;
             }
         } else if (peppermintChatEntry.type == ChatEntryTypeEmail && self.chatEntryTypesToShow & ChatEntryTypeEmail) {
             height = [self calculatedHeight:peppermintChatEntry indexPath:indexPath];

@@ -55,7 +55,6 @@
 +(ContactInformationTableViewCell*) cellContactInformationTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath withDelegate:(id<ContactInformationTableViewCellDelegate>)delegate;
 
 #define CELL_HEIGHT_CHAT_TABLEVIEWCELL  60
-#define CELL_HEIGHT_CHAT_TABLEVIEWCELL_TRANSCRIPTION_ROW   20
 +(ChatTableViewCell*) cellChatTableViewCellFromTable:(UITableView*)tableView forIndexPath:(NSIndexPath*)indexPath andDelegate:(id<ChatTableViewCellDelegate>) delegate;
 
 #define CELL_HEIGHT_CHAT_TABLEVIEWMAILCELL_IDLE_MAX  300
