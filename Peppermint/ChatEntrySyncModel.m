@@ -143,11 +143,7 @@ SUBSCRIBE(NetworkFailure) {
     if(event.sender == awsService) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         [self resetSyncDate];
-        if([ConnectionModel sharedInstance].isInternetReachable) {
-            [self makeSyncRequestForMessages];
-        } else {
-            [self.delegate operationFailure:[event error]];
-        }
+        [self.delegate operationFailure:[event error]];
     }
 }
 
