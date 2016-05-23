@@ -95,6 +95,7 @@
                                                             [weakSelf.delegate operationFailure:error];
                                                         } else if(!response) {
                                                             NSLog(@"There is no response information");
+                                                            weakSelf.isTranscriptionCompleted = YES;
                                                         } else {
                                                             weakSelf.isTranscriptionCompleted = NO;
                                                             NSLog(@"RESPONSE: %@", response);
@@ -108,10 +109,11 @@
                                                                     weakSelf.isTranscriptionCompleted = YES;
                                                                 }
                                                             }
-                                                            if (weakSelf.isTranscriptionCompleted) {
-                                                                NSLog(@"Got finished signal");
-                                                                [self checkToFinishRecordingAndCallDelegate];
-                                                            }
+                                                        }
+                                                        
+                                                        if (weakSelf.isTranscriptionCompleted) {
+                                                            NSLog(@"Got finished signal");
+                                                            [self checkToFinishRecordingAndCallDelegate];
                                                         }
                                                     }];
         self.audioData = [[NSMutableData alloc] init];
