@@ -202,7 +202,8 @@ sharedObject;\
 
 #define SCREEN_HEIGHT_LIMIT             600
 
-#define CONTACT_PHONEBOOK               @"p"
+#define CONTACT_PHONEBOOK_EMAIL         @"pe"
+#define CONTACT_PHONEBOOK_PHONE         @"pp"
 #define CONTACT_GOOGLE                  @"g"
 #define CONTACT_CUSTOM                  @"c"
 

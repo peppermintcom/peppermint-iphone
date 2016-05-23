@@ -123,14 +123,8 @@
     NSMutableAttributedString *information = [NSMutableAttributedString new];
     [information addText:nameSurname ofSize:sizeLarge ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:sizeLarge]];
     [self setAttributedText:information forLabel:self.informationLabel];
-    
-    information = [NSMutableAttributedString new];
-    if(self.showViaLabel) {
-        [information addText:LOC(@"via", @"Localized value for the word via") ofSize:sizeSmall ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
-        [information addText:@" " ofSize:sizeSmall ofColor:[UIColor clearColor]];
-    }
-    [information addText:cellCommunicationChannelAddress ofSize:sizeSmall ofColor:[UIColor whiteColor] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
-    [self setAttributedText:information forLabel:self.informationLabel2ndLine];
+    [self update2ndLineTextWithViaColor:[UIColor whiteColor]
+                       explanationColor:[UIColor whiteColor]];
 }
 
 -(void) applyNonSelectedStyle {
@@ -140,14 +134,23 @@
     NSMutableAttributedString *information = [NSMutableAttributedString new];
     [information addText:nameSurname ofSize:sizeLarge ofColor:[UIColor blackColor] andFont:[UIFont openSansSemiBoldFontOfSize:sizeLarge]];
     [self setAttributedText:information forLabel:self.informationLabel];
-    
-    information = [NSMutableAttributedString new];
-    if(self.showViaLabel) {
-        [information addText:LOC(@"via", @"Localized value for the word via") ofSize:sizeSmall ofColor:[UIColor textFieldTintGreen] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
-        [information addText:@" " ofSize:sizeSmall ofColor:[UIColor clearColor]];
+    [self update2ndLineTextWithViaColor:[UIColor textFieldTintGreen]
+                       explanationColor:[UIColor viaInformationLabelTextGreen]];
+}
+
+-(void) update2ndLineTextWithViaColor:(UIColor*)viaColor explanationColor:(UIColor*)explanationColor {
+    BOOL isCommunicationChannelEmpty = [cellCommunicationChannelAddress isEqualToString:LOC(@"...", @"No SMS Number Text")];
+    if(isCommunicationChannelEmpty) {
+        self.informationLabel2ndLine.text = @"";
+    } else {
+        NSMutableAttributedString *information = [NSMutableAttributedString new];
+        if(self.showViaLabel) {
+            [information addText:LOC(@"via", @"Localized value for the word via") ofSize:sizeSmall ofColor:viaColor andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
+            [information addText:@" " ofSize:sizeSmall ofColor:[UIColor clearColor]];
+        }
+        [information addText:cellCommunicationChannelAddress ofSize:sizeSmall ofColor:explanationColor andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
+        [self setAttributedText:information forLabel:self.informationLabel2ndLine];
     }
-    [information addText:cellCommunicationChannelAddress ofSize:sizeSmall ofColor:[UIColor viaInformationLabelTextGreen] andFont:[UIFont openSansSemiBoldFontOfSize:sizeSmall]];
-    [self setAttributedText:information forLabel:self.informationLabel2ndLine];
 }
 
 #pragma mark - Action Buttons
