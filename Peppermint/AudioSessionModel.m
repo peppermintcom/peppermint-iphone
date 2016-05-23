@@ -180,7 +180,9 @@
 }
 
 -(void) resetActiveAudioItems {
-    for(NSObject *item in activeAudioItemsArray) {
+    //Using reverse array in a loop, prevents “NSArray was mutated while being enumerated” error
+    // http://stackoverflow.com/a/31269190/5171866
+    for(NSObject *item in [activeAudioItemsArray reverseObjectEnumerator]) {
         if (item && [item isKindOfClass:[AVAudioRecorder class]]) {
             AVAudioRecorder *recorder = (AVAudioRecorder*)item;
             if(recorder.isRecording) {

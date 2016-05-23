@@ -13,7 +13,7 @@
 #import "ContactsModel.h"
 #import "CustomContactModel.h"
 
-#define FAR_FUTURE_DATE     [NSDate dateWithTimeIntervalSinceNow: 5 * YEAR];
+#define FAR_FUTURE_DATE     [NSDate dateWithTimeIntervalSinceNow: 3 * DAY];
 #define SOME_RECENT_DATE    [NSDate dateWithTimeIntervalSinceNow: -48 * HOUR];
 
 @interface SyncDateHolder : JSONModel

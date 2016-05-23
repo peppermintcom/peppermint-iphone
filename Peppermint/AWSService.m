@@ -533,7 +533,7 @@
         }
         messageGetRequest.order = orderText;
         [messageGetRequest setSinceDate:sinceDate];
-        [messageGetRequest setUntilDate:untilDate ? untilDate : [NSDate dateWithTimeIntervalSinceNow:2*DAY]];
+        [messageGetRequest setUntilDate:untilDate];
         parameterDictionary = [messageGetRequest toDictionary];
     } else {
         NSLog(@"Making a next %@ qury.|updated until:%@ <-> since:%@", (isForRecipient ? @"Recipient" : @"Sender"), untilDate, sinceDate );

@@ -85,7 +85,8 @@
 }
 
 -(void) initRecorder {
-    @throw override_error;
+    //@throw override_error;
+    NSLog(@"initRecorder is called from BaseClass. Please override function in subclasses to add more functionality");
 }
 
 -(void) setInputGain {
