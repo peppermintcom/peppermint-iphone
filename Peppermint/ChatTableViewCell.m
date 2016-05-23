@@ -15,6 +15,7 @@
 
 #define SIZE_TITLE                          11
 #define BASE_HEIGHT_FOR_TRANSCRIPTION_VIEW  35
+#define WIDTH_FOR_RIGHT_AND_LEFT_IMAGE      14
 
 #define DISTANCE_TO_BORDER                  5
 #define TIMER_UPDATE_PERIOD                 0.05
@@ -453,7 +454,9 @@ SUBSCRIBE(ProximitySensorValueIsUpdated) {
 }
 
 + (CGFloat)heightOfTranscriptionViewWithText:(NSString *)transcriptionText withFrameWidth:(CGFloat)frameWidth {
-    CGFloat labelWidth                  = [self contentWidthForFrameWidth:frameWidth];
+    CGFloat labelWidth                  = [self contentWidthForFrameWidth:frameWidth];    
+    labelWidth = labelWidth - (2 * WIDTH_FOR_RIGHT_AND_LEFT_IMAGE);
+    
     CGSize labelContraints              = CGSizeMake(labelWidth, CGFLOAT_MAX);
     NSStringDrawingContext *context     = [[NSStringDrawingContext alloc] init];
     CGRect labelRect                    = [transcriptionText boundingRectWithSize:labelContraints
