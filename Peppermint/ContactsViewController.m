@@ -271,10 +271,11 @@ SUBSCRIBE(UserLoggedOut) {
     } else if (indexPath.section == SECTION_EMPTY_RESULT) {
         EmptyResultTableViewCell *cell = [CellFactory cellEmptyResultTableViewCellFromTable:tableView forIndexPath:indexPath];
         [cell setVisibiltyOfExplanationLabels:YES];
-        
         BOOL isOneCycleCompleted = [ChatEntrySyncModel sharedInstance].issentMessagesAreInSyncOfFirstCycle
         || [ChatEntrySyncModel sharedInstance].isReciviedMessagesAreInSyncOfFirstCycle;
-        if(!isOneCycleCompleted) {
+        BOOL isUserStillLoggedIn = [[PeppermintMessageSender sharedInstance] isUserStillLoggedIn];
+        
+        if(!isOneCycleCompleted && isUserStillLoggedIn) {
             [cell showLoading];
             cell.headerLabel.text = @"";
         } else if(activeCellTag == CELL_TAG_RECENT_CONTACTS) {
