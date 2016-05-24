@@ -174,7 +174,7 @@
     if(timeVariable > 1) {
         timeText = [NSString stringWithFormat:@"%@%@", timeText, LOC(@"Plural Suffix", @"Plural Suffix")];
     }
-    self.rightLabel.text = [NSString stringWithFormat:@"%ld %@ ago", (long)timeVariable, timeText].lowercaseString;
+    self.rightLabel.text = [NSString stringWithFormat:@"%ld %@ %@", (long)timeVariable, timeText, LOC(@"ago", @"ago keyword")].lowercaseString;
 }
 
 -(void) setSeparatorView {

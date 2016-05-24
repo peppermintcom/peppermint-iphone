@@ -169,7 +169,7 @@
 "Sent Audio Message" = "Sesli mesaj gönderildi";
 "Received Audio Message" = "Sesli mesaj alındı";
 "Search" = "Ara";
-"Audio message could not be played. Please check your connection and try again." = "Sesli mesaj oynatılamadı. Lütfen internet bağlantını kontrol edin ve tekrar deneyin.";
+"Audio message could not be played. Please check your connection and try again." = "Sesli mesaj oynatılamadı. Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.";
 "..." = "...";
 "Sending via Email" = "E-Posta adresi ile gönder";
 "No email address found. Please insert an email address for this contact." = "Hiçbir e-posta adresi bulunamadı. Bu kişi için bir e-posta adresi giriniz.";
@@ -182,5 +182,6 @@
 "Welcome Back" = "Tekrar Hoşgeldiniz";
 "Log in" = "Oturum aç";
 "Forgot password?" = "Unuttunuz mu?";
-
+"ago" = "önce";
+"AUTOMATIC TRANSCRIPTION" = "AUTOMATIC TRANSCRIPTION";
 "Transcription Language" = "tr-TR";
