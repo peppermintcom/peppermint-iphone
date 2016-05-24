@@ -251,7 +251,7 @@
         NSInteger numberOfUpdatedRecords = 0;
         Repository *repository = [Repository beginTransaction];
         NSPredicate *emailPredicate = [ChatEntryModel contactEmailPredicate:peppermintChatEntry.contactEmail];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.dateCreated <= %@", peppermintChatEntry.dateCreated];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.dateCreated < %@", peppermintChatEntry.dateCreated];
         predicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:
                                                                         predicate,
                                                                         PREDICATE_UNREAD_MESSAGES,
@@ -269,6 +269,7 @@
         } else if(batchUpdateResult.resultType == NSUpdatedObjectIDsResultType) {
             __block NSArray *objectIDs = batchUpdateResult.result;
             numberOfUpdatedRecords = objectIDs.count;            
+            /* We do not need below call, cos it is handled in server side
             dispatch_async(LOW_PRIORITY_QUEUE, ^{
                 for (NSManagedObjectID *objectID in objectIDs) {
                     NSManagedObject *managedObject = [repository.managedObjectContext objectWithID:objectID];
@@ -281,8 +282,9 @@
                     }
                 }
             });
+            */
         }
-                
+        
         NSError *error = [repository endTransaction];
         if(error) {
             [weakSelf.delegate operationFailure:error];
