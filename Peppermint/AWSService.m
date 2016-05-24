@@ -474,7 +474,7 @@
     [requestOperationManager.requestSerializer setValue:@"application/vnd.api+json" forHTTPHeaderField:@"Content-Type"];
     [requestOperationManager.requestSerializer setValue:self.apiKey forHTTPHeaderField:X_API_KEY];
     [requestOperationManager.requestSerializer setValue:tokenText forHTTPHeaderField:AUTHORIZATION];
-    requestOperationManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/vnd.api+json"];
+    requestOperationManager.responseSerializer.acceptableContentTypes = nil;//[NSSet setWithObject:@"application/vnd.api+json"];
     
     Attribute *attribute = [Attribute new];
     attribute.transcription_url = transcriptionUrl;
@@ -547,7 +547,7 @@
     [requestOperationManager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [requestOperationManager.requestSerializer setValue:self.apiKey forHTTPHeaderField:X_API_KEY];
     [requestOperationManager.requestSerializer setValue:tokenText forHTTPHeaderField:AUTHORIZATION];
-    requestOperationManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/vnd.api+json"];
+    requestOperationManager.responseSerializer.acceptableContentTypes = nil;//[NSSet setWithObject:@"application/vnd.api+json"];
 
     [requestOperationManager GET:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSError *error;
