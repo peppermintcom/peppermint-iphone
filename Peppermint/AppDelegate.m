@@ -458,6 +458,7 @@ SUBSCRIBE(DetachSuccess) {
 #pragma mark - ChatEntrySyncModelDelegate
 
 -(void) syncStepCompleted:(NSArray<PeppermintChatEntry*>*) syncedPeppermintChatEnryArray {
+    #warning "Add a isLastStep Boolean flag! and close background task if the flag is set!"
     [self peppermintChatEntrySavedWithSuccess:syncedPeppermintChatEnryArray];
 }
 
@@ -508,22 +509,19 @@ SUBSCRIBE(DetachSuccess) {
                             && peppermintContactToNavigate.communicationChannelAddress.length > 0
                             && [[AutoPlayModel sharedInstance] isScheduledForPeppermintContactWithEmail:
                                 peppermintContactToNavigate.communicationChannelAddress]);
-    BOOL shouldPublishNotification = NO;
     
     if(isNavigationSet && doesNewIncomingMessageExists) {
-        [self hideAppCoverLoadingView];
         [self navigateToChatEntriesPageForEmail:peppermintContactToNavigate.communicationChannelAddress
                                     nameSurname:peppermintContactToNavigate.nameSurname];
         peppermintContactToNavigate = nil;
-        shouldPublishNotification = YES;
     } else if (!isNavigationSet) {
-        [self hideAppCoverLoadingView];
         [self checkAndPlayIncomingAudioAlertForNewMessagesArray:newIncomingMessagesArray];
         hasFinishedFirstSync = hasFinishedFirstSync || [self.chatEntrySyncModel isAllMessagesAreInSyncOfFirstCycle];
-        shouldPublishNotification = YES;
     }
     
+    BOOL shouldPublishNotification = doesNewIncomingMessageExists || !isNavigationSet;
     if(shouldPublishNotification) {
+        [self hideAppCoverLoadingView];
         RefreshIncomingMessagesCompletedWithSuccess *refreshIncomingMessagesCompletedWithSuccess = [RefreshIncomingMessagesCompletedWithSuccess new];
         refreshIncomingMessagesCompletedWithSuccess.sender = self;
         refreshIncomingMessagesCompletedWithSuccess.peppermintChatEntryNewMesssagesArray = newIncomingMessagesArray;
