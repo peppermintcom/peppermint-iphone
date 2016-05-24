@@ -14,7 +14,7 @@
 #import "CustomContactModel.h"
 
 #define FAR_FUTURE_DATE     [NSDate dateWithTimeIntervalSinceNow: 3 * DAY];
-#define SOME_RECENT_DATE    [NSDate dateWithTimeIntervalSinceNow: -48 * HOUR];
+#define SOME_RECENT_DATE    [NSDate dateWithTimeIntervalSinceNow: -1 * MINUTE];
 
 @interface SyncDateHolder : JSONModel
 @property (strong, nonatomic) NSDate<Optional> *recipientSinceDate;
@@ -149,7 +149,9 @@ SUBSCRIBE(NetworkFailure) {
 
 -(void) resetSyncDate {
     self.syncDateHolder.recipientUntilDate = FAR_FUTURE_DATE;
+    self.syncDateHolder.recipientSinceDate = nil;
     self.syncDateHolder.senderUntilDate = FAR_FUTURE_DATE;
+    self.syncDateHolder.senderSinceDate = nil;
     defaults_set_object(DEFAULTS_SYNC_DATE_HOLDER, [self syncDateHolder].toJSONString);
 }
 
@@ -193,13 +195,6 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
         
         //Custom Contact
         [customContactModel save:peppermintContact];
-        
-        //Min Until Date
-        if(event.isForRecipient) {
-            self.syncDateHolder.recipientUntilDate = [peppermintChatEntry.dateCreated earlierDate:self.syncDateHolder.recipientUntilDate];
-        } else {
-            self.syncDateHolder.senderUntilDate = [peppermintChatEntry.dateCreated earlierDate:self.syncDateHolder.senderUntilDate];
-        }
     }
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
@@ -257,13 +252,13 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
 }
 
 -(void) checkAndMarkFullSyncCycleCompletedIfNeeded {
-    BOOL isFirstSyncCycleFinishedForRecipient = !nextUrl && queryForIncoming && self.syncDateHolder.recipientUntilDate;
+    BOOL isFirstSyncCycleFinishedForRecipient = !nextUrl && queryForIncoming;
     if(isFirstSyncCycleFinishedForRecipient) {
         self.syncDateHolder.recipientUntilDate = nil;
         self.syncDateHolder.recipientSinceDate = SOME_RECENT_DATE;
     }
     
-    BOOL isFirstSyncCycleFinishedForSender = !nextUrl && !queryForIncoming && self.syncDateHolder.senderUntilDate;
+    BOOL isFirstSyncCycleFinishedForSender = !nextUrl && !queryForIncoming;
     if(isFirstSyncCycleFinishedForSender) {
         self.syncDateHolder.senderUntilDate = nil;
         self.syncDateHolder.senderSinceDate = SOME_RECENT_DATE;
