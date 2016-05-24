@@ -77,6 +77,9 @@
 - (void) processSampleData:(NSData *)data {
     [self.aacFileWriter appendData:data];
     [self.audioData appendData:data];
+    [self updateMetering];
+    
+    /*
     NSInteger frameCount = [data length] / 2;
     int16_t *samples = (int16_t *) [data bytes];
     int64_t sum = 0;
@@ -84,6 +87,7 @@
         sum += abs(samples[i]);
     }
     //NSLog(@"audio %d %d", (int) frameCount, (int) (sum * 1.0 / frameCount));
+    */
     
     if ([self.audioData length] > SPEECH_BUFFER) {
         NSLog(@"SENDING");
@@ -117,7 +121,6 @@
                                                         }
                                                     }];
         self.audioData = [[NSMutableData alloc] init];
-        [self updateMetering];
     }
 }
 

@@ -24,7 +24,7 @@
                                            [NSNumber numberWithInt:kAudioFormatMPEG4AAC], AVFormatIDKey,
                                            [NSNumber numberWithInt:AVAudioQualityHigh], AVEncoderAudioQualityKey,
                                            [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,
-                                           [NSNumber numberWithFloat:SAMPLE_RATE], AVSampleRateKey,
+                                           [NSNumber numberWithFloat:AUDIO_SAMPLE_RATE], AVSampleRateKey,
                                            nil];
             
             recorder = [[AVAudioRecorder alloc] initWithURL:self.fileUrl settings:recordSetting error:&error];

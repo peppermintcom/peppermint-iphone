@@ -154,7 +154,7 @@ static OSStatus playbackCallback(void *inRefCon,
 
   sampleRate = session.sampleRate;
   NSLog (@"hardwareSampleRate = %f", sampleRate);
-  sampleRate = 16000;
+  sampleRate = AUDIO_SAMPLE_RATE;
 
   // Describe the RemoteIO unit
   AudioComponentDescription audioComponentDescription;

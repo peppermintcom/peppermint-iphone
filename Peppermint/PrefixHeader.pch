@@ -130,6 +130,8 @@ sharedObject;\
 #define ANIM_TIME                   0.3
 #define WARN_TIME                   1.5
 
+#define AUDIO_SAMPLE_RATE           16000.0   //44100 -> 44.1kHz = 44100, 16 kHz -> 16000
+
 #define MIN_INTERVAL_FOR_INCOMING_AUDIO 4
 
 #define SHOW_ALL_CONTACRS_CORNER_RADIUS 10

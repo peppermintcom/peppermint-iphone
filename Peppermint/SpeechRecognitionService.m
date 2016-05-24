@@ -61,7 +61,7 @@
 
     InitialRecognizeRequest *initialRecognizeRequest = [InitialRecognizeRequest message];
     initialRecognizeRequest.encoding = InitialRecognizeRequest_AudioEncoding_Linear16;
-    initialRecognizeRequest.sampleRate = 16000;
+    initialRecognizeRequest.sampleRate = AUDIO_SAMPLE_RATE;
     initialRecognizeRequest.languageCode = LOC(@"Transcription Language", @"Transcription Language");
     initialRecognizeRequest.maxAlternatives = 1;
     initialRecognizeRequest.profanityFilter = YES;
