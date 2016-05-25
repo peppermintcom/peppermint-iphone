@@ -62,6 +62,7 @@
     substitution_data.canonical_url = canonicalUrl;
     substitution_data.url = url;
     substitution_data.replyLink = [self fastReplyUrlForSender];
+    substitution_data.transcription = self.transcriptionToSet;
     sparkPostMessage.substitution_data = substitution_data;
     
     if(![self isCancelled]) {

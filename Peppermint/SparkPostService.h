@@ -15,7 +15,7 @@
 #define CHROME_API_KEY          @"74d47793522fa8f719c94d6274d8654d8be93817"
 
 #define SPK_BASE_URL                @"https://api.sparkpost.com/api/v1"
-#define SPK_ENDPOINT_IOS_TEMPLATE   @"/templates/ios-voice-message?draft=false"
+#define SPK_ENDPOINT_IOS_TEMPLATE   @"/templates/audio-mail-template?draft=false"
 #define SPK_ENDPOINT_TRANSMISSION   @"/transmissions"
 #define SPK_RECIPIENT_LIMIT         @"?num_rcpt_errors=3"
 
