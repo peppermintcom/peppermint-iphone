@@ -468,9 +468,10 @@
 }
 
 -(void) stoppedPlayingMessage:(ChatTableViewCell*)chatTableViewCell {
-    BOOL isPaused = chatTableViewCell.playingModel.audioPlayer.currentTime > 0.3;
     isPlaying = NO;
-    if(scheduleRefresh && !isPaused) {
+    //BOOL isPaused = chatTableViewCell.playingModel.audioPlayer.currentTime > 0.3;
+    //if(scheduleRefresh && !isPaused) { //Decide to refresh on paused player or not?
+    if(scheduleRefresh) {
         scheduleRefresh = NO;
         [self refreshContent];
     }
