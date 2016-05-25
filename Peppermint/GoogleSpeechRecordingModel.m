@@ -22,6 +22,7 @@
 
 @property (atomic, assign) BOOL receivedPrepareMessage;
 @property (atomic, assign) BOOL isTranscriptionCompleted;
+@property (atomic, assign) BOOL isStopCommandReceived;
 @end
 
 @implementation GoogleSpeechRecordingModel
@@ -48,6 +49,8 @@
     [self recordingStartDate];
     self.aacFileWriter = [AACFileWriter new];
     self.aacFileWriter.delegate = self;
+    self.transcriptionText = @"";
+    self.isStopCommandReceived = NO;
     [[AudioController sharedInstance] start];
 }
 
@@ -61,6 +64,7 @@
 
 -(void) stop {
     NSLog(@"Stop is called.....");
+    self.isStopCommandReceived = YES;
     [[AudioController sharedInstance] stop];
     [[SpeechRecognitionService sharedInstance] stopStreaming];
 }
@@ -98,7 +102,7 @@
                                                         if (error) {
                                                             [weakSelf.delegate operationFailure:error];
                                                         } else if(!response) {
-                                                            NSLog(@"There is no response information");
+                                                            NSLog(@"There is no response information. End of recognising.");
                                                             weakSelf.isTranscriptionCompleted = YES;
                                                         } else {
                                                             weakSelf.isTranscriptionCompleted = NO;
@@ -106,13 +110,9 @@
                                                             for (SpeechRecognitionResult *result in response.resultsArray) {
                                                                 if(result.alternativesArray.count > 0) {
                                                                     SpeechRecognitionAlternative *alternative = result.alternativesArray.firstObject;
-                                                                    weakSelf.transcriptionText = alternative.transcript;
+                                                                    weakSelf.transcriptionText = [weakSelf.transcriptionText stringByAppendingString:alternative.transcript];
                                                                     weakSelf.transcriptionConfidence = [NSNumber numberWithFloat:alternative.confidence];
-                                                                }
-                                                                if (result.isFinal) {
-                                                                    weakSelf.isTranscriptionCompleted = YES;
-                                                                }
-                                                            }
+                                                                }                                                            }
                                                         }
                                                         
                                                         if (weakSelf.isTranscriptionCompleted) {
@@ -125,7 +125,6 @@
 }
 
 -(void) prepareRecordData {
-    self.receivedPrepareMessage = YES;
     [self stop];
     NSURL *fileUrl = [self recordFileUrl];
     [self.aacFileWriter convertToAACWithAudioStreamBasicDescription:[AudioController sharedInstance].asbd andFileUrl:fileUrl];
@@ -134,11 +133,12 @@
 #pragma mark - AACFileWriterDelegate
 
 -(void) fileConversionIsFinished {
+    self.receivedPrepareMessage = YES;
     [self checkToFinishRecordingAndCallDelegate];
 }
 
 -(void) checkToFinishRecordingAndCallDelegate {
-    if(self.receivedPrepareMessage && self.isTranscriptionCompleted) {
+    if(self.receivedPrepareMessage && self.isTranscriptionCompleted && self.isStopCommandReceived) {
         self.isActive = NO;
         [self setAudioSession:NO];
         [super prepareRecordData];

@@ -19,7 +19,7 @@
     } else {
         [awsModel sendInterAppMessageTo:self.selectedPeppermintContact.communicationChannelAddress
                                    from:self.peppermintMessageSender.email
-                   withTranscriptionUrl:@"https://qdkkavugcd.execute-api.us-west-2.amazonaws.com/prod/v1/transcriptions/mMuYhGEqnPg3H2M42YnvGB"
+                   withTranscriptionUrl:nil
                                audioUrl:publicUrl];
     }
 }
