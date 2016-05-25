@@ -177,7 +177,7 @@
         _sendingStatus = SendingStatusCancelled; //Cancel to stop ongoing processes. All taken actions are rolled-back!
         [[CacheModel sharedInstance] cache:self WithData:_data extension:_extension duration:_duration];
     } else {
-        NSLog(@"Message could not be cached. There is no sufficient information to cacheq   ""!!!");
+        NSLog(@"Message could not be cached. There is no sufficient information to cache!");
     }
 }
 

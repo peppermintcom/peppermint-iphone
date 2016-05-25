@@ -536,7 +536,7 @@
         [messageGetRequest setUntilDate:untilDate];
         parameterDictionary = [messageGetRequest toDictionary];
     } else {
-        NSLog(@"Making a next %@ qury.|updated until:%@ <-> since:%@", (isForRecipient ? @"Recipient" : @"Sender"), untilDate, sinceDate );
+        NSLog(@"Making a next %@ qury.|last saved until:%@ <-> since:%@", (isForRecipient ? @"Recipient" : @"Sender"), untilDate, sinceDate );
     }
     
     NSString *tokenText = [self toketTextForJwt:jwt];
@@ -561,7 +561,9 @@
             getMessagesAreSuccessful.existsMoreMessages = (messageGetResponse.links.next != nil);
             getMessagesAreSuccessful.nextUrl = messageGetResponse.links.next;
             getMessagesAreSuccessful.isForRecipient = isForRecipient;
-            NSLog(@"Received %d messages from API", messageGetResponse.data.count);
+            NSLog(@"Received %lu %@ messages from API",
+                  (unsigned long)messageGetResponse.data.count,
+                  (isForRecipient ? @"Recipient" : @"Sender"));
             PUBLISH(getMessagesAreSuccessful);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

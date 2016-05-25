@@ -65,6 +65,7 @@
     EmailClientModel *emailClientModel;
     NSDate *lastAudioPlayedDate;
     MessageBarManagerModel *_messageBarManagerModel;
+    NSMutableArray *newMessagesInSyncCycle;
 }
 
 -(void) initPlayingModel {
@@ -241,6 +242,7 @@
         [self refreshChatEntryModel];
         hasFinishedFirstSync = NO;
     }
+    newMessagesInSyncCycle = nil;
     [[self chatEntrySyncModel] makeSyncRequestForMessages];
 }
 
@@ -457,8 +459,68 @@ SUBSCRIBE(DetachSuccess) {
 
 #pragma mark - ChatEntrySyncModelDelegate
 
--(void) syncStepCompleted:(NSArray<PeppermintChatEntry*>*) syncedPeppermintChatEnryArray {
-    [self peppermintChatEntrySavedWithSuccess:syncedPeppermintChatEnryArray];
+-(NSMutableArray*) newMessagesInSyncCycle {
+    if(!newMessagesInSyncCycle) {
+        newMessagesInSyncCycle = [NSMutableArray new];
+    }
+    return newMessagesInSyncCycle;
+}
+
+-(void) performNavigationForPeppermintContactToNavigate {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.contactEmail ==[cd] %@", peppermintContactToNavigate.communicationChannelAddress];
+    
+    NSArray *messagesForPeppermintContactToNavigate = [NSArray arrayWithArray:[self newMessagesInSyncCycle]];
+    [messagesForPeppermintContactToNavigate filteredArrayUsingPredicate:predicate];
+    if(messagesForPeppermintContactToNavigate.count > 0) {
+        [self navigateToChatEntriesPageForEmail:peppermintContactToNavigate.communicationChannelAddress
+                                    nameSurname:peppermintContactToNavigate.nameSurname];
+    } else {
+        NSLog(@"Seems there is no message for %@. Not Navigating!!!", peppermintContactToNavigate.communicationChannelAddress);
+        [[AutoPlayModel sharedInstance] clearScheduledPeppermintContact];
+    }
+    peppermintContactToNavigate = nil;
+}
+
+-(void) syncStepCompleted:(NSArray<PeppermintChatEntry*>*) syncedPeppermintChatEnryArray isLastStep:(BOOL)isCompleted {
+    NSArray<PeppermintChatEntry*> *newIncomingMessagesInThisStep = [self filterNewIncomingMessagesInArray:syncedPeppermintChatEnryArray];
+    [[self newMessagesInSyncCycle] addObjectsFromArray:newIncomingMessagesInThisStep];
+    BOOL isNavigationSet = (peppermintContactToNavigate
+                            && peppermintContactToNavigate.nameSurname.length > 0
+                            && peppermintContactToNavigate.communicationChannelAddress.length > 0
+                            && [[AutoPlayModel sharedInstance] isScheduledForPeppermintContactWithEmail:
+                                peppermintContactToNavigate.communicationChannelAddress]);
+    
+    if (isCompleted) {
+        [self hideAppCoverLoadingView];
+        [self refreshBadgeNumber];
+        
+        if(isNavigationSet) {
+            [self performNavigationForPeppermintContactToNavigate];
+        } else {
+            [self checkAndPlayIncomingAudioAlertForNewMessagesArray:[self newMessagesInSyncCycle]];
+            hasFinishedFirstSync = hasFinishedFirstSync || [self.chatEntrySyncModel isAllMessagesAreInSyncOfFirstCycle];
+        }
+        
+        if(cachedCompletionHandler) {
+            NSDate *fetchEnd = [NSDate date];
+            NSTimeInterval timeElapsed = [fetchEnd timeIntervalSinceDate:fetchStart];
+            NSLog(@"Background Fetch Duration: %f seconds", timeElapsed);
+            if([self newMessagesInSyncCycle].count > 0) {
+                cachedCompletionHandler(UIBackgroundFetchResultNewData);
+                NSLog(@"UIBackgroundFetchResultNewData");
+            } else {
+                cachedCompletionHandler(UIBackgroundFetchResultNoData);
+                NSLog(@"UIBackgroundFetchResultNoData");
+            }
+        }
+        [self finishSyncBackgroundTask];
+    }
+    
+    RefreshIncomingMessagesCompletedWithSuccess *refreshIncomingMessagesCompletedWithSuccess = [RefreshIncomingMessagesCompletedWithSuccess new];
+    refreshIncomingMessagesCompletedWithSuccess.sender = self;
+    refreshIncomingMessagesCompletedWithSuccess.peppermintChatEntryNewMesssagesArray = newIncomingMessagesInThisStep;
+    refreshIncomingMessagesCompletedWithSuccess.peppermintChatEntryAllMesssagesArray = syncedPeppermintChatEnryArray;
+    PUBLISH(refreshIncomingMessagesCompletedWithSuccess);
 }
 
 #pragma mark - ChatEntryModelDelegate
@@ -499,40 +561,7 @@ SUBSCRIBE(DetachSuccess) {
 }
 
 -(void) peppermintChatEntrySavedWithSuccess:(NSArray<PeppermintChatEntry*>*) savedPeppermintChatEnryArray {
-    [self hideAppCoverLoadingView];
-    NSArray<PeppermintChatEntry*> *newIncomingMessagesArray = [self filterNewIncomingMessagesInArray:savedPeppermintChatEnryArray];
-    [self refreshBadgeNumber];
-    
-    if(peppermintContactToNavigate
-       && peppermintContactToNavigate.nameSurname.length > 0
-       && peppermintContactToNavigate.communicationChannelAddress.length > 0) {
-        [self navigateToChatEntriesPageForEmail:peppermintContactToNavigate.communicationChannelAddress
-                                    nameSurname:peppermintContactToNavigate.nameSurname];
-        peppermintContactToNavigate = nil;
-    } else {
-        [self checkAndPlayIncomingAudioAlertForNewMessagesArray:newIncomingMessagesArray];
-    }    
-    hasFinishedFirstSync = hasFinishedFirstSync || [self.chatEntrySyncModel isAllMessagesAreInSyncOfFirstCycle];
-    
-    RefreshIncomingMessagesCompletedWithSuccess *refreshIncomingMessagesCompletedWithSuccess = [RefreshIncomingMessagesCompletedWithSuccess new];
-    refreshIncomingMessagesCompletedWithSuccess.sender = self;
-    refreshIncomingMessagesCompletedWithSuccess.peppermintChatEntryNewMesssagesArray = newIncomingMessagesArray;
-    refreshIncomingMessagesCompletedWithSuccess.peppermintChatEntryAllMesssagesArray = savedPeppermintChatEnryArray;
-    PUBLISH(refreshIncomingMessagesCompletedWithSuccess);
-    
-    if(cachedCompletionHandler) {
-        NSDate *fetchEnd = [NSDate date];
-        NSTimeInterval timeElapsed = [fetchEnd timeIntervalSinceDate:fetchStart];
-        NSLog(@"Background Fetch Duration: %f seconds", timeElapsed);
-        if(newIncomingMessagesArray.count > 0) {
-            cachedCompletionHandler(UIBackgroundFetchResultNewData);
-            NSLog(@"UIBackgroundFetchResultNewData");
-        } else {
-            cachedCompletionHandler(UIBackgroundFetchResultNoData);
-            NSLog(@"UIBackgroundFetchResultNoData");
-        }
-    }
-    [self finishSyncBackgroundTask];
+    NSLog(@"peppermintChatEntrySavedWithSuccess:");
 }
 
 -(void) operationFailure:(NSError *)error {

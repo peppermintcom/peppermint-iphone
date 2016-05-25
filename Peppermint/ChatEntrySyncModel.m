@@ -13,14 +13,16 @@
 #import "ContactsModel.h"
 #import "CustomContactModel.h"
 
-#define FAR_FUTURE_DATE     [NSDate dateWithTimeIntervalSinceNow: 3 * DAY];
-#define SOME_RECENT_DATE    [NSDate dateWithTimeIntervalSinceNow: -1 * MINUTE];
-
 @interface SyncDateHolder : JSONModel
+
 @property (strong, nonatomic) NSDate<Optional> *recipientSinceDate;
 @property (strong, nonatomic) NSDate<Optional> *recipientUntilDate;
+@property (strong, nonatomic) NSString<Optional> *recipientNextUrl;
+
 @property (strong, nonatomic) NSDate<Optional> *senderSinceDate;
 @property (strong, nonatomic) NSDate<Optional> *senderUntilDate;
+@property (strong, nonatomic) NSString<Optional> *senderNextUrl;
+
 @end
 
 @implementation SyncDateHolder
@@ -30,8 +32,9 @@
     AWSService *awsService;
     __block int activeServerQueryCount;
     __block BOOL queryForIncoming;
+    
     __block NSString *nextUrl;
-    SyncDateHolder *_syncDateHolder;
+    __block NSDate *maxSinceDate;
 }
 
 + (instancetype) sharedInstance {
@@ -73,9 +76,12 @@ SUBSCRIBE(UserLoggedOut) {
         if(error) {
             _syncDateHolder = [SyncDateHolder new];
             _syncDateHolder.recipientSinceDate = nil;
-            _syncDateHolder.recipientUntilDate = FAR_FUTURE_DATE;
+            _syncDateHolder.recipientUntilDate = nil;
+            _syncDateHolder.recipientNextUrl = nil;
+            
             _syncDateHolder.senderSinceDate = nil;
-            _syncDateHolder.senderUntilDate = FAR_FUTURE_DATE;
+            _syncDateHolder.senderUntilDate = nil;
+            _syncDateHolder.senderNextUrl = nil;
         }
     }
     return _syncDateHolder;
@@ -84,11 +90,11 @@ SUBSCRIBE(UserLoggedOut) {
 #pragma mark - SyncStatus
 
 -(BOOL) isReciviedMessagesAreInSyncOfFirstCycle {
-    return !self.syncDateHolder.recipientUntilDate;
+    return (self.syncDateHolder.recipientSinceDate != nil);
 }
 
 -(BOOL) issentMessagesAreInSyncOfFirstCycle {
-    return !self.syncDateHolder.senderUntilDate;
+    return (self.syncDateHolder.senderSinceDate != nil);
 }
 
 -(BOOL) isAllMessagesAreInSyncOfFirstCycle {
@@ -106,11 +112,12 @@ SUBSCRIBE(UserLoggedOut) {
 -(void) makeSyncRequestForMessages {
     queryForIncoming = NO;
     nextUrl = nil;
+    maxSinceDate = nil;
     [self queryServerForIncomingMessages];
 }
 
 -(void) notifyDelegateToFinishBackgroundFetchInCase {
-    [self.delegate syncStepCompleted:[NSArray new]];
+    [self.delegate syncStepCompleted:[NSArray new] isLastStep:YES];
 }
 
 -(BOOL) userLoggedInAndReadyForQuery {
@@ -129,6 +136,7 @@ SUBSCRIBE(UserLoggedOut) {
         
         NSDate *sinceDate = queryForIncoming ? self.syncDateHolder.recipientSinceDate : self.syncDateHolder.senderSinceDate;
         NSDate *untilDate = queryForIncoming ? self.syncDateHolder.recipientUntilDate : self.syncDateHolder.senderUntilDate;
+        nextUrl = queryForIncoming ? self.syncDateHolder.recipientNextUrl : self.syncDateHolder.senderNextUrl;
         [awsService getMessagesForAccountId:peppermintMessageSender.accountId
                                         jwt:peppermintMessageSender.exchangedJwt
                                     nextUrl:nextUrl
@@ -148,11 +156,7 @@ SUBSCRIBE(NetworkFailure) {
 }
 
 -(void) resetSyncDate {
-    self.syncDateHolder.recipientUntilDate = FAR_FUTURE_DATE;
-    self.syncDateHolder.recipientSinceDate = nil;
-    self.syncDateHolder.senderUntilDate = FAR_FUTURE_DATE;
-    self.syncDateHolder.senderSinceDate = nil;
-    defaults_set_object(DEFAULTS_SYNC_DATE_HOLDER, [self syncDateHolder].toJSONString);
+    //Perform any reset operation if needed
 }
 
 SUBSCRIBE(GetMessagesAreSuccessful) {
@@ -178,7 +182,6 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
 -(void) processEvent:(GetMessagesAreSuccessful*) event {
     NSMutableSet *mergedPeppermintChatEntrySet = [NSMutableSet new];
     NSMutableSet *mergedPeppermintContactSet = [NSMutableSet new];
-    
     CustomContactModel *customContactModel = [CustomContactModel new];
     for (Data *messageData in event.dataOfMessagesArray) {
         //Peppermint Chat Entry
@@ -195,6 +198,9 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
         
         //Custom Contact
         [customContactModel save:peppermintContact];
+        //Max Since Date
+        maxSinceDate = [NSDate maxOfDate1:peppermintChatEntry.dateCreated
+                                    date2:maxSinceDate];
     }
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
@@ -218,8 +224,9 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
 
 -(void) peppermintChatEntrySavedWithSuccess:(NSArray*) savedPeppermintChatEnryArray {
     if(self.userLoggedInAndReadyForQuery) {
+        BOOL isSyncCompleted = !nextUrl && queryForIncoming;
         [self updateLastSyncDatesInPeppermintMessageSender];
-        [self.delegate syncStepCompleted:savedPeppermintChatEnryArray];
+        [self.delegate syncStepCompleted:savedPeppermintChatEnryArray isLastStep:isSyncCompleted];
     }
 }
 
@@ -248,22 +255,18 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
         [self queryServerForIncomingMessages];
     } else {
         NSLog(@"Sync cycle completed.");
+        _syncDateHolder = nil;
     }
 }
 
 -(void) checkAndMarkFullSyncCycleCompletedIfNeeded {
-    BOOL isFirstSyncCycleFinishedForRecipient = !nextUrl && queryForIncoming;
-    if(isFirstSyncCycleFinishedForRecipient) {
-        self.syncDateHolder.recipientUntilDate = nil;
-        self.syncDateHolder.recipientSinceDate = SOME_RECENT_DATE;
+    if(queryForIncoming) {
+        self.syncDateHolder.recipientNextUrl = nextUrl;
+        self.syncDateHolder.recipientSinceDate = nextUrl ? nil : maxSinceDate;
+    } else {
+        self.syncDateHolder.senderNextUrl = nextUrl;
+        self.syncDateHolder.senderSinceDate = nextUrl ? nil : maxSinceDate;
     }
-    
-    BOOL isFirstSyncCycleFinishedForSender = !nextUrl && !queryForIncoming;
-    if(isFirstSyncCycleFinishedForSender) {
-        self.syncDateHolder.senderUntilDate = nil;
-        self.syncDateHolder.senderSinceDate = SOME_RECENT_DATE;
-    }
-    
     defaults_set_object(DEFAULTS_SYNC_DATE_HOLDER, [self syncDateHolder].toJSONString);
 }
 
