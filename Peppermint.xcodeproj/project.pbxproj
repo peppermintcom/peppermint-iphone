@@ -48,6 +48,7 @@
 		B13B076D1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B076C1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m */; };
 		B13B50261BF38D48009D3348 /* InformationTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B50251BF38D48009D3348 /* InformationTextTableViewCell.m */; };
 		B13B50281BF38D57009D3348 /* InformationTextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13B50271BF38D56009D3348 /* InformationTextTableViewCell.xib */; };
+		B13C2E251CF5D4E600410B67 /* TranscriptionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B13C2E241CF5D4E600410B67 /* TranscriptionModel.m */; };
 		B13E977E1CE0CEF40066ECC9 /* AddEmailForSMSContactView.m in Sources */ = {isa = PBXBuildFile; fileRef = B13E977D1CE0CEF40066ECC9 /* AddEmailForSMSContactView.m */; };
 		B14057091CE0F69900D2D017 /* AddEmailForSMSContactView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B14057081CE0F69900D2D017 /* AddEmailForSMSContactView.xib */; };
 		B149EB351C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B149EB341C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m */; };
@@ -385,6 +386,8 @@
 		B13B50241BF38D48009D3348 /* InformationTextTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationTextTableViewCell.h; sourceTree = "<group>"; };
 		B13B50251BF38D48009D3348 /* InformationTextTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationTextTableViewCell.m; sourceTree = "<group>"; };
 		B13B50271BF38D56009D3348 /* InformationTextTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InformationTextTableViewCell.xib; sourceTree = "<group>"; };
+		B13C2E231CF5D4E600410B67 /* TranscriptionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranscriptionModel.h; sourceTree = "<group>"; };
+		B13C2E241CF5D4E600410B67 /* TranscriptionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranscriptionModel.m; sourceTree = "<group>"; };
 		B13E977C1CE0CEF40066ECC9 /* AddEmailForSMSContactView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEmailForSMSContactView.h; sourceTree = "<group>"; };
 		B13E977D1CE0CEF40066ECC9 /* AddEmailForSMSContactView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEmailForSMSContactView.m; sourceTree = "<group>"; };
 		B14057081CE0F69900D2D017 /* AddEmailForSMSContactView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddEmailForSMSContactView.xib; sourceTree = "<group>"; };
@@ -1300,6 +1303,8 @@
 				B1BE21881CD77798000B1070 /* ChatEntrySyncModel.m */,
 				B15E05A21CE498D2008203C5 /* MessageBarManagerModel.h */,
 				B15E05A31CE498D2008203C5 /* MessageBarManagerModel.m */,
+				B13C2E231CF5D4E600410B67 /* TranscriptionModel.h */,
+				B13C2E241CF5D4E600410B67 /* TranscriptionModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2459,6 +2464,7 @@
 				B16145E91CCE4EC700F7FE0C /* BaseCollectionViewCell.m in Sources */,
 				B15E05A11CE4781D008203C5 /* UITextField_Addition.m in Sources */,
 				B18EEBA01CB3F88B00F9491F /* BaseRecordingGestureViewController.m in Sources */,
+				B13C2E251CF5D4E600410B67 /* TranscriptionModel.m in Sources */,
 				B1DA4A1C1CA581350002F07A /* PlayingChatEntryModel.m in Sources */,
 				B1BB605F1BDE36AF00C1140B /* SignUpWithEmailViewController.m in Sources */,
 				B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */,

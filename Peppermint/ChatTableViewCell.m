@@ -56,7 +56,7 @@
     self.transcriptionView.layer.cornerRadius = 8;
     self.transctiptionTitleLabel.font = [UIFont openSansSemiBoldFontOfSize:SIZE_TITLE];
     self.transctiptionTitleLabel.textColor = [UIColor textFieldTintGreen];
-    self.transctiptionTitleLabel.text = LOC(@"AUTOMATIC TRANSCRIPTION", @"Transctiption Title");
+    self.transctiptionTitleLabel.text = LOC(@"AUTOMATIC TRANSCRIPTION", @"Transctiption Title").uppercaseString;
     self.transctiptionContentLabel.font = [UIFont openSansFontOfSize:SIZE_TITLE];
     self.transctiptionContentLabel.textColor = [UIColor blackColor];
     

@@ -12,6 +12,7 @@
 #import "PeppermintMessageSender.h"
 #import "GoogleCloudMessagingModel.h"
 #import "ChatEntryModel.h"
+#import "TranscriptionModel.h"
 
 #define AUTH_FACEBOOK   @"facebook"
 #define AUTH_GOOGLE     @"google"
@@ -243,7 +244,7 @@ SUBSCRIBE(InterAppMessageProcessCompleted) {
 
 -(void) saveTranscriptionWithAudioUrl:(NSString*)audioUrl transcriptionText:(NSString*)transcriptionText confidence:(NSNumber*) confidence {
     PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
-    NSString *language = LOC(@"Transcription Language", @"Transcription Language");
+    NSString *language = [[TranscriptionModel new] transctiptionLanguageCode];
     
     [awsService saveTranscriptionWithJwt:peppermintMessageSender.exchangedJwt
                                 audioUrl:audioUrl

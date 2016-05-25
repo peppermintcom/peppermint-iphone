@@ -20,6 +20,8 @@
 #import <RxLibrary/GRXBufferedPipe.h>
 #import <ProtoRPC/ProtoRPC.h>
 
+#import "TranscriptionModel.h"
+
 #define HOST @"speech.googleapis.com"
 
 @interface SpeechRecognitionService ()
@@ -28,7 +30,7 @@
 @property (nonatomic, strong) Speech *client;
 @property (nonatomic, strong) GRXBufferedPipe *writer;
 @property (nonatomic, strong) ProtoRPC *call;
-
+@property (nonatomic, strong) TranscriptionModel *transcriptionModel;
 @end
 
 @implementation SpeechRecognitionService
@@ -36,7 +38,8 @@
 + (instancetype) sharedInstance {
   static SpeechRecognitionService *instance = nil;
   if (!instance) {
-    instance = [[self alloc] init];
+      instance = [[self alloc] init];
+      instance.transcriptionModel = [TranscriptionModel new];
   }
   return instance;
 }
@@ -62,7 +65,7 @@
     InitialRecognizeRequest *initialRecognizeRequest = [InitialRecognizeRequest message];
     initialRecognizeRequest.encoding = InitialRecognizeRequest_AudioEncoding_Linear16;
     initialRecognizeRequest.sampleRate = AUDIO_SAMPLE_RATE;
-    initialRecognizeRequest.languageCode = LOC(@"Transcription Language", @"Transcription Language");
+      initialRecognizeRequest.languageCode = [self.transcriptionModel transctiptionLanguageCode];
     initialRecognizeRequest.maxAlternatives = 1;
     initialRecognizeRequest.profanityFilter = YES;
     initialRecognizeRequest.continuous = YES;
