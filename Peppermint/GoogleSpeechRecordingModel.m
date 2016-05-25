@@ -23,6 +23,7 @@
 @property (atomic, assign) BOOL receivedPrepareMessage;
 @property (atomic, assign) BOOL isTranscriptionCompleted;
 @property (atomic, assign) BOOL isStopCommandReceived;
+
 @end
 
 @implementation GoogleSpeechRecordingModel
@@ -33,7 +34,6 @@
         audioController.delegate = self;
         [audioController stop];
         [audioController prepare];
-        self.audioData = [[NSMutableData alloc] init];
         self.isActive = YES;
         [[AudioSessionModel sharedInstance] attachAVAudioProcessObject:self];
     } else {
@@ -45,12 +45,13 @@
     NSLog(@"Record is called.....");
     self.receivedPrepareMessage = NO;
     self.isTranscriptionCompleted = NO;
+    self.isStopCommandReceived = NO;
     _recordingStartDate = nil;
     [self recordingStartDate];
     self.aacFileWriter = [AACFileWriter new];
     self.aacFileWriter.delegate = self;
     self.transcriptionText = @"";
-    self.isStopCommandReceived = NO;
+    self.audioData = [[NSMutableData alloc] init];
     [[AudioController sharedInstance] start];
 }
 
@@ -66,7 +67,6 @@
     NSLog(@"Stop is called.....");
     self.isStopCommandReceived = YES;
     [[AudioController sharedInstance] stop];
-    [[SpeechRecognitionService sharedInstance] stopStreaming];
 }
 
 #pragma mark - Metering
@@ -76,6 +76,15 @@
     CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
     NSTimeInterval recordingTime = [[NSDate new] timeIntervalSinceDate:self.recordingStartDate];
     [self.delegate timerUpdated:(recordingTime + previousFileLength)];
+}
+
+-(void) operationFailure:(NSError *)error {
+    [self stop];
+    [[SpeechRecognitionService sharedInstance] stopStreaming];
+    if(self.isActive) {
+        [self.delegate operationFailure:error];
+        self.isActive = NO;
+    }
 }
 
 - (void) processSampleData:(NSData *)data {
@@ -100,7 +109,7 @@
                                                     withCompletion:^(RecognizeResponse *response, NSError *error) {
                                                         NSLog(@"RESPONSE RECEIVED");
                                                         if (error) {
-                                                            [weakSelf.delegate operationFailure:error];
+                                                            [weakSelf operationFailure:error];
                                                         } else if(!response) {
                                                             NSLog(@"There is no response information. End of recognising.");
                                                             weakSelf.isTranscriptionCompleted = YES;
@@ -117,7 +126,8 @@
                                                         
                                                         if (weakSelf.isTranscriptionCompleted) {
                                                             NSLog(@"Got finished signal");
-                                                            [self checkToFinishRecordingAndCallDelegate];
+                                                            [[SpeechRecognitionService sharedInstance] stopStreaming];
+                                                            [weakSelf checkToFinishRecordingAndCallDelegate];
                                                         }
                                                     }];
         self.audioData = [[NSMutableData alloc] init];
