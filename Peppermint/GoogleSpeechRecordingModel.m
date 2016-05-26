@@ -67,6 +67,7 @@
     NSLog(@"Stop is called.....");
     self.isStopCommandReceived = YES;
     [[AudioController sharedInstance] stop];
+    [[SpeechRecognitionService sharedInstance] stopStreaming];
 }
 
 #pragma mark - Metering
@@ -80,7 +81,6 @@
 
 -(void) operationFailure:(NSError *)error {
     [self stop];
-    [[SpeechRecognitionService sharedInstance] stopStreaming];
     if(self.isActive) {
         [self.delegate operationFailure:error];
         self.isActive = NO;
@@ -126,7 +126,6 @@
                                                         
                                                         if (weakSelf.isTranscriptionCompleted) {
                                                             NSLog(@"Got finished signal");
-                                                            [[SpeechRecognitionService sharedInstance] stopStreaming];
                                                             [weakSelf checkToFinishRecordingAndCallDelegate];
                                                         }
                                                     }];
