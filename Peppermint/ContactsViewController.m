@@ -904,11 +904,10 @@ SUBSCRIBE(UserLoggedOut) {
 SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
     weakself_create();
     dispatch_async(dispatch_get_main_queue(), ^{
-        BOOL partialUpdate = ![ChatEntrySyncModel sharedInstance].isAllMessagesAreInSyncOfFirstCycle
-        && event.peppermintChatEntryAllMesssagesArray.count > 0;
-        BOOL newMessage = [ChatEntrySyncModel sharedInstance].isAllMessagesAreInSyncOfFirstCycle
-        && event.peppermintChatEntryNewMesssagesArray.count > 0;
-        if(isScreenReady && (partialUpdate || newMessage)) {
+        BOOL partialUpdate = ![ChatEntrySyncModel sharedInstance].isAllMessagesAreInSyncOfFirstCycle && event.peppermintChatEntryAllMesssagesArray.count > 0;
+        BOOL newMessage = [ChatEntrySyncModel sharedInstance].isAllMessagesAreInSyncOfFirstCycle && event.peppermintChatEntryNewMesssagesArray.count > 0;
+        BOOL isScreenEmpty = [weakSelf activeContactList].count == 0;
+        if(isScreenReady && (partialUpdate || newMessage || isScreenEmpty)) {
             [weakSelf.recentContactsModel refreshRecentContactList];
         }
     });

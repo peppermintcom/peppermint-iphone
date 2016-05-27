@@ -262,10 +262,10 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
 -(void) checkAndMarkFullSyncCycleCompletedIfNeeded {
     if(queryForIncoming) {
         self.syncDateHolder.recipientNextUrl = nextUrl;
-        self.syncDateHolder.recipientSinceDate = nextUrl ? nil : maxSinceDate;
+        self.syncDateHolder.recipientSinceDate = nextUrl ? nil : maxSinceDate ? maxSinceDate : [NSDate dateWithTimeIntervalSinceNow:0];
     } else {
         self.syncDateHolder.senderNextUrl = nextUrl;
-        self.syncDateHolder.senderSinceDate = nextUrl ? nil : maxSinceDate;
+        self.syncDateHolder.senderSinceDate = nextUrl ? nil : maxSinceDate ? maxSinceDate : [NSDate dateWithTimeIntervalSinceNow:0];
     }
     defaults_set_object(DEFAULTS_SYNC_DATE_HOLDER, [self syncDateHolder].toJSONString);
 }

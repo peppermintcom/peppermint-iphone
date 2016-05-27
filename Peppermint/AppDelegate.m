@@ -520,6 +520,7 @@ SUBSCRIBE(DetachSuccess) {
     refreshIncomingMessagesCompletedWithSuccess.sender = self;
     refreshIncomingMessagesCompletedWithSuccess.peppermintChatEntryNewMesssagesArray = newIncomingMessagesInThisStep;
     refreshIncomingMessagesCompletedWithSuccess.peppermintChatEntryAllMesssagesArray = syncedPeppermintChatEnryArray;
+    refreshIncomingMessagesCompletedWithSuccess.isCompletedAllSteps = isCompleted;
     PUBLISH(refreshIncomingMessagesCompletedWithSuccess);
 }
 

@@ -131,6 +131,7 @@
 @interface RefreshIncomingMessagesCompletedWithSuccess : BaseEvent
 @property (strong, nonatomic) NSArray* peppermintChatEntryNewMesssagesArray;
 @property (strong, nonatomic) NSArray* peppermintChatEntryAllMesssagesArray;
+@property (assign, nonatomic) BOOL isCompletedAllSteps;
 @end
 
 @interface AccountIdIsUpdated : BaseEvent
