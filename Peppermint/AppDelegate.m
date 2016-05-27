@@ -932,6 +932,14 @@ SUBSCRIBE(DetachSuccess) {
             default:
                 break;
         }
+    } else if ([error.domain isEqualToString:DOMAIN_GOOGLESPEECHRECORDINGMODEL]) {
+        switch (error.code) {
+            case CODE_NO_CONNECTION:
+                message = LOC(@"Please check your internet connection and try again", @"message");
+                break;
+            default:
+                break;
+        }
     }
     return message;
 }

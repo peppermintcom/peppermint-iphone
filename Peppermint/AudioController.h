@@ -24,8 +24,6 @@
 
 @interface AudioController : NSObject
 
-+ (instancetype) sharedInstance;
-
 @property (nonatomic, weak) id<AudioControllerDelegate> delegate;
 @property (nonatomic, assign) AudioStreamBasicDescription asbd;
 

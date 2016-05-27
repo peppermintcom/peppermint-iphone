@@ -26,13 +26,13 @@
 
 @implementation AudioController
 
-+ (instancetype) sharedInstance {
-  static AudioController *instance = nil;
-  if (!instance) {
-    instance = [[self alloc] init];
-  }
-  return instance;
+-(id) init {
+    self = [super init];
+    if(self) {
+    }
+    return self;
 }
+
 
 - (void) dealloc {
   AudioComponentInstanceDispose(remoteIOUnit);

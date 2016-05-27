@@ -35,13 +35,12 @@
 
 @implementation SpeechRecognitionService
 
-+ (instancetype) sharedInstance {
-  static SpeechRecognitionService *instance = nil;
-  if (!instance) {
-      instance = [[self alloc] init];
-      instance.transcriptionModel = [TranscriptionModel new];
-  }
-  return instance;
+-(id) init {
+    self = [super init];
+    if(self) {
+        self.transcriptionModel = [TranscriptionModel new];
+    }
+    return self;
 }
 
 - (void) streamAudioData:(NSData *) audioData
@@ -70,7 +69,7 @@
     initialRecognizeRequest.profanityFilter = YES;
     initialRecognizeRequest.continuous = YES;
     initialRecognizeRequest.interimResults = NO;
-    initialRecognizeRequest.enableEndpointerEvents = NO;
+    initialRecognizeRequest.enableEndpointerEvents = YES;
     request.initialRequest = initialRecognizeRequest;
   }
 
@@ -82,11 +81,13 @@
 }
 
 - (void) stopStreaming {
-  if (!_streaming) {
-    return;
-  }
-  [_writer finishWithError:nil];
-  _streaming = NO;
+    if(_streaming) {
+        [_writer finishWithError:nil];
+        _streaming = NO;
+        NSLog(@"stopStreaming is processed and streaming is completed");
+    } else {
+        NSLog(@"stopStreaming is called in non-streaming state.");
+    }
 }
 
 - (BOOL) isStreaming {

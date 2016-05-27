@@ -12,6 +12,7 @@
 #import "AudioController.h"
 #import "AACFileWriter.h"
 #import "SpeechRecognitionService.h"
+#import "ConnectionModel.h"
 
 #define SPEECH_BUFFER   16384
 
@@ -24,17 +25,42 @@
 @property (atomic, assign) BOOL isTranscriptionCompleted;
 @property (atomic, assign) BOOL isStopCommandReceived;
 
+@property (strong, nonatomic) AudioController *audioController;
+@property (strong, nonatomic) SpeechRecognitionService *speechRecognitionService;
+
+@property (atomic, assign) BOOL gotError;
 @end
+
+typedef enum : NSUInteger {
+    OK,
+    CANCELLED,
+    UNKNOWN,
+    INVALID_ARGUMENT,
+    DEADLINE_EXCEEDED,
+    NOT_FOUND,
+    ALREADY_EXISTS,
+    PERMISSION_DENIED,
+    UNAUTHENTICATED,
+    RESOURCE_EXHAUSTED,
+    FAILED_PRECONDITION,
+    ABORTED,
+    OUT_OF_RANGE,
+    UNIMPLEMENTED,
+    INTERNAL,
+    UNAVAILABLE,
+    DATA_LOSS,
+} GrpcErrorCode;
 
 @implementation GoogleSpeechRecordingModel
 
 -(void) initRecorder {    
     if([self setAudioSession:YES]) {
-        AudioController *audioController = [AudioController sharedInstance];
-        audioController.delegate = self;
-        [audioController stop];
-        [audioController prepare];
+        self.audioController = [AudioController new];
+        self.audioController.delegate = self;
+        [self.audioController prepare];
+        self.speechRecognitionService = [SpeechRecognitionService new];
         self.isActive = YES;
+        self.gotError = NO;
         [[AudioSessionModel sharedInstance] attachAVAudioProcessObject:self];
     } else {
         NSLog(@"Could not activate audio session.");
@@ -52,7 +78,7 @@
     self.aacFileWriter.delegate = self;
     self.transcriptionText = @"";
     self.audioData = [[NSMutableData alloc] init];
-    [[AudioController sharedInstance] start];
+    [self.audioController start];
 }
 
 -(void) pause {
@@ -64,10 +90,15 @@
 }
 
 -(void) stop {
-    NSLog(@"Stop is called.....");
-    self.isStopCommandReceived = YES;
-    [[AudioController sharedInstance] stop];
-    [[SpeechRecognitionService sharedInstance] stopStreaming];
+    if(self.gotError) {
+        NSLog(@"Not stopping cos already got error.");
+    } else if (self.isStopCommandReceived) {
+        NSLog(@"Not processing stop again, because isStopCommandReceived = NO");
+    } else {
+        self.isStopCommandReceived = YES;
+        [self.audioController stop];
+        [self.speechRecognitionService stopStreaming];
+    }
 }
 
 #pragma mark - Metering
@@ -80,11 +111,11 @@
 }
 
 -(void) operationFailure:(NSError *)error {
+    NSLog(@"GoogleSpeechRecordingModel got error:%@", error);
     [self stop];
-    if(self.isActive) {
-        [self.delegate operationFailure:error];
-        self.isActive = NO;
-    }
+    self.gotError = YES;
+    [self completeAudioSession];
+    [self.delegate operationFailure:error];
 }
 
 - (void) processSampleData:(NSData *)data {
@@ -92,20 +123,19 @@
     [self.audioData appendData:data];
     [self updateMetering];
     
-    /*
-    NSInteger frameCount = [data length] / 2;
-    int16_t *samples = (int16_t *) [data bytes];
-    int64_t sum = 0;
-    for (int i = 0; i < frameCount; i++) {
-        sum += abs(samples[i]);
-    }
-    //NSLog(@"audio %d %d", (int) frameCount, (int) (sum * 1.0 / frameCount));
-    */
-    
-    if ([self.audioData length] > SPEECH_BUFFER) {
+    if(![[ConnectionModel sharedInstance] isInternetReachable]) {
+        NSLog(@"Internet connection is not active.");
+        NSError *error = [NSError errorWithDomain:DOMAIN_GOOGLESPEECHRECORDINGMODEL
+                                           code:CODE_NO_CONNECTION
+                                         userInfo:[[NSDictionary alloc] initWithObjectsAndKeys:@"Info", @"No internet connection", nil]];
+        [self operationFailure:error];
+        self.isTranscriptionCompleted = YES;
+    } else if(self.gotError) {
+        NSLog(@"Not sending, becase an error occured in previous sending.");
+    } else if ([self.audioData length] > SPEECH_BUFFER) {
         NSLog(@"SENDING");
         weakself_create();
-        [[SpeechRecognitionService sharedInstance] streamAudioData:self.audioData
+        [self.speechRecognitionService streamAudioData:self.audioData
                                                     withCompletion:^(RecognizeResponse *response, NSError *error) {
                                                         NSLog(@"RESPONSE RECEIVED");
                                                         if (error) {
@@ -134,9 +164,12 @@
 }
 
 -(void) prepareRecordData {
-    [self stop];
-    NSURL *fileUrl = [self recordFileUrl];
-    [self.aacFileWriter convertToAACWithAudioStreamBasicDescription:[AudioController sharedInstance].asbd andFileUrl:fileUrl];
+    if(self.speechRecognitionService.isStreaming) {
+        NSLog(@"SpeechRecognitionService is still streaming. Can not prepareRecordData");
+    } else {
+        NSURL *fileUrl = [self recordFileUrl];
+        [self.aacFileWriter convertToAACWithAudioStreamBasicDescription:self.audioController.asbd andFileUrl:fileUrl];
+    }
 }
 
 #pragma mark - AACFileWriterDelegate
@@ -148,12 +181,16 @@
 
 -(void) checkToFinishRecordingAndCallDelegate {
     if(self.receivedPrepareMessage && self.isTranscriptionCompleted && self.isStopCommandReceived) {
-        self.isActive = NO;
-        [self setAudioSession:NO];
+        [self completeAudioSession];
         [super prepareRecordData];
     } else {
         NSLog(@"GoogleSpeechRecordingModel is strill processing");
     }
+}
+
+-(void) completeAudioSession {
+    self.isActive = NO;
+    [self setAudioSession:NO];
 }
 
 -(NSDate*) recordingStartDate {
@@ -168,4 +205,5 @@
 -(void) backUpRecording {
     NSLog(@"backUpRecording is not supported");
 }
+
 @end

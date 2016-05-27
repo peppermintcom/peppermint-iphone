@@ -189,6 +189,9 @@ sharedObject;\
 #define DOMAIN_PEPPERMINT               @"peppermint.com"
 #define DOMAIN_MANDRILL                 @"mandrill.com"
 
+#define DOMAIN_GOOGLESPEECHRECORDINGMODEL   @"GoogleSpeechRecordingModel"
+#define CODE_NO_CONNECTION                  19
+
 //Define Host&Path information as lowercase Text
 #define HOST_FASTREPLY                  @"reply"
 #define PATH_VERIFIY_EMAIL              @"verify-email"

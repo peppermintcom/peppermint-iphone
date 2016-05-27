@@ -48,9 +48,11 @@
     BOOL isClassValid = [item isKindOfClass:[AVAudioPlayer class]]
     || [item isKindOfClass:[AVAudioRecorder class]]
     || [item isKindOfClass:[GoogleSpeechRecordingModel class]];
-    NSAssert(isClassValid, @"attachAVAudioProcessObject: must be called with an instance of AVAudioPlayer or AVAudioRecorder");
+    NSAssert(isClassValid, @"attachAVAudioProcessObject: must be called with an instance of AVAudioPlayer, AVAudioRecorder or GoogleSpeechRecorder");
     if(![activeAudioItemsArray containsObject:item]) {
         [activeAudioItemsArray addObject:item];
+    } else {
+        NSLog(@"Did not attach %@ to audio session, because it was already attached.", item);
     }
 }
 

@@ -21,8 +21,6 @@ typedef void (^SpeechRecognitionCompletionHandler)(RecognizeResponse *object, NS
 
 @interface SpeechRecognitionService : NSObject
 
-+ (instancetype) sharedInstance;
-
 - (void) streamAudioData:(NSData *) audioData
           withCompletion:(SpeechRecognitionCompletionHandler)completion;
 
