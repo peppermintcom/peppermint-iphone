@@ -504,13 +504,12 @@ SUBSCRIBE(DetachSuccess) {
             NSDate *fetchEnd = [NSDate date];
             NSTimeInterval timeElapsed = [fetchEnd timeIntervalSinceDate:fetchStart];
             NSLog(@"Background Fetch Duration: %f seconds", timeElapsed);
-            if([self newMessagesInSyncCycle].count > 0) {
-                cachedCompletionHandler(UIBackgroundFetchResultNewData);
-                NSLog(@"UIBackgroundFetchResultNewData");
-            } else {
-                cachedCompletionHandler(UIBackgroundFetchResultNoData);
-                NSLog(@"UIBackgroundFetchResultNoData");
-            }
+            
+            BOOL doesNewDataExists = ([self newMessagesInSyncCycle].count > 0);
+            UIBackgroundFetchResult fetchResult = doesNewDataExists ? UIBackgroundFetchResultNewData : UIBackgroundFetchResultNoData;
+            cachedCompletionHandler(fetchResult);
+            NSLog(@"CompletionHandler finished with code %d", fetchResult);
+            cachedCompletionHandler = nil;
         }
         [self finishSyncBackgroundTask];
     }

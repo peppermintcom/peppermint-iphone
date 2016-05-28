@@ -90,8 +90,8 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
                 
                 for(int i=0; i<cachedMessageArray.count; i++) {
                     CachedMessage *cachedMessage = [cachedMessageArray objectAtIndex:i];
-                    SendVoiceMessageEmailModel *mailSenderModel = [[NSClassFromString(cachedMessage.mailSenderClass) alloc] init];
-                    mailSenderModel.delegate = nil;
+                    SendVoiceMessageModel *vocieSenderModel = [[NSClassFromString(cachedMessage.mailSenderClass) alloc] init];
+                    vocieSenderModel.delegate = nil;
                     
                     PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
                     peppermintMessageSender.nameSurname = cachedMessage.senderNameSurname;
@@ -100,11 +100,13 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
                     selectedContact.nameSurname = cachedMessage.receiverNameSurname;
                     selectedContact.communicationChannel = cachedMessage.receiverCommunicationChannel.intValue;
                     selectedContact.communicationChannelAddress = cachedMessage.receiverCommunicationChannelAddress;
-                    mailSenderModel.peppermintMessageSender = peppermintMessageSender;
-                    mailSenderModel.selectedPeppermintContact = selectedContact;
-                    mailSenderModel.subject = cachedMessage.subject;
+                    vocieSenderModel.peppermintMessageSender = peppermintMessageSender;
+                    vocieSenderModel.selectedPeppermintContact = selectedContact;
+                    if ([vocieSenderModel isKindOfClass:[SendVoiceMessageEmailModel class]]) {
+                        ((SendVoiceMessageEmailModel*)vocieSenderModel).subject = cachedMessage.subject;
+                    }
                     
-                    [mailSenderModel sendVoiceMessageWithData:cachedMessage.data withExtension:cachedMessage.extension  andDuration:cachedMessage.duration.doubleValue];
+                    [vocieSenderModel sendVoiceMessageWithData:cachedMessage.data withExtension:cachedMessage.extension  andDuration:cachedMessage.duration.doubleValue];
                     [repository deleteEntity:cachedMessage];
                 }
                 [repository endTransaction];

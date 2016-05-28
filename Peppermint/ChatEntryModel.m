@@ -34,29 +34,32 @@
 -(void) refreshPeppermintChatEntriesForContactEmail:(NSString*) contactEmail {
     weakself_create();
     dispatch_async(LOW_PRIORITY_QUEUE, ^{
-        NSPredicate *chatPredicate = [ChatEntryModel contactEmailPredicate:contactEmail];
-        Repository *repository = [Repository beginTransaction];
-        NSArray *chatEntryArray = [repository getResultsFromEntity:[ChatEntry class]
-                                                    predicateOrNil:chatPredicate
-                                                ascSortStringOrNil:[NSArray arrayWithObjects:@"dateCreated", nil]
-                                               descSortStringOrNil:[NSArray arrayWithObjects:@"isSentByMe",  nil]];
-        
-        NSMutableArray *peppermintChatEntryArray = [NSMutableArray new];
-        for(ChatEntry* chatEntry in chatEntryArray) {
-            PeppermintChatEntry *peppermintChatEntry = [weakSelf peppermintChatEntryWith:chatEntry];
-            if(peppermintChatEntry) {
-                [peppermintChatEntryArray addObject:peppermintChatEntry];
+        strongSelf_create();
+        if(strongSelf) {
+            NSPredicate *chatPredicate = [ChatEntryModel contactEmailPredicate:contactEmail];
+            Repository *repository = [Repository beginTransaction];
+            NSArray *chatEntryArray = [repository getResultsFromEntity:[ChatEntry class]
+                                                        predicateOrNil:chatPredicate
+                                                    ascSortStringOrNil:[NSArray arrayWithObjects:@"dateCreated", nil]
+                                                   descSortStringOrNil:[NSArray arrayWithObjects:@"isSentByMe",  nil]];
+            
+            NSMutableArray *peppermintChatEntryArray = [NSMutableArray new];
+            for(ChatEntry* chatEntry in chatEntryArray) {
+                PeppermintChatEntry *peppermintChatEntry = [strongSelf peppermintChatEntryWith:chatEntry];
+                if(peppermintChatEntry) {
+                    [peppermintChatEntryArray addObject:peppermintChatEntry];
+                }
             }
+            strongSelf.chatEntriesArray = peppermintChatEntryArray;
+            weakself_create();
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if(weakSelf && weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(peppermintChatEntriesArrayIsUpdated)]) {
+                    [weakSelf.delegate peppermintChatEntriesArrayIsUpdated];
+                } else {
+                    NSLog(@"Delegate did not implement function peppermintChatEntriesArrayIsUpdated");
+                }
+            });
         }
-        weakSelf.chatEntriesArray = peppermintChatEntryArray;
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if(weakSelf && [weakSelf.delegate respondsToSelector:@selector(peppermintChatEntriesArrayIsUpdated)]) {
-                [weakSelf.delegate peppermintChatEntriesArrayIsUpdated];
-            } else {
-                NSLog(@"Delegate did not implement function peppermintChatEntriesArrayIsUpdated");
-            }
-        });
     });
 }
 
@@ -113,7 +116,9 @@
                 peppermintChatEntry.performedOperation = PerformedOperationCreated;
             } else if(existingChatEntriesArray.count == 1) {
                 chatEntry = existingChatEntriesArray.firstObject;
-                [weakSelf checkChatEntry:chatEntry andMarkAsReadIfNeededWithPeppermintChatEntry:peppermintChatEntry];
+                if(!chatEntry.isSeen.boolValue && peppermintChatEntry.isSeen) {
+                    [weakSelf markChatEntryAsReadWithPeppermintChatEntry:peppermintChatEntry];
+                }
                 peppermintChatEntry.performedOperation = PerformedOperationUpdated;
             } else if(peppermintChatEntry.messageId != nil) {
                 chatEntry = [existingChatEntriesArray objectAtIndex:0];
@@ -201,11 +206,12 @@
 
 #pragma mark - Mark As Read
 
--(void) checkChatEntry:(ChatEntry*)chatEntry andMarkAsReadIfNeededWithPeppermintChatEntry:(PeppermintChatEntry*)peppermintChatEntry {
-    if(!chatEntry.isSeen.boolValue
-       && peppermintChatEntry.isSeen
-       && peppermintChatEntry.messageId.length > 0
-       && peppermintChatEntry.type == ChatEntryTypeAudio) {
+-(void) markChatEntryAsReadWithPeppermintChatEntry:(PeppermintChatEntry*)peppermintChatEntry {
+    if(peppermintChatEntry.messageId.length == 0) {
+        NSLog(@"Could not mark chatEntry as read, because message Id is empty");
+    } else if (peppermintChatEntry.type != ChatEntryTypeAudio) {
+        NSLog(@"Could not mark chatEntry as read, because type is not ChatEntryTypeAudio. Type is %d", peppermintChatEntry.type);
+    } else {
         PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
         [awsService markMessageAsReadWithJwt:peppermintMessageSender.exchangedJwt messageId:peppermintChatEntry.messageId];
     }
