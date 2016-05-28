@@ -26,6 +26,7 @@
     ChatEntryModel *chatEntryModel;
     NSString *cachedCanonicalUrl;
     PeppermintChatEntry *peppermintChatEntryForCurrentMessageModel;
+    __block BOOL fileUploadCompeted;
 }
 
 -(id) init {
@@ -44,6 +45,7 @@
         customContactModel.delegate = self;
         chatEntryModel = [ChatEntryModel new];
         chatEntryModel.delegate = self;
+        fileUploadCompeted = NO;
     }
     return self;
 }
@@ -126,9 +128,15 @@
     dispatch_semaphore_signal(dispatch_semaphore);
 }
 
--(void) fileUploadCompletedWithPublicUrl:(NSString*) url canonicalUrl:(NSString*)canonicalUrl {
+-(void) fileUploadStartedWithPublicUrl:(NSString*) url canonicalUrl:(NSString*)canonicalUrl {
     cachedCanonicalUrl = canonicalUrl;
     [self checkToSaveTranscriptionWithUrl:canonicalUrl];
+}
+
+-(void) fileUploadCompletedWithSignedUrl:(NSString*)signedUrl {
+    NSLog(@"File is successfully uploaded to %@", signedUrl);
+    fileUploadCompeted = YES;
+    [self checkToDetach];
 }
 
 -(void) checkToSaveTranscriptionWithUrl:(NSString*)url {
@@ -262,9 +270,13 @@
             [self cacheMessage];
         case SendingStatusCancelled:
         case SendingStatusCached:
-        case SendingStatusSent:
-            //NSLog(@"%@ changed status to %d, soon it will be detached.", self, (int)self.sendingStatus);
             [self performDetach];
+            //NSLog(@"%@ changed status to %d, soon it will be detached.", self, (int)self.sendingStatus);
+            break;
+        case SendingStatusSent:
+            if(fileUploadCompeted) {
+                [self performDetach];
+            }
             return;
         default:
             break;

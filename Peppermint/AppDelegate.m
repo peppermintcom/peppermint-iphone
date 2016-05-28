@@ -476,7 +476,7 @@ SUBSCRIBE(DetachSuccess) {
     if(messagesForPeppermintContactToNavigate.count == 0) {
         NSLog(@"Seems there is no message for %@. Not Navigating!!!", peppermintContactToNavigate.communicationChannelAddress);
         [[AutoPlayModel sharedInstance] clearScheduledPeppermintContact];
-    }    
+    }
     peppermintContactToNavigate = nil;
 }
 
@@ -939,6 +939,8 @@ SUBSCRIBE(DetachSuccess) {
             default:
                 break;
         }
+    } else if ([error.domain isEqualToString:DOMAIN_GRPC]) {
+        message = [NSString stringWithFormat:@"Transcription API error code:%d", error.code];
     }
     return message;
 }

@@ -12,7 +12,8 @@
 @protocol AWSModelDelegate <BaseModelDelegate>
 @required
 -(void) recorderInitIsSuccessful;
--(void) fileUploadCompletedWithPublicUrl:(NSString*) url canonicalUrl:(NSString*)canonicalUrl;
+-(void) fileUploadStartedWithPublicUrl:(NSString*) url canonicalUrl:(NSString*)canonicalUrl;
+-(void) fileUploadCompletedWithSignedUrl:(NSString*)signedUrl;
 @optional
 -(void) sendInterAppMessageIsCompletedWithSuccess;
 -(void) sendInterAppMessageIsCompletedWithError:(NSError*)error;

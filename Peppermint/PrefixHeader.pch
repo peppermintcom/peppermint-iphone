@@ -191,6 +191,7 @@ sharedObject;\
 
 #define DOMAIN_GOOGLESPEECHRECORDINGMODEL   @"GoogleSpeechRecordingModel"
 #define CODE_NO_CONNECTION                  19
+#define DOMAIN_GRPC                         @"io.grpc"
 
 //Define Host&Path information as lowercase Text
 #define HOST_FASTREPLY                  @"reply"

@@ -107,13 +107,13 @@ SUBSCRIBE(RetrieveSignedUrlSuccessful) {
     if(event.sender == awsService) {
         _signedUrl = event.signedUrl;
         [awsService sendData:_data ofContentType:_contentType tosignedURL:_signedUrl];
-        [self.delegate fileUploadCompletedWithPublicUrl:event.short_url canonicalUrl:event.canonical_url];
+        [self.delegate fileUploadStartedWithPublicUrl:event.short_url canonicalUrl:event.canonical_url];
     }
 }
 
 SUBSCRIBE(FileUploadCompleted) {
     if([event.signedUrl isEqualToString:_signedUrl] && event.sender == awsService) {
-        //NSLog(@"File upload is completed with signedURL:%@", _signedUrl);
+        [self.delegate fileUploadCompletedWithSignedUrl:_signedUrl];
     }
 }
 

@@ -660,6 +660,8 @@ SUBSCRIBE(UserLoggedOut) {
         [infoAttrText addText:@" " ofSize:13 ofColor:textColor];
         [infoAttrText addText:LOC(@"An error occured", @"Info") ofSize:13 ofColor:textColor];
         durationToHideMessage = MESSAGE_SHOW_DURATION;
+    } else {
+        isNewRecordAvailable = YES;
     }
     
     if(isCacnelAble && infoAttrText.length > 0) {

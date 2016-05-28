@@ -25,8 +25,8 @@
 
 #pragma mark - AWSModelDelegate
 
--(void) fileUploadCompletedWithPublicUrl:(NSString*) url canonicalUrl:(NSString*)canonicalUrl{
-    [super fileUploadCompletedWithPublicUrl:url canonicalUrl:canonicalUrl];
+-(void) fileUploadStartedWithPublicUrl:(NSString*) url canonicalUrl:(NSString*)canonicalUrl{
+    [super fileUploadStartedWithPublicUrl:url canonicalUrl:canonicalUrl];
     if(![self isCancelled]) {
         _publicFileUrl = url;
         _canonicalUrl = canonicalUrl;

@@ -15,6 +15,7 @@
 #import "ConnectionModel.h"
 
 #define SPEECH_BUFFER   16384
+#define SPEECH_RESPONSE_WAIT_TIME   30
 
 @interface GoogleSpeechRecordingModel() <AudioControllerDelegate, AACFileWriterDelegate>
 @property (nonatomic, strong) NSMutableData *audioData;
@@ -29,6 +30,8 @@
 @property (strong, nonatomic) SpeechRecognitionService *speechRecognitionService;
 
 @property (atomic, assign) BOOL gotError;
+
+@property (strong, nonatomic) NSTimer *speechResponseWaitTimer;
 @end
 
 typedef enum : NSUInteger {
@@ -135,14 +138,21 @@ typedef enum : NSUInteger {
     } else if ([self.audioData length] > SPEECH_BUFFER) {
         NSLog(@"SENDING");
         weakself_create();
+        [self setSpeechResponseWaitTimer];
         [self.speechRecognitionService streamAudioData:self.audioData
                                                     withCompletion:^(RecognizeResponse *response, NSError *error) {
                                                         NSLog(@"RESPONSE RECEIVED");
-                                                        if (error) {
+                                                        [weakSelf.speechResponseWaitTimer invalidate];
+                                                        if(!self.speechResponseWaitTimer) {
+                                                            NSLog(@"Not processing response because speechResponseWaitTimer is fired earlier.");
+                                                            NSLog(@"Response:\n%@\nerror:\n%@", response, error);
+                                                            NSLog(@"---- End of non processed response information ----");
+                                                        } else if (error) {
                                                             [weakSelf operationFailure:error];
                                                         } else if(!response) {
-                                                            NSLog(@"There is no response information. End of recognising.");
+                                                            NSLog(@"Got finished signal");
                                                             weakSelf.isTranscriptionCompleted = YES;
+                                                            [weakSelf checkToFinishRecordingAndCallDelegate];
                                                         } else {
                                                             weakSelf.isTranscriptionCompleted = NO;
                                                             NSLog(@"RESPONSE: %@", response);
@@ -152,11 +162,6 @@ typedef enum : NSUInteger {
                                                                     weakSelf.transcriptionText = [weakSelf.transcriptionText stringByAppendingString:alternative.transcript];
                                                                     weakSelf.transcriptionConfidence = [NSNumber numberWithFloat:alternative.confidence];
                                                                 }                                                            }
-                                                        }
-                                                        
-                                                        if (weakSelf.isTranscriptionCompleted) {
-                                                            NSLog(@"Got finished signal");
-                                                            [weakSelf checkToFinishRecordingAndCallDelegate];
                                                         }
                                                     }];
         self.audioData = [[NSMutableData alloc] init];
@@ -170,6 +175,23 @@ typedef enum : NSUInteger {
         NSURL *fileUrl = [self recordFileUrl];
         [self.aacFileWriter convertToAACWithAudioStreamBasicDescription:self.audioController.asbd andFileUrl:fileUrl];
     }
+}
+
+#pragma mark - 
+
+-(void) setSpeechResponseWaitTimer {
+    [self.speechResponseWaitTimer invalidate];
+    self.speechResponseWaitTimer = [NSTimer scheduledTimerWithTimeInterval:SPEECH_RESPONSE_WAIT_TIME
+                                                                    target:self
+                                                                  selector:@selector(speechResponseDidNotReceivedInTime)
+                                                                  userInfo:nil
+                                                                   repeats:NO];
+}
+
+-(void) speechResponseDidNotReceivedInTime {
+    self.speechResponseWaitTimer = nil;
+    self.isTranscriptionCompleted = YES;
+    [self checkToFinishRecordingAndCallDelegate];
 }
 
 #pragma mark - AACFileWriterDelegate
