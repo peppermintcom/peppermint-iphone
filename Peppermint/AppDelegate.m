@@ -241,8 +241,8 @@
     if(!chatEntryModel) {
         [self refreshChatEntryModel];
         hasFinishedFirstSync = NO;
+        newMessagesInSyncCycle = nil;
     }
-    newMessagesInSyncCycle = nil;
     [[self chatEntrySyncModel] makeSyncRequestForMessages];
 }
 
@@ -258,7 +258,7 @@
     [self initFabric];
     [self initFlurry];
     [self initInitialViewController];
-    //[self logServiceCalls];
+    [self logServiceCalls];
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
     [self initConnectionStatusChangeListening];
     [self initWatchKitSession];
@@ -467,17 +467,16 @@ SUBSCRIBE(DetachSuccess) {
 }
 
 -(void) performNavigationForPeppermintContactToNavigate {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.contactEmail ==[cd] %@", peppermintContactToNavigate.communicationChannelAddress];
+    [self navigateToChatEntriesPageForEmail:peppermintContactToNavigate.communicationChannelAddress
+                                nameSurname:peppermintContactToNavigate.nameSurname];
     
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.contactEmail ==[cd] %@", peppermintContactToNavigate.communicationChannelAddress];
     NSArray *messagesForPeppermintContactToNavigate = [NSArray arrayWithArray:[self newMessagesInSyncCycle]];
     [messagesForPeppermintContactToNavigate filteredArrayUsingPredicate:predicate];
-    if(messagesForPeppermintContactToNavigate.count > 0) {
-        [self navigateToChatEntriesPageForEmail:peppermintContactToNavigate.communicationChannelAddress
-                                    nameSurname:peppermintContactToNavigate.nameSurname];
-    } else {
+    if(messagesForPeppermintContactToNavigate.count == 0) {
         NSLog(@"Seems there is no message for %@. Not Navigating!!!", peppermintContactToNavigate.communicationChannelAddress);
         [[AutoPlayModel sharedInstance] clearScheduledPeppermintContact];
-    }
+    }    
     peppermintContactToNavigate = nil;
 }
 
