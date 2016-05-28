@@ -719,6 +719,7 @@ SUBSCRIBE(UserLoggedOut) {
     } completion:^(BOOL finished) {
         self.sendingIndicatorView.hidden = YES;
         self.sendingIndicatorView.alpha = 1;
+        isNewRecordAvailable = YES;
     }];
 }
 

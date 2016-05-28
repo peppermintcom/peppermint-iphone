@@ -191,6 +191,9 @@ typedef enum : NSUInteger {
 -(void) speechResponseDidNotReceivedInTime {
     self.speechResponseWaitTimer = nil;
     self.isTranscriptionCompleted = YES;
+    if(self.transcriptionText.length > 0) {
+        self.transcriptionText = [self.transcriptionText stringByAppendingString:@" ..."];
+    }
     [self checkToFinishRecordingAndCallDelegate];
 }
 
