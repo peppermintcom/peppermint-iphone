@@ -84,6 +84,7 @@
 		B15FDE811C117CCE007100EC /* CachedMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B15FDE771C117CCE007100EC /* CachedMessage.m */; };
 		B15FDE841C117CFE007100EC /* CustomContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B15FDE831C117CFE007100EC /* CustomContactModel.m */; };
 		B15FDE871C119D60007100EC /* UIImage_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B15FDE861C119D60007100EC /* UIImage_Addition.m */; };
+		B16055491CF9D52F00AD1DF4 /* NSString+Truncate.m in Sources */ = {isa = PBXBuildFile; fileRef = B16055481CF9D52F00AD1DF4 /* NSString+Truncate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B16145DD1CCE094D00F7FE0C /* PeppermintGIdSignIn.m in Sources */ = {isa = PBXBuildFile; fileRef = B16145DC1CCE094D00F7FE0C /* PeppermintGIdSignIn.m */; };
 		B16145E41CCE479700F7FE0C /* EmailLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B16145E31CCE479700F7FE0C /* EmailLoginViewController.m */; };
 		B16145E91CCE4EC700F7FE0C /* BaseCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B16145E81CCE4EC700F7FE0C /* BaseCollectionViewCell.m */; };
@@ -459,6 +460,8 @@
 		B15FDE831C117CFE007100EC /* CustomContactModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomContactModel.m; sourceTree = "<group>"; };
 		B15FDE851C119D60007100EC /* UIImage_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImage_Addition.h; sourceTree = "<group>"; };
 		B15FDE861C119D60007100EC /* UIImage_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImage_Addition.m; sourceTree = "<group>"; };
+		B16055471CF9D52F00AD1DF4 /* NSString+Truncate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Truncate.h"; sourceTree = "<group>"; };
+		B16055481CF9D52F00AD1DF4 /* NSString+Truncate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Truncate.m"; sourceTree = "<group>"; };
 		B16145DB1CCE094D00F7FE0C /* PeppermintGIdSignIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeppermintGIdSignIn.h; sourceTree = "<group>"; };
 		B16145DC1CCE094D00F7FE0C /* PeppermintGIdSignIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeppermintGIdSignIn.m; sourceTree = "<group>"; };
 		B16145E21CCE479700F7FE0C /* EmailLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailLoginViewController.h; sourceTree = "<group>"; };
@@ -1548,6 +1551,8 @@
 				B1AC47811CDB738500693C47 /* AVAudioPlayer_Addition.m */,
 				B15E059F1CE4781D008203C5 /* UITextField_Addition.h */,
 				B15E05A01CE4781D008203C5 /* UITextField_Addition.m */,
+				B16055471CF9D52F00AD1DF4 /* NSString+Truncate.h */,
+				B16055481CF9D52F00AD1DF4 /* NSString+Truncate.m */,
 			);
 			name = Addition;
 			sourceTree = "<group>";
@@ -2587,6 +2592,7 @@
 				B102F9821BF0CE2000EDF7E6 /* LoginValidateEmailViewController.m in Sources */,
 				B1E2DF9B1C76061F0037FFBF /* AutoPlayModel.m in Sources */,
 				B1EF40F91BB8782F00042E4B /* SwipeView.m in Sources */,
+				B16055491CF9D52F00AD1DF4 /* NSString+Truncate.m in Sources */,
 				B13AE4391C8435A20046AF6E /* MessageGetResponse.m in Sources */,
 				B16145E41CCE479700F7FE0C /* EmailLoginViewController.m in Sources */,
 				B1BB60151BDE0E0200C1140B /* LoginTableViewCell.m in Sources */,

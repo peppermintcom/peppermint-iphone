@@ -80,6 +80,7 @@ sharedObject;\
 
 #pragma mark - NSString Addition
 #import "NSString_Addition.h"
+#import "NSString+Truncate.h"
 
 #pragma mark - UIView Addition
 #import "UIView+Addition.h"

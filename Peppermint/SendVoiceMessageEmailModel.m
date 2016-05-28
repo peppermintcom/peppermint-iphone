@@ -8,10 +8,20 @@
 
 #import "SendVoiceMessageEmailModel.h"
 
+#define SUBJECT_TRANSCRIPTION_LIMIT     50
+
 @implementation SendVoiceMessageEmailModel
 
 #pragma mark - MailBody
 
+-(NSString*) subject {
+    if(!_subject && self.transcriptionToSet.length > 0) {
+        NSString *truncatedString = [self.transcriptionToSet stringByTruncatingEndToLength:SUBJECT_TRANSCRIPTION_LIMIT
+                                                                                wholeWords:YES];
+        _subject = [NSString stringWithFormat:@"%@: %@", LOC(@"Audio Message", @"Audio Message"), truncatedString];
+    }
+    return _subject;
+}
 
 -(NSString*) mailBodyHTMLForUrlPath:(NSString*)urlPath extension:(NSString*)extension signature:(NSString*) signature duration:(NSTimeInterval) duration {
     
