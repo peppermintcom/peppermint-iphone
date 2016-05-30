@@ -979,6 +979,10 @@ SUBSCRIBE(DetachSuccess) {
 
 #pragma mark - Inter App Messaging
 
+SUBSCRIBE(UserLoggedOut) {
+    [self initGCM];
+}
+
 SUBSCRIBE(NewUserLoggedIn) {
     [self refreshChatEntryModel];
     [self initRecorder];

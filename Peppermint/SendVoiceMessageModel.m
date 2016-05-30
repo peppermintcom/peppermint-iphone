@@ -46,6 +46,7 @@
         chatEntryModel = [ChatEntryModel new];
         chatEntryModel.delegate = self;
         fileUploadCompeted = NO;
+        self.isCachedMessage = NO;
     }
     return self;
 }
@@ -62,8 +63,7 @@
     _extension = extension;
     _duration = duration;
     
-    BOOL isPreviousCachedMessage = (self.delegate == nil);
-    if(!isPreviousCachedMessage) {
+    if(!self.isCachedMessage) {
         [recentContactsModel save:self.selectedPeppermintContact
     forLastPeppermintContactDate:[NSDate new]
         lastMailClientContactDate:nil];        
@@ -83,8 +83,7 @@
 
 -(void) checkAndPerformOperationsConnectedWithMessageSending {
     if(self.sendingStatus == SendingStatusCached) {
-        BOOL isPreviousCachedMessage = (self.delegate == nil);
-        if(!isPreviousCachedMessage) {
+        if(!self.isCachedMessage) {
             BOOL isChatEntryAlreadyCreated = (peppermintChatEntryForCurrentMessageModel != nil);
             if(isChatEntryAlreadyCreated) {
                 [chatEntryModel deletePeppermintChatEntry:peppermintChatEntryForCurrentMessageModel];
@@ -93,8 +92,7 @@
             [self setChatConversation:tempUrl];
         }
     } else if(self.sendingStatus == SendingStatusSendingWithNoCancelOption) {
-        BOOL isPreviousCachedMessage = (self.delegate == nil);
-        if(isPreviousCachedMessage) {
+        if(self.isCachedMessage) {
             [chatEntryModel updateChatEntryWithAudio:_data toAudioUrl:cachedCanonicalUrl];
         } else {
             [self setChatConversation:cachedCanonicalUrl];
@@ -108,6 +106,12 @@
     NSString *customInfo = [NSString stringWithFormat:@"%@ Message Sending Error", self.class];
     error = [AnalyticsModel addCustomInfo:customInfo toError:error];
     [AnalyticsModel logError:error];
+    if(![error.domain isEqualToString:NSURLErrorDomain]) {
+        NSLog(@"It is not a connection error. Consider notifying the user or nivestigeting the reason.");
+#ifdef DEBUG
+        [AppDelegate handleError:error];
+#endif
+    }
     self.sendingStatus = SendingStatusError;
 }
 
@@ -195,6 +199,10 @@
 }
 
 -(void) cacheMessage {
+    if(self.isCachedMessage) {
+        NSLog(@"A message triggered from cache will be saved to cache again.");
+    }
+    
     BOOL isValidToCache = _data && _extension && _duration > 0;
     if(isValidToCache) {
         _sendingStatus = SendingStatusCancelled; //Cancel to stop ongoing processes. All taken actions are rolled-back!

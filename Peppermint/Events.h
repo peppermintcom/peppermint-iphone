@@ -11,7 +11,7 @@
 #import "User.h"
 
 @interface BaseEvent : NSObject
-@property (nonatomic) id sender;
+@property (assign, nonatomic) id sender;
 @end
 
 @interface NetworkFailure : BaseEvent

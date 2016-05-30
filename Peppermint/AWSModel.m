@@ -209,12 +209,17 @@ SUBSCRIBE(SetUpAccountWithRecorderCompleted) {
 #pragma mark - Send Inter App Message
 
 -(void) sendInterAppMessageTo:(NSString*)toEmail from:(NSString*)fromEmail withTranscriptionUrl:(NSString*)transcriptionUrl audioUrl:(NSString*)audioUrl {
-    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
-    [awsService sendMessageToRecepientEmail:toEmail
-                                senderEmail:fromEmail
-                           transcriptionUrl:transcriptionUrl
-                                   audioUrl:audioUrl
-                                        jwt:peppermintMessageSender.exchangedJwt];
+    
+    if(!audioUrl) {
+        NSLog(@"Audio URL is not supplied for sendInterAppMessageTo:");
+    } else {
+        PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+        [awsService sendMessageToRecepientEmail:toEmail
+                                    senderEmail:fromEmail
+                               transcriptionUrl:transcriptionUrl
+                                       audioUrl:audioUrl
+                                            jwt:peppermintMessageSender.exchangedJwt];
+    }
 }
 
 SUBSCRIBE(UnauthorizedResponse) {

@@ -50,6 +50,7 @@ typedef enum : NSUInteger {
 @property (weak, nonatomic) id<SendVoiceMessageDelegate> delegate;
 @property (strong, nonatomic) NSString *transcriptionToSet;
 @property (strong, nonatomic) NSNumber *confidenceToSet;
+@property (assign, nonatomic) BOOL isCachedMessage;
 
 -(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension andDuration:(NSTimeInterval) duration;
 -(NSString*) typeForExtension:(NSString*) extension;

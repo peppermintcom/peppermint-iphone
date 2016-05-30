@@ -92,6 +92,7 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
                     CachedMessage *cachedMessage = [cachedMessageArray objectAtIndex:i];
                     SendVoiceMessageModel *vocieSenderModel = [[NSClassFromString(cachedMessage.mailSenderClass) alloc] init];
                     vocieSenderModel.delegate = nil;
+                    vocieSenderModel.isCachedMessage = YES;
                     
                     PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
                     peppermintMessageSender.nameSurname = cachedMessage.senderNameSurname;

@@ -679,7 +679,7 @@ SUBSCRIBE(UserLoggedOut) {
 
 -(void) checkShouldNavigateWithModel:(SendVoiceMessageModel*)sendVoiceMessageModel {
     BOOL isInCorrectState = sendVoiceMessageModel.sendingStatus == SendingStatusSendingWithNoCancelOption;
-    BOOL isCacheMessage = (sendVoiceMessageModel.delegate == nil);
+    BOOL isCacheMessage = sendVoiceMessageModel.isCachedMessage;
     BOOL isScreenActive = self.navigationController.viewControllers.lastObject == self;
     BOOL isForCorrectRecording = lastRecordedPeppermintContact
     && [sendVoiceMessageModel.selectedPeppermintContact isEqual:lastRecordedPeppermintContact];
