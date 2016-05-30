@@ -23,7 +23,6 @@
 @end
 
 @implementation ChatEntriesViewController {
-    NSTimer *holdToRecordViewTimer;
     AutoPlayModel *autoPlayModel;
     __block BOOL scheduleRefresh;
     BOOL isScrolling;
@@ -41,17 +40,7 @@
     [self resetBottomInformationLabel];
     
     self.avatarImageView.layer.cornerRadius = 5;
-    self.holdToRecordView.hidden = YES;
-    self.holdToRecordLabel.font = [UIFont openSansSemiBoldFontOfSize:15];
-    self.holdToRecordLabel.textColor = [UIColor whiteColor];
-    self.holdToRecordLabel.text = LOC(@"Hold to record message", @"Hold to record message");
     
-    [self.holdToRecordView addGestureRecognizer:
-     [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
-    [self.holdToRecordView addGestureRecognizer:
-     [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
-    [self.holdToRecordView addGestureRecognizer:
-     [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
     autoPlayModel =[AutoPlayModel sharedInstance];
     [self recordingView]; // init recording view to be able to handle status change events
     self.recordingButton.delegate = self;
@@ -154,6 +143,10 @@
 
 -(void) peppermintChatEntrySavedWithSuccess:(NSArray*) savedPeppermintChatEnryArray {
     NSLog(@"peppermintChatEntrySavedWithSuccess");
+}
+
+-(void) lastMessagesAreUpdated:(NSArray<PeppermintContactWithChatEntry *> *)peppermintContactWithChatEntryArray {
+    NSLog(@"lastMessagesAreUpdated:");
 }
 
 #pragma mark - UITableView
@@ -306,17 +299,9 @@
 }
 
 -(void) touchShortTapActionOccuredOnLocation:(CGPoint) location {
-    [holdToRecordViewTimer invalidate];
-    holdToRecordViewTimer = nil;
-    if(self.holdToRecordView.hidden) {
-        self.holdToRecordView.alpha = 0;
-        self.holdToRecordView.hidden = NO;
-    }
-    [UIView animateWithDuration:0.3 animations:^{
-        self.holdToRecordView.alpha = 1;
-    } completion:^(BOOL finished) {
-        [self initRecordingModel];
-        holdToRecordViewTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(hideHoldToRecordInfoView) userInfo:nil repeats:NO];
+    weakself_create();
+    [self.holdToRecordView showWithCompletionHandler:^{
+        [weakSelf initRecordingModel];
     }];
 }
 
@@ -428,23 +413,11 @@
     [self.recordingView cancelMessageSending];
 }
 
-#pragma mark - HoldToRecordView
-
--(void) hideHoldToRecordInfoView {
-    [holdToRecordViewTimer invalidate];
-    holdToRecordViewTimer = nil;
-    [UIView animateWithDuration:ANIM_TIME animations:^{
-        self.holdToRecordView.alpha = 0;
-    } completion:^(BOOL finished) {
-        self.holdToRecordView.hidden = YES;
-    }];
-}
-
 #pragma mark - ScrollView Delegate
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     isScrolling = YES;
-    [self hideHoldToRecordInfoView];
+    [self.holdToRecordView hide];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {

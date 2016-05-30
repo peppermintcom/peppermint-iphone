@@ -8,6 +8,7 @@
 
 #import "BaseViewController.h"
 #import "ChatEntryModel.h"
+#import "HoldToRecordInfoView.h"
 
 @class PeppermintContact;
 @class RecordingGestureButton;
@@ -21,8 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *bottomInformationLabel;
 @property (weak, nonatomic) IBOutlet UIView *microphoneView;
 @property (weak, nonatomic) IBOutlet RecordingGestureButton *recordingButton;
-@property (weak, nonatomic) IBOutlet UIView *holdToRecordView;
-@property (weak, nonatomic) IBOutlet UILabel *holdToRecordLabel;
+@property (weak, nonatomic) IBOutlet HoldToRecordInfoView *holdToRecordView;
 @property (weak, nonatomic) IBOutlet UIButton *cancelSendingButton;
 
 @property (strong, nonatomic) ChatEntryModel *chatEntryModel;

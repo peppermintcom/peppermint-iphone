@@ -13,18 +13,25 @@
 
 @implementation DeviceModel
 
++(NSArray*) bodyComponents {
+    return @[
+                                 @"",
+                                 @"",
+                                 @"",
+                                 @"",
+                                 [NSString stringWithFormat:@"Platform: %@",[DeviceModel platform]],
+                                 [NSString stringWithFormat:@"Device Hardware: %@", [DeviceModel deviceName]],
+                                 [NSString stringWithFormat:@"System Version: %@", [DeviceModel systemVersion]],
+                                 [NSString stringWithFormat:@"Version: %@", [DeviceModel applicationVersion]]
+                                 ];
+}
+
 + (NSString *)summary {
-  NSArray * bodyComponents = @[
-                               @"",
-                               @"",
-                               @"",
-                               @"",
-                            [NSString stringWithFormat:@"Platform: %@",[DeviceModel platform]],
-                            [NSString stringWithFormat:@"Device Hardware: %@", [DeviceModel deviceName]],
-                            [NSString stringWithFormat:@"System Version: %@", [DeviceModel systemVersion]],
-                            [NSString stringWithFormat:@"Version: %@", [DeviceModel applicationVersion]]
-                               ];
-  return [bodyComponents componentsJoinedByString:@"<br/>"];
+  return [[self bodyComponents] componentsJoinedByString:@"<br/>"];
+}
+
++ (NSString*)summaryText {
+    return [[self bodyComponents] componentsJoinedByString:@" \n"];
 }
 
 + (NSDictionary*)summaryDictionary {

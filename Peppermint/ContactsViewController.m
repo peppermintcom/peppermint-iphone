@@ -46,7 +46,6 @@
     NSTimer *timer;
     BOOL isScreenReady;
     NSUInteger activeRecordingView;
-    NSTimer *holdToRecordViewTimer;
     BOOL isContactsPermissionGranted;
     
     BOOL isFirstOpen;
@@ -75,7 +74,6 @@
     
     self.tutorialView = nil;
     isScrolling  = NO;
-    [self initHoldToRecordInfoView];
     isNewRecordAvailable = YES;
     isAddNewContactModalisUp = NO;
     isNavigatedToChatEntries = NO;
@@ -121,7 +119,7 @@ SUBSCRIBE(UserLoggedOut) {
     if([self checkIfuserIsLoggedIn]) {
         lastRecordedPeppermintContact = nil;
         [self performTutorialViewProcess];
-        [self hideHoldToRecordInfoView];
+        [self.holdToRecordInfoView hide];
         if(isAddNewContactModalisUp) {
             isAddNewContactModalisUp = !isAddNewContactModalisUp;
             [self textFieldDidChange:self.searchContactsTextField];
@@ -194,7 +192,7 @@ SUBSCRIBE(UserLoggedOut) {
 #pragma mark - Slide Menu
 
 -(IBAction)slideMenuValidAction:(id)sender {
-    [self hideHoldToRecordInfoView];
+    [self.holdToRecordInfoView hide];
     [super slideMenuValidAction:sender];    
 }
 
@@ -365,7 +363,7 @@ SUBSCRIBE(UserLoggedOut) {
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     isScrolling = YES;
-    [self hideHoldToRecordInfoView];    
+    [self.holdToRecordInfoView hide];
     [self cancelOngoingInteractionsInTableViewCells];
 }
 
@@ -431,36 +429,16 @@ SUBSCRIBE(UserLoggedOut) {
 
 #pragma mark - HoldToRecordInfoView
 
--(void) initHoldToRecordInfoView {
-    holdToRecordViewTimer = nil;
-    self.holdToRecordInfoView.hidden = YES;
-    self.holdToRecordInfoViewLabel.font = [UIFont openSansSemiBoldFontOfSize:14];
-    self.holdToRecordInfoViewLabel.text = LOC(@"Hold to record message",@"Hold to record message");
-    
-    [self.holdToRecordInfoView addGestureRecognizer:
-     [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
-    [self.holdToRecordInfoView addGestureRecognizer:
-     [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
-    [self.holdToRecordInfoView addGestureRecognizer:
-     [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
-}
-
 -(void) showHoldToRecordViewAtLocation:(CGPoint) location {
-    [holdToRecordViewTimer invalidate];
-    self.holdToRecordInfoView.hidden = YES;
     CGFloat cellHeight = CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
     location.y +=  cellHeight * (3/4);
     if(location.y + self.holdToRecordInfoView.frame.size.height
        <= self.view.frame.size.height) {
         self.holdToRecordInfoViewYValueConstraint.constant = location.y;
         [self.view layoutIfNeeded];
-        self.holdToRecordInfoView.alpha = 0;
-        self.holdToRecordInfoView.hidden = NO;
-        [UIView animateWithDuration:ANIM_TIME animations:^{
-            self.holdToRecordInfoView.alpha = 1;
-        } completion:^(BOOL finished) {
-            [self initRecordingModel];   //Init recording model to get permission for microphone!
-            holdToRecordViewTimer = [NSTimer scheduledTimerWithTimeInterval:MESSAGE_SHOW_DURATION/2 target:self selector:@selector(hideHoldToRecordInfoView) userInfo:nil repeats:NO];
+        weakself_create();
+        [self.holdToRecordInfoView showWithCompletionHandler:^{
+            [weakSelf initRecordingModel];   //Init recording model to get permission for microphone!
         }];
     } else {
         NSLog(@"Can not show holdToRecordView out of the view");
@@ -470,16 +448,6 @@ SUBSCRIBE(UserLoggedOut) {
 -(void) initRecordingModel {
     RecordingModel *recordingModel = [RecordingModel new];   //Init recording model to get permission for microphone!
     recordingModel.delegate = self.recordingView;
-}
-
--(void) hideHoldToRecordInfoView {
-    [holdToRecordViewTimer invalidate];
-    holdToRecordViewTimer = nil;
-    [UIView animateWithDuration:ANIM_TIME animations:^{
-        self.holdToRecordInfoView.alpha = 0;
-    } completion:^(BOOL finished) {
-        self.holdToRecordInfoView.hidden = YES;
-    }];
 }
 
 #pragma mark - ContactTableViewCellDelegate
@@ -535,7 +503,7 @@ SUBSCRIBE(UserLoggedOut) {
        && isActiveContactListStillValid) {
         [self.searchContactsTextField resignFirstResponder];
         CGRect cellRect = [self fixTableScrollPositionForIndexPath:indexPath];
-        [self hideHoldToRecordInfoView];
+        [self.holdToRecordInfoView hide];
         
         PeppermintContact *selectedContact = [FastReplyModel sharedInstance].peppermintContact;
         if(indexPath.section == SECTION_CONTACTS) {
@@ -745,7 +713,7 @@ SUBSCRIBE(UserLoggedOut) {
 
 -(void)textFieldDidChange :(UITextField *)textField {
     self.contactsModel.filterText = textField.text;
-    [self hideHoldToRecordInfoView];
+    [self.holdToRecordInfoView hide];
     [self refreshContacts];
 }
 

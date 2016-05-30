@@ -17,5 +17,6 @@
 
 + (NSString *)summary;
 + (NSDictionary*)summaryDictionary;
++ (NSString*)summaryText;
 
 @end

@@ -11,11 +11,14 @@
 
 #import "FeedBackModel.h"
 #import "FoggyRecordingView.h"
+#import "HoldToRecordInfoView.h"
 
 @interface FeedBackViewController : BaseRecordingViewController <UITableViewDataSource, UITableViewDelegate, FeedBackModelDelegate, ContactTableViewCellDelegate, RecordingViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *supportEmailLabel;
+@property (weak, nonatomic) IBOutlet HoldToRecordInfoView *holdToRecordInfoView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *holdToRecordInfoViewYValueConstraint;
 
 @property (strong, nonatomic) FeedBackModel *feedBackModel;
 

@@ -193,6 +193,7 @@
 		B1E516111C7D9A69002BD49C /* PeppermintChatEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E516101C7D9A69002BD49C /* PeppermintChatEntry.m */; };
 		B1EB69B31C9828E20031F37E /* NSmutableSet_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EB69B21C9828E20031F37E /* NSmutableSet_Addition.m */; };
 		B1EDD43F1CFC338E00263EF8 /* TranscriptionsResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EDD43E1CFC338E00263EF8 /* TranscriptionsResponse.m */; };
+		B1EDD4431CFC591900263EF8 /* HoldToRecordInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EDD4421CFC591900263EF8 /* HoldToRecordInfoView.m */; };
 		B1EF03751C2184F80054FA02 /* AnalyticsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF03741C2184F80054FA02 /* AnalyticsModel.m */; };
 		B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40E41BB7D58C00042E4B /* RecordingModel.m */; };
 		B1EF40EB1BB7E78C00042E4B /* SendVoiceMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40EA1BB7E78C00042E4B /* SendVoiceMessageModel.m */; };
@@ -671,6 +672,8 @@
 		B1EB69B21C9828E20031F37E /* NSmutableSet_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSmutableSet_Addition.m; sourceTree = "<group>"; };
 		B1EDD43D1CFC338E00263EF8 /* TranscriptionsResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranscriptionsResponse.h; sourceTree = "<group>"; };
 		B1EDD43E1CFC338E00263EF8 /* TranscriptionsResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranscriptionsResponse.m; sourceTree = "<group>"; };
+		B1EDD4411CFC591900263EF8 /* HoldToRecordInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HoldToRecordInfoView.h; sourceTree = "<group>"; };
+		B1EDD4421CFC591900263EF8 /* HoldToRecordInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HoldToRecordInfoView.m; sourceTree = "<group>"; };
 		B1EF03731C2184F80054FA02 /* AnalyticsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsModel.h; sourceTree = "<group>"; };
 		B1EF03741C2184F80054FA02 /* AnalyticsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsModel.m; sourceTree = "<group>"; };
 		B1EF40E31BB7D58C00042E4B /* RecordingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RecordingModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1491,6 +1494,7 @@
 		B17B3D551BB689F1009B8BC5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B1EDD4401CFC58F600263EF8 /* HoldToRecordInfoView */,
 				B13E977B1CE0CE7F0066ECC9 /* AddEmailForSMSContactView */,
 				B1D646551C998FA000600183 /* ShakeGestureView */,
 				B10163391C6378D0008CC8D0 /* SMSChargeWarningView */,
@@ -1805,6 +1809,15 @@
 				B108F85F1BECAA5300267DEC /* SendVoiceMessageEmailModel.m */,
 			);
 			name = Base;
+			sourceTree = "<group>";
+		};
+		B1EDD4401CFC58F600263EF8 /* HoldToRecordInfoView */ = {
+			isa = PBXGroup;
+			children = (
+				B1EDD4411CFC591900263EF8 /* HoldToRecordInfoView.h */,
+				B1EDD4421CFC591900263EF8 /* HoldToRecordInfoView.m */,
+			);
+			name = HoldToRecordInfoView;
 			sourceTree = "<group>";
 		};
 		B1EF40E11BB7CE5600042E4B /* Controller */ = {
@@ -2549,6 +2562,7 @@
 				B13B076D1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m in Sources */,
 				D0AC07711C4815AE00F9CF6F /* AppDelegate.m in Sources */,
 				D0A7C0DA1BFA0C7900ACD33E /* DeviceModel.m in Sources */,
+				B1EDD4431CFC591900263EF8 /* HoldToRecordInfoView.m in Sources */,
 				B17B64B71CC63A1C00600A55 /* SparkPostTemplatesResponse.m in Sources */,
 				B16DA2171BE0F2C100EBF043 /* SlideMenuViewController.m in Sources */,
 				B1BB601A1BDE127500C1140B /* LoginViewController.m in Sources */,
