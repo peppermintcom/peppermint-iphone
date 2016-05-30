@@ -9,7 +9,6 @@
 #import "FeedBackModel.h"
 #import <MessageUI/MessageUI.h>
 #import "EasyMailSender.h"
-#import "EasyMailAlertSender.h"
 #import "DeviceModel.h"
 #import <Crashlytics/Crashlytics.h>
 #import "PeppermintContact.h"
@@ -68,7 +67,7 @@
 
 -(void) presentMailModalView {
     __block NSString *body;
-    EasyMailAlertSender *mailSender = [EasyMailAlertSender easyMail:^(MFMailComposeViewController *controller) {
+    EasyMailSender *mailSender = [EasyMailSender easyMail:^(MFMailComposeViewController *controller) {
         NSString *supportEmail = [self supportEmail];
         [controller setToRecipients:[NSArray arrayWithObject:supportEmail]];
         [controller setSubject:LOC(@"Feedback Subject",@"Feedback Subject")];
