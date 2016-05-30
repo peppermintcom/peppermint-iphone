@@ -60,6 +60,7 @@
     PlayingModel *playingModel;
     ChatEntryModel *chatEntryModel;
     void (^cachedCompletionHandler)(UIBackgroundFetchResult);
+    __block BOOL cachedCompletionHandlerIsProcessed;
     NSDate *fetchStart;
     BOOL hasFinishedFirstSync;
     EmailClientModel *emailClientModel;
@@ -439,6 +440,7 @@ SUBSCRIBE(DetachSuccess) {
 
 -(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
     fetchStart = [NSDate new];
+    cachedCompletionHandlerIsProcessed = NO;
     cachedCompletionHandler = completionHandler;
     [self refreshIncomingMessages];
     [self initEmailClient];
@@ -500,7 +502,8 @@ SUBSCRIBE(DetachSuccess) {
             hasFinishedFirstSync = hasFinishedFirstSync || [self.chatEntrySyncModel isAllMessagesAreInSyncOfFirstCycle];
         }
         
-        if(cachedCompletionHandler) {
+        if(!cachedCompletionHandlerIsProcessed) {
+            cachedCompletionHandlerIsProcessed = YES;
             NSDate *fetchEnd = [NSDate date];
             NSTimeInterval timeElapsed = [fetchEnd timeIntervalSinceDate:fetchStart];
             NSLog(@"Background Fetch Duration: %f seconds", timeElapsed);
@@ -509,7 +512,6 @@ SUBSCRIBE(DetachSuccess) {
             UIBackgroundFetchResult fetchResult = doesNewDataExists ? UIBackgroundFetchResultNewData : UIBackgroundFetchResultNoData;
             cachedCompletionHandler(fetchResult);
             NSLog(@"CompletionHandler finished with code %d", fetchResult);
-            cachedCompletionHandler = nil;
         }
         [self finishSyncBackgroundTask];
     }
@@ -564,7 +566,8 @@ SUBSCRIBE(DetachSuccess) {
 }
 
 -(void) operationFailure:(NSError *)error {
-    if(cachedCompletionHandler) {
+    if(!cachedCompletionHandlerIsProcessed) {
+        cachedCompletionHandlerIsProcessed = YES;
         cachedCompletionHandler(UIBackgroundFetchResultFailed);
     }
     
