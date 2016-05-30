@@ -192,6 +192,7 @@
 		B1E5160E1C7D99E3002BD49C /* ChatEntryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E5160D1C7D99E3002BD49C /* ChatEntryModel.m */; };
 		B1E516111C7D9A69002BD49C /* PeppermintChatEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E516101C7D9A69002BD49C /* PeppermintChatEntry.m */; };
 		B1EB69B31C9828E20031F37E /* NSmutableSet_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EB69B21C9828E20031F37E /* NSmutableSet_Addition.m */; };
+		B1EDD43F1CFC338E00263EF8 /* TranscriptionsResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EDD43E1CFC338E00263EF8 /* TranscriptionsResponse.m */; };
 		B1EF03751C2184F80054FA02 /* AnalyticsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF03741C2184F80054FA02 /* AnalyticsModel.m */; };
 		B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40E41BB7D58C00042E4B /* RecordingModel.m */; };
 		B1EF40EB1BB7E78C00042E4B /* SendVoiceMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40EA1BB7E78C00042E4B /* SendVoiceMessageModel.m */; };
@@ -668,6 +669,8 @@
 		B1E516101C7D9A69002BD49C /* PeppermintChatEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeppermintChatEntry.m; sourceTree = "<group>"; };
 		B1EB69B11C9828E20031F37E /* NSmutableSet_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSmutableSet_Addition.h; sourceTree = "<group>"; };
 		B1EB69B21C9828E20031F37E /* NSmutableSet_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSmutableSet_Addition.m; sourceTree = "<group>"; };
+		B1EDD43D1CFC338E00263EF8 /* TranscriptionsResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranscriptionsResponse.h; sourceTree = "<group>"; };
+		B1EDD43E1CFC338E00263EF8 /* TranscriptionsResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranscriptionsResponse.m; sourceTree = "<group>"; };
 		B1EF03731C2184F80054FA02 /* AnalyticsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsModel.h; sourceTree = "<group>"; };
 		B1EF03741C2184F80054FA02 /* AnalyticsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsModel.m; sourceTree = "<group>"; };
 		B1EF40E31BB7D58C00042E4B /* RecordingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RecordingModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1153,6 +1156,8 @@
 				B13AE43B1C8436410046AF6E /* Link.m */,
 				B1ADABC11CF10E1C00D2A458 /* TranscriptionsRequest.h */,
 				B1ADABC21CF10E1C00D2A458 /* TranscriptionsRequest.m */,
+				B1EDD43D1CFC338E00263EF8 /* TranscriptionsResponse.h */,
+				B1EDD43E1CFC338E00263EF8 /* TranscriptionsResponse.m */,
 			);
 			name = AWS;
 			sourceTree = "<group>";
@@ -2428,6 +2433,7 @@
 				B17B9A2A1C60CCDD00B081F7 /* SetUpRecorderRequest.m in Sources */,
 				D0D70D451C0495680068AB20 /* LoginWithEmailViewController.m in Sources */,
 				B1B4BF7B1CC4E61D004D4A6E /* SparkPostService.m in Sources */,
+				B1EDD43F1CFC338E00263EF8 /* TranscriptionsResponse.m in Sources */,
 				B184A0A71C1B0CF20087BB9C /* JwtInformation.m in Sources */,
 				B1D1E2C31CA04149008CFCB7 /* NSDate_Addition.m in Sources */,
 				B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */,

@@ -14,7 +14,7 @@
 @property (strong, nonatomic) NSString<Optional> *token;
 
 @property (strong, nonatomic) NSString<Optional> *transcription_url;
-@property (strong, nonatomic) NSString<Optional> *audio_url;
+@property (strong, nonatomic) NSString *audio_url;      //Check if audio_url is not an optional field
 @property (strong, nonatomic) NSString<Optional> *sender_email;
 @property (strong, nonatomic) NSString<Optional> *recipient_email;
 @property (strong, nonatomic) NSString<Optional> *sender_name;

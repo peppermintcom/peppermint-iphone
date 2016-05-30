@@ -159,3 +159,7 @@
 
 @interface UnauthorizedResponse : BaseEvent
 @end
+
+@interface TranscriptionIsSavedToServer : BaseEvent
+@property (strong, nonatomic) NSString *transctiptionUrl;
+@end

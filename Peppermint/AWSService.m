@@ -623,7 +623,16 @@
     NSDictionary *parameterDictionary = [transcriptionsRequest toDictionary];
     
     [requestOperationManager POST:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Transcription is saved");
+        NSError *error;
+        TranscriptionsResponse *transcriptionsResponse = [[TranscriptionsResponse alloc] initWithDictionary:responseObject error:&error];
+        if (error) {
+            [self failureWithOperation:nil andError:error];
+        } else {
+            TranscriptionIsSavedToServer *transcriptionIsSavedToServer = [TranscriptionIsSavedToServer new];
+            transcriptionIsSavedToServer.sender = self;
+            transcriptionIsSavedToServer.transctiptionUrl = transcriptionsResponse.transcription_url;
+            PUBLISH(transcriptionIsSavedToServer);
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Transcription error");
         [self failureWithOperation:operation andError:error];

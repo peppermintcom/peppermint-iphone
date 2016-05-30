@@ -12,14 +12,14 @@
 
 #pragma mark - Send Inter App Message
 
--(void) tryInterAppMessage:(NSString*) publicUrl {
+-(void) tryInterAppMessage:(NSString*) publicUrl withTransctiptionUrl:(NSString*)transcriptionUrl {
     NSLog(@"Trying InterApp for file: %@", publicUrl);
     if( self.selectedPeppermintContact.communicationChannel != CommunicationChannelEmail ) {
         NSLog(@"App does not send message over SMS address yet");
     } else {
         [awsModel sendInterAppMessageTo:self.selectedPeppermintContact.communicationChannelAddress
                                    from:self.peppermintMessageSender.email
-                   withTranscriptionUrl:nil
+                   withTranscriptionUrl:transcriptionUrl
                                audioUrl:publicUrl];
     }
 }

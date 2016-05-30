@@ -118,3 +118,6 @@
 
 @implementation UnauthorizedResponse
 @end
+
+@implementation TranscriptionIsSavedToServer
+@end

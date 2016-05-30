@@ -14,6 +14,7 @@
 -(void) recorderInitIsSuccessful;
 -(void) fileUploadStartedWithPublicUrl:(NSString*) url canonicalUrl:(NSString*)canonicalUrl;
 -(void) fileUploadCompletedWithSignedUrl:(NSString*)signedUrl;
+-(void) transcriptionUploadCompletedWithUrl:(NSString*)url;
 @optional
 -(void) sendInterAppMessageIsCompletedWithSuccess;
 -(void) sendInterAppMessageIsCompletedWithError:(NSError*)error;

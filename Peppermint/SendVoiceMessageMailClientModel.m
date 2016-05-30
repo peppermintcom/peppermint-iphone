@@ -26,15 +26,27 @@
 #pragma mark - AWSModelDelegate
 
 -(void) fileUploadStartedWithPublicUrl:(NSString*) url canonicalUrl:(NSString*)canonicalUrl{
-    [super fileUploadStartedWithPublicUrl:url canonicalUrl:canonicalUrl];
     if(![self isCancelled]) {
         _publicFileUrl = url;
         _canonicalUrl = canonicalUrl;
+        [super fileUploadStartedWithPublicUrl:url canonicalUrl:canonicalUrl];
+    } else {
+        NSLog(@"Mail message sending is not fired, cos message is cancelled");
+    }
+}
+
+-(void) transcriptionUploadCompletedWithUrl:(NSString*)url {
+    _transcriptionUrl = url;
+    [super transcriptionUploadCompletedWithUrl:url];    
+}
+
+-(void) uploadsAreProcessedToSendMessage {
+    if(![self isCancelled]) {
         self.sendingStatus = SendingStatusSending;
         self.sendingStatus = SendingStatusSendingWithNoCancelOption;
-        [self tryInterAppMessage:canonicalUrl];
+        [self tryInterAppMessage:self.canonicalUrl withTransctiptionUrl:self.transcriptionUrl];
     } else {
-        NSLog(@"Mandrill message sending is not fired, cos message is cancelled");
+        NSLog(@"Mail message sending is not fired, cos message is cancelled");
     }
 }
 

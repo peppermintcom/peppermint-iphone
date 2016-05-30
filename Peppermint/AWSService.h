@@ -26,6 +26,7 @@
 #import "MessageGetRequest.h"
 #import "MessageGetResponse.h"
 #import "TranscriptionsRequest.h"
+#import "TranscriptionsResponse.h"
 
 /*
  DEVELOPMENT:

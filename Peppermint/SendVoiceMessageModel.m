@@ -130,7 +130,11 @@
 
 -(void) fileUploadStartedWithPublicUrl:(NSString*) url canonicalUrl:(NSString*)canonicalUrl {
     cachedCanonicalUrl = canonicalUrl;
-    [self checkToSaveTranscriptionWithUrl:canonicalUrl];
+    if(![self isCancelled]) {
+        [self checkToSaveTranscriptionWithUrl:canonicalUrl];
+    } else {
+        NSLog(@"Message sending is cancelled");
+    }
 }
 
 -(void) fileUploadCompletedWithSignedUrl:(NSString*)signedUrl {
@@ -144,7 +148,18 @@
         [awsModel saveTranscriptionWithAudioUrl:url
                               transcriptionText:self.transcriptionToSet
                                      confidence:self.confidenceToSet];
+    } else {
+        [self uploadsAreProcessedToSendMessage];
     }
+}
+
+-(void) transcriptionUploadCompletedWithUrl:(NSString*)url {
+    NSLog(@"transcriptionUploadCompleted");
+    [self uploadsAreProcessedToSendMessage];
+}
+
+-(void) uploadsAreProcessedToSendMessage {
+    NSLog(@"This function should be overrided..");
 }
 
 #pragma mark - CustomContactModelDelegate

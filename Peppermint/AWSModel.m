@@ -253,4 +253,10 @@ SUBSCRIBE(InterAppMessageProcessCompleted) {
                               confidence:confidence];
 }
 
+SUBSCRIBE(TranscriptionIsSavedToServer) {
+    if(event.sender == awsService) {
+        [self.delegate transcriptionUploadCompletedWithUrl:event.transctiptionUrl];
+    }
+}
+
 @end

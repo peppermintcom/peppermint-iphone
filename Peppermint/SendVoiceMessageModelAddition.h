@@ -9,5 +9,5 @@
 #import "SendVoiceMessageModel.h"
 
 @interface SendVoiceMessageModel (SendVoiceMessageModelAddition)
--(void) tryInterAppMessage:(NSString*) publicUrl;
+-(void) tryInterAppMessage:(NSString*) publicUrl withTransctiptionUrl:(NSString*)transcriptionUrl;
 @end
