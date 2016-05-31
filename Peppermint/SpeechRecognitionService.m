@@ -22,12 +22,13 @@
 
 #import "TranscriptionModel.h"
 
-#define HOST @"speech.googleapis.com"
+#define HOST            @"speech.googleapis.com"
+#define XGoogApiKey     @"X-Goog-Api-Key"
 
 @interface SpeechRecognitionService ()
 
 @property (nonatomic, assign) BOOL streaming;
-@property (nonatomic, strong) Speech *client;
+//@property (nonatomic, strong) Speech *client;
 @property (nonatomic, strong) GRXBufferedPipe *writer;
 @property (nonatomic, strong) ProtoRPC *call;
 @property (nonatomic, strong) TranscriptionModel *transcriptionModel;
@@ -43,34 +44,36 @@
     return self;
 }
 
-- (void) streamAudioData:(NSData *) audioData
-          withCompletion:(SpeechRecognitionCompletionHandler)completion {
-
-  RecognizeRequest *request = [RecognizeRequest message];
-
-  if (!_streaming) {
-    _client = [[Speech alloc] initWithHost:HOST];
-    _writer = [[GRXBufferedPipe alloc] init];
-    _call = [_client RPCToRecognizeWithRequestsWriter:_writer
-                                         eventHandler:^(BOOL done, RecognizeResponse *response, NSError *error) {
-                                           completion(response, error);
-                                         }];
-    _call.requestHeaders[@"X-Goog-Api-Key"] = GOOGLE_SPEECH_API_KEY;
-    NSLog(@"HEADERS: %@", _call.requestHeaders);
-    [_call start];
-
-    _streaming = YES;
-
+-(InitialRecognizeRequest*) initialRecognizeRequest {
     InitialRecognizeRequest *initialRecognizeRequest = [InitialRecognizeRequest message];
     initialRecognizeRequest.encoding = InitialRecognizeRequest_AudioEncoding_Linear16;
     initialRecognizeRequest.sampleRate = AUDIO_SAMPLE_RATE;
-      initialRecognizeRequest.languageCode = [self.transcriptionModel transctiptionLanguageCode];
+    initialRecognizeRequest.languageCode = [self.transcriptionModel transctiptionLanguageCode];
     initialRecognizeRequest.maxAlternatives = 1;
     initialRecognizeRequest.profanityFilter = YES;
     initialRecognizeRequest.continuous = YES;
     initialRecognizeRequest.interimResults = NO;
     initialRecognizeRequest.enableEndpointerEvents = YES;
-    request.initialRequest = initialRecognizeRequest;
+    return initialRecognizeRequest;
+}
+
+- (void) streamAudioData:(NSData *) audioData withCompletion:(SpeechRecognitionCompletionHandler)completion {
+  RecognizeRequest *request = [RecognizeRequest message];
+  if (!self.streaming) {
+      if(self.call) {
+          NSLog(@"Canceling ProtoRPC call in transcriptAudioData. This can affect ongoing recording processes!!\n\nBE AWARE!!!\n\n");
+          [self.call cancel];
+      }
+    Speech *client = [[Speech alloc] initWithHost:HOST];
+    _writer = [[GRXBufferedPipe alloc] init];
+    self.call = [client RPCToRecognizeWithRequestsWriter:_writer
+                                         eventHandler:^(BOOL done, RecognizeResponse *response, NSError *error) {
+                                           completion(response, error);
+                                         }];
+    self.call.requestHeaders[XGoogApiKey] = GOOGLE_SPEECH_API_KEY;
+    [self.call start];
+    self.streaming = YES;
+    request.initialRequest = [self initialRecognizeRequest];
   }
 
   AudioRequest *audioRequest = [AudioRequest message];
@@ -92,6 +95,33 @@
 
 - (BOOL) isStreaming {
   return _streaming;
+}
+
+- (void) transcriptAudioData:(NSData *) audioData withCompletion:(SpeechRecognitionNonStreamCompletionHandler)completion {
+    RecognizeRequest *request = [RecognizeRequest message];
+    
+    if(!self.call) {
+        NSLog(@"Canceling ProtoRPC call in transcriptAudioData. This can affect ongoing recording processes!!\n\nBE AWARE!!!\n\n");
+        [self.call cancel];
+    }
+    
+    Speech *client = [[Speech alloc] initWithHost:HOST];
+    _writer = [[GRXBufferedPipe alloc] init];
+    
+    self.call = [client RPCToNonStreamingRecognizeWithRequest:request
+                                                      handler:^(NonStreamingRecognizeResponse *response, NSError *error) {
+                                                          completion(response, error);
+                                                      }];
+    
+    self.call.requestHeaders[XGoogApiKey] = GOOGLE_SPEECH_API_KEY;
+    [self.call start];
+    request.initialRequest = [self initialRecognizeRequest];
+    
+    AudioRequest *audioRequest = [AudioRequest message];
+    audioRequest.content = audioData;
+    request.audioRequest = audioRequest;
+    
+    [_writer writeValue:request];
 }
 
 @end
