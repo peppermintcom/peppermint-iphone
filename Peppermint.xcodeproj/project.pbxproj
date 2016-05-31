@@ -134,6 +134,9 @@
 		B1879A181C5810EE0036A660 /* StaticDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1879A171C5810EE0036A660 /* StaticDataTableViewController.m */; };
 		B1889FE11C4EBA3E003552CE /* ChatEntriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1889FE01C4EBA3E003552CE /* ChatEntriesViewController.m */; };
 		B18BF95E1BD674CD009B665E /* PeppermintMessageSender.m in Sources */ = {isa = PBXBuildFile; fileRef = B18BF95D1BD674CD009B665E /* PeppermintMessageSender.m */; };
+		B18D47B61CFD917A0060FD6C /* FLACiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B18D47B51CFD917A0060FD6C /* FLACiOS.framework */; };
+		B18D47BC1CFD91EB0060FD6C /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = B18D47B81CFD91EB0060FD6C /* LICENSE.txt */; };
+		B18D47BD1CFD91EB0060FD6C /* README in Resources */ = {isa = PBXBuildFile; fileRef = B18D47B91CFD91EB0060FD6C /* README */; };
 		B18EEB991CB3B36600F9491F /* FeedBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B18EEB981CB3B36600F9491F /* FeedBackViewController.m */; };
 		B18EEB9D1CB3F4EA00F9491F /* BaseRecordingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B18EEB9C1CB3F4EA00F9491F /* BaseRecordingViewController.m */; };
 		B18EEBA01CB3F88B00F9491F /* BaseRecordingGestureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B18EEB9F1CB3F88B00F9491F /* BaseRecordingGestureViewController.m */; };
@@ -559,6 +562,11 @@
 		B1889FE01C4EBA3E003552CE /* ChatEntriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatEntriesViewController.m; sourceTree = "<group>"; };
 		B18BF95C1BD674CD009B665E /* PeppermintMessageSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeppermintMessageSender.h; sourceTree = "<group>"; };
 		B18BF95D1BD674CD009B665E /* PeppermintMessageSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeppermintMessageSender.m; sourceTree = "<group>"; };
+		B18D47B51CFD917A0060FD6C /* FLACiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FLACiOS.framework; path = flac_ios/FLACiOS.framework; sourceTree = "<group>"; };
+		B18D47B81CFD91EB0060FD6C /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		B18D47B91CFD91EB0060FD6C /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		B18D47BA1CFD91EB0060FD6C /* wav_to_flac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wav_to_flac.c; sourceTree = "<group>"; };
+		B18D47BB1CFD91EB0060FD6C /* wav_to_flac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wav_to_flac.h; sourceTree = "<group>"; };
 		B18EEB971CB3B36600F9491F /* FeedBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedBackViewController.h; sourceTree = "<group>"; };
 		B18EEB981CB3B36600F9491F /* FeedBackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedBackViewController.m; sourceTree = "<group>"; };
 		B18EEB9B1CB3F4EA00F9491F /* BaseRecordingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseRecordingViewController.h; sourceTree = "<group>"; };
@@ -797,6 +805,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B18D47B61CFD917A0060FD6C /* FLACiOS.framework in Frameworks */,
 				D0AC07651C4809E000F9CF6F /* Contacts.framework in Frameworks */,
 				D0AC07631C4809D600F9CF6F /* WatchConnectivity.framework in Frameworks */,
 				D0A7C0F01BFC58A300ACD33E /* CoreSpotlight.framework in Frameworks */,
@@ -838,6 +847,7 @@
 		6C8541A65356EA01C859C162 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B18D47B51CFD917A0060FD6C /* FLACiOS.framework */,
 				B1A792451C6D9F8300254528 /* PushKit.framework */,
 				D0AC07661C4809F300F9CF6F /* WatchConnectivity.framework */,
 				D0AC07641C4809E000F9CF6F /* Contacts.framework */,
@@ -1081,6 +1091,7 @@
 		B15B15AD1BDA44D200C0C171 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				B18D47B71CFD91EB0060FD6C /* WavToFlac */,
 				B14CB64A1CEF7D4E00056813 /* TPAACAudioConverter */,
 				B14CB64B1CEF7D6400056813 /* GoogleSpeech */,
 			);
@@ -1594,6 +1605,18 @@
 			);
 			name = StaticTableView;
 			sourceTree = "<group>";
+		};
+		B18D47B71CFD91EB0060FD6C /* WavToFlac */ = {
+			isa = PBXGroup;
+			children = (
+				B18D47B81CFD91EB0060FD6C /* LICENSE.txt */,
+				B18D47B91CFD91EB0060FD6C /* README */,
+				B18D47BA1CFD91EB0060FD6C /* wav_to_flac.c */,
+				B18D47BB1CFD91EB0060FD6C /* wav_to_flac.h */,
+			);
+			name = WavToFlac;
+			path = flac_ios/WavToFlac;
+			sourceTree = SOURCE_ROOT;
 		};
 		B18EEB9A1CB3B37400F9491F /* FeedBack */ = {
 			isa = PBXGroup;
@@ -2340,7 +2363,9 @@
 				B101633B1C637983008CC8D0 /* SMSChargeWarningView.xib in Resources */,
 				B11BA7FD1CD3FD66005D02E0 /* MailContactTableViewCell.xib in Resources */,
 				B1BB60171BDE0E3200C1140B /* LoginTableViewCell.xib in Resources */,
+				B18D47BC1CFD91EB0060FD6C /* LICENSE.txt in Resources */,
 				B17B3D3C1BB6898C009B8BC5 /* Images.xcassets in Resources */,
+				B18D47BD1CFD91EB0060FD6C /* README in Resources */,
 				B15B15B21BDBBAB200C0C171 /* Login.storyboard in Resources */,
 				B1BDD36C1C7A6FB300C8BDF4 /* water_drop.mp3 in Resources */,
 				B1BB2A531BE6AA2000A4BFB4 /* GoogleService-Info.plist in Resources */,
@@ -2836,6 +2861,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Peppermint",
+					"$(PROJECT_DIR)/flac_ios",
 				);
 				GCC_PREFIX_HEADER = Peppermint/PrefixHeader.pch;
 				INFOPLIST_FILE = Peppermint/Info.plist;
@@ -2862,6 +2888,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Peppermint",
+					"$(PROJECT_DIR)/flac_ios",
 				);
 				GCC_PREFIX_HEADER = Peppermint/PrefixHeader.pch;
 				INFOPLIST_FILE = Peppermint/Info.plist;
