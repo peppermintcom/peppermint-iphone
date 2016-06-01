@@ -30,6 +30,7 @@
 @property (strong, nonatomic) SpeechRecognitionService *speechRecognitionService;
 
 @property (atomic, assign) BOOL gotError;
+@property (atomic, assign) BOOL gotAtLeastOnePieceOfFinalTranscription;
 
 @property (strong, nonatomic) NSTimer *speechResponseWaitTimer;
 @end
@@ -80,6 +81,7 @@ typedef enum : NSUInteger {
     [self recordingStartDate];
     self.aacFileWriter = [AACFileWriter new];
     self.aacFileWriter.delegate = self;
+    self.gotAtLeastOnePieceOfFinalTranscription = NO;
     self.transcriptionText = @"";
     self.audioData = [[NSMutableData alloc] init];
     [self.speechRecognitionService prepareToStream];
@@ -150,40 +152,51 @@ typedef enum : NSUInteger {
         NSLog(@"SENDING, bytes length:%5ld", self.audioData.length);
         weakself_create();
         [self setSpeechResponseWaitTimer];
-        [self.speechRecognitionService streamAudioData:self.audioData
-                                                    withCompletion:^(RecognizeResponse *response, NSError *error) {
-                                                        NSLog(@"RESPONSE RECEIVED");
-                                                        [weakSelf.speechResponseWaitTimer invalidate];
-                                                        if(!self.speechResponseWaitTimer) {
-                                                            NSLog(@"Not processing response because speechResponseWaitTimer is fired earlier.");
-                                                            NSLog(@"Response:\n%@\nerror:\n%@", response, error);
-                                                            NSLog(@"---- End of non processed response information ----");
-                                                        } else if (error) {
-                                                            [weakSelf errorInTranscriptionResponse:error];
-                                                        } else if(!response) {
-                                                            NSLog(@"Got finished signal");
-                                                            weakSelf.isTranscriptionCompleted = YES;
-                                                            [weakSelf checkToFinishRecordingAndCallDelegate];
-                                                        } else if (response.error.code > 0 && response.error.message.length > 0) {
-                                                            NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                                                                      @"message", response.error.message,
-                                                                                      nil];
-                                                            NSError *responseError = [NSError errorWithDomain:DOMAIN_GRPC
-                                                                                                         code:response.error.code
-                                                                                                     userInfo:userInfo];
-                                                            [weakSelf errorInTranscriptionResponse:responseError];
-                                                        } else {
-                                                            weakSelf.isTranscriptionCompleted = NO;
-                                                            NSLog(@"RESPONSE: %@", response);
-                                                            for (SpeechRecognitionResult *result in response.resultsArray) {
-                                                                if(result.isFinal
-                                                                   && result.alternativesArray.count > 0) {
-                                                                    SpeechRecognitionAlternative *alternative = result.alternativesArray.firstObject;
-                                                                    weakSelf.transcriptionText = [weakSelf.transcriptionText stringByAppendingString:alternative.transcript];
-                                                                    weakSelf.transcriptionConfidence = [NSNumber numberWithFloat:alternative.confidence];
-                                                                }                                                            }
-                                                        }
-                                                    }];
+        [self.speechRecognitionService
+         streamAudioData:self.audioData
+         withCompletion:^(RecognizeResponse *response, NSError *error) {
+             NSLog(@"RESPONSE RECEIVED");
+             [weakSelf.speechResponseWaitTimer invalidate];
+             if(!self.speechResponseWaitTimer) {
+                 NSLog(@"Not processing response because speechResponseWaitTimer is fired earlier.");
+                 NSLog(@"Response:\n%@\nerror:\n%@", response, error);
+                 NSLog(@"---- End of non processed response information ----");
+             } else if (error) {
+                 [weakSelf errorInTranscriptionResponse:error];
+             } else if(!response) {
+                 NSLog(@"Got finished signal");
+                 weakSelf.isTranscriptionCompleted = YES;
+                 [weakSelf checkToFinishRecordingAndCallDelegate];
+             } else if (response.error.code > 0 && response.error.message.length > 0) {
+                 NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                           @"message", response.error.message,
+                                           nil];
+                 NSError *responseError = [NSError errorWithDomain:DOMAIN_GRPC
+                                                              code:response.error.code
+                                                          userInfo:userInfo];
+                 [weakSelf errorInTranscriptionResponse:responseError];
+             } else {
+                 weakSelf.isTranscriptionCompleted = NO;
+                 NSLog(@"RESPONSE: %@", response);
+                 if(!weakSelf.gotAtLeastOnePieceOfFinalTranscription) {
+                     weakSelf.transcriptionText = @"";
+                 }
+                 
+                 for (SpeechRecognitionResult *result in response.resultsArray) {
+                     if (result.alternativesArray.count > 0) {
+                         if(weakSelf.gotAtLeastOnePieceOfFinalTranscription
+                            && !result.isFinal) {
+                             NSLog(@"Not processing response..");
+                         } else {
+                             weakSelf.gotAtLeastOnePieceOfFinalTranscription |= result.isFinal;
+                             SpeechRecognitionAlternative *alternative = result.alternativesArray.firstObject;
+                             weakSelf.transcriptionText = [weakSelf.transcriptionText stringByAppendingString:alternative.transcript];
+                             weakSelf.transcriptionConfidence = [NSNumber numberWithFloat:alternative.confidence];
+                         }
+                     }
+                 }
+             }
+         }];
         self.audioData = [[NSMutableData alloc] init];
     }
 }
