@@ -153,46 +153,37 @@
                  
                  if(nameSurname) {
                      nameSurname = [nameSurname capitalizedString];
-                     for(NSString *email in contact.emails) {
-                         NSString *key = [NSString stringWithFormat:@"%@,%@", nameSurname, email];
-                         if(self.filterText.length > 0 && ![key.lowercaseString containsString:self.filterText.lowercaseString]) {
-                             continue;
-                         } else if([uniqueSet containsObject:key]) {
-                             continue;
-                         } else {
-                             [uniqueSet addObject:key];
-                             PeppermintContact *peppermintContact = [PeppermintContact new];
-                             peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%d",
-                                                                  CONTACT_PHONEBOOK_EMAIL,contact.recordID.hash];
-                             peppermintContact.communicationChannel = CommunicationChannelEmail;
-                             peppermintContact.communicationChannelAddress = email;
-                             peppermintContact.nameSurname = nameSurname;
-                             peppermintContact.avatarImage = contact.thumbnail;
-                             [peppermintContactsArray addObject:peppermintContact];
+                     
+                     NSMutableArray *communicationChannelsToprocess = [NSMutableArray new];
+                     [communicationChannelsToprocess addObjectsFromArray:contact.emails];
+                     [communicationChannelsToprocess addObjectsFromArray:contact.phones];
+                     
+                     for(NSString *address in communicationChannelsToprocess) {
+                         if(address.length > 0) {
+                             NSString *key = [NSString stringWithFormat:@"%@,%@", nameSurname, address];
+                             if(self.filterText.length > 0 && ![key.lowercaseString containsString:self.filterText.lowercaseString]) {
+                                 continue;  // Just add contacts matching filter
+                             } else if([uniqueSet containsObject:key]) {
+                                 continue;  // Do not let duplicates
+                             } else {
+                                 [uniqueSet addObject:key];
+                                 PeppermintContact *peppermintContact = [PeppermintContact new];
+                                 
+                                 //Set Separated Fields
+                                 BOOL isEmailValid = address.isValidEmail;
+                                 NSString *prefix = isEmailValid ? CONTACT_PHONEBOOK_EMAIL : CONTACT_PHONEBOOK_PHONE;
+                                 peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%ld", prefix,contact.recordID.hash];
+                                 peppermintContact.communicationChannel = isEmailValid ? CommunicationChannelEmail : CommunicationChannelSMS;
+                                 
+                                 //Set Common Fields
+                                 peppermintContact.communicationChannelAddress = address;
+                                 peppermintContact.nameSurname = nameSurname;
+                                 peppermintContact.avatarImage = contact.thumbnail;
+                                 [peppermintContactsArray addObject:peppermintContact];
+                             }
                          }
                      }
                      
-                     for(NSString *rawPhone in contact.phones) {
-                         NSString *phone = [self filterUnwantedChars:rawPhone];
-                         if(phone.length > 0) {
-                             NSString *key = [NSString stringWithFormat:@"%@,%@", nameSurname, phone];
-                             if(self.filterText.length > 0 && ![key.lowercaseString containsString:self.filterText.lowercaseString]) {
-                                 continue;
-                             } else if([uniqueSet containsObject:key]) {
-                                 continue;
-                             } else {
-                                 [uniqueSet addObject:key];
-                             }
-                             PeppermintContact *peppermintContact = [PeppermintContact new];
-                             peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%d",
-                                                                  CONTACT_PHONEBOOK_PHONE,contact.recordID.hash];
-                             peppermintContact.communicationChannel = CommunicationChannelSMS;
-                             peppermintContact.communicationChannelAddress = phone;
-                             peppermintContact.nameSurname = nameSurname;
-                             peppermintContact.avatarImage = contact.thumbnail;
-                             [peppermintContactsArray addObject:peppermintContact];
-                         }
-                     }
                  }
              }
          }
