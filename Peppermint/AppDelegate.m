@@ -258,7 +258,7 @@
     [self initFabric];
     [self initFlurry];
     [self initInitialViewController];
-    [self logServiceCalls];
+    //[self logServiceCalls];
     [self initFacebookAppWithApplication:application launchOptions:launchOptions];
     [self initConnectionStatusChangeListening];
     [self initWatchKitSession];

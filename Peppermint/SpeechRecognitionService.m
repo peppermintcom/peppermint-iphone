@@ -52,7 +52,7 @@
     initialRecognizeRequest.maxAlternatives = 1;
     initialRecognizeRequest.profanityFilter = YES;
     initialRecognizeRequest.continuous = YES;
-    initialRecognizeRequest.interimResults = NO;
+    initialRecognizeRequest.interimResults = YES;
     initialRecognizeRequest.enableEndpointerEvents = YES;
     return initialRecognizeRequest;
 }
@@ -89,7 +89,7 @@
 
 - (void) stopStreamingWithError:(NSError*) error {
     if(_streaming) {
-        [_writer finishWithError:nil];
+        [_writer finishWithError:error];
         _streaming = NO;
         NSLog(@"stopStreaming is processed and streaming is completed");
     } else {

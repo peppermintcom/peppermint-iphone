@@ -491,9 +491,6 @@
     NSDictionary *parameterDictionary = [messageRequest toDictionary];
     
     [requestOperationManager POST:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Send Message Response Code:%ld",operation.response.statusCode);
-        NSLog(@"Response:\n%@", responseObject);
-        
         InterAppMessageProcessCompleted *interAppMessageProcessCompleted = [InterAppMessageProcessCompleted new];
         interAppMessageProcessCompleted.sender = self;
         interAppMessageProcessCompleted.error = nil;

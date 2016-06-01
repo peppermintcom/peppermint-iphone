@@ -119,13 +119,21 @@
     @try {
         NSError *error;
         AVAudioSession *session = [AVAudioSession sharedInstance];
-        result = [session setActive:destinationSessionState
-                        withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation
-                              error:&error];
+        [session setPreferredSampleRate:AUDIO_SAMPLE_RATE error:&error];
         if(error) {
             [AppDelegate handleError:error];
         } else {
-            currentSessionState = destinationSessionState;
+            result = [session setActive:destinationSessionState
+                            withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation
+                                  error:&error];
+            if(error) {
+                [AppDelegate handleError:error];
+            } else {
+                if(!currentSessionState && destinationSessionState) {
+                    NSLog(@"AudioSession is activated with sampleRate: %.2f", session.sampleRate);
+                }
+                currentSessionState = destinationSessionState;
+            }
         }
     }
     @catch ( NSException *e ) {

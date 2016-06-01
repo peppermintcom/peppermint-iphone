@@ -14,7 +14,7 @@
 #import "SpeechRecognitionService.h"
 #import "ConnectionModel.h"
 
-#define SPEECH_BUFFER   16384
+#define SPEECH_BUFFER               32768 //16384
 #define SPEECH_RESPONSE_WAIT_TIME   30
 
 @interface GoogleSpeechRecordingModel() <AudioControllerDelegate, AACFileWriterDelegate>
@@ -58,13 +58,13 @@ typedef enum : NSUInteger {
 
 -(void) initRecorder {    
     if([self setAudioSession:YES]) {
+        self.isActive = YES;
+        self.gotError = NO;
+        [[AudioSessionModel sharedInstance] attachAVAudioProcessObject:self];
         self.audioController = [AudioController new];
         self.audioController.delegate = self;
         [self.audioController prepare];
         self.speechRecognitionService = [SpeechRecognitionService new];
-        self.isActive = YES;
-        self.gotError = NO;
-        [[AudioSessionModel sharedInstance] attachAVAudioProcessObject:self];
     } else {
         NSLog(@"Could not activate audio session.");
     }
@@ -72,6 +72,7 @@ typedef enum : NSUInteger {
 
 -(void) record {
     NSLog(@"Record is called.....");
+    self.isActive = YES;
     self.receivedPrepareMessage = NO;
     self.isTranscriptionCompleted = NO;
     self.isStopCommandReceived = NO;
@@ -81,8 +82,9 @@ typedef enum : NSUInteger {
     self.aacFileWriter.delegate = self;
     self.transcriptionText = @"";
     self.audioData = [[NSMutableData alloc] init];
-    [self.audioController start];
     [self.speechRecognitionService prepareToStream];
+    [self processSampleData:[NSData new]];
+    [self.audioController start];
 }
 
 -(void) pause {
@@ -94,14 +96,13 @@ typedef enum : NSUInteger {
 }
 
 -(void) stop {
-    if(self.gotError) {
-        NSLog(@"Not stopping cos already got error.");
-    } else if (self.isStopCommandReceived) {
+    if (self.isStopCommandReceived) {
         NSLog(@"Not processing stop again, because isStopCommandReceived = NO");
     } else {
         self.isStopCommandReceived = YES;
-        [self.audioController stop];
         [self.speechRecognitionService stopStreaming];
+        [self.audioController stop];
+        [self completeAudioSession];
     }
 }
 
@@ -115,6 +116,7 @@ typedef enum : NSUInteger {
 }
 
 -(void) operationFailure:(NSError *)error {
+#warning "Check operations occuring during failure"
     NSLog(@"GoogleSpeechRecordingModel got error:%@", error);
     [self stop];
     self.gotError = YES;
@@ -122,25 +124,29 @@ typedef enum : NSUInteger {
     [self.delegate operationFailure:error];
 }
 
+-(void) errorInTranscriptionResponse:(NSError*) error {
+    NSLog(@"Failure in transcription.\n%@", error);
+    self.gotError = YES;
+    [self.speechRecognitionService stopStreamingWithError:error];
+    [self speechResponseDidNotReceivedInTime];
+}
+
 - (void) processSampleData:(NSData *)data {
     [self.aacFileWriter appendData:data];
     [self.audioData appendData:data];
     [self updateMetering];
     
-    /*
-    if(![[ConnectionModel sharedInstance] isInternetReachable]) {
-        NSLog(@"Internet connection is not active.");
-        NSError *error = [NSError errorWithDomain:DOMAIN_GOOGLESPEECHRECORDINGMODEL
-                                           code:CODE_NO_CONNECTION
-                                         userInfo:[[NSDictionary alloc] initWithObjectsAndKeys:@"Info", @"No internet connection", nil]];
-        [self operationFailure:error];
-        self.isTranscriptionCompleted = YES;
-    } else 
-    */
+    NSInteger frameCount = [data length] / 2;
+    int16_t *samples = (int16_t *) [data bytes];
+    int64_t sum = 0;
+    for (int i = 0; i < frameCount; i++) {
+        sum += abs(samples[i]);
+    }
+    NSLog(@"audio %d %d", (int) frameCount, (int) (sum * 1.0 / frameCount));
     
     if(self.gotError) {
         NSLog(@"Not sending, becase an error occured in previous sending.");
-    } else if ([self.audioData length] > SPEECH_BUFFER) {
+    } else if (!self.speechRecognitionService.isStreaming || [self.audioData length] > SPEECH_BUFFER) {
         NSLog(@"SENDING, bytes length:%5ld", self.audioData.length);
         weakself_create();
         [self setSpeechResponseWaitTimer];
@@ -153,20 +159,25 @@ typedef enum : NSUInteger {
                                                             NSLog(@"Response:\n%@\nerror:\n%@", response, error);
                                                             NSLog(@"---- End of non processed response information ----");
                                                         } else if (error) {
-                                                            //[weakSelf operationFailure:error];
-                                                            NSLog(@"Failure in transcription.\n%@", error);
-                                                            weakSelf.gotError = YES;
-                                                            [self.speechRecognitionService stopStreamingWithError:error];
-                                                            [weakSelf speechResponseDidNotReceivedInTime];
+                                                            [weakSelf errorInTranscriptionResponse:error];
                                                         } else if(!response) {
                                                             NSLog(@"Got finished signal");
                                                             weakSelf.isTranscriptionCompleted = YES;
                                                             [weakSelf checkToFinishRecordingAndCallDelegate];
+                                                        } else if (response.error.code > 0 && response.error.message.length > 0) {
+                                                            NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                                                                      @"message", response.error.message,
+                                                                                      nil];
+                                                            NSError *responseError = [NSError errorWithDomain:DOMAIN_GRPC
+                                                                                                         code:response.error.code
+                                                                                                     userInfo:userInfo];
+                                                            [weakSelf errorInTranscriptionResponse:responseError];
                                                         } else {
                                                             weakSelf.isTranscriptionCompleted = NO;
                                                             NSLog(@"RESPONSE: %@", response);
                                                             for (SpeechRecognitionResult *result in response.resultsArray) {
-                                                                if(result.alternativesArray.count > 0) {
+                                                                if(result.isFinal
+                                                                   && result.alternativesArray.count > 0) {
                                                                     SpeechRecognitionAlternative *alternative = result.alternativesArray.firstObject;
                                                                     weakSelf.transcriptionText = [weakSelf.transcriptionText stringByAppendingString:alternative.transcript];
                                                                     weakSelf.transcriptionConfidence = [NSNumber numberWithFloat:alternative.confidence];
@@ -178,15 +189,18 @@ typedef enum : NSUInteger {
 }
 
 -(void) prepareRecordData {
-    if(self.speechRecognitionService.isStreaming) {
-        NSLog(@"SpeechRecognitionService is still streaming. Can not prepareRecordData");
-    } else {
+    if(!self.isStopCommandReceived) {
+        NSLog(@"Stop command is not received yet. Can not prepareRecordData");
+    } else if([self setAudioSession:YES]) {
+        self.isActive = YES;
         NSURL *fileUrl = [self recordFileUrl];
         [self.aacFileWriter convertToAACWithAudioStreamBasicDescription:self.audioController.asbd andFileUrl:fileUrl];
+    } else {
+        NSLog(@"Could not activate audio session.");
     }
 }
 
-#pragma mark - 
+#pragma mark - SeechResponseWaitTimer
 
 -(void) setSpeechResponseWaitTimer {
     [self.speechResponseWaitTimer invalidate];
@@ -209,13 +223,13 @@ typedef enum : NSUInteger {
 #pragma mark - AACFileWriterDelegate
 
 -(void) fileConversionIsFinished {
+    [self completeAudioSession];
     self.receivedPrepareMessage = YES;
     [self checkToFinishRecordingAndCallDelegate];
 }
 
 -(void) checkToFinishRecordingAndCallDelegate {
     if(self.receivedPrepareMessage && self.isTranscriptionCompleted && self.isStopCommandReceived) {
-        [self completeAudioSession];
         [super prepareRecordData];
     } else {
         NSLog(@"GoogleSpeechRecordingModel is strill processing");
