@@ -668,6 +668,8 @@
 		B1E5160D1C7D99E3002BD49C /* ChatEntryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatEntryModel.m; sourceTree = "<group>"; };
 		B1E5160F1C7D9A69002BD49C /* PeppermintChatEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeppermintChatEntry.h; sourceTree = "<group>"; };
 		B1E516101C7D9A69002BD49C /* PeppermintChatEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeppermintChatEntry.m; sourceTree = "<group>"; };
+		B1E5E4D31CFE23FD00936563 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Text.strings; sourceTree = "<group>"; };
+		B1E5E4D51CFE3AB400936563 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Text.strings; sourceTree = "<group>"; };
 		B1EB69B11C9828E20031F37E /* NSmutableSet_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSmutableSet_Addition.h; sourceTree = "<group>"; };
 		B1EB69B21C9828E20031F37E /* NSmutableSet_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSmutableSet_Addition.m; sourceTree = "<group>"; };
 		B1EDD43D1CFC338E00263EF8 /* TranscriptionsResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranscriptionsResponse.h; sourceTree = "<group>"; };
@@ -2297,6 +2299,8 @@
 				Base,
 				"pt-PT",
 				tr,
+				ru,
+				uk,
 			);
 			mainGroup = B17B3D221BB6898C009B8BC5;
 			productRefGroup = B17B3D2C1BB6898C009B8BC5 /* Products */;
@@ -2716,6 +2720,8 @@
 				B1AE969C1CEA310D000A8E3D /* Base */,
 				B1AE969F1CEA3133000A8E3D /* pt-PT */,
 				B1AE96A01CEA36A7000A8E3D /* tr */,
+				B1E5E4D31CFE23FD00936563 /* ru */,
+				B1E5E4D51CFE3AB400936563 /* uk */,
 			);
 			name = Text.strings;
 			sourceTree = "<group>";

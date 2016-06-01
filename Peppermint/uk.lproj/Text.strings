@@ -1,0 +1,190 @@
+/*
+ Text.strings
+ Peppermint
+ 
+ Created by Okan Kurtulus on 26/09/15.
+ Copyright (c) 2015 Okan Kurtulus. All rights reserved.
+ */
+
+"via" = "через";
+"Search for Contacts" = "Шукати всі контакти";
+"No contacts have been found" = "Жодного контакта не знайдено.";
+"Peppermint" = "Peppermint";
+"Ok" = "Гаразд";
+"An error occured" = "Виникла помилка";
+"Contacts access rights explanation" = "Щоб використовувати Peppermint, вам потрібно надати доступ до контактів. Ви можете змінити права доступу через налаштування телефону.";
+"Information" = "Інформація";
+"Record Message" = "Запишіть повідомлення";
+"for ContactNameSurname" = "для %@";
+"Could not resume" = "Неможливо відновити запис";
+"Could not start record" = "Неможливо почати запис";
+"Mail Subject" = "Вам надіслано аудіо повідомлення";
+"Mail Body Format" = "Користувацький контент пошти...";
+
+"Mail Text Format" = "Ось моє повідомлення (%@). Натисніть %@ для швидкої відповіді\n%@";
+"Time is up" = "Час вийшов! Ви можете натиснути для відправки записаного повідомлення або відмінити";
+"Message sent with success" = "Ваше повідомлення успішно надіслано";
+"All Contacts" = "Всі контакти";
+"Recent Contacts" = "Нещодавні контакти";
+"Email Contacts" = "Е-мейл контакти";
+"Phone Contacts" = "Телефонні контакти";
+
+"Mic Access rights explanation" = "Ви повинні дозволити доступ до мікрофону для запису.";
+"Settings URL is not supported" = "Ваша версія iOS не підтримує перенаправлення на Налаштування. Будь ласка, перейдіть на домашню сторінку -> Налаштування -> Peppermint змінити дозволи";
+"Settings" = "Налаштування";
+"Recording is cut" = "Ваш голосовий запис зупинено. Ви бажаєте його надіслати?";
+
+
+"Recording for contact format" = "Запис для %@\n%@";
+"Hold to record message" = "Утримуйте для запису, відпустіть для відправки";
+"Cancel" = "Відмінити";
+"Email" = "Ел.пошта";
+"Record More Than Limit Format" = "Будь ласка, запишіть мінімум %d секунд перед\nвідправкою";
+"Send" = "Надіслати";
+
+"Swipe in any direction to cancel" = "Проведіть пальцем у будь-якому напрямку\nдля відміни";
+"Swipe anywhere to cancel" = "Проведіть пальцем у будь-якому напрямку\nдля відміни";
+"Tap to cancel" = "Натисніть для відміни";
+"Service is not available" = "Ваш пристрій не підтримує цього сервису повідомлень";
+"SMS Body Format" = "Вам надіслано аудіо повідомлення %@ ";
+"Log In with Facebook" = "Увійдіть з допомогою Facebook";
+"Log In with Google" = "Увійдіть з допомогою Google";
+"Log In with Email" = "Увійдіть з допомогою Email";
+"To send a message with Peppermint" = "Щоб надіслати повідомлення через Peppermint,\nвам потрібно створити обліковий запис.";
+"Please Login" = "Будь ласка, оберіть як увійти:";
+"Done" = "Зроблено";
+"Contacts" = "Контакти";
+"Settings" = "Налаштування";
+"Tutorial" = "Посібник";
+"Feedback" = "Відгуки";
+"support@peppermint.com" = "support@peppermint.com";
+"Feedback account error" = "Будь ласка, додайте і налаштуйте принаймні один е-мейл аккаунт на цьому пристрої, щоб надсилати відгуки";
+"Feedback sent with success" = "Ваше повідомлення було надіслано";
+"Feedback Subject" = "Peppermint відгук iPhone";
+"Starting" = "Підготовка";
+"Uploading" = "Завантажую";
+"Sending" = "Відправка";
+"Sent" = "Надіслано";
+"Cancelled" = "Скасовано";
+
+
+"Account" = "Обліковий запис";
+"Your Name" = "Ваше ім\'я";
+"Could not get all needed information from facebook!" = "Не вдалось отримати всю необхідну інформацію з facebook! Здається, в вашому facebook аккаунті немає всіх необхідних деталей. Будь ласка, оновіть ваш профіль або використайте інший спосіб входу.";
+"Validate Information Format" = "Посилання з підтвердженням надіслано %@. Будь ласка, натисніть на посилання для завершення реєстрації в Peppermint";
+"Resend Verification" = "Надіслати посилання з підтвердженням ще раз";
+"Register Information Missing" = "Будь ласка, заповніть всі поля";
+"Password" = "Пароль";
+"Verification Mail Sent" = "Peppermint тільки що надіслав вам лист з підтвердженням. Будь ласка, перевірте вхідні!";
+"This field is mandatory" = "Це поле є обов\'язковим";
+"Mail Format is not correct" = "Будь ласка, введіть правильну ел.адресу";
+"Facebook" = "Facebook";
+"Google" = "Google";
+"Logged in message format" = "Ви увійшли з допомогою %@";
+"Log Out" = "Вийти";
+"Signature" = "Підпис";
+"Display Name" = "Ім\'я, що відображається";
+"Display Name Description" = "Ваше ім\'я, що відображається (використовується при надсиланні in-app листів)";
+"Save" = "Зберегти";
+"Subject" = "Тема";
+"Subject Description" = "Тема листа";
+"What is your name?" = "Ваше ім\'я?";
+"Your Surname" = "Ваше прізвище";
+"What is your surname?" = "Ваше прізвище?";
+"Please enter at least 6 characters" = "Будь ласка, введіть щонайменше 6 символів";
+"Please connect to the Internet then Log In" = "Будь ласка, під\'єднайтесь до Інтернету перед входом";
+"Continue" = "Продовжити";
+"Please check your internet connection and try again" = "Будь ласка, перевірте ваше з\'єднання з Інтернетом і спробуйте ще раз";
+"Please connect to the internet to upload the message" = "Будь ласка, під\'єднайтесь до Інтернету для завантаження повідомлення";
+"Please check your login information" = "Будь ласка, перевірте вашу інформацію для входу";
+"Login with email" = "У вас немає Google або Facebook?\nУвійдіть з допомогою е-мейлу і паролю";
+"Your message will be sent later" = "З\'єднання з Інтернетом відсутнє. Ваше повідомлення буде надіслано пізніше";
+"Invalid email" = "Неправильна ел.адреса";
+"Invalid password" = "Неправильний пароль";
+"Add Contact" = "Додати контакт";
+"View All Contacts" = "Подивитись всі контакти";
+"You can add a contact" = "Ви можете додати контакт\nз е-мейлом";
+"New Contact" = "Новий контакт";
+"Save" = "Зберегти";
+"Contact exists format" = "%@ вже існує";
+"Microphone is in use" = "Мікрофон використовується іншим додатком.";
+"Email recover message format" = "Ми надіслали е-мейл %@ для відновлення паролю";
+"Search here for your friend" = "Знайдіть вашого друга.";
+"Then tap and hold to send them an audio message." = "Тоді натисніть і утримуйте\nдля відправки аудіо повідомлення.";
+"Display Name can not be empty" = "Ім\'я не може бути пустим";
+"Cancel registration or change email" = "Скасувати реєстрацію або змінити е-мейл";
+"Contact Support" = "Зв\'язатись зі службою підтримки";
+"Contact Support account error" = "Будь ласка, додайте і налаштуйте принаймні один е-мейл аккаунт на цьому пристрої, щоб зв\'язатись зі службою підтримки";
+"Contact Support Subject" = "Зв\'язатись зі службою підтримки";
+"Contact support mail was sent" = "Лист в службу підтримки надіслано";
+"You have installed Peppermint. Click to send your first message!" = "Ви встановили Peppermint. Натисніть для відправки вашого першого повідомлення!";
+"About" = "Інформація";
+"Privacy Policy & Terms of Use" = "Політика конфіденційності\n& Умови використання";
+"Peppermint.com" = "Peppermint.com";
+"Version" = "Версія";
+
+
+"Record a Message" = "Натисніть і утримуйте для запису";
+"Year" = "Рік";
+"Month" = "Місяць";
+"Day" = "День";
+"Hour" = "Година";
+"Minute" = "Хвилина";
+"Secont" = "Секунда";
+"Plural Suffix" = "s";
+"Just Now" = "Тільки що";
+"Don't want to create an account yet? click here" = "Поки не бажаєте створювати обліковий запис? натисніть тут";
+"Please enter a valid name." = "Будь ласка, введіть правильне ім\'я.";
+"Please enter a valid email." = "Будь ласка, введіть правильнe ел.адресу.";
+"Please enter a valid phone number." = "Будь ласка, введіть правильний номер телефону.";
+
+
+"Show results from iPhone contacts" = "Показати результати з контактів iPhone";
+"Sending via SMS" = "Відправка через SMS";
+"Sending via SMS may cost you money. Continue?" = "Відправка через SMS може коштувати вам грошей. Продовжити?";
+"Send to Email Instead" = "Надіслати на е-мейл натомість";
+"Do not ask this again and always send the SMS message" = "Більше не запитувати і завжди надсилати SMS повідомлення";
+"Yes" = "Так";
+"No" = "Ні";
+"Add email address" = "Додати ел.адресу";
+"Reply" = "Відповісти";
+"Please try again later" = "Будь ласка, спробуйте ще раз пізніше";
+"Mandrill message can not be delivered" = "Peppermint не зміг надіслати лист-підтвердження. Будь ласка, перевірте ваші налаштування вхідних";
+"Enable" = "Увімкнути";
+"You should have internet connection to login" = "Для входу необхідно мати з'єднання з Інтернетом";
+"Today" = "Сьогдні";
+"Yesterday" = "Вчора";
+"Or email us for support" = "чи надіслати лист в службу підтримки";
+"Peppermint Support" = "Служба підтримки Peppermint";
+"Peppermint Support Explanation" = "Надішліть нам аудіо відгук про додаток";
+"There are no recent contacts" = "Нещодавніх контактів немає";
+"To start seeing how easy it is to reply to emails, add an account"="Щоб побачити наскільки легко відповідати на листи, створіть обл.запис";
+"COMING SOON" = "СКОРО";
+"GMail" = "GMail";
+"Outlook.com" = "Outlook.com";
+"Yahoo! Mail" = "Yahoo! Mail";
+"Office 365" = "Office 365";
+"AOL Mail" = "AOL Mail";
+"iCloud" = "iCloud";
+"Mail.ru" = "Mail.ru";
+"Mail Contacts" = "Контакти ел.пошти";
+"NEW" = "НОВЕ";
+"Sent Audio Message" = "Аудіо повідомлення надіслано";
+"Received Audio Message" = "Отримано аудіо повідомлення";
+"Search" = "Пошук";
+"Audio message could not be played. Please check your connection and try again." = "Неможливо відтворити аудіо повідомлення. Будь ласка, перевірте ваше з\'єднання і спробуйте ще раз.";
+"..." = "...";
+"Sending via Email" = "Відправка через е-мейл";
+"No email address found. Please insert an email address for this contact." = "Ел.адрес не знайдено. Будь ласка, додайте ел.адресу для цього контакту.";
+"Save email address" = "Зберегти ел.адресу";
+"Active Locale" = "англ_США";
+"First Name" = "Ім\'я";
+"Last Name" = "Прізвище";
+"Phone Number" = "Номер телефону";
+"Your Email" = "Ваша ел.адреса";
+"Welcome Back" = "З поверненням";
+"Log in" = "Увійти";
+"Forgot password?" = "Забули пароль?";
+"ago" = "тому назад";
+"AUTOMATIC TRANSCRIPTION" = "ТРАНСКРИПЦіЯ";
+"Transcription Preffered Default Language" = "uk-UA";
