@@ -18,14 +18,17 @@
 #import "google/cloud/speech/v1/CloudSpeech.pbrpc.h"
 
 typedef void (^SpeechRecognitionCompletionHandler)(RecognizeResponse *object, NSError *error);
+typedef void (^SpeechRecognitionNonStreamCompletionHandler)(NonStreamingRecognizeResponse *object, NSError *error);
 
 @interface SpeechRecognitionService : NSObject
 
+-(void) prepareToStream;
 - (void) streamAudioData:(NSData *) audioData
           withCompletion:(SpeechRecognitionCompletionHandler)completion;
-
+- (void) stopStreamingWithError:(NSError*) error;
 - (void) stopStreaming;
-
 - (BOOL) isStreaming;
+
+- (void) transcriptAudioData:(NSData *) audioData withCompletion:(SpeechRecognitionNonStreamCompletionHandler)completion;
 
 @end
