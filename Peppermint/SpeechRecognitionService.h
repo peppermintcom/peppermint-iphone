@@ -22,8 +22,10 @@ typedef void (^SpeechRecognitionNonStreamCompletionHandler)(NonStreamingRecogniz
 
 @interface SpeechRecognitionService : NSObject
 
+-(void) prepareToStream;
 - (void) streamAudioData:(NSData *) audioData
           withCompletion:(SpeechRecognitionCompletionHandler)completion;
+- (void) stopStreamingWithError:(NSError*) error;
 - (void) stopStreaming;
 - (BOOL) isStreaming;
 

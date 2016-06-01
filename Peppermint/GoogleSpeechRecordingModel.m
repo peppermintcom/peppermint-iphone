@@ -82,6 +82,7 @@ typedef enum : NSUInteger {
     self.transcriptionText = @"";
     self.audioData = [[NSMutableData alloc] init];
     [self.audioController start];
+    [self.speechRecognitionService prepareToStream];
 }
 
 -(void) pause {
@@ -126,6 +127,7 @@ typedef enum : NSUInteger {
     [self.audioData appendData:data];
     [self updateMetering];
     
+    /*
     if(![[ConnectionModel sharedInstance] isInternetReachable]) {
         NSLog(@"Internet connection is not active.");
         NSError *error = [NSError errorWithDomain:DOMAIN_GOOGLESPEECHRECORDINGMODEL
@@ -133,10 +135,13 @@ typedef enum : NSUInteger {
                                          userInfo:[[NSDictionary alloc] initWithObjectsAndKeys:@"Info", @"No internet connection", nil]];
         [self operationFailure:error];
         self.isTranscriptionCompleted = YES;
-    } else if(self.gotError) {
+    } else 
+    */
+    
+    if(self.gotError) {
         NSLog(@"Not sending, becase an error occured in previous sending.");
     } else if ([self.audioData length] > SPEECH_BUFFER) {
-        NSLog(@"SENDING");
+        NSLog(@"SENDING, bytes length:%5ld", self.audioData.length);
         weakself_create();
         [self setSpeechResponseWaitTimer];
         [self.speechRecognitionService streamAudioData:self.audioData
@@ -148,7 +153,11 @@ typedef enum : NSUInteger {
                                                             NSLog(@"Response:\n%@\nerror:\n%@", response, error);
                                                             NSLog(@"---- End of non processed response information ----");
                                                         } else if (error) {
-                                                            [weakSelf operationFailure:error];
+                                                            //[weakSelf operationFailure:error];
+                                                            NSLog(@"Failure in transcription.\n%@", error);
+                                                            weakSelf.gotError = YES;
+                                                            [self.speechRecognitionService stopStreamingWithError:error];
+                                                            [weakSelf speechResponseDidNotReceivedInTime];
                                                         } else if(!response) {
                                                             NSLog(@"Got finished signal");
                                                             weakSelf.isTranscriptionCompleted = YES;

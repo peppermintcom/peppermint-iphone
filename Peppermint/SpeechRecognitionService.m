@@ -28,7 +28,7 @@
 @interface SpeechRecognitionService ()
 
 @property (nonatomic, assign) BOOL streaming;
-//@property (nonatomic, strong) Speech *client;
+@property (nonatomic, strong) Speech *client;
 @property (nonatomic, strong) GRXBufferedPipe *writer;
 @property (nonatomic, strong) ProtoRPC *call;
 @property (nonatomic, strong) TranscriptionModel *transcriptionModel;
@@ -57,16 +57,20 @@
     return initialRecognizeRequest;
 }
 
+-(void) prepareToStream {
+    [self stopStreaming];
+    if(self.call) {
+        NSLog(@"Canceling ProtoRPC call in transcriptAudioData. This can affect ongoing recording processes!!\n\nBE AWARE!!!\n\n");
+        [self.call cancel];
+    }
+}
+
 - (void) streamAudioData:(NSData *) audioData withCompletion:(SpeechRecognitionCompletionHandler)completion {
   RecognizeRequest *request = [RecognizeRequest message];
   if (!self.streaming) {
-      if(self.call) {
-          NSLog(@"Canceling ProtoRPC call in transcriptAudioData. This can affect ongoing recording processes!!\n\nBE AWARE!!!\n\n");
-          [self.call cancel];
-      }
-    Speech *client = [[Speech alloc] initWithHost:HOST];
+    _client = [[Speech alloc] initWithHost:HOST];
     _writer = [[GRXBufferedPipe alloc] init];
-    self.call = [client RPCToRecognizeWithRequestsWriter:_writer
+    self.call = [self.client RPCToRecognizeWithRequestsWriter:_writer
                                          eventHandler:^(BOOL done, RecognizeResponse *response, NSError *error) {
                                            completion(response, error);
                                          }];
@@ -83,7 +87,7 @@
   [_writer writeValue:request];
 }
 
-- (void) stopStreaming {
+- (void) stopStreamingWithError:(NSError*) error {
     if(_streaming) {
         [_writer finishWithError:nil];
         _streaming = NO;
@@ -91,6 +95,10 @@
     } else {
         NSLog(@"stopStreaming is called in non-streaming state.");
     }
+}
+
+- (void) stopStreaming {
+    [self stopStreamingWithError:nil];
 }
 
 - (BOOL) isStreaming {
