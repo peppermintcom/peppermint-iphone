@@ -457,8 +457,11 @@ SUBSCRIBE(UserLoggedOut) {
         PeppermintContact *peppermintContact = nil;
         if([self isFastReplyRowVisible] && indexPath.row == 0) {
             peppermintContact = [FastReplyModel sharedInstance].peppermintContact;
-        } else {
+        } else if (indexPath.row < [self activeContactList].count) {
             peppermintContact = [[self activeContactList] objectAtIndex:indexPath.row];
+        } else {
+            NSLog(@"ActiveContactList is updated!Can not access contact with index:%ld", indexPath.row);
+            return;
         }
         
         if(peppermintContact) {

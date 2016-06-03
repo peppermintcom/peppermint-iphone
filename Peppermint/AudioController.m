@@ -17,6 +17,7 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import "AudioController.h"
+#import "AudioSessionModel.h"
 
 @interface AudioController () {
     AudioComponentInstance remoteIOUnit;
@@ -153,7 +154,12 @@ static OSStatus playbackCallback(void *inRefCon,
   [session setPreferredIOBufferDuration:10 error:&error];
 
   sampleRate = session.sampleRate;
-  NSLog (@"hardwareSampleRate = %f", sampleRate);
+    BOOL isSessionActive = [AudioSessionModel sharedInstance].isAudioSessionActive;
+    NSLog (@"hardwareSampleRate = %f and Session:%d", sampleRate, isSessionActive);
+    if(!isSessionActive) {
+        NSAssert(isSessionActive, @"Audio Session must be activated before preparing audio controller.");
+    }
+    
   sampleRate = AUDIO_SAMPLE_RATE;
 
   // Describe the RemoteIO unit
