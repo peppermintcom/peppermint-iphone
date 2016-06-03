@@ -14,6 +14,8 @@
 @interface RecordingModel (RecordingModel_Addition)
 
 #pragma mark - Private functions used in subclasses
+-(NSTimeInterval) currentRecordingTime;
+-(void)updateMetering;
 -(void) prepareRecordData;
 -(BOOL) setAudioSession:(BOOL) active;
 -(NSURL*) recordFileUrl;

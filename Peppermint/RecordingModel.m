@@ -10,7 +10,12 @@
 #import "RecordingModel_Addition.h"
 //#import <AudioToolbox/AudioServices.h>
 
-@implementation RecordingModel
+@implementation RecordingModel {
+    NSTimer *timer;
+    NSDate *pauseStart, *previousFireDate;
+    __block NSTimeInterval previousMeasurement;
+    NSTimeInterval _currentRecordingTime;
+}
 
 +(CGFloat) checkPreviousFileLength {
     NSString *length = (NSString*) defaults_object(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH);
@@ -109,19 +114,58 @@
 }
 
 -(void) record {
-    @throw override_error
+    previousMeasurement = _currentRecordingTime = 0;
+    timer = [NSTimer scheduledTimerWithTimeInterval:PING_INTERVAL target:self selector:@selector(onTick:) userInfo:nil repeats:YES];
 }
 
 -(void) pause {
-    @throw override_error
+    [self pauseTimer];
 }
 
 -(void) resume {
-    @throw override_error
+    [self resumeTimer];
 }
 
 -(void) stop {
+    [timer invalidate];
+    timer = nil;
+}
+
+#pragma mark - Recording Timer (Pause/Resume Timer)
+
+-(NSTimeInterval) currentRecordingTime {
+    return _currentRecordingTime;
+}
+
+-(void)updateMetering {
     @throw override_error
+}
+
+-(void)onTick:(NSTimer *)timer {
+    _currentRecordingTime += PING_INTERVAL;
+    [self updateMetering];
+    CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
+    
+    NSTimeInterval diff = fabs(self.currentRecordingTime - previousMeasurement);
+    BOOL isDiffValid = (diff < PING_INTERVAL * 100 && self.currentRecordingTime >= -0.00001);
+    BOOL didGetReset = !isDiffValid && (self.currentRecordingTime > 0 && self.currentRecordingTime < PING_INTERVAL);
+    
+    if(isDiffValid || didGetReset) {
+        previousMeasurement = self.currentRecordingTime;
+        [self.delegate timerUpdated:self.currentRecordingTime + previousFileLength];
+    }
+}
+
+-(void) pauseTimer {
+    pauseStart = [NSDate dateWithTimeIntervalSinceNow:0];
+    previousFireDate = [timer fireDate];
+    [timer setFireDate:[NSDate distantFuture]];
+}
+
+-(void) resumeTimer {
+    float pauseTime = -1*[pauseStart timeIntervalSinceNow];
+    [timer setFireDate:[previousFireDate initWithTimeInterval:pauseTime sinceDate:previousFireDate]];
+    pauseStart = previousFireDate = nil;
 }
 
 #pragma mark - File Urls

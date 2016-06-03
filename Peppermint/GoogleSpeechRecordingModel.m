@@ -20,8 +20,8 @@
 @interface GoogleSpeechRecordingModel() <AudioControllerDelegate, AACFileWriterDelegate>
 @property (nonatomic, strong) NSMutableData *audioData;
 @property (nonatomic, strong) AACFileWriter *aacFileWriter;
-@property (nonatomic, strong) NSDate *recordingStartDate;
 
+@property (atomic, assign) BOOL isFileConversionCompleted;
 @property (atomic, assign) BOOL receivedPrepareMessage;
 @property (atomic, assign) BOOL isTranscriptionCompleted;
 @property (atomic, assign) BOOL isStopCommandReceived;
@@ -75,10 +75,9 @@ typedef enum : NSUInteger {
     NSLog(@"Record is called.....");
     self.isActive = YES;
     self.receivedPrepareMessage = NO;
+    self.isFileConversionCompleted = NO;
     self.isTranscriptionCompleted = NO;
     self.isStopCommandReceived = NO;
-    _recordingStartDate = nil;
-    [self recordingStartDate];
     self.aacFileWriter = [AACFileWriter new];
     self.aacFileWriter.delegate = self;
     self.gotAtLeastOnePieceOfFinalTranscription = NO;
@@ -87,20 +86,24 @@ typedef enum : NSUInteger {
     [self.speechRecognitionService prepareToStream];
     [self processSampleData:[NSData new]];
     [self.audioController start];
+    [super record];
 }
 
 -(void) pause {
-    NSLog(@"Pause is not implemented.");
+    NSLog(@"Pause is not implemented. Stopping the message.");
+    [self stop];
 }
 
 -(void) resume {
-    NSLog(@"Resume is not implemented.");
+    NSLog(@"Resume is not implemented. Starting recording.");
+    [self record];
 }
 
 -(void) stop {
     if (self.isStopCommandReceived) {
         NSLog(@"Not processing stop again, because isStopCommandReceived = NO");
     } else {
+        [super stop];
         self.isStopCommandReceived = YES;
         [self.speechRecognitionService stopStreaming];
         [self.audioController stop];
@@ -113,8 +116,7 @@ typedef enum : NSUInteger {
 -(void)updateMetering {
 #warning "Measure metering if possible"
     CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
-    NSTimeInterval recordingTime = [[NSDate new] timeIntervalSinceDate:self.recordingStartDate];
-    [self.delegate timerUpdated:(recordingTime + previousFileLength)];
+    [self.delegate timerUpdated:(self.currentRecordingTime + previousFileLength)];
 }
 
 -(void) operationFailure:(NSError *)error {
@@ -136,7 +138,6 @@ typedef enum : NSUInteger {
 - (void) processSampleData:(NSData *)data {
     [self.aacFileWriter appendData:data];
     [self.audioData appendData:data];
-    [self updateMetering];
     
     NSInteger frameCount = [data length] / 2;
     int16_t *samples = (int16_t *) [data bytes];
@@ -204,10 +205,16 @@ typedef enum : NSUInteger {
 -(void) prepareRecordData {
     if(!self.isStopCommandReceived) {
         NSLog(@"Stop command is not received yet. Can not prepareRecordData");
-    } else if([self setAudioSession:YES]) {
+    } else {
+        self.receivedPrepareMessage = YES;
+        [self startFileConversion];
+    }
+}
+
+-(void) startFileConversion {
+    if([self setAudioSession:YES]) {
         self.isActive = YES;
-        NSURL *fileUrl = [self recordFileUrl];
-        [self.aacFileWriter convertToAACWithAudioStreamBasicDescription:self.audioController.asbd andFileUrl:fileUrl];
+        [self.aacFileWriter convertToAACWithAudioStreamBasicDescription:self.audioController.asbd andFileUrl:self.fileUrl];
     } else {
         NSLog(@"Could not activate audio session.");
     }
@@ -237,12 +244,16 @@ typedef enum : NSUInteger {
 
 -(void) fileConversionIsFinished {
     [self completeAudioSession];
-    self.receivedPrepareMessage = YES;
+    self.isFileConversionCompleted = YES;
     [self checkToFinishRecordingAndCallDelegate];
+    BOOL isForBackUp = (!self.receivedPrepareMessage);
+    if(isForBackUp) {
+        [self copyFileFrom:self.fileUrl targetUrl:[self backUpFileUrl] completion:nil];
+    }
 }
 
 -(void) checkToFinishRecordingAndCallDelegate {
-    if(self.receivedPrepareMessage && self.isTranscriptionCompleted && self.isStopCommandReceived) {
+    if(self.receivedPrepareMessage && self.isFileConversionCompleted && self.isTranscriptionCompleted && self.isStopCommandReceived) {
         [super prepareRecordData];
     } else {
         NSLog(@"GoogleSpeechRecordingModel is strill processing");
@@ -254,17 +265,14 @@ typedef enum : NSUInteger {
     [self setAudioSession:NO];
 }
 
--(NSDate*) recordingStartDate {
-    if(!_recordingStartDate) {
-        _recordingStartDate = [NSDate new];
-    }
-    return _recordingStartDate;
-}
-
 #pragma mark - BackUp
 
 -(void) backUpRecording {
-    NSLog(@"backUpRecording is not supported");
+#warning "Implement back-up support"
+    //CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
+    //[RecordingModel setPreviousFileLength:self.currentRecordingTime + previousFileLength];
+    [self stop];
+    //[self startFileConversion];
 }
 
 @end

@@ -11,9 +11,6 @@
 
 @implementation AVAudioRecordingModel {
     AVAudioRecorder *recorder;
-    NSTimer *timer;
-    NSDate *pauseStart, *previousFireDate;
-    __block NSTimeInterval previousMeasurement;
 }
 
 -(void) initRecorder {
@@ -44,8 +41,7 @@
     if(!recorder.recording) {
         if([recorder prepareToRecord] && [recorder record]) {
             recorder.meteringEnabled = [self.delegate respondsToSelector:@selector(meteringUpdatedWithAverage:andPeak:)];
-            previousMeasurement = 0;
-            timer = [NSTimer scheduledTimerWithTimeInterval:PING_INTERVAL target:self selector:@selector(onTick:) userInfo:nil repeats:YES];
+            [super record];
         } else {
             [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Could not start record", @"Error message") code:0 userInfo:nil]];
         }
@@ -56,7 +52,7 @@
 
 -(void) pause {
     if(recorder.recording) {
-        [self pauseTimer];
+        [super pause];
         [recorder pause];
         [self setAudioSession:NO];
     } else {
@@ -68,29 +64,18 @@
     if(![recorder record]) {
         [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Could not resume", @"Error message") code:0 userInfo:nil]];
     } else {
-        [self resumeTimer];
+        [super resume];
     }
 }
 
 -(void) stop {
-    [timer invalidate];
-    timer = nil;
+    [super stop];
     [recorder stop];
     [self setAudioSession:NO];
 }
 
-#pragma mark - Recording Timer (Pause/Resume Timer)
-
--(void) pauseTimer {
-    pauseStart = [NSDate dateWithTimeIntervalSinceNow:0];
-    previousFireDate = [timer fireDate];
-    [timer setFireDate:[NSDate distantFuture]];
-}
-
--(void) resumeTimer {
-    float pauseTime = -1*[pauseStart timeIntervalSinceNow];
-    [timer setFireDate:[previousFireDate initWithTimeInterval:pauseTime sinceDate:previousFireDate]];
-    pauseStart = previousFireDate = nil;
+-(NSTimeInterval) currentRecordingTime {
+    return recorder.currentTime;
 }
 
 #pragma mark - Metering
@@ -102,20 +87,6 @@
         CGFloat peak    = [recorder peakPowerForChannel:0];
         [self.delegate meteringUpdatedWithAverage:average andPeak:peak];
         recorder.meteringEnabled = YES;
-    }
-}
-
--(void)onTick:(NSTimer *)timer {
-    [self updateMetering];
-    CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
-    
-    NSTimeInterval diff = fabs(recorder.currentTime - previousMeasurement);
-    BOOL isDiffValid = (diff < PING_INTERVAL * 100 && recorder.currentTime >= -0.00001);
-    BOOL didGetReset = !isDiffValid && (recorder.currentTime > 0 && recorder.currentTime < PING_INTERVAL);
-    
-    if(isDiffValid || didGetReset) {
-        previousMeasurement = recorder.currentTime;
-        [self.delegate timerUpdated:recorder.currentTime + previousFileLength];
     }
 }
 
