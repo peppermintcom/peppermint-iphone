@@ -186,9 +186,12 @@ sharedObject;\
 //#define GOOGLE_ANALYTICS_KEY            @"UA-71499085-1"  --> Deprecated in GoogleService-Info.plist
 //#define PEPPERMINT_GCM_SENDER_ID        @"896089644819"   --> Deprecated in GoogleService-Info.plist
 
+#ifdef DEBUG
+#define GOOGLE_SPEECH_API_KEY   @"AIzaSyDvfQrFFAD0CVZiw0mFQfR7iU210PLPPSE"  //API KEY for DEBUG
+#else
 //#define GOOGLE_SPEECH_API_KEY   @"AIzaSyDHIurMNCMvOsuhWtVngBx3CdxasALDSjc"
-#define GOOGLE_SPEECH_API_KEY   @"AIzaSyCftDuV3Ijzbr3ZKReEoqZmB8QcmMBmpeo"
-
+#define GOOGLE_SPEECH_API_KEY   @"AIzaSyCftDuV3Ijzbr3ZKReEoqZmB8QcmMBmpeo"  //API KEY for PROD
+#endif
 
 #define DOMAIN_PEPPERMINT               @"peppermint.com"
 #define DOMAIN_MANDRILL                 @"mandrill.com"

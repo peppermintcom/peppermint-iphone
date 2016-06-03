@@ -113,11 +113,11 @@ SUBSCRIBE(UserLoggedOut) {
 #pragma mark - SyncStatus
 
 -(BOOL) isReciviedMessagesAreInSyncOfFirstCycle {
-    return (self.syncDateHolder.recipientSinceDate != nil);
+    return (self.syncDateHolder.recipientSinceDate != nil && !self.syncDateHolder.recipientNextUrl);
 }
 
 -(BOOL) issentMessagesAreInSyncOfFirstCycle {
-    return (self.syncDateHolder.senderSinceDate != nil);
+    return (self.syncDateHolder.senderSinceDate != nil && !self.syncDateHolder.senderNextUrl);
 }
 
 -(BOOL) isAllMessagesAreInSyncOfFirstCycle {

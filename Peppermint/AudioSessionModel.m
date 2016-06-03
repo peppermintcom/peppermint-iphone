@@ -52,7 +52,10 @@
     if(![activeAudioItemsArray containsObject:item]) {
         [activeAudioItemsArray addObject:item];
     } else {
-        NSLog(@"Did not attach %@ to audio session, because it was already attached.", item);
+        [activeAudioItemsArray removeObject:item];
+        [activeAudioItemsArray addObject:item];
+        NSLog(@"as %@ was already atached. Removed and re-attached it.", item);
+        //NSLog(@"Did not attach %@ to audio session, because it was already attached.", item);
     }
 }
 

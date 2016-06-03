@@ -65,6 +65,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self checkToTakeOverSendingMessageEvents];
     NSParameterAssert(self.peppermintContact);
     scheduleRefresh = NO;
     if(self.peppermintContact.avatarImage) {
@@ -96,7 +97,6 @@
     [super viewDidAppear:animated];
     [self startListeningProximitySensor];
     [self refreshContent];
-    [self checkToTakeOverSendingMessageEvents];
     if(self.chatEntryTypesToShow == ChatEntryTypeNone) {
         NSLog(@"No ChatEntryTypes are set to be shown. View content will be empty!!");
     }
@@ -125,11 +125,18 @@
 
 -(void) checkToTakeOverSendingMessageEvents {
     SendVoiceMessageModel *sendVoiceMessageModel = [SendVoiceMessageModel activeSendVoiceMessageModel];
+    BOOL isSendingStateOKToTakeOver = (sendVoiceMessageModel.sendingStatus == SendingStatusStarting
+                                       || sendVoiceMessageModel.sendingStatus == SendingStatusUploading
+                                       || sendVoiceMessageModel.sendingStatus == SendingStatusSending
+                                       || sendVoiceMessageModel.sendingStatus == SendingStatusSendingWithNoCancelOption);
+    
     if(sendVoiceMessageModel
-       && [sendVoiceMessageModel.selectedPeppermintContact isEqual:self.peppermintContact]) {
+       && [sendVoiceMessageModel.selectedPeppermintContact isEqual:self.peppermintContact]
+       && isSendingStateOKToTakeOver ) {
         [self messageModel:sendVoiceMessageModel isUpdatedWithStatus:sendVoiceMessageModel.sendingStatus cancelAble:sendVoiceMessageModel.isCancelAble];
     } else {
         NSLog(@"SendVoiceMessageModel is not active to take over sending process.");
+        [self resetBottomInformationLabel];
     }
 }
 
@@ -461,6 +468,11 @@ SUBSCRIBE(ApplicationWillResignActive) {
     isPlaying = NO;
 }
 
+SUBSCRIBE(ApplicationDidBecomeActive) {
+    scheduleRefresh = NO;
+    [self checkToTakeOverSendingMessageEvents];
+}
+
 -(void) refreshContent {
     if(isPlaying) {
         scheduleRefresh = YES;
@@ -480,7 +492,7 @@ SUBSCRIBE(ApplicationWillResignActive) {
         NSUInteger lastRowNumber = [self.tableView numberOfRowsInSection:lastSection] - 1;
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:lastRowNumber inSection:lastSection];
         ChatTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-        if(!cell.peppermintChatEntry.isSeen) {
+        if(!cell.peppermintChatEntry.isSeen || cell.peppermintChatEntry.transcription.length > 0) {
             [cell playPauseButtonPressed:self];
         } else {
             NSLog(@"Last message is seen. Does not play automatically!");
