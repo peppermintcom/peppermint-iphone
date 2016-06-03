@@ -120,6 +120,7 @@
     [self setRightLabelWithDate:chatEntry.dateCreated];
     [self setTranscriptionView];
     [self setSeparatorView];
+    [self markAsReadIfTranscriptExists];
 }
 
 -(void) setLeftLabel {
@@ -191,6 +192,15 @@
     self.transcriptionView.hidden = isTransctiptionEmpty;
     if(!self.transcriptionView.hidden) {
         self.transctiptionContentLabel.text = self.peppermintChatEntry.transcription;
+    }
+}
+
+-(void) markAsReadIfTranscriptExists {
+    if(self.peppermintChatEntry.transcription.length > 0 && self.peppermintChatEntry.isSeen == NO) {
+        [self.chatEntryModel markAllPreviousMessagesAsRead:self.peppermintChatEntry];
+        self.peppermintChatEntry.isSeen = YES;
+        [self.chatEntryModel savePeppermintChatEntry:self.peppermintChatEntry];
+        NSLog(@"Marked as read, because transcription is seen.");
     }
 }
 
