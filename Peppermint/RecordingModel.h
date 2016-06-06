@@ -8,6 +8,7 @@
 
 #import "BaseModel.h"
 #import <AVFoundation/AVFoundation.h>
+#import "TranscriptionInfo.h"
 
 #define PING_INTERVAL   0.05
 
@@ -24,8 +25,7 @@
 @interface RecordingModel : BaseModel <AVAudioRecorderDelegate>
 @property (weak, nonatomic) id<RecordingModelDelegate> delegate;
 @property (strong, nonatomic) NSURL *fileUrl;
-@property (nonatomic, strong) NSString *transcriptionText;
-@property (nonatomic, strong) NSNumber *transcriptionConfidence;
+@property (strong, nonatomic) TranscriptionInfo *transcriptionInfo;
 
 +(CGFloat) checkPreviousFileLength;
 +(void) setPreviousFileLength:(CGFloat) previousFileLength;

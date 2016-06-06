@@ -12,6 +12,7 @@
 #import "PeppermintMessageSender.h"
 #import "AWSModel.h"
 #import "CustomContactModel.h"
+#import "TranscriptionInfo.h"
 
 #define TYPE_TEXT   @"text/plain"
 #define TYPE_M4A    @"audio/mp4"
@@ -48,8 +49,7 @@ typedef enum : NSUInteger {
 @property (strong, nonatomic) PeppermintMessageSender *peppermintMessageSender;
 @property (strong, nonatomic) PeppermintContact *selectedPeppermintContact;
 @property (weak, nonatomic) id<SendVoiceMessageDelegate> delegate;
-@property (strong, nonatomic) NSString *transcriptionToSet;
-@property (strong, nonatomic) NSNumber *confidenceToSet;
+@property (strong, nonatomic) TranscriptionInfo *transcriptionInfo;
 @property (assign, nonatomic) BOOL isCachedMessage;
 
 -(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension andDuration:(NSTimeInterval) duration;

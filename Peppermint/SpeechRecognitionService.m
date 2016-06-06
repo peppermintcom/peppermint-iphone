@@ -25,6 +25,9 @@
 #define HOST            @"speech.googleapis.com"
 #define XGoogApiKey     @"X-Goog-Api-Key"
 
+#define NON_STREAM_COMPLETION      @"NonStreamCompletion"
+#define STREAM_COMPLETION          @"StreamCompletion"
+
 @interface SpeechRecognitionService ()
 
 @property (nonatomic, assign) BOOL streaming;
@@ -106,30 +109,48 @@
 }
 
 - (void) transcriptAudioData:(NSData *) audioData withCompletion:(SpeechRecognitionNonStreamCompletionHandler)completion {
-    RecognizeRequest *request = [RecognizeRequest message];
-    
-    if(!self.call) {
-        NSLog(@"Canceling ProtoRPC call in transcriptAudioData. This can affect ongoing recording processes!!\n\nBE AWARE!!!\n\n");
-        [self.call cancel];
-    }
-    
-    Speech *client = [[Speech alloc] initWithHost:HOST];
-    _writer = [[GRXBufferedPipe alloc] init];
-    
-    self.call = [client RPCToNonStreamingRecognizeWithRequest:request
-                                                      handler:^(NonStreamingRecognizeResponse *response, NSError *error) {
-                                                          completion(response, error);
-                                                      }];
-    
-    self.call.requestHeaders[XGoogApiKey] = GOOGLE_SPEECH_API_KEY;
-    [self.call start];
-    request.initialRequest = [self initialRecognizeRequest];
-    
     AudioRequest *audioRequest = [AudioRequest message];
     audioRequest.content = audioData;
-    request.audioRequest = audioRequest;
     
-    [_writer writeValue:request];
+    RecognizeRequest *request = [RecognizeRequest message];
+    request.initialRequest = [self initialRecognizeRequest];
+    request.audioRequest = audioRequest;
+    Speech *client = [[Speech alloc] initWithHost:HOST];
+    
+    
+    __block NSTimer *speechResponseWaitTimer = [NSTimer scheduledTimerWithTimeInterval:SPEECH_RESPONSE_WAIT_TIME
+                                                                                target:self
+                                                                              selector:@selector(timeOutOccuredWithTimer:)
+                                                                              userInfo:@{NON_STREAM_COMPLETION : completion}
+                                                                               repeats:NO];
+    
+    ProtoRPC *call = [client RPCToNonStreamingRecognizeWithRequest:request
+                                                           handler:^(NonStreamingRecognizeResponse *response, NSError *error) {
+                                                               [speechResponseWaitTimer invalidate];
+                                                               speechResponseWaitTimer = nil;
+                                                               completion(response, error);
+                                                           }];
+    
+    call.requestHeaders[XGoogApiKey] = GOOGLE_SPEECH_API_KEY;
+    [call start];
+}
+
+-(void) timeOutOccuredWithTimer:(NSTimer*) timer {
+    NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : @"timoutOccured"};
+    NSError *error = [NSError errorWithDomain:DOMAIN_GRPC code:-1 userInfo:userInfo];
+    
+    userInfo = (NSDictionary*) timer.userInfo;
+    if(!userInfo) {
+        NSLog(@"timeOutOccuredWithTimer: parameter is invalid!");
+    } else if([userInfo.allKeys containsObject:NON_STREAM_COMPLETION]) {
+        SpeechRecognitionNonStreamCompletionHandler completion = (SpeechRecognitionNonStreamCompletionHandler)(userInfo[NON_STREAM_COMPLETION]);
+        completion(nil, error);
+    } else if ([userInfo.allKeys containsObject:STREAM_COMPLETION]) {
+        SpeechRecognitionCompletionHandler completion = (SpeechRecognitionCompletionHandler)(userInfo[STREAM_COMPLETION]);
+        completion(nil, error);
+    } else {
+        NSLog(@"Timeout event is not handled!!!");
+    }
 }
 
 @end

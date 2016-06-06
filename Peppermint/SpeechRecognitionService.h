@@ -17,6 +17,8 @@
 #import <Foundation/Foundation.h>
 #import "google/cloud/speech/v1/CloudSpeech.pbrpc.h"
 
+#define SPEECH_RESPONSE_WAIT_TIME   30
+
 typedef void (^SpeechRecognitionCompletionHandler)(RecognizeResponse *object, NSError *error);
 typedef void (^SpeechRecognitionNonStreamCompletionHandler)(NonStreamingRecognizeResponse *object, NSError *error);
 

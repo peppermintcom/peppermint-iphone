@@ -7,12 +7,13 @@
 //
 
 #import "BaseModel.h"
+#import "TranscriptionInfo.h"
 @class SendVoiceMessageModel;
 
 @interface CacheModel : BaseModel
 
 + (instancetype) sharedInstance;
--(void) cache:(SendVoiceMessageModel*) sendVoiceMessageModel WithData:(NSData*) data extension:(NSString*) extension duration:(NSTimeInterval)duration;
+-(void) cache:(SendVoiceMessageModel*) sendVoiceMessageModel WithData:(NSData*) data extension:(NSString*) extension duration:(NSTimeInterval)duration transcriptionInfo:(TranscriptionInfo*)transcriptionInfo;
 -(void) triggerCachedMessages;
 -(void) cacheOngoingMessages;
 

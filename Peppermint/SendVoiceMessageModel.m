@@ -13,8 +13,10 @@
 #import <Crashlytics/Crashlytics.h>
 #import "ChatEntryModel.h"
 #import "AnalyticsModel.h"
+#import "SpeechRecognitionService.h"
 
 #define DISPATCH_SEMAPHORE_PERIOD   15000000000 //15seconds in nanoseconds
+#define TRANSCRIPTION_TRY_LIMIT     3
 
 @interface SendVoiceMessageModel () <ChatEntryModelDelegate>
 @end
@@ -27,6 +29,7 @@
     NSString *cachedCanonicalUrl;
     PeppermintChatEntry *peppermintChatEntryForCurrentMessageModel;
     __block BOOL fileUploadCompeted;
+    int transcriptionTryCount;
 }
 
 -(id) init {
@@ -77,6 +80,15 @@
     if(self.sendingStatus == SendingStatusIniting) {
         dispatch_semaphore_wait(dispatch_semaphore,dispatch_time(DISPATCH_TIME_NOW, DISPATCH_SEMAPHORE_PERIOD));
     }
+}
+
+#pragma mark - TranscriptionInfo
+
+-(TranscriptionInfo*) transcriptionInfo {
+    if(!_transcriptionInfo) {
+        _transcriptionInfo = [TranscriptionInfo new];
+    }
+    return _transcriptionInfo;
 }
 
 #pragma mark - Operations connected with message sending
@@ -133,6 +145,7 @@
 }
 
 -(void) fileUploadStartedWithPublicUrl:(NSString*) url canonicalUrl:(NSString*)canonicalUrl {
+    transcriptionTryCount = 0;
     cachedCanonicalUrl = canonicalUrl;
     if(![self isCancelled]) {
         [self checkToSaveTranscriptionWithUrl:canonicalUrl];
@@ -147,11 +160,31 @@
     [self checkToDetach];
 }
 
+-(void) retryTranscription {
+    SpeechRecognitionService *service = [SpeechRecognitionService new];
+    weakself_create();
+    [service transcriptAudioData:self.transcriptionInfo.rawAudioData withCompletion:
+     ^(NonStreamingRecognizeResponse *object, NSError *error) {
+         if(error) {
+             [weakSelf operationFailure:error];
+         } else {
+             weakSelf.transcriptionInfo = nil;
+             for(RecognizeResponse *recognizeResponse in object.responsesArray) {
+                 [weakSelf.transcriptionInfo processRecogniseResponse:recognizeResponse];
+             }
+             [weakSelf checkToSaveTranscriptionWithUrl:cachedCanonicalUrl];
+         }
+     }];
+}
+
 -(void) checkToSaveTranscriptionWithUrl:(NSString*)url {
-    if(self.transcriptionToSet.length > 0) {
+    NSLog(@"Audio:%ld transcription:%@", self.transcriptionInfo.rawAudioData.length, self.transcriptionInfo.text);
+    if(self.transcriptionInfo.text.length > 0) {
         [awsModel saveTranscriptionWithAudioUrl:url
-                              transcriptionText:self.transcriptionToSet
-                                     confidence:self.confidenceToSet];
+                              transcriptionText:self.transcriptionInfo.text
+                                     confidence:self.transcriptionInfo.confidence];
+    } else if ( ++transcriptionTryCount < TRANSCRIPTION_TRY_LIMIT) {
+        [self retryTranscription];
     } else {
         [self uploadsAreProcessedToSendMessage];
     }
@@ -206,7 +239,7 @@
     BOOL isValidToCache = _data && _extension && _duration > 0;
     if(isValidToCache) {
         _sendingStatus = SendingStatusCancelled; //Cancel to stop ongoing processes. All taken actions are rolled-back!
-        [[CacheModel sharedInstance] cache:self WithData:_data extension:_extension duration:_duration];
+        [[CacheModel sharedInstance] cache:self WithData:_data extension:_extension duration:_duration transcriptionInfo:self.transcriptionInfo];
     } else {
         NSLog(@"Message could not be cached. There is no sufficient information to cache!");
     }
@@ -386,7 +419,7 @@
     peppermintChatEntryForCurrentMessageModel.isSentByMe = YES;
     peppermintChatEntryForCurrentMessageModel.messageId = nil; //We leave message Id as nil, cos we would like it to be merged when it sync with server!
     peppermintChatEntryForCurrentMessageModel.isSeen = YES;
-    peppermintChatEntryForCurrentMessageModel.transcription = self.transcriptionToSet;
+    peppermintChatEntryForCurrentMessageModel.transcription = self.transcriptionInfo.text;
     peppermintChatEntryForCurrentMessageModel.contactEmail = self.selectedPeppermintContact.communicationChannelAddress;
     [chatEntryModel savePeppermintChatEntry:peppermintChatEntryForCurrentMessageModel];
 }

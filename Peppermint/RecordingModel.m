@@ -107,6 +107,15 @@
     }
 }
 
+#pragma mark - TranscriptionInfo
+
+-(TranscriptionInfo*) transcriptionInfo {
+    if(!_transcriptionInfo) {
+        _transcriptionInfo = [TranscriptionInfo new];
+    }
+    return _transcriptionInfo;
+}
+
 #pragma mark - Session Setting
 
 -(BOOL) setAudioSession:(BOOL) active {

@@ -161,8 +161,8 @@
         NSLog(@"message:isUpdatedWithStatus:%ld", (unsigned long)sendingStatus);
         
         if(sendingStatus == SendingStatusUploading) {
-            messageModel.transcriptionToSet = [NSString stringWithFormat:@"%@  |  %@",
-                                               messageModel.transcriptionToSet,
+            messageModel.transcriptionInfo.text = [NSString stringWithFormat:@"%@  |  %@",
+                                               messageModel.transcriptionInfo.text,
                                                [DeviceModel summaryText]
                                                ];
         } else if(sendingStatus == SendingStatusSent) {

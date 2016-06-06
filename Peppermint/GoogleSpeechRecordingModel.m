@@ -15,7 +15,6 @@
 #import "ConnectionModel.h"
 
 #define SPEECH_BUFFER               32768 //16384
-#define SPEECH_RESPONSE_WAIT_TIME   30
 
 @interface GoogleSpeechRecordingModel() <AudioControllerDelegate, AACFileWriterDelegate>
 @property (nonatomic, strong) NSMutableData *audioData;
@@ -30,7 +29,6 @@
 @property (strong, nonatomic) SpeechRecognitionService *speechRecognitionService;
 
 @property (atomic, assign) BOOL gotError;
-@property (atomic, assign) BOOL gotAtLeastOnePieceOfFinalTranscription;
 
 @property (strong, nonatomic) NSTimer *speechResponseWaitTimer;
 @end
@@ -80,8 +78,7 @@ typedef enum : NSUInteger {
     self.isStopCommandReceived = NO;
     self.aacFileWriter = [AACFileWriter new];
     self.aacFileWriter.delegate = self;
-    self.gotAtLeastOnePieceOfFinalTranscription = NO;
-    self.transcriptionText = @"";
+    self.transcriptionInfo = nil;
     self.audioData = [[NSMutableData alloc] init];
     [self.speechRecognitionService prepareToStream];
     [self processSampleData:[NSData new]];
@@ -137,6 +134,7 @@ typedef enum : NSUInteger {
 
 - (void) processSampleData:(NSData *)data {
     [self.aacFileWriter appendData:data];
+    self.transcriptionInfo.rawAudioData = [self.aacFileWriter.audioData copy];
     [self.audioData appendData:data];
     
     NSInteger frameCount = [data length] / 2;
@@ -178,24 +176,7 @@ typedef enum : NSUInteger {
                  [weakSelf errorInTranscriptionResponse:responseError];
              } else {
                  weakSelf.isTranscriptionCompleted = NO;
-                 NSLog(@"RESPONSE: %@", response);
-                 if(!weakSelf.gotAtLeastOnePieceOfFinalTranscription) {
-                     weakSelf.transcriptionText = @"";
-                 }
-                 
-                 for (SpeechRecognitionResult *result in response.resultsArray) {
-                     if (result.alternativesArray.count > 0) {
-                         if(weakSelf.gotAtLeastOnePieceOfFinalTranscription
-                            && !result.isFinal) {
-                             NSLog(@"Not processing response..");
-                         } else {
-                             weakSelf.gotAtLeastOnePieceOfFinalTranscription |= result.isFinal;
-                             SpeechRecognitionAlternative *alternative = result.alternativesArray.firstObject;
-                             weakSelf.transcriptionText = [weakSelf.transcriptionText stringByAppendingString:alternative.transcript];
-                             weakSelf.transcriptionConfidence = [NSNumber numberWithFloat:alternative.confidence];
-                         }
-                     }
-                 }
+                 [weakSelf.transcriptionInfo processRecogniseResponse:response];
              }
          }];
         self.audioData = [[NSMutableData alloc] init];
@@ -234,8 +215,8 @@ typedef enum : NSUInteger {
 -(void) speechResponseDidNotReceivedInTime {
     self.speechResponseWaitTimer = nil;
     self.isTranscriptionCompleted = YES;
-    if(self.transcriptionText.length > 0) {
-        self.transcriptionText = [self.transcriptionText stringByAppendingString:@" ..."];
+    if(self.transcriptionInfo.text.length > 0) {
+        self.transcriptionInfo.text = [self.transcriptionInfo.text stringByAppendingString:@" ..."];
     }
     [self checkToFinishRecordingAndCallDelegate];
 }

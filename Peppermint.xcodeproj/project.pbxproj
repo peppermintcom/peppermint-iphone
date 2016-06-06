@@ -106,6 +106,7 @@
 		B17206D21BE4AAE40021D855 /* ConnectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B17206D11BE4AAE40021D855 /* ConnectionModel.m */; };
 		B17206D91BE4E1450021D855 /* begin_record.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B17206D81BE4E1450021D855 /* begin_record.mp3 */; };
 		B17206DC1BE4E2D40021D855 /* PlayingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B17206DB1BE4E2D40021D855 /* PlayingModel.m */; };
+		B1730EE71D0567C10059C2B9 /* TranscriptionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B1730EE61D0567C10059C2B9 /* TranscriptionInfo.m */; };
 		B17801761C1EFE9000BA2436 /* TutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = B17801751C1EFE9000BA2436 /* TutorialView.m */; };
 		B17801781C1EFEA700BA2436 /* TutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B17801771C1EFEA700BA2436 /* TutorialView.xib */; };
 		B17933121BE0B7B00016F158 /* LoginNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17933111BE0B7B00016F158 /* LoginNavigationViewController.m */; };
@@ -506,6 +507,8 @@
 		B17206D81BE4E1450021D855 /* begin_record.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = begin_record.mp3; sourceTree = "<group>"; };
 		B17206DA1BE4E2D40021D855 /* PlayingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayingModel.h; sourceTree = "<group>"; };
 		B17206DB1BE4E2D40021D855 /* PlayingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayingModel.m; sourceTree = "<group>"; };
+		B1730EE51D0567C10059C2B9 /* TranscriptionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranscriptionInfo.h; sourceTree = "<group>"; };
+		B1730EE61D0567C10059C2B9 /* TranscriptionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranscriptionInfo.m; sourceTree = "<group>"; };
 		B17801741C1EFE9000BA2436 /* TutorialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialView.h; sourceTree = "<group>"; };
 		B17801751C1EFE9000BA2436 /* TutorialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialView.m; sourceTree = "<group>"; };
 		B17801771C1EFEA700BA2436 /* TutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialView.xib; sourceTree = "<group>"; };
@@ -1344,6 +1347,8 @@
 				B1E516101C7D9A69002BD49C /* PeppermintChatEntry.m */,
 				B1104D1E1CD4697D002BA01B /* PeppermintContactWithChatEntry.h */,
 				B1104D1F1CD4697D002BA01B /* PeppermintContactWithChatEntry.m */,
+				B1730EE51D0567C10059C2B9 /* TranscriptionInfo.h */,
+				B1730EE61D0567C10059C2B9 /* TranscriptionInfo.m */,
 			);
 			name = Entity;
 			sourceTree = "<group>";
@@ -2636,6 +2641,7 @@
 				D0AC07CA1C48221D00F9CF6F /* JSONModelArray.m in Sources */,
 				B15FDE7D1C117CCE007100EC /* RecentContact.m in Sources */,
 				B17B3D311BB6898C009B8BC5 /* main.m in Sources */,
+				B1730EE71D0567C10059C2B9 /* TranscriptionInfo.m in Sources */,
 				B163557A1C5FB02200E0C07A /* Attribute.m in Sources */,
 				B108F8601BECAA5300267DEC /* SendVoiceMessageEmailModel.m in Sources */,
 				B102F9821BF0CE2000EDF7E6 /* LoginValidateEmailViewController.m in Sources */,

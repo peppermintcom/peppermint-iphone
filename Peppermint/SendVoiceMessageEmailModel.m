@@ -15,9 +15,9 @@
 #pragma mark - MailBody
 
 -(NSString*) subject {
-    if(!_subject && self.transcriptionToSet.length > 0) {
-        NSString *truncatedString = [self.transcriptionToSet stringByTruncatingEndToLength:SUBJECT_TRANSCRIPTION_LIMIT
-                                                                                wholeWords:YES];
+    if(!_subject && self.transcriptionInfo.text.length > 0) {
+        NSString *truncatedString = [self.transcriptionInfo.text stringByTruncatingEndToLength:SUBJECT_TRANSCRIPTION_LIMIT
+                                                                                    wholeWords:YES];
         _subject = [NSString stringWithFormat:@"%@: %@", LOC(@"Audio Message", @"Audio Message"), truncatedString];
     }
     return _subject;

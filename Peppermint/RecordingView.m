@@ -251,8 +251,7 @@ typedef enum : NSUInteger {
     || self.sendVoiceMessageModel.peppermintMessageSender.isValidToSendMessage;
     
     if(isAuthProcessOK) {
-        self.sendVoiceMessageModel.transcriptionToSet = self.recordingModel.transcriptionText;
-        self.sendVoiceMessageModel.confidenceToSet = self.recordingModel.transcriptionConfidence;
+        self.sendVoiceMessageModel.transcriptionInfo = self.recordingModel.transcriptionInfo;
         [self.sendVoiceMessageModel sendVoiceMessageWithData:data withExtension:extension  andDuration:cachedSeconds];
     } else {
         audioData = data;
