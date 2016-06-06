@@ -187,7 +187,7 @@
     notif.timeZone = [NSTimeZone defaultTimeZone];
     
     notif.alertBody = LOC(@"You have installed Peppermint. Click to send your first message!", @"Notification Message");
-    notif.alertAction = @"Send now!";
+    notif.alertAction = LOC(@"Send now!", @"Send now!") ;
     notif.soundName = @"alert.caf";
     [[UIApplication sharedApplication] scheduleLocalNotification:notif];
 }
