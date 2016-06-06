@@ -54,9 +54,9 @@
 "Tap to cancel" = "Нажмите для отмены";
 "Service is not available" = "Ваше устройство не поддерживает этого сервиса сообщений";
 "SMS Body Format" = "Вам отправлено аудио сообщение %@ ";
-"Log In with Facebook" = "Войдите с помощью Facebook";
-"Log In with Google" = "Войдите с помощью Google";
-"Log In with Email" = "Войдите с помощью Email";
+"Log In with Facebook" = "Войти через Facebook";
+"Log In with Google" = "Войти через Google";
+"Log In with Email" = "Войти через Email";
 "To send a message with Peppermint" = "Чтоб отправить сообщение через Peppermint,\nвам нужно создать учётную запись.";
 "Please Login" = "Пожалуйста, выберите как войти:";
 "Done" = "Сделано";
@@ -103,7 +103,7 @@
 "Please check your internet connection and try again" = "Пожалуйста, проверьте ваше соединение с Интернетом и попробуйте еще раз";
 "Please connect to the internet to upload the message" = "Пожалуйста, подсоединитесь к Интернету для загрузки сообщения";
 "Please check your login information" = "Пожалуйста, проверьте вашу информацию для входа";
-"Login with email" = "У вас нет Google или Facebook?\nВойдите с помощью е-мейла и пароля";
+"Login with email" = "У вас нет Google или Facebook?\nВойти через е-мейл и пароль";
 "Your message will be sent later" = "Соединение с Интернетом отсутствует. Ваше сообщение будет отправлено позже";
 "Invalid email" = "Неправильный эл.адрес";
 "Invalid password" = "Неверный пароль";
@@ -131,12 +131,12 @@
 
 "Record a Message" = "Нажмите и удерживайте для записи";
 "Year" = "Год";
-"Month" = "Месяц";
-"Day" = "День";
+"Month" = "Мес.";
+"Day" = "Д.";
 "Hour" = "Час";
-"Minute" = "Минута";
-"Secont" = "Секунда";
-"Plural Suffix" = "s";
+"Minute" = "Мин.";
+"Secont" = "Сек.";
+"Plural Suffix" = "";
 "Just Now" = "Только что";
 "Don't want to create an account yet? click here" = "Пока не хотите создавать учётную запись? нажмите здесь";
 "Please enter a valid name." = "Пожалуйста, введите правильное имя.";
@@ -156,10 +156,10 @@
 "Please try again later" = "Пожалуйста, попробуйте еще раз позже";
 "Mandrill message can not be delivered" = "Peppermint не смог доставить подтверждающее письмо. Пожалуйста, проверьте ваши настройки входящих";
 "Enable" = "Включить";
-"You should have internet connection to login" = "Для входа необходимо иметь соединение с Интернетом";
+"You should have internet connection to login" = "Для входа необходимо соединение с Интернетом";
 "Today" = "Сегодня";
 "Yesterday" = "Вчера";
-"Or email us for support" = "или отправить письмо в службу поддержки";
+"Or email us for support" = "или отправьте письмо";
 "Peppermint Support" = "Служба поддержки Peppermint";
 "Peppermint Support Explanation" = "Отправьте нам аудио отзыв о приложении";
 "There are no recent contacts" = "Недавних контактов нет";
