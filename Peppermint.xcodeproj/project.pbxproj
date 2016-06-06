@@ -107,6 +107,7 @@
 		B17206D91BE4E1450021D855 /* begin_record.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B17206D81BE4E1450021D855 /* begin_record.mp3 */; };
 		B17206DC1BE4E2D40021D855 /* PlayingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B17206DB1BE4E2D40021D855 /* PlayingModel.m */; };
 		B1730EE71D0567C10059C2B9 /* TranscriptionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B1730EE61D0567C10059C2B9 /* TranscriptionInfo.m */; };
+		B1730EEA1D05BD450059C2B9 /* QueueModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1730EE91D05BD450059C2B9 /* QueueModel.m */; };
 		B17801761C1EFE9000BA2436 /* TutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = B17801751C1EFE9000BA2436 /* TutorialView.m */; };
 		B17801781C1EFEA700BA2436 /* TutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B17801771C1EFEA700BA2436 /* TutorialView.xib */; };
 		B17933121BE0B7B00016F158 /* LoginNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17933111BE0B7B00016F158 /* LoginNavigationViewController.m */; };
@@ -509,6 +510,8 @@
 		B17206DB1BE4E2D40021D855 /* PlayingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayingModel.m; sourceTree = "<group>"; };
 		B1730EE51D0567C10059C2B9 /* TranscriptionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranscriptionInfo.h; sourceTree = "<group>"; };
 		B1730EE61D0567C10059C2B9 /* TranscriptionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranscriptionInfo.m; sourceTree = "<group>"; };
+		B1730EE81D05BD450059C2B9 /* QueueModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueModel.h; sourceTree = "<group>"; };
+		B1730EE91D05BD450059C2B9 /* QueueModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueueModel.m; sourceTree = "<group>"; };
 		B17801741C1EFE9000BA2436 /* TutorialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialView.h; sourceTree = "<group>"; };
 		B17801751C1EFE9000BA2436 /* TutorialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialView.m; sourceTree = "<group>"; };
 		B17801771C1EFEA700BA2436 /* TutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialView.xib; sourceTree = "<group>"; };
@@ -1332,6 +1335,8 @@
 				B15E05A31CE498D2008203C5 /* MessageBarManagerModel.m */,
 				B13C2E231CF5D4E600410B67 /* TranscriptionModel.h */,
 				B13C2E241CF5D4E600410B67 /* TranscriptionModel.m */,
+				B1730EE81D05BD450059C2B9 /* QueueModel.h */,
+				B1730EE91D05BD450059C2B9 /* QueueModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2664,6 +2669,7 @@
 				B1B4BF7F1CC507E3004D4A6E /* SparkPostRequest.m in Sources */,
 				B1F93E901BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld in Sources */,
 				B17933151BE0C19C0016F158 /* LoginModel.m in Sources */,
+				B1730EEA1D05BD450059C2B9 /* QueueModel.m in Sources */,
 				B100A54A1BEDD6F800EEB573 /* CacheModel.m in Sources */,
 				B10C39371BF718960070B49F /* AccountModel.m in Sources */,
 				B1C4A7731BF73E3B00272AD7 /* LoginRequest.m in Sources */,

@@ -14,6 +14,7 @@
 #import "ChatEntryModel.h"
 #import "AnalyticsModel.h"
 #import "SpeechRecognitionService.h"
+#import "QueueModel.h"
 
 #define DISPATCH_SEMAPHORE_PERIOD   15000000000 //15seconds in nanoseconds
 #define TRANSCRIPTION_TRY_LIMIT     3
@@ -161,20 +162,23 @@
 }
 
 -(void) retryTranscription {
-    SpeechRecognitionService *service = [SpeechRecognitionService new];
+    dispatch_queue_t transcriptionQueue = [[QueueModel sharedInstance] transcriptionQueue];
     weakself_create();
-    [service transcriptAudioData:self.transcriptionInfo.rawAudioData withCompletion:
-     ^(NonStreamingRecognizeResponse *object, NSError *error) {
-         if(error) {
-             [weakSelf operationFailure:error];
-         } else {
-             weakSelf.transcriptionInfo = nil;
-             for(RecognizeResponse *recognizeResponse in object.responsesArray) {
-                 [weakSelf.transcriptionInfo processRecogniseResponse:recognizeResponse];
+    dispatch_async(transcriptionQueue, ^{
+        SpeechRecognitionService *service = [SpeechRecognitionService new];
+        [service transcriptAudioData:self.transcriptionInfo.rawAudioData withCompletion:
+         ^(NonStreamingRecognizeResponse *object, NSError *error) {
+             if(error) {
+                 [weakSelf operationFailure:error];
+             } else {
+                 weakSelf.transcriptionInfo = nil;
+                 for(RecognizeResponse *recognizeResponse in object.responsesArray) {
+                     [weakSelf.transcriptionInfo processRecogniseResponse:recognizeResponse];
+                 }
+                 [weakSelf checkToSaveTranscriptionWithUrl:cachedCanonicalUrl];
              }
-             [weakSelf checkToSaveTranscriptionWithUrl:cachedCanonicalUrl];
-         }
-     }];
+         }];
+    });
 }
 
 -(void) checkToSaveTranscriptionWithUrl:(NSString*)url {
