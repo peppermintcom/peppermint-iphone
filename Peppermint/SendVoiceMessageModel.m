@@ -13,8 +13,10 @@
 #import <Crashlytics/Crashlytics.h>
 #import "ChatEntryModel.h"
 #import "AnalyticsModel.h"
+#import "SpeechRecognitionService.h"
 
 #define DISPATCH_SEMAPHORE_PERIOD   15000000000 //15seconds in nanoseconds
+#define TRANSCRIPTION_TRY_LIMIT     3
 
 @interface SendVoiceMessageModel () <ChatEntryModelDelegate>
 @end
@@ -26,6 +28,8 @@
     ChatEntryModel *chatEntryModel;
     NSString *cachedCanonicalUrl;
     PeppermintChatEntry *peppermintChatEntryForCurrentMessageModel;
+    __block BOOL fileUploadCompeted;
+    int transcriptionTryCount;
 }
 
 -(id) init {
@@ -44,6 +48,8 @@
         customContactModel.delegate = self;
         chatEntryModel = [ChatEntryModel new];
         chatEntryModel.delegate = self;
+        fileUploadCompeted = NO;
+        self.isCachedMessage = NO;
     }
     return self;
 }
@@ -60,8 +66,7 @@
     _extension = extension;
     _duration = duration;
     
-    BOOL isPreviousCachedMessage = (self.delegate == nil);
-    if(!isPreviousCachedMessage) {
+    if(!self.isCachedMessage) {
         [recentContactsModel save:self.selectedPeppermintContact
     forLastPeppermintContactDate:[NSDate new]
         lastMailClientContactDate:nil];        
@@ -77,12 +82,20 @@
     }
 }
 
+#pragma mark - TranscriptionInfo
+
+-(TranscriptionInfo*) transcriptionInfo {
+    if(!_transcriptionInfo) {
+        _transcriptionInfo = [TranscriptionInfo new];
+    }
+    return _transcriptionInfo;
+}
+
 #pragma mark - Operations connected with message sending
 
 -(void) checkAndPerformOperationsConnectedWithMessageSending {
     if(self.sendingStatus == SendingStatusCached) {
-        BOOL isPreviousCachedMessage = (self.delegate == nil);
-        if(!isPreviousCachedMessage) {
+        if(!self.isCachedMessage) {
             BOOL isChatEntryAlreadyCreated = (peppermintChatEntryForCurrentMessageModel != nil);
             if(isChatEntryAlreadyCreated) {
                 [chatEntryModel deletePeppermintChatEntry:peppermintChatEntryForCurrentMessageModel];
@@ -91,8 +104,7 @@
             [self setChatConversation:tempUrl];
         }
     } else if(self.sendingStatus == SendingStatusSendingWithNoCancelOption) {
-        BOOL isPreviousCachedMessage = (self.delegate == nil);
-        if(isPreviousCachedMessage) {
+        if(self.isCachedMessage) {
             [chatEntryModel updateChatEntryWithAudio:_data toAudioUrl:cachedCanonicalUrl];
         } else {
             [self setChatConversation:cachedCanonicalUrl];
@@ -106,6 +118,12 @@
     NSString *customInfo = [NSString stringWithFormat:@"%@ Message Sending Error", self.class];
     error = [AnalyticsModel addCustomInfo:customInfo toError:error];
     [AnalyticsModel logError:error];
+    if(![error.domain isEqualToString:NSURLErrorDomain]) {
+        NSLog(@"It is not a connection error. Consider notifying the user or nivestigeting the reason.");
+#ifdef DEBUG
+        [AppDelegate handleError:error];
+#endif
+    }
     self.sendingStatus = SendingStatusError;
 }
 
@@ -126,8 +144,59 @@
     dispatch_semaphore_signal(dispatch_semaphore);
 }
 
--(void) fileUploadCompletedWithPublicUrl:(NSString*) url canonicalUrl:(NSString*)canonicalUrl {
+-(void) fileUploadStartedWithPublicUrl:(NSString*) url canonicalUrl:(NSString*)canonicalUrl {
+    transcriptionTryCount = 0;
     cachedCanonicalUrl = canonicalUrl;
+    if(![self isCancelled]) {
+        [self checkToSaveTranscriptionWithUrl:canonicalUrl];
+    } else {
+        NSLog(@"Message sending is cancelled");
+    }
+}
+
+-(void) fileUploadCompletedWithSignedUrl:(NSString*)signedUrl {
+    NSLog(@"File is successfully uploaded to %@", signedUrl);
+    fileUploadCompeted = YES;
+    [self checkToDetach];
+}
+
+-(void) retryTranscription {
+    SpeechRecognitionService *service = [SpeechRecognitionService new];
+    weakself_create();
+    [service transcriptAudioData:self.transcriptionInfo.rawAudioData withCompletion:
+     ^(NonStreamingRecognizeResponse *object, NSError *error) {
+         if(error) {
+             [weakSelf operationFailure:error];
+         } else {
+             weakSelf.transcriptionInfo = nil;
+             for(RecognizeResponse *recognizeResponse in object.responsesArray) {
+                 [weakSelf.transcriptionInfo processRecogniseResponse:recognizeResponse];
+             }
+             [weakSelf checkToSaveTranscriptionWithUrl:cachedCanonicalUrl];
+         }
+     }];
+}
+
+-(void) checkToSaveTranscriptionWithUrl:(NSString*)url {
+    NSLog(@"Audio:%ld transcription:%@", self.transcriptionInfo.rawAudioData.length, self.transcriptionInfo.text);
+    if(self.transcriptionInfo.text.length > 0) {
+        [awsModel saveTranscriptionWithAudioUrl:url
+                              transcriptionText:self.transcriptionInfo.text
+                                     confidence:self.transcriptionInfo.confidence];
+    } else if ( ++transcriptionTryCount < TRANSCRIPTION_TRY_LIMIT) {
+        [self retryTranscription];
+    } else {
+        [self uploadsAreProcessedToSendMessage];
+    }
+}
+
+-(void) transcriptionUploadCompletedWithUrl:(NSString*)url {
+    NSLog(@"transcriptionUploadCompleted");
+    [self uploadsAreProcessedToSendMessage];
+}
+
+-(void) uploadsAreProcessedToSendMessage {
+    NSLog(@"This function should be overrided..");
 }
 
 #pragma mark - CustomContactModelDelegate
@@ -163,12 +232,16 @@
 }
 
 -(void) cacheMessage {
+    if(self.isCachedMessage) {
+        NSLog(@"A message triggered from cache will be saved to cache again.");
+    }
+    
     BOOL isValidToCache = _data && _extension && _duration > 0;
     if(isValidToCache) {
         _sendingStatus = SendingStatusCancelled; //Cancel to stop ongoing processes. All taken actions are rolled-back!
-        [[CacheModel sharedInstance] cache:self WithData:_data extension:_extension duration:_duration];
+        [[CacheModel sharedInstance] cache:self WithData:_data extension:_extension duration:_duration transcriptionInfo:self.transcriptionInfo];
     } else {
-        NSLog(@"Message could not be cached. There is no sufficient information to cacheq   ""!!!");
+        NSLog(@"Message could not be cached. There is no sufficient information to cache!");
     }
 }
 
@@ -253,9 +326,13 @@
             [self cacheMessage];
         case SendingStatusCancelled:
         case SendingStatusCached:
-        case SendingStatusSent:
-            //NSLog(@"%@ changed status to %d, soon it will be detached.", self, (int)self.sendingStatus);
             [self performDetach];
+            //NSLog(@"%@ changed status to %d, soon it will be detached.", self, (int)self.sendingStatus);
+            break;
+        case SendingStatusSent:
+            if(fileUploadCompeted) {
+                [self performDetach];
+            }
             return;
         default:
             break;
@@ -342,6 +419,7 @@
     peppermintChatEntryForCurrentMessageModel.isSentByMe = YES;
     peppermintChatEntryForCurrentMessageModel.messageId = nil; //We leave message Id as nil, cos we would like it to be merged when it sync with server!
     peppermintChatEntryForCurrentMessageModel.isSeen = YES;
+    peppermintChatEntryForCurrentMessageModel.transcription = self.transcriptionInfo.text;
     peppermintChatEntryForCurrentMessageModel.contactEmail = self.selectedPeppermintContact.communicationChannelAddress;
     [chatEntryModel savePeppermintChatEntry:peppermintChatEntryForCurrentMessageModel];
 }

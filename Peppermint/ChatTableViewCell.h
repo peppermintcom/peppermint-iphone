@@ -35,6 +35,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *leftLabel;
 @property (weak, nonatomic) IBOutlet UIView *durationCircleView;
 
+@property (weak, nonatomic) IBOutlet UIView *transcriptionView;
+@property (weak, nonatomic) IBOutlet UILabel *transctiptionTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *transctiptionContentLabel;
+
+@property (weak, nonatomic) IBOutlet UIView *separatorView;
+@property (weak, nonatomic) IBOutlet UIView *separatorViewTopContent;
+@property (weak, nonatomic) IBOutlet UIView *separatorViewBottomContent;
+
 @property (weak, nonatomic) UITableView *tableView;
 
 @property (weak, nonatomic) id<ChatTableViewCellDelegate> delegate;
@@ -47,4 +55,5 @@
 - (IBAction)playPauseButtonPressed:(id)sender;
 - (void) resetContent;
 
++ (CGFloat)heightOfTranscriptionViewWithText:(NSString *)transcriptionText withFrameWidth:(CGFloat)frameWidth;
 @end

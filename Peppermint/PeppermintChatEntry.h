@@ -30,6 +30,7 @@ typedef enum : NSUInteger {
 @property (assign, nonatomic) BOOL isSentByMe;
 @property (strong, nonatomic) NSString *messageId;
 @property (assign, nonatomic) PerformedOperation performedOperation;
+@property (strong, nonatomic) NSString *transcription;
 
 #pragma mark - Audio Content
 @property (strong, nonatomic) NSData *audio;

@@ -236,7 +236,7 @@
     self.recorderClientId = NIL_TEXT;
     self.recorderKey = NIL_TEXT;
     self.exchangedJwt = NIL_TEXT;
-    //self.gcmToken = nil; -> Do not clear GCM token, cos maybe the app will not be restarted& [recorder init] will need gcmToken
+    self.gcmToken = nil; // Maybe the app will not be restarted, so we should call [gcm init] manually. [recorder init] will need gcmToken
     self.isAccountSetUpWithRecorder = NO;
     
     defaults_remove(DEFAULTS_KEY_CACHED_SENDVOCIEMESSAGE_MODEL);

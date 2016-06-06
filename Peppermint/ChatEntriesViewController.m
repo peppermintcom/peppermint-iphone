@@ -23,7 +23,6 @@
 @end
 
 @implementation ChatEntriesViewController {
-    NSTimer *holdToRecordViewTimer;
     AutoPlayModel *autoPlayModel;
     __block BOOL scheduleRefresh;
     BOOL isScrolling;
@@ -41,17 +40,7 @@
     [self resetBottomInformationLabel];
     
     self.avatarImageView.layer.cornerRadius = 5;
-    self.holdToRecordView.hidden = YES;
-    self.holdToRecordLabel.font = [UIFont openSansSemiBoldFontOfSize:15];
-    self.holdToRecordLabel.textColor = [UIColor whiteColor];
-    self.holdToRecordLabel.text = LOC(@"Hold to record message", @"Hold to record message");
     
-    [self.holdToRecordView addGestureRecognizer:
-     [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
-    [self.holdToRecordView addGestureRecognizer:
-     [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
-    [self.holdToRecordView addGestureRecognizer:
-     [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
     autoPlayModel =[AutoPlayModel sharedInstance];
     [self recordingView]; // init recording view to be able to handle status change events
     self.recordingButton.delegate = self;
@@ -76,6 +65,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self checkToTakeOverSendingMessageEvents];
     NSParameterAssert(self.peppermintContact);
     scheduleRefresh = NO;
     if(self.peppermintContact.avatarImage) {
@@ -107,7 +97,6 @@
     [super viewDidAppear:animated];
     [self startListeningProximitySensor];
     [self refreshContent];
-    [self checkToTakeOverSendingMessageEvents];
     if(self.chatEntryTypesToShow == ChatEntryTypeNone) {
         NSLog(@"No ChatEntryTypes are set to be shown. View content will be empty!!");
     }
@@ -136,11 +125,18 @@
 
 -(void) checkToTakeOverSendingMessageEvents {
     SendVoiceMessageModel *sendVoiceMessageModel = [SendVoiceMessageModel activeSendVoiceMessageModel];
+    BOOL isSendingStateOKToTakeOver = (sendVoiceMessageModel.sendingStatus == SendingStatusStarting
+                                       || sendVoiceMessageModel.sendingStatus == SendingStatusUploading
+                                       || sendVoiceMessageModel.sendingStatus == SendingStatusSending
+                                       || sendVoiceMessageModel.sendingStatus == SendingStatusSendingWithNoCancelOption);
+    
     if(sendVoiceMessageModel
-       && [sendVoiceMessageModel.selectedPeppermintContact isEqual:self.peppermintContact]) {
+       && [sendVoiceMessageModel.selectedPeppermintContact isEqual:self.peppermintContact]
+       && isSendingStateOKToTakeOver ) {
         [self messageModel:sendVoiceMessageModel isUpdatedWithStatus:sendVoiceMessageModel.sendingStatus cancelAble:sendVoiceMessageModel.isCancelAble];
     } else {
         NSLog(@"SendVoiceMessageModel is not active to take over sending process.");
+        [self resetBottomInformationLabel];
     }
 }
 
@@ -154,6 +150,10 @@
 
 -(void) peppermintChatEntrySavedWithSuccess:(NSArray*) savedPeppermintChatEnryArray {
     NSLog(@"peppermintChatEntrySavedWithSuccess");
+}
+
+-(void) lastMessagesAreUpdated:(NSArray<PeppermintContactWithChatEntry *> *)peppermintContactWithChatEntryArray {
+    NSLog(@"lastMessagesAreUpdated:");
 }
 
 #pragma mark - UITableView
@@ -216,7 +216,13 @@
     if(self.chatEntryModel.chatEntriesArray.count > indexPath.row) {
         PeppermintChatEntry *peppermintChatEntry = (PeppermintChatEntry*)[self.chatEntryModel.chatEntriesArray objectAtIndex:indexPath.row];
         if(peppermintChatEntry.type == ChatEntryTypeAudio && self.chatEntryTypesToShow & ChatEntryTypeAudio) {
-            height = CELL_HEIGHT_CHAT_TABLEVIEWCELL;
+            if(peppermintChatEntry.transcription.length == 0) {
+                height = CELL_HEIGHT_CHAT_TABLEVIEWCELL;
+            } else {
+                CGFloat transcriptionHeight = [ChatTableViewCell heightOfTranscriptionViewWithText:peppermintChatEntry.transcription
+                                                                                    withFrameWidth:self.tableView.frame.size.width];
+                height = CELL_HEIGHT_CHAT_TABLEVIEWCELL + transcriptionHeight;
+            }
         } else if (peppermintChatEntry.type == ChatEntryTypeEmail && self.chatEntryTypesToShow & ChatEntryTypeEmail) {
             height = [self calculatedHeight:peppermintChatEntry indexPath:indexPath];
         }
@@ -300,17 +306,9 @@
 }
 
 -(void) touchShortTapActionOccuredOnLocation:(CGPoint) location {
-    [holdToRecordViewTimer invalidate];
-    holdToRecordViewTimer = nil;
-    if(self.holdToRecordView.hidden) {
-        self.holdToRecordView.alpha = 0;
-        self.holdToRecordView.hidden = NO;
-    }
-    [UIView animateWithDuration:0.3 animations:^{
-        self.holdToRecordView.alpha = 1;
-    } completion:^(BOOL finished) {
-        [self initRecordingModel];
-        holdToRecordViewTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(hideHoldToRecordInfoView) userInfo:nil repeats:NO];
+    weakself_create();
+    [self.holdToRecordView showWithCompletionHandler:^{
+        [weakSelf initRecordingModel];
     }];
 }
 
@@ -369,6 +367,7 @@
         
         if(isCacnelAble && infoAttrText.length > 0) {
             self.cancelSendingButton.hidden = NO;
+            [infoAttrText addText:@"  " ofSize:13 ofColor:[UIColor peppermintCancelOrange]];
             [infoAttrText addText:LOC(@"Tap to cancel", @"Info") ofSize:13 ofColor:[UIColor peppermintCancelOrange]];
         } else {
             self.cancelSendingButton.hidden = YES;
@@ -421,23 +420,11 @@
     [self.recordingView cancelMessageSending];
 }
 
-#pragma mark - HoldToRecordView
-
--(void) hideHoldToRecordInfoView {
-    [holdToRecordViewTimer invalidate];
-    holdToRecordViewTimer = nil;
-    [UIView animateWithDuration:ANIM_TIME animations:^{
-        self.holdToRecordView.alpha = 0;
-    } completion:^(BOOL finished) {
-        self.holdToRecordView.hidden = YES;
-    }];
-}
-
 #pragma mark - ScrollView Delegate
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     isScrolling = YES;
-    [self hideHoldToRecordInfoView];
+    [self.holdToRecordView hide];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
@@ -461,9 +448,10 @@
 }
 
 -(void) stoppedPlayingMessage:(ChatTableViewCell*)chatTableViewCell {
-    BOOL isPaused = chatTableViewCell.playingModel.audioPlayer.currentTime > 0.3;
     isPlaying = NO;
-    if(scheduleRefresh && !isPaused) {
+    //BOOL isPaused = chatTableViewCell.playingModel.audioPlayer.currentTime > 0.3;
+    //if(scheduleRefresh && !isPaused) { //Decide to refresh on paused player or not?
+    if(scheduleRefresh) {
         scheduleRefresh = NO;
         [self refreshContent];
     }
@@ -478,6 +466,11 @@
 
 SUBSCRIBE(ApplicationWillResignActive) {
     isPlaying = NO;
+}
+
+SUBSCRIBE(ApplicationDidBecomeActive) {
+    scheduleRefresh = NO;
+    [self checkToTakeOverSendingMessageEvents];
 }
 
 -(void) refreshContent {
@@ -499,7 +492,11 @@ SUBSCRIBE(ApplicationWillResignActive) {
         NSUInteger lastRowNumber = [self.tableView numberOfRowsInSection:lastSection] - 1;
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:lastRowNumber inSection:lastSection];
         ChatTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-        [cell playPauseButtonPressed:self];
+        if(!cell.peppermintChatEntry.isSeen || cell.peppermintChatEntry.transcription.length > 0) {
+            [cell playPauseButtonPressed:self];
+        } else {
+            NSLog(@"Last message is seen. Does not play automatically!");
+        }
     }
 }
 

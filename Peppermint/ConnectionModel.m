@@ -40,10 +40,16 @@
 
 #pragma mark - Network
 
--(BOOL) isInternetReachable
-{
-    [self beginTracking];
-    return afNetworkReachabilityManager.reachable;
+-(BOOL) isInternetReachable {
+    BOOL isConnected = afNetworkReachabilityManager.reachable;
+    if (!isConnected) {
+        NSError *error;
+        NSString *urlString = [NSString stringWithFormat:@"https://%@", DOMAIN_PEPPERMINT];
+        NSURL *url = [NSURL URLWithString:urlString];
+        NSData *data = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
+        isConnected = (!error && data.length > 0);
+    }
+    return isConnected;
 }
 
 -(void) beginTracking {

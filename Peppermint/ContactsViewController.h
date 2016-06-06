@@ -14,6 +14,7 @@
 #import "TutorialView.h"
 #import "ChatEntrySyncModel.h"
 #import "AddEmailForSMSContactView.h"
+#import "HoldToRecordInfoView.h"
 
 #define CELL_TAG_ALL_CONTACTS           1
 #define CELL_TAG_RECENT_CONTACTS        2
@@ -30,8 +31,7 @@
 @property (weak, nonatomic) IBOutlet UIView *sendingIndicatorView;
 @property (weak, nonatomic) IBOutlet UILabel *sendingInformationLabel;
 @property (weak, nonatomic) IBOutlet UIView *seperatorView;
-@property (weak, nonatomic) IBOutlet UIView *holdToRecordInfoView;
-@property (weak, nonatomic) IBOutlet UILabel *holdToRecordInfoViewLabel;
+@property (weak, nonatomic) IBOutlet HoldToRecordInfoView *holdToRecordInfoView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *holdToRecordInfoViewYValueConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *cancelMessageSendingButton;
 @property (weak, nonatomic) IBOutlet UIView *whiteEllipseView;

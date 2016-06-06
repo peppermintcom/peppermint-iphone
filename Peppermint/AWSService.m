@@ -474,7 +474,7 @@
     [requestOperationManager.requestSerializer setValue:@"application/vnd.api+json" forHTTPHeaderField:@"Content-Type"];
     [requestOperationManager.requestSerializer setValue:self.apiKey forHTTPHeaderField:X_API_KEY];
     [requestOperationManager.requestSerializer setValue:tokenText forHTTPHeaderField:AUTHORIZATION];
-    requestOperationManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/vnd.api+json"];
+    requestOperationManager.responseSerializer.acceptableContentTypes = nil;//[NSSet setWithObject:@"application/vnd.api+json"];
     
     Attribute *attribute = [Attribute new];
     attribute.transcription_url = transcriptionUrl;
@@ -496,7 +496,9 @@
         interAppMessageProcessCompleted.error = nil;
         PUBLISH(interAppMessageProcessCompleted);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        if(operation.response.statusCode == RESPONSE_CODE_NOT_FOUND) {
+        if(!error) {
+            NSLog(@"Error is nil, but operation response code is:%ld", operation.response.statusCode);
+        } else if(operation.response.statusCode == RESPONSE_CODE_NOT_FOUND) {
             //User is not available to get inter-app messaging
             InterAppMessageProcessCompleted *interAppMessageProcessCompleted = [InterAppMessageProcessCompleted new];
             interAppMessageProcessCompleted.sender = self;
@@ -531,7 +533,7 @@
         [messageGetRequest setUntilDate:untilDate];
         parameterDictionary = [messageGetRequest toDictionary];
     } else {
-        NSLog(@"Making a next %@ qury.|updated until:%@ <-> since:%@", (isForRecipient ? @"Recipient" : @"Sender"), untilDate, sinceDate );
+        NSLog(@"Making a next %@ qury.|last saved until:%@ <-> since:%@", (isForRecipient ? @"Recipient" : @"Sender"), untilDate, sinceDate );
     }
     
     NSString *tokenText = [self toketTextForJwt:jwt];
@@ -542,7 +544,7 @@
     [requestOperationManager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [requestOperationManager.requestSerializer setValue:self.apiKey forHTTPHeaderField:X_API_KEY];
     [requestOperationManager.requestSerializer setValue:tokenText forHTTPHeaderField:AUTHORIZATION];
-    requestOperationManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/vnd.api+json"];
+    requestOperationManager.responseSerializer.acceptableContentTypes = nil;//[NSSet setWithObject:@"application/vnd.api+json"];
 
     [requestOperationManager GET:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSError *error;
@@ -556,7 +558,9 @@
             getMessagesAreSuccessful.existsMoreMessages = (messageGetResponse.links.next != nil);
             getMessagesAreSuccessful.nextUrl = messageGetResponse.links.next;
             getMessagesAreSuccessful.isForRecipient = isForRecipient;
-            NSLog(@"Received %d messages from API", messageGetResponse.data.count);
+            NSLog(@"Received %lu %@ messages from API",
+                  (unsigned long)messageGetResponse.data.count,
+                  (isForRecipient ? @"Recipient" : @"Sender"));
             PUBLISH(getMessagesAreSuccessful);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -593,6 +597,42 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //[self failureWithOperation:operation andError:error];
         NSLog(@"Message with id:%@ could not be marked as read!", messageId);
+    }];
+}
+
+-(void) saveTranscriptionWithJwt:(NSString*)jwt audioUrl:(NSString*)audioUrl language:(NSString*)language transcriptionText:(NSString*)transcriptionText confidence:(NSNumber*) confidence {
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_TRANSCRIPTIONS];
+    NSString *tokenText = [self toketTextForJwt:jwt];
+    AFHTTPRequestOperationManager *requestOperationManager = [[AFHTTPRequestOperationManager alloc]
+                                                              initWithBaseURL:[NSURL URLWithString:url]];
+    
+    requestOperationManager.requestSerializer = [AFJSONRequestSerializer new];
+    [requestOperationManager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [requestOperationManager.requestSerializer setValue:self.apiKey forHTTPHeaderField:X_API_KEY];
+    [requestOperationManager.requestSerializer setValue:tokenText forHTTPHeaderField:AUTHORIZATION];
+    requestOperationManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
+    
+    TranscriptionsRequest *transcriptionsRequest = [TranscriptionsRequest new];
+    transcriptionsRequest.audio_url = audioUrl;
+    transcriptionsRequest.language = language;
+    transcriptionsRequest.text = transcriptionText;
+    transcriptionsRequest.confidence = confidence;
+    NSDictionary *parameterDictionary = [transcriptionsRequest toDictionary];
+    
+    [requestOperationManager POST:url parameters:parameterDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSError *error;
+        TranscriptionsResponse *transcriptionsResponse = [[TranscriptionsResponse alloc] initWithDictionary:responseObject error:&error];
+        if (error) {
+            [self failureWithOperation:nil andError:error];
+        } else {
+            TranscriptionIsSavedToServer *transcriptionIsSavedToServer = [TranscriptionIsSavedToServer new];
+            transcriptionIsSavedToServer.sender = self;
+            transcriptionIsSavedToServer.transctiptionUrl = transcriptionsResponse.transcription_url;
+            PUBLISH(transcriptionIsSavedToServer);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Transcription error");
+        [self failureWithOperation:operation andError:error];
     }];
 }
 

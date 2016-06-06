@@ -60,4 +60,8 @@
         );
 }
 
+SUBSCRIBE(UserLoggedOut) {
+    [self cleanFastReplyContact];
+}
+
 @end

@@ -12,5 +12,6 @@
 @interface SendVoiceMessageMailClientModel : SendVoiceMessageEmailModel
 @property (strong, nonatomic, readonly) NSString *publicFileUrl;
 @property (strong, nonatomic, readonly) NSString *canonicalUrl;
+@property (strong, nonatomic, readonly) NSString *transcriptionUrl;
 
 @end

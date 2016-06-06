@@ -13,6 +13,10 @@
 #import "ChatEntryModel.h"
 #import "PlayingChatEntryModel.h"
 
+#define SIZE_TITLE                          11
+#define BASE_HEIGHT_FOR_TRANSCRIPTION_VIEW  35
+#define WIDTH_FOR_RIGHT_AND_LEFT_IMAGE      14
+
 #define DISTANCE_TO_BORDER                  5
 #define TIMER_UPDATE_PERIOD                 0.05
 #define REWIND_TIME_DURING_SPEAKER_UPDATE   2
@@ -37,6 +41,7 @@
     NSTimer *deviceIsRemovedFromEarTimer;
 }
 
+#warning "Refactor content and view constraints"
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.contentView.backgroundColor = [UIColor clearColor];
@@ -46,6 +51,15 @@
     imageFlat = [UIImage imageNamed:@"icon_chat_left_flat"];
     imagePlay = [UIImage imageNamed:@"icon_play"];
     imagePause = [UIImage imageNamed:@"icon_pause"];
+    
+    self.transcriptionView.backgroundColor = [UIColor whiteColor];
+    self.transcriptionView.layer.cornerRadius = 8;
+    self.transctiptionTitleLabel.font = [UIFont openSansSemiBoldFontOfSize:SIZE_TITLE];
+    self.transctiptionTitleLabel.textColor = [UIColor textFieldTintGreen];
+    self.transctiptionTitleLabel.text = LOC(@"AUTOMATIC TRANSCRIPTION", @"Transctiption Title").uppercaseString;
+    self.transctiptionContentLabel.font = [UIFont openSansFontOfSize:SIZE_TITLE];
+    self.transctiptionContentLabel.textColor = [UIColor blackColor];
+    
     timer = [NSTimer scheduledTimerWithTimeInterval:TIMER_UPDATE_PERIOD target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
     totalSeconds = 0;
@@ -62,7 +76,7 @@
 }
 
 - (void) layoutSubviews {
-    self.centerViewWidth.constant = self.frame.size.width * 0.60;
+    self.centerViewWidth.constant = [ChatTableViewCell contentWidthForFrameWidth:self.frame.size.width];
     self.durationCircleView.layer.cornerRadius = self.durationCircleView.frame.size.height/2;
     
     if(!self.peppermintChatEntry) {
@@ -104,6 +118,9 @@
     self.playPauseImageView.hidden = NO;
     [self setLeftLabel];
     [self setRightLabelWithDate:chatEntry.dateCreated];
+    [self setTranscriptionView];
+    [self setSeparatorView];
+    [self markAsReadIfTranscriptExists];
 }
 
 -(void) setLeftLabel {
@@ -124,7 +141,6 @@
     } else {
         self.leftLabel.textColor = [UIColor textFieldTintGreen];
     }
-    
     self.leftLabel.text = durationText;
 }
 
@@ -160,6 +176,32 @@
         timeText = [NSString stringWithFormat:@"%@%@", timeText, LOC(@"Plural Suffix", @"Plural Suffix")];
     }
     self.rightLabel.text = [NSString stringWithFormat:@"%ld %@ %@", (long)timeVariable, timeText, LOC(@"ago", @"ago keyword")].lowercaseString;
+}
+
+-(void) setSeparatorView {
+    self.separatorView.hidden = self.transcriptionView.hidden;
+    self.separatorView.backgroundColor = self.tableView.backgroundColor;
+    self.separatorViewTopContent.backgroundColor = self.messageView.backgroundColor;
+    self.separatorViewTopContent.layer.cornerRadius = 2;
+    self.separatorViewBottomContent.backgroundColor = self.messageView.backgroundColor;
+    self.separatorViewBottomContent.layer.cornerRadius = 2;
+}
+
+-(void) setTranscriptionView {
+    BOOL isTransctiptionEmpty = self.peppermintChatEntry.transcription.length == 0;
+    self.transcriptionView.hidden = isTransctiptionEmpty;
+    if(!self.transcriptionView.hidden) {
+        self.transctiptionContentLabel.text = self.peppermintChatEntry.transcription;
+    }
+}
+
+-(void) markAsReadIfTranscriptExists {
+    if(self.peppermintChatEntry.transcription.length > 0 && self.peppermintChatEntry.isSeen == NO) {
+        [self.chatEntryModel markAllPreviousMessagesAsRead:self.peppermintChatEntry];
+        self.peppermintChatEntry.isSeen = YES;
+        [self.chatEntryModel savePeppermintChatEntry:self.peppermintChatEntry];
+        NSLog(@"Marked as read, because transcription is seen.");
+    }
 }
 
 - (IBAction)playPauseButtonPressed:(id)sender {
@@ -364,6 +406,10 @@ SUBSCRIBE(StopAllPlayingMessages) {
     NSLog(@"peppermintChatEntrySavedWithSuccess");
 }
 
+-(void) lastMessagesAreUpdated:(NSArray<PeppermintContactWithChatEntry*>*) peppermintContactWithChatEntryArray {
+    NSLog(@"lastMessagesAreUpdated:");
+}
+
 #pragma mark - Raise to listen on built-in headset
 
 -(void) rewindPlayer {
@@ -411,6 +457,23 @@ SUBSCRIBE(ProximitySensorValueIsUpdated) {
     if(![_playingModel isEqual:cachedPlayingModel]) {
         [_playingModel stop];
     }
+}
+
++ (CGFloat) contentWidthForFrameWidth:(CGFloat)frameWidth {
+    return frameWidth * 0.60;
+}
+
++ (CGFloat)heightOfTranscriptionViewWithText:(NSString *)transcriptionText withFrameWidth:(CGFloat)frameWidth {
+    CGFloat labelWidth                  = [self contentWidthForFrameWidth:frameWidth];    
+    labelWidth = labelWidth - (2 * WIDTH_FOR_RIGHT_AND_LEFT_IMAGE);
+    
+    CGSize labelContraints              = CGSizeMake(labelWidth, CGFLOAT_MAX);
+    NSStringDrawingContext *context     = [[NSStringDrawingContext alloc] init];
+    CGRect labelRect                    = [transcriptionText boundingRectWithSize:labelContraints
+                                                                       options:NSStringDrawingUsesLineFragmentOrigin
+                                                                    attributes:nil
+                                                                       context:context];
+    return labelRect.size.height + BASE_HEIGHT_FOR_TRANSCRIPTION_VIEW;
 }
 
 @end

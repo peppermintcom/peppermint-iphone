@@ -7,18 +7,14 @@
 //
 
 #import "RecordingModel.h"
-#import "AudioSessionModel.h"
+#import "RecordingModel_Addition.h"
 //#import <AudioToolbox/AudioServices.h>
 
-#define DEFAULT_GAIN    0.8 //Input Gain must be a value btw 0.0 - 1.0
-#define SAMPLE_RATE     16000.0   //44100 -> 44.1kHz = 44100, 16 kHz -> 16000
-
 @implementation RecordingModel {
-    AVAudioRecorder *recorder;
     NSTimer *timer;
-    TPAACAudioConverter *tPAACAudioConverter;
     NSDate *pauseStart, *previousFireDate;
     __block NSTimeInterval previousMeasurement;
+    NSTimeInterval _currentRecordingTime;
 }
 
 +(CGFloat) checkPreviousFileLength {
@@ -94,27 +90,8 @@
 }
 
 -(void) initRecorder {
-    if(!recorder) {
-        if([self setAudioSession:YES]) {
-            NSError *error;
-            NSDictionary *recordSetting = [NSDictionary dictionaryWithObjectsAndKeys:
-                                           [NSNumber numberWithInt:kAudioFormatMPEG4AAC], AVFormatIDKey,
-                                           [NSNumber numberWithInt:AVAudioQualityHigh], AVEncoderAudioQualityKey,
-                                           [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,
-                                           [NSNumber numberWithFloat:SAMPLE_RATE], AVSampleRateKey,
-                                           nil];
-            
-            recorder = [[AVAudioRecorder alloc] initWithURL:self.fileUrl settings:recordSetting error:&error];
-            if(error) {
-                [self.delegate operationFailure:error];
-            } else {
-                recorder.delegate = self;
-                [[AudioSessionModel sharedInstance] attachAVAudioProcessObject:recorder];
-            }
-        }
-    } else {
-        NSLog(@"Recorder was already active!!!");
-    }
+    //@throw override_error;
+    NSLog(@"initRecorder is called from BaseClass. Please override function in subclasses to add more functionality");
 }
 
 -(void) setInputGain {
@@ -130,6 +107,15 @@
     }
 }
 
+#pragma mark - TranscriptionInfo
+
+-(TranscriptionInfo*) transcriptionInfo {
+    if(!_transcriptionInfo) {
+        _transcriptionInfo = [TranscriptionInfo new];
+    }
+    return _transcriptionInfo;
+}
+
 #pragma mark - Session Setting
 
 -(BOOL) setAudioSession:(BOOL) active {
@@ -137,67 +123,61 @@
 }
 
 -(void) record {
-    if(!recorder.recording) {
-        if([recorder prepareToRecord] && [recorder record]) {
-            recorder.meteringEnabled = [self.delegate respondsToSelector:@selector(meteringUpdatedWithAverage:andPeak:)];
-            previousMeasurement = 0;
-            timer = [NSTimer scheduledTimerWithTimeInterval:PING_INTERVAL target:self selector:@selector(onTick:) userInfo:nil repeats:YES];
-        } else {
-            [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Could not start record", @"Error message") code:0 userInfo:nil]];
-        }
-    } else {
-        [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Recording is already active", @"Error message") code:0 userInfo:nil]];
-    }
+    previousMeasurement = _currentRecordingTime = 0;
+    timer = [NSTimer scheduledTimerWithTimeInterval:PING_INTERVAL target:self selector:@selector(onTick:) userInfo:nil repeats:YES];
 }
 
 -(void) pause {
-    if(recorder.recording) {
-        [self pauseTimer];
-        [recorder pause];
-        [self setAudioSession:NO];
-    } else {
-        [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Recording is not active", @"Error message") code:0 userInfo:nil]];
-    }
+    [self pauseTimer];
 }
 
 -(void) resume {
-    if(![recorder record]) {
-        [self.delegate operationFailure:[NSError errorWithDomain:LOC(@"Could not resume", @"Error message") code:0 userInfo:nil]];
-    } else {
-        [self resumeTimer];
-    }
+    [self resumeTimer];
 }
 
 -(void) stop {
     [timer invalidate];
     timer = nil;
-    [recorder stop];
-    [self setAudioSession:NO];
 }
 
--(void)updateMetering {    
-    if([self.delegate respondsToSelector:@selector(meteringUpdatedWithAverage:andPeak:)]) {
-        [recorder updateMeters];
-        CGFloat average = [recorder averagePowerForChannel:0];
-        CGFloat peak    = [recorder peakPowerForChannel:0];
-        [self.delegate meteringUpdatedWithAverage:average andPeak:peak];
-        recorder.meteringEnabled = YES;
-    }
+#pragma mark - Recording Timer (Pause/Resume Timer)
+
+-(NSTimeInterval) currentRecordingTime {
+    return _currentRecordingTime;
+}
+
+-(void)updateMetering {
+    @throw override_error
 }
 
 -(void)onTick:(NSTimer *)timer {
+    _currentRecordingTime += PING_INTERVAL;
     [self updateMetering];
     CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
     
-    NSTimeInterval diff = fabs(recorder.currentTime - previousMeasurement);
-    BOOL isDiffValid = (diff < PING_INTERVAL * 100 && recorder.currentTime >= -0.00001);
-    BOOL didGetReset = !isDiffValid && (recorder.currentTime > 0 && recorder.currentTime < PING_INTERVAL);
+    NSTimeInterval diff = fabs(self.currentRecordingTime - previousMeasurement);
+    BOOL isDiffValid = (diff < PING_INTERVAL * 100 && self.currentRecordingTime >= -0.00001);
+    BOOL didGetReset = !isDiffValid && (self.currentRecordingTime > 0 && self.currentRecordingTime < PING_INTERVAL);
     
     if(isDiffValid || didGetReset) {
-        previousMeasurement = recorder.currentTime;
-        [self.delegate timerUpdated:recorder.currentTime + previousFileLength];
+        previousMeasurement = self.currentRecordingTime;
+        [self.delegate timerUpdated:self.currentRecordingTime + previousFileLength];
     }
 }
+
+-(void) pauseTimer {
+    pauseStart = [NSDate dateWithTimeIntervalSinceNow:0];
+    previousFireDate = [timer fireDate];
+    [timer setFireDate:[NSDate distantFuture]];
+}
+
+-(void) resumeTimer {
+    float pauseTime = -1*[pauseStart timeIntervalSinceNow];
+    [timer setFireDate:[previousFireDate initWithTimeInterval:pauseTime sinceDate:previousFireDate]];
+    pauseStart = previousFireDate = nil;
+}
+
+#pragma mark - File Urls
 
 -(NSURL*) recordFileUrl {
     NSArray *pathComponents = [NSArray arrayWithObjects: [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"PeppermintMessage.m4a", nil];
@@ -231,10 +211,7 @@
 }
 
 -(void) backUpRecording {
-    CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
-    [RecordingModel setPreviousFileLength:recorder.currentTime + previousFileLength];
-    [self stop];
-    [self copyFileFrom:self.fileUrl targetUrl:[self backUpFileUrl] completion:nil];
+    @throw override_error
 }
 
 -(void) resetRecording {
@@ -289,124 +266,12 @@
     }
 }
 
-/****************************************************************************************************
- * Grabbed & Modified the mixAudios function from : http://stackoverflow.com/a/15241353/5171866
- * Check for possible errors before using
- *****************************************************************************************************/
--(void)mixAudiosWithTargetUrl:(NSURL*)targetUrl Completion:(void(^)(void))completion
-{
-    NSLog(@"Please validate that mixing is working before using it!");
-    /*
-    NSError *error;
-    AVMutableComposition* mixComposition = [AVMutableComposition composition];
-    [mixComposition addMutableTrackWithMediaType:AVMediaTypeAudio  preferredTrackID:kCMPersistentTrackID_Invalid];
-    
-    CMTime mergedFileEndPoint = kCMTimeZero;
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSArray *fileUrlArray = [NSArray arrayWithObjects:[self backUpFileUrl], self.fileUrl, nil];
-    for(int i=0; i<fileUrlArray.count; i++)
-    {
-        NSURL *url = [fileUrlArray objectAtIndex:i];
-        if([fileManager fileExistsAtPath:url.path]) {
-            AVURLAsset* audioAsset = [AVURLAsset URLAssetWithURL:url options:nil];
-            AVMutableCompositionTrack* audioTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeAudio
-                                                                                preferredTrackID:kCMPersistentTrackID_Invalid];
-            NSArray *audioAssetArray = [audioAsset tracksWithMediaType:AVMediaTypeAudio];
-            if(audioAssetArray.count > 0) {
-                AVAssetTrack *assetTrack = [audioAssetArray objectAtIndex:0];
-                [audioTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, assetTrack.asset.duration) ofTrack:assetTrack atTime:mergedFileEndPoint error:&error];
-                if (error) {
-                    [self.delegate operationFailure:error];
-                } else {
-                    mergedFileEndPoint = CMTimeAdd(mergedFileEndPoint, assetTrack.asset.duration);
-                }
-            }
-        }
-    }
-    AVAssetExportSession* _assetExport = [[AVAssetExportSession alloc] initWithAsset:mixComposition
-                                                                          presetName:
-                                          AVAssetExportPresetAppleM4A];
-    [self removeFileIfExistsAtUrl:targetUrl];
-    
-    _assetExport.outputFileType = AVFileTypeAppleM4A;
-    _assetExport.outputURL = targetUrl;
-    _assetExport.shouldOptimizeForNetworkUse = YES;
-    [_assetExport exportAsynchronouslyWithCompletionHandler:completion];
-    */
-}
-
-#pragma mark - Voice Record Conversion
-
--(void) convertM4aToAAC {
-    // Register an Audio Session interruption listener, important for AAC conversion
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(audioSessionInterrupted:)
-                                                 name:AVAudioSessionInterruptionNotification
-                                               object:nil];
-    tPAACAudioConverter = [[TPAACAudioConverter alloc] initWithDelegate:self
-                                                                 source:[self fileUrl].path
-                                                            destination:[self aacFileUrl].path];
-    [self removeFileIfExistsAtUrl:[self aacFileUrl]];
-    [tPAACAudioConverter start];
-}
-
-#pragma mark - TPAACAudioConverterDelegate
-
-- (void)AACAudioConverterDidFinishConversion:(TPAACAudioConverter*)converter {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVAudioSessionInterruptionNotification object: nil];
-    NSData *data = [[NSData alloc] initWithContentsOfURL:[self aacFileUrl]];
-    [self removeFileIfExistsAtUrl:[self fileUrl]];
-    [self removeFileIfExistsAtUrl:[self aacFileUrl]];
-    [self setAudioSession:NO];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.delegate recordDataIsPrepared:data withExtension:[[self aacFileUrl] pathExtension]];
-    });
-}
-
-- (void)AACAudioConverter:(TPAACAudioConverter*)converter didFailWithError:(NSError*)error {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVAudioSessionInterruptionNotification object: nil];
-    
-    
-    [self.delegate operationFailure:error];
-}
-
-- (void)AACAudioConverter:(TPAACAudioConverter*)converter didMakeProgress:(CGFloat)progress {
-    //NSLog(@"Progress:%f", progress);
-}
-
-#pragma mark - Audio session interruption
-
-- (void)audioSessionInterrupted:(NSNotification*)notification {
-    AVAudioSessionInterruptionType type = [notification.userInfo[AVAudioSessionInterruptionTypeKey] integerValue];
-    if ( type == AVAudioSessionInterruptionTypeEnded) {
-        if ( [self setAudioSession:YES] && tPAACAudioConverter ) {
-            [tPAACAudioConverter resume];
-        }
-    } else if ( type == AVAudioSessionInterruptionTypeBegan ) {
-        if ( tPAACAudioConverter ) [tPAACAudioConverter interrupt];
-    }
-}
-
 #pragma mark - Clean cached files
 
 -(void) cleanCache {
     [self removeFileIfExistsAtUrl:[self recordFileUrl]];
     [self removeFileIfExistsAtUrl:[self backUpFileUrl]];
     [self removeFileIfExistsAtUrl:[self aacFileUrl]];
-}
-
-#pragma mark - Pause/Resume Timer
-
--(void) pauseTimer {
-    pauseStart = [NSDate dateWithTimeIntervalSinceNow:0];
-    previousFireDate = [timer fireDate];
-    [timer setFireDate:[NSDate distantFuture]];
-}
-
--(void) resumeTimer {
-    float pauseTime = -1*[pauseStart timeIntervalSinceNow];
-    [timer setFireDate:[previousFireDate initWithTimeInterval:pauseTime sinceDate:previousFireDate]];
-    pauseStart = previousFireDate = nil;
 }
 
 @end

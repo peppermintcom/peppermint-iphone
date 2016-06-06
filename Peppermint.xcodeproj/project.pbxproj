@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		392D9C861A6F3945B758D95F /* libPods-Peppermint.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4568D87C1B184E71C2B112BE /* libPods-Peppermint.a */; };
+		A3768C0CA987D47CF4AB885F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1F46B1F599F9778D6F7EA0F /* libPods.a */; };
 		B100A54A1BEDD6F800EEB573 /* CacheModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B100A5491BEDD6F800EEB573 /* CacheModel.m */; };
 		B10125BC1BEB670500B5DD54 /* NSString_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B10125BB1BEB670500B5DD54 /* NSString_Addition.m */; };
 		B101633B1C637983008CC8D0 /* SMSChargeWarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B101633A1C637983008CC8D0 /* SMSChargeWarningView.xib */; };
@@ -47,12 +48,17 @@
 		B13B076D1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B076C1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m */; };
 		B13B50261BF38D48009D3348 /* InformationTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B13B50251BF38D48009D3348 /* InformationTextTableViewCell.m */; };
 		B13B50281BF38D57009D3348 /* InformationTextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13B50271BF38D56009D3348 /* InformationTextTableViewCell.xib */; };
+		B13C2E251CF5D4E600410B67 /* TranscriptionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B13C2E241CF5D4E600410B67 /* TranscriptionModel.m */; };
 		B13E977E1CE0CEF40066ECC9 /* AddEmailForSMSContactView.m in Sources */ = {isa = PBXBuildFile; fileRef = B13E977D1CE0CEF40066ECC9 /* AddEmailForSMSContactView.m */; };
 		B14057091CE0F69900D2D017 /* AddEmailForSMSContactView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B14057081CE0F69900D2D017 /* AddEmailForSMSContactView.xib */; };
 		B149EB351C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B149EB341C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m */; };
 		B14B2FD21CCB773600B9E083 /* UidManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B14B2FD11CCB773600B9E083 /* UidManager.m */; };
 		B14B2FD51CCBA06100B9E083 /* UidHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = B14B2FD41CCBA06100B9E083 /* UidHolder.m */; };
 		B14B2FD91CCBA52300B9E083 /* GoogleEmailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B14B2FD81CCBA52300B9E083 /* GoogleEmailModel.m */; };
+		B14CB64E1CEF7D9000056813 /* AACFileWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = B14CB64D1CEF7D9000056813 /* AACFileWriter.m */; };
+		B14CB6531CEF7DA700056813 /* AudioController.m in Sources */ = {isa = PBXBuildFile; fileRef = B14CB6501CEF7DA700056813 /* AudioController.m */; };
+		B14CB6541CEF7DA700056813 /* SpeechRecognitionService.m in Sources */ = {isa = PBXBuildFile; fileRef = B14CB6521CEF7DA700056813 /* SpeechRecognitionService.m */; };
+		B14CB65B1CEF87C100056813 /* AVAudioRecordingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B14CB65A1CEF87C100056813 /* AVAudioRecordingModel.m */; };
 		B14EF8321C4D16570041FD24 /* MandrillNameContentPair.m in Sources */ = {isa = PBXBuildFile; fileRef = B14EF8311C4D16570041FD24 /* MandrillNameContentPair.m */; };
 		B15B15AC1BD9D8B800C0C171 /* ExplodingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15AB1BD9D8B800C0C171 /* ExplodingView.m */; };
 		B15B15B01BDA44E200C0C171 /* TPAACAudioConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = B15B15AF1BDA44E200C0C171 /* TPAACAudioConverter.m */; };
@@ -78,6 +84,7 @@
 		B15FDE811C117CCE007100EC /* CachedMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B15FDE771C117CCE007100EC /* CachedMessage.m */; };
 		B15FDE841C117CFE007100EC /* CustomContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B15FDE831C117CFE007100EC /* CustomContactModel.m */; };
 		B15FDE871C119D60007100EC /* UIImage_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B15FDE861C119D60007100EC /* UIImage_Addition.m */; };
+		B16055491CF9D52F00AD1DF4 /* NSString+Truncate.m in Sources */ = {isa = PBXBuildFile; fileRef = B16055481CF9D52F00AD1DF4 /* NSString+Truncate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B16145DD1CCE094D00F7FE0C /* PeppermintGIdSignIn.m in Sources */ = {isa = PBXBuildFile; fileRef = B16145DC1CCE094D00F7FE0C /* PeppermintGIdSignIn.m */; };
 		B16145E41CCE479700F7FE0C /* EmailLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B16145E31CCE479700F7FE0C /* EmailLoginViewController.m */; };
 		B16145E91CCE4EC700F7FE0C /* BaseCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B16145E81CCE4EC700F7FE0C /* BaseCollectionViewCell.m */; };
@@ -99,6 +106,7 @@
 		B17206D21BE4AAE40021D855 /* ConnectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B17206D11BE4AAE40021D855 /* ConnectionModel.m */; };
 		B17206D91BE4E1450021D855 /* begin_record.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B17206D81BE4E1450021D855 /* begin_record.mp3 */; };
 		B17206DC1BE4E2D40021D855 /* PlayingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B17206DB1BE4E2D40021D855 /* PlayingModel.m */; };
+		B1730EE71D0567C10059C2B9 /* TranscriptionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B1730EE61D0567C10059C2B9 /* TranscriptionInfo.m */; };
 		B17801761C1EFE9000BA2436 /* TutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = B17801751C1EFE9000BA2436 /* TutorialView.m */; };
 		B17801781C1EFEA700BA2436 /* TutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B17801771C1EFEA700BA2436 /* TutorialView.xib */; };
 		B17933121BE0B7B00016F158 /* LoginNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17933111BE0B7B00016F158 /* LoginNavigationViewController.m */; };
@@ -127,6 +135,9 @@
 		B1879A181C5810EE0036A660 /* StaticDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1879A171C5810EE0036A660 /* StaticDataTableViewController.m */; };
 		B1889FE11C4EBA3E003552CE /* ChatEntriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1889FE01C4EBA3E003552CE /* ChatEntriesViewController.m */; };
 		B18BF95E1BD674CD009B665E /* PeppermintMessageSender.m in Sources */ = {isa = PBXBuildFile; fileRef = B18BF95D1BD674CD009B665E /* PeppermintMessageSender.m */; };
+		B18D47B61CFD917A0060FD6C /* FLACiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B18D47B51CFD917A0060FD6C /* FLACiOS.framework */; };
+		B18D47BC1CFD91EB0060FD6C /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = B18D47B81CFD91EB0060FD6C /* LICENSE.txt */; };
+		B18D47BD1CFD91EB0060FD6C /* README in Resources */ = {isa = PBXBuildFile; fileRef = B18D47B91CFD91EB0060FD6C /* README */; };
 		B18EEB991CB3B36600F9491F /* FeedBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B18EEB981CB3B36600F9491F /* FeedBackViewController.m */; };
 		B18EEB9D1CB3F4EA00F9491F /* BaseRecordingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B18EEB9C1CB3F4EA00F9491F /* BaseRecordingViewController.m */; };
 		B18EEBA01CB3F88B00F9491F /* BaseRecordingGestureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B18EEB9F1CB3F88B00F9491F /* BaseRecordingGestureViewController.m */; };
@@ -142,6 +153,8 @@
 		B1A366951BDC92FF00852B52 /* UploadsResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A366941BDC92FF00852B52 /* UploadsResponse.m */; };
 		B1A4AA511BF4DA9D005D55CB /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A4AA501BF4DA9D005D55CB /* AccountViewController.m */; };
 		B1AC47821CDB738500693C47 /* AVAudioPlayer_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B1AC47811CDB738500693C47 /* AVAudioPlayer_Addition.m */; };
+		B1ADABC01CF0F38600D2A458 /* GoogleSpeechRecordingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1ADABBF1CF0F38600D2A458 /* GoogleSpeechRecordingModel.m */; };
+		B1ADABC31CF10E1C00D2A458 /* TranscriptionsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B1ADABC21CF10E1C00D2A458 /* TranscriptionsRequest.m */; };
 		B1AE969B1CEA310D000A8E3D /* Text.strings in Resources */ = {isa = PBXBuildFile; fileRef = B1AE969D1CEA310D000A8E3D /* Text.strings */; };
 		B1B2F47D1C73273A003A4220 /* notification.aiff in Resources */ = {isa = PBXBuildFile; fileRef = B1B2F47C1C73273A003A4220 /* notification.aiff */; };
 		B1B4BF7B1CC4E61D004D4A6E /* SparkPostService.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B4BF7A1CC4E61D004D4A6E /* SparkPostService.m */; };
@@ -183,6 +196,8 @@
 		B1E5160E1C7D99E3002BD49C /* ChatEntryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E5160D1C7D99E3002BD49C /* ChatEntryModel.m */; };
 		B1E516111C7D9A69002BD49C /* PeppermintChatEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E516101C7D9A69002BD49C /* PeppermintChatEntry.m */; };
 		B1EB69B31C9828E20031F37E /* NSmutableSet_Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EB69B21C9828E20031F37E /* NSmutableSet_Addition.m */; };
+		B1EDD43F1CFC338E00263EF8 /* TranscriptionsResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EDD43E1CFC338E00263EF8 /* TranscriptionsResponse.m */; };
+		B1EDD4431CFC591900263EF8 /* HoldToRecordInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EDD4421CFC591900263EF8 /* HoldToRecordInfoView.m */; };
 		B1EF03751C2184F80054FA02 /* AnalyticsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF03741C2184F80054FA02 /* AnalyticsModel.m */; };
 		B1EF40E51BB7D58C00042E4B /* RecordingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40E41BB7D58C00042E4B /* RecordingModel.m */; };
 		B1EF40EB1BB7E78C00042E4B /* SendVoiceMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B1EF40EA1BB7E78C00042E4B /* SendVoiceMessageModel.m */; };
@@ -378,9 +393,12 @@
 		B13B50241BF38D48009D3348 /* InformationTextTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationTextTableViewCell.h; sourceTree = "<group>"; };
 		B13B50251BF38D48009D3348 /* InformationTextTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationTextTableViewCell.m; sourceTree = "<group>"; };
 		B13B50271BF38D56009D3348 /* InformationTextTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InformationTextTableViewCell.xib; sourceTree = "<group>"; };
+		B13C2E231CF5D4E600410B67 /* TranscriptionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranscriptionModel.h; sourceTree = "<group>"; };
+		B13C2E241CF5D4E600410B67 /* TranscriptionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranscriptionModel.m; sourceTree = "<group>"; };
 		B13E977C1CE0CEF40066ECC9 /* AddEmailForSMSContactView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEmailForSMSContactView.h; sourceTree = "<group>"; };
 		B13E977D1CE0CEF40066ECC9 /* AddEmailForSMSContactView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEmailForSMSContactView.m; sourceTree = "<group>"; };
 		B14057081CE0F69900D2D017 /* AddEmailForSMSContactView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddEmailForSMSContactView.xib; sourceTree = "<group>"; };
+		B14886561CF06DF00046C294 /* RecordingModel_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingModel_Addition.h; sourceTree = "<group>"; };
 		B149EB331C0F07AE00A5E41A /* NSMutableAttributedString_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMutableAttributedString_Addition.h; sourceTree = "<group>"; };
 		B149EB341C0F07AE00A5E41A /* NSMutableAttributedString_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMutableAttributedString_Addition.m; sourceTree = "<group>"; };
 		B14B2FD01CCB773600B9E083 /* UidManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UidManager.h; sourceTree = "<group>"; };
@@ -389,6 +407,14 @@
 		B14B2FD41CCBA06100B9E083 /* UidHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UidHolder.m; sourceTree = "<group>"; };
 		B14B2FD71CCBA52300B9E083 /* GoogleEmailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleEmailModel.h; sourceTree = "<group>"; };
 		B14B2FD81CCBA52300B9E083 /* GoogleEmailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleEmailModel.m; sourceTree = "<group>"; };
+		B14CB64C1CEF7D9000056813 /* AACFileWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AACFileWriter.h; sourceTree = "<group>"; };
+		B14CB64D1CEF7D9000056813 /* AACFileWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AACFileWriter.m; sourceTree = "<group>"; };
+		B14CB64F1CEF7DA700056813 /* AudioController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioController.h; sourceTree = "<group>"; };
+		B14CB6501CEF7DA700056813 /* AudioController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioController.m; sourceTree = "<group>"; };
+		B14CB6511CEF7DA700056813 /* SpeechRecognitionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeechRecognitionService.h; sourceTree = "<group>"; };
+		B14CB6521CEF7DA700056813 /* SpeechRecognitionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeechRecognitionService.m; sourceTree = "<group>"; };
+		B14CB6591CEF87C100056813 /* AVAudioRecordingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVAudioRecordingModel.h; sourceTree = "<group>"; };
+		B14CB65A1CEF87C100056813 /* AVAudioRecordingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVAudioRecordingModel.m; sourceTree = "<group>"; };
 		B14EF8301C4D16570041FD24 /* MandrillNameContentPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MandrillNameContentPair.h; sourceTree = "<group>"; };
 		B14EF8311C4D16570041FD24 /* MandrillNameContentPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MandrillNameContentPair.m; sourceTree = "<group>"; };
 		B15228541BE898DF00C400C6 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -440,6 +466,8 @@
 		B15FDE831C117CFE007100EC /* CustomContactModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomContactModel.m; sourceTree = "<group>"; };
 		B15FDE851C119D60007100EC /* UIImage_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImage_Addition.h; sourceTree = "<group>"; };
 		B15FDE861C119D60007100EC /* UIImage_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImage_Addition.m; sourceTree = "<group>"; };
+		B16055471CF9D52F00AD1DF4 /* NSString+Truncate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Truncate.h"; sourceTree = "<group>"; };
+		B16055481CF9D52F00AD1DF4 /* NSString+Truncate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Truncate.m"; sourceTree = "<group>"; };
 		B16145DB1CCE094D00F7FE0C /* PeppermintGIdSignIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeppermintGIdSignIn.h; sourceTree = "<group>"; };
 		B16145DC1CCE094D00F7FE0C /* PeppermintGIdSignIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeppermintGIdSignIn.m; sourceTree = "<group>"; };
 		B16145E21CCE479700F7FE0C /* EmailLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailLoginViewController.h; sourceTree = "<group>"; };
@@ -479,6 +507,8 @@
 		B17206D81BE4E1450021D855 /* begin_record.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = begin_record.mp3; sourceTree = "<group>"; };
 		B17206DA1BE4E2D40021D855 /* PlayingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayingModel.h; sourceTree = "<group>"; };
 		B17206DB1BE4E2D40021D855 /* PlayingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayingModel.m; sourceTree = "<group>"; };
+		B1730EE51D0567C10059C2B9 /* TranscriptionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranscriptionInfo.h; sourceTree = "<group>"; };
+		B1730EE61D0567C10059C2B9 /* TranscriptionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranscriptionInfo.m; sourceTree = "<group>"; };
 		B17801741C1EFE9000BA2436 /* TutorialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialView.h; sourceTree = "<group>"; };
 		B17801751C1EFE9000BA2436 /* TutorialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialView.m; sourceTree = "<group>"; };
 		B17801771C1EFEA700BA2436 /* TutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialView.xib; sourceTree = "<group>"; };
@@ -535,6 +565,11 @@
 		B1889FE01C4EBA3E003552CE /* ChatEntriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatEntriesViewController.m; sourceTree = "<group>"; };
 		B18BF95C1BD674CD009B665E /* PeppermintMessageSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeppermintMessageSender.h; sourceTree = "<group>"; };
 		B18BF95D1BD674CD009B665E /* PeppermintMessageSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeppermintMessageSender.m; sourceTree = "<group>"; };
+		B18D47B51CFD917A0060FD6C /* FLACiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FLACiOS.framework; path = flac_ios/FLACiOS.framework; sourceTree = "<group>"; };
+		B18D47B81CFD91EB0060FD6C /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		B18D47B91CFD91EB0060FD6C /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		B18D47BA1CFD91EB0060FD6C /* wav_to_flac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wav_to_flac.c; sourceTree = "<group>"; };
+		B18D47BB1CFD91EB0060FD6C /* wav_to_flac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wav_to_flac.h; sourceTree = "<group>"; };
 		B18EEB971CB3B36600F9491F /* FeedBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedBackViewController.h; sourceTree = "<group>"; };
 		B18EEB981CB3B36600F9491F /* FeedBackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedBackViewController.m; sourceTree = "<group>"; };
 		B18EEB9B1CB3F4EA00F9491F /* BaseRecordingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseRecordingViewController.h; sourceTree = "<group>"; };
@@ -565,6 +600,10 @@
 		B1A792451C6D9F8300254528 /* PushKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PushKit.framework; path = System/Library/Frameworks/PushKit.framework; sourceTree = SDKROOT; };
 		B1AC47801CDB738500693C47 /* AVAudioPlayer_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVAudioPlayer_Addition.h; sourceTree = "<group>"; };
 		B1AC47811CDB738500693C47 /* AVAudioPlayer_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVAudioPlayer_Addition.m; sourceTree = "<group>"; };
+		B1ADABBE1CF0F38600D2A458 /* GoogleSpeechRecordingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleSpeechRecordingModel.h; sourceTree = "<group>"; };
+		B1ADABBF1CF0F38600D2A458 /* GoogleSpeechRecordingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleSpeechRecordingModel.m; sourceTree = "<group>"; };
+		B1ADABC11CF10E1C00D2A458 /* TranscriptionsRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranscriptionsRequest.h; sourceTree = "<group>"; };
+		B1ADABC21CF10E1C00D2A458 /* TranscriptionsRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranscriptionsRequest.m; sourceTree = "<group>"; };
 		B1AE969C1CEA310D000A8E3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Text.strings; sourceTree = "<group>"; };
 		B1AE969F1CEA3133000A8E3D /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Text.strings"; sourceTree = "<group>"; };
 		B1AE96A01CEA36A7000A8E3D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Text.strings; sourceTree = "<group>"; };
@@ -644,6 +683,10 @@
 		B1E5E4D51CFE3AB400936563 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Text.strings; sourceTree = "<group>"; };
 		B1EB69B11C9828E20031F37E /* NSmutableSet_Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSmutableSet_Addition.h; sourceTree = "<group>"; };
 		B1EB69B21C9828E20031F37E /* NSmutableSet_Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSmutableSet_Addition.m; sourceTree = "<group>"; };
+		B1EDD43D1CFC338E00263EF8 /* TranscriptionsResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranscriptionsResponse.h; sourceTree = "<group>"; };
+		B1EDD43E1CFC338E00263EF8 /* TranscriptionsResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranscriptionsResponse.m; sourceTree = "<group>"; };
+		B1EDD4411CFC591900263EF8 /* HoldToRecordInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HoldToRecordInfoView.h; sourceTree = "<group>"; };
+		B1EDD4421CFC591900263EF8 /* HoldToRecordInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HoldToRecordInfoView.m; sourceTree = "<group>"; };
 		B1EF03731C2184F80054FA02 /* AnalyticsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsModel.h; sourceTree = "<group>"; };
 		B1EF03741C2184F80054FA02 /* AnalyticsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsModel.m; sourceTree = "<group>"; };
 		B1EF40E31BB7D58C00042E4B /* RecordingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RecordingModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -664,6 +707,7 @@
 		B1F045661BCFB36900A67942 /* BaseService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseService.m; sourceTree = "<group>"; };
 		B1F045691BCFB4E400A67942 /* Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
 		B1F0456A1BCFB4E400A67942 /* Events.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Events.m; sourceTree = "<group>"; };
+		B1F46B1F599F9778D6F7EA0F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1F5158B1C2ABCBE0033A779 /* ContactSupportModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactSupportModel.h; sourceTree = "<group>"; };
 		B1F5158C1C2ABCBE0033A779 /* ContactSupportModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactSupportModel.m; sourceTree = "<group>"; };
 		B1F93E8B1BC8E0D9005F2128 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -764,6 +808,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B18D47B61CFD917A0060FD6C /* FLACiOS.framework in Frameworks */,
 				D0AC07651C4809E000F9CF6F /* Contacts.framework in Frameworks */,
 				D0AC07631C4809D600F9CF6F /* WatchConnectivity.framework in Frameworks */,
 				D0A7C0F01BFC58A300ACD33E /* CoreSpotlight.framework in Frameworks */,
@@ -771,6 +816,7 @@
 				B190F5BC1BDD7F040094B391 /* AudioToolbox.framework in Frameworks */,
 				B1F93E8C1BC8E0D9005F2128 /* CoreData.framework in Frameworks */,
 				392D9C861A6F3945B758D95F /* libPods-Peppermint.a in Frameworks */,
+				A3768C0CA987D47CF4AB885F /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -804,6 +850,7 @@
 		6C8541A65356EA01C859C162 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B18D47B51CFD917A0060FD6C /* FLACiOS.framework */,
 				B1A792451C6D9F8300254528 /* PushKit.framework */,
 				D0AC07661C4809F300F9CF6F /* WatchConnectivity.framework */,
 				D0AC07641C4809E000F9CF6F /* Contacts.framework */,
@@ -815,6 +862,7 @@
 				B190F5BB1BDD7F040094B391 /* AudioToolbox.framework */,
 				B1F93E8B1BC8E0D9005F2128 /* CoreData.framework */,
 				4568D87C1B184E71C2B112BE /* libPods-Peppermint.a */,
+				B1F46B1F599F9778D6F7EA0F /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -998,6 +1046,42 @@
 			name = Google;
 			sourceTree = "<group>";
 		};
+		B14CB64A1CEF7D4E00056813 /* TPAACAudioConverter */ = {
+			isa = PBXGroup;
+			children = (
+				B15B15AE1BDA44E200C0C171 /* TPAACAudioConverter.h */,
+				B15B15AF1BDA44E200C0C171 /* TPAACAudioConverter.m */,
+			);
+			name = TPAACAudioConverter;
+			sourceTree = "<group>";
+		};
+		B14CB64B1CEF7D6400056813 /* GoogleSpeech */ = {
+			isa = PBXGroup;
+			children = (
+				B14CB64C1CEF7D9000056813 /* AACFileWriter.h */,
+				B14CB64D1CEF7D9000056813 /* AACFileWriter.m */,
+				B14CB64F1CEF7DA700056813 /* AudioController.h */,
+				B14CB6501CEF7DA700056813 /* AudioController.m */,
+				B14CB6511CEF7DA700056813 /* SpeechRecognitionService.h */,
+				B14CB6521CEF7DA700056813 /* SpeechRecognitionService.m */,
+			);
+			name = GoogleSpeech;
+			sourceTree = "<group>";
+		};
+		B14CB6581CEF878300056813 /* Recording */ = {
+			isa = PBXGroup;
+			children = (
+				B1EF40E31BB7D58C00042E4B /* RecordingModel.h */,
+				B1EF40E41BB7D58C00042E4B /* RecordingModel.m */,
+				B14886561CF06DF00046C294 /* RecordingModel_Addition.h */,
+				B14CB6591CEF87C100056813 /* AVAudioRecordingModel.h */,
+				B14CB65A1CEF87C100056813 /* AVAudioRecordingModel.m */,
+				B1ADABBE1CF0F38600D2A458 /* GoogleSpeechRecordingModel.h */,
+				B1ADABBF1CF0F38600D2A458 /* GoogleSpeechRecordingModel.m */,
+			);
+			name = Recording;
+			sourceTree = "<group>";
+		};
 		B15B15A91BD9D8A100C0C171 /* ExplodingView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1010,8 +1094,9 @@
 		B15B15AD1BDA44D200C0C171 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				B15B15AE1BDA44E200C0C171 /* TPAACAudioConverter.h */,
-				B15B15AF1BDA44E200C0C171 /* TPAACAudioConverter.m */,
+				B18D47B71CFD91EB0060FD6C /* WavToFlac */,
+				B14CB64A1CEF7D4E00056813 /* TPAACAudioConverter */,
+				B14CB64B1CEF7D6400056813 /* GoogleSpeech */,
 			);
 			name = Vendor;
 			sourceTree = "<group>";
@@ -1088,6 +1173,10 @@
 				B13AE4381C8435A20046AF6E /* MessageGetResponse.m */,
 				B13AE43A1C8436410046AF6E /* Link.h */,
 				B13AE43B1C8436410046AF6E /* Link.m */,
+				B1ADABC11CF10E1C00D2A458 /* TranscriptionsRequest.h */,
+				B1ADABC21CF10E1C00D2A458 /* TranscriptionsRequest.m */,
+				B1EDD43D1CFC338E00263EF8 /* TranscriptionsResponse.h */,
+				B1EDD43E1CFC338E00263EF8 /* TranscriptionsResponse.m */,
 			);
 			name = AWS;
 			sourceTree = "<group>";
@@ -1194,8 +1283,7 @@
 				B1F045641BCFB33F00A67942 /* Service */,
 				B165EF101BB71A85008C6F71 /* BaseModel.h */,
 				B165EF111BB71A85008C6F71 /* BaseModel.m */,
-				B1EF40E31BB7D58C00042E4B /* RecordingModel.h */,
-				B1EF40E41BB7D58C00042E4B /* RecordingModel.m */,
+				B14CB6581CEF878300056813 /* Recording */,
 				B1DF989E1CB7710B005ED222 /* SendVoiceMessage */,
 				B1A72F0C1CD0B574000EAD18 /* Contact */,
 				B15B15BF1BDBC55A00C0C171 /* AWSModel.h */,
@@ -1242,6 +1330,8 @@
 				B1BE21881CD77798000B1070 /* ChatEntrySyncModel.m */,
 				B15E05A21CE498D2008203C5 /* MessageBarManagerModel.h */,
 				B15E05A31CE498D2008203C5 /* MessageBarManagerModel.m */,
+				B13C2E231CF5D4E600410B67 /* TranscriptionModel.h */,
+				B13C2E241CF5D4E600410B67 /* TranscriptionModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1257,6 +1347,8 @@
 				B1E516101C7D9A69002BD49C /* PeppermintChatEntry.m */,
 				B1104D1E1CD4697D002BA01B /* PeppermintContactWithChatEntry.h */,
 				B1104D1F1CD4697D002BA01B /* PeppermintContactWithChatEntry.m */,
+				B1730EE51D0567C10059C2B9 /* TranscriptionInfo.h */,
+				B1730EE61D0567C10059C2B9 /* TranscriptionInfo.m */,
 			);
 			name = Entity;
 			sourceTree = "<group>";
@@ -1420,6 +1512,7 @@
 		B17B3D551BB689F1009B8BC5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B1EDD4401CFC58F600263EF8 /* HoldToRecordInfoView */,
 				B13E977B1CE0CE7F0066ECC9 /* AddEmailForSMSContactView */,
 				B1D646551C998FA000600183 /* ShakeGestureView */,
 				B10163391C6378D0008CC8D0 /* SMSChargeWarningView */,
@@ -1485,6 +1578,8 @@
 				B1AC47811CDB738500693C47 /* AVAudioPlayer_Addition.m */,
 				B15E059F1CE4781D008203C5 /* UITextField_Addition.h */,
 				B15E05A01CE4781D008203C5 /* UITextField_Addition.m */,
+				B16055471CF9D52F00AD1DF4 /* NSString+Truncate.h */,
+				B16055481CF9D52F00AD1DF4 /* NSString+Truncate.m */,
 			);
 			name = Addition;
 			sourceTree = "<group>";
@@ -1515,6 +1610,18 @@
 			);
 			name = StaticTableView;
 			sourceTree = "<group>";
+		};
+		B18D47B71CFD91EB0060FD6C /* WavToFlac */ = {
+			isa = PBXGroup;
+			children = (
+				B18D47B81CFD91EB0060FD6C /* LICENSE.txt */,
+				B18D47B91CFD91EB0060FD6C /* README */,
+				B18D47BA1CFD91EB0060FD6C /* wav_to_flac.c */,
+				B18D47BB1CFD91EB0060FD6C /* wav_to_flac.h */,
+			);
+			name = WavToFlac;
+			path = flac_ios/WavToFlac;
+			sourceTree = SOURCE_ROOT;
 		};
 		B18EEB9A1CB3B37400F9491F /* FeedBack */ = {
 			isa = PBXGroup;
@@ -1732,6 +1839,15 @@
 				B108F85F1BECAA5300267DEC /* SendVoiceMessageEmailModel.m */,
 			);
 			name = Base;
+			sourceTree = "<group>";
+		};
+		B1EDD4401CFC58F600263EF8 /* HoldToRecordInfoView */ = {
+			isa = PBXGroup;
+			children = (
+				B1EDD4411CFC591900263EF8 /* HoldToRecordInfoView.h */,
+				B1EDD4421CFC591900263EF8 /* HoldToRecordInfoView.m */,
+			);
+			name = HoldToRecordInfoView;
 			sourceTree = "<group>";
 		};
 		B1EF40E11BB7CE5600042E4B /* Controller */ = {
@@ -2252,7 +2368,9 @@
 				B101633B1C637983008CC8D0 /* SMSChargeWarningView.xib in Resources */,
 				B11BA7FD1CD3FD66005D02E0 /* MailContactTableViewCell.xib in Resources */,
 				B1BB60171BDE0E3200C1140B /* LoginTableViewCell.xib in Resources */,
+				B18D47BC1CFD91EB0060FD6C /* LICENSE.txt in Resources */,
 				B17B3D3C1BB6898C009B8BC5 /* Images.xcassets in Resources */,
+				B18D47BD1CFD91EB0060FD6C /* README in Resources */,
 				B15B15B21BDBBAB200C0C171 /* Login.storyboard in Resources */,
 				B1BDD36C1C7A6FB300C8BDF4 /* water_drop.mp3 in Resources */,
 				B1BB2A531BE6AA2000A4BFB4 /* GoogleService-Info.plist in Resources */,
@@ -2304,7 +2422,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Peppermint/Pods-Peppermint-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		99E5888A4AEAE0B8E8705C03 /* Copy Pods Resources */ = {
@@ -2362,6 +2480,7 @@
 				B17B9A2A1C60CCDD00B081F7 /* SetUpRecorderRequest.m in Sources */,
 				D0D70D451C0495680068AB20 /* LoginWithEmailViewController.m in Sources */,
 				B1B4BF7B1CC4E61D004D4A6E /* SparkPostService.m in Sources */,
+				B1EDD43F1CFC338E00263EF8 /* TranscriptionsResponse.m in Sources */,
 				B184A0A71C1B0CF20087BB9C /* JwtInformation.m in Sources */,
 				B1D1E2C31CA04149008CFCB7 /* NSDate_Addition.m in Sources */,
 				B12C03BB1BCFFC060085A55A /* FastRecordingView.m in Sources */,
@@ -2387,6 +2506,7 @@
 				B165EF151BB71A99008C6F71 /* ContactsModel.m in Sources */,
 				B102F9861BF0CF0800EDF7E6 /* LoginValidateEmailTableViewCell.m in Sources */,
 				B179F83A1BC9316F0089D709 /* SearchMenuTableViewCell.m in Sources */,
+				B1ADABC31CF10E1C00D2A458 /* TranscriptionsRequest.m in Sources */,
 				B16145DD1CCE094D00F7FE0C /* PeppermintGIdSignIn.m in Sources */,
 				B15B15B01BDA44E200C0C171 /* TPAACAudioConverter.m in Sources */,
 				B1FC538B1C52656800C0A472 /* ChatTableViewCell.m in Sources */,
@@ -2397,10 +2517,12 @@
 				B13B07631BD3720100974AC3 /* MandrillMessage.m in Sources */,
 				B1D646581C998FB300600183 /* ShakeGestureView.m in Sources */,
 				B165EF1D1BB72242008C6F71 /* EmptyResultTableViewCell.m in Sources */,
+				B14CB64E1CEF7D9000056813 /* AACFileWriter.m in Sources */,
 				B15EEB9A1C6081F40083658A /* RecordersUpdateRequest.m in Sources */,
 				B16145E91CCE4EC700F7FE0C /* BaseCollectionViewCell.m in Sources */,
 				B15E05A11CE4781D008203C5 /* UITextField_Addition.m in Sources */,
 				B18EEBA01CB3F88B00F9491F /* BaseRecordingGestureViewController.m in Sources */,
+				B13C2E251CF5D4E600410B67 /* TranscriptionModel.m in Sources */,
 				B1DA4A1C1CA581350002F07A /* PlayingChatEntryModel.m in Sources */,
 				B1BB605F1BDE36AF00C1140B /* SignUpWithEmailViewController.m in Sources */,
 				B1FE18501BE1676D002772B4 /* FeedBackModel.m in Sources */,
@@ -2449,6 +2571,7 @@
 				B1EF40EE1BB7EAA200042E4B /* SendVoiceMessageMailComposerModel.m in Sources */,
 				B1E02AE21CAE6120008D7C15 /* AudioSessionModel.m in Sources */,
 				B15B15BE1BDBC31F00C0C171 /* AWSService.m in Sources */,
+				B14CB6541CEF7DA700056813 /* SpeechRecognitionService.m in Sources */,
 				B15FDE811C117CCE007100EC /* CachedMessage.m in Sources */,
 				B165EF181BB71EC0008C6F71 /* PeppermintContact.m in Sources */,
 				B13AE4361C8420570046AF6E /* MessageGetRequest.m in Sources */,
@@ -2458,6 +2581,7 @@
 				B17B64BD1CC63F5E00600A55 /* SparkPostFrom.m in Sources */,
 				B1BB1E5F1BD35CD300A1CE45 /* MandrillService.m in Sources */,
 				D0AC07CE1C48223500F9CF6F /* JSONKeyMapper.m in Sources */,
+				B14CB6531CEF7DA700056813 /* AudioController.m in Sources */,
 				B1F93E981BC8E328005F2128 /* Repository.m in Sources */,
 				B1B4BF881CC520FA004D4A6E /* SparkPostContent.m in Sources */,
 				B17B9A2D1C60F34000B081F7 /* MessageRequest.m in Sources */,
@@ -2472,6 +2596,7 @@
 				B13B076D1BD3C80600974AC3 /* SendVoiceMessageMandrillModel.m in Sources */,
 				D0AC07711C4815AE00F9CF6F /* AppDelegate.m in Sources */,
 				D0A7C0DA1BFA0C7900ACD33E /* DeviceModel.m in Sources */,
+				B1EDD4431CFC591900263EF8 /* HoldToRecordInfoView.m in Sources */,
 				B17B64B71CC63A1C00600A55 /* SparkPostTemplatesResponse.m in Sources */,
 				B16DA2171BE0F2C100EBF043 /* SlideMenuViewController.m in Sources */,
 				B1BB601A1BDE127500C1140B /* LoginViewController.m in Sources */,
@@ -2479,6 +2604,7 @@
 				B19877C31CCCE3DD0004FF67 /* ChatTableViewMailCell.m in Sources */,
 				B1F5158D1C2ABCBE0033A779 /* ContactSupportModel.m in Sources */,
 				B18BF95E1BD674CD009B665E /* PeppermintMessageSender.m in Sources */,
+				B1ADABC01CF0F38600D2A458 /* GoogleSpeechRecordingModel.m in Sources */,
 				B1D646541C99728F00600183 /* ProximitySensorModel.m in Sources */,
 				B15FDE7C1C117CCE007100EC /* RecentContact+CoreDataProperties.m in Sources */,
 				B1A366951BDC92FF00852B52 /* UploadsResponse.m in Sources */,
@@ -2490,6 +2616,7 @@
 				B18EEB9D1CB3F4EA00F9491F /* BaseRecordingViewController.m in Sources */,
 				B1EB69B31C9828E20031F37E /* NSmutableSet_Addition.m in Sources */,
 				B1FFFF2A1C18241E0049347D /* RecoverPasswordRequest.m in Sources */,
+				B14CB65B1CEF87C100056813 /* AVAudioRecordingModel.m in Sources */,
 				B14B2FD51CCBA06100B9E083 /* UidHolder.m in Sources */,
 				B18EEB991CB3B36600F9491F /* FeedBackViewController.m in Sources */,
 				B1B4BF8B1CC52328004D4A6E /* SendVoiceMessageSparkPostModel.m in Sources */,
@@ -2514,11 +2641,13 @@
 				D0AC07CA1C48221D00F9CF6F /* JSONModelArray.m in Sources */,
 				B15FDE7D1C117CCE007100EC /* RecentContact.m in Sources */,
 				B17B3D311BB6898C009B8BC5 /* main.m in Sources */,
+				B1730EE71D0567C10059C2B9 /* TranscriptionInfo.m in Sources */,
 				B163557A1C5FB02200E0C07A /* Attribute.m in Sources */,
 				B108F8601BECAA5300267DEC /* SendVoiceMessageEmailModel.m in Sources */,
 				B102F9821BF0CE2000EDF7E6 /* LoginValidateEmailViewController.m in Sources */,
 				B1E2DF9B1C76061F0037FFBF /* AutoPlayModel.m in Sources */,
 				B1EF40F91BB8782F00042E4B /* SwipeView.m in Sources */,
+				B16055491CF9D52F00AD1DF4 /* NSString+Truncate.m in Sources */,
 				B13AE4391C8435A20046AF6E /* MessageGetResponse.m in Sources */,
 				B16145E41CCE479700F7FE0C /* EmailLoginViewController.m in Sources */,
 				B1BB60151BDE0E0200C1140B /* LoginTableViewCell.m in Sources */,
@@ -2738,6 +2867,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Peppermint",
+					"$(PROJECT_DIR)/flac_ios",
 				);
 				GCC_PREFIX_HEADER = Peppermint/PrefixHeader.pch;
 				INFOPLIST_FILE = Peppermint/Info.plist;
@@ -2764,6 +2894,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Peppermint",
+					"$(PROJECT_DIR)/flac_ios",
 				);
 				GCC_PREFIX_HEADER = Peppermint/PrefixHeader.pch;
 				INFOPLIST_FILE = Peppermint/Info.plist;

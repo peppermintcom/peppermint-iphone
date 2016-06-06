@@ -11,7 +11,7 @@
 #import "User.h"
 
 @interface BaseEvent : NSObject
-@property (nonatomic) id sender;
+@property (assign, nonatomic) id sender;
 @end
 
 @interface NetworkFailure : BaseEvent
@@ -131,6 +131,7 @@
 @interface RefreshIncomingMessagesCompletedWithSuccess : BaseEvent
 @property (strong, nonatomic) NSArray* peppermintChatEntryNewMesssagesArray;
 @property (strong, nonatomic) NSArray* peppermintChatEntryAllMesssagesArray;
+@property (assign, nonatomic) BOOL isCompletedAllSteps;
 @end
 
 @interface AccountIdIsUpdated : BaseEvent
@@ -157,4 +158,8 @@
 @end
 
 @interface UnauthorizedResponse : BaseEvent
+@end
+
+@interface TranscriptionIsSavedToServer : BaseEvent
+@property (strong, nonatomic) NSString *transctiptionUrl;
 @end

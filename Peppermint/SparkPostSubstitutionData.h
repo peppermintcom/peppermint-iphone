@@ -15,4 +15,5 @@
 @property (strong, nonatomic) NSString *url;
 @property (strong, nonatomic) NSString *replyLink;
 @property (strong, nonatomic) NSString *reply_to;
+@property (strong, nonatomic) NSString *transcription;
 @end

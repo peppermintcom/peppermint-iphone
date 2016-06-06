@@ -1,0 +1,1 @@
+../../../../../../../../googleapis/google/cloud/vision/v1/ImageAnnotator.pbrpc.h

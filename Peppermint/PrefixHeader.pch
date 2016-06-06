@@ -80,6 +80,7 @@ sharedObject;\
 
 #pragma mark - NSString Addition
 #import "NSString_Addition.h"
+#import "NSString+Truncate.h"
 
 #pragma mark - UIView Addition
 #import "UIView+Addition.h"
@@ -129,6 +130,8 @@ sharedObject;\
 #define MIN_VOICE_MESSAGE_LENGTH    1            //Seconds
 #define ANIM_TIME                   0.3
 #define WARN_TIME                   1.5
+
+#define AUDIO_SAMPLE_RATE           16000.0   //44100 -> 44.1kHz = 44100, 16 kHz -> 16000
 
 #define MIN_INTERVAL_FOR_INCOMING_AUDIO 4
 
@@ -183,8 +186,19 @@ sharedObject;\
 //#define GOOGLE_ANALYTICS_KEY            @"UA-71499085-1"  --> Deprecated in GoogleService-Info.plist
 //#define PEPPERMINT_GCM_SENDER_ID        @"896089644819"   --> Deprecated in GoogleService-Info.plist
 
+#ifdef DEBUG
+#define GOOGLE_SPEECH_API_KEY   @"AIzaSyDvfQrFFAD0CVZiw0mFQfR7iU210PLPPSE"  //API KEY for DEBUG
+#else
+//#define GOOGLE_SPEECH_API_KEY   @"AIzaSyDHIurMNCMvOsuhWtVngBx3CdxasALDSjc"
+#define GOOGLE_SPEECH_API_KEY   @"AIzaSyCftDuV3Ijzbr3ZKReEoqZmB8QcmMBmpeo"  //API KEY for PROD
+#endif
+
 #define DOMAIN_PEPPERMINT               @"peppermint.com"
 #define DOMAIN_MANDRILL                 @"mandrill.com"
+
+#define DOMAIN_GOOGLESPEECHRECORDINGMODEL   @"GoogleSpeechRecordingModel"
+#define CODE_NO_CONNECTION                  19
+#define DOMAIN_GRPC                         @"io.grpc"
 
 //Define Host&Path information as lowercase Text
 #define HOST_FASTREPLY                  @"reply"
@@ -201,7 +215,8 @@ sharedObject;\
 
 #define SCREEN_HEIGHT_LIMIT             600
 
-#define CONTACT_PHONEBOOK               @"p"
+#define CONTACT_PHONEBOOK_EMAIL         @"pe"
+#define CONTACT_PHONEBOOK_PHONE         @"pp"
 #define CONTACT_GOOGLE                  @"g"
 #define CONTACT_CUSTOM                  @"c"
 

@@ -2,7 +2,7 @@
 //  ChatEntry+CoreDataProperties.h
 //  Peppermint
 //
-//  Created by Okan Kurtulus on 30/04/16.
+//  Created by Okan Kurtulus on 06/06/16.
 //  Copyright © 2016 Okan Kurtulus. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -20,15 +20,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *contactEmail;
 @property (nullable, nonatomic, retain) NSDate *dateCreated;
 @property (nullable, nonatomic, retain) NSNumber *duration;
+@property (nullable, nonatomic, retain) NSNumber *isForwarded;
+@property (nullable, nonatomic, retain) NSNumber *isRepliedAnswered;
 @property (nullable, nonatomic, retain) NSNumber *isSeen;
 @property (nullable, nonatomic, retain) NSNumber *isSentByMe;
+@property (nullable, nonatomic, retain) NSNumber *isStarredFlagged;
 @property (nullable, nonatomic, retain) NSString *mailContent;
 @property (nullable, nonatomic, retain) NSString *messageId;
 @property (nullable, nonatomic, retain) NSString *subject;
 @property (nullable, nonatomic, retain) NSString *transcription;
-@property (nullable, nonatomic, retain) NSNumber *isRepliedAnswered;
-@property (nullable, nonatomic, retain) NSNumber *isStarredFlagged;
-@property (nullable, nonatomic, retain) NSNumber *isForwarded;
 
 @end
 

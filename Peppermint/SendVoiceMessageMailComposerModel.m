@@ -9,14 +9,13 @@
 #import "SendVoiceMessageMailComposerModel.h"
 #import <MessageUI/MessageUI.h>
 #import "EasyMailSender.h"
-#import "EasyMailAlertSender.h"
 
 @implementation SendVoiceMessageMailComposerModel
 
 -(void) sendVoiceMessageWithData:(NSData *)data withExtension:(NSString *)extension andDuration:(NSTimeInterval)duration {
     
     if([self isConnectionActive]) {
-        EasyMailAlertSender *mailSender = [EasyMailAlertSender easyMail:^(MFMailComposeViewController *controller) {
+        EasyMailSender *mailSender = [EasyMailSender easyMail:^(MFMailComposeViewController *controller) {
             [controller setToRecipients:[NSArray arrayWithObject:self.selectedPeppermintContact.communicationChannelAddress]];
 
             NSString *signature = @"";

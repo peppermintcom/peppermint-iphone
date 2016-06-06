@@ -9,6 +9,7 @@
 #import "AudioSessionModel.h"
 #import "AppDelegate.h"
 #import "ProximitySensorModel.h"
+#import "GoogleSpeechRecordingModel.h"
 
 #define SESSION_DEACTIVATE_LATENCY     3
 
@@ -44,10 +45,17 @@
 }
 
 -(void) attachAVAudioProcessObject:(id)item {
-    BOOL isClassValid = [item isKindOfClass:[AVAudioPlayer class]] || [item isKindOfClass:[AVAudioRecorder class]];
-    NSAssert(isClassValid, @"attachAVAudioProcessObject: must be called with an instance of AVAudioPlayer or AVAudioRecorder");
+    BOOL isClassValid = [item isKindOfClass:[AVAudioPlayer class]]
+    || [item isKindOfClass:[AVAudioRecorder class]]
+    || [item isKindOfClass:[GoogleSpeechRecordingModel class]];
+    NSAssert(isClassValid, @"attachAVAudioProcessObject: must be called with an instance of AVAudioPlayer, AVAudioRecorder or GoogleSpeechRecorder");
     if(![activeAudioItemsArray containsObject:item]) {
         [activeAudioItemsArray addObject:item];
+    } else {
+        [activeAudioItemsArray removeObject:item];
+        [activeAudioItemsArray addObject:item];
+        NSLog(@"as %@ was already atached. Removed and re-attached it.", item);
+        //NSLog(@"Did not attach %@ to audio session, because it was already attached.", item);
     }
 }
 
@@ -91,6 +99,9 @@
         } else if (item && [item isKindOfClass:[AVAudioRecorder class]]) {
             AVAudioRecorder *recorder = (AVAudioRecorder*)item;
             canDeactivateSession &= !recorder.isRecording;
+        } else if (item && [item isKindOfClass:[GoogleSpeechRecordingModel class]]) {
+            GoogleSpeechRecordingModel *model = (GoogleSpeechRecordingModel*)item;
+            canDeactivateSession &= !model.isActive;
         }
         if(!canDeactivateSession) {
             break;
@@ -111,13 +122,21 @@
     @try {
         NSError *error;
         AVAudioSession *session = [AVAudioSession sharedInstance];
-        result = [session setActive:destinationSessionState
-                        withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation
-                              error:&error];
+        [session setPreferredSampleRate:AUDIO_SAMPLE_RATE error:&error];
         if(error) {
             [AppDelegate handleError:error];
         } else {
-            currentSessionState = destinationSessionState;
+            result = [session setActive:destinationSessionState
+                            withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation
+                                  error:&error];
+            if(error) {
+                [AppDelegate handleError:error];
+            } else {
+                if(!currentSessionState && destinationSessionState) {
+                    NSLog(@"AudioSession is activated with sampleRate: %.2f", session.sampleRate);
+                }
+                currentSessionState = destinationSessionState;
+            }
         }
     }
     @catch ( NSException *e ) {
@@ -174,7 +193,9 @@
 }
 
 -(void) resetActiveAudioItems {
-    for(NSObject *item in activeAudioItemsArray) {
+    //Using reverse array in a loop, prevents “NSArray was mutated while being enumerated” error
+    // http://stackoverflow.com/a/31269190/5171866
+    for(NSObject *item in [activeAudioItemsArray reverseObjectEnumerator]) {
         if (item && [item isKindOfClass:[AVAudioRecorder class]]) {
             AVAudioRecorder *recorder = (AVAudioRecorder*)item;
             if(recorder.isRecording) {

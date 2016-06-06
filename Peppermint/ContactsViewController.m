@@ -46,7 +46,6 @@
     NSTimer *timer;
     BOOL isScreenReady;
     NSUInteger activeRecordingView;
-    NSTimer *holdToRecordViewTimer;
     BOOL isContactsPermissionGranted;
     
     BOOL isFirstOpen;
@@ -75,7 +74,6 @@
     
     self.tutorialView = nil;
     isScrolling  = NO;
-    [self initHoldToRecordInfoView];
     isNewRecordAvailable = YES;
     isAddNewContactModalisUp = NO;
     isNavigatedToChatEntries = NO;
@@ -121,7 +119,7 @@ SUBSCRIBE(UserLoggedOut) {
     if([self checkIfuserIsLoggedIn]) {
         lastRecordedPeppermintContact = nil;
         [self performTutorialViewProcess];
-        [self hideHoldToRecordInfoView];
+        [self.holdToRecordInfoView hide];
         if(isAddNewContactModalisUp) {
             isAddNewContactModalisUp = !isAddNewContactModalisUp;
             [self textFieldDidChange:self.searchContactsTextField];
@@ -194,7 +192,7 @@ SUBSCRIBE(UserLoggedOut) {
 #pragma mark - Slide Menu
 
 -(IBAction)slideMenuValidAction:(id)sender {
-    [self hideHoldToRecordInfoView];
+    [self.holdToRecordInfoView hide];
     [super slideMenuValidAction:sender];    
 }
 
@@ -271,10 +269,11 @@ SUBSCRIBE(UserLoggedOut) {
     } else if (indexPath.section == SECTION_EMPTY_RESULT) {
         EmptyResultTableViewCell *cell = [CellFactory cellEmptyResultTableViewCellFromTable:tableView forIndexPath:indexPath];
         [cell setVisibiltyOfExplanationLabels:YES];
-        
         BOOL isOneCycleCompleted = [ChatEntrySyncModel sharedInstance].issentMessagesAreInSyncOfFirstCycle
         || [ChatEntrySyncModel sharedInstance].isReciviedMessagesAreInSyncOfFirstCycle;
-        if(!isOneCycleCompleted) {
+        BOOL isUserStillLoggedIn = [[PeppermintMessageSender sharedInstance] isUserStillLoggedIn];
+        
+        if(!isOneCycleCompleted && isUserStillLoggedIn) {
             [cell showLoading];
             cell.headerLabel.text = @"";
         } else if(activeCellTag == CELL_TAG_RECENT_CONTACTS) {
@@ -364,7 +363,7 @@ SUBSCRIBE(UserLoggedOut) {
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     isScrolling = YES;
-    [self hideHoldToRecordInfoView];    
+    [self.holdToRecordInfoView hide];
     [self cancelOngoingInteractionsInTableViewCells];
 }
 
@@ -430,36 +429,16 @@ SUBSCRIBE(UserLoggedOut) {
 
 #pragma mark - HoldToRecordInfoView
 
--(void) initHoldToRecordInfoView {
-    holdToRecordViewTimer = nil;
-    self.holdToRecordInfoView.hidden = YES;
-    self.holdToRecordInfoViewLabel.font = [UIFont openSansSemiBoldFontOfSize:14];
-    self.holdToRecordInfoViewLabel.text = LOC(@"Hold to record message",@"Hold to record message");
-    
-    [self.holdToRecordInfoView addGestureRecognizer:
-     [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
-    [self.holdToRecordInfoView addGestureRecognizer:
-     [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
-    [self.holdToRecordInfoView addGestureRecognizer:
-     [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(hideHoldToRecordInfoView)]];
-}
-
 -(void) showHoldToRecordViewAtLocation:(CGPoint) location {
-    [holdToRecordViewTimer invalidate];
-    self.holdToRecordInfoView.hidden = YES;
     CGFloat cellHeight = CELL_HEIGHT_CONTACT_TABLEVIEWCELL;
     location.y +=  cellHeight * (3/4);
     if(location.y + self.holdToRecordInfoView.frame.size.height
        <= self.view.frame.size.height) {
         self.holdToRecordInfoViewYValueConstraint.constant = location.y;
         [self.view layoutIfNeeded];
-        self.holdToRecordInfoView.alpha = 0;
-        self.holdToRecordInfoView.hidden = NO;
-        [UIView animateWithDuration:ANIM_TIME animations:^{
-            self.holdToRecordInfoView.alpha = 1;
-        } completion:^(BOOL finished) {
-            [self initRecordingModel];   //Init recording model to get permission for microphone!
-            holdToRecordViewTimer = [NSTimer scheduledTimerWithTimeInterval:MESSAGE_SHOW_DURATION/2 target:self selector:@selector(hideHoldToRecordInfoView) userInfo:nil repeats:NO];
+        weakself_create();
+        [self.holdToRecordInfoView showWithCompletionHandler:^{
+            [weakSelf initRecordingModel];   //Init recording model to get permission for microphone!
         }];
     } else {
         NSLog(@"Can not show holdToRecordView out of the view");
@@ -471,16 +450,6 @@ SUBSCRIBE(UserLoggedOut) {
     recordingModel.delegate = self.recordingView;
 }
 
--(void) hideHoldToRecordInfoView {
-    [holdToRecordViewTimer invalidate];
-    holdToRecordViewTimer = nil;
-    [UIView animateWithDuration:ANIM_TIME animations:^{
-        self.holdToRecordInfoView.alpha = 0;
-    } completion:^(BOOL finished) {
-        self.holdToRecordInfoView.hidden = YES;
-    }];
-}
-
 #pragma mark - ContactTableViewCellDelegate
 
 -(void) didShortTouchOnIndexPath:(NSIndexPath*) indexPath location:(CGPoint) location {
@@ -488,8 +457,11 @@ SUBSCRIBE(UserLoggedOut) {
         PeppermintContact *peppermintContact = nil;
         if([self isFastReplyRowVisible] && indexPath.row == 0) {
             peppermintContact = [FastReplyModel sharedInstance].peppermintContact;
-        } else {
+        } else if (indexPath.row < [self activeContactList].count) {
             peppermintContact = [[self activeContactList] objectAtIndex:indexPath.row];
+        } else {
+            NSLog(@"ActiveContactList is updated!Can not access contact with index:%ld", indexPath.row);
+            return;
         }
         
         if(peppermintContact) {
@@ -534,7 +506,7 @@ SUBSCRIBE(UserLoggedOut) {
        && isActiveContactListStillValid) {
         [self.searchContactsTextField resignFirstResponder];
         CGRect cellRect = [self fixTableScrollPositionForIndexPath:indexPath];
-        [self hideHoldToRecordInfoView];
+        [self.holdToRecordInfoView hide];
         
         PeppermintContact *selectedContact = [FastReplyModel sharedInstance].peppermintContact;
         if(indexPath.section == SECTION_CONTACTS) {
@@ -659,10 +631,13 @@ SUBSCRIBE(UserLoggedOut) {
         [infoAttrText addText:@" " ofSize:13 ofColor:textColor];
         [infoAttrText addText:LOC(@"An error occured", @"Info") ofSize:13 ofColor:textColor];
         durationToHideMessage = MESSAGE_SHOW_DURATION;
+    } else {
+        isNewRecordAvailable = YES;
     }
     
     if(isCacnelAble && infoAttrText.length > 0) {
         self.cancelMessageSendingButton.hidden = NO;
+        [infoAttrText addText:@"  " ofSize:13 ofColor:[UIColor peppermintCancelOrange]];
         [infoAttrText addText:LOC(@"Tap to cancel", @"Info") ofSize:13 ofColor:[UIColor peppermintCancelOrange]];
     } else {
         self.cancelMessageSendingButton.hidden = YES;
@@ -675,7 +650,7 @@ SUBSCRIBE(UserLoggedOut) {
 
 -(void) checkShouldNavigateWithModel:(SendVoiceMessageModel*)sendVoiceMessageModel {
     BOOL isInCorrectState = sendVoiceMessageModel.sendingStatus == SendingStatusSendingWithNoCancelOption;
-    BOOL isCacheMessage = (sendVoiceMessageModel.delegate == nil);
+    BOOL isCacheMessage = sendVoiceMessageModel.isCachedMessage;
     BOOL isScreenActive = self.navigationController.viewControllers.lastObject == self;
     BOOL isForCorrectRecording = lastRecordedPeppermintContact
     && [sendVoiceMessageModel.selectedPeppermintContact isEqual:lastRecordedPeppermintContact];
@@ -715,6 +690,7 @@ SUBSCRIBE(UserLoggedOut) {
     } completion:^(BOOL finished) {
         self.sendingIndicatorView.hidden = YES;
         self.sendingIndicatorView.alpha = 1;
+        isNewRecordAvailable = YES;
     }];
 }
 
@@ -740,7 +716,7 @@ SUBSCRIBE(UserLoggedOut) {
 
 -(void)textFieldDidChange :(UITextField *)textField {
     self.contactsModel.filterText = textField.text;
-    [self hideHoldToRecordInfoView];
+    [self.holdToRecordInfoView hide];
     [self refreshContacts];
 }
 
@@ -902,11 +878,10 @@ SUBSCRIBE(UserLoggedOut) {
 SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
     weakself_create();
     dispatch_async(dispatch_get_main_queue(), ^{
-        BOOL partialUpdate = ![ChatEntrySyncModel sharedInstance].isAllMessagesAreInSyncOfFirstCycle
-        && event.peppermintChatEntryAllMesssagesArray.count > 0;
-        BOOL newMessage = [ChatEntrySyncModel sharedInstance].isAllMessagesAreInSyncOfFirstCycle
-        && event.peppermintChatEntryNewMesssagesArray.count > 0;
-        if(isScreenReady && (partialUpdate || newMessage)) {
+        BOOL partialUpdate = ![ChatEntrySyncModel sharedInstance].isAllMessagesAreInSyncOfFirstCycle && event.peppermintChatEntryAllMesssagesArray.count > 0;
+        BOOL newMessage = [ChatEntrySyncModel sharedInstance].isAllMessagesAreInSyncOfFirstCycle && event.peppermintChatEntryNewMesssagesArray.count > 0;
+        BOOL isScreenEmpty = [weakSelf activeContactList].count == 0;
+        if(isScreenReady && (partialUpdate || newMessage || isScreenEmpty)) {
             [weakSelf.recentContactsModel refreshRecentContactList];
         }
     });

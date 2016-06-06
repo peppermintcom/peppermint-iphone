@@ -12,6 +12,7 @@
 #import "PeppermintMessageSender.h"
 #import "GoogleCloudMessagingModel.h"
 #import "ChatEntryModel.h"
+#import "TranscriptionModel.h"
 
 #define AUTH_FACEBOOK   @"facebook"
 #define AUTH_GOOGLE     @"google"
@@ -106,13 +107,13 @@ SUBSCRIBE(RetrieveSignedUrlSuccessful) {
     if(event.sender == awsService) {
         _signedUrl = event.signedUrl;
         [awsService sendData:_data ofContentType:_contentType tosignedURL:_signedUrl];
-        [self.delegate fileUploadCompletedWithPublicUrl:event.short_url canonicalUrl:event.canonical_url];
+        [self.delegate fileUploadStartedWithPublicUrl:event.short_url canonicalUrl:event.canonical_url];
     }
 }
 
 SUBSCRIBE(FileUploadCompleted) {
     if([event.signedUrl isEqualToString:_signedUrl] && event.sender == awsService) {
-        //NSLog(@"File upload is completed with signedURL:%@", _signedUrl);
+        [self.delegate fileUploadCompletedWithSignedUrl:_signedUrl];
     }
 }
 
@@ -208,12 +209,17 @@ SUBSCRIBE(SetUpAccountWithRecorderCompleted) {
 #pragma mark - Send Inter App Message
 
 -(void) sendInterAppMessageTo:(NSString*)toEmail from:(NSString*)fromEmail withTranscriptionUrl:(NSString*)transcriptionUrl audioUrl:(NSString*)audioUrl {
-    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
-    [awsService sendMessageToRecepientEmail:toEmail
-                                senderEmail:fromEmail
-                           transcriptionUrl:transcriptionUrl
-                                   audioUrl:audioUrl
-                                        jwt:peppermintMessageSender.exchangedJwt];
+    
+    if(!audioUrl) {
+        NSLog(@"Audio URL is not supplied for sendInterAppMessageTo:");
+    } else {
+        PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+        [awsService sendMessageToRecepientEmail:toEmail
+                                    senderEmail:fromEmail
+                               transcriptionUrl:transcriptionUrl
+                                       audioUrl:audioUrl
+                                            jwt:peppermintMessageSender.exchangedJwt];
+    }
 }
 
 SUBSCRIBE(UnauthorizedResponse) {
@@ -236,6 +242,25 @@ SUBSCRIBE(InterAppMessageProcessCompleted) {
         } else if ([self.delegate respondsToSelector:@selector(sendInterAppMessageIsCompletedWithError:)]) {
             [self.delegate sendInterAppMessageIsCompletedWithError:error];
         }
+    }
+}
+
+#pragma mark - Transcription
+
+-(void) saveTranscriptionWithAudioUrl:(NSString*)audioUrl transcriptionText:(NSString*)transcriptionText confidence:(NSNumber*) confidence {
+    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+    NSString *language = [[TranscriptionModel new] transctiptionLanguageCode];
+    
+    [awsService saveTranscriptionWithJwt:peppermintMessageSender.exchangedJwt
+                                audioUrl:audioUrl
+                                language:language
+                       transcriptionText:transcriptionText
+                              confidence:confidence];
+}
+
+SUBSCRIBE(TranscriptionIsSavedToServer) {
+    if(event.sender == awsService) {
+        [self.delegate transcriptionUploadCompletedWithUrl:event.transctiptionUrl];
     }
 }
 

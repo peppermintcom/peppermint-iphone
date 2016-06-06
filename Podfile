@@ -1,6 +1,8 @@
 # Uncomment this line to define a global platform for your project
 # platform :ios, '6.0'
 
+pod 'googleapis', :path => 'googleapis'
+
 target 'Peppermint' do
 pod 'APAddressBook', '0.1.12'		#last version seems 0.2.1 on 12..03.2016, however it gives error& i think we need to make change on ContactsManager for making it work. For now there is no problem with existing version. If any error will occur, this can be updated too.
 pod 'EasyMailSender'

@@ -11,6 +11,9 @@
 #import "SMSChargeWarningView.h"
 #import "SendVoiceMessageSparkPostModel.h"
 
+#import "AVAudioRecordingModel.h"
+#import "GoogleSpeechRecordingModel.h"
+
 #define LATENCY_TO_RECOVER          3
 #define LATENCY_TO_SYSTEM_CANCEL    2
 
@@ -55,6 +58,7 @@ typedef enum : NSUInteger {
 
 - (void)awakeFromNib {
     self.hidden = YES;
+    _recordingModel = nil;
     sendCachedMessageButton = nil;
     recordingViewStatus = RecordingViewStatusInit;
     defaults_set_object(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH, 0);
@@ -73,8 +77,8 @@ typedef enum : NSUInteger {
         recordingViewStatus = RecordingViewStatusPresented;
         assert(self.sendVoiceMessageModel != nil);
         self.sendVoiceMessageModel.delegate = self;
-        self.recordingModel = [RecordingModel new];
-        self.recordingModel.delegate = self;
+        _recordingModel = nil;
+        [self recordingModel];
         return YES;
     }
     return NO;
@@ -247,6 +251,7 @@ typedef enum : NSUInteger {
     || self.sendVoiceMessageModel.peppermintMessageSender.isValidToSendMessage;
     
     if(isAuthProcessOK) {
+        self.sendVoiceMessageModel.transcriptionInfo = self.recordingModel.transcriptionInfo;
         [self.sendVoiceMessageModel sendVoiceMessageWithData:data withExtension:extension  andDuration:cachedSeconds];
     } else {
         audioData = data;
@@ -444,11 +449,25 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
             [self dissmissWithFadeOut];
         } else {
             self.sendVoiceMessageModel.delegate = self;
-            self.recordingModel = [RecordingModel new];
-            self.recordingModel.delegate = self;
+            _recordingModel = nil;
+            [self recordingModel];
             [self showAlertForRecordIsCut];
         }
     }
+}
+
+-(RecordingModel*) recordingModel {
+    if(!_recordingModel) {
+        _recordingModel = [GoogleSpeechRecordingModel new];
+        _recordingModel.delegate = self;
+    }
+    return _recordingModel;
+}
+
+-(void) operationFailure:(NSError*) error {
+    NSLog(@"an error occuren in recording view.");
+    [self.delegate messageModel:self.sendVoiceMessageModel isUpdatedWithStatus:SendingStatusInited cancelAble:NO];
+    [super operationFailure:error];
 }
 
 @end

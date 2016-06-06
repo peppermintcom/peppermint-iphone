@@ -8,7 +8,7 @@
 
 #import "BaseModel.h"
 #import <AVFoundation/AVFoundation.h>
-#import "TPAACAudioConverter.h"
+#import "TranscriptionInfo.h"
 
 #define PING_INTERVAL   0.05
 
@@ -22,9 +22,10 @@
 -(void) meteringUpdatedWithAverage:(CGFloat)average andPeak:(CGFloat)peak;
 @end
 
-@interface RecordingModel : BaseModel <AVAudioRecorderDelegate, TPAACAudioConverterDelegate>
+@interface RecordingModel : BaseModel <AVAudioRecorderDelegate>
 @property (weak, nonatomic) id<RecordingModelDelegate> delegate;
 @property (strong, nonatomic) NSURL *fileUrl;
+@property (strong, nonatomic) TranscriptionInfo *transcriptionInfo;
 
 +(CGFloat) checkPreviousFileLength;
 +(void) setPreviousFileLength:(CGFloat) previousFileLength;

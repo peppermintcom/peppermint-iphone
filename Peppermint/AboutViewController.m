@@ -14,11 +14,6 @@
 #define VERSION_TEXT_SIZE           13
 #define PRIVACY_TEXT_SIZE           15
 
-
-@interface AboutViewController ()
-
-@end
-
 @implementation AboutViewController
 
 - (void)viewDidLoad {

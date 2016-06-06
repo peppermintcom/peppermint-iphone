@@ -10,6 +10,7 @@
 
 @implementation SendVoiceMessageSMSModel {
     UIViewController *rootViewController;
+    NSString *cachedUrl;
 }
 
 -(id) init {
@@ -44,10 +45,14 @@
 
 #pragma mark - AWSModelDelegate
 
--(void) fileUploadCompletedWithPublicUrl:(NSString*) url canonicalUrl:(NSString*)canonicalUrl {
-    [super fileUploadCompletedWithPublicUrl:url canonicalUrl:canonicalUrl];
+-(void) fileUploadStartedWithPublicUrl:(NSString*) url canonicalUrl:(NSString*)canonicalUrl {
+    cachedUrl = url;
+    [super fileUploadStartedWithPublicUrl:url canonicalUrl:canonicalUrl];
+}
+
+-(void) uploadsAreProcessedToSendMessage {
     if(![self isCancelled]) {
-        [self fireSMSMessageWithUrl:url];
+        [self fireSMSMessageWithUrl:cachedUrl];
     } else {
         NSLog(@"Mandrill message sending is not fired, cos message is cancelled");
     }

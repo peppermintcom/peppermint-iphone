@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KGz-9S-dSJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KGz-9S-dSJ">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -284,7 +284,7 @@
                                     <constraint firstItem="Udr-nq-7U3" firstAttribute="leading" secondItem="7zR-tD-HrX" secondAttribute="leading" id="poT-Mg-7oP"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bqr-Ay-zAT" userLabel="HoldToRecordView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bqr-Ay-zAT" userLabel="HoldToRecordView" customClass="HoldToRecordInfoView">
                                 <rect key="frame" x="85" y="120" width="245" height="42"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" alpha="0.80000000000000027" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hold_to_record_background" translatesAutoresizingMaskIntoConstraints="NO" id="NPm-oW-gZ9">
@@ -311,6 +311,9 @@
                                     <constraint firstAttribute="height" constant="42" id="fjM-G8-4tl"/>
                                     <constraint firstItem="NPm-oW-gZ9" firstAttribute="top" secondItem="bqr-Ay-zAT" secondAttribute="top" id="gEC-Wg-boD"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="holdToRecordInfoViewLabel" destination="HyV-Kd-4bj" id="dPR-np-OIi"/>
+                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -334,7 +337,6 @@
                     <connections>
                         <outlet property="cancelMessageSendingButton" destination="Udr-nq-7U3" id="g4S-Ax-a3P"/>
                         <outlet property="holdToRecordInfoView" destination="bqr-Ay-zAT" id="bmK-Vc-NaW"/>
-                        <outlet property="holdToRecordInfoViewLabel" destination="HyV-Kd-4bj" id="Sx3-xk-W29"/>
                         <outlet property="holdToRecordInfoViewYValueConstraint" destination="fXC-Ki-css" id="NFx-e7-cI4"/>
                         <outlet property="searchContactsTextField" destination="uAf-dO-WUM" id="nA1-4S-XXK"/>
                         <outlet property="sendingIndicatorView" destination="7zR-tD-HrX" id="aPf-8b-ADq"/>
@@ -1315,7 +1317,7 @@ Version 1.0.0</string>
                                     <action selector="cancelSendingButtonPressed:" destination="NAA-3N-hVr" eventType="touchUpInside" id="pdf-am-q0h"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4XM-r8-jWN">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4XM-r8-jWN" customClass="HoldToRecordInfoView">
                                 <rect key="frame" x="129" y="651" width="250" height="40"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coach" translatesAutoresizingMaskIntoConstraints="NO" id="yte-a8-TGw">
@@ -1341,6 +1343,9 @@ Version 1.0.0</string>
                                     <constraint firstAttribute="bottom" secondItem="b2s-bN-Z3E" secondAttribute="bottom" constant="9" id="y4o-w6-cB1"/>
                                     <constraint firstAttribute="trailing" secondItem="b2s-bN-Z3E" secondAttribute="trailing" id="ywy-4G-aFW"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="holdToRecordInfoViewLabel" destination="b2s-bN-Z3E" id="p9N-2l-xv7"/>
+                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -1392,7 +1397,6 @@ Version 1.0.0</string>
                         <outlet property="bottomInformationFullLabel" destination="OmM-9c-ehy" id="DAu-tc-zpf"/>
                         <outlet property="bottomInformationLabel" destination="Tec-iN-Ad0" id="iAT-0V-Vuh"/>
                         <outlet property="cancelSendingButton" destination="kOH-bN-wWh" id="h89-bO-uvj"/>
-                        <outlet property="holdToRecordLabel" destination="b2s-bN-Z3E" id="jWn-XF-izj"/>
                         <outlet property="holdToRecordView" destination="4XM-r8-jWN" id="za5-Gz-y6N"/>
                         <outlet property="microphoneView" destination="9rV-hA-tP2" id="20Y-0A-Y7O"/>
                         <outlet property="recordingButton" destination="fzK-41-yXK" id="69P-EJ-0bx"/>
@@ -1466,6 +1470,39 @@ Version 1.0.0</string>
                                 <color key="textColor" red="0.085774112779999995" green="0.36037287979999999" blue="0.31380316759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tQ2-Za-xzf" userLabel="HoldToRecordView" customClass="HoldToRecordInfoView">
+                                <rect key="frame" x="38" y="74" width="245" height="42"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hold_to_record_background" translatesAutoresizingMaskIntoConstraints="NO" id="LCu-is-L0U">
+                                        <rect key="frame" x="0.0" y="0.0" width="245" height="42"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Hold to record, release to send" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5A-OD-5wJ">
+                                        <rect key="frame" x="0.0" y="10" width="245" height="32"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="245" id="ApC-K6-Y2Q"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="42" id="Bxs-hO-dif"/>
+                                    <constraint firstAttribute="trailing" secondItem="f5A-OD-5wJ" secondAttribute="trailing" id="Cli-wz-6Po"/>
+                                    <constraint firstAttribute="height" constant="42" id="JKj-VA-wAY"/>
+                                    <constraint firstItem="f5A-OD-5wJ" firstAttribute="top" secondItem="tQ2-Za-xzf" secondAttribute="top" constant="10" id="MJ0-bA-wfo"/>
+                                    <constraint firstAttribute="bottom" secondItem="LCu-is-L0U" secondAttribute="bottom" id="V3x-NN-Qih"/>
+                                    <constraint firstAttribute="width" constant="245" id="eGo-h5-gho"/>
+                                    <constraint firstAttribute="trailing" secondItem="LCu-is-L0U" secondAttribute="trailing" id="iMY-VZ-UsU"/>
+                                    <constraint firstItem="f5A-OD-5wJ" firstAttribute="leading" secondItem="tQ2-Za-xzf" secondAttribute="leading" id="lC3-PB-Bml"/>
+                                    <constraint firstItem="LCu-is-L0U" firstAttribute="leading" secondItem="tQ2-Za-xzf" secondAttribute="leading" id="suV-0v-60Y"/>
+                                    <constraint firstAttribute="bottom" secondItem="f5A-OD-5wJ" secondAttribute="bottom" id="teI-RP-kgk"/>
+                                    <constraint firstItem="LCu-is-L0U" firstAttribute="top" secondItem="tQ2-Za-xzf" secondAttribute="top" id="vim-Rs-J9j"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="holdToRecordInfoViewLabel" destination="f5A-OD-5wJ" id="Tnc-2W-WYP"/>
+                                </connections>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -1473,17 +1510,27 @@ Version 1.0.0</string>
                             <constraint firstItem="dbi-qO-9Kg" firstAttribute="leading" secondItem="GcN-60-4Ob" secondAttribute="leading" id="2bB-lG-MEz"/>
                             <constraint firstAttribute="trailing" secondItem="dbi-qO-9Kg" secondAttribute="trailing" id="3zI-Y1-AhL"/>
                             <constraint firstAttribute="trailing" secondItem="ihE-lH-nLt" secondAttribute="trailing" id="IWB-qn-jTP"/>
+                            <constraint firstItem="tQ2-Za-xzf" firstAttribute="top" secondItem="nnv-S3-79e" secondAttribute="bottom" constant="10" id="XIK-Jr-PpB"/>
+                            <constraint firstItem="tQ2-Za-xzf" firstAttribute="top" secondItem="GcN-60-4Ob" secondAttribute="topMargin" constant="74" id="aLb-tg-I5g"/>
                             <constraint firstItem="ihE-lH-nLt" firstAttribute="top" secondItem="dbi-qO-9Kg" secondAttribute="bottom" id="byT-hA-C9l"/>
                             <constraint firstItem="nnv-S3-79e" firstAttribute="top" secondItem="GcN-60-4Ob" secondAttribute="top" id="cKf-LC-zE5"/>
                             <constraint firstItem="dbi-qO-9Kg" firstAttribute="top" secondItem="nnv-S3-79e" secondAttribute="bottom" id="cio-pA-vLr"/>
                             <constraint firstItem="nnv-S3-79e" firstAttribute="leading" secondItem="GcN-60-4Ob" secondAttribute="leading" id="lyP-zK-OTo"/>
+                            <constraint firstItem="tQ2-Za-xzf" firstAttribute="centerX" secondItem="GcN-60-4Ob" secondAttribute="centerX" id="tQp-vO-l1X"/>
                             <constraint firstAttribute="trailing" secondItem="nnv-S3-79e" secondAttribute="trailing" id="vx0-zB-cvE"/>
                             <constraint firstItem="ihE-lH-nLt" firstAttribute="leading" secondItem="GcN-60-4Ob" secondAttribute="leading" id="zUi-PK-dqS"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="XIK-Jr-PpB"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="No9-xv-fbT"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="holdToRecordInfoView" destination="tQ2-Za-xzf" id="fZn-rR-kje"/>
+                        <outlet property="holdToRecordInfoViewYValueConstraint" destination="aLb-tg-I5g" id="6Ta-AS-Ly1"/>
                         <outlet property="supportEmailLabel" destination="ihE-lH-nLt" id="Bwb-BE-791"/>
                         <outlet property="tableView" destination="dbi-qO-9Kg" id="q7b-uB-aqT"/>
                         <outlet property="titleLabel" destination="hPj-Oc-9Uq" id="8SF-Vs-YPh"/>
@@ -1611,7 +1658,7 @@ Version 1.0.0</string>
         <image name="tap_to_send" width="139" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="wBS-s4-slH"/>
         <segue reference="6Da-5y-Gif"/>
+        <segue reference="cR9-Nt-llY"/>
     </inferredMetricsTieBreakers>
 </document>

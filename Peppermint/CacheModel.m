@@ -39,7 +39,7 @@
     return self;
 }
 
--(void) cache:(SendVoiceMessageModel*) sendVoiceMessageModel WithData:(NSData*) data extension:(NSString*) extension duration:(NSTimeInterval)duration {
+-(void) cache:(SendVoiceMessageModel*) sendVoiceMessageModel WithData:(NSData*) data extension:(NSString*) extension duration:(NSTimeInterval)duration transcriptionInfo:(TranscriptionInfo*)transcriptionInfo {
     
     Repository *repository = [Repository beginTransaction];
     CachedMessage *cachedMessage =
@@ -60,6 +60,8 @@
     cachedMessage.receiverNameSurname = sendVoiceMessageModel.selectedPeppermintContact.nameSurname;
     cachedMessage.mailSenderClass = [NSString stringWithFormat:@"%@", [sendVoiceMessageModel class]];
     cachedMessage.duration = [NSNumber numberWithDouble:duration];
+    cachedMessage.rawAudioData = transcriptionInfo.rawAudioData;
+    cachedMessage.transcriptionText = transcriptionInfo.text;
     
     __block NSError *err = [repository endTransaction];
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -90,8 +92,9 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
                 
                 for(int i=0; i<cachedMessageArray.count; i++) {
                     CachedMessage *cachedMessage = [cachedMessageArray objectAtIndex:i];
-                    SendVoiceMessageEmailModel *mailSenderModel = [[NSClassFromString(cachedMessage.mailSenderClass) alloc] init];
-                    mailSenderModel.delegate = nil;
+                    SendVoiceMessageModel *vocieSenderModel = [[NSClassFromString(cachedMessage.mailSenderClass) alloc] init];
+                    vocieSenderModel.delegate = nil;
+                    vocieSenderModel.isCachedMessage = YES;
                     
                     PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
                     peppermintMessageSender.nameSurname = cachedMessage.senderNameSurname;
@@ -100,11 +103,16 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
                     selectedContact.nameSurname = cachedMessage.receiverNameSurname;
                     selectedContact.communicationChannel = cachedMessage.receiverCommunicationChannel.intValue;
                     selectedContact.communicationChannelAddress = cachedMessage.receiverCommunicationChannelAddress;
-                    mailSenderModel.peppermintMessageSender = peppermintMessageSender;
-                    mailSenderModel.selectedPeppermintContact = selectedContact;
-                    mailSenderModel.subject = cachedMessage.subject;
+                    vocieSenderModel.peppermintMessageSender = peppermintMessageSender;
+                    vocieSenderModel.selectedPeppermintContact = selectedContact;
+                    vocieSenderModel.transcriptionInfo.rawAudioData = cachedMessage.rawAudioData;
+                    vocieSenderModel.transcriptionInfo.text = cachedMessage.transcriptionText;
                     
-                    [mailSenderModel sendVoiceMessageWithData:cachedMessage.data withExtension:cachedMessage.extension  andDuration:cachedMessage.duration.doubleValue];
+                    if ([vocieSenderModel isKindOfClass:[SendVoiceMessageEmailModel class]]) {
+                        ((SendVoiceMessageEmailModel*)vocieSenderModel).subject = cachedMessage.subject;
+                    }
+                    
+                    [vocieSenderModel sendVoiceMessageWithData:cachedMessage.data withExtension:cachedMessage.extension  andDuration:cachedMessage.duration.doubleValue];
                     [repository deleteEntity:cachedMessage];
                 }
                 [repository endTransaction];

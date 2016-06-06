@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Xcode 4.3">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15E65" minimumToolsVersion="Xcode 4.3">
     <entity name="CachedMessage" representedClassName="CachedMessage" syncable="YES">
         <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="duration" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="extension" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mailSenderClass" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rawAudioData" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="receiverCommunicationChannel" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="receiverCommunicationChannelAddress" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="receiverNameSurname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="senderEmail" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="senderNameSurname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="transcriptionText" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="ChatEntry" representedClassName="ChatEntry" syncable="YES">
         <attribute name="audio" optional="YES" attributeType="Binary" syncable="YES"/>
@@ -47,7 +49,7 @@
         <attribute name="peppermintContactDate" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CachedMessage" positionX="-135" positionY="-63" width="128" height="195"/>
+        <element name="CachedMessage" positionX="-135" positionY="-63" width="128" height="225"/>
         <element name="ChatEntry" positionX="-234" positionY="72" width="128" height="255"/>
         <element name="Contact" positionX="-353" positionY="3" width="128" height="105"/>
         <element name="CustomContact" positionX="-243" positionY="63" width="128" height="75"/>

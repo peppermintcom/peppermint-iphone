@@ -10,6 +10,7 @@
 #import "PeppermintContact.h"
 #import "SendVoiceMessageSparkPostModel.h"
 #import "ProximitySensorModel.h"
+#import "DeviceModel.h"
 
 #define TITLE_TEXT_SIZE                     20
 #define SUPPORT_EMAIL_TEXT_SIZE             15
@@ -47,6 +48,7 @@
 
 -(void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [self.holdToRecordInfoView hide];
 }
 
 -(void) supportEmailLabelPressed {
@@ -88,7 +90,17 @@
 #pragma mark - ContactTableViewCellDelegate
 
 -(void) didShortTouchOnIndexPath:(NSIndexPath*) indexPath location:(CGPoint) location {
-    NSLog(@"didShortTouchOnIndexPath:");
+    self.holdToRecordInfoViewYValueConstraint.constant = location.y;
+    [self.view layoutIfNeeded];
+    weakself_create();
+    [self.holdToRecordInfoView showWithCompletionHandler:^{
+        [weakSelf initRecordingModel];
+    }];
+}
+
+-(void) initRecordingModel {
+    RecordingModel *recordingModel = [RecordingModel new];   //Init recording model to get permission for microphone!
+    recordingModel.delegate = self.recordingView;
 }
 
 -(void) didBeginItemSelectionOnIndexpath:(NSIndexPath*) indexPath location:(CGPoint) location {
@@ -147,7 +159,13 @@
 -(void) messageModel:(SendVoiceMessageModel*) messageModel isUpdatedWithStatus:(SendingStatus) sendingStatus cancelAble:(BOOL)isCacnelAble {
     if(messageModel == [self recordingView].sendVoiceMessageModel) {
         NSLog(@"message:isUpdatedWithStatus:%ld", (unsigned long)sendingStatus);
-        if(sendingStatus == SendingStatusSent) {
+        
+        if(sendingStatus == SendingStatusUploading) {
+            messageModel.transcriptionInfo.text = [NSString stringWithFormat:@"%@  |  %@",
+                                               messageModel.transcriptionInfo.text,
+                                               [DeviceModel summaryText]
+                                               ];
+        } else if(sendingStatus == SendingStatusSent) {
             [self feedBackSentWithSuccess];
         }
     }
