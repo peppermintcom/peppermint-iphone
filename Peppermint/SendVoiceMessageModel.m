@@ -187,7 +187,7 @@
         [awsModel saveTranscriptionWithAudioUrl:url
                               transcriptionText:self.transcriptionInfo.text
                                      confidence:self.transcriptionInfo.confidence];
-    } else if ( ++transcriptionTryCount < TRANSCRIPTION_TRY_LIMIT) {
+    } else if ( ++transcriptionTryCount < TRANSCRIPTION_TRY_LIMIT && self.transcriptionInfo.rawAudioData) {
         [self retryTranscription];
     } else {
         [self uploadsAreProcessedToSendMessage];
