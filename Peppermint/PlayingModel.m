@@ -135,24 +135,4 @@
     return result;
 }
 
-#warning "Fade animation can be added to voice"
-/*
-#pragma mark - Cross Fade
-- (void) crossFadePlayerOne:(AVAudioPlayer *)player1 andPlayerTwo:(AVAudioPlayer *)player2 withCompletion:(void(^)())completion{
-    CGFloat fadeSpeed = DEFAULT_FADE_SPEED;
-    if([player1 volume] > 0) {
-        [player1 setVolume:[player1 volume] - fadeSpeed];
-        [player2 setVolume:[player2 volume] + fadeSpeed];
-        NSLog(@"Audio2 volume %.4f", player2.volume);
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC),dispatch_get_main_queue(),^{
-            [self crossFadePlayerOne:player1 andPlayerTwo:player2 withCompletion:completion];
-        });
-    } else {
-        if(completion){
-            completion();
-        }
-    }
-}
-*/
-
 @end

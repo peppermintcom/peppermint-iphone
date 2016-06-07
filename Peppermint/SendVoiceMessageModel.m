@@ -413,7 +413,6 @@
 #pragma mark - Chat
 
 -(void) setChatConversation:(NSString*) publicAudioUrl {
-#warning "Set transcription text"    
     NSDate *createDate = [NSDate new];
     peppermintChatEntryForCurrentMessageModel = [PeppermintChatEntry new];
     peppermintChatEntryForCurrentMessageModel.audio = _data;

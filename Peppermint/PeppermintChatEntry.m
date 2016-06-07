@@ -19,7 +19,6 @@
     peppermintChatEntry.audio = nil;
     peppermintChatEntry.audioUrl = attribute.audio_url;
     peppermintChatEntry.dateCreated = attribute.createdDate;
-#warning "Get transcription from attribute"
     peppermintChatEntry.transcription = attribute.transcription;
     
     if(isIncoming) {
