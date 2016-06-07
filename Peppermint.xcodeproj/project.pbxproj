@@ -351,6 +351,7 @@
 		B1104D1F1CD4697D002BA01B /* PeppermintContactWithChatEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeppermintContactWithChatEntry.m; sourceTree = "<group>"; };
 		B11091B71D06C00A00BD471A /* TranscriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranscriptionViewController.h; sourceTree = "<group>"; };
 		B11091B81D06C00A00BD471A /* TranscriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranscriptionViewController.m; sourceTree = "<group>"; };
+		B11091BA1D06E8A900BD471A /* PeppermintDataModel 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PeppermintDataModel 5.xcdatamodel"; sourceTree = "<group>"; };
 		B113680F1CB67DDD0075CF58 /* PeppermintDataModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PeppermintDataModel 3.xcdatamodel"; sourceTree = "<group>"; };
 		B116F3AF1C008E570091994C /* FastReplyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastReplyModel.h; sourceTree = "<group>"; };
 		B116F3B01C008E570091994C /* FastReplyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FastReplyModel.m; sourceTree = "<group>"; };
@@ -3101,12 +3102,13 @@
 		B1F93E8E1BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				B11091BA1D06E8A900BD471A /* PeppermintDataModel 5.xcdatamodel */,
 				B19877BB1CCCCD720004FF67 /* PeppermintDataModel 4.xcdatamodel */,
 				B113680F1CB67DDD0075CF58 /* PeppermintDataModel 3.xcdatamodel */,
 				B11E02D51C490DA900579122 /* PeppermintDataModel 2.xcdatamodel */,
 				B1F93E8F1BC8E1E4005F2128 /* PeppermintDataModel.xcdatamodel */,
 			);
-			currentVersion = B19877BB1CCCCD720004FF67 /* PeppermintDataModel 4.xcdatamodel */;
+			currentVersion = B11091BA1D06E8A900BD471A /* PeppermintDataModel 5.xcdatamodel */;
 			path = PeppermintDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
