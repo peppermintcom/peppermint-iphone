@@ -9,11 +9,13 @@
 #import "AccountViewController.h"
 #import "AppDelegate.h"
 #import "LoginNavigationViewController.h"
+#import "TranscriptionViewController.h"
 
 int NUMBER_OF_OPTIONS           = 1;
 int OPTION_DISPLAY_NAME         = 0;
 int OPTION_SUBJECT              = 0;
 int OPTION_LOG_OUT              = 0;
+int OPTION_TRANSCRIPTION_LANG   = 0;
 
 @interface AccountViewController () <UIAlertViewDelegate, LoginNavigationViewControllerDelegate>
 
@@ -61,14 +63,16 @@ int OPTION_LOG_OUT              = 0;
         case LOGINSOURCE_GOOGLE:
             OPTION_SUBJECT      = -2;
             OPTION_DISPLAY_NAME = -1;
-            OPTION_LOG_OUT      = 0;
-            NUMBER_OF_OPTIONS   = 1;
+            OPTION_TRANSCRIPTION_LANG = 0;
+            OPTION_LOG_OUT      = 1;
+            NUMBER_OF_OPTIONS   = 2;
             break;
         case LOGINSOURCE_PEPPERMINT:
             OPTION_SUBJECT      = -1;
             OPTION_DISPLAY_NAME = 0;
-            OPTION_LOG_OUT      = 1;
-            NUMBER_OF_OPTIONS   = 2;
+            OPTION_TRANSCRIPTION_LANG = 1;
+            OPTION_LOG_OUT      = 2;
+            NUMBER_OF_OPTIONS   = 3;
             break;
         default:
             break;
@@ -138,6 +142,8 @@ int OPTION_LOG_OUT              = 0;
         [logOutCell setJustText:LOC(@"Subject", nil) withColor:[UIColor facebookLoginColor]];
     } else if (index == OPTION_DISPLAY_NAME){
         [logOutCell setJustText:LOC(@"Display Name", nil) withColor:[UIColor emailLoginColor]];
+    } else if (index == OPTION_TRANSCRIPTION_LANG) {
+        [logOutCell setJustText:LOC(@"AUTOMATIC TRANSCRIPTION", @"Transcription").localizedCapitalizedString withColor:[UIColor emailLoginColor]];
     }
     [logOutCell.loginLabel sizeToFit];
     return logOutCell;
@@ -176,12 +182,17 @@ int OPTION_LOG_OUT              = 0;
       UITextField *textField = [alertView textFieldAtIndex:0];
       textField.text = self.peppermintMessageSender.nameSurname;
       [alertView show];
-    } else {
+    } else if (option == OPTION_SUBJECT) {
       UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:LOC(@"Subject", nil) message:LOC(@"Subject Description", nil) delegate:self cancelButtonTitle:LOC(@"Cancel", nil) otherButtonTitles:LOC(@"Save", nil), nil];
       alertView.alertViewStyle=UIAlertViewStylePlainTextInput;
       UITextField *textField = [alertView textFieldAtIndex:0];
       textField.text = self.peppermintMessageSender.subject;
       [alertView show];
+    } else if (option == OPTION_TRANSCRIPTION_LANG) {
+        TranscriptionViewController *transcriptionViewController = [TranscriptionViewController createInstance];
+        [self.navigationController pushViewController:transcriptionViewController animated:YES];
+    } else {
+        NSLog(@"button action is not handled!!");
     }
 }
 

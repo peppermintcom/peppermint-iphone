@@ -110,15 +110,42 @@
 -(NSString*) transctiptionLanguageCode {
     NSString *defaultLanguageCode = LOC(@"Transcription Preffered Default Language", @"Transcription Preffered Default Language");
     NSString *systemLanguageCode = [[NSLocale preferredLanguages] objectAtIndex:0];
-    NSArray *supportedLanguageCodes = self.supportedLanguageCodesDictionary.allKeys;
+    NSString *userPreferredLanguageCode = defaults_object(DEFAULTS_TRANSCRIPTION_LANG_CODE);
     
-    NSString *languageCode = @"en-US";
-    if([supportedLanguageCodes containsObject:systemLanguageCode]) {
+    NSString *languageCode = DEFAULT_LANGUAGE_CODE;
+    if([self isLangCodeValid:userPreferredLanguageCode]) {
+        languageCode = userPreferredLanguageCode;
+    } else if([self isLangCodeValid:systemLanguageCode]) {
         languageCode = systemLanguageCode;
     } else if (![defaultLanguageCode isEqualToString:@"Transcription Preffered Default Language"]) {
         languageCode = defaultLanguageCode;
     }
     return languageCode;
+}
+
+-(BOOL) isLangCodeValid:(NSString*)langCode {
+    return [self.supportedLanguageCodesDictionary.allKeys containsObject:langCode];
+}
+
+-(BOOL) setTransctiptionLanguageCode:(NSString*)langCode {
+    BOOL result = NO;
+    if([self isLangCodeValid:langCode]) {
+        defaults_set_object(DEFAULTS_TRANSCRIPTION_LANG_CODE, langCode);
+        result = YES;
+        NSLog(@"Saved %@", langCode);
+    } else {
+        NSLog(@"Did not save code:%@ because it is not a valid language code", langCode);
+    }
+    return result;
+}
+
+-(NSString*) codeForLanguage:(NSString*)language {
+    NSString *langCode = DEFAULT_LANGUAGE_CODE;
+    NSArray *matchingCodes = [self.supportedLanguageCodesDictionary allKeysForObject:language];
+    if(matchingCodes.count > 0) {
+        langCode = matchingCodes.firstObject;
+    }
+    return langCode;
 }
 
 @end

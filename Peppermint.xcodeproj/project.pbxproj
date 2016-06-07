@@ -24,6 +24,7 @@
 		B10C39341BF6FC840070B49F /* AccountResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B10C39331BF6FC840070B49F /* AccountResponse.m */; };
 		B10C39371BF718960070B49F /* AccountModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B10C39361BF718960070B49F /* AccountModel.m */; };
 		B1104D201CD4697D002BA01B /* PeppermintContactWithChatEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = B1104D1F1CD4697D002BA01B /* PeppermintContactWithChatEntry.m */; };
+		B11091B91D06C00A00BD471A /* TranscriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B11091B81D06C00A00BD471A /* TranscriptionViewController.m */; };
 		B116F3B11C008E570091994C /* FastReplyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B116F3B01C008E570091994C /* FastReplyModel.m */; };
 		B11B13541C0C5EAD00782FC4 /* ContactInformationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B11B13531C0C5EAD00782FC4 /* ContactInformationTableViewCell.m */; };
 		B11B13561C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B11B13551C0C5ECA00782FC4 /* ContactInformationTableViewCell.xib */; };
@@ -348,6 +349,8 @@
 		B10C39361BF718960070B49F /* AccountModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountModel.m; sourceTree = "<group>"; };
 		B1104D1E1CD4697D002BA01B /* PeppermintContactWithChatEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeppermintContactWithChatEntry.h; sourceTree = "<group>"; };
 		B1104D1F1CD4697D002BA01B /* PeppermintContactWithChatEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeppermintContactWithChatEntry.m; sourceTree = "<group>"; };
+		B11091B71D06C00A00BD471A /* TranscriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranscriptionViewController.h; sourceTree = "<group>"; };
+		B11091B81D06C00A00BD471A /* TranscriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranscriptionViewController.m; sourceTree = "<group>"; };
 		B113680F1CB67DDD0075CF58 /* PeppermintDataModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PeppermintDataModel 3.xcdatamodel"; sourceTree = "<group>"; };
 		B116F3AF1C008E570091994C /* FastReplyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastReplyModel.h; sourceTree = "<group>"; };
 		B116F3B01C008E570091994C /* FastReplyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FastReplyModel.m; sourceTree = "<group>"; };
@@ -897,6 +900,15 @@
 				B102F9871BF0CF1500EDF7E6 /* LoginValidateEmailTableViewCell.xib */,
 			);
 			name = LoginValidateEmailTableViewCell;
+			sourceTree = "<group>";
+		};
+		B11091B61D06BF3700BD471A /* Transcription */ = {
+			isa = PBXGroup;
+			children = (
+				B11091B71D06C00A00BD471A /* TranscriptionViewController.h */,
+				B11091B81D06C00A00BD471A /* TranscriptionViewController.m */,
+			);
+			name = Transcription;
 			sourceTree = "<group>";
 		};
 		B1122BD51C94760C00B35BB0 /* Navigation */ = {
@@ -1858,6 +1870,7 @@
 		B1EF40E11BB7CE5600042E4B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				B11091B61D06BF3700BD471A /* Transcription */,
 				B18EEB9A1CB3B37400F9491F /* FeedBack */,
 				B1122BD61C94762E00B35BB0 /* Tutorial */,
 				B1122BD51C94760C00B35BB0 /* Navigation */,
@@ -2583,6 +2596,7 @@
 				B16F01281C4E48350030BE65 /* ChatEntry+CoreDataProperties.m in Sources */,
 				B1104D201CD4697D002BA01B /* PeppermintContactWithChatEntry.m in Sources */,
 				B15FDE7B1C117CCE007100EC /* CustomContact.m in Sources */,
+				B11091B91D06C00A00BD471A /* TranscriptionViewController.m in Sources */,
 				B17B64BD1CC63F5E00600A55 /* SparkPostFrom.m in Sources */,
 				B1BB1E5F1BD35CD300A1CE45 /* MandrillService.m in Sources */,
 				D0AC07CE1C48223500F9CF6F /* JSONKeyMapper.m in Sources */,

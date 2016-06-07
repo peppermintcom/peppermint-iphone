@@ -31,13 +31,13 @@
 -(void) applySelectedStyle {
     self.backgroundColor = [UIColor peppermintGreen];
     self.titleLabel.textColor = [UIColor whiteColor];
-    self.iconImageView.image = [UIImage imageNamed:self.iconHighlightedImageName];
+    self.iconImageView.image = self.iconHighlightedImageName ? [UIImage imageNamed:self.iconHighlightedImageName] : nil;
 }
 
 -(void) applyNonSelectedStyle {
     self.backgroundColor = [UIColor whiteColor];
     self.titleLabel.textColor = [UIColor viaInformationLabelTextGreen];
-    self.iconImageView.image = [UIImage imageNamed:self.iconImageName];
+    self.iconImageView.image = self.iconImageName ? [UIImage imageNamed:self.iconImageName] : nil;
 }
 
 - (IBAction)MenuItemPressed:(id)sender {

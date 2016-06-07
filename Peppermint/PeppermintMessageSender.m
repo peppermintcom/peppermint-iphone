@@ -244,6 +244,7 @@
     defaults_remove(DEFAULTS_KEY_PREVIOUS_RECORDING_LENGTH);
     defaults_remove(DEFAULTS_EMAIL_UID_HOLDER);
     defaults_remove(DEFAULTS_SYNC_DATE_HOLDER);
+    defaults_remove(DEFAULTS_TRANSCRIPTION_LANG_CODE);
     
     [[AppDelegate Instance] cleanDatabase];
     [self save];

@@ -119,6 +119,7 @@ sharedObject;\
 #define DEFAULTS_KEY_DONT_SHOW_SMS_WARNING          @"DontShowSMSWarning"
 #define DEFAULTS_EMAIL_UID_HOLDER                   @"EmailUidHolder"
 #define DEFAULTS_SYNC_DATE_HOLDER                   @"SyncDateHolder"
+#define DEFAULTS_TRANSCRIPTION_LANG_CODE            @"TranscriptionLanguageCode"
 
 #define DEFAULTS_KEY_CACHED_SENDVOCIEMESSAGE_MODEL @"CachedSendVoiceMessageModel"
 
@@ -169,6 +170,7 @@ sharedObject;\
 #define VIEWCONTROLLER_CHATS    @"ChatsViewController"
 #define VIEWCONTROLLER_FEEDBACK @"FeedBackViewController"
 #define VIEWCONTROLLER_MAILCLIENT_CONTACTS   @"MailClientContactsViewController"
+#define VIEWCONTROLLER_TRANSCRIPTION         @"TranscriptionViewController"
 
 #define VIEWCONTROLLER_CONTACTS                     @"ContactsViewController"
 #define VIEWCONTROLLER_SLIDEMENU                    @"SlideMenuViewController"
