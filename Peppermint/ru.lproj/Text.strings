@@ -89,7 +89,7 @@
 "Logged in message format" = "Вы вошли с помощью %@";
 "Log Out" = "Выйти";
 "Signature" = "Подпись";
-"Display Name" = "Профиль";
+"Display Name" = "имя";
 "Display Name Description" = "Ваше отображаемое имя (используется при отправке in-app писем)";
 "Save" = "Сохранить";
 "Subject" = "Тема";
