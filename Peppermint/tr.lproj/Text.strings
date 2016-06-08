@@ -127,7 +127,7 @@
 "Day" = "Gün";
 "Hour" = "Saat";
 "Minute" = "Dakika";
-"Secont" = "Saniye";
+"Second" = "Saniye";
 "Plural Suffix" = "";
 "Just Now" = "Az Önce";
 "Don't want to create an account yet? click here" = "Henüz hesap istemiyor\nmusunuz? Buraya dokunun";
@@ -186,3 +186,4 @@
 "AUTOMATIC TRANSCRIPTION" = "Transkripsiyon";
 "Transcription Preffered Default Language" = "tr-TR";
 "Send now!" = "Şimdi gönder!";
+"MMM dd" = "dd MMM";

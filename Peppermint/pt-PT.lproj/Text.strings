@@ -126,7 +126,7 @@
 "Day" = "Dia";
 "Hour" = "Hora";
 "Minute" = "Minuto";
-"Secont" = "Segundo";
+"Second" = "Segundo";
 "Plural Suffix" = "s";
 "Just Now" = "Agora Mesmo";
 "Don't want to create an account yet? click here" = "Quer saber mais antes de\ncriar uma conta? Pressione aqui";
@@ -186,3 +186,4 @@
 "AUTOMATIC TRANSCRIPTION" = "Transcrição";
 "Transcription Preffered Default Language" = "pt-BR";
 "Send now!" = "Envie agora!";
+"MMM dd" = "MMM dd";

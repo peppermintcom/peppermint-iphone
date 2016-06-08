@@ -234,7 +234,6 @@ sharedObject;\
 #define DATE_TIME_FORMAT_WITH_MSECONDS  @"yyyy-MM-dd HH:mm:ss.SSS"
 #define DATE_TIME_FORMAT_WITH_SECONDS   @"yyyy-MM-dd HH:mm:ss"
 #define DATE_TIME_FORMAT                @"yyyy-MM-dd HH:mm:ss"
-#define DATE_MONTH_DAY_FORMAT           @"MMM dd"
 
 #define GMT                             @"GMT"
 

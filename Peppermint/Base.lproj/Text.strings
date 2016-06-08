@@ -127,7 +127,7 @@
 "Day" = "Day";
 "Hour" = "Hour";
 "Minute" = "Minute";
-"Secont" = "Second";
+"Second" = "Second";
 "Plural Suffix" = "s";
 "Just Now" = "Just Now";
 "Don't want to create an account yet? click here" = "Don't want to create\nan account yet? click here";
@@ -187,3 +187,4 @@
 "Transcription Preffered Default Language" = "en-US";
 "Audio Message" = "Audio Message";
 "Send now!" = "Send now!";
+"MMM dd" = "MMM dd";
