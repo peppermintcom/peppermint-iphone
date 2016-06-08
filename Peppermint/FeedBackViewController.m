@@ -166,7 +166,9 @@
                                                [DeviceModel summaryText]
                                                ];
         } else if(sendingStatus == SendingStatusSent) {
-            [self feedBackSentWithSuccess];
+            [self feedBackResultWithMessage:LOC(@"Feedback sent with success", @"Feedback sent with success")];
+        } else if (sendingStatus == SendingStatusCached) {
+            [self feedBackResultWithMessage:LOC(@"Your message will be sent later", @"Feedback will be sent later")];
         }
     }
 }
@@ -177,9 +179,8 @@
     [super operationFailure:error];
 }
 
--(void) feedBackSentWithSuccess {
+-(void) feedBackResultWithMessage:(NSString*) message {
     NSString *title = LOC(@"Information", @"Information");
-    NSString *message = LOC(@"Feedback sent with success", @"Feedback sent with success");
     NSString *cancelButtonTitle = LOC(@"Ok", @"Ok Message");
     [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
 }
