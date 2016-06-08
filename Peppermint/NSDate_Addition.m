@@ -54,10 +54,10 @@
         resultText = LOC(@"Yesterday", @"Yesterday");
     } else {
         NSDateFormatter *dateFormatter = [NSDateFormatter new];
-        [dateFormatter setDateFormat:DATE_MONTH_DAY_FORMAT];        
-        NSString *activeLocale = LOC(@"Active Locale", @"Active Locale");
-        NSLocale *englishUsLocale = [[NSLocale alloc] initWithLocaleIdentifier:activeLocale];
-        [dateFormatter setLocale:englishUsLocale];
+        [dateFormatter setDateFormat:LOC(@"MMM dd", @"Month Day Format")];
+        NSString *activeLocaleText = LOC(@"Active Locale", @"Active Locale");
+        NSLocale *activeLocale = [[NSLocale alloc] initWithLocaleIdentifier:activeLocaleText];
+        [dateFormatter setLocale:activeLocale];
         resultText = [dateFormatter stringFromDate:self];
     }
     return resultText;

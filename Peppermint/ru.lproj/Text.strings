@@ -33,7 +33,7 @@
 "Time is up" = "Время истекло! Вы можете нажать для отправки записанного сообщения или отменить";
 "Message sent with success" = "Ваше сообщение отправлено успешно";
 "All Contacts" = "Все контакты";
-"Recent Contacts" = "Недавние контакты";
+"Recent Contacts" = "Недавние";
 "Email Contacts" = "Е-мейл контакты";
 "Phone Contacts" = "Телефонные контакты";
 
@@ -43,14 +43,14 @@
 "Recording is cut" = "Ваша голосовая запись была остановлена. Вы хотите отправить ее?";
 
 "Recording for contact format" = "Запись для %@\n%@";
-"Hold to record message" = "Удерживайте для записи, отпустите для отправки";
+"Hold to record message" = "Держите для записи";
 "Cancel" = "Отменить";
 "Email" = "Эл.почта";
-"Record More Than Limit Format" = "Пожалуйста, запишите минимум %d секунд перед\nотправкой";
+"Record More Than Limit Format" = "Пожалуйста, запишите минимум %d секунду перед отправкой";
 "Send" = "Отправить";
 
 "Swipe in any direction to cancel" = "Проведите пальцем в любом направлении\nдля отмены";
-"Swipe anywhere to cancel" = "Проведите пальцем в любом направлении\nдля отмены";
+"Swipe anywhere to cancel" = "Проведите пальцем для отмены";
 "Tap to cancel" = "Нажмите для отмены";
 "Service is not available" = "Ваше устройство не поддерживает этого сервиса сообщений";
 "SMS Body Format" = "Вам отправлено аудио сообщение %@ ";
@@ -78,7 +78,7 @@
 "Your Name" = "Ваше имя";
 "Could not get all needed information from facebook!" = "Не удалось получить всю необходимую информацию из facebook! Кажется, в вашем facebook аккаунте не хватает всех нужных деталей. Пожалуйста, обновите ваш профиль или используйте другой способ входа.";
 "Validate Information Format" = "Ссылка с подтверждением отправлена %@. Пожалуйста, нажмите на ссылку для завершения регистрации в Peppermint";
-"Resend Verification" = "Отправить ссылку с подтверждением еще раз";
+"Resend Verification" = "Отправить еще раз";
 "Register Information Missing" = "Пожалуйста, заполните все поля";
 "Password" = "Пароль";
 "Verification Mail Sent" = "Peppermint только что отправил вам письмо с подтверждением. Пожалуйста, проверьте входящие!";
@@ -89,7 +89,7 @@
 "Logged in message format" = "Вы вошли с помощью %@";
 "Log Out" = "Выйти";
 "Signature" = "Подпись";
-"Display Name" = "Отображаемое имя";
+"Display Name" = "Профиль";
 "Display Name Description" = "Ваше отображаемое имя (используется при отправке in-app писем)";
 "Save" = "Сохранить";
 "Subject" = "Тема";
@@ -118,7 +118,7 @@
 "Search here for your friend" = "Найдите вашего друга.";
 "Then tap and hold to send them an audio message." = "Тогда нажмите и удерживайте\nдля отправки аудио сообщения.";
 "Display Name can not be empty" = "Отображаемое имя не может быть пустым";
-"Cancel registration or change email" = "Отменить регистрацию или сменить е-мейл";
+"Cancel registration or change email" = "Отменить или сменить е-мейл";
 "Contact Support" = "Связаться со службой поддержки";
 "Contact Support account error" = "Пожалуйста, добавьте и настройте по крайней мере один е-мейл аккаунт на этом устройстве, чтоб связываться со службой поддержки";
 "Contact Support Subject" = "Связаться со службой поддержки";
@@ -129,13 +129,13 @@
 "Peppermint.com" = "Peppermint.com";
 "Version" = "Версия";
 
-"Record a Message" = "Нажмите и удерживайте для записи";
+"Record a Message" = "Держите для записи";
 "Year" = "Год";
 "Month" = "Мес.";
 "Day" = "Д.";
 "Hour" = "Час";
 "Minute" = "Мин.";
-"Secont" = "Сек.";
+"Second" = "Сек.";
 "Plural Suffix" = "";
 "Just Now" = "Только что";
 "Don't want to create an account yet? click here" = "Пока не хотите создавать учётную запись? нажмите здесь";
@@ -190,7 +190,8 @@
 "Welcome Back" = "С возвращением";
 "Log in" = "Войти";
 "Forgot password?" = "Забыли пароль?";
-"ago" = "тому назад";
+"ago" = "назад";
 "AUTOMATIC TRANSCRIPTION" = "ТРАНСКРИПЦИЯ";
 "Transcription Preffered Default Language" = "ru-RU";
 "Send now!" = "Отправьте сейчас!";
+"MMM dd" = "dd MMM";

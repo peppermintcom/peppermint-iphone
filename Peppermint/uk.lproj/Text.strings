@@ -130,7 +130,7 @@
 "Day" = "День";
 "Hour" = "Година";
 "Minute" = "Хвилина";
-"Secont" = "Секунда";
+"Second" = "Секунда";
 "Plural Suffix" = "s";
 "Just Now" = "Тільки що";
 "Don't want to create an account yet? click here" = "Поки не бажаєте створювати обліковий запис? натисніть тут";
@@ -189,3 +189,4 @@
 "AUTOMATIC TRANSCRIPTION" = "ТРАНСКРИПЦіЯ";
 "Transcription Preffered Default Language" = "uk-UA";
 "Send now!" = "відправити зараз!";
+"MMM dd" = "MMM dd";
