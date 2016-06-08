@@ -22,7 +22,8 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     if(selected) {
-        [self applySelectedStyle];
+        NSLog(@"Selected style is bypassed as it is not needed in design anymore.");
+        //[self applySelectedStyle];
     } else {
         [self applyNonSelectedStyle];
     }
