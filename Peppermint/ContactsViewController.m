@@ -502,8 +502,9 @@ SUBSCRIBE(UserLoggedOut) {
 
 -(void) didBeginItemSelectionOnIndexpath:(NSIndexPath*) indexPath location:(CGPoint) location {
     BOOL isActiveContactListStillValid = [self activeContactList].count > indexPath.row;
-    if(!isScrolling
-       && isActiveContactListStillValid) {
+    BOOL isFastReplyContact = [self isFastReplyRowVisible] && indexPath.row == 0;
+    
+    if(!isScrolling && (isActiveContactListStillValid || isFastReplyContact)) {
         [self.searchContactsTextField resignFirstResponder];
         CGRect cellRect = [self fixTableScrollPositionForIndexPath:indexPath];
         [self.holdToRecordInfoView hide];
