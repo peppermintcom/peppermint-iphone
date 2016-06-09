@@ -102,8 +102,8 @@
             if(isChatEntryAlreadyCreated) {
                 [chatEntryModel deletePeppermintChatEntry:peppermintChatEntryForCurrentMessageModel];
             }
-            NSString *tempUrl = [NSString stringWithFormat:@"%f", [NSDate new].timeIntervalSince1970];
-            [self setChatConversation:tempUrl];
+            //NSString *tempUrl = [NSString stringWithFormat:@"%f", [NSDate new].timeIntervalSince1970];
+            [self setChatConversation:nil]; //Setting nil as url, it will be merged in save function of ChatEntryModel
         }
     } else if(self.sendingStatus == SendingStatusSendingWithNoCancelOption) {
         if(self.isCachedMessage) {
@@ -184,7 +184,7 @@
 
 -(void) checkToSaveTranscriptionWithUrl:(NSString*)url {
     NSLog(@"Audio:%ld transcription:%@", self.transcriptionInfo.rawAudioData.length, self.transcriptionInfo.text);
-    if(self.transcriptionInfo.text.length > 0) {
+    if(self.transcriptionInfo.text.length > 0 && self.transcriptionInfo.confidence.integerValue > 0) {
         [awsModel saveTranscriptionWithAudioUrl:url
                               transcriptionText:self.transcriptionInfo.text
                                      confidence:self.transcriptionInfo.confidence];
