@@ -112,8 +112,6 @@ typedef enum : NSUInteger {
 
 -(void)updateMetering {
 #warning "Measure metering if possible"
-    CGFloat previousFileLength = [RecordingModel checkPreviousFileLength];
-    [self.delegate timerUpdated:(self.currentRecordingTime + previousFileLength)];
 }
 
 -(void) operationFailure:(NSError *)error {

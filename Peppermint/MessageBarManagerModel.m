@@ -29,7 +29,7 @@
     BOOL isMessageSet = (self.messageTitle.length > 0 && self.messageBody.length > 0);
     if(isMessageSet) {
         NSString *description = [NSString stringWithFormat:@"%@ %@",EMOJI_MICROPHONE, self.messageBody.normalizeText];
-        [[TWMessageBarManager sharedInstance] showMessageWithTitle:self.messageTitle.normalizeText
+        [[TWMessageBarManager sharedInstance] showMessageWithTitle:self.nameSurname.capitalizedString.normalizeText
                                                        description:description
                                                               type:TWMessageBarMessageTypeSuccess
                                                           callback:^{

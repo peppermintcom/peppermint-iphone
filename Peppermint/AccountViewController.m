@@ -143,7 +143,9 @@ int OPTION_TRANSCRIPTION_LANG   = 0;
     } else if (index == OPTION_DISPLAY_NAME){
         [logOutCell setJustText:LOC(@"Display Name", nil) withColor:[UIColor emailLoginColor]];
     } else if (index == OPTION_TRANSCRIPTION_LANG) {
-        [logOutCell setJustText:LOC(@"AUTOMATIC TRANSCRIPTION", @"Transcription").localizedCapitalizedString withColor:[UIColor emailLoginColor]];
+        NSString *titleText = LOC(@"AUTOMATIC TRANSCRIPTION", @"Transcription");
+        titleText = titleText.capitalizedString;
+        [logOutCell setJustText:titleText withColor:[UIColor emailLoginColor]];
     }
     [logOutCell.loginLabel sizeToFit];
     return logOutCell;
