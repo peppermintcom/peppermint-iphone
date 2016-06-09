@@ -19,11 +19,13 @@
 @property (strong, nonatomic) NSDate<Optional> *recipientUntilDate;
 @property (strong, nonatomic) NSString<Optional> *recipientNextUrl;
 @property (assign, nonatomic) BOOL recipientSyncCompleted;
+@property (assign, nonatomic) BOOL recipientIsFirstCycleCompleted;
 
 @property (strong, nonatomic) NSDate<Optional> *senderSinceDate;
 @property (strong, nonatomic) NSDate<Optional> *senderUntilDate;
 @property (strong, nonatomic) NSString<Optional> *senderNextUrl;
 @property (assign, nonatomic) BOOL senderSyncCompleted;
+@property (assign, nonatomic) BOOL senderIsFirstCycleCompleted;
 
 @end
 
@@ -77,11 +79,13 @@ SUBSCRIBE(UserLoggedOut) {
             _syncDateHolder.recipientUntilDate = nil;
             _syncDateHolder.recipientNextUrl = nil;
             _syncDateHolder.recipientSyncCompleted = NO;
+            _syncDateHolder.recipientIsFirstCycleCompleted = NO;
             
             _syncDateHolder.senderSinceDate = nil;
             _syncDateHolder.senderUntilDate = nil;
             _syncDateHolder.senderNextUrl = nil;
             _syncDateHolder.senderSyncCompleted = NO;
+            _syncDateHolder.senderIsFirstCycleCompleted = NO;
         }
     }
     return _syncDateHolder;
@@ -96,6 +100,7 @@ SUBSCRIBE(UserLoggedOut) {
             self.syncDateHolder.recipientSinceDate = [NSDate dateWithTimeIntervalSinceNow:0];
         }
         self.syncDateHolder.recipientSyncCompleted = !nextQueryUrl;
+        self.syncDateHolder.recipientIsFirstCycleCompleted |= self.syncDateHolder.recipientSyncCompleted;
     } else {
         self.syncDateHolder.senderNextUrl = nextQueryUrl;
         self.syncDateHolder.senderSinceDate = [NSDate maxOfDate1:self.syncDateHolder.senderSinceDate date2:maxSinceDate];
@@ -103,6 +108,7 @@ SUBSCRIBE(UserLoggedOut) {
             self.syncDateHolder.senderSinceDate = [NSDate dateWithTimeIntervalSinceNow:0];
         }
         self.syncDateHolder.senderSyncCompleted = !nextQueryUrl;
+        self.syncDateHolder.senderIsFirstCycleCompleted |= self.syncDateHolder.senderSyncCompleted;
     }
 }
 
@@ -113,16 +119,15 @@ SUBSCRIBE(UserLoggedOut) {
 #pragma mark - SyncStatus
 
 -(BOOL) isReciviedMessagesAreInSyncOfFirstCycle {
-    return (self.syncDateHolder.recipientSinceDate != nil && !self.syncDateHolder.recipientNextUrl);
+    return self.syncDateHolder.recipientIsFirstCycleCompleted;
 }
 
 -(BOOL) issentMessagesAreInSyncOfFirstCycle {
-    return (self.syncDateHolder.senderSinceDate != nil && !self.syncDateHolder.senderNextUrl);
+    return self.syncDateHolder.senderIsFirstCycleCompleted;
 }
 
 -(BOOL) isAllMessagesAreInSyncOfFirstCycle {
-    return self.isReciviedMessagesAreInSyncOfFirstCycle
-    && self.issentMessagesAreInSyncOfFirstCycle;
+    return self.isReciviedMessagesAreInSyncOfFirstCycle && self.issentMessagesAreInSyncOfFirstCycle;
 }
 
 #pragma mark - Server Query
@@ -134,6 +139,7 @@ SUBSCRIBE(UserLoggedOut) {
 
 -(void) makeSyncRequestForMessages {
     isSyncCompleted = NO;
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [self queryServerForIncomingMessagesForRecepient:NO];
     [self queryServerForIncomingMessagesForRecepient:YES];
 }
@@ -153,7 +159,6 @@ SUBSCRIBE(UserLoggedOut) {
         [self notifyDelegateToFinishBackgroundFetchInCase];
     } else {
         activeServiceCallCount ++;
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
         
         NSDate *sinceDate = isRecipient ? self.syncDateHolder.recipientSinceDate : self.syncDateHolder.senderSinceDate;
@@ -229,7 +234,6 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
     [self queueNextQueryAfterIsRecipient:event.isForRecipient withNextQueryUrl:event.nextUrl];
     
     //Complete processing
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     [self.recentContactsModel saveMultiple:mergedPeppermintContactSet.allObjects];
     [self.chatEntryModel savePeppermintChatEntryArray:[mergedPeppermintChatEntrySet allObjects]];
 }
@@ -253,7 +257,10 @@ SUBSCRIBE(GetMessagesAreSuccessful) {
         [self saveSyncDateHolder];
         
         isSyncCompleted = (!isSyncCompleted && ![self isSyncProcessActive]);
-        if(isSyncCompleted) { NSLog(@"Sync cycle completed."); }
+        if(isSyncCompleted) {
+            NSLog(@"Sync cycle completed.");
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        }
         [self.delegate syncStepCompleted:savedPeppermintChatEnryArray isLastStep:isSyncCompleted];
     }
 }

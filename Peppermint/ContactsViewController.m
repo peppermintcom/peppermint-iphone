@@ -126,7 +126,7 @@ SUBSCRIBE(UserLoggedOut) {
         } else if (isNavigatedToChatEntries) {
             isNavigatedToChatEntries = !isNavigatedToChatEntries;
             [self.recentContactsModel refreshRecentContactList];
-            //Add if some more action will need to be taken?
+            [self.contactsModel refreshContactList];
         }
     }
 }
@@ -884,6 +884,7 @@ SUBSCRIBE(RefreshIncomingMessagesCompletedWithSuccess) {
         BOOL isScreenEmpty = [weakSelf activeContactList].count == 0;
         if(isScreenReady && (partialUpdate || newMessage || isScreenEmpty)) {
             [weakSelf.recentContactsModel refreshRecentContactList];
+            [weakSelf.contactsModel refreshContactList];
         }
     });
 }
