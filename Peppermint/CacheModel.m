@@ -118,6 +118,7 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
                         [vocieSenderModel sendVoiceMessageWithData:cachedMessage.data withExtension:cachedMessage.extension  andDuration:cachedMessage.duration.doubleValue];
                         [repository deleteEntity:cachedMessage];
                     } else {
+                        #warning "Decide what to do with retryCount reached messages. Can be logged to server"
                         NSLog(@"Cached message %@ is not triggered because %ld retryCount reached",
                               cachedMessage.receiverCommunicationChannelAddress,
                               cachedMessage.retryCount.integerValue);

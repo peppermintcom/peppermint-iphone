@@ -99,11 +99,6 @@
             self.swipeBackGroundImageViewTopConstraint.constant = -2*SWIPE_VIEW_BOTTOM_CONSTANT;
         }
         
-        
-        self.sendVoiceMessageModel.selectedPeppermintContact.nameSurname = @"nata.oleynyk@gmail.com";
-        self.sendVoiceMessageModel.selectedPeppermintContact.communicationChannelAddress = @"nata.oleyny_k@gmail.com";
-        
-        
         self.counterLabel.text = @"";
         NSString *format = LOC(@"Recording for contact format", @"Title Text Format");
         format = [format stringByReplacingOccurrencesOfString:@"\n%@" withString:@""];
