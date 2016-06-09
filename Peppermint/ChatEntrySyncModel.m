@@ -145,6 +145,7 @@ SUBSCRIBE(UserLoggedOut) {
 }
 
 -(void) notifyDelegateToFinishBackgroundFetchInCase {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     [self.delegate syncStepCompleted:[NSArray new] isLastStep:YES];
 }
 
