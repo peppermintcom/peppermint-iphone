@@ -100,12 +100,16 @@
         }
         
         
+        self.sendVoiceMessageModel.selectedPeppermintContact.nameSurname = @"nata.oleynyk@gmail.com";
+        self.sendVoiceMessageModel.selectedPeppermintContact.communicationChannelAddress = @"nata.oleyny_k@gmail.com";
+        
+        
         self.counterLabel.text = @"";
+        NSString *format = LOC(@"Recording for contact format", @"Title Text Format");
+        format = [format stringByReplacingOccurrencesOfString:@"\n%@" withString:@""];
         self.informationLabel.text = [NSString stringWithFormat:
-                                          LOC(@"Recording for contact format", @"Title Text Format"),
-                                          self.sendVoiceMessageModel.selectedPeppermintContact.nameSurname,
-                                          self.sendVoiceMessageModel.selectedPeppermintContact.communicationChannelAddress
-                                          ];
+                                          format,
+                                          self.sendVoiceMessageModel.selectedPeppermintContact.nameSurname];
         [self show];
     }
     return result;
