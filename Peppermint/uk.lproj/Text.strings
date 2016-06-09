@@ -98,7 +98,7 @@
 "Please connect to the internet to upload the message" = "Будь ласка, під\'єднайтесь до Інтернету для завантаження повідомлення";
 "Please check your login information" = "Будь ласка, перевірте вашу інформацію для входу";
 "Login with email" = "У вас немає Google або Facebook?\nУвійти через е-мейл і пароль";
-"Your message will be sent later" = "Нема Інтернету. Повідомлення буде надіслано пізніше";
+"Your message will be sent later" = "Нет Интернета. Сообщение будет отправлено позже";
 "Invalid email" = "Неправильна ел.адреса";
 "Invalid password" = "Неправильний пароль";
 "Add Contact" = "Додати контакт";

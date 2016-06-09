@@ -38,7 +38,7 @@
 "Hold to record message" = "Hold to record, release to send";
 "Cancel" = "Cancel";
 "Email" = "Email";
-"Record More Than Limit Format" = "Please record at least %d seconds before\nsending";
+"Record More Than Limit Format" = "Please record at least %d second before\nsending";
 "Send" = "Send";
 
 "Swipe in any direction to cancel" = "Swipe in any direction\nto cancel";

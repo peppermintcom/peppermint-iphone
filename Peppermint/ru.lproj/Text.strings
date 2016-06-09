@@ -104,7 +104,7 @@
 "Please connect to the internet to upload the message" = "Пожалуйста, подсоединитесь к Интернету для загрузки сообщения";
 "Please check your login information" = "Пожалуйста, проверьте вашу информацию для входа";
 "Login with email" = "У вас нет Google или Facebook?\nВойти через е-мейл и пароль";
-"Your message will be sent later" = "Соединение с Интернетом отсутствует. Ваше сообщение будет отправлено позже";
+"Your message will be sent later" = "Ваше сообщение будет отправлено позже";
 "Invalid email" = "Неправильный эл.адрес";
 "Invalid password" = "Неверный пароль";
 "Add Contact" = "Добавить контакт";
