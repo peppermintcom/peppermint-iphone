@@ -51,6 +51,7 @@
         chatEntryModel.delegate = self;
         fileUploadCompeted = NO;
         self.isCachedMessage = NO;
+        self.retryCount = 0;
     }
     return self;
 }
@@ -327,6 +328,7 @@
         case SendingStatusSendingWithNoCancelOption:
             break;
         case SendingStatusError:
+            self.retryCount++;
             [self cacheMessage];
         case SendingStatusCancelled:
         case SendingStatusCached:

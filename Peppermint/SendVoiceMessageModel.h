@@ -18,6 +18,8 @@
 #define TYPE_M4A    @"audio/mp4"
 #define TYPE_AAC    @"audio/aac"
 
+#define MAX_RETRY_COUNT     5
+
 typedef enum : NSUInteger {
     SendingStatusError = 0,
     SendingStatusCancelled = 1,
@@ -51,6 +53,7 @@ typedef enum : NSUInteger {
 @property (weak, nonatomic) id<SendVoiceMessageDelegate> delegate;
 @property (strong, nonatomic) TranscriptionInfo *transcriptionInfo;
 @property (assign, nonatomic) BOOL isCachedMessage;
+@property (assign, nonatomic) NSInteger retryCount;
 
 -(void) sendVoiceMessageWithData:(NSData*) data withExtension:(NSString*) extension andDuration:(NSTimeInterval) duration;
 -(NSString*) typeForExtension:(NSString*) extension;

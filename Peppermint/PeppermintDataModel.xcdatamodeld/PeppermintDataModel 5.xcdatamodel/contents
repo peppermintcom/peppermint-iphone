@@ -9,6 +9,7 @@
         <attribute name="receiverCommunicationChannel" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="receiverCommunicationChannelAddress" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="receiverNameSurname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="retryCount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="senderEmail" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="senderNameSurname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
@@ -49,7 +50,7 @@
         <attribute name="peppermintContactDate" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CachedMessage" positionX="-135" positionY="-63" width="128" height="225"/>
+        <element name="CachedMessage" positionX="-135" positionY="-63" width="128" height="240"/>
         <element name="ChatEntry" positionX="-234" positionY="72" width="128" height="255"/>
         <element name="Contact" positionX="-353" positionY="3" width="128" height="105"/>
         <element name="CustomContact" positionX="-243" positionY="63" width="128" height="75"/>

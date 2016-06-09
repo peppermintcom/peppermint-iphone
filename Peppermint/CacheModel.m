@@ -18,7 +18,7 @@
 #define     KEY_SENDER_CLASS                    @"SenderClass"
 
 @implementation CacheModel {
-    volatile NSUInteger numberOfActiveCalls;
+    __block volatile NSUInteger numberOfActiveCalls;
 }
 
 + (instancetype) sharedInstance {
@@ -62,6 +62,7 @@
     cachedMessage.duration = [NSNumber numberWithDouble:duration];
     cachedMessage.rawAudioData = transcriptionInfo.rawAudioData;
     cachedMessage.transcriptionText = transcriptionInfo.text;
+    cachedMessage.retryCount = [NSNumber numberWithInteger:sendVoiceMessageModel.retryCount];
     
     __block NSError *err = [repository endTransaction];
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -92,28 +93,35 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
                 
                 for(int i=0; i<cachedMessageArray.count; i++) {
                     CachedMessage *cachedMessage = [cachedMessageArray objectAtIndex:i];
-                    SendVoiceMessageModel *vocieSenderModel = [[NSClassFromString(cachedMessage.mailSenderClass) alloc] init];
-                    vocieSenderModel.delegate = nil;
-                    vocieSenderModel.isCachedMessage = YES;
-                    
-                    PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
-                    peppermintMessageSender.nameSurname = cachedMessage.senderNameSurname;
-                    peppermintMessageSender.email = cachedMessage.senderEmail;
-                    PeppermintContact *selectedContact = [PeppermintContact new];
-                    selectedContact.nameSurname = cachedMessage.receiverNameSurname;
-                    selectedContact.communicationChannel = cachedMessage.receiverCommunicationChannel.intValue;
-                    selectedContact.communicationChannelAddress = cachedMessage.receiverCommunicationChannelAddress;
-                    vocieSenderModel.peppermintMessageSender = peppermintMessageSender;
-                    vocieSenderModel.selectedPeppermintContact = selectedContact;
-                    vocieSenderModel.transcriptionInfo.rawAudioData = cachedMessage.rawAudioData;
-                    vocieSenderModel.transcriptionInfo.text = cachedMessage.transcriptionText;
-                    
-                    if ([vocieSenderModel isKindOfClass:[SendVoiceMessageEmailModel class]]) {
-                        ((SendVoiceMessageEmailModel*)vocieSenderModel).subject = cachedMessage.subject;
+                    if(cachedMessage.retryCount.integerValue < MAX_RETRY_COUNT) {
+                        SendVoiceMessageModel *vocieSenderModel = [[NSClassFromString(cachedMessage.mailSenderClass) alloc] init];
+                        vocieSenderModel.delegate = nil;
+                        vocieSenderModel.isCachedMessage = YES;
+                        
+                        PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
+                        peppermintMessageSender.nameSurname = cachedMessage.senderNameSurname;
+                        peppermintMessageSender.email = cachedMessage.senderEmail;
+                        PeppermintContact *selectedContact = [PeppermintContact new];
+                        selectedContact.nameSurname = cachedMessage.receiverNameSurname;
+                        selectedContact.communicationChannel = cachedMessage.receiverCommunicationChannel.intValue;
+                        selectedContact.communicationChannelAddress = cachedMessage.receiverCommunicationChannelAddress;
+                        vocieSenderModel.peppermintMessageSender = peppermintMessageSender;
+                        vocieSenderModel.selectedPeppermintContact = selectedContact;
+                        vocieSenderModel.transcriptionInfo.rawAudioData = cachedMessage.rawAudioData;
+                        vocieSenderModel.transcriptionInfo.text = cachedMessage.transcriptionText;
+                        vocieSenderModel.retryCount = cachedMessage.retryCount.integerValue;
+                        
+                        if ([vocieSenderModel isKindOfClass:[SendVoiceMessageEmailModel class]]) {
+                            ((SendVoiceMessageEmailModel*)vocieSenderModel).subject = cachedMessage.subject;
+                        }
+                        
+                        [vocieSenderModel sendVoiceMessageWithData:cachedMessage.data withExtension:cachedMessage.extension  andDuration:cachedMessage.duration.doubleValue];
+                        [repository deleteEntity:cachedMessage];
+                    } else {
+                        NSLog(@"Cached message %@ is not triggered because %ld retryCount reached",
+                              cachedMessage.receiverCommunicationChannelAddress,
+                              cachedMessage.retryCount.integerValue);
                     }
-                    
-                    [vocieSenderModel sendVoiceMessageWithData:cachedMessage.data withExtension:cachedMessage.extension  andDuration:cachedMessage.duration.doubleValue];
-                    [repository deleteEntity:cachedMessage];
                 }
                 [repository endTransaction];
                 if(--numberOfActiveCalls > 0) {
@@ -123,7 +131,9 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
                     });
                 }
             });
-        }
+    } else {
+        NSLog(@"did not process triggerCachedMessages because numberOfActiveCalls is %ld", numberOfActiveCalls);
+    }
 }
 
 -(void) cacheOngoingMessages {
