@@ -23,7 +23,7 @@
     //Title
     self.titleLabel.textColor = [UIColor whiteColor];
     self.titleLabel.font = [UIFont openSansSemiBoldFontOfSize:TITLE_TEXT_SIZE];
-    self.titleLabel.text = LOC(@"AUTOMATIC TRANSCRIPTION", @"Transcription").localizedCapitalizedString;
+    self.titleLabel.text = LOC(@"AUTOMATIC TRANSCRIPTION", @"Transcription").capitalizedString;
     
     self.tableView.rowHeight = CELL_HEIGHT_SEARCH_MENU_TABLEVIEWCELL;
     allLanguagesArray = [self.transcriptionModel.supportedLanguageCodesDictionary.allValues
