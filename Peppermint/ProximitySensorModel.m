@@ -9,6 +9,7 @@
 #import "ProximitySensorModel.h"
 #import "DeviceMotionMager.h"
 
+#warning "Incoming call and raising the phone cause proximity to start, however incoming call blocks it. In the end, it appears alerts about microphone. Check the case!"
 
 #define SENSITIVITY                     0.60     //SENSITIVITY TRESHOLD FOR DEVICE ORIENTATION
 #define DEVICE_MOVEMENT_TRESHOLD        0.60      //TRESHOLD TO DECIDE DEVICE IS RAISING
