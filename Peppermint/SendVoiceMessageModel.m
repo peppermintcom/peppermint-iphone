@@ -387,8 +387,7 @@
     
     for(SendVoiceMessageModel *item in array) {
         if(!sendVoiceMessageModel
-           || sendVoiceMessageModel.sendingStatus > item.sendingStatus
-           || [self isModelActive:item]) {
+           || ((sendVoiceMessageModel.sendingStatus > item.sendingStatus) && [self isModelActive:item])) {
             sendVoiceMessageModel = item;
         }
     }

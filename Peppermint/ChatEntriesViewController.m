@@ -23,7 +23,6 @@
 @end
 
 @implementation ChatEntriesViewController {
-    AutoPlayModel *autoPlayModel;
     __block BOOL scheduleRefresh;
     BOOL isScrolling;
     __block BOOL isPlaying;
@@ -41,7 +40,6 @@
     
     self.avatarImageView.layer.cornerRadius = 5;
     
-    autoPlayModel =[AutoPlayModel sharedInstance];
     [self recordingView]; // init recording view to be able to handle status change events
     self.recordingButton.delegate = self;
     calculatedHeightsDictionary = [NSMutableDictionary new];
@@ -486,7 +484,7 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
 
 -(void) checkForAutoPlay {
     NSString *email = self.peppermintContact.communicationChannelAddress;
-    BOOL isAutoPlayScheduled = [autoPlayModel isScheduledForPeppermintContactWithEmail:email];
+    BOOL isAutoPlayScheduled = [[AutoPlayModel sharedInstance] isScheduledForPeppermintContactWithEmail:email];
     if(isAutoPlayScheduled) {
         NSUInteger lastSection = 0;
         NSUInteger lastRowNumber = [self.tableView numberOfRowsInSection:lastSection] - 1;
