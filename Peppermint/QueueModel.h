@@ -11,5 +11,5 @@
 @interface QueueModel : BaseModel
 
 + (instancetype) sharedInstance;
--(dispatch_queue_t) transcriptionQueue;
+-(NSOperationQueue*) transcriptionQueue;
 @end

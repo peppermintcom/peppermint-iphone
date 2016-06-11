@@ -35,6 +35,7 @@
 @property (nonatomic, strong) GRXBufferedPipe *writer;
 @property (nonatomic, strong) ProtoRPC *call;
 @property (nonatomic, strong) TranscriptionModel *transcriptionModel;
+@property (strong, nonatomic) NSTimer *speechResponseWaitTimer;
 @end
 
 @implementation SpeechRecognitionService
@@ -117,27 +118,43 @@
     request.audioRequest = audioRequest;
     Speech *client = [[Speech alloc] initWithHost:HOST];
     
-    
-    __block NSTimer *speechResponseWaitTimer = [NSTimer scheduledTimerWithTimeInterval:SPEECH_RESPONSE_WAIT_TIME
-                                                                                target:self
-                                                                              selector:@selector(timeOutOccuredWithTimer:)
-                                                                              userInfo:@{NON_STREAM_COMPLETION : completion}
-                                                                               repeats:NO];
-    
+    weakself_create();
+    [self setSpeechResponseWaitTimerWithUserInfo:@{NON_STREAM_COMPLETION : completion}];
     ProtoRPC *call = [client RPCToNonStreamingRecognizeWithRequest:request
                                                            handler:^(NonStreamingRecognizeResponse *response, NSError *error) {
-                                                               [speechResponseWaitTimer invalidate];
-                                                               speechResponseWaitTimer = nil;
+                                                               [weakSelf invalidateSpeechResponseWaitTimer];
                                                                completion(response, error);
                                                            }];
-    
     call.requestHeaders[XGoogApiKey] = GOOGLE_SPEECH_API_KEY;
     [call start];
 }
 
+#pragma mark - SpeechResponseWaitTimer
+
+-(void) invalidateSpeechResponseWaitTimer {
+    if(_speechResponseWaitTimer ) {
+        [self.speechResponseWaitTimer invalidate];
+        self.speechResponseWaitTimer = nil;
+        NSLog(@"Timer is invalidated.");
+    } else {
+        NSLog(@"Timer is not working. Clean to go...");
+    }
+}
+
+-(void) setSpeechResponseWaitTimerWithUserInfo:(NSDictionary*) userInfo {
+    [self invalidateSpeechResponseWaitTimer];
+    self.speechResponseWaitTimer = [NSTimer scheduledTimerWithTimeInterval:SPEECH_RESPONSE_WAIT_TIME
+                                                                    target:self
+                                                                  selector:@selector(timeOutOccuredWithTimer:)
+                                                                  userInfo:userInfo
+                                                                   repeats:NO];
+    NSLog(@"Timer is set with %@", userInfo.description);
+}
+
 -(void) timeOutOccuredWithTimer:(NSTimer*) timer {
+    NSLog(@"timeOutOccuredWithTimer: is called");
     NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : @"timoutOccured"};
-    NSError *error = [NSError errorWithDomain:DOMAIN_GRPC code:-1 userInfo:userInfo];
+    NSError *error = [NSError errorWithDomain:DOMAIN_GRPC code:ERROR_CODE_TIMEOUT userInfo:userInfo];
     
     userInfo = (NSDictionary*) timer.userInfo;
     if(!userInfo) {
@@ -153,4 +170,10 @@
     }
 }
 
+-(void) dealloc {
+    NSLog(@"dealloc Speech Recognition service...");
+    if(self.call) {
+        [self.call cancel];
+    }
+}
 @end

@@ -127,6 +127,7 @@ typedef enum : NSUInteger {
     NSLog(@"Failure in transcription.\n%@", error);
     self.gotError = YES;
     [self.speechRecognitionService stopStreamingWithError:error];
+    self.speechRecognitionService = nil;
     [self speechResponseDidNotReceivedInTime];
 }
 

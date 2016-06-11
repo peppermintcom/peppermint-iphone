@@ -102,9 +102,8 @@
 }
 
 -(BOOL) isCancelAble {
-    return
-    self.sendingStatus == SendingStatusStarting
-    || self.sendingStatus == SendingStatusUploading;
+    return [super isCancelAble]
+    && (self.sendingStatus == SendingStatusStarting || self.sendingStatus == SendingStatusUploading);
 }
 
 @end

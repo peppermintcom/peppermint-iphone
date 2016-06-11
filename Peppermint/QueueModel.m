@@ -9,7 +9,7 @@
 #import "QueueModel.h"
 
 @implementation QueueModel {
-    dispatch_queue_t transcriptionQueue;
+    NSOperationQueue *transcriptionQueue;
 }
 
 + (instancetype) sharedInstance {
@@ -24,13 +24,14 @@
 -(id) initShared {
     self = [super init];
     if(self) {
-        transcriptionQueue = dispatch_queue_create("com.example.name", DISPATCH_QUEUE_SERIAL);
+        transcriptionQueue = [NSOperationQueue new];
+        transcriptionQueue.maxConcurrentOperationCount = 1;
     }
     return self;
 }
 
 
--(dispatch_queue_t) transcriptionQueue {
+-(NSOperationQueue*) transcriptionQueue {
     return transcriptionQueue;
 }
 

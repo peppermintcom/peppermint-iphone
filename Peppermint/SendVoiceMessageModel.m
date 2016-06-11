@@ -102,8 +102,8 @@
             if(isChatEntryAlreadyCreated) {
                 [chatEntryModel deletePeppermintChatEntry:peppermintChatEntryForCurrentMessageModel];
             }
-            //NSString *tempUrl = [NSString stringWithFormat:@"%f", [NSDate new].timeIntervalSince1970];
-            [self setChatConversation:nil]; //Setting nil as url, it will be merged in save function of ChatEntryModel
+            NSString *tempUrl = [NSString stringWithFormat:@"%f", [NSDate new].timeIntervalSince1970];
+            [self setChatConversation:tempUrl]; //Setting tempValue as url, it will be merged in save function of ChatEntryModel
         }
     } else if(self.sendingStatus == SendingStatusSendingWithNoCancelOption) {
         if(self.isCachedMessage) {
@@ -120,7 +120,11 @@
     NSString *customInfo = [NSString stringWithFormat:@"%@ Message Sending Error", self.class];
     error = [AnalyticsModel addCustomInfo:customInfo toError:error];
     [AnalyticsModel logError:error];
-    if(![error.domain isEqualToString:NSURLErrorDomain]) {
+    if([error.domain isEqualToString:NSURLErrorDomain]) {
+        NSLog(@"%ld error %@", error.code, NSURLErrorDomain);
+    } else if([error.domain isEqualToString:DOMAIN_GRPC] && error.code == ERROR_CODE_TIMEOUT ) {
+        NSLog(@"Timeout occured in %@", DOMAIN_GRPC);
+    } else {
         NSLog(@"It is not a connection error. Consider notifying the user or nivestigeting the reason.");
 #ifdef DEBUG
         [AppDelegate handleError:error];
@@ -163,28 +167,30 @@
 }
 
 -(void) retryTranscription {
-    dispatch_queue_t transcriptionQueue = [[QueueModel sharedInstance] transcriptionQueue];
+    //As cacheModel is programmed to trigger one by one, there should not happen concurrency problem, however still it is possible
+    //Consider to use QueueModel
+    
     weakself_create();
-    dispatch_async(transcriptionQueue, ^{
-        SpeechRecognitionService *service = [SpeechRecognitionService new];
-        [service transcriptAudioData:self.transcriptionInfo.rawAudioData withCompletion:
-         ^(NonStreamingRecognizeResponse *object, NSError *error) {
-             if(error) {
-                 [weakSelf operationFailure:error];
-             } else {
+    [[SpeechRecognitionService new] transcriptAudioData:self.transcriptionInfo.rawAudioData withCompletion:
+     ^(NonStreamingRecognizeResponse *object, NSError *error) {
+         if(error) {
+             [weakSelf operationFailure:error];
+         } else {
+             NSLog(@"Got response : %@", object);
+             if(object.responsesArray.count > 1) {
                  weakSelf.transcriptionInfo = nil;
                  for(RecognizeResponse *recognizeResponse in object.responsesArray) {
                      [weakSelf.transcriptionInfo processRecogniseResponse:recognizeResponse];
                  }
-                 [weakSelf checkToSaveTranscriptionWithUrl:cachedCanonicalUrl];
              }
-         }];
-    });
+             [weakSelf checkToSaveTranscriptionWithUrl:cachedCanonicalUrl];
+         }
+     }];
 }
 
 -(void) checkToSaveTranscriptionWithUrl:(NSString*)url {
     NSLog(@"Audio:%ld transcription:%@", self.transcriptionInfo.rawAudioData.length, self.transcriptionInfo.text);
-    if(self.transcriptionInfo.text.length > 0 && self.transcriptionInfo.confidence.integerValue > 0) {
+    if(self.transcriptionInfo.text.length > 0 && self.transcriptionInfo.confidence.floatValue > 0) {
         [awsModel saveTranscriptionWithAudioUrl:url
                               transcriptionText:self.transcriptionInfo.text
                                      confidence:self.transcriptionInfo.confidence];
@@ -244,9 +250,11 @@
     BOOL isValidToCache = _data && _extension && _duration > 0;
     if(isValidToCache) {
         _sendingStatus = SendingStatusCancelled; //Cancel to stop ongoing processes. All taken actions are rolled-back!
+#warning Handle the case if message cached after uploading audio!!!
         [[CacheModel sharedInstance] cache:self WithData:_data extension:_extension duration:_duration transcriptionInfo:self.transcriptionInfo];
     } else {
         NSLog(@"Message could not be cached. There is no sufficient information to cache!");
+        [self performDetach];
     }
 }
 
@@ -263,7 +271,7 @@
 }
 
 -(BOOL) isCancelAble {
-    return YES;
+    return !self.isCachedMessage;
 }
 
 -(NSString*) fastReplyUrlForSender {
@@ -330,12 +338,14 @@
         case SendingStatusError:
             self.retryCount++;
             [self cacheMessage];
+            break;
         case SendingStatusCancelled:
         case SendingStatusCached:
             [self performDetach];
             //NSLog(@"%@ changed status to %d, soon it will be detached.", self, (int)self.sendingStatus);
             break;
         case SendingStatusSent:
+            [[CacheModel sharedInstance] triggerCachedMessages];
             if(fileUploadCompeted) {
                 [self performDetach];
             }

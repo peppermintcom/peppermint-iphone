@@ -69,7 +69,7 @@
         case SendingStatusStarting:
         case SendingStatusUploading:
         case SendingStatusSending:
-            result = YES;
+            result = [super isCancelAble];
             break;
         case SendingStatusError:
         case SendingStatusCancelled:
