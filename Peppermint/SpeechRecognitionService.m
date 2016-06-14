@@ -122,8 +122,15 @@
     [self setSpeechResponseWaitTimerWithUserInfo:@{NON_STREAM_COMPLETION : completion}];
     ProtoRPC *call = [client RPCToNonStreamingRecognizeWithRequest:request
                                                            handler:^(NonStreamingRecognizeResponse *response, NSError *error) {
-                                                               [weakSelf invalidateSpeechResponseWaitTimer];
-                                                               completion(response, error);
+                                                               strongSelf_create()
+                                                               if(strongSelf) {
+                                                                   BOOL isTimerInvalidated = [strongSelf invalidateSpeechResponseWaitTimer];
+                                                                   if(isTimerInvalidated) {
+                                                                       completion(response, error);
+                                                                   } else {
+                                                                       NSLog(@"Received response after timeout. Consider to increase timeout limit.");
+                                                                   }
+                                                               }
                                                            }];
     call.requestHeaders[XGoogApiKey] = GOOGLE_SPEECH_API_KEY;
     [call start];
@@ -131,14 +138,17 @@
 
 #pragma mark - SpeechResponseWaitTimer
 
--(void) invalidateSpeechResponseWaitTimer {
+-(BOOL) invalidateSpeechResponseWaitTimer {
+    BOOL result = NO;
     if(_speechResponseWaitTimer ) {
         [self.speechResponseWaitTimer invalidate];
         self.speechResponseWaitTimer = nil;
         NSLog(@"Timer is invalidated.");
+        result = YES;
     } else {
         NSLog(@"Timer is not working. Clean to go...");
     }
+    return result;
 }
 
 -(void) setSpeechResponseWaitTimerWithUserInfo:(NSDictionary*) userInfo {

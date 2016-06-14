@@ -98,7 +98,7 @@ typedef enum : NSUInteger {
 
 -(void) stop {
     if (self.isStopCommandReceived) {
-        NSLog(@"Not processing stop again, because isStopCommandReceived = NO");
+        NSLog(@"Not processing stop again, because isStopCommandReceived = YES");
     } else {
         [super stop];
         self.isStopCommandReceived = YES;
