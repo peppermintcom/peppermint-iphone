@@ -349,6 +349,11 @@ SUBSCRIBE(DetachSuccess) {
     NSString *messageBody = [userInfo valueForKeyPath:PATH_BODY];
     NSString *messageTitle = [userInfo valueForKeyPath:PATH_TITLE];
     
+    if([messageBody hasPrefix:messageTitle]) {
+        NSRange range = [messageTitle rangeOfString:messageBody];
+        messageTitle = [messageTitle stringByReplacingCharactersInRange:range withString:@""];
+    }
+    
     [self messageBarManagerModel].nameSurname = peppermintContact.nameSurname;
     [self messageBarManagerModel].email = peppermintContact.communicationChannelAddress;
     [self messageBarManagerModel].avatarImage = peppermintContact.avatarImage;
