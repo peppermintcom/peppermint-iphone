@@ -17,7 +17,7 @@
 #import "QueueModel.h"
 
 #define DISPATCH_SEMAPHORE_PERIOD   15000000000 //15seconds in nanoseconds
-#define TRANSCRIPTION_TRY_LIMIT     3
+#define TRANSCRIPTION_TRY_LIMIT     1
 
 @interface SendVoiceMessageModel () <ChatEntryModelDelegate>
 @end
@@ -31,6 +31,7 @@
     PeppermintChatEntry *peppermintChatEntryForCurrentMessageModel;
     __block BOOL fileUploadCompeted;
     int transcriptionTryCount;
+    SpeechRecognitionService *speechRecognitionService;
 }
 
 -(id) init {
@@ -166,16 +167,23 @@
     [self checkToDetach];
 }
 
+-(SpeechRecognitionService*) speechRecognitionService {
+    if(!speechRecognitionService) {
+        speechRecognitionService = [SpeechRecognitionService new];
+    }
+    return speechRecognitionService;
+}
+
 -(void) retryTranscription {
     //As cacheModel is programmed to trigger one by one, there should not happen concurrency problem, however still it is possible
     //Consider to use QueueModel
     
     weakself_create();
-    NSInteger durationToSend = MAX(22, _duration);
-    [[SpeechRecognitionService new] transcriptAudioData:self.transcriptionInfo.rawAudioData ofDuration:durationToSend withCompletion:
+    NSInteger durationToSend = MAX(33, _duration);
+    [[self speechRecognitionService] transcriptAudioData:self.transcriptionInfo.rawAudioData ofDuration:durationToSend withCompletion:
      ^(NonStreamingRecognizeResponse *object, NSError *error) {
-         if(error) {
-             [AppDelegate handleError:error];
+         if(error) {             
+             [AnalyticsModel logError:error];
              [weakSelf checkToSaveTranscriptionWithUrl:cachedCanonicalUrl];
          } else {
              NSLog(@"Got response : %@", object);
@@ -196,7 +204,7 @@
         [awsModel saveTranscriptionWithAudioUrl:url
                               transcriptionText:self.transcriptionInfo.text
                                      confidence:self.transcriptionInfo.confidence];
-    } else if ( ++transcriptionTryCount < TRANSCRIPTION_TRY_LIMIT && self.transcriptionInfo.rawAudioData.length > 0) {
+    } else if ( transcriptionTryCount++ < TRANSCRIPTION_TRY_LIMIT && self.transcriptionInfo.rawAudioData.length > 0) {
         [self retryTranscription];
     } else if (self.transcriptionInfo.text.length > 0) {
         [awsModel saveTranscriptionWithAudioUrl:url

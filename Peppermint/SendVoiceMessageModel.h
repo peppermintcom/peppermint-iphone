@@ -18,7 +18,7 @@
 #define TYPE_M4A    @"audio/mp4"
 #define TYPE_AAC    @"audio/aac"
 
-#define MAX_RETRY_COUNT     10
+#define MAX_RETRY_COUNT     5
 
 typedef enum : NSUInteger {
     SendingStatusError = 0,

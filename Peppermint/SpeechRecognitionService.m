@@ -119,7 +119,7 @@
     Speech *client = [[Speech alloc] initWithHost:HOST];
     
     weakself_create();
-    NSInteger timeout = MIN(150, (duration * 2.5));
+    NSInteger timeout = MIN(180, (duration * 3));
     [self setSpeechResponseWaitTimerWithUserInfo:@{NON_STREAM_COMPLETION : completion} timeout:timeout];
     ProtoRPC *call = [client RPCToNonStreamingRecognizeWithRequest:request
                                                            handler:^(NonStreamingRecognizeResponse *response, NSError *error) {
@@ -132,6 +132,8 @@
                                                                    } else {
                                                                        NSLog(@"Received response after timeout. Consider to increase timeout limit.");
                                                                    }
+                                                               } else {
+                                                                   NSLog(@"Could not init strongself. Not processing response");
                                                                }
                                                            }];
     call.requestHeaders[XGoogApiKey] = GOOGLE_SPEECH_API_KEY;
