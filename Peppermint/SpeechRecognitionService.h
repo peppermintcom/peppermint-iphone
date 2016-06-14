@@ -32,6 +32,6 @@ typedef void (^SpeechRecognitionNonStreamCompletionHandler)(NonStreamingRecogniz
 - (void) stopStreaming;
 - (BOOL) isStreaming;
 
-- (void) transcriptAudioData:(NSData *) audioData withCompletion:(SpeechRecognitionNonStreamCompletionHandler)completion;
+- (void) transcriptAudioData:(NSData *) audioData ofDuration:(NSInteger)duration withCompletion:(SpeechRecognitionNonStreamCompletionHandler)completion;
 
 @end

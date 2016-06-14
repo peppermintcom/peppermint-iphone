@@ -109,7 +109,7 @@
   return _streaming;
 }
 
-- (void) transcriptAudioData:(NSData *) audioData withCompletion:(SpeechRecognitionNonStreamCompletionHandler)completion {
+- (void) transcriptAudioData:(NSData *) audioData ofDuration:(NSInteger)duration withCompletion:(SpeechRecognitionNonStreamCompletionHandler)completion {
     AudioRequest *audioRequest = [AudioRequest message];
     audioRequest.content = audioData;
     
@@ -119,9 +119,11 @@
     Speech *client = [[Speech alloc] initWithHost:HOST];
     
     weakself_create();
-    [self setSpeechResponseWaitTimerWithUserInfo:@{NON_STREAM_COMPLETION : completion}];
+    NSInteger timeout = MIN(150, (duration * 2.5));
+    [self setSpeechResponseWaitTimerWithUserInfo:@{NON_STREAM_COMPLETION : completion} timeout:timeout];
     ProtoRPC *call = [client RPCToNonStreamingRecognizeWithRequest:request
                                                            handler:^(NonStreamingRecognizeResponse *response, NSError *error) {
+                                                               NSLog(@"Got response:\n%@", response);
                                                                strongSelf_create()
                                                                if(strongSelf) {
                                                                    BOOL isTimerInvalidated = [strongSelf invalidateSpeechResponseWaitTimer];
@@ -151,14 +153,14 @@
     return result;
 }
 
--(void) setSpeechResponseWaitTimerWithUserInfo:(NSDictionary*) userInfo {
+-(void) setSpeechResponseWaitTimerWithUserInfo:(NSDictionary*) userInfo timeout:(NSInteger)timeout {
     [self invalidateSpeechResponseWaitTimer];
-    self.speechResponseWaitTimer = [NSTimer scheduledTimerWithTimeInterval:SPEECH_RESPONSE_WAIT_TIME
+    self.speechResponseWaitTimer = [NSTimer scheduledTimerWithTimeInterval:timeout > 0 ? timeout : SPEECH_RESPONSE_WAIT_TIME
                                                                     target:self
                                                                   selector:@selector(timeOutOccuredWithTimer:)
                                                                   userInfo:userInfo
                                                                    repeats:NO];
-    NSLog(@"Timer is set with %@", userInfo.description);
+    NSLog(@"Timer is set to %ld seconds with %@", timeout, userInfo.description);
 }
 
 -(void) timeOutOccuredWithTimer:(NSTimer*) timer {

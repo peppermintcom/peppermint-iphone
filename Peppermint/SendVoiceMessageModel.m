@@ -171,10 +171,12 @@
     //Consider to use QueueModel
     
     weakself_create();
-    [[SpeechRecognitionService new] transcriptAudioData:self.transcriptionInfo.rawAudioData withCompletion:
+    NSInteger durationToSend = MAX(22, _duration);
+    [[SpeechRecognitionService new] transcriptAudioData:self.transcriptionInfo.rawAudioData ofDuration:durationToSend withCompletion:
      ^(NonStreamingRecognizeResponse *object, NSError *error) {
          if(error) {
-             [weakSelf operationFailure:error];
+             [AppDelegate handleError:error];
+             [weakSelf checkToSaveTranscriptionWithUrl:cachedCanonicalUrl];
          } else {
              NSLog(@"Got response : %@", object);
              if(object.responsesArray.count > 1) {
@@ -194,8 +196,12 @@
         [awsModel saveTranscriptionWithAudioUrl:url
                               transcriptionText:self.transcriptionInfo.text
                                      confidence:self.transcriptionInfo.confidence];
-    } else if ( ++transcriptionTryCount < TRANSCRIPTION_TRY_LIMIT && self.transcriptionInfo.rawAudioData) {
+    } else if ( ++transcriptionTryCount < TRANSCRIPTION_TRY_LIMIT && self.transcriptionInfo.rawAudioData.length > 0) {
         [self retryTranscription];
+    } else if (self.transcriptionInfo.text.length > 0) {
+        [awsModel saveTranscriptionWithAudioUrl:url
+                              transcriptionText:self.transcriptionInfo.text
+                                     confidence:@0.5];
     } else {
         [self uploadsAreProcessedToSendMessage];
     }
