@@ -125,8 +125,10 @@ SUBSCRIBE(ApplicationDidBecomeActive) {
                               cachedMessage.retryCount.integerValue);
                     }
                 }
-                [repository endTransaction];
-                if(--numberOfActiveCalls > 0) {
+                NSError *error = [repository endTransaction];
+                if(error) {
+                    [AppDelegate handleError:error];
+                } else if(--numberOfActiveCalls > 0) {
                     numberOfActiveCalls = 0;
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [[CacheModel sharedInstance] triggerCachedMessages];

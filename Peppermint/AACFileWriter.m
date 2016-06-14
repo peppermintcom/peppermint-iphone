@@ -51,6 +51,7 @@
                                              selector:@selector(audioSessionInterrupted:)
                                                  name:AVAudioSessionInterruptionNotification
                                                object:nil];
+    NSLog(@"Destination is %@", destination);
     tPAACAudioConverter = [[TPAACAudioConverter alloc] initWithDelegate:self
                                                              dataSource:self
                                                             audioFormat:asbd
