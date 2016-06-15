@@ -310,6 +310,11 @@ SUBSCRIBE(UserLoggedOut) {
         ContactInformationTableViewCell *cell = [CellFactory cellContactInformationTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:self];
         [cell setViewForShowResultsFromPhoneContacts];
         preparedCell = cell;
+    } else {
+        //Added according to NSInternalInconsistencyException in Fabric Logs. numberofrows&sections delegate functions should be checked
+        ContactInformationTableViewCell *cell = [CellFactory cellContactInformationTableViewCellFromTable:tableView forIndexPath:indexPath withDelegate:nil];
+        cell.titleLabel.text = @"";
+        preparedCell = cell;
     }
     return preparedCell;
 }

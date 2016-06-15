@@ -185,6 +185,9 @@
     [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil] show];
 }
 
+-(void) feedBackSentWithSuccess {
+    [self feedBackResultWithMessage:LOC(@"Feedback sent with success", @"Feedback sent with success")];
+}
 
 /*
 

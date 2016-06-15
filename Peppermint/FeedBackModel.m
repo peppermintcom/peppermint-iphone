@@ -67,6 +67,7 @@
 
 -(void) presentMailModalView {
     __block NSString *body;
+    weakself_create();
     EasyMailSender *mailSender = [EasyMailSender easyMail:^(MFMailComposeViewController *controller) {
         NSString *supportEmail = [self supportEmail];
         [controller setToRecipients:[NSArray arrayWithObject:supportEmail]];
@@ -76,13 +77,13 @@
     } complete:^(MFMailComposeViewController *controller, MFMailComposeResult result, NSError *error) {
         if(error) {
             [controller dismissViewControllerAnimated:YES completion:nil];
-            [self.delegate operationFailure:error];
+            [weakSelf.delegate operationFailure:error];
         } else if (result == MFMailComposeResultFailed) {
             [controller dismissViewControllerAnimated:YES completion:nil];
             error = [NSError errorWithDomain:LOC(@"An error occured",@"Unknown Error Message") code:0 userInfo:nil];
-            [self.delegate operationFailure:error];
+            [weakSelf.delegate operationFailure:error];
         } else if (result == MFMailComposeResultSent) {
-            [self.delegate feedBackSentWithSuccess];
+            [weakSelf.delegate feedBackSentWithSuccess];
             [controller dismissViewControllerAnimated:NO completion:nil];
             NSMutableDictionary *messageDict = [NSMutableDictionary dictionaryWithDictionary:[DeviceModel summaryDictionary]];
             [messageDict setValue:body forKey:@"message"];

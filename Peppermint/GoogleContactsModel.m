@@ -134,9 +134,10 @@
             [peppermintContact addToCoreSpotlightSearch];
             
             NSError *err = [repository endTransaction];
+            weakself_create()
             dispatch_async(dispatch_get_main_queue(), ^{
                 if(err) {
-                    [self.delegate operationFailure:err];
+                    [weakSelf.delegate operationFailure:err];
                 }
             });
         } else {
@@ -163,7 +164,7 @@
     
     for(GoogleContact *matchedGoogleContact in matchingGoogleContacts) {
         PeppermintContact *peppermintContact = [[PeppermintContact alloc] initWithContact:matchedGoogleContact];
-        peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%d",
+        peppermintContact.uniqueContactId = [NSString stringWithFormat:@"%@%lu",
                                              CONTACT_GOOGLE, matchedGoogleContact.identifier.hash];
         [peppermintContactArray addObject:peppermintContact];
     }

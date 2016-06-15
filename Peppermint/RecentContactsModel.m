@@ -48,7 +48,7 @@
         for(PeppermintContact *peppermintContact in peppermintContactArray) {
             if(!peppermintContact.isRestrictedForRecentContact) {
                 [peppermintContact addToCoreSpotlightSearch];
-                NSPredicate *predicate = [self recentContactPredicate:peppermintContact];
+                NSPredicate *predicate = [weakSelf recentContactPredicate:peppermintContact];
                 NSArray *matchedRecentContacts = [repository getResultsFromEntity:[RecentContact class] predicateOrNil:predicate];
                 
                 RecentContact *recentContact = nil;
@@ -75,9 +75,9 @@
         NSError *err = [repository endTransaction];
         dispatch_async(dispatch_get_main_queue(), ^{
             if(err) {
-                [self.delegate operationFailure:err];
+                [weakSelf.delegate operationFailure:err];
             } else {
-                [self.delegate recentPeppermintContactsSavedSucessfully:peppermintContactArray];
+                [weakSelf.delegate recentPeppermintContactsSavedSucessfully:peppermintContactArray];
             }
         });
     });

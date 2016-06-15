@@ -23,27 +23,28 @@
 }
 
 -(void) save:(PeppermintContact*) peppermintContact {
+    weakself_create();
     dispatch_async(LOW_PRIORITY_QUEUE, ^() {
         Repository *repository = [Repository beginTransaction];
         [peppermintContact addToCoreSpotlightSearch];
-        NSPredicate *predicate = [self peppermintContactPredicateWithNameSurname:peppermintContact.nameSurname communicationChanneldAddress:peppermintContact.communicationChannelAddress communicationChannel:peppermintContact.communicationChannel];
+        NSPredicate *predicate = [weakSelf peppermintContactPredicateWithNameSurname:peppermintContact.nameSurname communicationChanneldAddress:peppermintContact.communicationChannelAddress communicationChannel:peppermintContact.communicationChannel];
         NSArray *matchedCustomContacts = [repository getResultsFromEntity:[CustomContact class]
                                                            predicateOrNil:predicate];
         
         if(matchedCustomContacts.count == 0) {
-            [self addNewCustomForPeppermintContact:peppermintContact inRepository:repository];
+            [weakSelf addNewCustomForPeppermintContact:peppermintContact inRepository:repository];
         } else {
             repository = nil;
             //NSLog(@"Did not save custom Peppermint Contact as it already exists. %@ - %@", peppermintContact.nameSurname, peppermintContact.communicationChannelAddress);
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.delegate customPeppermintContactSavedSucessfully:peppermintContact];
+                [weakSelf.delegate customPeppermintContactSavedSucessfully:peppermintContact];
             });
             
             /*
             if (matchedCustomContacts.count == 1) {
-                [self promtDuplicateRecord:peppermintContact];
+                [weakSelf promtDuplicateRecord:peppermintContact];
             } else {
-                [self promtMultipleRecordsWithSameValueErrorForPeppermintContact:peppermintContact];
+                [weakSelf promtMultipleRecordsWithSameValueErrorForPeppermintContact:peppermintContact];
             }
             */
         }
