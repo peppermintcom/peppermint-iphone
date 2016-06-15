@@ -317,13 +317,15 @@
 -(PeppermintContact*) matchingPeppermintContactForEmail:(NSString*) email nameSurname:(NSString*) nameSurname {
     PeppermintContact *peppermintContact = nil;
     
-    #warning "Consider to move repository operation to background."
-    Repository *repository = [Repository beginTransaction];
-    NSPredicate *predicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:email];
-    NSArray *contactsArray = [repository getResultsFromEntity:[Contact class] predicateOrNil:predicate];
-    if(contactsArray.count > 0) {
-        Contact *contact = contactsArray.firstObject;
-        peppermintContact = [[PeppermintContact alloc] initWithContact:contact];
+    if(email) {
+        #warning "Consider to move repository operation to background."
+        Repository *repository = [Repository beginTransaction];
+        NSPredicate *predicate = [ContactsModel contactPredicateWithCommunicationChannelAddress:email];
+        NSArray *contactsArray = [repository getResultsFromEntity:[Contact class] predicateOrNil:predicate];
+        if(contactsArray.count > 0) {
+            Contact *contact = contactsArray.firstObject;
+            peppermintContact = [[PeppermintContact alloc] initWithContact:contact];
+        }
     }
     
     if(!peppermintContact) {
