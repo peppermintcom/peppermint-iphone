@@ -124,6 +124,7 @@
 }
 
 -(void) startListeningDeviceMotionMager {
+    weakself_create();
     [[self deviceMotionMager] initWithAccelerometerUpdatesWithHandler:^(CMAcceleration acceleration) {
         
         CGFloat tresholdForOnEar = -CGFLOAT_MAX;
@@ -150,13 +151,16 @@
         }
         
         _isDeviceOrientationCorrectOnEar = acceleration.y < tresholdForOnEar;
-        BOOL isDeviceRaised = [self checkIfDeviceIsRaisedWithNewMeasurement:acceleration];
+        BOOL isDeviceRaised = [weakSelf checkIfDeviceIsRaisedWithNewMeasurement:acceleration];
         
-        if(_isDeviceOrientationCorrectOnEar
-           && isDeviceRaised
-           && ![UIDevice currentDevice].proximityMonitoringEnabled) {
-            [self startProximitySensor];
-            [self startProximityTimer];
+        if(_isDeviceOrientationCorrectOnEar && isDeviceRaised && !_isRecordingActive) {
+            if(![UIDevice currentDevice].proximityMonitoringEnabled) {
+                [weakSelf startProximitySensor];
+                [weakSelf startProximityTimer];
+            } else if (_isDeviceCloseToUser) {
+                #warning "Consider handling the case that device is taken to ear in wrong orientation and orientation is updated while proximity sensor is on"
+                //[weakSelf updateSensorState:_isDeviceCloseToUser];
+            }
         }
     }];
     

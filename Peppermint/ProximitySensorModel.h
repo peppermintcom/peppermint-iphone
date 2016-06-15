@@ -13,6 +13,7 @@
 @property (assign, atomic, readonly) __block UIDeviceOrientation currentDeviceOrientation;
 @property (assign, atomic, readonly) __block BOOL isDeviceOrientationCorrectOnEar;
 @property (assign, atomic, readonly) __block BOOL isDeviceCloseToUser;
+@property (assign, atomic) BOOL isRecordingActive;
 
 + (instancetype) sharedInstance;
 -(void) startMonitoring;

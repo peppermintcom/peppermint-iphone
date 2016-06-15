@@ -14,6 +14,8 @@
 #import "AVAudioRecordingModel.h"
 #import "GoogleSpeechRecordingModel.h"
 
+#import "ProximitySensorModel.h"
+
 #define LATENCY_TO_RECOVER          3
 #define LATENCY_TO_SYSTEM_CANCEL    2
 
@@ -74,6 +76,7 @@ typedef enum : NSUInteger {
     
     if(isRecordingViewStateValid && !isSMSChargeViewVisible) {
         [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+        [ProximitySensorModel sharedInstance].isRecordingActive = YES;
         recordingViewStatus = RecordingViewStatusPresented;
         assert(self.sendVoiceMessageModel != nil);
         self.sendVoiceMessageModel.delegate = self;
@@ -125,6 +128,7 @@ typedef enum : NSUInteger {
 
 -(void) recordingViewIsHidden {
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+    [ProximitySensorModel sharedInstance].isRecordingActive = NO;
     recordingViewStatus = RecordingViewStatusInit;
     [self.delegate recordingViewDissappeared];
 }
