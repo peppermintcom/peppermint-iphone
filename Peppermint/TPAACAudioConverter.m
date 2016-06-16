@@ -238,7 +238,8 @@ static inline BOOL _checkResultLite(OSStatus result, const char *operation, cons
     
     ExtAudioFileRef destinationFile;
     if ( !checkResult(ExtAudioFileCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:_destination],
-                                                kAudioFileAAC_ADTSType,
+                                                //kAudioFileAAC_ADTSType,
+                                                kAudioFileM4AType,
                                                 &destinationFormat,
                                                 NULL,
                                                 kAudioFileFlags_EraseFile,
