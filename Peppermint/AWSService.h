@@ -82,7 +82,7 @@
 -(void) exchangeCredentialsWithPrefix:(NSString*)prefix forEmail:(NSString*)email password:(NSString*)password recorderClientId:(NSString*)recorderClientId recorderKey:(NSString*)recorderKey;
 -(void) setUpRecorderWithAccountId:(NSString*)accountId recorderId:(NSString*)recorderId jwt:(NSString*)jwt;
 -(void)unlinkRecorder:(NSString*)recorderId fromAccount:(NSString*) accountId withJwt:(NSString*)recorderJwt;
--(void) sendMessageToRecepientEmail:(NSString*)recepientEmail senderEmail:(NSString*)senderEmail transcriptionUrl:(NSString*) transcriptionUrl audioUrl:(NSString*)audioUrl jwt:(NSString*) jwt;
+-(void) sendMessageToRecepientEmail:(NSString*)recepientEmail senderEmail:(NSString*)senderEmail transcriptionUrl:(NSString*) transcriptionUrl audioUrl:(NSString*)audioUrl jwt:(NSString*) jwt andClientId:(NSString*) clientId;
 -(void) getMessagesForAccountId:(NSString*) accountId jwt:(NSString*)jwt nextUrl:(NSString*)url order:(NSString*)orderText sinceDate:(NSDate*)sinceDate untilDate:(NSDate*)untilDate recipient:(BOOL)isForRecipient;
 -(void) markMessageAsReadWithJwt:(NSString*)jwt messageId:(NSString*)messageId;
 -(void) saveTranscriptionWithJwt:(NSString*)jwt audioUrl:(NSString*)audioUrl language:(NSString*)language transcriptionText:(NSString*)transcriptionText confidence:(NSNumber*) confidence;

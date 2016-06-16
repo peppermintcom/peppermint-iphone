@@ -463,7 +463,7 @@
     }];
 }
 
--(void) sendMessageToRecepientEmail:(NSString*)recepientEmail senderEmail:(NSString*)senderEmail transcriptionUrl:(NSString*) transcriptionUrl audioUrl:(NSString*)audioUrl jwt:(NSString*) jwt {
+-(void) sendMessageToRecepientEmail:(NSString*)recepientEmail senderEmail:(NSString*)senderEmail transcriptionUrl:(NSString*) transcriptionUrl audioUrl:(NSString*)audioUrl jwt:(NSString*) jwt andClientId:(NSString*) clientId {
     
     NSString *url = [NSString stringWithFormat:@"%@%@", self.baseUrl, AWS_ENDPOINT_MESSAGES];
     NSString *tokenText = [self toketTextForJwt:jwt];
@@ -484,6 +484,7 @@
     
     Data *data = [Data new];
     data.type = TYPE_MESSAGES;
+    data.id = clientId;
     data.attributes = attribute;
     
     MessageRequest *messageRequest = [MessageRequest new];

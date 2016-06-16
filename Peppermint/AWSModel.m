@@ -213,12 +213,19 @@ SUBSCRIBE(SetUpAccountWithRecorderCompleted) {
     if(!audioUrl) {
         NSLog(@"Audio URL is not supplied for sendInterAppMessageTo:");
     } else {
+        
+        
+        NSString *clientId = [NSString stringWithFormat:@"iOS%luA%luB%lu", _data.hash, fromEmail.hash, toEmail.hash];
+        NSLog(@"ClientId : %@", clientId);
+        
+        
         PeppermintMessageSender *peppermintMessageSender = [PeppermintMessageSender sharedInstance];
         [awsService sendMessageToRecepientEmail:toEmail
                                     senderEmail:fromEmail
                                transcriptionUrl:transcriptionUrl
                                        audioUrl:audioUrl
-                                            jwt:peppermintMessageSender.exchangedJwt];
+                                            jwt:peppermintMessageSender.exchangedJwt
+                                    andClientId:@""];
     }
 }
 
